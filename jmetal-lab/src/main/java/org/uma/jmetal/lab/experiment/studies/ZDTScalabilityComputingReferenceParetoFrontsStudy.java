@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -64,14 +66,14 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
     }
     String experimentBaseDirectory = args[0];
 
-    List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
+    @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new ZDT1(10), "ZDT110"));
     problemList.add(new ExperimentProblem<>(new ZDT1(20), "ZDT120"));
     problemList.add(new ExperimentProblem<>(new ZDT1(30), "ZDT130"));
     problemList.add(new ExperimentProblem<>(new ZDT1(40), "ZDT140"));
     problemList.add(new ExperimentProblem<>(new ZDT1(50), "ZDT150"));
 
-    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+    @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
@@ -111,7 +113,7 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
    * ExperimentAlgorithm} has an optional tag component, that can be set as it is shown in this
    * example, where four variants of a same algorithm are defined.
    */
-  static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+  static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {

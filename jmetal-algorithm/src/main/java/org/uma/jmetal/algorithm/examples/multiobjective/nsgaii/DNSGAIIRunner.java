@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.DNSGAII;
@@ -30,7 +32,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
 
   public static void main(String[] args) throws FileNotFoundException {
 
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
+    @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
     // problem
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
@@ -47,7 +49,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     // selection
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
+    @NotNull SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
             new RankingAndDirScoreDistanceComparator<>());
 
     int populationSize = 300;

@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective;
 
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.ibea.IBEA;
 import org.uma.jmetal.algorithm.multiobjective.ibea.IBEABuilder;
@@ -16,6 +16,8 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemFactory;
 
+import java.util.List;
+
 /**
  * Class for configuring and running the IBEA algorithm
  *
@@ -30,7 +32,7 @@ public class IBEARunner extends AbstractAlgorithmRunner {
    * Invoking command:
   java org.uma.jmetal.runner.multiobjective.IBEARunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws Exception {
+  public static void main(String @NotNull [] args) throws Exception {
     Problem<DoubleSolution> problem;
     IBEA<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;

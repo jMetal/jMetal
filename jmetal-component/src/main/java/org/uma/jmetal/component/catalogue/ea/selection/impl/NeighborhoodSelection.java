@@ -2,6 +2,8 @@ package org.uma.jmetal.component.catalogue.ea.selection.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
@@ -39,7 +41,7 @@ public class NeighborhoodSelection<S extends Solution<?>>
     this.updateCurrentSolutionIndex = updateCurrentSolutionIndex ;
   }
 
-  public List<S> select(List<S> solutionList) {
+  public @NotNull List<S> select(List<S> solutionList) {
     List<S> matingPool = new ArrayList<>();
 
     while (matingPool.size() < matingPoolSize) {

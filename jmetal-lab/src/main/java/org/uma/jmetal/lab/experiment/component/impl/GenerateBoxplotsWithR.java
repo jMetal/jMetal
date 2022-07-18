@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
@@ -46,7 +48,7 @@ public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> i
     return this ;
   }
 
-  public GenerateBoxplotsWithR<Result> setColumns(int columns) {
+  public @NotNull GenerateBoxplotsWithR<Result> setColumns(int columns) {
     numberOfColumns = columns ;
 
     return this ;
@@ -60,7 +62,7 @@ public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> i
 
   @Override
   public void run() throws IOException {
-    String rDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_R_DIRECTORY;
+    @NotNull String rDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_R_DIRECTORY;
     File rOutput;
     rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
@@ -70,7 +72,7 @@ public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> i
     for (QualityIndicator indicator : experiment.getIndicatorList()) {
      String rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
 
-     try(FileWriter os = new FileWriter(rFileName, false)){
+     try(@NotNull FileWriter os = new FileWriter(rFileName, false)){
       os.write("postscript(\"" +
                indicator.getName() +
               ".Boxplot.eps\", horizontal=FALSE, onefile=FALSE, height=8, width=12, pointsize=10)" +

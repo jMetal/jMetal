@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.spea2;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
@@ -31,7 +33,7 @@ public class ParallelSPEA2Runner extends AbstractAlgorithmRunner {
    * @throws SecurityException Invoking command: java
    *     org.uma.jmetal.runner.multiobjective.spea2.ParallelSPEA2Runner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;

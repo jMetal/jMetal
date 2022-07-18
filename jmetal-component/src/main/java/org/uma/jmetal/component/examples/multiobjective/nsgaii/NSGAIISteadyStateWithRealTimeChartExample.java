@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -30,8 +32,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class NSGAIISteadyStateWithRealTimeChartExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    @NotNull String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -41,7 +43,7 @@ public class NSGAIISteadyStateWithRealTimeChartExample {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    @NotNull var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
     int offspringPopulationSize = 1;
@@ -57,7 +59,7 @@ public class NSGAIISteadyStateWithRealTimeChartExample {
         .setTermination(termination)
         .build();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    @NotNull EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("NSGA-II", 80, 500, referenceParetoFront);
 

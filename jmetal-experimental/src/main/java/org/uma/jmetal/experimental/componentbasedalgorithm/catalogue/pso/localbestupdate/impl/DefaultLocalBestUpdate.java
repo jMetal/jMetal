@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.LocalBestUpdate;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
@@ -18,7 +20,7 @@ public class DefaultLocalBestUpdate implements LocalBestUpdate {
   }
 
   @Override
-  public DoubleSolution[] update(List<DoubleSolution> swarm, DoubleSolution[] localBest) {
+  public DoubleSolution[] update(@NotNull List<DoubleSolution> swarm, DoubleSolution[] localBest) {
     for (int i = 0; i < swarm.size(); i++) {
       int result = dominanceComparator.compare(swarm.get(i), localBest[i]) ;
       if (result != 1) {

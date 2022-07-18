@@ -2,6 +2,8 @@ package org.uma.jmetal.util.densityestimator.impl;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -28,7 +30,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
     this(referencePoint, true);
   }
 
-  public CosineSimilarityDensityEstimator(Point referencePoint, boolean normalize) {
+  public CosineSimilarityDensityEstimator(@NotNull Point referencePoint, boolean normalize) {
     this.referencePoint = referencePoint;
     distance = new CosineSimilarityBetweenVectors(referencePoint.getValues());
     this.normalize = normalize;
@@ -61,11 +63,11 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       return;
     }
 
-    for (S solution : solutionList) {
+    for (@NotNull S solution : solutionList) {
       referencePoint.update(solution.objectives());
     }
 
-    double[][] distanceMatrix = new double[solutionList.size()][solutionList.size()];
+    double[] @NotNull [] distanceMatrix = new double[solutionList.size()][solutionList.size()];
     double[][] solutionMatrix = null;
     if (normalize) {
       try {

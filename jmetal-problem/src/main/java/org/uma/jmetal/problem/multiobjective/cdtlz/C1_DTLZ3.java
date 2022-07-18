@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.cdtlz;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -38,7 +40,7 @@ public class C1_DTLZ3 extends DTLZ3 {
   }
 
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     super.evaluate(solution);
     this.evaluateConstraints(solution);
 

@@ -2,6 +2,7 @@ package org.uma.jmetal.auto.irace.parameterfilegeneration;
 
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoConfigurableAlgorithm;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
@@ -27,7 +28,7 @@ public class IraceParameterFileGenerator {
     System.out.println(stringBuilder.toString());
   }
 
-  private void decodeParameter(Parameter<?> parameter, StringBuilder stringBuilder) {
+  private void decodeParameter(@NotNull Parameter<?> parameter, StringBuilder stringBuilder) {
     stringBuilder.append(
             String.format(
                     formatString,
@@ -37,7 +38,7 @@ public class IraceParameterFileGenerator {
                     decodeValidValues(parameter),
                     ""));
 
-    for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
+    for (@NotNull Parameter<?> globalParameter : parameter.getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
     }
 
@@ -46,8 +47,8 @@ public class IraceParameterFileGenerator {
     }
   }
 
-  private void decodeParameterGlobal(Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
-    StringBuilder dependenceString = new StringBuilder("\"" + parameter.getName() + "\"");
+  private void decodeParameterGlobal(@NotNull Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
+    @NotNull StringBuilder dependenceString = new StringBuilder("\"" + parameter.getName() + "\"");
     if (parentParameter instanceof CategoricalParameter) {
       var validValues = ((CategoricalParameter) parentParameter).getValidValues();
       dependenceString = new StringBuilder();
@@ -70,7 +71,7 @@ public class IraceParameterFileGenerator {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
     }
 
-    for (Pair<String, Parameter<?>> specificParameter : parameter.getSpecificParameters()) {
+    for (@NotNull Pair<String, Parameter<?>> specificParameter : parameter.getSpecificParameters()) {
       decodeParameterSpecific(specificParameter, stringBuilder, parameter);
     }
   }
@@ -87,7 +88,7 @@ public class IraceParameterFileGenerator {
                     decodeValidValues(pair.getRight()),
                     "| " + parentParameter.getName() + " %in% c(\"" + pair.getLeft() + "\")"));
 
-    for (Parameter<?> globalParameter : pair.getValue().getGlobalParameters()) {
+    for (@NotNull Parameter<?> globalParameter : pair.getValue().getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, pair.getValue());
     }
 

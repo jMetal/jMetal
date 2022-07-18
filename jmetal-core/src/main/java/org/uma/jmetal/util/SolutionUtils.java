@@ -3,6 +3,9 @@ package org.uma.jmetal.util;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BinaryOperator;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -33,7 +36,7 @@ public class SolutionUtils {
    * @return The best solution
    */
   public static <S extends Solution<?>> S getBestSolution(
-      S solution1, S solution2, Comparator<S> comparator, RandomGenerator<Double> randomGenerator) {
+          S solution1, S solution2, @NotNull Comparator<S> comparator, @NotNull RandomGenerator<Double> randomGenerator) {
     return getBestSolution(
         solution1, solution2, comparator, (a, b) -> randomGenerator.getRandomValue() < 0.5 ? a : b);
   }
@@ -45,7 +48,7 @@ public class SolutionUtils {
    * @return The best solution
    */
   public static <S extends Solution<?>> S getBestSolution(
-      S solution1, S solution2, Comparator<S> comparator, BinaryOperator<S> equalityPolicy) {
+          S solution1, S solution2, @NotNull Comparator<S> comparator, BinaryOperator<S> equalityPolicy) {
     S result;
     int flag = comparator.compare(solution1, solution2);
     if (flag == -1) {
@@ -100,7 +103,7 @@ public class SolutionUtils {
    * @return The minimum distance between solution and the set.
    */
   public static double distanceToSolutionListInSolutionSpace(
-      DoubleSolution solution, List<DoubleSolution> solutionList) {
+          @NotNull DoubleSolution solution, List<DoubleSolution> solutionList) {
     double distance = Double.MAX_VALUE;
 
     for (int i = 0; i < solutionList.size(); i++) {
@@ -152,7 +155,7 @@ public class SolutionUtils {
    * @param maxValues maximum value for each objective
    * @return normalized solution
    */
-  public static <S extends Solution<?>> S normalize(S solution, double[] minValues, double[] maxValues) {
+  public static <S extends Solution<?>> S normalize(S solution, double @Nullable [] minValues, double[] maxValues) {
 
     if (solution == null) {
       throw new JMetalException("The solution should not be null");

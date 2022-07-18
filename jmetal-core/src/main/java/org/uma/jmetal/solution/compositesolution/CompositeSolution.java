@@ -3,6 +3,8 @@ package org.uma.jmetal.solution.compositesolution;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -27,7 +29,7 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
    * @param solutions Collection of solutions composing the composite solution. All of them have to have the same
    *                  number of objectives and constraints.
    */
-  public CompositeSolution(List<Solution<?>> solutions) {
+  public CompositeSolution(@NotNull List<Solution<?>> solutions) {
     super(solutions.size(), solutions.get(0).objectives().length, solutions.get(0).constraints().length);
     Check.notNull(solutions);
     Check.collectionIsNotEmpty(solutions);

@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.singleobjective;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.EvolutionStrategyBuilder;
@@ -13,6 +12,9 @@ import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to configure and run a non elitist (mu,lamba) evolution strategy. The target problem is
@@ -27,7 +29,7 @@ public class NonElitistEvolutionStrategyRunner {
   public static void main(String[] args) throws Exception {
 
     Algorithm<BinarySolution> algorithm;
-    BinaryProblem problem = new OneMax(512) ;
+    @NotNull BinaryProblem problem = new OneMax(512) ;
 
     MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(1.0 / problem.getBitsFromVariable(0)) ;
 
@@ -42,7 +44,7 @@ public class NonElitistEvolutionStrategyRunner {
             .execute() ;
 
     BinarySolution solution = algorithm.getResult() ;
-    List<BinarySolution> population = new ArrayList<>(1) ;
+    @NotNull List<BinarySolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
     long computingTime = algorithmRunner.getComputingTime() ;

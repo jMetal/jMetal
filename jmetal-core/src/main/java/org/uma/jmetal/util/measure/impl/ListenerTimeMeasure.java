@@ -3,6 +3,9 @@ package org.uma.jmetal.util.measure.impl;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.WeakHashMap;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.PullMeasure;
@@ -34,7 +37,7 @@ import org.uma.jmetal.util.measure.PushMeasure;
 public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 		PullMeasure<Long> {
 
-	private Long lastReset = 0L;
+	private @NotNull Long lastReset = 0L;
 	private Long time = 0L;
 	private final WeakHashMap<PushMeasure<?>, PushMeasure<?>> measureCache = new WeakHashMap<PushMeasure<?>, PushMeasure<?>>();
 	private final WeakHashMap<MeasureListener<?>, MeasureListener<?>> listenerCache = new WeakHashMap<MeasureListener<?>, MeasureListener<?>>();
@@ -56,7 +59,7 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 	 * @return the {@link MeasureListener} wrapper
 	 * @throw {@link IllegalArgumentException} if no listener is provided
 	 */
-	public <Value> MeasureListener<Value> wrapListener(
+	public <Value> @NotNull MeasureListener<Value> wrapListener(
 			final MeasureListener<Value> wrapped) {
 		if (wrapped == null) {
 			throw new IllegalArgumentException("No listener provided");
@@ -163,7 +166,7 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 	 * @throw {@link IllegalArgumentException} if no manager is provided or if
 	 *        the additional key is already used
 	 */
-	public <Value> MeasureManager wrapManager(final MeasureManager wrapped,
+	public <Value> MeasureManager wrapManager(final @Nullable MeasureManager wrapped,
 			final Object measureKey) {
 		if (wrapped == null) {
 			throw new IllegalArgumentException("No manager provided");
@@ -183,7 +186,7 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 
 					@SuppressWarnings("unchecked")
 					@Override
-					public <T> PullMeasure<T> getPullMeasure(Object key) {
+					public <T> PullMeasure<T> getPullMeasure(@NotNull Object key) {
 						if (key.equals(measureKey)) {
 							return (PullMeasure<T>) ListenerTimeMeasure.this;
 						} else {

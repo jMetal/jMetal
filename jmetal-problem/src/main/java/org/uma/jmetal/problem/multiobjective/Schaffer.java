@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -15,8 +17,8 @@ public class Schaffer extends AbstractDoubleProblem {
     setNumberOfObjectives(2);
     setName("Schaffer");
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-100000.0);
@@ -27,7 +29,7 @@ public class Schaffer extends AbstractDoubleProblem {
   }
 
   /** Evaluate() method */
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double[] f = new double[solution.objectives().length];
     double value = solution.variables().get(0);
 

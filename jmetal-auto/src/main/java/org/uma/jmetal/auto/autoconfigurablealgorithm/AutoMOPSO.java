@@ -3,6 +3,8 @@ package org.uma.jmetal.auto.autoconfigurablealgorithm;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
@@ -49,7 +51,7 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceC
  */
 public class AutoMOPSO implements AutoConfigurableAlgorithm{
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
-  public List<Parameter<?>> fixedParameterList = new ArrayList<>();
+  public @NotNull List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
   private StringParameter problemNameParameter;
   public StringParameter referenceFrontFilenameParameter;
@@ -132,8 +134,8 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
         List.of("constantValue", "randomSelectedValue", "linearIncreasingValue", "linearDecreasingValue"));
 
     RealParameter weightParameter = new RealParameter("weight", args, 0.1, 1.0);
-    RealParameter wMinParameter = new RealParameter("weightMin", args, 0.1, 0.5);
-    RealParameter wMaxParameter = new RealParameter("weightMax", args, 0.5, 1.0);
+    @NotNull RealParameter wMinParameter = new RealParameter("weightMin", args, 0.1, 0.5);
+    @NotNull RealParameter wMaxParameter = new RealParameter("weightMax", args, 0.5, 1.0);
     inertiaWeightComputingParameter.addSpecificParameter("constantValue", weightParameter);
     inertiaWeightComputingParameter.addSpecificParameter("randomSelectedValue", wMinParameter);
     inertiaWeightComputingParameter.addSpecificParameter("randomSelectedValue", wMaxParameter);
@@ -157,7 +159,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     autoConfigurableParameterList.add(localBestUpdateParameter);
     autoConfigurableParameterList.add(positionUpdateParameter);
 
-    for (Parameter<?> parameter : autoConfigurableParameterList) {
+    for (@NotNull Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
     }
   }
@@ -167,18 +169,18 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
         new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonUniform"));
     //ProbabilityParameter mutationProbability =
     //    new ProbabilityParameter("mutationProbability", args);
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0.0, 2.0) ;
+    @NotNull RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0.0, 2.0) ;
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
-    RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
+    @NotNull RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutationParameter.addGlobalParameter(mutationRepairStrategy);
 
-    RealParameter distributionIndexForPolynomialMutation =
+    @NotNull RealParameter distributionIndexForPolynomialMutation =
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
     mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
-    RealParameter uniformMutationPerturbation =
+    @NotNull RealParameter uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
@@ -190,7 +192,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables", problem.getNumberOfVariables());
 
     // TODO: the upper bound  must be the swarm size
-    IntegerParameter frequencyOfApplicationParameter = new IntegerParameter(
+    @NotNull IntegerParameter frequencyOfApplicationParameter = new IntegerParameter(
         "frequencyOfApplicationOfMutationOperator", args, 1, 10);
 
     perturbationParameter = new PerturbationParameter(args,
@@ -206,8 +208,8 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   private VelocityUpdateParameter configureVelocityUpdate(String[] args) {
     RealParameter c1MinParameter = new RealParameter("c1Min", args, 1.0, 2.0);
     RealParameter c1MaxParameter = new RealParameter("c1Max", args, 2.0, 3.0);
-    RealParameter c2MinParameter = new RealParameter("c2Min", args, 1.0, 2.0);
-    RealParameter c2MaxParameter = new RealParameter("c2Max", args, 2.0, 3.0);
+    @NotNull RealParameter c2MinParameter = new RealParameter("c2Min", args, 1.0, 2.0);
+    @NotNull RealParameter c2MaxParameter = new RealParameter("c2Max", args, 2.0, 3.0);
 
     velocityUpdateParameter = new VelocityUpdateParameter(args,
         List.of("defaultVelocityUpdate", "constrainedVelocityUpdate"));
@@ -231,14 +233,14 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     int swarmSize = swarmSizeParameter.getValue();
     int maximumNumberOfEvaluations = maximumNumberOfEvaluationsParameter.getValue();
 
-    var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
+    @NotNull var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
 
-    var evaluation = new SequentialEvaluation<>(problem);
+    @NotNull var evaluation = new SequentialEvaluation<>(problem);
     var termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
 
     leaderArchiveParameter.setSize(archiveSizeParameter.getValue());
     BoundedArchive<DoubleSolution> leaderArchive = (BoundedArchive<DoubleSolution>) leaderArchiveParameter.getParameter();
-    var velocityInitialization = new DefaultVelocityInitialization();
+    @NotNull var velocityInitialization = new DefaultVelocityInitialization();
 
     if (velocityUpdateParameter.getValue().equals("constrainedVelocityUpdate")) {
       velocityUpdateParameter.addNonConfigurableParameter("problem", problem);
@@ -255,7 +257,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     var velocityUpdate = velocityUpdateParameter.getParameter();
 
     LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter();
-    GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter();
+    @NotNull GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter();
     GlobalBestSelection globalBestSelection = globalBestSelectionParameter.getParameter(
         leaderArchive.getComparator());
 
@@ -272,9 +274,9 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
           ((DoubleProblem) problem).getVariableBounds());
     }
 
-    PositionUpdate positionUpdate = positionUpdateParameter.getParameter();
+    @NotNull PositionUpdate positionUpdate = positionUpdateParameter.getParameter();
 
-    GlobalBestUpdate globalBestUpdate = globalBestUpdateParameter.getParameter();
+    @NotNull GlobalBestUpdate globalBestUpdate = globalBestUpdateParameter.getParameter();
     LocalBestUpdate localBestUpdate = localBestUpdateParameter.getParameter(
         new DefaultDominanceComparator<DoubleSolution>());
 
@@ -295,7 +297,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
         leaderArchive);
   }
 
-  public static void print(List<Parameter<?>> parameterList) {
+  public static void print(@NotNull List<Parameter<?>> parameterList) {
     for (Parameter<?> parameter : parameterList) {
       System.out.println(parameter);
     }

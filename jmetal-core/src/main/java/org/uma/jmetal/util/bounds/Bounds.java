@@ -3,6 +3,7 @@ package org.uma.jmetal.util.bounds;
 import java.io.Serializable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Describes a pair of lower and upper bounds for a {@link Comparable} value.
@@ -62,7 +63,7 @@ public interface Bounds<T extends Comparable<T>> extends Serializable {
     } else {
       return new Bounds<T>() {
         @Override
-        public T getLowerBound() {
+        public @NotNull T getLowerBound() {
           return lowerBound;
         }
 
@@ -90,7 +91,7 @@ public interface Bounds<T extends Comparable<T>> extends Serializable {
    *             should disappear soon.
    */
   @Deprecated
-  public static <T extends Comparable<T>> Bounds<T> fromPair(Pair<T, T> pair) {
+  public static <T extends Comparable<T>> @NotNull Bounds<T> fromPair(Pair<T, T> pair) {
     return create(pair.getLeft(), pair.getRight());
   }
 

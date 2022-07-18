@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.examples.singleobjective.cellulargeneticalgorithm;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -33,11 +35,11 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerato
  */
 public class AsynchronousCellularGeneticAlgorithmExample {
   public static void main(String[] args) throws JMetalException {
-    Problem<DoubleSolution> problem = new Sphere(20) ;
+    @NotNull Problem<DoubleSolution> problem = new Sphere(20) ;
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    @NotNull var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -49,7 +50,7 @@ public class RE21 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
     double x3 = solution.variables().get(2);

@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.examples.singleobjective.cellulargeneticalgorithm;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -34,7 +36,7 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerato
  */
 public class AsynchronousCellularGeneticAlgorithmBinaryExample {
   public static void main(String[] args) throws JMetalException {
-    BinaryProblem problem = new OneMax(1024) ;
+    @NotNull BinaryProblem problem = new OneMax(1024) ;
 
     double crossoverProbability = 0.9;
     var crossover = new SinglePointCrossover(crossoverProbability);
@@ -51,9 +53,9 @@ public class AsynchronousCellularGeneticAlgorithmBinaryExample {
 
     SequenceGenerator<Integer> solutionIndexGenerator = new IntegerBoundedSequenceGenerator(populationSize);
 
-    var variation = new CrossoverAndMutationVariation<BinarySolution>(offspringPopulationSize, crossover, mutation) ;
+    @NotNull var variation = new CrossoverAndMutationVariation<BinarySolution>(offspringPopulationSize, crossover, mutation) ;
 
-    var selection =
+    @NotNull var selection =
         new NeighborhoodSelection<BinarySolution>(
             variation.getMatingPoolSize(),
             solutionIndexGenerator,

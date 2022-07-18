@@ -7,6 +7,8 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -40,7 +42,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
     this.numberOfObjectives = numberOfObjectives;
   }
 
-  public List<Double> translateObjectives(List<S> population) {
+  public @NotNull List<Double> translateObjectives(List<S> population) {
     List<Double> ideal_point;
     ideal_point = new ArrayList<>(numberOfObjectives);
 
@@ -53,7 +55,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
       ideal_point.add(minf);
 
       for (List<S> list : fronts) {
-        for (S s : list) {
+        for (@NotNull S s : list) {
           if (f == 0) // in the first objective we create the vector of conv_objs
           setAttribute(s, new ArrayList<Double>());
 
@@ -71,7 +73,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
   // of the objective which uses 1.0; the rest will use 0.00001. This is
   // different to the one impelemented in C++
   // ----------------------------------------------------------------------
-  private double ASF(S s, int index) {
+  private double ASF(@NotNull S s, int index) {
     double max_ratio = Double.NEGATIVE_INFINITY;
     for (int i = 0; i < s.objectives().length; i++) {
       double weight = (index == i) ? 1.0 : 0.000001;
@@ -81,12 +83,12 @@ public class EnvironmentalSelection<S extends Solution<?>>
   }
 
   // ----------------------------------------------------------------------
-  private List<S> findExtremePoints(List<S> population) {
+  private @NotNull List<S> findExtremePoints(List<S> population) {
     List<S> extremePoints = new ArrayList<>();
     S min_indv = null;
     for (int f = 0; f < numberOfObjectives; f += 1) {
       double min_ASF = Double.MAX_VALUE;
-      for (S s : fronts.get(0)) { // only consider the individuals in the first front
+      for (@NotNull S s : fronts.get(0)) { // only consider the individuals in the first front
         double asf = ASF(s, f);
         if (asf < min_ASF) {
           min_ASF = asf;
@@ -99,7 +101,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
     return extremePoints;
   }
 
-  public List<Double> guassianElimination(List<List<Double>> A, List<Double> b) {
+  public List<Double> guassianElimination(@NotNull List<List<Double>> A, List<Double> b) {
     List<Double> x;
 
     int N = A.size();
@@ -132,7 +134,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
     return x;
   }
 
-  public List<Double> constructHyperplane(List<S> population, List<S> extreme_points) {
+  public List<Double> constructHyperplane(List<S> population, @NotNull List<S> extreme_points) {
     // Check whether there are duplicate extreme points.
     // This might happen but the original paper does not mention how to deal with it.
     boolean duplicate = false;
@@ -148,7 +150,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
                    // the condition)
     {
         // extreme_points[f] stands for the individual with the largest value of objective f
-      List<Double> list = new ArrayList<>();
+      @NotNull List<Double> list = new ArrayList<>();
       int bound = numberOfObjectives;
       for (int f = 0; f < bound; f++) {
         Double objective = extreme_points.get(f).objectives()[f];
@@ -176,10 +178,10 @@ public class EnvironmentalSelection<S extends Solution<?>>
         }
         return list;
       }).collect(Collectors.toList());
-      List<Double> x = guassianElimination(A, b);
+      @NotNull List<Double> x = guassianElimination(A, b);
 
       // Find intercepts
-      List<Double> list = new ArrayList<>();
+      @NotNull List<Double> list = new ArrayList<>();
       int bound = numberOfObjectives;
       for (int f = 0; f < bound; f++) {
         Double aDouble = 1.0 / x.get(f);
@@ -191,9 +193,9 @@ public class EnvironmentalSelection<S extends Solution<?>>
   }
 
   public void normalizeObjectives(
-      List<S> population, List<Double> intercepts, List<Double> ideal_point) {
+          List<S> population, List<Double> intercepts, @NotNull List<Double> ideal_point) {
     for (int t = 0; t < fronts.size(); t += 1) {
-      for (S s : fronts.get(t)) {
+      for (@NotNull S s : fronts.get(t)) {
 
         for (int f = 0; f < numberOfObjectives; f++) {
           List<Double> conv_obj = (List<Double>) getAttribute(s);
@@ -207,7 +209,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
     }
   }
 
-  public double perpendicularDistance(List<Double> direction, List<Double> point) {
+  public double perpendicularDistance(@NotNull List<Double> direction, List<Double> point) {
     double numerator = 0, denominator = 0;
     for (int i = 0; i < direction.size(); i += 1) {
       numerator += direction.get(i) * point.get(i);
@@ -227,7 +229,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
   public void associate(List<S> population) {
 
     for (int t = 0; t < fronts.size(); t++) {
-      for (S s : fronts.get(t)) {
+      for (@NotNull S s : fronts.get(t)) {
         int min_rp = -1;
         double min_dist = Double.MAX_VALUE;
         for (int r = 0; r < this.referencePoints.size(); r++) {
@@ -256,7 +258,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
   //
   // Check the last two paragraphs in Section IV-E in the original paper.
   // ----------------------------------------------------------------------
-  S SelectClusterMember(ReferencePoint<S> rp) {
+  @Nullable S SelectClusterMember(@NotNull ReferencePoint<S> rp) {
     S chosen = null;
     if (rp.HasPotentialMember()) {
       if (rp.MemberSize() == 0) // currently has no member
@@ -280,7 +282,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
 
   @Override
   /* This method performs the environmental Selection indicated in the paper describing NSGAIII*/
-  public List<S> execute(List<S> source) throws JMetalException {
+  public List<S> execute(@NotNull List<S> source) throws JMetalException {
     // The comments show the C++ code
 
     // ---------- Steps 9-10 in Algorithm 1 ----------
@@ -302,7 +304,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
     }
 
     var rand = JMetalRandom.getInstance();
-    List<S> result = new ArrayList<>();
+    @NotNull List<S> result = new ArrayList<>();
 
     // ---------- Step 17 / Algorithm 4 ----------
     while (result.size() < this.solutionsToSelect) {
@@ -329,12 +331,12 @@ public class EnvironmentalSelection<S extends Solution<?>>
 
     // the default constructor is generated by default
 
-    public Builder<S> setSolutionsToSelect(int solutions) {
+    public @NotNull Builder<S> setSolutionsToSelect(int solutions) {
       solutionsToSelect = solutions;
       return this;
     }
 
-    public Builder<S> setFronts(List<List<S>> f) {
+    public @NotNull Builder<S> setFronts(List<List<S>> f) {
       fronts = f;
       return this;
     }
@@ -347,7 +349,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
       return this.fronts;
     }
 
-    public EnvironmentalSelection<S> build() {
+    public @NotNull EnvironmentalSelection<S> build() {
       return new EnvironmentalSelection<>(this);
     }
 
@@ -360,7 +362,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
       return this;
     }
 
-    public Builder<S> setNumberOfObjectives(int n) {
+    public @NotNull Builder<S> setNumberOfObjectives(int n) {
       this.numberOfObjctives = n;
       return this;
     }
@@ -377,7 +379,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
 
   @Override
   @SuppressWarnings("unchecked")
-  public List<Double> getAttribute(S solution) {
+  public List<Double> getAttribute(@NotNull S solution) {
     return (List<Double>) solution.attributes().get(getAttributeIdentifier());
   }
 

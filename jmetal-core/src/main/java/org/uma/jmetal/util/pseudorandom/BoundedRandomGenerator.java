@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.pseudorandom;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -57,7 +59,7 @@ public interface BoundedRandomGenerator<Value extends Comparable<Value>> extends
 	 * @return {@link BoundedRandomGenerator} which generates {@link Integer}
 	 *         values based on the provided generator
 	 */
-	static BoundedRandomGenerator<Integer> fromDoubleToInteger(RandomGenerator<Double> doubleGenerator) {
+	static @NotNull BoundedRandomGenerator<Integer> fromDoubleToInteger(RandomGenerator<Double> doubleGenerator) {
 		return fromDoubleToInteger(bound(doubleGenerator));
 	}
 

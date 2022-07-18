@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -61,7 +63,7 @@ public class SpatialSpreadDeviationDensityEstimator<S extends Solution<?>>
       front.get(0).attributes().put(attributeId, Double.POSITIVE_INFINITY);
       front.get(size - 1).attributes().put(attributeId, Double.POSITIVE_INFINITY);
     }
-    double[][] distance =
+    double[] @NotNull [] distance =
             SolutionListUtils.normalizedDistanceMatrix(front, objetiveMaxn, objetiveMinn);
 
     double dminn, dmaxx;
@@ -112,7 +114,7 @@ public class SpatialSpreadDeviationDensityEstimator<S extends Solution<?>>
   }
 
   @Override
-  public Double getValue(S solution) {
+  public Double getValue(@NotNull S solution) {
     Check.notNull(solution);
 
     Double result = 0.0;

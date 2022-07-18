@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.selection.impl.BestSolutionSelection;
@@ -96,7 +98,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
    * @param numberOfParticlesToInform
    * @param evaluator
    */
-  public StandardPSO2011(DoubleProblem problem, int swarmSize, int maxIterations,
+  public StandardPSO2011(@NotNull DoubleProblem problem, int swarmSize, int maxIterations,
                          int numberOfParticlesToInform, SolutionListEvaluator<DoubleSolution> evaluator) {
     this(problem, 0, swarmSize, maxIterations, numberOfParticlesToInform, evaluator);
   }
@@ -117,8 +119,8 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   }
 
   @Override
-  public List<DoubleSolution> createInitialSwarm() {
-    List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
+  public @NotNull List<DoubleSolution> createInitialSwarm() {
+    @NotNull List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
     for (int i = 0; i < swarmSize; i++) {
@@ -165,7 +167,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   }
 
   @Override
-  public void updateVelocity(List<DoubleSolution> swarm) {
+  public void updateVelocity(@NotNull List<DoubleSolution> swarm) {
     double r1, r2;
 
     for (int i = 0; i < swarmSize; i++) {
@@ -283,7 +285,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   }
 
   @Override
-  public void updateParticlesMemory(List<DoubleSolution> swarm) {
+  public void updateParticlesMemory(@NotNull List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       if ((swarm.get(i).objectives()[objectiveId] < localBest[i].objectives()[0])) {
         localBest[i] = (DoubleSolution) swarm.get(i).copy();
@@ -319,7 +321,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
     return localBest ;
   }
 
-  @Override public String getName() {
+  @Override public @NotNull String getName() {
     return "SPSO11" ;
   }
 

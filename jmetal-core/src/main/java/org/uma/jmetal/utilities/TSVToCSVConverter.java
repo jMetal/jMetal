@@ -6,6 +6,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
@@ -17,7 +19,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class TSVToCSVConverter {
-  public static void main(String[] args) throws IOException {
+  public static void main(String @NotNull [] args) throws IOException {
     if (args.length != 2) {
       throw new JMetalException("Wrong number of arguments: two file names are required.");
     }
@@ -34,7 +36,7 @@ public class TSVToCSVConverter {
       lines.forEach(
           line -> {
             // List<String> values = Arrays.asList(l.split("\\s+")) ;
-            String values = line.replaceAll("\\s+", ",");
+            @NotNull String values = line.replaceAll("\\s+", ",");
 
             if (values.endsWith(",")) {
               values = values.substring(0, values.length() - 1);

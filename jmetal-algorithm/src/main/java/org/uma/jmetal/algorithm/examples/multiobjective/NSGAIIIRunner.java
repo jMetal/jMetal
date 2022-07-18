@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective;
 
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
@@ -18,6 +18,8 @@ import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+
+import java.util.List;
 
 /** Class to configure and run the NSGA-III algorithm */
 public class NSGAIIIRunner extends AbstractAlgorithmRunner {
@@ -37,7 +39,7 @@ public class NSGAIIIRunner extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    @NotNull String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
 
     problem = ProblemFactory.loadProblem(problemName);
 

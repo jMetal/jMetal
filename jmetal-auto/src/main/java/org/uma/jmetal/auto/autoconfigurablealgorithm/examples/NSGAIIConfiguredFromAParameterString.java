@@ -1,5 +1,6 @@
 package org.uma.jmetal.auto.autoconfigurablealgorithm.examples;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -16,7 +17,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  */
 public class NSGAIIConfiguredFromAParameterString {
   public static void main(String[] args) {
-    String referenceFrontFileName = "ZDT1.csv" ;
+    @NotNull String referenceFrontFileName = "ZDT1.csv" ;
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
@@ -41,7 +42,7 @@ public class NSGAIIConfiguredFromAParameterString {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoNSGAII autoNSGAII = new AutoNSGAII();
+    @NotNull AutoNSGAII autoNSGAII = new AutoNSGAII();
     autoNSGAII.parseAndCheckParameters(parameters);
 
     AutoNSGAII.print(autoNSGAII.fixedParameterList);
@@ -50,7 +51,7 @@ public class NSGAIIConfiguredFromAParameterString {
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+    @NotNull RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "NSGA-II", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -25,7 +26,7 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
     setNumberOfConstraints(2);
     setName("LIRCMOP1");
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i = 0; i < numberOfVariables; i++) {
@@ -38,8 +39,8 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
-      double[] x = new double[10];
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
+      double @NotNull [] x = new double[10];
       int count = 0;
       int bound = getNumberOfVariables();
       for (int i = 0; i < bound; i++) {
@@ -58,7 +59,7 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-      double[] x = new double[10];
+      double @NotNull [] x = new double[10];
       int count = 0;
       int bound = getNumberOfVariables();
       for (int i = 0; i < bound; i++) {

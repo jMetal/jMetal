@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
@@ -56,14 +57,14 @@ public class SMPSORPWithOneReferencePointExample {
     int maxEvaluations = 25000;
     int swarmSize = 100;
 
-      List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
+      @NotNull List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
       for (List<Double> referencePoint : referencePoints) {
           CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
                   swarmSize / referencePoints.size(), referencePoint);
           archivesWithReferencePoints.add(doubleSolutionCrowdingDistanceArchiveWithReferencePoint);
       }
 
-      Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
+      @NotNull Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
     Termination termination = new TerminationByEvaluations(maxEvaluations) ;
 
     algorithm = new SMPSORP(problem,

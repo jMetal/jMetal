@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.point.Point;
 
@@ -42,7 +44,7 @@ public class ArrayPoint implements Point {
    *
    * @param point
    */
-  public ArrayPoint(Point point) {
+  public ArrayPoint(@NotNull Point point) {
     Check.notNull(point);
 
     this.point = new double[point.getDimension()];
@@ -57,7 +59,7 @@ public class ArrayPoint implements Point {
    *
    * @param point
    */
-  public ArrayPoint(double[] point) {
+  public ArrayPoint(double @NotNull [] point) {
     Check.notNull(point);
 
     this.point = new double[point.length];
@@ -68,10 +70,10 @@ public class ArrayPoint implements Point {
    * Constructor reading the values from a file
    * @param fileName
    */
-  public ArrayPoint(String fileName) throws IOException {
+  public ArrayPoint(@NotNull String fileName) throws IOException {
    FileInputStream fis = new FileInputStream(fileName);
    InputStreamReader isr = new InputStreamReader(fis);
-   try(BufferedReader br = new BufferedReader(isr)){
+   try(@NotNull BufferedReader br = new BufferedReader(isr)){
 
     List<Double> auxiliarPoint = new ArrayList<Double>();
     String aux = br.readLine();
@@ -150,7 +152,7 @@ public class ArrayPoint implements Point {
     if (o == null || getClass() != o.getClass())
       return false;
 
-    ArrayPoint that = (ArrayPoint) o;
+    @NotNull ArrayPoint that = (ArrayPoint) o;
 
     return Arrays.equals(point, that.point);
   }

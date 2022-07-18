@@ -3,6 +3,8 @@ package org.uma.jmetal.lab.operator;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -58,7 +60,7 @@ public class IntegerPolynomialMutationExample {
     IntegerProblem problem ;
 
     problem = new NIntegerMin(1, 10, -1000, 1000);
-    MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(1.0, distributionIndex) ;
+    @NotNull MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(1.0, distributionIndex) ;
 
     IntegerSolution solution = problem.createSolution() ;
     solution.variables().set(0, 0);

@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -17,7 +18,7 @@ public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithCrowdingArchi
   public static void main(String[] args) {
     String referenceFrontFileName = "ZDT1.csv" ;
 
-    String[] parameters =
+    String @NotNull [] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName "+ referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 25000 "
@@ -42,7 +43,7 @@ public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithCrowdingArchi
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoNSGAII NSGAII = new AutoNSGAII();
+    @NotNull AutoNSGAII NSGAII = new AutoNSGAII();
     NSGAII.parseAndCheckParameters(parameters);
 
     AutoNSGAII.print(NSGAII.fixedParameterList);
@@ -50,8 +51,8 @@ public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithCrowdingArchi
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = NSGAII.create();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+    @NotNull EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    @NotNull RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "NSGA-II", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
     //WriteSolutionsToFilesObserver writeSolutionsToFilesObserver = new WriteSolutionsToFilesObserver() ;

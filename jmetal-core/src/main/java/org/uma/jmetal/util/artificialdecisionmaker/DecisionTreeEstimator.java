@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import weka.classifiers.Classifier;
@@ -30,14 +31,14 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
   }
 
 
-  public double doPrediction(int index,S testSolution) {
+  public double doPrediction(int index, @NotNull S testSolution) {
     double result = 0.0d;
 
     try {
       int numberOfObjectives = solutionList.get(0).objectives().length;
       //Attributes
       //numeric
-      Attribute attr = new Attribute("my-numeric");
+      @NotNull Attribute attr = new Attribute("my-numeric");
 
       //nominal
       ArrayList<String> myNomVals = new ArrayList<>();
@@ -54,14 +55,14 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       //System.out.println(attr2.isString());
 
       //2.create dataset
-      ArrayList<Attribute> attrs = new ArrayList<>();
+      @NotNull ArrayList<Attribute> attrs = new ArrayList<>();
       attrs.add(attr);
       attrs.add(attr1);
       attrs.add(attr2);
       Instances dataset = new Instances("my_dataset", attrs, 0);
 
       //Add instances
-      for (S solution : solutionList) {
+      for (@NotNull S solution : solutionList) {
         //instaces
         for (int i = 0; i <numberOfObjectives ; i++) {
           double[] attValues = new double[dataset.numAttributes()];
@@ -74,7 +75,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
 
 
       //DataSet test
-      Instances datasetTest = new Instances("my_dataset_test", attrs, 0);
+      @NotNull Instances datasetTest = new Instances("my_dataset_test", attrs, 0);
 
       //Add instances
       for (int i = 0; i < numberOfObjectives; i++) {
@@ -90,14 +91,14 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       //split to 70:30 learn and test set
 
       //Preprocess strings (almost no classifier supports them)
-      StringToWordVector filter = new StringToWordVector();
+      @NotNull StringToWordVector filter = new StringToWordVector();
 
       filter.setInputFormat(dataset);
       dataset = Filter.useFilter(dataset, filter);
 
       //Buid classifier
       dataset.setClassIndex(1);
-      Classifier classifier = new J48();
+      @NotNull Classifier classifier = new J48();
       classifier.buildClassifier(dataset);
       //resample if needed
       //dataset = dataset.resample(new Random(42));
@@ -114,14 +115,14 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
   }
 
 
-  public double doPredictionVariable(int index,S testSolution) {
+  public double doPredictionVariable(int index, @NotNull S testSolution) {
     double result = 0.0d;
 
     try {
       int numberOfVariables = solutionList.get(0).variables().size();
       //Attributes
       //numeric
-      Attribute attr = new Attribute("my-numeric");
+      @NotNull Attribute attr = new Attribute("my-numeric");
 
       //nominal
       ArrayList<String> myNomVals = new ArrayList<>();
@@ -143,10 +144,10 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       Instances dataset = new Instances("my_dataset", attrs, 0);
 
       //Add instances
-      for (S solution : solutionList) {
+      for (@NotNull S solution : solutionList) {
         //instaces
         for (int i = 0; i <numberOfVariables ; i++) {
-          double[] attValues = new double[dataset.numAttributes()];
+          double @NotNull [] attValues = new double[dataset.numAttributes()];
           attValues[0] = ((DoubleSolution)solution).variables().get(i);
           attValues[1] = dataset.attribute(NOMINAL_STRING).indexOfValue(VALUE_STRING+i);
           attValues[2] = dataset.attribute(MY_STRING).addStringValue(solution.toString()+i);
@@ -156,7 +157,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
 
 
       //DataSet test
-      Instances datasetTest = new Instances("my_dataset_test", attrs, 0);
+      @NotNull Instances datasetTest = new Instances("my_dataset_test", attrs, 0);
 
       //Add instances
       for (int i = 0; i < numberOfVariables; i++) {
@@ -179,7 +180,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
 
       //Buid classifier
       dataset.setClassIndex(1);
-      Classifier classifier = new J48();
+      @NotNull Classifier classifier = new J48();
       classifier.buildClassifier(dataset);
       //resample if needed
       //dataset = dataset.resample(new Random(42));

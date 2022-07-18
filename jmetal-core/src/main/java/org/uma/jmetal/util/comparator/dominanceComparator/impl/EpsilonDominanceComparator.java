@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.comparator.dominanceComparator.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -30,7 +31,7 @@ public class EpsilonDominanceComparator<S extends Solution<?>> implements Domina
    * non-dominated, or solution1  is dominated by solution2, respectively.
    */
   @Override
-  public int compare(S solution1, S solution2) {
+  public int compare(S solution1, @NotNull S solution2) {
     Check.notNull(solution1);
     Check.notNull(solution2);
     Check.that(
@@ -43,7 +44,7 @@ public class EpsilonDominanceComparator<S extends Solution<?>> implements Domina
     return dominanceTest(solution1, solution2) ;
   }
 
-  private int dominanceTest(Solution<?> solution1, Solution<?> solution2) {
+  private int dominanceTest(@NotNull Solution<?> solution1, Solution<?> solution2) {
     boolean bestIsOne = false ;
     boolean bestIsTwo = false ;
     for (int i = 0; i < solution1.objectives().length; i++) {

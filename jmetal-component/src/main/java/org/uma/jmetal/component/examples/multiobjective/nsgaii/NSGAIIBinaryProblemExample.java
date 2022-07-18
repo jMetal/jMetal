@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -26,7 +28,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class NSGAIIBinaryProblemExample {
   public static void main(String[] args) throws JMetalException, IOException {
 
-    BinaryProblem problem = new OneZeroMax(256) ;
+    @NotNull BinaryProblem problem = new OneZeroMax(256) ;
 
     var  crossover = new SinglePointCrossover(0.9);
     var mutation = new BitFlipMutation(1.0 / problem.getTotalNumberOfBits());

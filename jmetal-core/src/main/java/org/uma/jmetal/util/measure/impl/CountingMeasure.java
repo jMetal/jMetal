@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.WeakHashMap;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.PullMeasure;
 import org.uma.jmetal.util.measure.PushMeasure;
@@ -145,11 +147,11 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 * @param measure
 	 *            the {@link PushMeasure} to link
 	 */
-	public <T> void link(PushMeasure<T> measure) {
+	public <T> void link(@NotNull PushMeasure<T> measure) {
 		if (linkedMeasures.containsKey(measure)) {
 			// already linked
 		} else {
-			MeasureListener<T> listener = value -> increment();
+			@NotNull MeasureListener<T> listener = value -> increment();
 			measure.register(listener);
 			linkedMeasures.put(measure, listener);
 		}
@@ -183,7 +185,7 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 		 */
 		Collection<PushMeasure<?>> remainingMeasures = new LinkedList<>(
 				linkedMeasures.keySet());
-		for (PushMeasure<?> measure : remainingMeasures) {
+		for (@NotNull PushMeasure<?> measure : remainingMeasures) {
 			unlink(measure);
 		}
 		super.finalize();

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -53,7 +56,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 public class autoAlgorithmWithDTLZExperiments {
   private static final int INDEPENDENT_RUNS = 25;
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String @NotNull [] args) throws IOException {
     Check.that(args.length == 1, "Missing argument: experimentBaseDirectory");
 
     String experimentBaseDirectory = args[0];
@@ -67,10 +70,10 @@ public class autoAlgorithmWithDTLZExperiments {
     problemList.add(new ExperimentProblem<>(new DTLZ6_2D()).setReferenceFront("DTLZ6.2D.csv"));
     problemList.add(new ExperimentProblem<>(new DTLZ7_2D()).setReferenceFront("DTLZ7.2D.csv"));
 
-    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+    @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
         configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    @NotNull Experiment<DoubleSolution, List<DoubleSolution>> experiment =
         new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("DTLZAutoAlgorithmExperiments")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
@@ -105,11 +108,11 @@ public class autoAlgorithmWithDTLZExperiments {
    * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
    */
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
-      List<ExperimentProblem<DoubleSolution>> problemList) {
+          @NotNull List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-        Algorithm<List<DoubleSolution>> algorithm =
+        @Nullable Algorithm<List<DoubleSolution>> algorithm =
             new NSGAIIBuilder<DoubleSolution>(
                     experimentProblem.getProblem(),
                     new SBXCrossover(1.0, 20.0),
@@ -123,7 +126,7 @@ public class autoAlgorithmWithDTLZExperiments {
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
         double mutationDistributionIndex = 20.0;
-        Algorithm<List<DoubleSolution>> algorithm =
+        @NotNull Algorithm<List<DoubleSolution>> algorithm =
             new SMPSOBuilder(
                     (DoubleProblem) experimentProblem.getProblem(),
                     new CrowdingDistanceArchive<DoubleSolution>(100))
@@ -139,7 +142,7 @@ public class autoAlgorithmWithDTLZExperiments {
 
 
         /* OMOPSO */
-        String[] parametersOMOPSO =
+        String @NotNull [] parametersOMOPSO =
             ("--problemName "
                     + experimentProblem.getProblem().getClass().getName()
                     + " "
@@ -177,7 +180,7 @@ public class autoAlgorithmWithDTLZExperiments {
                 .split("\\s+");
         AutoMOPSO OMOPSO = new AutoMOPSO();
         OMOPSO.parseAndCheckParameters(parametersOMOPSO);
-        ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
+        @NotNull ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
 
         algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
 
@@ -218,9 +221,9 @@ public class autoAlgorithmWithDTLZExperiments {
                           + "--velocityChangeWhenLowerLimitIsReached 0.1399 "
                           + "--velocityChangeWhenUpperLimitIsReached -0.7488")
                           .split("\\s+");
-          AutoMOPSO AutoMOPSOWithConfig = new AutoMOPSO();
+          @NotNull AutoMOPSO AutoMOPSOWithConfig = new AutoMOPSO();
           AutoMOPSOWithConfig.parseAndCheckParameters(parametersAutoMOPSOWithConfig);
-          ParticleSwarmOptimizationAlgorithm automopsowithconfig = AutoMOPSOWithConfig.create();
+          @NotNull ParticleSwarmOptimizationAlgorithm automopsowithconfig = AutoMOPSOWithConfig.create();
 
           algorithms.add(
                   new ExperimentAlgorithm<>(automopsowithconfig, "AutoMOPSO", experimentProblem, run));

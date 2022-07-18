@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -42,7 +44,7 @@ public class DTLZ1 extends AbstractDoubleProblem {
   }
 
   /** Evaluate() method */
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
     int numberOfObjectives = solution.objectives().length ;
 

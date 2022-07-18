@@ -46,6 +46,7 @@
 //
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.util.stream.IntStream;
@@ -60,7 +61,7 @@ public class F03ShiftedRotatedHighCondElliptic extends TestFunc {
 
   // Shifted global optimum
   private final double[] m_o;
-  private final double[][] m_matrix;
+  private final double[] @NotNull [] m_matrix;
 
   // In order to avoid excessive memory allocation,
   // a fixed memory buffer is allocated for each function object.
@@ -95,7 +96,7 @@ public class F03ShiftedRotatedHighCondElliptic extends TestFunc {
   }
 
   // Function body
-  public double f(double[] x) {
+  public double f(double @NotNull [] x) {
     double result = 0.0;
 
     Benchmark.shift(m_z, x, m_o);

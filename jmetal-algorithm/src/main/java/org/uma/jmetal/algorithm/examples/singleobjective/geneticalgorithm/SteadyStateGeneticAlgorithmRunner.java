@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.singleobjective.geneticalgorithm;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder;
@@ -18,6 +17,9 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class to configure and run a steady-state genetic algorithm. The target problem is Sphere
  *
@@ -29,13 +31,13 @@ public class SteadyStateGeneticAlgorithmRunner {
    */
   public static void main(String[] args) throws Exception {
     Algorithm<DoubleSolution> algorithm;
-    DoubleProblem problem = new Sphere(20) ;
+    @NotNull DoubleProblem problem = new Sphere(20) ;
 
     CrossoverOperator<DoubleSolution> crossoverOperator =
         new SBXCrossover(0.9, 20.0) ;
-    MutationOperator<DoubleSolution> mutationOperator =
+    @NotNull MutationOperator<DoubleSolution> mutationOperator =
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selectionOperator = new BinaryTournamentSelection<DoubleSolution>() ;
+    @NotNull SelectionOperator<List<DoubleSolution>, DoubleSolution> selectionOperator = new BinaryTournamentSelection<DoubleSolution>() ;
 
     algorithm = new GeneticAlgorithmBuilder<DoubleSolution>(problem, crossoverOperator, mutationOperator)
         .setPopulationSize(100)

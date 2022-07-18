@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -32,7 +34,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class NSGAIIWithPlotly2DChartExample {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT3.csv";
+    @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/ZDT3.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -47,7 +49,7 @@ public class NSGAIIWithPlotly2DChartExample {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    @NotNull Termination termination = new TerminationByEvaluations(25000);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
                     problem,
@@ -77,7 +79,7 @@ public class NSGAIIWithPlotly2DChartExample {
         SolutionListUtils.getMatrixWithObjectiveValues(population),
         VectorUtils.readVectors(referenceParetoFront, ","));
 
-    PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix(), problem.getName() + " (NSGA-II)");
+    @NotNull PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix(), problem.getName() + " (NSGA-II)");
     plot.plot();
   }
 }

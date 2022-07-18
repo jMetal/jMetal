@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.auto.parameter.catalogue;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.impl.NaryTournamentMatingPoolSelection;
@@ -29,7 +31,7 @@ public class SelectionParameter extends CategoricalParameter {
         Ranking<Solution<?>> ranking = new FastNonDominatedSortRanking<>();
         DensityEstimator<Solution<?>> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
-        MultiComparator<Solution<?>> rankingAndCrowdingComparator =
+        @NotNull MultiComparator<Solution<?>> rankingAndCrowdingComparator =
             new MultiComparator<>(
                 Arrays.asList(
                     Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed()));

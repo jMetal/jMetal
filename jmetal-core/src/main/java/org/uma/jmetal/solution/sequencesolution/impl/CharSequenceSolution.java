@@ -1,6 +1,8 @@
 package org.uma.jmetal.solution.sequencesolution.impl;
 
 import java.util.HashMap;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.sequencesolution.SequenceSolution;
 
@@ -21,7 +23,7 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
   }
 
   /** Copy Constructor */
-  public CharSequenceSolution(CharSequenceSolution solution) {
+  public CharSequenceSolution(@NotNull CharSequenceSolution solution) {
     super(solution.getLength(), solution.objectives().length);
 
     for (int i = 0; i < objectives().length; i++) {
@@ -40,7 +42,7 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
   }
 
   @Override
-  public CharSequenceSolution copy() {
+  public @NotNull CharSequenceSolution copy() {
     return new CharSequenceSolution(this);
   }
 

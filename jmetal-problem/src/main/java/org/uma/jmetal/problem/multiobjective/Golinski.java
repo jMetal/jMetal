@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -51,7 +53,7 @@ public class Golinski extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double @NotNull [] constraint = new double[this.getNumberOfConstraints()];
     double x1, x2, x3, x4, x5, x6, x7;
 
     x1 = solution.variables().get(0);

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.singleobjective.cec2005competitioncode.Benchmark;
 import org.uma.jmetal.problem.singleobjective.cec2005competitioncode.TestFunc;
@@ -94,10 +95,10 @@ public class CEC2005Problem extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
-    double[] x = new double[10];
+    double @NotNull [] x = new double[10];
     int count = 0;
     for (int i = 0; i < numberOfVariables; i++) {
       double v = solution.variables().get(i);

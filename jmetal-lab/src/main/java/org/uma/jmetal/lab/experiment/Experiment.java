@@ -2,6 +2,8 @@ package org.uma.jmetal.lab.experiment;
 
 import java.util.HashSet;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
@@ -29,7 +31,7 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
   private int numberOfCores;
 
   /** Constructor */
-  public Experiment(ExperimentBuilder<S, Result> builder) {
+  public Experiment(@NotNull ExperimentBuilder<S, Result> builder) {
     this.experimentName = builder.getExperimentName();
     this.experimentBaseDirectory = builder.getExperimentBaseDirectory();
     this.algorithmList = builder.getAlgorithmList();
@@ -98,7 +100,7 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
    * remove duplicated algorithms and leave only an instance of each one.
    */
   public void removeDuplicatedAlgorithms() {
-    HashSet<String> algorithmTagList = new HashSet<>();
+    @NotNull HashSet<String> algorithmTagList = new HashSet<>();
 
     getAlgorithmList().removeIf(alg -> !algorithmTagList.add(alg.getAlgorithmTag()));
   }

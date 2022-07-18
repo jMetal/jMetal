@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.naming.DescribedEntity;
 
 public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<Entity> {
@@ -14,7 +16,7 @@ public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<E
   private final Map<String, Entity> map = new HashMap<>();
 
   @Override
-  public boolean add(Entity e) {
+  public boolean add(@NotNull Entity e) {
     Entity stored = map.get(e.getName());
     if (stored == null) {
       map.put(e.getName(), e);
@@ -27,10 +29,10 @@ public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<E
   }
 
   @Override
-  public boolean addAll(Collection<? extends Entity> c) {
+  public boolean addAll(@NotNull Collection<? extends Entity> c) {
     Boolean acc = false;
     for (Entity entity : c) {
-      Boolean add = add(entity);
+      @NotNull Boolean add = add(entity);
       acc = acc || add;
     }
     boolean isModified = acc;
@@ -71,7 +73,7 @@ public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<E
   }
 
   @Override
-  public boolean retainAll(Collection<?> c) {
+  public boolean retainAll(@NotNull Collection<?> c) {
     return map.values().retainAll(c);
   }
 
@@ -91,23 +93,23 @@ public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<E
   }
 
   @Override
-  public Iterator<Entity> iterator() {
+  public @NotNull Iterator<Entity> iterator() {
     return map.values().iterator();
   }
 
   @Override
-  public Object[] toArray() {
+  public Object @NotNull [] toArray() {
     return map.values().toArray();
   }
 
   @Override
-  public <T> T[] toArray(T[] a) {
+  public <T> T @NotNull [] toArray(T[] a) {
     return map.values().toArray(a);
   }
 
   @Override
   public String toString() {
-    TreeSet<String> displaySet =
+    @NotNull TreeSet<String> displaySet =
         new TreeSet<>(
                 (s1, s2) -> {
                   int comparison = s1.compareToIgnoreCase(s2);

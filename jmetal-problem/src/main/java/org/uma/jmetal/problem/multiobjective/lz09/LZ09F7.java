@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.lz09;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -50,7 +52,7 @@ public class LZ09F7 extends AbstractDoubleProblem {
   }
 
   /** Evaluate() method */
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
     List<Double> x = new ArrayList<Double>(getNumberOfVariables());
     List<Double> y = new ArrayList<Double>(solution.objectives().length);
 

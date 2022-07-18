@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.auto.parameter.catalogue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -22,7 +24,7 @@ public class CompositeDoubleSolutionMutation implements MutationOperator<DoubleS
   private double mutationProbability = 1.0;
 
   /** Constructor */
-  public CompositeDoubleSolutionMutation(List<MutationOperator<DoubleSolution>> operators) {
+  public CompositeDoubleSolutionMutation(@NotNull List<MutationOperator<DoubleSolution>> operators) {
     Check.notNull(operators);
     Check.collectionIsNotEmpty(operators);
 

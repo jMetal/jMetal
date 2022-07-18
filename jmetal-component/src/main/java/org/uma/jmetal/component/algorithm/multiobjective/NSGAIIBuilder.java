@@ -2,6 +2,8 @@ package org.uma.jmetal.component.algorithm.multiobjective;
 
 import java.util.Arrays;
 import java.util.Comparator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -73,7 +75,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     this.evaluation = new SequentialEvaluation<>(problem);
   }
 
-  public NSGAIIBuilder<S> setTermination(Termination termination) {
+  public @NotNull NSGAIIBuilder<S> setTermination(Termination termination) {
     this.termination = termination;
 
     return this;
@@ -88,7 +90,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public NSGAIIBuilder<S> setEvaluation(Evaluation<S> evaluation) {
+  public @NotNull NSGAIIBuilder<S> setEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation;
 
     return this;

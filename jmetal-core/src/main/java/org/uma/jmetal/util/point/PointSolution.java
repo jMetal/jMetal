@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 
 /**
@@ -16,10 +19,10 @@ import org.uma.jmetal.solution.Solution;
 public class PointSolution implements Solution<Double> {
   private int numberOfObjectives;
   private double[] objectives;
-  protected Map<Object, Object> attributes = new HashMap<>();
+  protected @NotNull Map<Object, Object> attributes = new HashMap<>();
 
   @Override
-  public List<Double> variables() {
+  public @NotNull List<Double> variables() {
     return new ArrayList<>();
   }
 
@@ -68,7 +71,7 @@ public class PointSolution implements Solution<Double> {
    *
    * @param solution
    */
-  public PointSolution(Solution<?> solution) {
+  public PointSolution(@NotNull Solution<?> solution) {
     this.numberOfObjectives = solution.objectives().length;
     objectives = new double[numberOfObjectives];
 
@@ -82,7 +85,7 @@ public class PointSolution implements Solution<Double> {
    *
    * @param point
    */
-  public PointSolution(PointSolution point) {
+  public PointSolution(@NotNull PointSolution point) {
     this(point.objectives().length);
 
     for (int i = 0; i < numberOfObjectives; i++) {
@@ -91,12 +94,12 @@ public class PointSolution implements Solution<Double> {
   }
 
   @Override
-  public PointSolution copy() {
+  public @NotNull PointSolution copy() {
     return new PointSolution(this);
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(@Nullable Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 

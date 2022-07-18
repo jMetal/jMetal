@@ -1,5 +1,6 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -117,7 +118,7 @@ public class SMPSOBuilder {
     return this ;
   }
 
-  public SMPSOBuilder setPositionUpdate(PositionUpdate positionUpdate) {
+  public @NotNull SMPSOBuilder setPositionUpdate(PositionUpdate positionUpdate) {
     this.positionUpdate = positionUpdate ;
 
     return this ;

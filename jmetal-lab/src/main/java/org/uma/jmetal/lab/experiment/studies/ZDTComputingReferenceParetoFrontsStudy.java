@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
@@ -78,7 +80,7 @@ public class ZDTComputingReferenceParetoFrontsStudy {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
-    ExperimentBuilder<DoubleSolution, List<DoubleSolution>> zdt2Study =
+    @NotNull ExperimentBuilder<DoubleSolution, List<DoubleSolution>> zdt2Study =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy2");
     zdt2Study.setAlgorithmList(algorithmList);
     zdt2Study.setProblemList(problemList);
@@ -119,12 +121,12 @@ public class ZDTComputingReferenceParetoFrontsStudy {
    * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
    */
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
-          List<ExperimentProblem<DoubleSolution>> problemList) {
+          @NotNull List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
         double mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
@@ -138,7 +140,7 @@ public class ZDTComputingReferenceParetoFrontsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
                 experimentProblem.getProblem(),
                 new SBXCrossover(1.0, 20.0),

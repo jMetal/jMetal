@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -21,7 +23,7 @@ public class NullCrossover<S extends Solution<?>>
     Check.notNull(source);
     Check.that(source.size() == 2, "There must be two parents instead of " + source.size());
 
-    List<S> list = new ArrayList<>() ;
+    @NotNull List<S> list = new ArrayList<>() ;
     list.add((S) source.get(0).copy()) ;
     list.add((S) source.get(1).copy()) ;
 

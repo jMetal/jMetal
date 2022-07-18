@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.pesa2;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -38,7 +39,7 @@ public class PESA2Builder<S extends Solution<?>> implements AlgorithmBuilder<PES
     evaluator = new SequentialSolutionListEvaluator<S>();
   }
 
-  public PESA2Builder<S> setMaxEvaluations(int maxEvaluations) {
+  public @NotNull PESA2Builder<S> setMaxEvaluations(int maxEvaluations) {
     if (maxEvaluations < 0) {
       throw new JMetalException("maxEvaluations is negative: " + maxEvaluations);
     }
@@ -47,7 +48,7 @@ public class PESA2Builder<S extends Solution<?>> implements AlgorithmBuilder<PES
     return this;
   }
 
-  public PESA2Builder<S> setArchiveSize(int archiveSize) {
+  public @NotNull PESA2Builder<S> setArchiveSize(int archiveSize) {
     if (archiveSize < 0) {
       throw new JMetalException("archiveSize is negative: " + maxEvaluations);
     }
@@ -56,7 +57,7 @@ public class PESA2Builder<S extends Solution<?>> implements AlgorithmBuilder<PES
     return this;
   }
 
-  public PESA2Builder<S> setBisections(int biSections) {
+  public @NotNull PESA2Builder<S> setBisections(int biSections) {
     if (biSections < 0) {
       throw new JMetalException("biSections is negative: " + maxEvaluations);
     }
@@ -65,7 +66,7 @@ public class PESA2Builder<S extends Solution<?>> implements AlgorithmBuilder<PES
     return this;
   }
 
-  public PESA2Builder<S> setPopulationSize(int populationSize) {
+  public @NotNull PESA2Builder<S> setPopulationSize(int populationSize) {
     if (populationSize < 0) {
       throw new JMetalException("Population size is negative: " + populationSize);
     }

@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Arrays;
@@ -48,7 +49,7 @@ public class WFG7 extends WFG {
     y = t2(y, k);
     y = t3(y, k, m);
 
-    float[] result = new float[m];
+    float @NotNull [] result = new float[m];
     float[] x = calculateX(y);
     for (int m = 1; m <= this.m; m++) {
       result[m - 1] = d * x[this.m - 1] + s[m - 1] * (new Shapes()).concave(x, m);
@@ -61,7 +62,7 @@ public class WFG7 extends WFG {
    * WFG7 t1 transformation
    */
   public float[] t1(float[] z, int k) {
-    float[] result = new float[z.length];
+    float @NotNull [] result = new float[z.length];
     float[] w = new float[z.length];
 
     for (int i = 0; i < w.length; i++) {
@@ -129,7 +130,7 @@ public class WFG7 extends WFG {
   }
 
   /** Evaluate() method */
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     float[] variables = new float[getNumberOfVariables()];
       double[] x = new double[10];
       int count = 0;

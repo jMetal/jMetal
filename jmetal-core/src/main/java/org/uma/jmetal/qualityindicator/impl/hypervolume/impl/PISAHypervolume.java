@@ -1,6 +1,8 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume.impl;
 
 import java.io.FileNotFoundException;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -91,7 +93,7 @@ public class PISAHypervolume extends Hypervolume {
   are collected; the points referenced by 'front[0..noPoints-1]' are
   considered; 'front' is resorted, such that 'front[0..n-1]' contains
   the nondominated points; n is returned */
-  private int filterNondominatedSet(double[][] front, int noPoints, int noObjectives) {
+  private int filterNondominatedSet(double[] @NotNull [] front, int noPoints, int noObjectives) {
     int i, j;
     int n;
 
@@ -122,7 +124,7 @@ public class PISAHypervolume extends Hypervolume {
 
   /* calculate next value regarding dimension 'objective'; consider
   points referenced in 'front[0..noPoints-1]' */
-  private double surfaceUnchangedTo(double[][] front, int noPoints, int objective) {
+  private double surfaceUnchangedTo(double[] @NotNull [] front, int noPoints, int objective) {
     int i;
     double minValue, value;
 

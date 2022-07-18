@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.observable.Observable;
@@ -44,7 +45,7 @@ public class FitnessObserver implements Observer<Map<String, Object>> {
       if (evaluations % frequency == 0) {
           StringBuilder sb = new StringBuilder();
           for (double objective : solution.objectives()) {
-              String s = objective + " ";
+              @NotNull String s = objective + " ";
               sb.append(s);
           }
           String objectiveValues = sb.toString();

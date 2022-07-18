@@ -13,6 +13,8 @@
 
 package org.uma.jmetal.algorithm.multiobjective.cdg;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -132,37 +134,37 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
     return this;
   }
 
-  public CDGBuilder setResultPopulationSize(int resultPopulationSize) {
+  public @NotNull CDGBuilder setResultPopulationSize(int resultPopulationSize) {
     this.resultPopulationSize = resultPopulationSize;
 
     return this;
   }
 
-  public CDGBuilder setMaxEvaluations(int maxEvaluations) {
+  public @NotNull CDGBuilder setMaxEvaluations(int maxEvaluations) {
     this.maxEvaluations = maxEvaluations;
 
     return this;
   }
 
-  public CDGBuilder setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
+  public @NotNull CDGBuilder setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
     this.neighborhoodSelectionProbability = neighborhoodSelectionProbability;
 
     return this;
   }
 
-  public CDGBuilder setCrossover(CrossoverOperator<DoubleSolution> crossover) {
+  public @NotNull CDGBuilder setCrossover(CrossoverOperator<DoubleSolution> crossover) {
     this.crossover = crossover;
 
     return this;
   }
 
-  public CDGBuilder setNumberOfThreads(int numberOfThreads) {
+  public @NotNull CDGBuilder setNumberOfThreads(int numberOfThreads) {
     this.numberOfThreads = numberOfThreads;
 
     return this;
   }
 
-  public CDGBuilder setK(int k) {
+  public @NotNull CDGBuilder setK(int k) {
     this.k_ = k;
 
     return this;
@@ -174,7 +176,7 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
     return this;
   }
 
-  public CDGBuilder setChildGrid(int childGrid) {
+  public @NotNull CDGBuilder setChildGrid(int childGrid) {
     this.childGrid_ = childGrid;
 
     return this;
@@ -187,7 +189,7 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
   }
 
   public AbstractCDG<DoubleSolution> build() {
-    AbstractCDG<DoubleSolution> algorithm = null;
+    @Nullable AbstractCDG<DoubleSolution> algorithm = null;
     algorithm =
         new CDG(
             problem,

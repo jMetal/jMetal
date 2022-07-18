@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -23,7 +24,7 @@ public class CRE51 extends AbstractDoubleProblem {
     setNumberOfConstraints(7);
     setName("CRE51");
 
-    List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);
+    @NotNull List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);
     List<Double> upperLimit = List.of(0.45, 0.10, 0.10);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -31,8 +32,8 @@ public class CRE51 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[10];
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
+    double @NotNull [] x = new double[10];
     int count = 0;
     int bound = getNumberOfVariables();
     for (int i = 0; i < bound; i++) {
@@ -54,7 +55,7 @@ public class CRE51 extends AbstractDoubleProblem {
   }
 
   /** EvaluateConstraints() method */
-  public void evaluateConstraints(DoubleSolution solution, double[] x) {
+  public void evaluateConstraints(@NotNull DoubleSolution solution, double[] x) {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
     constraint[0] = 1 - (0.00139 / (x[0] * x[1]) + 4.94 * x[2] - 0.08);

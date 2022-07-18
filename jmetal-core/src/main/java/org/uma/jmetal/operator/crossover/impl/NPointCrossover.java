@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -63,7 +64,7 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
         mom.variables().size() >= crossovers,
         "The number of crossovers is higher than the number of variables");
 
-      int[] crossoverPoints = new int[10];
+      int @NotNull [] crossoverPoints = new int[10];
       int count = 0;
       int bound = crossovers;
       for (int i1 = 0; i1 < bound; i1++) {

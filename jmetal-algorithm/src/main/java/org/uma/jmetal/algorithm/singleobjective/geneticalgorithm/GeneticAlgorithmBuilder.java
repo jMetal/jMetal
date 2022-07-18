@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.singleobjective.geneticalgorithm;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -61,7 +63,7 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public GeneticAlgorithmBuilder<S> setSelectionOperator(SelectionOperator<List<S>, S> selectionOperator) {
+  public @NotNull GeneticAlgorithmBuilder<S> setSelectionOperator(SelectionOperator<List<S>, S> selectionOperator) {
     this.selectionOperator = selectionOperator;
 
     return this;
@@ -79,7 +81,7 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public Algorithm<S> build() {
+  public @NotNull Algorithm<S> build() {
     if (variant == GeneticAlgorithmVariant.GENERATIONAL) {
       return new GenerationalGeneticAlgorithm<S>(problem, maxEvaluations, populationSize,
           crossoverOperator, mutationOperator, selectionOperator, evaluator);

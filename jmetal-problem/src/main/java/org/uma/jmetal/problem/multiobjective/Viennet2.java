@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -19,7 +20,7 @@ public class Viennet2 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("Viennet2");
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i = 0; i < numberOfVariables; i++) {
@@ -36,7 +37,7 @@ public class Viennet2 extends AbstractDoubleProblem {
     int numberOfVariables = getNumberOfVariables();
 
     double[] f = new double[solution.objectives().length];
-      double[] x = new double[10];
+      double @NotNull [] x = new double[10];
       int count = 0;
       for (int i1 = 0; i1 < numberOfVariables; i1++) {
           double v = solution.variables().get(i1);

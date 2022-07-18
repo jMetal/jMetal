@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.pseudorandom;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +36,8 @@ public interface RandomGenerator<Value> extends Serializable {
    * @return a {@link RandomGenerator} on the provided values
    */
   static <T> RandomGenerator<T> forCollection(
-      BoundedRandomGenerator<Integer> indexSelector, Collection<T> values) {
-    ArrayList<T> list = new ArrayList<>(values);
+          BoundedRandomGenerator<Integer> indexSelector, @NotNull Collection<T> values) {
+    @NotNull ArrayList<T> list = new ArrayList<>(values);
     return () -> list.get(indexSelector.getRandomValue(0, values.size() - 1));
   }
 
@@ -59,7 +61,7 @@ public interface RandomGenerator<Value> extends Serializable {
    * @param enumClass the {@link Enum} to cover
    * @return a {@link RandomGenerator} on the {@link Enum} values
    */
-  static <T extends Enum<T>> RandomGenerator<T> forEnum(
+  static <T extends Enum<T>> @NotNull RandomGenerator<T> forEnum(
       BoundedRandomGenerator<Integer> indexSelector, Class<T> enumClass) {
     return forArray(indexSelector, enumClass.getEnumConstants());
   }
@@ -76,7 +78,7 @@ public interface RandomGenerator<Value> extends Serializable {
    * @param filter the filter to pass to be an acceptable value
    * @return a {@link RandomGenerator} which provides only acceptable values
    */
-  static <T> RandomGenerator<T> filter(RandomGenerator<T> generator, Predicate<T> filter) {
+  static <T> RandomGenerator<T> filter(RandomGenerator<T> generator, @NotNull Predicate<T> filter) {
     return () -> {
       T value;
       do {

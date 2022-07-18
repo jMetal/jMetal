@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.abyss;
 
 import java.util.Arrays;
 import java.util.Comparator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -48,7 +50,7 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
     int improvementRounds = 1;
     this.archive = (CrowdingDistanceArchive<DoubleSolution>) archive;
 
-    Comparator<DoubleSolution> comparator =
+    @NotNull Comparator<DoubleSolution> comparator =
         new MultiComparator<>(
             Arrays.asList(
                 new OverallConstraintViolationDegreeComparator<>(), new DominanceWithConstraintsComparator<>()));
@@ -62,7 +64,7 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
     return crossoverOperator;
   }
 
-  public ABYSSBuilder setCrossoverOperator(CrossoverOperator<DoubleSolution> crossoverOperator) {
+  public @NotNull ABYSSBuilder setCrossoverOperator(CrossoverOperator<DoubleSolution> crossoverOperator) {
     this.crossoverOperator = crossoverOperator;
     return this;
   }
@@ -117,7 +119,7 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
     return refSet2Size;
   }
 
-  public ABYSSBuilder setRefSet2Size(int refSet2Size) {
+  public @NotNull ABYSSBuilder setRefSet2Size(int refSet2Size) {
     this.refSet2Size = refSet2Size;
     return this;
   }
@@ -141,7 +143,7 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
   }
 
   @Override
-  public ABYSS build() {
+  public @NotNull ABYSS build() {
     return new ABYSS(
         problem,
         maxEvaluations,

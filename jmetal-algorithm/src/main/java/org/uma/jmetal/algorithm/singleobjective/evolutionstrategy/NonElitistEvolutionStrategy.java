@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
@@ -54,7 +55,7 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
   }
 
   @Override protected List<S> createInitialPopulation() {
-      List<S> population = new ArrayList<>(mu);
+      @NotNull List<S> population = new ArrayList<>(mu);
       int bound = mu;
       for (int i = 0; i < bound; i++) {
           S solution = getProblem().createSolution();
@@ -116,7 +117,7 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
     return "NonElitistEA" ;
   }
 
-  @Override public String getDescription() {
+  @Override public @NotNull String getDescription() {
     return "Non Elitist Evolution Strategy Algorithm, i.e, (mu , lambda) EA" ;
   }
 }

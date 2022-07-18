@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -48,24 +50,24 @@ public abstract class AbstractDoubleProblem implements DoubleProblem {
   public int getNumberOfConstraints() {
     return numberOfConstraints ;
   }
-  public void setVariableBounds(List<Double> lowerBounds, List<Double> upperBounds) {
+  public void setVariableBounds(List<Double> lowerBounds, @NotNull List<Double> upperBounds) {
     Check.notNull(lowerBounds);
     Check.notNull(upperBounds);
     Check.that(
         lowerBounds.size() == upperBounds.size(),
         "The size of the lower bound list is not equal to the size of the upper bound list");
 
-    List<Bounds<Double>> list = new ArrayList<>();
+    @NotNull List<Bounds<Double>> list = new ArrayList<>();
     int bound = lowerBounds.size();
     for (int i = 0; i < bound; i++) {
-      Bounds<Double> doubleBounds = Bounds.create(lowerBounds.get(i), upperBounds.get(i));
+      @NotNull Bounds<Double> doubleBounds = Bounds.create(lowerBounds.get(i), upperBounds.get(i));
       list.add(doubleBounds);
     }
     bounds =
             list;
   }
   @Override
-  public DoubleSolution createSolution() {
+  public @NotNull DoubleSolution createSolution() {
     return new DefaultDoubleSolution(bounds, getNumberOfObjectives(), getNumberOfConstraints());
   }
   @Override

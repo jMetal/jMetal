@@ -3,6 +3,8 @@ package org.uma.jmetal.component.algorithm;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
@@ -150,7 +152,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     return evaluation;
   }
 
-  public Map<String, Object> getAttributes() {
+  public @NotNull Map<String, Object> getAttributes() {
     return attributes ;
   }
 

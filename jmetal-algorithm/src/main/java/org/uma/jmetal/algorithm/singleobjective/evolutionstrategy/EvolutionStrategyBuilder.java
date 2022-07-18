@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -31,13 +32,13 @@ public class EvolutionStrategyBuilder<S extends Solution<?>> implements Algorith
     this.variant = variant ;
   }
 
-  public EvolutionStrategyBuilder<S> setMu(int mu) {
+  public @NotNull EvolutionStrategyBuilder<S> setMu(int mu) {
     this.mu = mu;
 
     return this;
   }
 
-  public EvolutionStrategyBuilder<S> setLambda(int lambda) {
+  public @NotNull EvolutionStrategyBuilder<S> setLambda(int lambda) {
     this.lambda = lambda;
 
     return this;

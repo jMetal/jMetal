@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -26,7 +27,7 @@ public class C3_DTLZ4 extends DTLZ4 {
   }
 
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
     super.evaluate(solution);
     this.evaluateConstraints(solution);
 

@@ -4,6 +4,8 @@ import static java.lang.Math.sin;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.MultiThreadedEvaluation;
@@ -48,11 +50,11 @@ public class ParallelNSGAIIExample {
       }
     };
 
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    @NotNull var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;

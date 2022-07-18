@@ -1,6 +1,8 @@
 package org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl;
 
 import java.text.DecimalFormat;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.experiment.util.FriedmanTest;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.HtmlTable;
 import tech.tablesaw.api.StringColumn;
@@ -17,7 +19,7 @@ public class FriedmanTestTable extends HtmlTable<String> {
   public FriedmanTestTable(
       Table table, StringColumn algorithms, StringColumn problems, boolean minimizar) {
     this.title = "Friedman ranking and Holm test";
-    FriedmanTest test = new FriedmanTest(minimizar, table, algorithms, problems, "IndicatorValue");
+    @NotNull FriedmanTest test = new FriedmanTest(minimizar, table, algorithms, problems, "IndicatorValue");
     test.computeHolmTest();
     Table ranking = test.getResults();
     this.headersColumn = ranking.columnNames().toArray(new String[0]);
@@ -32,7 +34,7 @@ public class FriedmanTestTable extends HtmlTable<String> {
           DecimalFormat format = new DecimalFormat("0.###E0");
           this.data[i][j] = format.format(ranking.doubleColumn(j).get(i));
         } else {
-          DecimalFormat format = new DecimalFormat("##.###");
+          @NotNull DecimalFormat format = new DecimalFormat("##.###");
           this.data[i][j] = format.format(ranking.doubleColumn(j).get(i));
         }
       }

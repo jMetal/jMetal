@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -100,7 +102,7 @@ public abstract class AbstractCoralReefsOptimization<S, R>
 		}
 
 		@Override
-		public int compareTo(Coordinate arg0) {
+		public int compareTo(@NotNull Coordinate arg0) {
 			int diffX = Math.abs(arg0.x - this.x);
 			int diffY = Math.abs(arg0.y - this.y);
 			double result = Math.sqrt((diffX * diffX) + (diffY * diffY));

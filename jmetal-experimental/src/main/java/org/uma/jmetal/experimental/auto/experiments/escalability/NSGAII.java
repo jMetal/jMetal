@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.auto.experiments.escalability;
 import static org.uma.jmetal.util.VectorUtils.readVectors;
 
 import java.io.IOException;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByQualityIndicator;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
@@ -45,7 +47,7 @@ public class NSGAII {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue();
+    @NotNull RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue();
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
     CrossoverOperator<DoubleSolution> crossover =
@@ -66,12 +68,12 @@ public class NSGAII {
     SolutionsCreation<DoubleSolution> createInitialPopulation =
         new RandomSolutionsCreation<>(problem, populationSize);
 
-    var termination = new TerminationByQualityIndicator(new PISAHypervolume(),
+    @NotNull var termination = new TerminationByQualityIndicator(new PISAHypervolume(),
         readVectors(referenceFrontFileName, ","),
         0.95, 100000000);
 
     Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
-    DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
+    @NotNull DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
     Preference<DoubleSolution> preferenceForReplacement = new Preference<>(ranking, densityEstimator) ;
     Replacement<DoubleSolution> replacement =

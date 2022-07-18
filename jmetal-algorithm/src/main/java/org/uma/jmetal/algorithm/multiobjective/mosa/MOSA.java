@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.multiobjective.mosa.cooling.CoolingScheme;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -103,8 +104,8 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   @Override
-  protected List<S> createInitialPopulation() {
-    List<S> solutionList = new ArrayList<>(1);
+  protected @NotNull List<S> createInitialPopulation() {
+    @NotNull List<S> solutionList = new ArrayList<>(1);
     solutionList.add(getProblem().createSolution());
     archive.add(solutionList.get(0));
 
@@ -112,7 +113,7 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   @Override
-  protected List<S> evaluatePopulation(List<S> population) {
+  protected @NotNull List<S> evaluatePopulation(@NotNull List<S> population) {
     getProblem().evaluate(population.get(0));
     return population;
   }
@@ -162,7 +163,7 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
     return population;
   }
 
-  protected double compute_acceptance_probability(S currentSolution, S mutatedSolution, double temperature) {
+  protected double compute_acceptance_probability(@NotNull S currentSolution, @NotNull S mutatedSolution, double temperature) {
       double value = 0.0;
       int bound = currentSolution.objectives().length;
       for (int i = 0; i < bound; i++) {
@@ -186,7 +187,7 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "MOSA";
   }
 

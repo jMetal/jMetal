@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.selection.impl;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -33,7 +35,7 @@ public class NaryTournamentSelection<S extends Solution<?>>
 
   @Override
   /** Execute() method */
-  public S execute(List<S> solutionList) {
+  public S execute(@NotNull List<S> solutionList) {
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
@@ -49,7 +51,7 @@ public class NaryTournamentSelection<S extends Solution<?>>
     if (solutionList.size() == 1) {
       result = solutionList.get(0);
     } else {
-      List<S> selectedSolutions =
+      @NotNull List<S> selectedSolutions =
           SolutionListUtils.selectNRandomDifferentSolutions(
                   tournamentSize, solutionList);
       result = SolutionListUtils.findBestSolution(selectedSolutions, comparator);

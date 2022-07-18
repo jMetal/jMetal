@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -84,7 +85,7 @@ public class WFG6 extends WFG {
    * WFG6 t2 transformation
    */
   public float[] t2(float[] z, int k, int M) {
-    float[] result = new float[M];
+    float @NotNull [] result = new float[M];
 
     for (int i = 1; i <= M - 1; i++) {
       int head = (i - 1) * k / (M - 1) + 1;

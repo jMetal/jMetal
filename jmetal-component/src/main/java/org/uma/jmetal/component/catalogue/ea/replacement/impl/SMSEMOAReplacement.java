@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
@@ -27,8 +28,8 @@ public class SMSEMOAReplacement<S extends Solution<?>>
     this.hypervolume = hypervolume;
   }
 
-  public List<S> replace(List<S> solutionList, List<S> offspringList) {
-    List<S> jointPopulation = new ArrayList<>();
+  public List<S> replace(@NotNull List<S> solutionList, @NotNull List<S> offspringList) {
+    @NotNull List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(solutionList);
     jointPopulation.addAll(offspringList);
 

@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.multiobjective.pesa2;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.pesa2.util.AdaptiveGridArchive;
 import org.uma.jmetal.algorithm.multiobjective.pesa2.util.PESA2Selection;
@@ -29,7 +31,7 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   private AdaptiveGridArchive<S> archive;
   protected final SolutionListEvaluator<S> evaluator;
 
-  public PESA2(Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
+  public PESA2(@NotNull Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
                int biSections, CrossoverOperator<S> crossoverOperator,
                MutationOperator<S> mutationOperator, SolutionListEvaluator<S> evaluator) {
     super(problem) ;
@@ -97,7 +99,7 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     return offspringPopulation;
   }
 
-  @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+  @Override protected List<S> replacement(List<S> population, @NotNull List<S> offspringPopulation) {
     for (S solution : offspringPopulation) {
       archive.add(solution) ;
     }
@@ -109,11 +111,11 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     return archive.getSolutionList();
   }
 
-  @Override public String getName() {
+  @Override public @NotNull String getName() {
     return "PESA2" ;
   }
 
-  @Override public String getDescription() {
+  @Override public @NotNull String getDescription() {
     return "Pareto Envelope-based Selection Algorithm " ;
   }
 }

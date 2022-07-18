@@ -3,6 +3,9 @@ package org.uma.jmetal.component.catalogue.ea.selection.impl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.solution.Solution;
@@ -11,7 +14,7 @@ public class NaryTournamentSelection<S extends Solution<?>>
     implements Selection<S> {
   private org.uma.jmetal.operator.selection.impl.NaryTournamentSelection<S> selectionOperator;
   private int matingPoolSize;
-  private RankingAndDensityEstimatorPreference<S> preference;
+  private @Nullable RankingAndDensityEstimatorPreference<S> preference;
 
   public NaryTournamentSelection(
       org.uma.jmetal.operator.selection.impl.NaryTournamentSelection<S> selection, int matingPoolSize) {
@@ -34,7 +37,7 @@ public class NaryTournamentSelection<S extends Solution<?>>
     this.matingPoolSize = matingPoolSize;
   }
 
-  public List<S> select(List<S> solutionList) {
+  public @NotNull List<S> select(List<S> solutionList) {
     if (null != preference) {
       preference.recompute(solutionList) ;
     }

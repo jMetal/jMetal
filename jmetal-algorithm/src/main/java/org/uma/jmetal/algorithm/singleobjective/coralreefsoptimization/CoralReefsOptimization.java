@@ -1,18 +1,17 @@
 package org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractCoralReefsOptimization;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * 
@@ -66,7 +65,7 @@ public class CoralReefsOptimization<S>
 
 		int quantity = (int) (getRho() * getN() * getM());
 
-		ArrayList<S> s = new ArrayList<>(getN() * getM());
+		@NotNull ArrayList<S> s = new ArrayList<>(getN() * getM());
 		for (int i = 0; i < quantity; i++) {
 			S solution = problem.createSolution();
 			s.add(solution);
@@ -76,11 +75,11 @@ public class CoralReefsOptimization<S>
 	}
 
 	@Override
-	protected List<Coordinate> generateCoordinates() {
+	protected @NotNull List<Coordinate> generateCoordinates() {
 		int popSize = getPopulationSize();
 		MersenneTwisterGenerator random = new MersenneTwisterGenerator();
 
-		ArrayList<Coordinate> coordinates = new ArrayList<>(popSize);
+		@NotNull ArrayList<Coordinate> coordinates = new ArrayList<>(popSize);
 		for (int i = 0; i < popSize; i++) {
 			Coordinate coordinate = new Coordinate(random.nextInt(0, getN() - 1),
 					random.nextInt(0, getM() - 1));
@@ -91,7 +90,7 @@ public class CoralReefsOptimization<S>
 	}
 
 	@Override
-	protected List<S> evaluatePopulation(List<S> population) {
+	protected @NotNull List<S> evaluatePopulation(@NotNull List<S> population) {
 		for (int solution = 0; solution < population.size(); solution++) {
 			this.problem.evaluate(population.get(solution));
 		}
@@ -118,8 +117,8 @@ public class CoralReefsOptimization<S>
 
 	@Override
 	protected List<S> sexualReproduction(List<S> broadcastSpawners) {
-		List<S> parents = new ArrayList<S>(2);
-		List<S> larvae = new ArrayList<S>(broadcastSpawners.size() / 2);
+		@NotNull List<S> parents = new ArrayList<S>(2);
+		@NotNull List<S> larvae = new ArrayList<S>(broadcastSpawners.size() / 2);
 
 		while (broadcastSpawners.size() > 0) {
 			parents.add(selectionOperator.execute(broadcastSpawners));
@@ -144,7 +143,7 @@ public class CoralReefsOptimization<S>
 	protected List<S> asexualReproduction(List<S> brooders) {
 		int sz = brooders.size();
 
-		List<S> larvae = new ArrayList<>(sz);
+		@NotNull List<S> larvae = new ArrayList<>(sz);
 		for (int i = 0; i < sz; i++) {
 			S execute = mutationOperator.execute(brooders.get(i));
 			larvae.add(execute);
@@ -154,8 +153,8 @@ public class CoralReefsOptimization<S>
 	}
 
 	@Override
-	protected List<S> larvaeSettlementPhase(List<S> larvae, List<S> population,
-			List<Coordinate> coordinates) {
+	protected List<S> larvaeSettlementPhase(List<S> larvae, @NotNull List<S> population,
+                                            List<Coordinate> coordinates) {
 
 		int attempts = getAttemptsToSettle();
 		int index;
@@ -188,8 +187,8 @@ public class CoralReefsOptimization<S>
 	}
 
 	@Override
-	protected List<S> depredation(List<S> population,
-			List<Coordinate> coordinates) {
+	protected @NotNull List<S> depredation(@NotNull List<S> population,
+                                           @NotNull List<Coordinate> coordinates) {
 		int popSize = population.size();
 		int quantity = (int) (getFd() * popSize);
 
@@ -221,7 +220,7 @@ public class CoralReefsOptimization<S>
 	}
 
 	@Override
-	public String getDescription() {
+	public @NotNull String getDescription() {
 		return "Coral Reefs Optimizatoin";
 	}
 

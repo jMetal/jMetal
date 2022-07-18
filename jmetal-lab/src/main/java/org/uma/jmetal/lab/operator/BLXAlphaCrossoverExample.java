@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -64,7 +66,7 @@ public class BLXAlphaCrossoverExample {
     solution2.variables().set(0, 2.0);
     List<DoubleSolution> parents = Arrays.asList(solution1, solution2);
 
-    List<DoubleSolution> population = new ArrayList<>(numberOfPoints);
+    @NotNull List<DoubleSolution> population = new ArrayList<>(numberOfPoints);
     for (int i = 0; i < numberOfPoints; i++) {
       List<DoubleSolution> solutions = (List<DoubleSolution>) crossover.execute(parents);
       population.add(solutions.get(0));
@@ -78,15 +80,15 @@ public class BLXAlphaCrossoverExample {
         .print();
 
     double[][] classifier = classify(population, problem, granularity);
-    PlotFront plot = new PlotSmile(classifier);
+    @NotNull PlotFront plot = new PlotSmile(classifier);
     plot.plot();
   }
 
   private static double[][] classify(
-      List<DoubleSolution> solutions, DoubleProblem problem, int granularity) {
+          @NotNull List<DoubleSolution> solutions, @NotNull DoubleProblem problem, int granularity) {
     Bounds<Double> bounds = problem.getVariableBounds().get(0);
     double grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity;
-    double[][] classifier = new double[granularity][];
+    double[] @NotNull [] classifier = new double[granularity][];
     for (int i = 0; i < granularity; i++) {
       classifier[i] = new double[2];
       classifier[i][0] = bounds.getLowerBound() + i * grain;

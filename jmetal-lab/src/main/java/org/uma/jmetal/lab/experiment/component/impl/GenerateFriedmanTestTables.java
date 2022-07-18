@@ -16,6 +16,7 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
@@ -63,20 +64,20 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
 
     for (QualityIndicator indicator : experiment.getIndicatorList()) {
       Vector<Vector<Double>> data = readData(indicator);
-      double []averageRanking = computeAverageRanking(data) ;
-      String fileContents = prepareFileOutputContents(averageRanking) ;
+      double @NotNull []averageRanking = computeAverageRanking(data) ;
+      @NotNull String fileContents = prepareFileOutputContents(averageRanking) ;
       writeLatexFile(indicator, fileContents);
     }
   }
 
-  private Vector<Vector<Double>> readData(QualityIndicator indicator) {
+  private @NotNull Vector<Vector<Double>> readData(QualityIndicator indicator) {
     Vector<Vector<Double>> data = new Vector<Vector<Double>>() ;
 
     for (int algorithm = 0; algorithm < experiment.getAlgorithmList().size(); algorithm++) {
       String algorithmName = experiment.getAlgorithmList().get(algorithm).getAlgorithmTag();
 
       data.add(new Vector<Double>());
-      String algorithmPath = experiment.getExperimentBaseDirectory() + "/data/"
+      @NotNull String algorithmPath = experiment.getExperimentBaseDirectory() + "/data/"
           + algorithmName + "/";
 
       for (int problem = 0; problem < experiment.getProblemList().size(); problem++) {
@@ -90,13 +91,13 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
     return data ;
   }
 
-  private void readDataFromFile(String path, Vector<Vector<Double>> data, int algorithmIndex) {
+  private void readDataFromFile(String path, @NotNull Vector<Vector<Double>> data, int algorithmIndex) {
     String string = "";
 
-    try(FileInputStream fis = new FileInputStream(path)) {
+    try(@NotNull FileInputStream fis = new FileInputStream(path)) {
       
 
-      byte[] bytes = new byte[4096];
+      byte @NotNull [] bytes = new byte[4096];
       int readBytes = 0;
 
       while (readBytes != -1) {
@@ -138,7 +139,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
     }
 
     /*We use the Pair class to compute and order rankings*/
-    List<List<Pair<Integer, Double>>> order = new ArrayList<List<Pair<Integer, Double>>>(numberOfProblems);
+    @NotNull List<List<Pair<Integer, Double>>> order = new ArrayList<List<Pair<Integer, Double>>>(numberOfProblems);
 
     for (int i=0; i<numberOfProblems; i++) {
       order.add(new ArrayList<>(numberOfAlgorithms)) ;
@@ -149,7 +150,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
     }
 
     /*building of the rankings table per algorithms and data sets*/
-    List<List<MutablePair<Double, Double>>> rank = new ArrayList<List<MutablePair<Double, Double>>>(numberOfProblems);
+    @NotNull List<List<MutablePair<Double, Double>>> rank = new ArrayList<List<MutablePair<Double, Double>>>(numberOfProblems);
 
     int position = 0;
     for (int i=0; i<numberOfProblems; i++) {
@@ -194,7 +195,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
     }
 
     /*compute the average ranking for each algorithm*/
-    double []averageRanking = new double[numberOfAlgorithms];
+    double @NotNull []averageRanking = new double[numberOfAlgorithms];
     for (int i=0; i<numberOfAlgorithms; i++){
       averageRanking[i] = 0;
       for (int j=0; j<numberOfProblems; j++) {
@@ -220,7 +221,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
    * @param indicator
    * @param fileContents
    */
-  private void writeLatexFile(QualityIndicator indicator, String fileContents) {
+  private void writeLatexFile(QualityIndicator indicator, @NotNull String fileContents) {
     String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
 
     File latexOutput;
@@ -236,7 +237,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
     }
   }
 
-  private String writeLatexHeader() {
+  private @NotNull String writeLatexHeader() {
 
     return ("\\documentclass{article}\n" +
         "\\usepackage{graphicx}\n" +

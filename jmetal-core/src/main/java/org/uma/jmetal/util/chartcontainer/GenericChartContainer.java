@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
@@ -74,7 +76,7 @@ public class GenericChartContainer<S extends Solution<?>> {
       displayReferenceFront();
     }
 
-    double[] xData = new double[] {0};
+    double @NotNull [] xData = new double[] {0};
     double[] yData = new double[] {0};
     XYSeries frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
     frontChartSeries.setMarkerColor(Color.RED);
@@ -125,8 +127,8 @@ public class GenericChartContainer<S extends Solution<?>> {
         .setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter)
         .setMarkerSize(5);
 
-    double[] xData = new double[] {0};
-    double[] yData = new double[] {0};
+    double @NotNull [] xData = new double[] {0};
+    double @NotNull [] yData = new double[] {0};
 
     XYSeries varChartSeries = this.varChart.addSeries(this.name, xData, yData);
     varChartSeries.setMarkerColor(Color.blue);
@@ -140,7 +142,7 @@ public class GenericChartContainer<S extends Solution<?>> {
     this.swingWrapper.displayChartMatrix().setTitle(this.name);
   }
 
-  public void updateFrontCharts(List<S> solutionList) {
+  public void updateFrontCharts(@NotNull List<S> solutionList) {
     if (this.frontChart != null) {
       this.frontChart.updateXYSeries(
           this.name,
@@ -181,7 +183,7 @@ public class GenericChartContainer<S extends Solution<?>> {
         .setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter)
         .setMarkerSize(5);
 
-    List<Integer> indicatorIterations = new ArrayList<Integer>();
+    @NotNull List<Integer> indicatorIterations = new ArrayList<Integer>();
     indicatorIterations.add(0);
     List<Double> indicatorValues = new ArrayList<Double>();
     indicatorValues.add(0.0);
@@ -222,9 +224,9 @@ public class GenericChartContainer<S extends Solution<?>> {
     }
   }
 
-  private void getReferenceFrontData(String fileName) throws FileNotFoundException {
-    ArrayFront front = new ArrayFront(fileName);
-    double[][] data = FrontUtils.convertFrontToArray(front);
+  private void getReferenceFrontData(@NotNull String fileName) throws FileNotFoundException {
+    @NotNull ArrayFront front = new ArrayFront(fileName);
+    double[] @NotNull [] data = FrontUtils.convertFrontToArray(front);
     xReferenceFrontData = getObjectiveValues(data, objective1) ;
     yReferenceFrontData = getObjectiveValues(data, objective2) ;
   }
@@ -258,8 +260,8 @@ public class GenericChartContainer<S extends Solution<?>> {
       return result;
   }
 
-  private double[] getVariableValues(List<DoubleSolution> solutionList, int variable) {
-      double[] result = new double[10];
+  private double[] getVariableValues(@NotNull List<DoubleSolution> solutionList, int variable) {
+      double @NotNull [] result = new double[10];
       int count = 0;
       for (DoubleSolution doubleSolution : solutionList) {
           double v = doubleSolution.variables().get(variable);
@@ -280,7 +282,7 @@ public class GenericChartContainer<S extends Solution<?>> {
     return this.name;
   }
 
-  public GenericChartContainer<S> setName(String name) {
+  public @NotNull GenericChartContainer<S> setName(String name) {
     this.name = name;
     return this;
   }

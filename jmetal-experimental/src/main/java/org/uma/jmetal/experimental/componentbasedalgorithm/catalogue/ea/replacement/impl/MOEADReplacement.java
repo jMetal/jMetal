@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.solution.Solution;
@@ -32,7 +34,7 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
 
   @Override
   public List<S> replace(
-      List<S> population, List<S> offspringPopulation) {
+          @NotNull List<S> population, @NotNull List<S> offspringPopulation) {
     S newSolution = offspringPopulation.get(0);
     aggregativeFunction.update(newSolution.objectives());
 

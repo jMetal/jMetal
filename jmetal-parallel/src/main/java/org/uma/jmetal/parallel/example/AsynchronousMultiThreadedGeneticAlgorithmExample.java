@@ -3,6 +3,8 @@ package org.uma.jmetal.parallel.example;
 import static java.lang.Math.sin;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.MuPlusLambdaReplacement;
@@ -32,7 +34,7 @@ public class AsynchronousMultiThreadedGeneticAlgorithmExample {
     int maxEvaluations = 25000;
     int numberOfCores = 16 ;
 
-    OneMax problem = new OneMax(1024) {
+    @NotNull OneMax problem = new OneMax(1024) {
       @Override
       public BinarySolution evaluate (BinarySolution solution) {
         super.evaluate(solution) ;
@@ -60,11 +62,11 @@ public class AsynchronousMultiThreadedGeneticAlgorithmExample {
     replacement = new MuPlusLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
 
     long initTime = System.currentTimeMillis();
-    AsynchronousMultiThreadedGeneticAlgorithm<BinarySolution> geneticAlgorithm =
+    @NotNull AsynchronousMultiThreadedGeneticAlgorithm<BinarySolution> geneticAlgorithm =
         new AsynchronousMultiThreadedGeneticAlgorithm<>(
             numberOfCores, problem, populationSize, crossover, mutation, selection, replacement, new TerminationByEvaluations(maxEvaluations));
 
-    FitnessObserver printObjectivesObserver = new FitnessObserver(100) ;
+    @NotNull FitnessObserver printObjectivesObserver = new FitnessObserver(100) ;
     geneticAlgorithm.getObservable().register(printObjectivesObserver);
 
     geneticAlgorithm.run();

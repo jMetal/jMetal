@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.smpso;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
@@ -40,7 +42,7 @@ public class SMPSOHv2Runner extends AbstractAlgorithmRunner {
    * Invoking command:
   java org.uma.jmetal.runner.multiobjective.smpso.SMPSOHvRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws Exception {
+  public static void main(String @NotNull [] args) throws Exception {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     MutationOperator<DoubleSolution> mutation;

@@ -1,6 +1,8 @@
 package org.uma.jmetal.lab.visualization.html.impl;
 
 import java.util.Objects;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.visualization.html.HtmlComponent;
 import tech.tablesaw.plotly.components.Figure;
 /**
@@ -16,7 +18,7 @@ public class HtmlFigure implements HtmlComponent {
     this.figure = figure;
   }
 
-  public String getHtml() {
+  public @NotNull String getHtml() {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder
         .append("<div id='")
@@ -38,7 +40,7 @@ public class HtmlFigure implements HtmlComponent {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    HtmlFigure that = (HtmlFigure) o;
+    @NotNull HtmlFigure that = (HtmlFigure) o;
     return Objects.equals(figure, that.figure);
   }
 

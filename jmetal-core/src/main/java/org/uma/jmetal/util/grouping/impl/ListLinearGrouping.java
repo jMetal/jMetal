@@ -3,6 +3,8 @@ package org.uma.jmetal.util.grouping.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
@@ -26,7 +28,7 @@ public class ListLinearGrouping<C extends Comparable<C>> extends ListGrouping<C>
   }
 
   @Override
-  public void computeGroups(List<C> list) {
+  public void computeGroups(@NotNull List<C> list) {
     Check.notNull(list);
 
     if (lastListSize != list.size()) {

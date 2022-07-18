@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -58,12 +59,12 @@ public class MaF11 extends AbstractDoubleProblem {
    * @param solution The solution to evaluate
    */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
     double[] x;
-    double[] f = new double[numberOfObjectives];
+    double @NotNull [] f = new double[numberOfObjectives];
 
       double[] arr = new double[10];
       int count = 0;

@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -38,7 +40,7 @@ public class NSGAIISteadyStateExample {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    @NotNull var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
     int offspringPopulationSize = 1;

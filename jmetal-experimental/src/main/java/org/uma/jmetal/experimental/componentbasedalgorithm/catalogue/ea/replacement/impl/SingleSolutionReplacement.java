@@ -2,6 +2,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replace
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
@@ -26,7 +28,7 @@ public class SingleSolutionReplacement<S extends Solution<?>> implements Replace
 
   @Override
   public List<S> replace(
-      List<S> population, List<S> offspringPopulation) {
+          @NotNull List<S> population, List<S> offspringPopulation) {
     S newSolution = offspringPopulation.get(0);
 
     if (comparator.compare(population.get(sequenceGenerator.getValue()), newSolution) > 0) {

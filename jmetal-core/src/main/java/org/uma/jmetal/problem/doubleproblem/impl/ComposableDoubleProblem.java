@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -101,7 +103,7 @@ public class ComposableDoubleProblem implements DoubleProblem {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    Double[] vars = solution.variables().toArray(new Double[getNumberOfVariables()]);
+    Double @NotNull [] vars = solution.variables().toArray(new Double[getNumberOfVariables()]);
 
     int bound1 = getNumberOfObjectives();
     for (int i1 = 0; i1 < bound1; i1++) {

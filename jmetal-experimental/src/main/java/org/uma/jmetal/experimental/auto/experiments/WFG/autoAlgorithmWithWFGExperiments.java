@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -61,7 +63,7 @@ public class autoAlgorithmWithWFGExperiments {
 
     String experimentBaseDirectory = args[0];
 
-    List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
+    @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG2()).setReferenceFront("WFG2.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG3()).setReferenceFront("WFG3.2D.csv"));
@@ -72,7 +74,7 @@ public class autoAlgorithmWithWFGExperiments {
     problemList.add(new ExperimentProblem<>(new WFG8()).setReferenceFront("WFG8.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG9()).setReferenceFront("WFG9.2D.csv"));
 
-    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+    @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
         configureAlgorithmList(problemList);
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
@@ -110,7 +112,7 @@ public class autoAlgorithmWithWFGExperiments {
    * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
    */
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
-      List<ExperimentProblem<DoubleSolution>> problemList) {
+          @NotNull List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
@@ -140,7 +142,7 @@ public class autoAlgorithmWithWFGExperiments {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
 
         /* OMOPSO */
         String[] parametersOMOPSO =
@@ -223,7 +225,7 @@ public class autoAlgorithmWithWFGExperiments {
                 .split("\\s+");
         AutoMOPSO AutoMOPSOWithConfig = new AutoMOPSO();
         AutoMOPSOWithConfig.parseAndCheckParameters(parametersAutoMOPSOWithtConfig);
-        ParticleSwarmOptimizationAlgorithm automopsoWithConfig = AutoMOPSOWithConfig.create();
+        @NotNull ParticleSwarmOptimizationAlgorithm automopsoWithConfig = AutoMOPSOWithConfig.create();
 
         algorithms.add(
             new ExperimentAlgorithm<>(automopsoWithConfig, "AutoMOPSO", experimentProblem, run));

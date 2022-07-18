@@ -1,5 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Class implementing shape functions for wfg benchmark
  * Reference: Simon Huband, Luigi Barone, Lyndon While, Phil Hingston
@@ -13,7 +15,7 @@ public class Shapes {
   /**
    * Calculate a linear shape
    */
-  public float linear(float[] x, int m) {
+  public float linear(float @NotNull [] x, int m) {
     float result = (float) 1.0;
     int M = x.length;
 
@@ -49,7 +51,7 @@ public class Shapes {
   /**
    * Calculate a concave shape
    */
-  public float concave(float[] x, int m) {
+  public float concave(float @NotNull [] x, int m) {
     float result = (float) 1.0;
     int M = x.length;
 
@@ -67,7 +69,7 @@ public class Shapes {
   /**
    * Calculate a mixed shape
    */
-  public float mixed(float[] x, int A, float alpha) {
+  public float mixed(float @NotNull [] x, int A, float alpha) {
     float tmp;
     tmp =
       (float) Math.cos((float) 2.0 * A * (float) Math.PI * x[0] + (float) Math.PI * (float) 0.5);

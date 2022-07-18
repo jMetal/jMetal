@@ -2,6 +2,8 @@ package org.uma.jmetal.util;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
@@ -63,7 +65,7 @@ public class NormalizeUtils {
   public static double[][] normalize(double[][] matrix) {
     Check.notNull(matrix);
 
-    double[][] normalizedMatrix = new double[matrix.length][matrix[0].length];
+    double[] @NotNull [] normalizedMatrix = new double[matrix.length][matrix[0].length];
 
     double[] minValue = getMinValuesOfTheColumnsOfAMatrix(matrix) ;
     double[] maxValue = getMaxValuesOfTheColumnsOfAMatrix(matrix) ;
@@ -83,10 +85,10 @@ public class NormalizeUtils {
    * @param matrix
    * @return A matrix with normalized values for each of its rows
    */
-  public static double[][] normalize(double[][] matrix, double[] minRangeValue, double[] maxRangeValue) {
+  public static double[][] normalize(double[] @NotNull [] matrix, double[] minRangeValue, double[] maxRangeValue) {
     Check.notNull(matrix);
 
-    double[][] normalizedMatrix = new double[matrix.length][matrix[0].length];
+    double[] @NotNull [] normalizedMatrix = new double[matrix.length][matrix[0].length];
 
     //double[] minValue = getMinValuesOfTheColumnsOfAMatrix(matrix) ;
     //double[] maxValue = getMaxValuesOfTheColumnsOfAMatrix(matrix) ;
@@ -124,7 +126,7 @@ public class NormalizeUtils {
    */
   public static double[]getMinValuesOfTheColumnsOfAMatrix(double[][] matrix) {
     int rowLength = matrix[0].length ;
-    double[] minValues = new double[rowLength] ;
+    double @NotNull [] minValues = new double[rowLength] ;
 
     Arrays.fill(minValues, Double.MAX_VALUE);
 

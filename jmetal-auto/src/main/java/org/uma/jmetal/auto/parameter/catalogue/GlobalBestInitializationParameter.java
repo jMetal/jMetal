@@ -1,6 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
@@ -11,7 +13,7 @@ public class GlobalBestInitializationParameter extends CategoricalParameter {
     super("globalBestInitialization", args, globalBestInitializationStrategies);
   }
 
-  public GlobalBestInitialization getParameter() {
+  public @NotNull GlobalBestInitialization getParameter() {
     GlobalBestInitialization result;
 
     if ("defaultGlobalBestInitialization".equals(getValue())) {

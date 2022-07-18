@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.moead;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.MOEADDEBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -34,7 +36,7 @@ public class MOEADDEDefaultConfigurationExample {
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
     String referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    @NotNull Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     double cr = 1.0 ;
     double f = 0.5 ;

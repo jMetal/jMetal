@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.binarySet;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.BitSet;
 
 /**
@@ -31,7 +33,7 @@ public class BinarySet extends BitSet {
   }
 
   @Override
-  public String toString() {
+  public @NotNull String toString() {
     StringBuilder result = new StringBuilder();
     for (int i = 0; i < numberOfBits; i++) {
       if (get(i)) {

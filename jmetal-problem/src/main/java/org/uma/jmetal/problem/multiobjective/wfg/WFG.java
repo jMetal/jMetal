@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective.wfg;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 
 /**
@@ -27,7 +29,7 @@ public abstract class WFG extends AbstractDoubleProblem {
   protected int[] a;
   protected int[] s;
   protected int d = 1;
-  protected Random random = new Random();
+  protected @NotNull Random random = new Random();
 
   /**
    * Constructor
@@ -47,7 +49,7 @@ public abstract class WFG extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);

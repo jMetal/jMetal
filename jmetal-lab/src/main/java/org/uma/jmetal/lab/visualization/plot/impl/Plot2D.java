@@ -1,5 +1,6 @@
 package org.uma.jmetal.lab.visualization.plot.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.util.errorchecking.Check;
 import tech.tablesaw.api.DoubleColumn;
@@ -28,7 +29,7 @@ public class Plot2D implements PlotFront {
   public void plot() {
     int numberOfRows = matrix.length;
     double[] f1 = new double[numberOfRows];
-    double[] f2 = new double[numberOfRows];
+    double @NotNull [] f2 = new double[numberOfRows];
 
     for (int i = 0; i < numberOfRows; i++) {
       f1[i] = matrix[i][0];

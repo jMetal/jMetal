@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.distance.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.Distance;
@@ -17,10 +18,10 @@ public class EuclideanDistanceBetweenSolutionsInSolutionSpace<S extends Solution
   private final EuclideanDistanceBetweenVectors distance = new EuclideanDistanceBetweenVectors() ;
 
   @Override
-  public double compute(S solution1, S solution2) {
+  public double compute(@NotNull S solution1, @NotNull S solution2) {
     double[] vector1;
     double[] vector2;
-    double[] result = new double[10];
+    double @NotNull [] result = new double[10];
     int count1 = 0;
     for (Double aDouble : solution1.variables()) {
       double value1 = aDouble;

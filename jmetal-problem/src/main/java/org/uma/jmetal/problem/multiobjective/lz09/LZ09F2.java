@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.lz09;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -38,8 +40,8 @@ public class LZ09F2 extends AbstractDoubleProblem {
             dtype,
             ltype);
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
@@ -50,7 +52,7 @@ public class LZ09F2 extends AbstractDoubleProblem {
   }
 
   /** Evaluate() method */
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     List<Double> x = new ArrayList<Double>(getNumberOfVariables());
     List<Double> y = new ArrayList<Double>(solution.objectives().length);
 

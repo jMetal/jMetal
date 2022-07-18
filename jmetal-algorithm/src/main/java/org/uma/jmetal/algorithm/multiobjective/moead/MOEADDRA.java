@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -72,7 +73,7 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
         List<DoubleSolution> parents = parentSelection(subProblemId, neighborType) ;
 
         differentialEvolutionCrossover.setCurrentSolution(population.get(subProblemId));
-        List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
+        @NotNull List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
 
         DoubleSolution child = children.get(0) ;
         mutationOperator.execute(child);
@@ -124,7 +125,7 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
     List<Integer> candidate;
 
       // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL (NOT SORTED!!!!)
-      List<Integer> result = new ArrayList<>();
+      @NotNull List<Integer> result = new ArrayList<>();
       int bound1 = problem.getNumberOfObjectives();
       for (int i3 = 0; i3 < bound1; i3++) {
           Integer integer1 = i3;

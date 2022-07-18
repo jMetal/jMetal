@@ -1,5 +1,6 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -50,7 +51,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    Hypervolume<S> hypervolume = new PISAHypervolume<>();
+    @NotNull Hypervolume<S> hypervolume = new PISAHypervolume<>();
     this.replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
 
     this.variation =
@@ -84,7 +85,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
     return this;
   }
 
-  public EvolutionaryAlgorithm<S> build() {
+  public @NotNull EvolutionaryAlgorithm<S> build() {
     return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
         selection, variation, replacement);
   }

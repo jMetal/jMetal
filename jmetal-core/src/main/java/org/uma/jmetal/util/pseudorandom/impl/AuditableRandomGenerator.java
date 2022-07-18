@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
@@ -31,7 +33,7 @@ public class AuditableRandomGenerator implements PseudoRandomGenerator {
 		}
 	}
 
-	private final PseudoRandomGenerator generator;
+	private final @NotNull PseudoRandomGenerator generator;
 	private final Set<Consumer<Audit>> listeners = new HashSet<Consumer<Audit>>();
 
 	public AuditableRandomGenerator(PseudoRandomGenerator generator) {

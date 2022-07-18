@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.pseudorandom.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 import java.util.Arrays;
@@ -45,7 +46,7 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return randomGenerator.getName() + " (extended)";
   }
 

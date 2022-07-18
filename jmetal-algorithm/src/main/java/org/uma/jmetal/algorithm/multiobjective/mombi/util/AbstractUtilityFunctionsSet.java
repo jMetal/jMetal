@@ -16,6 +16,7 @@ import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -33,7 +34,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	private List<List<Double>> weightVectors;
 	private int vectorSize;
 	
-	public AbstractUtilityFunctionsSet(double [][] weights) {
+	public AbstractUtilityFunctionsSet(double [] @NotNull [] weights) {
 		this.weightVectors = new ArrayList<>();
 		for (int i = 0; i < weights.length; i++) {
 			this.weightVectors.add(new ArrayList<Double>());
@@ -47,7 +48,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 				
 	}
 	
-	public AbstractUtilityFunctionsSet(String file_path) {
+	public AbstractUtilityFunctionsSet(@NotNull String file_path) {
 		loadWeightsFromFile(file_path);
 	}
 
@@ -81,7 +82,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	 * @param solution
 	 * @return
 	 */
-	public List<Double> evaluate(S solution) {
+	public @NotNull List<Double> evaluate(S solution) {
 		List<Double> result = new ArrayList<>(this.getSize());
 		int bound = this.getSize();
 		for (int i = 0; i < bound; i++) {
@@ -146,7 +147,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 
 			while ((line = buffer.readLine())!=null) {
 				st = new StringTokenizer(line);
-				List<Double> new_vector = new ArrayList<>(number_of_objectives);
+				@NotNull List<Double> new_vector = new ArrayList<>(number_of_objectives);
 				for (int i = 0; i < number_of_objectives; i++)
 					new_vector.add(parseDouble(st.nextToken()));
 				this.weightVectors.add(new_vector);

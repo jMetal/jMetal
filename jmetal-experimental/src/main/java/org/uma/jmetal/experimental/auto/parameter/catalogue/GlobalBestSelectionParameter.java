@@ -2,6 +2,8 @@ package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.BinaryTournamentGlobalBestSelection;
@@ -13,7 +15,7 @@ public class GlobalBestSelectionParameter extends CategoricalParameter {
     super("globalBestSelection", args, selectionStrategies) ;
   }
 
-  public GlobalBestSelection getParameter(Comparator<DoubleSolution> comparator) {
+  public @NotNull GlobalBestSelection getParameter(Comparator<DoubleSolution> comparator) {
     GlobalBestSelection result ;
     switch(getValue()) {
       case "binaryTournament":

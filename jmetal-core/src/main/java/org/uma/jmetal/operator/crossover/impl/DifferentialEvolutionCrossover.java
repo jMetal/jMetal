@@ -3,6 +3,8 @@ package org.uma.jmetal.operator.crossover.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
@@ -64,7 +66,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   private double f;
 
   private int numberOfDifferenceVectors = 1;
-  private DE_CROSSOVER_TYPE crossoverType = DE_CROSSOVER_TYPE.BIN;
+  private @NotNull DE_CROSSOVER_TYPE crossoverType = DE_CROSSOVER_TYPE.BIN;
   private DE_MUTATION_TYPE mutationType = DE_MUTATION_TYPE.RAND;
 
   private DE_VARIANT variant;
@@ -374,7 +376,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
             + f * (parent[0][index] - parent[1][index]);
   }
 
-  public static DE_VARIANT getVariantFromString(String variant) {
+  public static DE_VARIANT getVariantFromString(@NotNull String variant) {
     DE_VARIANT deVariant;
     switch (variant) {
       case "RAND_1_BIN":

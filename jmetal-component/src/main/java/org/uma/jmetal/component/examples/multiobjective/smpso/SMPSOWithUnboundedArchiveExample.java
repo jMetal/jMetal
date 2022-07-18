@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.smpso;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.SMPSOBuilder;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluationWithArchive;
@@ -28,15 +30,15 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class SMPSOWithUnboundedArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    @NotNull String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    @NotNull Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     int swarmSize = 100 ;
-    Termination termination = new TerminationByEvaluations(50000);
+    @NotNull Termination termination = new TerminationByEvaluations(50000);
 
-    Archive<DoubleSolution> externalUnboundedArchive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), swarmSize) ;
+    @NotNull Archive<DoubleSolution> externalUnboundedArchive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), swarmSize) ;
 
     ParticleSwarmOptimizationAlgorithm smpso = new SMPSOBuilder(
         (DoubleProblem) problem,
@@ -64,7 +66,7 @@ public class SMPSOWithUnboundedArchiveExample {
         SolutionListUtils.getMatrixWithObjectiveValues(population),
         VectorUtils.readVectors(referenceParetoFront, ","));
 
-    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.getName() + " (NSGA-II)");
+    @NotNull PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.getName() + " (NSGA-II)");
     plot.plot();
   }
 }

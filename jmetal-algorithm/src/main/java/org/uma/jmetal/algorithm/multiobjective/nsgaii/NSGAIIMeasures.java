@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -103,11 +105,11 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     return measureManager ;
   }
 
-  @Override protected List<S> replacement(List<S> population,
-      List<S> offspringPopulation) {
+  @Override protected List<S> replacement(@NotNull List<S> population,
+                                          List<S> offspringPopulation) {
     List<S> pop = super.replacement(population, offspringPopulation) ;
 
-    Ranking<S> ranking = new FastNonDominatedSortRanking<>(dominanceComparator);
+    @NotNull Ranking<S> ranking = new FastNonDominatedSortRanking<>(dominanceComparator);
     ranking.compute(population);
 
     numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubFront(0).size());

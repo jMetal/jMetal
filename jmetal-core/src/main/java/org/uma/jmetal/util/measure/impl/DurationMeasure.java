@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.measure.impl;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * This measure allows to have a simple way to compute the time spent in doing
  * something. For instance, an algorithm can compute the time spent to run. In
@@ -31,7 +33,7 @@ public class DurationMeasure extends SimplePullMeasure<Long> {
 	 * <code>null</code> if we are not in a round (if {@link #start()} has not
 	 * been called or if {@link #stop()} has been called).
 	 */
-	private Long roundStart = null;
+	private @Nullable Long roundStart = null;
 
 	public DurationMeasure() {
 		super("duration", "Provide the duration of execution of an algorithm.");

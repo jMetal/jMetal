@@ -2,6 +2,8 @@ package org.uma.jmetal.qualityindicator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GeneralizedSpread;
 import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
@@ -21,7 +23,7 @@ public class QualityIndicatorUtils {
    * @param referenceFront
    * @return
    */
-  public static List<QualityIndicator> getAvailableIndicators(double[][] referenceFront) {
+  public static @NotNull List<QualityIndicator> getAvailableIndicators(double[][] referenceFront) {
     List<QualityIndicator> list = new ArrayList<>();
     list.add(new Epsilon(referenceFront));
     list.add(new PISAHypervolume(referenceFront));
@@ -44,7 +46,7 @@ public class QualityIndicatorUtils {
    */
   public static QualityIndicator getIndicatorFromName(String name, List<QualityIndicator> list) {
       QualityIndicator result = null;
-      for (QualityIndicator indicator : list) {
+      for (@NotNull QualityIndicator indicator : list) {
           if (indicator.getName().equals(name)) {
               result = indicator;
               break;
@@ -57,7 +59,7 @@ public class QualityIndicatorUtils {
   }
 
   public static void printQualityIndicators(double[][] front, double[][] referenceFront){
-    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    double[] @NotNull [] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
     double[][] normalizedFront =
             NormalizeUtils.normalize(
                     front,
@@ -65,7 +67,7 @@ public class QualityIndicatorUtils {
                     NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
     List<QualityIndicator> qualityIndicators = getAvailableIndicators(normalizedReferenceFront) ;
-    for (QualityIndicator indicator: qualityIndicators) {
+    for (@NotNull QualityIndicator indicator: qualityIndicators) {
       JMetalLogger.logger.info(() ->indicator.getName() + ": " + indicator.compute(normalizedFront)) ;
     }
   }

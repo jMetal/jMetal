@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEA;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEABuilder;
 import org.uma.jmetal.algorithm.multiobjective.agemoeaii.util.AGEMOEA2EnvironmentalSelection;
@@ -24,7 +25,7 @@ public class AGEMOEAII<S extends Solution<?>> extends AGEMOEA<S> {
   protected SolutionListEvaluator<S> evaluator ;
 
   /** Constructor */
-  public AGEMOEAII(AGEMOEAIIBuilder<S> builder) { // can be created from the AGEMOEAIIBuilder within the same package
+  public AGEMOEAII(@NotNull AGEMOEAIIBuilder<S> builder) { // can be created from the AGEMOEAIIBuilder within the same package
     super((AGEMOEABuilder<S>) builder) ;
     maxIterations = builder.getMaxIterations() ;
     crossoverOperator =  builder.getCrossoverOperator() ;
@@ -57,7 +58,7 @@ public class AGEMOEAII<S extends Solution<?>> extends AGEMOEA<S> {
   }
 
   @Override
-  protected List<S> selection(List<S> population) {
+  protected List<S> selection(@NotNull List<S> population) {
     List<S> matingPopulation = new ArrayList<>(population.size());
     int bound = getMaxPopulationSize();
     for (int i = 0; i < bound; i++) {
@@ -97,7 +98,7 @@ public class AGEMOEAII<S extends Solution<?>> extends AGEMOEA<S> {
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    List<S> jointPopulation = new ArrayList<>();
+    @NotNull List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population) ;
     jointPopulation.addAll(offspringPopulation) ;
 
@@ -121,7 +122,7 @@ public class AGEMOEAII<S extends Solution<?>> extends AGEMOEA<S> {
     return "AGE-MOEA-II" ;
   }
 
-  @Override public String getDescription() {
+  @Override public @NotNull String getDescription() {
     return "Adaptive Geometry Estimation based MOEA II" ;
   }
 

@@ -2,6 +2,8 @@ package org.uma.jmetal.util.ranking.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -72,7 +74,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
   }
 
   private boolean merge_sort(
-          double src[][], double dest[][], int low, int high, int obj, int toObj) {
+          @NotNull double src[][], @NotNull double dest[][], int low, int high, int obj, int toObj) {
     int i, j, s;
     double temp[] = null;
     int destLow = low;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -21,7 +22,7 @@ public class FDA4 extends FDA {
     setNumberOfObjectives(numberOfObjectives);
     setName("FDA4");
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i = 0; i < numberOfVariables; i++) {
@@ -34,7 +35,7 @@ public class FDA4 extends FDA {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
+    double @NotNull [] f = new double[solution.objectives().length];
     double g = this.evalG(solution, M - 1);
     f[0] = this.evalF1(solution, g);
     f[1] = evalFK(solution, g, 2);
@@ -55,7 +56,7 @@ public class FDA4 extends FDA {
       return f * mult;
   }
 
-  private double evalFK(DoubleSolution solution, double g, int k) {
+  private double evalFK(@NotNull DoubleSolution solution, double g, int k) {
     double f = 1.0d + g;
     double mult;
     double aux = Math.sin((solution.variables().get(M - k) * Math.PI) / 2.0d);
@@ -75,7 +76,7 @@ public class FDA4 extends FDA {
    *
    * @param solution Solution
    */
-  private double evalG(DoubleSolution solution, int limitInf) {
+  private double evalG(@NotNull DoubleSolution solution, int limitInf) {
     double g;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
       double sum = 0.0;
@@ -88,7 +89,7 @@ public class FDA4 extends FDA {
     return g;
   }
 
-  private double evalFM(DoubleSolution solution, double g) {
+  private double evalFM(@NotNull DoubleSolution solution, double g) {
     double fm = 1.0d + g;
     fm *= Math.sin(solution.variables().get(0) * Math.PI / 2);
     return fm;

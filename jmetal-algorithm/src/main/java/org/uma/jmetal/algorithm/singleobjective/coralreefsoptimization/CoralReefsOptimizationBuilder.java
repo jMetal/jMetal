@@ -2,6 +2,9 @@ package org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -49,8 +52,8 @@ public class CoralReefsOptimizationBuilder<S extends Solution<?>> implements
 		this.mutationOperator = mutationOperator;
 	}
 
-	public CoralReefsOptimizationBuilder<S> setComparator(
-			Comparator<S> comparator) {
+	public @NotNull CoralReefsOptimizationBuilder<S> setComparator(
+            @Nullable Comparator<S> comparator) {
 		if (comparator == null) {
 			throw new JMetalException("Comparator is null!");
 		}
@@ -60,7 +63,7 @@ public class CoralReefsOptimizationBuilder<S extends Solution<?>> implements
 		return this;
 	}
 
-	public CoralReefsOptimizationBuilder<S> setMaxEvaluations(int maxEvaluations) {
+	public @NotNull CoralReefsOptimizationBuilder<S> setMaxEvaluations(int maxEvaluations) {
 		if (maxEvaluations < 0) {
 			throw new JMetalException("maxEvaluations is negative: "
 					+ maxEvaluations);
@@ -79,7 +82,7 @@ public class CoralReefsOptimizationBuilder<S extends Solution<?>> implements
 		return this;
 	}
 
-	public CoralReefsOptimizationBuilder<S> setM(int m) {
+	public @NotNull CoralReefsOptimizationBuilder<S> setM(int m) {
 		if (m < 0) {
 			throw new JMetalException("M is negative: " + m);
 		}
@@ -97,7 +100,7 @@ public class CoralReefsOptimizationBuilder<S extends Solution<?>> implements
 		return this;
 	}
 
-	public CoralReefsOptimizationBuilder<S> setFbs(double fbs) {
+	public @NotNull CoralReefsOptimizationBuilder<S> setFbs(double fbs) {
 		if (fbs < 0) {
 			throw new JMetalException("Fbs is negative: " + fbs);
 		}
@@ -106,7 +109,7 @@ public class CoralReefsOptimizationBuilder<S extends Solution<?>> implements
 		return this;
 	}
 
-	public CoralReefsOptimizationBuilder<S> setFbr(double fbr) {
+	public @NotNull CoralReefsOptimizationBuilder<S> setFbr(double fbr) {
 		if (fbr < 0) {
 			throw new JMetalException("Fbr is negative: " + fbr);
 		}
@@ -115,7 +118,7 @@ public class CoralReefsOptimizationBuilder<S extends Solution<?>> implements
 		return this;
 	}
 
-	public CoralReefsOptimizationBuilder<S> setFa(double fa) {
+	public @NotNull CoralReefsOptimizationBuilder<S> setFa(double fa) {
 		if (fa < 0) {
 			throw new JMetalException("Fa is negative: " + fa);
 		}

@@ -14,6 +14,8 @@
 package org.uma.jmetal.algorithm.multiobjective.cdg;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -76,10 +78,10 @@ public class CDG extends AbstractCDG<DoubleSolution> {
 
       delta = Math.pow((1 - evaluations / maxEvaluations), 0.7);
       
-      int[] permutation = new int[populationSize];
+      int @NotNull [] permutation = new int[populationSize];
       MOEADUtils.randomPermutation(permutation, populationSize);
 
-      MutationOperator<DoubleSolution> mutation = new CDGMutation(mutationProbability, delta);
+      @NotNull MutationOperator<DoubleSolution> mutation = new CDGMutation(mutationProbability, delta);
       
       for (int i = 0; i < populationSize; i++) {
         int subProblemId = permutation[i];

@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.singleobjective;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.sequenceproblem.impl.CharSequenceProblem;
 import org.uma.jmetal.solution.sequencesolution.impl.CharSequenceSolution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -11,9 +12,9 @@ import java.util.stream.IntStream;
 @SuppressWarnings("serial")
 public class StringMatching extends CharSequenceProblem {
   private String targetString;
-  private final char[] alphabet;
+  private final char @NotNull [] alphabet;
 
-  public StringMatching(String targetString, String alphabet) {
+  public StringMatching(@NotNull String targetString, @NotNull String alphabet) {
     this.targetString = targetString;
     this.alphabet = alphabet.toCharArray();
 
@@ -23,7 +24,7 @@ public class StringMatching extends CharSequenceProblem {
     setName("String Match");
   }
 
-  public StringMatching(String targetString) {
+  public StringMatching(@NotNull String targetString) {
     this(
         targetString,
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890, .-;:_!\"#%&/()=?@${[]}");
@@ -35,7 +36,7 @@ public class StringMatching extends CharSequenceProblem {
   }
 
   @Override
-  public CharSequenceSolution evaluate(CharSequenceSolution solution) {
+  public CharSequenceSolution evaluate(@NotNull CharSequenceSolution solution) {
     Check.that(solution.getLength() == targetString.length(), "The solution has an invalid length");
       long count = 0L;
       int bound = targetString.length();
@@ -54,8 +55,8 @@ public class StringMatching extends CharSequenceProblem {
   }
 
   @Override
-  public CharSequenceSolution createSolution() {
-    CharSequenceSolution solution = new CharSequenceSolution(targetString.length(), getNumberOfObjectives()) ;
+  public @NotNull CharSequenceSolution createSolution() {
+    @NotNull CharSequenceSolution solution = new CharSequenceSolution(targetString.length(), getNumberOfObjectives()) ;
     for (int i = 0 ; i < targetString.length(); i++) {
       solution.variables().set(i, alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length-1)]);
     }

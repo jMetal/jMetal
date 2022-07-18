@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.ea.replacement.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodSelection;
 import org.uma.jmetal.solution.Solution;
@@ -37,7 +39,7 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
     aggregativeFunction.update(newSolution.objectives());
 
     Neighborhood.NeighborType neighborType = matingPoolSelection.getNeighborType();
-    IntegerPermutationGenerator randomPermutation =
+    @NotNull IntegerPermutationGenerator randomPermutation =
         new IntegerPermutationGenerator(
             neighborType.equals(Neighborhood.NeighborType.NEIGHBOR)
                 ? weightVectorNeighborhood.neighborhoodSize()

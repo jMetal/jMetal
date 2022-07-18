@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective.fda;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.observable.Observable;
@@ -40,8 +42,8 @@ public class FDA1 extends FDA {
   }
 
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
+    double @NotNull [] f = new double[solution.objectives().length];
     f[0] = solution.variables().get(0);
     double g = this.evalG(solution);
     double h = this.evalH(f[0], g);

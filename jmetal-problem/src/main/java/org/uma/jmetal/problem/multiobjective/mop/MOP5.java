@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -34,7 +35,7 @@ public class MOP5 extends AbstractDoubleProblem {
     setName("MOP5");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
@@ -46,7 +47,7 @@ public class MOP5 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
+    double @NotNull [] f = new double[solution.objectives().length];
 
     double g = this.evalG(solution);
     f[0] = (1 + g) * solution.variables().get(0);

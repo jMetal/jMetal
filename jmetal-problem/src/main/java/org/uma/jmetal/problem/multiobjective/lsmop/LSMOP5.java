@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Sphere;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -37,7 +38,7 @@ public class LSMOP5 extends AbstractLSMOP5_8 {
   }
 
   @Override
-  protected Function getEvenFunction() {
+  protected @NotNull Function getEvenFunction() {
     return new Sphere();
   }
 

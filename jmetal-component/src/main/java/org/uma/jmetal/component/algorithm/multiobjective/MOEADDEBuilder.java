@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
 import java.io.FileNotFoundException;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -117,20 +119,20 @@ public class MOEADDEBuilder {
     return this;
   }
 
-  public MOEADDEBuilder setNeighborhoodSelectionProbability(
+  public @NotNull MOEADDEBuilder setNeighborhoodSelectionProbability(
       double neighborhoodSelectionProbability) {
     this.neighborhoodSelectionProbability = neighborhoodSelectionProbability;
 
     return this;
   }
 
-  public MOEADDEBuilder setMaximumNumberOfReplacedSolutionsy(int maximumNumberOfReplacedSolutions) {
+  public @NotNull MOEADDEBuilder setMaximumNumberOfReplacedSolutionsy(int maximumNumberOfReplacedSolutions) {
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
 
     return this;
   }
 
-  public MOEADDEBuilder setNeighborhoodSize(int neighborhoodSize) {
+  public @NotNull MOEADDEBuilder setNeighborhoodSize(int neighborhoodSize) {
     this.neighborhoodSize = neighborhoodSize;
 
     return this;

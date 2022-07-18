@@ -3,6 +3,8 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -20,7 +22,7 @@ public class PairwiseReplacement<S extends Solution<?>> implements Replacement<S
     this.comparator = comparator;
   }
 
-  public List<S> replace(List<S> population, List<S> offspringPopulation) {
+  public @NotNull List<S> replace(@NotNull List<S> population, List<S> offspringPopulation) {
     Check.that(
         population.size() == offspringPopulation.size(),
         "The sizes of both populations is not the same: "
@@ -28,7 +30,7 @@ public class PairwiseReplacement<S extends Solution<?>> implements Replacement<S
             + ", "
             + offspringPopulation.size());
 
-    List<S> resultPopulation = new ArrayList<>();
+    @NotNull List<S> resultPopulation = new ArrayList<>();
     for (int i = 0; i < population.size(); i++) {
       if (comparator.compare(population.get(i), offspringPopulation.get(i)) < 0) {
         resultPopulation.add(population.get(i)) ;

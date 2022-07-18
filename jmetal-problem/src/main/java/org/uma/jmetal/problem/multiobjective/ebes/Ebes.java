@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -525,13 +526,13 @@ public class Ebes extends AbstractDoubleProblem {
   double[][] Rji = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
   double[][] RTij = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
   double[][] RTji = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
-  double[][] Rpij = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
+  double[] @NotNull [] Rpij = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
   double[][] Rpji = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
   double[][] RpTij = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
   double[][] RpTji = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
   // second order geometric
-  double[][] KiiSOG = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
-  double[][] KijSOG = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
+  double[] @NotNull [] KiiSOG = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
+  double[] @NotNull [] KijSOG = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
   double[][] KjiSOG = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
   double[][] KjjSOG = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
 
@@ -674,7 +675,7 @@ public class Ebes extends AbstractDoubleProblem {
     EBEsInitialize(ebesFileName);
   }
 
-  public void EBEsInitialize(String file) throws FileNotFoundException {
+  public void EBEsInitialize(@NotNull String file) throws FileNotFoundException {
     // CALCULAR dd Y CA (CANTIDADES DE NUDOS COARTADOS) AL CARGAR EL ARCHIVO
     // CON ESTO EVITO RECALCULARLOS CADA VEZ QUE SE BUSCA UNA SOLUCIÃƒÂ³N
     // CONTAR EN PENALIZACIÃƒÂ³N DE LA MATRIZ CA Y NO CN, CON ESTO
@@ -744,7 +745,7 @@ public class Ebes extends AbstractDoubleProblem {
 
     // Fill lower and upper limits
     Double[] lowerLimit_ = new Double[numberOfVariables];
-    Double[] upperLimit_ = new Double[numberOfVariables];
+    Double @NotNull [] upperLimit_ = new Double[numberOfVariables];
     int var = 0;
     for (int gr = 0; gr < numberOfGroupElements_; gr++) {
       var += Groups_[gr][VARIABLES];
@@ -898,7 +899,7 @@ public class Ebes extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     int hi = 0;
-    double[] fx = new double[solution.objectives().length]; // functions
+    double @NotNull [] fx = new double[solution.objectives().length]; // functions
 
     EBEsElementsTopology(solution); // transforma geometria a caracterÃƒÂ­sticas mecÃƒÂ¡nicas
 
@@ -2359,7 +2360,7 @@ public class Ebes extends AbstractDoubleProblem {
     RpTji = EBEsMatrizTraspuesta(Rpji);
   }
 
-  public double[][] EBEsMatrizTraspuesta(double m[][]) {
+  public double[][] EBEsMatrizTraspuesta(@NotNull double m[][]) {
 
     int row = m.length;
     int col = m[0].length;
@@ -3633,10 +3634,10 @@ public class Ebes extends AbstractDoubleProblem {
     MatrixStiffness_[r6] = MatrixStiffness_[r6] + KGjj[5][5]; // 132
   }
 
-  public double[] EBEsMatrizVectorMultiplicar(double[][] s, double[] t) throws JMetalException {
+  public double[] EBEsMatrizVectorMultiplicar(double[] @NotNull [] s, double @NotNull [] t) throws JMetalException {
 
     int f, c;
-    double[] r = new double[t.length];
+    double @NotNull [] r = new double[t.length];
 
     for (f = 0; f < s.length; f++) { // cantidad de elementos de la 1ra dimensiÃƒÂ³n
       r[f] = 0;
@@ -3678,9 +3679,9 @@ public class Ebes extends AbstractDoubleProblem {
     return r;
   } // end module
 
-  public double[][] EBEsMatrixSubtractions(double[][] s, double[][] t) throws JMetalException {
+  public double[][] EBEsMatrixSubtractions(double[] @NotNull [] s, double[] @NotNull [] t) throws JMetalException {
 
-    double[][] r = new double[s.length][t[0].length];
+    double[] @NotNull [] r = new double[s.length][t[0].length];
 
     for (int f = 0; f < s.length; f++) { // cantidad de elementos de la 1ra dimensiÃƒÂ³n
       for (int c = 0; c < t.length; c++) { // cantidad de elementos de la 2ra dimensiÃƒÂ³n
@@ -4920,7 +4921,7 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsPrintArchTxtMKLB(int e) throws JMetalException {
 
     try {
-      PrintStream ps = new PrintStream("EBEs-MKLB(" + e + ").txt");
+      @NotNull PrintStream ps = new PrintStream("EBEs-MKLB(" + e + ").txt");
       // impresion de la matriz de rigidez penalizada
       // extremo ii
       ps.print("kii" + e + "=[");
@@ -5127,7 +5128,7 @@ public class Ebes extends AbstractDoubleProblem {
     char ch;
     String line = "";
     String var1 = "";
-    String txt = "";
+    @NotNull String txt = "";
     int i = 0, j = 0;
 
     // create a File instance
@@ -5144,8 +5145,8 @@ public class Ebes extends AbstractDoubleProblem {
       inputStream = new FileInputStream("Ebes.txt");
     }
 
-    InputStreamReader isr = new InputStreamReader(inputStream);
-    BufferedReader br = new BufferedReader(isr);
+    @NotNull InputStreamReader isr = new InputStreamReader(inputStream);
+    @NotNull BufferedReader br = new BufferedReader(isr);
 
     try (Scanner input = new Scanner(br)) {
 
@@ -5562,7 +5563,7 @@ public class Ebes extends AbstractDoubleProblem {
           for (i = 0; i < numberOfGroupsToCheckGeometry_; i++) {
             txt = input.nextLine();
             geometryCheck_[i] = new int[(txt.length() + 1) / 2];
-            String aTxt[] = txt.split(" ");
+            @NotNull String aTxt[] = txt.split(" ");
             int k = 0;
             for (j = 0; j < aTxt.length; j++) {
               if (aTxt[j] != " ") {
@@ -5728,7 +5729,7 @@ public class Ebes extends AbstractDoubleProblem {
 
     for (int i = 0; i < geometryCheck_.length; i++) {
       double[] Omax = new double[geometryCheck_[i].length];
-      double[] Omin = new double[geometryCheck_[i].length];
+      double @NotNull [] Omin = new double[geometryCheck_[i].length];
       double[] Emax = new double[geometryCheck_[i].length];
       double[] Emin = new double[geometryCheck_[i].length];
 
@@ -5766,7 +5767,7 @@ public class Ebes extends AbstractDoubleProblem {
     // Mahalanobis Distance With Variance for estimated value respect to estimated data
 
     double MD; // mahalanobis distance
-    double[] MDi = new double[geometryCheck_.length]; // mahalanobis distance
+    double @NotNull [] MDi = new double[geometryCheck_.length]; // mahalanobis distance
 
     for (int i = 0; i < geometryCheck_.length; i++) {
       int N = geometryCheck_[i].length;

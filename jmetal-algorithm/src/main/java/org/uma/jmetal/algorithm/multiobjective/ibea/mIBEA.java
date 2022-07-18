@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.ibea;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -78,7 +80,7 @@ public class mIBEA<S extends Solution<?>> extends IBEA<S> {
           parent2 = selectionOperator.execute(archive);
         } while (k < IBEA.TOURNAMENTS_ROUNDS);
 
-        List<S> parents = new ArrayList<>(2);
+        @NotNull List<S> parents = new ArrayList<>(2);
         parents.add(parent1);
         parents.add(parent2);
 
@@ -100,7 +102,7 @@ public class mIBEA<S extends Solution<?>> extends IBEA<S> {
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "Modificated Indicator based Evolutionary Algorithm";
   }
 }

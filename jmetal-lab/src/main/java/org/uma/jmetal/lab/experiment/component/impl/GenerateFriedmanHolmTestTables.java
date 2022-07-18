@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.FriedmanTest;
@@ -65,7 +66,7 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     Table table = Table.read().csv(path + "/" + INDICATOR_SUMMARY_CSV);
     boolean minimizar = true;
 
-    for (QualityIndicator indicator : experiment.getIndicatorList()) {
+    for (@NotNull QualityIndicator indicator : experiment.getIndicatorList()) {
       Table tableFilteredByIndicator = filterTableByIndicator(table, indicator.getName());
       if (indicator.getName().equals("HV")) minimizar = false;
       Table results = computeFriedmanAndHolmTests(tableFilteredByIndicator, minimizar);
@@ -81,8 +82,8 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     return test.getResults();
   }
 
-  private void createLatexFile(Table results, QualityIndicator indicator) {
-    String outputFile = latexDirectoryName + "/FriedmanTestWithHolm" + indicator.getName() + ".tex";
+  private void createLatexFile(@NotNull Table results, @NotNull QualityIndicator indicator) {
+    @NotNull String outputFile = latexDirectoryName + "/FriedmanTestWithHolm" + indicator.getName() + ".tex";
 
     File latexOutput;
     latexOutput = new File(latexDirectoryName);
@@ -100,8 +101,8 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     }
   }
 
-  public String prepareFileOutputContents(Table results) {
-    String fileContents = writeLatexHeader();
+  public String prepareFileOutputContents(@NotNull Table results) {
+    @NotNull String fileContents = writeLatexHeader();
     fileContents = printTableHeader(fileContents);
     fileContents = printTableLines(fileContents, results);
     fileContents = printTableTail(fileContents);
@@ -133,7 +134,7 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
             + "Algorithm&Ranking&p-value&Holm&Hypothesis\\\\\n\\hline");
   }
 
-  private String printTableLines(String fileContents, Table results) {
+  private @NotNull String printTableLines(String fileContents, Table results) {
     StringBuilder sb = new StringBuilder(fileContents);
     for (int i = 0; i < results.rowCount(); i++) {
       sb.append("\n");
@@ -158,7 +159,7 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     return sb.toString();
   }
 
-  private String printTableTail(String fileContents) {
+  private @NotNull String printTableTail(String fileContents) {
     return fileContents
         + "\n"
         + "\\end{tabular}\n"
@@ -178,7 +179,7 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
       }
       double friedman = (sum - term2) * term1;
 
-    String output =
+    @NotNull String output =
         fileContents
             + "\n"
             + "\n\nFriedman statistic considering reduction performance (distributed according to "
@@ -196,7 +197,7 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     return dropDuplicateRowsInColumn(table.stringColumn(columnName));
   }
 
-  public StringColumn dropDuplicateRowsInColumn(StringColumn column) {
+  public StringColumn dropDuplicateRowsInColumn(@NotNull StringColumn column) {
     LinkedList<String> result = new LinkedList<String>();
     for (int row = 0; row < column.size(); row++) {
       if (!result.contains(column.get(row))) {
@@ -206,7 +207,7 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     return StringColumn.create(column.name(), result);
   }
 
-  private Table filterTableByIndicator(Table table, String indicator) {
+  private Table filterTableByIndicator(@NotNull Table table, String indicator) {
     return table.where(table.stringColumn(INDICATOR_NAME).isEqualTo(indicator));
   }
 }

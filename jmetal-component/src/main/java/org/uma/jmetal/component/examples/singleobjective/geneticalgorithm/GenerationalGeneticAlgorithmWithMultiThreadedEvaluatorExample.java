@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.singleobjective.geneticalgorithm;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
@@ -27,11 +29,11 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class GenerationalGeneticAlgorithmWithMultiThreadedEvaluatorExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    Problem<DoubleSolution> problem = new Sphere(20) ;
+    @NotNull Problem<DoubleSolution> problem = new Sphere(20) ;
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    @NotNull var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
@@ -40,7 +42,7 @@ public class GenerationalGeneticAlgorithmWithMultiThreadedEvaluatorExample {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(125000);
+    @NotNull Termination termination = new TerminationByEvaluations(125000);
 
     Evaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(8, problem) ;
 

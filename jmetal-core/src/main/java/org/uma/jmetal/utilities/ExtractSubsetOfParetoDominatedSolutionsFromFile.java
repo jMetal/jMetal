@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
@@ -27,7 +29,7 @@ import org.uma.jmetal.util.point.impl.ArrayPoint;
  */
 public class ExtractSubsetOfParetoDominatedSolutionsFromFile {
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String @NotNull [] args) throws IOException {
     Check.that(args.length == 3,
         "Wrong number of arguments: "
             + args.length
@@ -42,7 +44,7 @@ public class ExtractSubsetOfParetoDominatedSolutionsFromFile {
 
     Stream<String> lines = Files.lines(Path.of(inputFileName));
 
-    List<PointSolution> solutions = lines
+    @NotNull List<PointSolution> solutions = lines
         .filter(line -> !line.equals(""))
         .map(ExtractSubsetOfParetoDominatedSolutionsFromFile::parseLineContainingObjectives)
         .map(vector -> new PointSolution(new ArrayPoint(vector)))

@@ -3,6 +3,8 @@ package org.uma.jmetal.util.ranking.impl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
@@ -39,7 +41,7 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
   private NonDominatedSorting sortingInstance = null;
 
   @Override
-  public Ranking<S> compute(List<S> solutionList) {
+  public Ranking<S> compute(@NotNull List<S> solutionList) {
     subFronts.clear();
     int nSolutions = solutionList.size();
     if (nSolutions == 0) {
@@ -87,7 +89,7 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
 
   private int runSorting(List<S> solutions, int from, int until, int dimension, int rankOffset) {
     ensureEnoughSpace(until - from, dimension);
-    double[][] points = new double[until - from][];
+    double[] @NotNull [] points = new double[until - from][];
     int[] ranks = new int[until - from];
     for (int i = from; i < until; ++i) {
       points[i - from] = solutions.get(i).objectives();
@@ -135,7 +137,7 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
   }
 
   @Override
-  public Integer getRank(S solution) {
+  public Integer getRank(@NotNull S solution) {
     Check.notNull(solution);
 
     Integer result = -1 ;

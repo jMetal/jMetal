@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.singleobjective.cellulargeneticalgorit
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -38,7 +40,7 @@ public class SynchronousCellularGeneticAlgorithmExample {
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    @NotNull var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
@@ -51,11 +53,11 @@ public class SynchronousCellularGeneticAlgorithmExample {
     int columns = 10 ;
     Neighborhood<DoubleSolution> neighborhood = new C9<>(rows, columns) ;
 
-    SequenceGenerator<Integer> solutionIndexGenerator = new IntegerBoundedSequenceGenerator(populationSize);
+    @NotNull SequenceGenerator<Integer> solutionIndexGenerator = new IntegerBoundedSequenceGenerator(populationSize);
 
-    var variation = new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation) ;
+    @NotNull var variation = new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation) ;
 
-    var selection =
+    @NotNull var selection =
         new NeighborhoodSelection<>(
             variation.getMatingPoolSize(),
             solutionIndexGenerator,

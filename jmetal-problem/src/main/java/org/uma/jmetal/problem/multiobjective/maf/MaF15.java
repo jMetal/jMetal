@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -33,7 +34,7 @@ public class MaF15 extends AbstractDoubleProblem {
       Integer numberOfObjectives) {
 
     nk15 = 2;
-    double[] c = new double[numberOfObjectives];
+    double @NotNull [] c = new double[numberOfObjectives];
     c[0] = 3.8 * 0.1 * (1 - 0.1);
     double sumc = 0;
     sumc += c[0];
@@ -43,7 +44,7 @@ public class MaF15 extends AbstractDoubleProblem {
     }
 
     int[] sublen = new int[numberOfObjectives];
-    int[] len = new int[numberOfObjectives + 1];
+    int @NotNull [] len = new int[numberOfObjectives + 1];
     len[0] = 0;
     for (int i = 0; i < numberOfObjectives; i++) {
       sublen[i] = (int) Math.ceil(Math.round(c[i] / sumc * numberOfVariables) / (double) nk15);
@@ -79,7 +80,7 @@ public class MaF15 extends AbstractDoubleProblem {
    * @param solution The solution to evaluate
    */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
 
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;

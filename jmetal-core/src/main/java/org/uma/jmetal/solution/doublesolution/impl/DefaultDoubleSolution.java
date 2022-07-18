@@ -3,6 +3,8 @@ package org.uma.jmetal.solution.doublesolution.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.bounds.Bounds;
@@ -35,7 +37,7 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
   /**
    * Copy constructor
    */
-  public DefaultDoubleSolution(DefaultDoubleSolution solution) {
+  public DefaultDoubleSolution(@NotNull DefaultDoubleSolution solution) {
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
     int bound2 = solution.variables().size();

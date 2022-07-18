@@ -1,5 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +24,7 @@ public abstract class AbstractLSMOP1_4 extends AbstractLSMOP {
       variables.set(i - 1, aux);
     }
 
-    double[] arr = new double[10];
+    double @NotNull [] arr = new double[10];
     int count = 0;
     int bound3 = getNumberOfObjectives();
     for (int i3 = 0; i3 < bound3; i3++) {
@@ -49,7 +51,7 @@ public abstract class AbstractLSMOP1_4 extends AbstractLSMOP {
     for (int i = 2; i <= getNumberOfObjectives(); i += 2) {
       for (int j = 1; j <= this.nk; j++) {
 
-        List<Double> x = new ArrayList<>(getNumberOfVariables());
+        @NotNull List<Double> x = new ArrayList<>(getNumberOfVariables());
         int bound = len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1);
         for (int k = len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1; k <= bound; k++) {
           Double aDouble = variables.get(k - 1);
@@ -78,7 +80,7 @@ public abstract class AbstractLSMOP1_4 extends AbstractLSMOP {
       leftHand.set(i - 1, cum);
     }
 
-    List<Double> inverted = new ArrayList<>();
+    @NotNull List<Double> inverted = new ArrayList<>();
     int bound2 = getNumberOfObjectives();
     for (int i2 = 0; i2 < bound2; i2++) {
       Double aDouble2 = leftHand.get(leftHand.size() - i2 - 1);
@@ -90,10 +92,10 @@ public abstract class AbstractLSMOP1_4 extends AbstractLSMOP {
       rightHand.add(1.0 - variables.get(i - 1));
     }
 
-    List<Double> operand = new ArrayList<>();
+    @NotNull List<Double> operand = new ArrayList<>();
     int bound1 = getNumberOfObjectives();
     for (int i1 = 0; i1 < bound1; i1++) {
-      Double aDouble1 = inverted.get(i1) * rightHand.get(i1);
+      @NotNull Double aDouble1 = inverted.get(i1) * rightHand.get(i1);
       operand.add(aDouble1);
     }
 

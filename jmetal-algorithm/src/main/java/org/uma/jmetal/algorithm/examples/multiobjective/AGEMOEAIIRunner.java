@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.agemoeaii.AGEMOEAIIBuilder;
@@ -31,7 +33,7 @@ public class AGEMOEAIIRunner extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
 
     problem = new DTLZ1();
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
+    @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 30.0;

@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.comparator;
 
 import java.util.Comparator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -23,7 +25,7 @@ public class DoubleVariableComparator implements Comparator<DoubleSolution> {
    * respectively.
    */
   @Override
-  public int compare(DoubleSolution solution1, DoubleSolution solution2) {
+  public int compare(@NotNull DoubleSolution solution1, DoubleSolution solution2) {
     Check.notNull(solution1);
     Check.notNull(solution2);
 

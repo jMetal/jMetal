@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.moead;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
@@ -57,7 +59,7 @@ public class MOEADDRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    MOEADBuilder builder =  new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADD);
+    @NotNull MOEADBuilder builder =  new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADD);
     builder.setCrossover(crossover)
             .setMutation(mutation)
             .setMaxEvaluations(150000)

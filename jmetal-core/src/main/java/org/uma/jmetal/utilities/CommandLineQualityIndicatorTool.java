@@ -5,6 +5,8 @@ import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getIndicator
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.SetCoverage;
 import org.uma.jmetal.util.JMetalLogger;
@@ -31,7 +33,7 @@ public class CommandLineQualityIndicatorTool {
    *
    * @param args
    */
-  private static void checkArguments(String[] args) {
+  private static void checkArguments(String @NotNull [] args) {
     if (args.length != 3) {
       JMetalLogger.logger.info("Invalid arguments");
       printOptions();

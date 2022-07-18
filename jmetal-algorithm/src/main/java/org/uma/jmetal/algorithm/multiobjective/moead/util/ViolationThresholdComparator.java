@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.moead.util;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ConstraintHandling;
 
@@ -58,9 +60,9 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
    * Computes the feasibility ratio
    * Return the ratio of feasible solutions
    */
-  public double feasibilityRatio(List<S> solutionSet) {
+  public double feasibilityRatio(@NotNull List<S> solutionSet) {
       double aux = 0.0;
-      for (S solution : solutionSet) {
+      for (@NotNull S solution : solutionSet) {
           if (ConstraintHandling.numberOfViolatedConstraints(solution) < 0) {
               double v = 1.0;
               aux += v;

@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.singleobjective.geneticalgorithm;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -36,7 +38,7 @@ public class GenerationalGeneticAlgorithmBinaryExample {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    @NotNull Termination termination = new TerminationByEvaluations(25000);
 
     EvolutionaryAlgorithm<BinarySolution> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
         "GGA",

@@ -3,6 +3,7 @@ package org.uma.jmetal.auto.parameter;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class IntegerParameter extends Parameter<Integer> {
@@ -40,7 +41,7 @@ public class IntegerParameter extends Parameter<Integer> {
   }
 
   @Override
-  public String toString() {
+  public @NotNull String toString() {
     StringBuilder result =
             new StringBuilder("Name: "
                     + getName()

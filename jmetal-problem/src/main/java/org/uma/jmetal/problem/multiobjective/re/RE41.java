@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.re;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -22,15 +24,15 @@ public class RE41 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("RE41");
 
-    List<Double> lowerLimit = List.of(0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4);
-    List<Double> upperLimit = List.of(1.5, 1.35, 1.5, 1.5, 2.625, 1.2, 1.2);
+    @NotNull List<Double> lowerLimit = List.of(0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4);
+    @NotNull List<Double> upperLimit = List.of(1.5, 1.35, 1.5, 1.5, 2.625, 1.2, 1.2);
 
     setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double x1 = Math.rint(solution.variables().get(0));
     double x2 = Math.rint(solution.variables().get(1));
     double x3 = Math.rint(solution.variables().get(2));

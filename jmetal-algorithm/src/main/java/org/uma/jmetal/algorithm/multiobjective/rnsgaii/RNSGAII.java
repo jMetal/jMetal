@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -97,7 +99,7 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> implements
     return measureManager ;
   }
 
-  @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+  @Override protected List<S> replacement(List<S> population, @NotNull List<S> offspringPopulation) {
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);

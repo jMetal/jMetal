@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.evaluator.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -12,7 +14,7 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 public class SequentialSolutionListEvaluator<S> implements SolutionListEvaluator<S> {
 
   @Override
-  public List<S> evaluate(List<S> solutionList, Problem<S> problem) throws JMetalException {
+  public List<S> evaluate(@NotNull List<S> solutionList, @NotNull Problem<S> problem) throws JMetalException {
       for (S s : solutionList) {
           problem.evaluate(s);
       }

@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -32,7 +34,7 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     String referenceParetoFront = "resources/referenceFrontsCSV/Srinivas.csv" ;
 
-    var problem = new ComposableDoubleProblem()
+    @NotNull var problem = new ComposableDoubleProblem()
         .setName("Srinivas")
         .addVariable(-20.0, 20.0)
         .addVariable(-20.0, 20.0)
@@ -43,11 +45,11 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
-    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    @NotNull var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
-    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    @NotNull var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
         new RankingAndCrowdingDistanceComparator<>());

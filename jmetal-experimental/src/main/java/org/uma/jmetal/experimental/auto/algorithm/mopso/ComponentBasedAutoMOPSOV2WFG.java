@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.mopso;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
@@ -11,9 +12,9 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class ComponentBasedAutoMOPSOV2WFG {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "WFG4.2D.csv";
+    @NotNull String referenceFrontFileName = "WFG4.2D.csv";
 
-    String[] parameters =
+    String @NotNull [] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.wfg.WFG4 "
             + "--referenceFrontFileName "
             + referenceFrontFileName
@@ -31,8 +32,8 @@ public class ComponentBasedAutoMOPSOV2WFG {
 
     ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+    @NotNull EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    @NotNull RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "irace.MOPSO", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 

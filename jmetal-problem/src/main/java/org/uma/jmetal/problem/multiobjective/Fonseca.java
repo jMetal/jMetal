@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -20,7 +21,7 @@ public class Fonseca extends AbstractDoubleProblem {
     setName("Fonseca");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-4.0);
@@ -34,14 +35,14 @@ public class Fonseca extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
 
 
 
     int numberOfVariables = getNumberOfVariables() ;
 
-    double[] f = new double[solution.objectives().length];
-      double[] x = new double[10];
+    double @NotNull [] f = new double[solution.objectives().length];
+      double @NotNull [] x = new double[10];
       int count = 0;
       for (int i2 = 0; i2 < numberOfVariables; i2++) {
           double v1 = solution.variables().get(i2);

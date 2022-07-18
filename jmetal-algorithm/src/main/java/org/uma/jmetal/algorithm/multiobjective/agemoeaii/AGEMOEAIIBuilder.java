@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoeaii;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEABuilder;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.SurvivalScoreComparator;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -39,13 +41,13 @@ public class AGEMOEAIIBuilder<S extends Solution<?>> extends AGEMOEABuilder<S> {
     return this ;
   }
 
-  public AGEMOEAIIBuilder<S> setPopulationSize(int populationSize) {
+  public @NotNull AGEMOEAIIBuilder<S> setPopulationSize(int populationSize) {
     this.populationSize = populationSize ;
 
     return this ;
   }
 
-  public AGEMOEAIIBuilder<S> setCrossoverOperator(CrossoverOperator<S> crossoverOperator) {
+  public @NotNull AGEMOEAIIBuilder<S> setCrossoverOperator(CrossoverOperator<S> crossoverOperator) {
     this.crossoverOperator = crossoverOperator ;
 
     return this ;
@@ -91,7 +93,7 @@ public class AGEMOEAIIBuilder<S extends Solution<?>> extends AGEMOEABuilder<S> {
     return selectionOperator;
   }
 
-  public AGEMOEAII<S> build() {
+  public @NotNull AGEMOEAII<S> build() {
     return new AGEMOEAII(this) ;
   }
 }

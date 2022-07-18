@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.gde3;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -41,19 +43,19 @@ public class GDE3Builder implements AlgorithmBuilder<GDE3> {
     return this;
   }
 
-  public GDE3Builder setMaxEvaluations(int maxEvaluations) {
+  public @NotNull GDE3Builder setMaxEvaluations(int maxEvaluations) {
     this.maxEvaluations = maxEvaluations;
 
     return this;
   }
 
-  public GDE3Builder setCrossover(DifferentialEvolutionCrossover crossover) {
+  public @NotNull GDE3Builder setCrossover(DifferentialEvolutionCrossover crossover) {
     crossoverOperator = crossover;
 
     return this;
   }
 
-  public GDE3Builder setSelection(DifferentialEvolutionSelection selection) {
+  public @NotNull GDE3Builder setSelection(DifferentialEvolutionSelection selection) {
     selectionOperator = selection;
 
     return this;
@@ -65,7 +67,7 @@ public class GDE3Builder implements AlgorithmBuilder<GDE3> {
     return this ;
   }
 
-  public GDE3 build() {
+  public @NotNull GDE3 build() {
     return new GDE3(problem, populationSize, maxEvaluations, selectionOperator, crossoverOperator, evaluator) ;
   }
 

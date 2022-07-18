@@ -1,12 +1,14 @@
 package org.uma.jmetal.parallel.asynchronous.task;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 public interface ParallelTask<S> extends Serializable {
   S getContents();
   long getIdentifier();
 
-  static <S> ParallelTask<S> create(long identifier, S data) {
+  static <S> @NotNull ParallelTask<S> create(long identifier, S data) {
     if (data == null) {
       throw new IllegalArgumentException("null data");
     } else {

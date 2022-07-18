@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -151,7 +152,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return this;
   }
 
-  public SMPSOBuilder setMutation(MutationOperator<DoubleSolution> mutation) {
+  public @NotNull SMPSOBuilder setMutation(MutationOperator<DoubleSolution> mutation) {
     mutationOperator = mutation;
 
     return this;
@@ -169,7 +170,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return this;
   }
 
-  public SMPSOBuilder setC2Max(double c2Max) {
+  public @NotNull SMPSOBuilder setC2Max(double c2Max) {
     this.c2Max = c2Max;
 
     return this;
@@ -181,7 +182,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return this;
   }
 
-  public SMPSOBuilder setR1Max(double r1Max) {
+  public @NotNull SMPSOBuilder setR1Max(double r1Max) {
     this.r1Max = r1Max;
 
     return this;
@@ -199,7 +200,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return this;
   }
 
-  public SMPSOBuilder setR2Min(double r2Min) {
+  public @NotNull SMPSOBuilder setR2Min(double r2Min) {
     this.r2Min = r2Min;
 
     return this;
@@ -235,7 +236,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return this;
   }
 
-  public SMPSOBuilder setSolutionListEvaluator(SolutionListEvaluator<DoubleSolution> evaluator) {
+  public @NotNull SMPSOBuilder setSolutionListEvaluator(SolutionListEvaluator<DoubleSolution> evaluator) {
     this.evaluator = evaluator ;
 
     return this ;
@@ -253,7 +254,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return this;
   }
 
-  public SMPSO build() {
+  public @NotNull SMPSO build() {
     if (variant.equals(SMPSOVariant.SMPSO)) {
       return new SMPSO(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max,
           r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,

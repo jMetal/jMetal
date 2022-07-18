@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
@@ -49,13 +50,13 @@ public class GenerateReferenceParetoFront implements ExperimentComponent {
 
     createOutputDirectory(outputDirectoryName) ;
 
-    List<String> referenceFrontFileNames = new LinkedList<>() ;
-    for (ExperimentProblem<?> problem : experiment.getProblemList()) {
+    @NotNull List<String> referenceFrontFileNames = new LinkedList<>() ;
+    for (@NotNull ExperimentProblem<?> problem : experiment.getProblemList()) {
       NonDominatedSolutionListArchive<PointSolution> nonDominatedSolutionArchive =
           new NonDominatedSolutionListArchive<PointSolution>() ;
 
-      for (ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
-        String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
+      for (@NotNull ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
+        @NotNull String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
             algorithm.getAlgorithmTag() + "/" + problem.getTag() ;
 
         for (int i = 0; i < experiment.getIndependentRuns(); i++) {
@@ -63,7 +64,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent {
               i + ".csv";
           Front front = new ArrayFront(frontFileName, ",") ;
           List<PointSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
-          GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
+          @NotNull GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
           for (PointSolution solution : solutionList) {
             solutionAttribute.setAttribute(solution, algorithm.getAlgorithmTag());
@@ -71,7 +72,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent {
           }
         }
       }
-      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".csv" ;
+      @NotNull String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".csv" ;
       referenceFrontFileNames.add(problem.getTag() + ".csv");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
           .printObjectivesToFile(referenceSetFileName, ",");
@@ -82,7 +83,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent {
 
   }
 
-  private File createOutputDirectory(String outputDirectoryName) {
+  private @NotNull File createOutputDirectory(String outputDirectoryName) {
     File outputDirectory ;
     outputDirectory = new File(outputDirectoryName) ;
     if (!outputDirectory.exists()) {
@@ -96,11 +97,11 @@ public class GenerateReferenceParetoFront implements ExperimentComponent {
   private void writeFilesWithTheSolutionsContributedByEachAlgorithm(
       String outputDirectoryName, ExperimentProblem<?> problem,
       List<PointSolution> nonDominatedSolutions) throws IOException {
-    GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
+    @NotNull GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
-    for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
+    for (@NotNull ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
         List<PointSolution> solutionsPerAlgorithm = new ArrayList<>();
-        for (PointSolution solution : nonDominatedSolutions) {
+        for (@NotNull PointSolution solution : nonDominatedSolutions) {
             if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
                 solutionsPerAlgorithm.add(solution);
             }

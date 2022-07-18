@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -18,7 +19,7 @@ public class Binh2 extends AbstractDoubleProblem {
     setName("Binh2");
 
     List<Double> lowerLimit = Arrays.asList(0.0, 0.0);
-    List<Double> upperLimit = Arrays.asList(5.0, 3.0);
+    @NotNull List<Double> upperLimit = Arrays.asList(5.0, 3.0);
 
     setVariableBounds(lowerLimit, upperLimit);
   }

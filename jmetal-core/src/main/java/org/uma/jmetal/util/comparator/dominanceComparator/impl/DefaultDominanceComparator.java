@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.comparator.dominanceComparator.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
@@ -21,7 +22,7 @@ public class DefaultDominanceComparator<S extends Solution<?>> implements Domina
    *     is dominated by solution2, respectively.
    */
   @Override
-  public int compare(S solution1, S solution2) {
+  public int compare(@NotNull S solution1, @NotNull S solution2) {
     Check.notNull(solution1);
     Check.notNull(solution2);
     Check.that(

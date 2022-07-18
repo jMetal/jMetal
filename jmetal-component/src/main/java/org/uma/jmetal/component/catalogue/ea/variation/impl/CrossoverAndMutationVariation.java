@@ -2,6 +2,8 @@ package org.uma.jmetal.component.catalogue.ea.variation.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -37,7 +39,7 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
   }
 
   @Override
-  public List<S> variate(List<S> population, List<S> matingPopulation) {
+  public @NotNull List<S> variate(List<S> population, List<S> matingPopulation) {
     int numberOfParents = crossover.getNumberOfRequiredParents();
 
     checkNumberOfParents(matingPopulation, numberOfParents);

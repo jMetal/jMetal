@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -84,7 +85,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
    *
    * @param solutionList The <code>solutionList</code> considered.
    */
-  private void addSolutionSet(List<S> solutionList) {
+  private void addSolutionSet(@NotNull List<S> solutionList) {
     //Calculate the location of all individuals and update the grid
     mostPopulatedHypercube = 0;
     int location;
@@ -136,7 +137,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @param solution    <code>Solution</code> considered to update the grid.
    * @param solutionSet <code>SolutionSet</code> used to update the grid.
    */
-  public void updateGrid(S solution, List<S> solutionSet) {
+  public void updateGrid(@NotNull S solution, List<S> solutionSet) {
 
     int location = location(solution);
     if (location == -1) {
@@ -174,7 +175,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
    *
    * @param solution The <code>Solution</code>.
    */
-  public int location(S solution) {
+  public int location(@NotNull S solution) {
     //Create a int [] to store the range of each objective
     int[] position = new int[numberOfObjectives];
 
@@ -316,7 +317,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * 
    * @return the number of the selected hypercube.
    */
-  public int rouletteWheel(BoundedRandomGenerator<Double> randomGenerator) {
+  public int rouletteWheel(@NotNull BoundedRandomGenerator<Double> randomGenerator) {
     //Calculate the inverse sum
     double inverseSum = 0.0;
     for (int i : hypercubes) {

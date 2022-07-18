@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
@@ -161,7 +163,7 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
     return this.delay;
   }
 
-  public ChartForDynamicProblemsContainer<S> setDelay(int delay) {
+  public @NotNull ChartForDynamicProblemsContainer<S> setDelay(int delay) {
     this.delay = delay;
     return this;
   }

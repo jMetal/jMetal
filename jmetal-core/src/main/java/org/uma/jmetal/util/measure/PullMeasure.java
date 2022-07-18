@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.measure;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A {@link PullMeasure} is a {@link Measure} from which the {@link Value} can
  * be accessed on demand through the {@link #get()} method. As such, a
@@ -17,5 +19,5 @@ public interface PullMeasure<Value> extends Measure<Value> {
 	 * 
 	 * @return the current {@link Value} of the {@link Measure}
 	 */
-	public Value get();
+	public @Nullable Value get();
 }

@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Rastrigin;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Rosenbrock;
@@ -38,7 +39,7 @@ public class LSMOP3 extends AbstractLSMOP1_4 {
   }
 
   @Override
-  protected Function getEvenFunction() {
+  protected @NotNull Function getEvenFunction() {
     return new Rosenbrock();
   }
 

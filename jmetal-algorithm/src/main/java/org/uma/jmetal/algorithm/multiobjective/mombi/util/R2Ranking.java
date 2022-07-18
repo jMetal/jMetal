@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
@@ -17,7 +19,7 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
   private AbstractUtilityFunctionsSet<S> utilityFunctions;
   private List<List<S>> rankedSubpopulations;
   private int numberOfRanks = 0;
-  private R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
+  private @NotNull R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
 
 
   public R2Ranking(AbstractUtilityFunctionsSet<S> utilityFunctions) {
@@ -40,7 +42,7 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
       }
 
       Collections.sort(population, (o1, o2) -> {
-        R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
+        @NotNull R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
         R2SolutionData data1 = (R2SolutionData) attribute.getAttribute(o1);
         R2SolutionData data2 = (R2SolutionData) attribute.getAttribute(o2);
 
@@ -89,7 +91,7 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
   }
 
   @Override
-  public void setAttribute(S solution, R2SolutionData value) {
+  public void setAttribute(@NotNull S solution, R2SolutionData value) {
     this.attribute.setAttribute(solution, value);
   }
 

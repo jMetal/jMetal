@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -24,7 +27,7 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
   /**
    * Creates a new MultiobjectiveTSP problem instance
    */
-  public MultiobjectiveTSP(String distanceFile, String costFile) throws IOException {
+  public MultiobjectiveTSP(@NotNull String distanceFile, @NotNull String costFile) throws IOException {
     distanceMatrix = readProblem(distanceFile) ;
     costMatrix     = readProblem(costFile);
 
@@ -34,7 +37,7 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
   }
 
   /** Evaluate() method */
-  public PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution){
+  public @NotNull PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution){
     double fitness1   ;
     double fitness2   ;
 
@@ -68,14 +71,14 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
   }
 
   private double [][] readProblem(String file) throws IOException {
-    double [][] matrix = null;
+    double [] @Nullable [] matrix = null;
 
     InputStream in = getClass().getResourceAsStream(file);
     if (in == null) {
       in = new FileInputStream(file) ;
     }
     InputStreamReader isr = new InputStreamReader(in);
-    BufferedReader br = new BufferedReader(isr);
+    @NotNull BufferedReader br = new BufferedReader(isr);
 
     StreamTokenizer token = new StreamTokenizer(br);
     try {
@@ -108,7 +111,7 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
           token.nextToken() ;
       }
 
-      double [] c = new double[2*numberOfCities] ;
+      double @NotNull [] c = new double[2*numberOfCities] ;
 
       for (int i = 0; i < numberOfCities; i++) {
         token.nextToken() ;

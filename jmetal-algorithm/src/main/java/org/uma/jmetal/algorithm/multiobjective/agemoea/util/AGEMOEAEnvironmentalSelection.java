@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
@@ -18,7 +20,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
  * @author Annibale Panichella
  */
 public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
-    protected static String attributeId = AGEMOEAEnvironmentalSelection.class.getName();
+    protected static @NotNull String attributeId = AGEMOEAEnvironmentalSelection.class.getName();
     protected double P;
     protected List<Double> intercepts;
     protected int numberOfObjectives;
@@ -29,12 +31,12 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     }
 
     public List execute(List<S> solutionList, int solutionsToSelect) throws JMetalException {
-        Ranking<S> ranking = new FastNonDominatedSortRanking<>() ;
+        @NotNull Ranking<S> ranking = new FastNonDominatedSortRanking<>() ;
         ranking.compute(solutionList) ;
         return selectFromFronts(ranking, solutionsToSelect);
     }
 
-    protected List<S> selectFromFronts(Ranking<S> ranking, int solutionsToSelect) {
+    protected @NotNull List<S> selectFromFronts(@NotNull Ranking<S> ranking, int solutionsToSelect) {
         List<S> population = new ArrayList<>(solutionsToSelect) ;
 
         // Apply the survival score for the first front
@@ -69,7 +71,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      */
     public void computeSurvivalScore(List<S> front){
         // list to keep track of solutions selected when assigning the survival scores
-        List<Integer> selected = new ArrayList<>();
+        @NotNull List<Integer> selected = new ArrayList<>();
 
         // compute ideal point
         List<Double> ideal_point = computeIdealPoint(front);
@@ -99,7 +101,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             intercepts = new ArrayList<>();
             for(int i=0; i<this.numberOfObjectives; i++){
                 double value = 0.0;
-                for (S s : front){
+                for (@NotNull S s : front){
                     if (s.objectives()[i] > value)
                         value = s.objectives()[i];
                 }
@@ -129,7 +131,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         double[] utopia = new double[numberOfObjectives];
         double[] arr = new double[10];
         int count = 0;
-        for (double[] doubles : normalizedFront) {
+        for (double @NotNull [] doubles : normalizedFront) {
             double v = minkowskiDistance(doubles, utopia, P);
             if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
             arr[count++] = v;
@@ -163,8 +165,8 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         }
     }
 
-    protected double[][] pairwiseDistances(List<double[]> normalizedFront, double P) {
-        double[][] distances = new double[normalizedFront.size()][normalizedFront.size()];
+    protected double[][] pairwiseDistances(@NotNull List<double[]> normalizedFront, double P) {
+        double[] @NotNull [] distances = new double[normalizedFront.size()][normalizedFront.size()];
         for (int i = 0; i< normalizedFront.size()-1; i++){
             for (int j = i+1; j< normalizedFront.size(); j++){
                 distances[i][j] = this.minkowskiDistance(normalizedFront.get(i), normalizedFront.get(j), P);
@@ -259,7 +261,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     protected List<S> findExtremes(List<S> front) {
         List<S> extremePoints = new ArrayList<>();
         for (int i=0; i<this.numberOfObjectives; i++){
-            double[] axes = new double[this.numberOfObjectives];
+            double @NotNull [] axes = new double[this.numberOfObjectives];
             axes[i] = 1;
 
             double minDistance = Double.POSITIVE_INFINITY;
@@ -277,7 +279,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         return extremePoints;
     }
 
-    protected double[] findMoreDiverseSolution(double[][] distances, List<Integer> selected, List<Integer> remaining) {
+    protected double[] findMoreDiverseSolution(double[][] distances, @NotNull List<Integer> selected, List<Integer> remaining) {
         double bestValue = 0;
         int bestIndex = -1;
 
@@ -319,7 +321,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      * @param B Second point delimiting the line (direction)
      * @return the perpendicular distance between P and the line AB
      */
-    public double point2LineDistance(double[] P, double[] A, double[] B) {
+    public double point2LineDistance(double @NotNull [] P, double[] A, double[] B) {
         double[] pa = new double[P.length];
         double[] ba = new double[P.length];
         for (int i = 0; i < P.length; i++) {
@@ -344,7 +346,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      * @param array2 Second vector
      * @return the doc product
      */
-    protected double dotProduct(double[] array1, double[] array2){
+    protected double dotProduct(double @NotNull [] array1, double[] array2){
         double sum = 0.0;
         for (int i = 0; i < array1.length; i++) {
             double v = array1[i] * array2[i];
@@ -357,7 +359,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         return attributeId;
     }
 
-    public List<Double> computeIdealPoint(List<S> population) {
+    public @NotNull List<Double> computeIdealPoint(List<S> population) {
         List<Double> ideal_point;
         ideal_point = new ArrayList<>(numberOfObjectives);
 
@@ -373,7 +375,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         return ideal_point;
     }
 
-    public List<Double> constructHyperplane(List<S> population, List<S> extreme_points) {
+    public List<Double> constructHyperplane(List<S> population, @NotNull List<S> extreme_points) {
         // Check whether there are duplicate extreme points.
         // This might happen but the original paper does not mention how to deal with it.
         boolean duplicate = false;
@@ -392,7 +394,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             List<Double> list = new ArrayList<>();
             int bound = numberOfObjectives;
             for (int f = 0; f < bound; f++) {
-                Double objective = extreme_points.get(f).objectives()[f];
+                @NotNull Double objective = extreme_points.get(f).objectives()[f];
                 list.add(objective);
             }
             intercepts = list;
@@ -402,17 +404,17 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             List<Double> b = new ArrayList<>();
             int bound1 = numberOfObjectives;
             for (int i1 = 0; i1 < bound1; i1++) {
-                Double aDouble1 = 1.0;
+                @NotNull Double aDouble1 = 1.0;
                 b.add(aDouble1);
             }
 
-            List<List<Double>> A = extreme_points.stream().<List<Double>>map(s -> {
+            @NotNull List<List<Double>> A = extreme_points.stream().<List<Double>>map(s -> {
                 List<Double> list = new ArrayList<>();
                 double[] array = s.objectives();
                 int bound = numberOfObjectives;
                 for (int i = 0; i < bound; i++) {
                     double v = array[i];
-                    Double aDouble = v;
+                    @NotNull Double aDouble = v;
                     list.add(aDouble);
                 }
                 return list;
@@ -420,10 +422,10 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             List<Double> x = guassianElimination(A, b);
 
             // Find intercepts
-            List<Double> list = new ArrayList<>();
+            @NotNull List<Double> list = new ArrayList<>();
             int bound = numberOfObjectives;
             for (int f = 0; f < bound; f++) {
-                Double aDouble = 1.0 / x.get(f);
+                @NotNull Double aDouble = 1.0 / x.get(f);
                 list.add(aDouble);
             }
             intercepts = list;
@@ -431,7 +433,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         return intercepts;
     }
 
-    public List<Double> guassianElimination(List<List<Double>> A, List<Double> b) {
+    public List<Double> guassianElimination(List<List<Double>> A, @NotNull List<Double> b) {
         List<Double> x;
 
         int N = A.size();

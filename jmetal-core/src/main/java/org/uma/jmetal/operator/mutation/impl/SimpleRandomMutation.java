@@ -1,5 +1,6 @@
 package org.uma.jmetal.operator.mutation.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.bounds.Bounds;
@@ -45,7 +46,7 @@ public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {
 
   /** Execute() method */
   @Override
-  public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
+  public @NotNull DoubleSolution execute(DoubleSolution solution) throws JMetalException {
     if (null == solution) {
       throw new JMetalException("Null parameter");
     }
@@ -63,7 +64,7 @@ public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {
         Double lowerBound = bounds.getLowerBound();
         Double upperBound = bounds.getUpperBound();
         Double randomValue = randomGenerator.getRandomValue();
-        Double value = lowerBound + ((upperBound - lowerBound) * randomValue);
+        @NotNull Double value = lowerBound + ((upperBound - lowerBound) * randomValue);
 
         solution.variables().set(i, value);
       }

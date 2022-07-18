@@ -46,6 +46,7 @@
 //
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class F21RotatedHybridComposition3 extends TestFunc {
@@ -78,7 +79,7 @@ public class F21RotatedHybridComposition3 extends TestFunc {
   };
   private final double[] m_testPoint;
   private final double[] m_testPointM;
-  private final double[] m_fmax;
+  private final double @NotNull [] m_fmax;
 
   // In order to avoid excessive memory allocation,
   // a fixed memory buffer is allocated for each function object.

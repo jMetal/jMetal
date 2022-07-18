@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smpso.SMPSORP;
@@ -56,7 +57,7 @@ public class SMPSORPWithMultipleReferencePointsAndRealTimeChartExample {
     int maxEvaluations = 25000;
     int swarmSize = 100;
 
-      List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
+      @NotNull List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
       for (List<Double> referencePoint : referencePoints) {
           CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
                   swarmSize / referencePoints.size(), referencePoint);
@@ -79,7 +80,7 @@ public class SMPSORPWithMultipleReferencePointsAndRealTimeChartExample {
             -1.0, -1.0,
             evaluation, termination);
 
-    var evaluationObserver = new EvaluationObserver(100);
+    @NotNull var evaluationObserver = new EvaluationObserver(100);
     var runTimeChartObserver = new RunTimeChartObserver<>("SMPSORP", 80, referenceParetoFront);
     runTimeChartObserver.setReferencePointList(referencePoints);
 

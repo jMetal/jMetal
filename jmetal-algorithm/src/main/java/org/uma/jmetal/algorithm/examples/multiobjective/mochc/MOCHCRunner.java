@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.mochc;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.mochc.MOCHCBuilder;
@@ -26,7 +28,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  * evolutionary computation. London, England. July 2007.
  */
 public class MOCHCRunner extends AbstractAlgorithmRunner {
-  public static void main(String[] args) throws Exception {
+  public static void main(String @NotNull [] args) throws Exception {
     CrossoverOperator<BinarySolution> crossoverOperator;
     MutationOperator<BinarySolution> mutationOperator;
     SelectionOperator<List<BinarySolution>, BinarySolution> parentsSelection;
@@ -36,7 +38,7 @@ public class MOCHCRunner extends AbstractAlgorithmRunner {
     BinaryProblem problem ;
 
     String problemName ;
-    String referenceParetoFront = "" ;
+    @NotNull String referenceParetoFront = "" ;
 
     if (args.length == 1) {
       problemName = args[0] ;

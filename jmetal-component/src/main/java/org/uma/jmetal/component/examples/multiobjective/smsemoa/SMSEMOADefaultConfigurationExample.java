@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.smsemoa;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.multiobjective.SMSEMOABuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
@@ -42,7 +44,7 @@ public class SMSEMOADefaultConfigurationExample extends AbstractAlgorithmRunner 
 
     int populationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    @NotNull Termination termination = new TerminationByEvaluations(25000);
 
     var algorithm = new SMSEMOABuilder<>(
             problem,

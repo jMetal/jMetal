@@ -2,6 +2,8 @@ package org.uma.jmetal.util.restartstrategy.impl;
 
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -19,7 +21,7 @@ public class RemoveNRandomSolutions<S extends Solution<?>> implements RemoveSolu
   }
 
   @Override
-  public int remove(List<S> solutionList, DynamicProblem<S, ?> problem) {
+  public int remove(@Nullable List<S> solutionList, DynamicProblem<S, ?> problem) {
     if (solutionList == null) {
       throw new JMetalException("The solution list is null") ;
     } else if (problem == null) {

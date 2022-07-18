@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.DynamicAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.DynamicNSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
@@ -28,16 +30,16 @@ public class DynamicNSGAIIRunner {
    * @param args
    */
   public static void main(String[] args) {
-    DynamicProblem<DoubleSolution, Integer> problem = new FDA2();
+    @NotNull DynamicProblem<DoubleSolution, Integer> problem = new FDA2();
 
     // STEP 2. Create the algorithm
-    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(0.9, 20.0);
+    @NotNull CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(0.9, 20.0);
     MutationOperator<DoubleSolution> mutation =
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection =
         new BinaryTournamentSelection<>();
 
-    InvertedGenerationalDistance igd = new InvertedGenerationalDistance();
+    @NotNull InvertedGenerationalDistance igd = new InvertedGenerationalDistance();
     CoverageFront coverageFront = new CoverageFront(0.055, igd);
     DynamicAlgorithm<List<DoubleSolution>> algorithm =
         new DynamicNSGAII<>(
@@ -56,7 +58,7 @@ public class DynamicNSGAIIRunner {
             coverageFront);
 
     // EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeForDynamicProblemsChartObserver<DoubleSolution> runTimeChartObserver =
+    @NotNull RunTimeForDynamicProblemsChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeForDynamicProblemsChartObserver<>("Dynamic NSGA-II", 80);
 
     // algorithm.getObservable().register(evaluationObserver);

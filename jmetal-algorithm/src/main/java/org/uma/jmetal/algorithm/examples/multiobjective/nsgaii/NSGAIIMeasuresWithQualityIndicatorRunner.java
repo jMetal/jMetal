@@ -4,6 +4,8 @@ import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
@@ -41,7 +43,7 @@ public class NSGAIIMeasuresWithQualityIndicatorRunner extends AbstractAlgorithmR
    * Invoking command:
   java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner problemName [referenceFront]
    */
-  public static void main(String[] args)
+  public static void main(String @NotNull [] args)
           throws JMetalException, InterruptedException, IOException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
@@ -120,16 +122,16 @@ public class NSGAIIMeasuresWithQualityIndicatorRunner extends AbstractAlgorithmR
     }
 
     @Override synchronized public void measureGenerated(List<DoubleSolution> solutionList) {
-      double[][] front = getMatrixWithObjectiveValues(solutionList);
+      double[] @NotNull [] front = getMatrixWithObjectiveValues(solutionList);
 
-      double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceParetoFront);
-      double[][] normalizedFront =
+      double[] @NotNull [] normalizedReferenceFront = NormalizeUtils.normalize(referenceParetoFront);
+      double[] @NotNull [] normalizedFront =
               NormalizeUtils.normalize(
                       front,
                       NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceParetoFront),
                       NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceParetoFront));
 
-      var epsilon = new Epsilon(normalizedReferenceFront) ;
+      @NotNull var epsilon = new Epsilon(normalizedReferenceFront) ;
       var hv = new PISAHypervolume(normalizedReferenceFront) ;
 
       System.out.println("Iteration: " + counter +

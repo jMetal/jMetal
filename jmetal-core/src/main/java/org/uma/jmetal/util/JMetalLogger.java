@@ -10,6 +10,8 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This class provides some facilities to manage loggers. One might use the
@@ -60,7 +62,7 @@ public class JMetalLogger implements Serializable {
 	 *            <code>null</code> to use only the default configuration
 	 * @throws IOException
 	 */
-	public static void configureLoggers(File propertyFile) throws IOException {
+	public static void configureLoggers(@Nullable File propertyFile) throws IOException {
 		// Prepare default configuration
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		PrintStream printer = new PrintStream(stream);
@@ -75,7 +77,7 @@ public class JMetalLogger implements Serializable {
 		printer.println("java.util.logging.ConsoleHandler.level = ALL");
 
 		// Retrieve custom configuration
-		File defaultFile = new File("jMetal.log.ini");
+		@NotNull File defaultFile = new File("jMetal.log.ini");
 		if (propertyFile != null) {
 			printer.println(FileUtils.readFileToString(propertyFile));
 		} else if (defaultFile.exists()) {

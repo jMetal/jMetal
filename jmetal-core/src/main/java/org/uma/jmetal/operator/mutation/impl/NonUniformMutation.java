@@ -1,5 +1,6 @@
 package org.uma.jmetal.operator.mutation.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
@@ -83,7 +84,7 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
 
   /** Execute() method */
   @Override
-  public DoubleSolution execute(DoubleSolution solution) {
+  public @NotNull DoubleSolution execute(DoubleSolution solution) {
     Check.notNull(solution);
 
     doMutation(mutationProbability, solution);

@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.omopso;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
@@ -57,7 +58,7 @@ public class OMOPSOBuilder implements AlgorithmBuilder<OMOPSO> {
     return this ;
   }
 
-  public OMOPSOBuilder setEta(double eta) {
+  public @NotNull OMOPSOBuilder setEta(double eta) {
     this.eta = eta ;
 
     return this ;

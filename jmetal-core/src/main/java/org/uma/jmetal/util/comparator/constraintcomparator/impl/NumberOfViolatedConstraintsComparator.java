@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.comparator.constraintcomparator.impl;
 
 import java.util.Comparator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.comparator.constraintcomparator.ConstraintComparator;
@@ -24,7 +26,7 @@ public class NumberOfViolatedConstraintsComparator<S extends Solution<?>> implem
    * the opposite case, and 0 if they have the same value (this case applies when the two compared solutions
    * have no constraints).
    */
-  public int compare(S solution1, S solution2) {
+  public int compare(@NotNull S solution1, S solution2) {
     Check.notNull(solution1);
     Check.notNull(solution2);
     var numberOfViolatedConstraintsOfSolution1 = ConstraintHandling.numberOfViolatedConstraints(solution1);

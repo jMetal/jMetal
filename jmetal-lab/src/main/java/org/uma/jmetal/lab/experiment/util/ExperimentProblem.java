@@ -1,5 +1,6 @@
 package org.uma.jmetal.lab.experiment.util;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
@@ -19,7 +20,7 @@ public class ExperimentProblem<S extends Solution<?>> {
     this.referenceFront = this.problem.getName() + ".csv";
   }
 
-  public ExperimentProblem(Problem<S> problem) {
+  public ExperimentProblem(@NotNull Problem<S> problem) {
     this(problem,problem.getName());
   }
 

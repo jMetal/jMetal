@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.espea;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.EnergyArchive.ReplacementStrategy;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.ScalarizationWrapper;
@@ -43,7 +45,7 @@ public class ESPEABuilder<S extends Solution<?>> implements AlgorithmBuilder<ESP
   }
 
   @Override
-  public ESPEA<S> build() {
+  public @NotNull ESPEA<S> build() {
     return new ESPEA<>(problem, maxEvaluations, populationSize, crossoverOperator, fullArchiveCrossoverOperator, mutationOperator,
             selectionOperator, scalarization, evaluator, normalizeObjectives, replacementStrategy);
   }

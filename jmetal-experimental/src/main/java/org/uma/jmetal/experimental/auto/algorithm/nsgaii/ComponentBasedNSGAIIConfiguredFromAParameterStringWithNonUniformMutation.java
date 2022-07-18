@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -15,7 +16,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithNonUniformMutation {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "ZDT1.csv" ;
+    @NotNull String referenceFrontFileName = "ZDT1.csv" ;
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
@@ -40,7 +41,7 @@ public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithNonUniformMut
                 + "--nonUniformMutationPerturbation 0.5 ")
             .split("\\s+");
 
-    AutoNSGAII NSGAII = new AutoNSGAII();
+    @NotNull AutoNSGAII NSGAII = new AutoNSGAII();
     NSGAII.parseAndCheckParameters(parameters);
 
     AutoNSGAII.print(NSGAII.fixedParameterList);

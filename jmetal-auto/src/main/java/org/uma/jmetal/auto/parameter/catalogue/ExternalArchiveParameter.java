@@ -1,6 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
@@ -22,7 +24,7 @@ public class ExternalArchiveParameter<S extends Solution<?>> extends Categorical
     this("externalArchive", args, archiveTypes);
   }
 
-  public Archive<S> getParameter() {
+  public @NotNull Archive<S> getParameter() {
     Archive<S> archive;
 
     switch (getValue()) {

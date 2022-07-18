@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.SwingWrapper;
@@ -99,7 +101,7 @@ public class ChartContainer {
         .setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter)
         .setMarkerSize(5);
 
-    double[] xData = new double[] {0};
+    double @NotNull [] xData = new double[] {0};
     double[] yData = new double[] {0};
 
     XYSeries varChartSeries = this.varChart.addSeries(this.name, xData, yData);
@@ -155,7 +157,7 @@ public class ChartContainer {
         .setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter)
         .setMarkerSize(5);
 
-    List<Integer> indicatorIterations = new ArrayList<Integer>();
+    @NotNull List<Integer> indicatorIterations = new ArrayList<Integer>();
     indicatorIterations.add(0);
     List<Double> indicatorValues = new ArrayList<Double>();
     indicatorValues.add(0.0);
@@ -201,7 +203,7 @@ public class ChartContainer {
     ArrayFront front = new ArrayFront(fileName);
     double[][] data = FrontUtils.convertFrontToArray(front);
     double[] xData = getObjectiveValues(data, objective1);
-    double[] yData = getObjectiveValues(data, objective2);
+    double @NotNull [] yData = getObjectiveValues(data, objective2);
     XYSeries referenceFront = this.frontChart.addSeries(name, xData, yData);
     referenceFront.setMarkerColor(Color.red);
   }
@@ -216,7 +218,7 @@ public class ChartContainer {
   }
 
   private double[] getObjectiveValues(double[][] data, int obj) {
-    double[] values = new double[10];
+    double @NotNull [] values = new double[10];
     int count = 0;
     for (double[] datum : data) {
       double v = datum[obj];
@@ -270,7 +272,7 @@ public class ChartContainer {
     return this.delay;
   }
 
-  public ChartContainer setDelay(int delay) {
+  public @NotNull ChartContainer setDelay(int delay) {
     this.delay = delay;
     return this;
   }

@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.FileOutputContext;
 
@@ -29,7 +31,7 @@ public class  DefaultFileOutputContext implements FileOutputContext {
   }
 
   @Override
-  public BufferedWriter getFileWriter() {
+  public @NotNull BufferedWriter getFileWriter() {
     FileOutputStream outputStream ;
     try {
       outputStream = new FileOutputStream(fileName);

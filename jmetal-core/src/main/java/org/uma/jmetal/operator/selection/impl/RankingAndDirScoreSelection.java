@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DirScoreComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -36,7 +37,7 @@ public class RankingAndDirScoreSelection<S extends Solution<?>>
   }
 
   @Override
-  public List<S> execute(List<S> solutionSet) {
+  public @NotNull List<S> execute(List<S> solutionSet) {
     if (referenceVectors == null || referenceVectors.length == 0) {
       throw new JMetalException("reference vectors can not be null.");
     }
@@ -48,7 +49,7 @@ public class RankingAndDirScoreSelection<S extends Solution<?>>
     return dirScoreSelection(ranking);
   }
 
-  private List<S> dirScoreSelection(Ranking<S> ranking) {
+  private List<S> dirScoreSelection(@NotNull Ranking<S> ranking) {
     DirScore<S> dirScore = new DirScore<>(referenceVectors);
     List<S> population = new ArrayList<>(solutionsToSelect);
     int rankingIndex = 0;

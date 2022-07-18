@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -15,7 +17,7 @@ public class Osyczka2 extends AbstractDoubleProblem {
     setNumberOfConstraints(6);
     setName("Osyczka2");
 
-    List<Double> lowerLimit = Arrays.asList(0.0, 0.0, 1.0, 0.0, 1.0, 0.0);
+    @NotNull List<Double> lowerLimit = Arrays.asList(0.0, 0.0, 1.0, 0.0, 1.0, 0.0);
     List<Double> upperLimit = Arrays.asList(10.0, 10.0, 5.0, 6.0, 5.0, 10.0);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -23,7 +25,7 @@ public class Osyczka2 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double[] fx = new double[solution.objectives().length];
 
     double x1, x2, x3, x4, x5, x6;

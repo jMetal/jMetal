@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.zdt;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.stream.IntStream;
@@ -29,7 +30,7 @@ public class ZDT6 extends ZDT1 {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
+    double @NotNull [] f = new double[solution.objectives().length];
 
     double x1;
     x1 = solution.variables().get(0);

@@ -47,6 +47,7 @@
 
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class F02ShiftedSchwefel extends TestFunc {
@@ -56,7 +57,7 @@ public class F02ShiftedSchwefel extends TestFunc {
   static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/schwefel_102_data.txt";
 
   // Shifted global optimum
-  private final double[] m_o;
+  private final double @NotNull [] m_o;
 
   // In order to avoid excessive memory allocation,
   // a fixed memory buffer is allocated for each function object.

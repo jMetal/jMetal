@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
@@ -91,8 +92,8 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
     return offspringPopulation;
   }
 
-  @Override protected List<S> replacement(List<S> population,
-      List<S> offspringPopulation) {
+  @Override protected @NotNull List<S> replacement(List<S> population,
+                                                   List<S> offspringPopulation) {
     for (int i = 0; i < mu; i++) {
       offspringPopulation.add(population.get(i));
     }

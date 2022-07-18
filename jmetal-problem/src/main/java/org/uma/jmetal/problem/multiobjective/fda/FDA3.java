@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -29,7 +30,7 @@ public class FDA3 extends FDA implements Serializable {
     setName("FDA3");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i = limitInfI; i < limitSupI; i++) {
       lowerLimit.add(0.0);
@@ -56,7 +57,7 @@ public class FDA3 extends FDA implements Serializable {
     return solution;
   }
 
-  private double evalF(DoubleSolution solution, int limitInf, int limitSup) {
+  private double evalF(@NotNull DoubleSolution solution, int limitInf, int limitSup) {
     double f;
     double aux = 2.0d * Math.sin(0.5d * Math.PI * time);
     double Ft = Math.pow(10.0d, aux);

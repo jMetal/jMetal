@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -24,7 +25,7 @@ public class RE61 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("RE61");
 
-    List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);
+    @NotNull List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);
     List<Double> upperLimit = List.of(0.45, 0.10, 0.10);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -32,7 +33,7 @@ public class RE61 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
       double[] x = new double[10];
       int count = 0;
       int bound = getNumberOfVariables();

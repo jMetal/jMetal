@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
@@ -41,7 +42,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
 
   @Override
   public void run() throws IOException {
-    String rDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_R_DIRECTORY;
+    @NotNull String rDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_R_DIRECTORY;
     File rOutput;
     rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
@@ -49,8 +50,8 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
       JMetalLogger.logger.info("GenerateWilcoxonTestTablesWithR. Creating " + rDirectoryName + " directory");
     }
     for (QualityIndicator indicator : experiment.getIndicatorList()) {
-      String rFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".R";
-      String latexFileName = indicator.getName() + ".Wilcoxon" + ".tex";
+      @NotNull String rFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".R";
+      @NotNull String latexFileName = indicator.getName() + ".Wilcoxon" + ".tex";
 
       printHeaderLatexCommands(rFileName, latexFileName);
       printTableHeader(indicator, rFileName, latexFileName);
@@ -64,10 +65,10 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
 
   private void printHeaderLatexCommands(String rFileName, String latexFileName) throws IOException {
     try(FileWriter os = new FileWriter(rFileName, false)){
-    String output = "write(\"\", \"" + latexFileName + "\",append=FALSE)";
+    @NotNull String output = "write(\"\", \"" + latexFileName + "\",append=FALSE)";
     os.write(output + "\n");
 
-    String dataDirectory = ".." + "/data";
+    @NotNull String dataDirectory = ".." + "/data";
     os.write("resultDirectory<-\"" + dataDirectory + "\"" + "\n");
     output = "latexHeader <- function() {" + "\n" +
         "  write(\"\\\\documentclass{article}\", \"" + latexFileName + APPEND_STRING +
@@ -83,7 +84,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     }
   }
 
-  private void printEndLatexCommands(String rFileName, String latexFileName) throws IOException {
+  private void printEndLatexCommands(@NotNull String rFileName, String latexFileName) throws IOException {
     try(FileWriter os = new FileWriter(rFileName, true)){
     String output = "latexTail <- function() { " + "\n" +
         "  write(\"\\\\end{document}\", \"" + latexFileName + APPEND_STRING + "}" + "\n";
@@ -91,10 +92,10 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     }
   }
 
-  private void printTableHeader(QualityIndicator indicator, String rFileName, String latexFileName) throws IOException {
+  private void printTableHeader(QualityIndicator indicator, @NotNull String rFileName, String latexFileName) throws IOException {
     try(FileWriter os = new FileWriter(rFileName, true)){
 
-    String latexTableLabel = "";
+    @NotNull String latexTableLabel = "";
     String latexTableCaption = "";
 
     // Write function latexTableHeader
@@ -106,7 +107,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
         "  write(\"." + indicator.getName() + ".}\", \"" + latexFileName + APPEND_STRING;
 
     // Generate function latexTableHeader()
-    String output = "latexTableHeader <- function(problem, tabularString, latexTableFirstLine) {" + "\n" +
+    @NotNull String output = "latexTableHeader <- function(problem, tabularString, latexTableFirstLine) {" + "\n" +
         "  write(\"\\\\begin{table}\", \"" + latexFileName + APPEND_STRING +
         latexTableCaption + "\n" +
         latexTableLabel + "\n" +
@@ -126,7 +127,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
 
   private void printTableTail(String rFileName, String latexFileName) throws IOException {
     // Generate function latexTableTail()
-    try(FileWriter os = new FileWriter(rFileName, true)){
+    try(@NotNull FileWriter os = new FileWriter(rFileName, true)){
 
     String output = "latexTableTail <- function() { " + "\n" +
         "  write(\"\\\\hline\", \"" + latexFileName + APPEND_STRING +
@@ -138,7 +139,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     }
   }
 
-  private void printLines(QualityIndicator indicator, String rFileName, String latexFileName) throws IOException {
+  private void printLines(QualityIndicator indicator, @NotNull String rFileName, String latexFileName) throws IOException {
     try(FileWriter os = new FileWriter(rFileName, true)){
 
     String output ;
@@ -208,7 +209,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     }
   }
 
-  private void printGenerateMainScript(QualityIndicator indicator, String rFileName, String latexFileName) throws IOException {
+  private void printGenerateMainScript(@NotNull QualityIndicator indicator, String rFileName, String latexFileName) throws IOException {
     try(FileWriter os = new FileWriter(rFileName, true)){
 
     // Start of the R script
@@ -228,13 +229,13 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     }
     algorithmList += "\"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + "\") ";
 
-    String latexTabularAlignment = "l";
+    @NotNull String latexTabularAlignment = "l";
     for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
       latexTabularAlignment += "c";
     }
 
     latexTabularAlignment = "l";
-    String latexTableFirstLine = "\\\\hline ";
+    @NotNull String latexTableFirstLine = "\\\\hline ";
 
     for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
       latexTabularAlignment += "c";
@@ -242,7 +243,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     }
     latexTableFirstLine += "\\\\\\\\ \"";
 
-    String tabularString = "tabularString <-c(" + "\""+ latexTabularAlignment + "\""+ ") " ;
+    @NotNull String tabularString = "tabularString <-c(" + "\""+ latexTabularAlignment + "\""+ ") " ;
     String tableFirstLine = "latexTableFirstLine <-c(" + "\"" + latexTableFirstLine + ") " ;
 
     output = "# Constants" + "\n" +

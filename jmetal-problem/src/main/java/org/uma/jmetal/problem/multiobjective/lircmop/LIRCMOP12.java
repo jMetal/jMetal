@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
@@ -25,7 +26,7 @@ public class LIRCMOP12 extends LIRCMOP9 {
     double f0 = solution.objectives()[0];
     double f1 = solution.objectives()[1];
     double N = 4.0, theta = 0.25 * Math.PI;
-    double[] constraint = new double[getNumberOfConstraints()];
+    double @NotNull [] constraint = new double[getNumberOfConstraints()];
     constraint[0] =
         f0 * Math.sin(theta)
             + f1 * Math.cos(theta)

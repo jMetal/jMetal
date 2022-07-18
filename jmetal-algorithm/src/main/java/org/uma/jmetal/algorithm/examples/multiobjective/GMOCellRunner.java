@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
@@ -70,7 +72,7 @@ public class GMOCellRunner extends AbstractAlgorithmRunner {
 
     List<Double> referencePoint = Arrays.asList(0.3, 0.8);
 
-    ArchiveWithReferencePoint<DoubleSolution> archive =
+    @NotNull ArchiveWithReferencePoint<DoubleSolution> archive =
         new CrowdingDistanceArchiveWithReferencePoint<>(100, referencePoint);
 
     algorithm =

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -25,7 +26,7 @@ public class ZDT1 extends AbstractDoubleProblem {
     setName("ZDT1");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
@@ -55,7 +56,7 @@ public class ZDT1 extends AbstractDoubleProblem {
    *
    * @param solution Solution
    */
-  protected double evalG(DoubleSolution solution) {
+  protected double evalG(@NotNull DoubleSolution solution) {
       double g = 0.0;
       int bound = solution.variables().size();
       for (int i = 1; i < bound; i++) {

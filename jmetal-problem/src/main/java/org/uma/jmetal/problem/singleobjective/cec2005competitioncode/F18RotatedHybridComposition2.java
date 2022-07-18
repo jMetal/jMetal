@@ -46,6 +46,7 @@
 //
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class F18RotatedHybridComposition2 extends TestFunc {
@@ -76,8 +77,8 @@ public class F18RotatedHybridComposition2 extends TestFunc {
     0.0, 100.0, 200.0, 300.0, 400.0,
     500.0, 600.0, 700.0, 800.0, 900.0
   };
-  private final double[] m_testPoint;
-  private final double[] m_testPointM;
+  private final double @NotNull [] m_testPoint;
+  private final double @NotNull [] m_testPointM;
   private final double[] m_fmax;
 
   // In order to avoid excessive memory allocation,

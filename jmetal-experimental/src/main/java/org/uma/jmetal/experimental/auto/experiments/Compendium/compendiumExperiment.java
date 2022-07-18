@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -135,7 +137,7 @@ public class compendiumExperiment {
             List<ExperimentProblem<DoubleSolution>> problemList) {
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
         for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-            for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+            for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
                 Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
                         experimentProblem.getProblem(),
                         new SBXCrossover(1.0, 20.0),
@@ -146,7 +148,7 @@ public class compendiumExperiment {
                 algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
             }
 
-            for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+            for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
                 double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
                 double mutationDistributionIndex = 20.0;
                 Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
@@ -161,7 +163,7 @@ public class compendiumExperiment {
             }
 
 
-            for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+            for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
 
                 /* OMOPSO */
                 String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
@@ -197,7 +199,7 @@ public class compendiumExperiment {
                         + "--velocityChangeWhenUpperLimitIsReached -1.0 "
                 )
                         .split("\\s+");
-                AutoMOPSO OMOPSO = new AutoMOPSO();
+                @NotNull AutoMOPSO OMOPSO = new AutoMOPSO();
                 OMOPSO.parseAndCheckParameters(parametersOMOPSO);
                 ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
 
@@ -236,14 +238,14 @@ public class compendiumExperiment {
                         "--velocityChangeWhenUpperLimitIsReached -0.3183"
                 )
                         .split("\\s+");
-                AutoMOPSO AutoMOPSOz = new AutoMOPSO();
+                @NotNull AutoMOPSO AutoMOPSOz = new AutoMOPSO();
                 AutoMOPSOz.parseAndCheckParameters(parametersAMOPSOzWithtConfig);
                 ParticleSwarmOptimizationAlgorithm amopsoz = AutoMOPSOz.create();
 
                 algorithms.add(new ExperimentAlgorithm<>(amopsoz, "AMOPSOz", experimentProblem, run));
 
                 /* AMOPSOd with config*/
-                String[] parametersAMOPSOdWithConfig =
+                String @NotNull [] parametersAMOPSOdWithConfig =
                         ("--problemName "
                                 + experimentProblem.getProblem().getClass().getName()
                                 + " "
@@ -287,7 +289,7 @@ public class compendiumExperiment {
 
 
                 /* AMOPSOw */
-                String[] parametersAutoMOPSOwWithtConfig =
+                String @NotNull [] parametersAutoMOPSOwWithtConfig =
                         ("--problemName "
                                 + experimentProblem.getProblem().getClass().getName()
                                 + " "

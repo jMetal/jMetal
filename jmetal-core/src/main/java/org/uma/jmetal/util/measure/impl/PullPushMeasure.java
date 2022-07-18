@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.measure.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.measure.Measure;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.PullMeasure;
@@ -103,7 +104,7 @@ public class PullPushMeasure<Value> implements PullMeasure<Value>,
 	 *            the {@link Value} to return before the next notification of
 	 *            the {@link PushMeasure}
 	 */
-	public PullPushMeasure(PushMeasure<Value> push, Value initialValue) {
+	public PullPushMeasure(@NotNull PushMeasure<Value> push, Value initialValue) {
 		this(new MeasureFactory().createPullFromPush(push, initialValue), push,
 				push);
 	}

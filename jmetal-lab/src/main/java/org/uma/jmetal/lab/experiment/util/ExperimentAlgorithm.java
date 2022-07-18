@@ -2,6 +2,8 @@ package org.uma.jmetal.lab.experiment.util;
 
 import java.io.File;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.solution.Solution;
@@ -22,14 +24,14 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
 
   /** Constructor */
   public ExperimentAlgorithm(
-      Algorithm<Result> algorithm, String algorithmTag, ExperimentProblem<S> problem, int runId) {
+          Algorithm<Result> algorithm, String algorithmTag, @NotNull ExperimentProblem<S> problem, int runId) {
     this.algorithm = algorithm;
     this.algorithmTag = algorithmTag;
     this.problemTag = problem.getTag();
     this.runId = runId;
   }
 
-  public ExperimentAlgorithm(Algorithm<Result> algorithm, ExperimentProblem<S> problem, int runId) {
+  public ExperimentAlgorithm(@NotNull Algorithm<Result> algorithm, ExperimentProblem<S> problem, int runId) {
 
     this(algorithm, algorithm.getName(), problem, runId);
   }
@@ -48,9 +50,9 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
       }
     }
 
-    String funFile =
+    @NotNull String funFile =
         outputDirectoryName + "/" + experimentData.getOutputParetoFrontFileName() + runId + ".csv";
-    String varFile =
+    @NotNull String varFile =
         outputDirectoryName + "/" + experimentData.getOutputParetoSetFileName() + runId + ".csv";
     JMetalLogger.logger.info(
         " Running algorithm: "

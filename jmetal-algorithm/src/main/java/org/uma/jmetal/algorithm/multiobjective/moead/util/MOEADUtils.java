@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
@@ -48,7 +50,7 @@ public class MOEADUtils {
     }
   }
 
-  public static double distVector(double[] vector1, double[] vector2) {
+  public static double distVector(double @NotNull [] vector1, double[] vector2) {
     int dim = vector1.length;
       double sum = 0.0;
       for (int n = 0; n < dim; n++) {
@@ -75,7 +77,7 @@ public class MOEADUtils {
 
   public static void randomPermutation(int[] perm, int size) {
     JMetalRandom randomGenerator = JMetalRandom.getInstance();
-    int[] index = new int[size];
+    int @NotNull [] index = new int[size];
     boolean[] flag = new boolean[size];
 
     for (int n = 0; n < size; n++) {
@@ -111,8 +113,8 @@ public class MOEADUtils {
    * @param <S>
    * @return
    */
-  public static <S extends Solution<?>> List<S> getSubsetOfEvenlyDistributedSolutions(
-      List<S> solutionList, int newSolutionListSize) {
+  public static <S extends Solution<?>> @NotNull List<S> getSubsetOfEvenlyDistributedSolutions(
+          @Nullable List<S> solutionList, int newSolutionListSize) {
     List<S> resultSolutionList = new ArrayList<>(newSolutionListSize);
     if (solutionList == null) {
       throw new JMetalException("The solution list is null");
@@ -141,7 +143,7 @@ public class MOEADUtils {
       lambda[i][1] = 1 - a;
     }
 
-    IdealPoint idealPoint = new IdealPoint(2);
+    @NotNull IdealPoint idealPoint = new IdealPoint(2);
       for (S solution : solutionList) {
           idealPoint.update(solution.objectives());
       }
@@ -168,9 +170,9 @@ public class MOEADUtils {
   }
 
   public static void shuffle(int sequence[]) {
-    JMetalRandom randomGenerator = JMetalRandom.getInstance();
+    @NotNull JMetalRandom randomGenerator = JMetalRandom.getInstance();
     int[] index = new int[sequence.length];
-    boolean[] flag = new boolean[sequence.length];
+    boolean @NotNull [] flag = new boolean[sequence.length];
     System.arraycopy(sequence, 0, index, 0, sequence.length);
 
     for (int n = 0; n < sequence.length; n++) {
@@ -197,9 +199,9 @@ public class MOEADUtils {
   }
 
   private static <S extends Solution<?>> void moreThanTwoObjectivesCase(
-      List<S> solutionList, List<S> resultSolutionList, int newSolutionListSize) {
+          @NotNull List<S> solutionList, @NotNull List<S> resultSolutionList, int newSolutionListSize) {
 
-    Distance<S, List<S>> distance =
+    @NotNull Distance<S, List<S>> distance =
         new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
 
     int randomIndex = JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1);
@@ -208,7 +210,7 @@ public class MOEADUtils {
     List<S> candidate;
     resultSolutionList.add(solutionList.get(randomIndex));
 
-      List<S> list = new ArrayList<>();
+      @NotNull List<S> list = new ArrayList<>();
       int bound = solutionList.size();
       for (int i1 = 0; i1 < bound; i1++) {
           if (i1 != randomIndex) {
@@ -242,7 +244,7 @@ public class MOEADUtils {
   }
 
   private static <S extends Solution<?>> double scalarizingFitnessFunction(
-      S currentBest, double[] lambda, IdealPoint idealPoint) {
+          @NotNull S currentBest, double[] lambda, IdealPoint idealPoint) {
 
     double maxFun = -1.0e+30;
 

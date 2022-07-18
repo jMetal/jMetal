@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -28,7 +29,7 @@ public class WFGHypervolume extends Hypervolume {
    *
    * @param referencePoint
    */
-  public WFGHypervolume(double[] referencePoint) {
+  public WFGHypervolume(double @NotNull [] referencePoint) {
     super(referencePoint);
   }
 
@@ -43,7 +44,7 @@ public class WFGHypervolume extends Hypervolume {
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "WFG Hypervolume quality indicator" ;
   }
 
@@ -134,7 +135,7 @@ public class WFGHypervolume extends Hypervolume {
     return 2;
   }
 
-  static boolean dominates1way(Point p, Point q, int k)
+  static boolean dominates1way(@NotNull Point p, @NotNull Point q, int k)
   // returns true if p dominates q or p == q, false otherwise
   // the assumption is that q doesn't dominate p
   // k is the highest index inspected
@@ -241,7 +242,7 @@ public class WFGHypervolume extends Hypervolume {
     fr++;
   }
 
-  static double hv2(Front ps, int k)
+  static double hv2(@NotNull Front ps, int k)
   // returns the hypervolume of ps[0 .. k-1] in 2D
   // assumes that ps is sorted improving
   {
@@ -269,7 +270,7 @@ public class WFGHypervolume extends Hypervolume {
       return volume;
   }
 
-  static double inclhv2(Point p, Point q)
+  static double inclhv2(Point p, @NotNull Point q)
   // returns the hypervolume of {p, q}
   {
     double vp = 1;
@@ -284,7 +285,7 @@ public class WFGHypervolume extends Hypervolume {
     return suma;
   }
 
-  static double inclhv3(Point p, Point q, Point r)
+  static double inclhv3(@NotNull Point p, @NotNull Point q, Point r)
   // returns the hypervolume of {p, q, r}
   {
     double vp = 1;
@@ -325,7 +326,7 @@ public class WFGHypervolume extends Hypervolume {
     return vp + vq + vr - vpq - vpr - vqr + vpqr;
   }
 
-  static double inclhv4(Point p, Point q, Point r, Point s)
+  static double inclhv4(Point p, @NotNull Point q, @NotNull Point r, Point s)
   // returns the hypervolume of {p, q, r, s}
   {
     double vp = 1;
@@ -463,7 +464,7 @@ public class WFGHypervolume extends Hypervolume {
             - vpqrs;
   }
 
-  static double exclhv(Front ps, int p)
+  static double exclhv(@NotNull Front ps, int p)
   // returns the exclusive hypervolume of ps[p] relative to ps[0 .. p-1]
   {
     makeDominatedBit(ps, p);
@@ -541,7 +542,7 @@ public class WFGHypervolume extends Hypervolume {
    * @param front          The front
    * @param referenceFront The true pareto front
    */
-  private double hypervolume(double[][] front, double[][] referenceFront) {
+  private double hypervolume(double[] @NotNull [] front, double[] @NotNull [] referenceFront) {
     double[][] invertedFront;
     invertedFront = VectorUtils.getInvertedFront(front);
 

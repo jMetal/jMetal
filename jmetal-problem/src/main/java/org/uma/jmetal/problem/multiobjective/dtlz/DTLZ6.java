@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -74,7 +76,7 @@ public class DTLZ6 extends AbstractDoubleProblem {
       theta[i] = t * (1.0 + 2.0 * g * x[i]);
     }
 
-    double[] arr = new double[10];
+    double @NotNull [] arr = new double[10];
     int count = 0;
     for (int i1 = 0; i1 < numberOfObjectives; i1++) {
       double v = 1.0 + g;

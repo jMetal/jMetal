@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -80,7 +81,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
     // main procedure
     do {
-      int[] permutation = new int[populationSize];
+      int @NotNull [] permutation = new int[populationSize];
       MOEADUtils.randomPermutation(permutation, populationSize);
 
       for (int i = 0; i < populationSize; i++) {
@@ -162,7 +163,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
         rnd2 = randomGenerator.nextInt(0, activeSize - 1);
       } while (rnd1 == rnd2);  // in a very extreme case, this will be a dead loop
       ArrayList<Integer> list1 = new ArrayList<>();
-      ArrayList<Integer> list2 = new ArrayList<>();
+      @NotNull ArrayList<Integer> list2 = new ArrayList<>();
       int id1 = activeList.get(rnd1);
       int id2 = activeList.get(rnd2);
       for (int i = 0; i < populationSize; i++) {
@@ -287,7 +288,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
         // find the index of the solution in the last non-domination level, and its corresponding subregion
         int[] idxArray = new int[frontSize];
-        int[] regionArray = new int[frontSize];
+        int @NotNull [] regionArray = new int[frontSize];
 
         for (int i = 0; i < frontSize; i++) {
           idxArray[i] = findPosition(lastFront.get(i));
@@ -525,7 +526,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
       }
     }
 
-    ArrayList<Integer> dominateList = new ArrayList<>();  // used to keep the solutions dominated by 'indiv'
+    @NotNull ArrayList<Integer> dominateList = new ArrayList<>();  // used to keep the solutions dominated by 'indiv'
     int level = 0;
     for (int i = 0; i < num_ranks; i++) {
       level = i;
@@ -790,7 +791,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
    * delete 'indiv' based on traditional method. However, the subregion of 'indiv' only has one
    * solution, so it should be kept)
    */
-  public void deleteCrowdRegion1(S indiv, int location) {
+  public void deleteCrowdRegion1(@NotNull S indiv, int location) {
 
     // find the most crowded subregion, if more than one such subregion exists, keep them in the crowdList
     ArrayList<Integer> crowdList = new ArrayList<>();
@@ -885,7 +886,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
    * the solution in the 'parentLocation' subregion, but since this subregion only has one solution,
    * it should be kept)
    */
-  public void deleteCrowdRegion2(S indiv, int location) {
+  public void deleteCrowdRegion2(@NotNull S indiv, int location) {
 
     double indivFitness = fitnessFunction(indiv, lambda[location]);
 
@@ -934,7 +935,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     }
 
     // find the solution indices within the 'crowdIdx' subregion
-    ArrayList<Integer> indList = new ArrayList<>();
+    @NotNull ArrayList<Integer> indList = new ArrayList<>();
     for (int i = 0; i < populationSize; i++) {
       if (subregionIdx[crowdIdx][i] == 1) {
         indList.add(i);
@@ -946,7 +947,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     }
 
     // find the solution with the largest rank
-    ArrayList<Integer> maxRankList = new ArrayList<>();
+    @NotNull ArrayList<Integer> maxRankList = new ArrayList<>();
     //int maxRank = ((DoubleSolution) population.get(indList.get(0))).getRank();
     int maxRank = (int) population.get(indList.get(0)).attributes().get(ranking.getAttributedId());
     maxRankList.add(indList.get(0));
@@ -1138,7 +1139,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   public void deleteCrowdIndiv_same(int crowdIdx, int nicheCount, double indivFitness, S indiv) {
 
     // find the solution indices within this crowdIdx subregion
-      ArrayList<Integer> indList = new ArrayList<>();
+      @NotNull ArrayList<Integer> indList = new ArrayList<>();
       int bound = populationSize;
       for (int i1 = 0; i1 < bound; i1++) {
           if (subregionIdx[crowdIdx][i1] == 1) {
@@ -1177,7 +1178,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
       int bound = populationSize;
       for (int i1 = 0; i1 < bound; i1++) {
           if (subregionIdx[crowdIdx][i1] == 1) {
-              Integer integer = i1;
+              @NotNull Integer integer = i1;
               indList.add(integer);
           }
       }
@@ -1238,7 +1239,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   /**
    * find the index of the solution 'indiv' in the population
    */
-  public int findPosition(S indiv) {
+  public int findPosition(@NotNull S indiv) {
 
       int bound = populationSize;
       for (int i = 0; i < bound; i++) {
@@ -1294,7 +1295,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
    * check the dominance relationship between a and b: 1 -> a dominates b, -1 -> b dominates a 0 ->
    * non-dominated with each other
    */
-  public int checkDominance(S a, S b) {
+  public int checkDominance(@NotNull S a, S b) {
 
     int flag1 = 0;
     int flag2 = 0;
@@ -1366,7 +1367,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     return distance;
   }
 
-  public double calculateDistance2(S indiv, double[] lambda,
+  public double calculateDistance2(@NotNull S indiv, double[] lambda,
                                    double[] z_, double[] nz_) {
 
     // normalize the weight vector (line segment)
@@ -1379,7 +1380,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     double[] realB;
 
     // difference between current point and reference point
-      double[] result = new double[10];
+      double @NotNull [] result = new double[10];
       int count1 = 0;
       int bound1 = problem.getNumberOfObjectives();
       for (int i1 = 0; i1 < bound1; i1++) {
@@ -1394,7 +1395,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     double d1 = Math.abs(innerproduct(realA, lambda));
 
     // distance to the line segment
-      double[] arr = new double[10];
+      double @NotNull [] arr = new double[10];
       int count = 0;
       int bound = problem.getNumberOfObjectives();
       for (int i = 0; i < bound; i++) {
@@ -1413,7 +1414,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   /**
    * Calculate the dot product of two vectors
    */
-  public double innerproduct(double[] vec1, double[] vec2) {
+  public double innerproduct(double @NotNull [] vec1, double[] vec2) {
       double sum = 0.0;
       for (int i = 0; i < vec1.length; i++) {
           double v = vec1[i] * vec2[i];
@@ -1452,7 +1453,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "MOEADD";
   }
 

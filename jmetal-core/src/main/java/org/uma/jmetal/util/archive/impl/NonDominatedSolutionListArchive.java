@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
@@ -64,7 +66,7 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
       boolean solutionInserted) {
     boolean isDominated = false;
     boolean isContained = false;
-    Iterator<S> iterator = solutionList.iterator();
+    @NotNull Iterator<S> iterator = solutionList.iterator();
     while (((!isDominated) && (!isContained)) && (iterator.hasNext())) {
       S listIndividual = iterator.next();
       int flag = dominanceComparator.compare(solution, listIndividual);

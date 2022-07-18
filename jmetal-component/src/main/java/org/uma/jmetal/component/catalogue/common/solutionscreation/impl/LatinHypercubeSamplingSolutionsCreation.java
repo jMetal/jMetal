@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -23,7 +24,7 @@ public class LatinHypercubeSamplingSolutionsCreation
     this.numberOfSolutionsToCreate = numberOfSolutionsToCreate;
   }
 
-  public List<DoubleSolution> create() {
+  public @NotNull List<DoubleSolution> create() {
     int[][] latinHypercube = new int[numberOfSolutionsToCreate][problem.getNumberOfVariables()];
     for (int dim = 0; dim < problem.getNumberOfVariables(); dim++) {
       List<Integer> permutation = getPermutation(numberOfSolutionsToCreate);
@@ -55,7 +56,7 @@ public class LatinHypercubeSamplingSolutionsCreation
   }
 
   private List<Integer> getPermutation(int permutationLength) {
-      List<Integer> randomSequence = new ArrayList<>(permutationLength);
+      @NotNull List<Integer> randomSequence = new ArrayList<>(permutationLength);
       for (int i = 0; i < permutationLength; i++) {
           Integer integer = i;
           randomSequence.add(integer);

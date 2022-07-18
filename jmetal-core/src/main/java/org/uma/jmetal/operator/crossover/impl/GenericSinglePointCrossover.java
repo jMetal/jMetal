@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
@@ -36,7 +38,7 @@ public class GenericSinglePointCrossover<S extends BinarySolution> implements Cr
      * Constructor
      */
   public GenericSinglePointCrossover(
-      double crossoverProbability, RandomGenerator<Double> randomGenerator) {
+          double crossoverProbability, @NotNull RandomGenerator<Double> randomGenerator) {
     this(
         crossoverProbability,
         randomGenerator,
@@ -84,7 +86,7 @@ public class GenericSinglePointCrossover<S extends BinarySolution> implements Cr
    * @return An array containing the two offspring
    */
   public List<S> doCrossover(
-      double probability, S parent1, S parent2) {
+          double probability, @NotNull S parent1, @NotNull S parent2) {
     List<S> offspring = new ArrayList<>(2);
     offspring.add((S) parent1.copy());
     offspring.add((S) parent2.copy());

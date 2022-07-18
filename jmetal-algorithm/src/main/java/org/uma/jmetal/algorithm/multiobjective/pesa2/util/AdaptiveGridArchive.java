@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.pesa2.util;
 
 import java.util.Comparator;
 import java.util.Iterator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AdaptiveGrid;
 import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
@@ -47,9 +49,9 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
    * otherwise.
    */
   @Override
-  public boolean add(S solution) {
+  public boolean add(@NotNull S solution) {
     //Iterator of individuals over the list
-    Iterator<S> iterator = getSolutionList().iterator();
+    @NotNull Iterator<S> iterator = getSolutionList().iterator();
 
     while (iterator.hasNext()) {
       S element = iterator.next();

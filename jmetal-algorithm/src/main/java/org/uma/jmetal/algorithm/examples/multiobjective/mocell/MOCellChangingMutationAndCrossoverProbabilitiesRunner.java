@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.mocell;
 
-import java.io.FileNotFoundException;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCell;
@@ -25,6 +24,9 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.neighborhood.impl.C9;
 
+import java.io.FileNotFoundException;
+import java.util.List;
+
 /**
  * Class to configure and run the MOCell algorithm
  *
@@ -38,7 +40,7 @@ public class MOCellChangingMutationAndCrossoverProbabilitiesRunner extends Abstr
    * Invoking command:
     java org.uma.jmetal.runner.multiobjective.MOCellRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;

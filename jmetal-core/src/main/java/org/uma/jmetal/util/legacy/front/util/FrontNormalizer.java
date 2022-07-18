@@ -1,6 +1,9 @@
 package org.uma.jmetal.util.legacy.front.util;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.front.Front;
@@ -20,7 +23,7 @@ public class FrontNormalizer {
    * Constructor.
    * @param referenceFront
    */
-  public FrontNormalizer(List<? extends Solution<?>> referenceFront) {
+  public FrontNormalizer(@Nullable List<? extends Solution<?>> referenceFront) {
     if (referenceFront == null) {
       throw new JMetalException("The reference front is null") ;
     }
@@ -32,7 +35,7 @@ public class FrontNormalizer {
    * Constructor.
    * @param referenceFront
    */
-  public FrontNormalizer(Front referenceFront) {
+  public FrontNormalizer(@Nullable Front referenceFront) {
     if (referenceFront == null) {
       throw new JMetalException("The reference front is null") ;
     }
@@ -87,7 +90,7 @@ public class FrontNormalizer {
     return getNormalizedFront(front, maximumValues, minimumValues);
   }
 
-  private Front getNormalizedFront(Front front, double[] maximumValues, double[] minimumValues) {
+  private Front getNormalizedFront(Front front, double @NotNull [] maximumValues, double[] minimumValues) {
    if (front.getNumberOfPoints() == 0) {
       throw new JMetalException("The front is empty") ;
     } else if (front.getPoint(0).getDimension() != maximumValues.length) {
@@ -96,7 +99,7 @@ public class FrontNormalizer {
           + "is different from the length of the maximum array (" + maximumValues.length+")") ;
     }
 
-    Front normalizedFront = new ArrayFront(front) ;
+    @NotNull Front normalizedFront = new ArrayFront(front) ;
     int numberOfPointDimensions = front.getPoint(0).getDimension() ;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {

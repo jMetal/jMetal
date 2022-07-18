@@ -1,11 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoeaii.util;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.IntStream;
-
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.solution.Solution;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Environmental Selection used in AGE-MOEA-II (Adaptive GEometry-based Many-Objective Evolutionary Algorithm II)
@@ -118,7 +118,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
      * @param x
      * @return value of the derivative for Lp with p=x
      */
-    protected double originalFunction(double[] point, double x) {
+    protected double originalFunction(double @NotNull [] point, double x) {
         double f = 0.0;
         for (double v : point) {
             double pow = Math.pow(Math.abs(v), x);
@@ -155,7 +155,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
      * @param p curvature of the Lp manifold
      * @return projected point
      */
-    protected double[] projectPoint(double[] point, double p) {
+    protected double[] projectPoint(double @NotNull [] point, double p) {
         double[] projection = point.clone();
         double dist = minkowskiDistance(point, ZERO, p);
         for (int i = 0; i < point.length; i++)
@@ -171,7 +171,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
      * @return middle point
      */
     protected double[] midPoint(double[] A, double[] B) {
-        double[] midpoint = new double[10];
+        double @NotNull [] midpoint = new double[10];
         int count = 0;
         for (int i = 0; i < A.length; i++) {
             double v = A[i] * 0.5 + B[i] * 0.5;

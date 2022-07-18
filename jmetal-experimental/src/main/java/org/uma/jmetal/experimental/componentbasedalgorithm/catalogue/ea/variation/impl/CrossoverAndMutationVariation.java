@@ -2,6 +2,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variati
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.Variation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -20,9 +22,9 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
   private int offspringPopulationSize ;
 
   public CrossoverAndMutationVariation(
-      int offspringPopulationSize,
-      CrossoverOperator<S> crossover,
-      MutationOperator<S> mutation) {
+          int offspringPopulationSize,
+          @NotNull CrossoverOperator<S> crossover,
+          MutationOperator<S> mutation) {
     this.crossover = crossover ;
     this.mutation = mutation ;
     this.offspringPopulationSize = offspringPopulationSize ;
@@ -37,14 +39,14 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
   }
 
   @Override
-  public List<S> variate(List<S> population, List<S> matingPopulation) {
+  public @NotNull List<S> variate(List<S> population, List<S> matingPopulation) {
     int numberOfParents = crossover.getNumberOfRequiredParents();
 
     checkNumberOfParents(matingPopulation, numberOfParents);
 
     List<S> offspringPopulation = new ArrayList<>(offspringPopulationSize);
     for (int i = 0; i < matingPoolSize; i += numberOfParents) {
-      List<S> parents = new ArrayList<>(numberOfParents);
+      @NotNull List<S> parents = new ArrayList<>(numberOfParents);
       for (int j = 0; j < numberOfParents; j++) {
         parents.add(matingPopulation.get(i + j));
       }
@@ -78,7 +80,7 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
    * @param population
    * @param numberOfParentsForCrossover
    */
-  private void checkNumberOfParents(List<S> population, int numberOfParentsForCrossover) {
+  private void checkNumberOfParents(@NotNull List<S> population, int numberOfParentsForCrossover) {
     if ((population.size() % numberOfParentsForCrossover) != 0) {
       throw new JMetalException("Wrong number of parents: the remainder if the " +
           "population size (" + population.size() + ") is not divisible by " +

@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.multiobjective.lircmop;
 
 import static java.lang.Math.sqrt;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Arrays;
@@ -28,8 +29,8 @@ public class LIRCMOP10 extends LIRCMOP8 {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
-      double[] x = new double[10];
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
+      double @NotNull [] x = new double[10];
       int count = 0;
       int bound = getNumberOfVariables();
       for (int i = 0; i < bound; i++) {

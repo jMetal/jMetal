@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -69,7 +71,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   private JMetalRandom randomGenerator;
   private SolutionListEvaluator<DoubleSolution> evaluator;
 
-  public DMOPSO(DoubleProblem problem, int swarmSize,
+  public DMOPSO(@NotNull DoubleProblem problem, int swarmSize,
                 int maxIterations, double r1Min, double r1Max,
                 double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
                 double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
@@ -148,7 +150,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   protected List<DoubleSolution> createInitialSwarm() {
-    List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
+    @NotNull List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
     for (int i = 0; i < swarmSize; i++) {
@@ -176,7 +178,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
   protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < getSwarm().size(); i++) {
-      DoubleSolution particle = (DoubleSolution)getSwarm().get(i).copy() ;
+      @Nullable DoubleSolution particle = (DoubleSolution)getSwarm().get(i).copy() ;
       localBest[i] = particle;
     }
   }
@@ -243,14 +245,14 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
         // ();
         String path = "/" + dataDirectory + "/" + dataFileName;
 
-        InputStream inputStream =
+        @Nullable InputStream inputStream =
             getClass()
                 .getClassLoader()
                 .getResourceAsStream(path);
         if (inputStream == null) {
           inputStream = new FileInputStream(dataDirectory + "/" + dataFileName);
         }
-        InputStreamReader isr = new InputStreamReader(inputStream);
+        @NotNull InputStreamReader isr = new InputStreamReader(inputStream);
         BufferedReader br = new BufferedReader(isr);
 
         int i = 0;
@@ -333,7 +335,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     }
   }
 
-  private double fitnessFunction(DoubleSolution sol, double[] lambda){
+  private double fitnessFunction(@NotNull DoubleSolution sol, double[] lambda){
     double fitness = 0.0;
 
     if (functionType == FunctionType.TCHE) {
@@ -458,7 +460,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     }
   }
 
-  private double velocityConstriction(double v, double[] deltaMax, double[] deltaMin,
+  private double velocityConstriction(double v, double @NotNull [] deltaMax, double[] deltaMin,
                                       int variableIndex, int particleIndex) {
 
     double result;
@@ -538,7 +540,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     return this.name ;
   }
 
-  @Override public String getDescription() {
+  @Override public @NotNull String getDescription() {
     return "MOPSO with decomposition" ;
   }
 }

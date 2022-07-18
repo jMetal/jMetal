@@ -3,6 +3,7 @@ package org.uma.jmetal.problem.multiobjective.re;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -31,7 +32,7 @@ public class RE32 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
     double x3 = solution.variables().get(2);
@@ -48,7 +49,7 @@ public class RE32 extends AbstractDoubleProblem {
     solution.objectives()[0] = (1.10471 * x1 * x1 * x2) + (0.04811 * x3 * x4) * (14.0 + x2);
     solution.objectives()[1] = (4 * P * L * L * L) / (E * x4 * x3 * x3 * x3);
 
-    double[] g = new double[numberOfOriginalConstraints];
+    double @NotNull [] g = new double[numberOfOriginalConstraints];
     double M = P * (L + (x2 / 2));
     double tmpVar = ((x2 * x2) / 4.0) + Math.pow((x1 + x3) / 2.0, 2);
     double R = Math.sqrt(tmpVar);

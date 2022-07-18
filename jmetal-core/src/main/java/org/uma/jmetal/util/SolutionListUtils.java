@@ -3,6 +3,9 @@ package org.uma.jmetal.util;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
@@ -23,7 +26,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class SolutionListUtils {
 
   public static <S extends Solution<?>> List<S> getNonDominatedSolutions(List<S> solutionList) {
-    Archive<S> nonDominatedSolutionArchive = new NonDominatedSolutionListArchive<>() ;
+    @NotNull Archive<S> nonDominatedSolutionArchive = new NonDominatedSolutionListArchive<>() ;
       for (S s : solutionList) {
           nonDominatedSolutionArchive.add(s);
       }
@@ -31,7 +34,7 @@ public class SolutionListUtils {
       return nonDominatedSolutionArchive.getSolutionList();
   }
 
-  public <S> S findWorstSolution(Collection<S> solutionList, Comparator<S> comparator) {
+  public <S> S findWorstSolution(@Nullable Collection<S> solutionList, Comparator<S> comparator) {
     if ((solutionList == null) || (solutionList.isEmpty())) {
       throw new IllegalArgumentException("No solution provided: " + solutionList);
     }
@@ -83,7 +86,7 @@ public class SolutionListUtils {
    * @return The index of the best solution
    */
   public static <S> int findIndexOfWorstSolution(
-      List<? extends S> solutionList, Comparator<S> comparator) {
+          @NotNull List<? extends S> solutionList, Comparator<S> comparator) {
     Check.notNull(solutionList);
     Check.notNull(comparator);
     Check.collectionIsNotEmpty(solutionList);
@@ -105,7 +108,7 @@ public class SolutionListUtils {
     return index;
   }
 
-  public static <S> S findBestSolution(List<S> solutionList, Comparator<S> comparator) {
+  public static <S> S findBestSolution(@NotNull List<S> solutionList, @NotNull Comparator<S> comparator) {
     return solutionList.get(findIndexOfBestSolution(solutionList, comparator));
   }
 
@@ -140,7 +143,7 @@ public class SolutionListUtils {
       List<S> solutions, double[] minValues, double[] maxValues) {
       List<S> normalizedSolutions = new ArrayList<>(solutions.size());
       for (S solution : solutions) {
-          S normalize = SolutionUtils.normalize(solution, minValues, maxValues);
+          @NotNull S normalize = SolutionUtils.normalize(solution, minValues, maxValues);
           normalizedSolutions.add(normalize);
       }
 
@@ -154,12 +157,12 @@ public class SolutionListUtils {
    * @param solutions A list of non-dominated solutions
    * @return the normalized list of non-dominated solutions
    */
-  public static <S extends Solution<?>> List<S> normalizeSolutionList(List<S> solutions) {
+  public static <S extends Solution<?>> @NotNull List<S> normalizeSolutionList(List<S> solutions) {
     Check.notNull(solutions);
     Check.collectionIsNotEmpty(solutions);
 
     double[] minValues = new double[solutions.get(0).objectives().length];
-    double[] maxValues = new double[solutions.get(0).objectives().length];
+    double @NotNull [] maxValues = new double[solutions.get(0).objectives().length];
 
     for (int i = 0; i < minValues.length; i++) {
       int best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i));
@@ -223,8 +226,8 @@ public class SolutionListUtils {
    * @param solutionList The front to invert
    * @return The inverted front
    */
-  public static <S> List<S> selectNRandomDifferentSolutions(
-      int numberOfSolutionsToBeReturned, List<S> solutionList) {
+  public static <S> @NotNull List<S> selectNRandomDifferentSolutions(
+          int numberOfSolutionsToBeReturned, @NotNull List<S> solutionList) {
     JMetalRandom random = JMetalRandom.getInstance();
     return selectNRandomDifferentSolutions(
         numberOfSolutionsToBeReturned, solutionList, random::nextInt);
@@ -237,7 +240,7 @@ public class SolutionListUtils {
    * @param randomGenerator The random number generator
    * @return The selected solutions
    */
-  public static <S> List<S> selectNRandomDifferentSolutions(
+  public static <S> @NotNull List<S> selectNRandomDifferentSolutions(
       int numberOfSolutionsToBeReturned,
       List<S> solutionList,
       BoundedRandomGenerator<Integer> randomGenerator) {
@@ -292,7 +295,7 @@ public class SolutionListUtils {
 
   public static <S extends Solution<?>> double[][] normalizedDistanceMatrix(
       List<S> solutionSet, double[] maxs, double[] mins) {
-    double[][] distance = new double[solutionSet.size()][solutionSet.size()];
+    double[] @NotNull [] distance = new double[solutionSet.size()][solutionSet.size()];
     for (int i = 0; i < solutionSet.size(); i++) {
       distance[i][i] = 0.0;
       for (int j = i + 1; j < solutionSet.size(); j++) {
@@ -340,7 +343,7 @@ public class SolutionListUtils {
    * @param percentageOfSolutionsToRemove
    */
   public static <S> void restart(
-      List<S> solutionList, Problem<S> problem, int percentageOfSolutionsToRemove) {
+          @NotNull List<S> solutionList, Problem<S> problem, int percentageOfSolutionsToRemove) {
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
@@ -387,7 +390,7 @@ public class SolutionListUtils {
    * @param <S> The type of the solutions to be created
    */
   public static <S> void fillPopulationWithNewSolutions(
-      List<S> solutionList, Problem<S> problem, int maxListSize) {
+          @NotNull List<S> solutionList, @NotNull Problem<S> problem, int maxListSize) {
     while (solutionList.size() < maxListSize) {
       solutionList.add(problem.createSolution());
     }
@@ -428,7 +431,7 @@ public class SolutionListUtils {
    * @return
    */
   public static <S extends Solution<?>> List<S> distanceBasedSubsetSelection(
-          List<S> originalSolutionList, int finalListSize) {
+          @NotNull List<S> originalSolutionList, int finalListSize) {
     Check.notNull(originalSolutionList);
     Check.collectionIsNotEmpty(originalSolutionList);
 
@@ -450,7 +453,7 @@ public class SolutionListUtils {
     }
 
     // STEP 1. Normalize the objectives values of the solution list
-    List<S> solutions = new ArrayList<>();
+    @NotNull List<S> solutions = new ArrayList<>();
     solutions.addAll(normalizeSolutionList(originalSolutionList));
 
     // STEP 2. Find the solution having the best objective value, being the objective randomly
@@ -462,12 +465,12 @@ public class SolutionListUtils {
             findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective));
 
     //  STEP 3. Add the solution to the current list of selected solutions and remove it from the original list
-    List<S> selectedSolutions = new ArrayList<>(finalListSize);
+    @NotNull List<S> selectedSolutions = new ArrayList<>(finalListSize);
     selectedSolutions.add(solutions.get(bestSolutionIndex));
     solutions.remove(bestSolutionIndex);
 
     // STEP 4. Find the solution having the largest distance to the selected solutions
-    Distance<S, List<S>> distance =
+    @NotNull Distance<S, List<S>> distance =
             new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
     while (selectedSolutions.size() < finalListSize) {
       for (S solution : solutions) {
@@ -498,7 +501,7 @@ public class SolutionListUtils {
    * @param <S>
    * @return
    */
-  public static <S extends Solution<?>> double[][] getMatrixWithObjectiveValues(List<S> solutionList) {
+  public static <S extends Solution<?>> double[][] getMatrixWithObjectiveValues(@NotNull List<S> solutionList) {
     double[][] matrix = new double[solutionList.size()][] ;
 
       int bound = solutionList.size();

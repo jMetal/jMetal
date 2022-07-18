@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.multiobjective.omopso;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
@@ -92,8 +94,8 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   }
 
   @Override
-  protected List<DoubleSolution> createInitialSwarm() {
-    List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
+  protected @NotNull List<DoubleSolution> createInitialSwarm() {
+    @NotNull List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
     for (int i = 0; i < swarmSize; i++) {
@@ -134,7 +136,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   }
 
   @Override
-  protected void updateVelocity(List<DoubleSolution> swarm)  {
+  protected void updateVelocity(@NotNull List<DoubleSolution> swarm)  {
     double r1, r2, W, C1, C2;
     DoubleSolution bestGlobal;
 
@@ -206,7 +208,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
     }
   }
 
-  @Override protected void initializeVelocity(List<DoubleSolution> swarm) {
+  @Override protected void initializeVelocity(@NotNull List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
@@ -245,7 +247,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
     return "OMOPSO" ;
   }
 
-  @Override public String getDescription() {
+  @Override public @NotNull String getDescription() {
     return "Optimized MOPSO" ;
   }
 

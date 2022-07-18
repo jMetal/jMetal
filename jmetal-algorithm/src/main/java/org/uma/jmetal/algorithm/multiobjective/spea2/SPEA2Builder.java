@@ -1,6 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.spea2;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -43,7 +46,7 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
     k = 1 ;
   }
 
-  public SPEA2Builder<S> setMaxIterations(int maxIterations) {
+  public @NotNull SPEA2Builder<S> setMaxIterations(int maxIterations) {
     if (maxIterations < 0) {
       throw new JMetalException("maxIterations is negative: " + maxIterations);
     }
@@ -71,7 +74,7 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
     return this;
   }
 
-  public SPEA2Builder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
+  public @NotNull SPEA2Builder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
     if (evaluator == null) {
       throw new JMetalException("evaluator is null");
     }
@@ -87,7 +90,7 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
   }
 
   public SPEA2<S> build() {
-    SPEA2<S> algorithm = null ;
+    @Nullable SPEA2<S> algorithm = null ;
     algorithm = new SPEA2<S>(problem, maxIterations, populationSize, crossoverOperator,
           mutationOperator, selectionOperator, evaluator, k);
     

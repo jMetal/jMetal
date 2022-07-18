@@ -7,6 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -22,7 +25,7 @@ public class VectorUtils {
    * @return 0 if the vectors are non-dominated, -1 if vector1 dominates vector2, and 1 if vector2
    *     dominates vector 1
    */
-  public static int dominanceTest(double[] vector1, double[] vector2) {
+  public static int dominanceTest(double @NotNull [] vector1, double[] vector2) {
     int bestIsOne = 0;
     int bestIsTwo = 0;
     int result;
@@ -51,7 +54,7 @@ public class VectorUtils {
     double[][] referenceVectors;
     String path = filePath;
 
-    URL url = VectorUtils.class.getClassLoader().getResource(filePath);
+    @Nullable URL url = VectorUtils.class.getClassLoader().getResource(filePath);
     if (url != null) {
       try {
         path = Paths.get(url.toURI()).toString();
@@ -65,7 +68,7 @@ public class VectorUtils {
     referenceVectors = new double[vectorStrList.size()][];
     for (int i = 0; i < vectorStrList.size(); i++) {
       String vectorStr = vectorStrList.get(i);
-      String[] objectArray = vectorStr.split(separator);
+      String @NotNull [] objectArray = vectorStr.split(separator);
       referenceVectors[i] = new double[objectArray.length];
       for (int j = 0; j < objectArray.length; j++) {
         referenceVectors[i][j] = Double.parseDouble(objectArray[j]);
@@ -100,7 +103,7 @@ public class VectorUtils {
     return result;
   }
 
-  public static double distanceToClosestVector(double[] vector, double[][] front) {
+  public static double distanceToClosestVector(double[] vector, double[] @NotNull [] front) {
     return distanceToClosestVector(vector, front, new EuclideanDistanceBetweenVectors());
   }
 
@@ -122,7 +125,7 @@ public class VectorUtils {
     return minDistance;
   }
 
-  public static double distanceToNearestVector(double[] vector, double[][] front) {
+  public static double distanceToNearestVector(double[] vector, double[] @NotNull [] front) {
     return distanceToNearestVector(vector, front, new EuclideanDistanceBetweenVectors());
   }
 
@@ -178,7 +181,7 @@ public class VectorUtils {
    * @param list
    * @return
    */
-  public static double[] toArray(List<Double> list) {
+  public static double[] toArray(@NotNull List<Double> list) {
       double[] arr = new double[10];
       int count = 0;
       for (Double v : list) {

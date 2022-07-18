@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -21,7 +23,7 @@ public class Tanaka extends AbstractDoubleProblem {
     setName("Tanaka") ;
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(10e-5);
@@ -32,7 +34,7 @@ public class Tanaka extends AbstractDoubleProblem {
   }
 
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution)  {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution)  {
     solution.objectives()[0] = solution.variables().get(0);
     solution.objectives()[1] = solution.variables().get(1);
 
@@ -42,7 +44,7 @@ public class Tanaka extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution)  {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double @NotNull [] constraint = new double[this.getNumberOfConstraints()];
 
     double x1 = solution.variables().get(0) ;
     double x2 = solution.variables().get(1) ;

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.EnergyArchive;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.EnergyArchive.ReplacementStrategy;
@@ -91,7 +92,7 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "Electrostatic Potential Energy Evolutionary Algorithms";
   }
 
@@ -122,7 +123,7 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override
-  protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+  protected List<S> replacement(List<S> population, @NotNull List<S> offspringPopulation) {
     // population and archive are always in sync
     for (S s : offspringPopulation) {
       archive.add(s);
@@ -143,11 +144,11 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
    * util.List)
    */
   @Override
-  protected List<S> selection(List<S> population) {
+  protected @NotNull List<S> selection(List<S> population) {
     // Chosen operator depends on archive size
     CrossoverOperator<S> chosenOperator = archive.isFull() ? fullArchiveCrossoverOperator : crossoverOperator;
 
-    List<S> matingPopulation = new ArrayList<>(chosenOperator.getNumberOfRequiredParents());
+    @NotNull List<S> matingPopulation = new ArrayList<>(chosenOperator.getNumberOfRequiredParents());
     int bound = chosenOperator.getNumberOfRequiredParents();
     for (int i = 0; i < bound; i++) {
       S execute = selectionOperator.execute(population);

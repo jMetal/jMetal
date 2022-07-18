@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -14,7 +17,7 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
     implements DensityEstimator<S> {
   private List<Double> interestPoint;
 
-  private List<Double> weights = null;
+  private @Nullable List<Double> weights = null;
   private double epsilon;
 
   public PreferenceDistance(List<Double> interestPoint, double epsilon) {
@@ -31,7 +34,7 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
   }
 
   @Override
-  public void computeDensityEstimator(List<S> solutionList) {
+  public void computeDensityEstimator(@NotNull List<S> solutionList) {
     int size = solutionList.size();
 
     if (size == 0) {
@@ -93,7 +96,7 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
 
   public List<S> epsilonClean(List<S> solutionList) {
     List<S> preference = new ArrayList<>();
-    List<S> temporalList = new LinkedList<>(solutionList);
+    @NotNull List<S> temporalList = new LinkedList<>(solutionList);
     int numerOfObjectives = solutionList.get(0).objectives().length;
 
     while (!temporalList.isEmpty()) {

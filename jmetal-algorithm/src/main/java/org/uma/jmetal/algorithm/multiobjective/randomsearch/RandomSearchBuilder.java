@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.randomsearch;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
@@ -30,7 +31,7 @@ public class RandomSearchBuilder<S extends Solution<?>> implements AlgorithmBuil
     return this ;
   }
 
-  public RandomSearch<S> build() {
+  public @NotNull RandomSearch<S> build() {
     return new RandomSearch<S>(problem, maxEvaluations) ;
   }
 } 

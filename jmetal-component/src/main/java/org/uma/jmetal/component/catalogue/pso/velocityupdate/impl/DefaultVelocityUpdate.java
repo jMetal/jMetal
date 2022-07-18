@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.pso.velocityupdate.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.component.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.VelocityUpdate;
@@ -61,7 +63,7 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
     DoubleSolution bestGlobal;
 
     for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+      @Nullable DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       DoubleSolution bestParticle = (DoubleSolution) localBest[i].copy();
 
       bestGlobal = globalBestSelection.select(leaders.getSolutionList()) ;

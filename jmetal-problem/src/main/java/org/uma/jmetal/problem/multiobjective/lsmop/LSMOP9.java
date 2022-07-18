@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Ackley;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Sphere;
@@ -46,7 +47,7 @@ public class LSMOP9 extends AbstractLSMOP {
   }
 
   @Override
-  protected List<Double> evaluate(List<Double> variables) {
+  protected List<Double> evaluate(@NotNull List<Double> variables) {
     double[] G;
 
     for (int i = getNumberOfObjectives(); i <= getNumberOfVariables(); i++) {

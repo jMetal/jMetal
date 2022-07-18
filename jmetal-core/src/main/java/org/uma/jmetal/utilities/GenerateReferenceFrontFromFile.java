@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.StoredSolutionsUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -35,7 +37,7 @@ public class GenerateReferenceFrontFromFile {
     String inputFileName = args[0] ;
     String outputFileName = args[1] ;
 
-    NonDominatedSolutionListArchive<PointSolution> archive = new NonDominatedSolutionListArchive<>();
+    @NotNull NonDominatedSolutionListArchive<PointSolution> archive = new NonDominatedSolutionListArchive<>();
     List<String> fileNameList = new ArrayList<>();
 
     if (Files.isRegularFile(Paths.get(inputFileName))) {
@@ -61,7 +63,7 @@ public class GenerateReferenceFrontFromFile {
   }
 
 
-  private static int determineNumberOfObjectives(String inputFileName) {
+  private static int determineNumberOfObjectives(@NotNull String inputFileName) {
     Stream<String> lines ;
 
     try {

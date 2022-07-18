@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective.glt;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -34,7 +36,7 @@ public class GLT3 extends AbstractDoubleProblem {
     setName("GLT3");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     lowerLimit.add(0.0) ;
     upperLimit.add(1.0) ;
@@ -47,7 +49,7 @@ public class GLT3 extends AbstractDoubleProblem {
   }
 
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
     solution.objectives()[0] = (1.0 + g(solution))*solution.variables().get(0);
     if (solution.objectives()[0] < 0.05) {
       solution.objectives()[1] = (1.0 + g(solution))*(1.0 - 19.0*solution.variables().get(0)) ;
@@ -57,7 +59,7 @@ public class GLT3 extends AbstractDoubleProblem {
     return solution ;
   }
 
-  private double g(DoubleSolution solution) {
+  private double g(@NotNull DoubleSolution solution) {
       double result = 0.0;
       int bound = solution.variables().size();
       for (int i = 1; i < bound; i++) {

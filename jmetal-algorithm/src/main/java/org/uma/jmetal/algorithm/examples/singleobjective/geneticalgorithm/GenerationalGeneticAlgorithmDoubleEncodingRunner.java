@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.singleobjective.geneticalgorithm;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder;
@@ -18,6 +17,9 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class to configure and run a generational genetic algorithm. The target problem is OneMax.
  *
@@ -31,7 +33,7 @@ public class GenerationalGeneticAlgorithmDoubleEncodingRunner {
     Algorithm<DoubleSolution> algorithm;
     DoubleProblem problem = new Sphere(20) ;
 
-    CrossoverOperator<DoubleSolution> crossover =
+    @NotNull CrossoverOperator<DoubleSolution> crossover =
             new SBXCrossover(0.9, 20.0) ;
     MutationOperator<DoubleSolution> mutation =
             new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
@@ -47,7 +49,7 @@ public class GenerationalGeneticAlgorithmDoubleEncodingRunner {
             .execute() ;
 
     DoubleSolution solution = algorithm.getResult() ;
-    List<DoubleSolution> population = new ArrayList<>(1) ;
+    @NotNull List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
     long computingTime = algorithmRunner.getComputingTime() ;

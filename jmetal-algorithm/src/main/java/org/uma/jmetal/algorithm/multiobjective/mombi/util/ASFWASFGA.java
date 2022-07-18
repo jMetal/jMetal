@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -19,11 +21,11 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 
 	private final List<Double> interestPoint;
 	private double augmentationCoefficient = 0.001;
-	private List<Double> utopia = null;
-	private List<Double> nadir  = null;
+	private @Nullable List<Double> utopia = null;
+	private @Nullable List<Double> nadir  = null;
 	
 	
-	public ASFWASFGA(double [][] weights, List<Double> interestPoint) {
+	public ASFWASFGA(double [] @NotNull [] weights, List<Double> interestPoint) {
 		super(weights);
 		this.interestPoint = interestPoint;
 	}
@@ -58,7 +60,7 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 
 
 	@Override
-	public Double evaluate(S solution, int vector) {
+	public Double evaluate(@NotNull S solution, int vector) {
 		if ((vector < 0) || (vector >= this.getSize())) {
 			throw new JMetalException("Vector value " + vector + " invalid") ;
 		}
@@ -66,7 +68,7 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 
 		
 		List<Double> weightVector 	 =  this.getWeightVector(vector);
-		List<Double> objectiveValues = new ArrayList<>(solution.objectives().length);
+		@NotNull List<Double> objectiveValues = new ArrayList<>(solution.objectives().length);
 		for (double v : solution.objectives()) {
 			Double aDouble = v;
 			objectiveValues.add(aDouble);

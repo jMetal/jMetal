@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.VelocityInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
@@ -10,7 +12,7 @@ public class VelocityInitializationParameter extends CategoricalParameter {
     super("velocityInitialization", args, variationStrategies);
   }
 
-  public VelocityInitialization getParameter() {
+  public @NotNull VelocityInitialization getParameter() {
     VelocityInitialization result;
 
     switch (getValue()) {

@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
@@ -61,7 +64,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     String outputDirectoryName = experiment.getReferenceFrontDirectory();
     createOutputDirectory(outputDirectoryName);
 
-    for (ExperimentProblem<?> problem : experiment.getProblemList()) {
+    for (@NotNull ExperimentProblem<?> problem : experiment.getProblemList()) {
       List<DummyDoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem);
 
       writeReferenceFrontFile(outputDirectoryName, problem, nonDominatedSolutions);
@@ -79,9 +82,9 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     GenericSolutionAttribute<DoubleSolution, String> solutionAttribute =
             new GenericSolutionAttribute<DoubleSolution, String>();
 
-    for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
+    for (@NotNull ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
         List<DoubleSolution> solutionsPerAlgorithm = new ArrayList<>();
-        for (DummyDoubleSolution solution : nonDominatedSolutions) {
+        for (@NotNull DummyDoubleSolution solution : nonDominatedSolutions) {
             if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
                 solutionsPerAlgorithm.add(solution);
             }
@@ -112,7 +115,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
           String outputDirectoryName,
           ExperimentProblem<?> problem,
           List<DummyDoubleSolution> nonDominatedSolutions) {
-    String referenceFrontFileName = outputDirectoryName + "/" + problem.getReferenceFront();
+    @NotNull String referenceFrontFileName = outputDirectoryName + "/" + problem.getReferenceFront();
 
     new SolutionListOutput(nonDominatedSolutions)
             .printObjectivesToFile(referenceFrontFileName, ",");
@@ -135,12 +138,12 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    * @return
    * @throws FileNotFoundException
    */
-  private List<DummyDoubleSolution> getNonDominatedSolutions(ExperimentProblem<?> problem)
+  private List<DummyDoubleSolution> getNonDominatedSolutions(@NotNull ExperimentProblem<?> problem)
       throws IOException {
     NonDominatedSolutionListArchive<DummyDoubleSolution> nonDominatedSolutionArchive =
             new NonDominatedSolutionListArchive<>();
 
-      ArrayList<ExperimentAlgorithm<?, ?>> experimentAlgorithms = new ArrayList<>();
+      @NotNull ArrayList<ExperimentAlgorithm<?, ?>> experimentAlgorithms = new ArrayList<>();
       for (ExperimentAlgorithm<?, ?> s : experiment.getAlgorithmList()) {
           if (s.getProblemTag().equals(problem.getTag())) {
               experimentAlgorithms.add(s);
@@ -155,7 +158,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
                       + "/"
                       + problem.getTag();
 
-      String frontFileName =
+      @NotNull String frontFileName =
               problemDirectory
                       + "/"
                       + experiment.getOutputParetoFrontFileName()
@@ -169,7 +172,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
                       + ".csv";
 
       double[][] frontWithObjectiveValues = readVectors(frontFileName, ",");
-      double[][] frontWithVariableValues = readVectors(paretoSetFileName, ",");
+      double[] @NotNull [] frontWithVariableValues = readVectors(paretoSetFileName, ",");
       List<DummyDoubleSolution> solutionList =
               createSolutionListFrontFiles(
                       algorithm.getAlgorithmTag(), frontWithVariableValues, frontWithObjectiveValues);
@@ -187,7 +190,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    * @param outputDirectoryName
    * @return
    */
-  private File createOutputDirectory(String outputDirectoryName) {
+  private @NotNull File createOutputDirectory(@NotNull String outputDirectoryName) {
     File outputDirectory;
     outputDirectory = new File(outputDirectoryName);
     if (!outputDirectory.exists()) {
@@ -204,7 +207,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    * @param frontWithObjectiveValues
    * @return
    */
-  private List<DummyDoubleSolution> createSolutionListFrontFiles(
+  private @NotNull List<DummyDoubleSolution> createSolutionListFrontFiles(
           String algorithmName, double[][] frontWithVariableValues, double[][] frontWithObjectiveValues) {
     if (frontWithVariableValues.length
             != frontWithObjectiveValues.length) {
@@ -222,7 +225,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
 
     List<DummyDoubleSolution> solutionList = new ArrayList<>();
     for (int i = 0; i < frontWithVariableValues.length; i++) {
-      DummyDoubleSolution solution = new DummyDoubleSolution(numberOfVariables, numberOfObjectives);
+      @NotNull DummyDoubleSolution solution = new DummyDoubleSolution(numberOfVariables, numberOfObjectives);
       for (int vars = 0; vars < numberOfVariables; vars++) {
         solution.variables().set(vars, frontWithVariableValues[i][vars]);
       }
@@ -246,7 +249,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     }
 
     @Override
-    public Solution<Double> copy() {
+    public @Nullable Solution<Double> copy() {
       return null;
     }
 
@@ -256,7 +259,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
      */
 
     @Override
-    public Bounds<Double> getBounds(int index) {
+    public @Nullable Bounds<Double> getBounds(int index) {
       return null;
     }
   }

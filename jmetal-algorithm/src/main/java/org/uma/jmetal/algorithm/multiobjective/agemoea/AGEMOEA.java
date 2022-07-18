@@ -1,15 +1,15 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoea;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of AGE-MOEA (Adaptive GEometry-based Many-objective Evolutionary Algorithm).
@@ -26,7 +26,7 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   protected SolutionListEvaluator<S> evaluator ;
 
   /** Constructor */
-  public AGEMOEA(AGEMOEABuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
+  public AGEMOEA(@NotNull AGEMOEABuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
     super(builder.getProblem()) ;
     maxIterations = builder.getMaxIterations() ;
     crossoverOperator =  builder.getCrossoverOperator() ;
@@ -64,7 +64,7 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     int bound = getMaxPopulationSize();
     for (int i = 0; i < bound; i++) {
       S solution = selectionOperator.execute(population);
-      S copy = (S) solution.copy();
+      @Nullable S copy = (S) solution.copy();
       matingPopulation.add(copy);
     }
 
@@ -72,12 +72,12 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   @Override
-  protected List<S> reproduction(List<S> matingPool) {
+  protected List<S> reproduction(@NotNull List<S> matingPool) {
     int numberOfParents = crossoverOperator.getNumberOfRequiredParents();
 
     checkNumberOfParents(matingPool, numberOfParents);
 
-    List<S> offspringPopulation = new ArrayList<>(maxPopulationSize);
+    @NotNull List<S> offspringPopulation = new ArrayList<>(maxPopulationSize);
     for (int i = 0; i < matingPool.size(); i += numberOfParents) {
       List<S> parents = new ArrayList<>(numberOfParents);
       for (int j = 0; j < numberOfParents; j++) {
@@ -98,8 +98,8 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   @Override
-  protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    List<S> jointPopulation = new ArrayList<>();
+  protected List<S> replacement(List<S> population, @NotNull List<S> offspringPopulation) {
+    @NotNull List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population) ;
     jointPopulation.addAll(offspringPopulation) ;
 

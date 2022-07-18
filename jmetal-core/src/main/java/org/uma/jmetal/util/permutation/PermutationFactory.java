@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
@@ -17,7 +19,7 @@ public class PermutationFactory {
           integerList.add(i);
       }
 
-      List<Integer> permutation = new ArrayList<>(length) ;
+      @NotNull List<Integer> permutation = new ArrayList<>(length) ;
     while(!integerList.isEmpty()) {
       int index = randomGenerator.nextInt(0, integerList.size()-1) ;
       permutation.add(integerList.get(index)) ;

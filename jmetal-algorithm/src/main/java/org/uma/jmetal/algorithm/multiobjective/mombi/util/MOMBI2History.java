@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 
 /**
@@ -34,7 +35,7 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
    * @param maxs
    */
   public void add(List<Double> maxs) {
-    List<Double> aux = new ArrayList<>(this.numberOfObjectives);
+    @NotNull List<Double> aux = new ArrayList<>(this.numberOfObjectives);
     aux.addAll(maxs);
     this.history.add(aux);
     if (history.size() > MAX_LENGHT)
@@ -51,7 +52,7 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
           result.add(aDouble);
       }
 
-      for (List<Double> historyMember : this.history)
+      for (@NotNull List<Double> historyMember : this.history)
       for (int i = 0; i < this.numberOfObjectives;i++)
         result.set(i, result.get(i) + historyMember.get(i));
 
@@ -66,7 +67,7 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
    * Returns the variance of the values contained in the history
    */
   public List<Double> variance(List<Double> mean) {
-      List<Double> result = new ArrayList<>(this.numberOfObjectives);
+      @NotNull List<Double> result = new ArrayList<>(this.numberOfObjectives);
       for (int i1 = 0; i1 < this.numberOfObjectives; i1++) {
           Double aDouble = 0.0;
           result.add(aDouble);
@@ -86,7 +87,7 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
    * Return the std of  the values contained in the history
    */
   public List<Double> std(List<Double> mean) {
-    List<Double> result = new ArrayList<>(mean.size());
+    @NotNull List<Double> result = new ArrayList<>(mean.size());
     result.addAll(this.variance(mean));
     for (int i = 0; i < result.size(); i++)
       result.set(i,Math.sqrt(result.get(i)));
@@ -107,7 +108,7 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
       this.marks.set(index,this.marks.get(index)-1);
   }
 
-  public Double getMaxObjective(int index) {
+  public @NotNull Double getMaxObjective(int index) {
     Double result = Double.NEGATIVE_INFINITY;
 
     for (List<Double> list : this.history)

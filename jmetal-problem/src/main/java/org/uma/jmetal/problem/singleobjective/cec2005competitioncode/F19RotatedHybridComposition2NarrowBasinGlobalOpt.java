@@ -46,6 +46,7 @@
 //
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class F19RotatedHybridComposition2NarrowBasinGlobalOpt extends TestFunc {
@@ -63,7 +64,7 @@ public class F19RotatedHybridComposition2NarrowBasinGlobalOpt extends TestFunc {
   private final MyHCJob theJob = new MyHCJob();
 
   // Shifted global optimum
-  private final double[][] m_o;
+  private final double[] @NotNull [] m_o;
   private final double[][][] m_M;
   private final double[] m_sigma = {
     0.1, 2.0, 1.5, 1.5, 1.0, 1.0,
@@ -155,7 +156,7 @@ public class F19RotatedHybridComposition2NarrowBasinGlobalOpt extends TestFunc {
 
 
   private class MyHCJob extends HCJob {
-    public double basicFunc(int func_no, double[] x) throws JMetalException {
+    public double basicFunc(int func_no, double @NotNull [] x) throws JMetalException {
       double result = 0.0;
       switch (func_no) {
         case 0:

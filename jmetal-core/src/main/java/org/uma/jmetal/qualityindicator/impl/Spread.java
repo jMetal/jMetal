@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.comparator.LexicographicalVectorComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
@@ -51,7 +52,7 @@ public class Spread extends QualityIndicator {
    * @param referenceFront    The true pareto front.
    */
   public double spread(double[][] front, double[][] referenceFront) {
-    var distance = new EuclideanDistanceBetweenVectors() ;
+    @NotNull var distance = new EuclideanDistanceBetweenVectors() ;
 
     // STEP 1. Sort normalizedFront and normalizedParetoFront;
     Arrays.sort(front, 0, front.length, new LexicographicalVectorComparator()) ;

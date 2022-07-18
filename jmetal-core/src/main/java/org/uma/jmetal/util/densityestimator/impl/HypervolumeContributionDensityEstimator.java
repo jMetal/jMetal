@@ -2,6 +2,8 @@ package org.uma.jmetal.util.densityestimator.impl;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -16,14 +18,14 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHyp
  */
 public class HypervolumeContributionDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
 
-  private String attributeId = getClass().getName();
+  private @NotNull String attributeId = getClass().getName();
   private Hypervolume<S> hypervolume ;
 
   public HypervolumeContributionDensityEstimator(List<S> referenceFront) {
     hypervolume = new PISAHypervolume<>(new ArrayFront(referenceFront)) ;
   }
 
-  public HypervolumeContributionDensityEstimator(double[] referencePoint) {
+  public HypervolumeContributionDensityEstimator(double @NotNull [] referencePoint) {
     hypervolume = new PISAHypervolume<>(referencePoint) ;
   }
 
@@ -45,7 +47,7 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
   }
 
   @Override
-  public Double getValue(S solution) {
+  public Double getValue(@NotNull S solution) {
     Check.notNull(solution);
 
     Double result = 0.0 ;

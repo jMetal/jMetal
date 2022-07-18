@@ -1,5 +1,6 @@
 package org.uma.jmetal.solution.doublesolution;
 
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.bounds.Bounds;
 
@@ -10,5 +11,5 @@ import org.uma.jmetal.util.bounds.Bounds;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface DoubleSolution extends Solution<Double> {
-  Bounds<Double> getBounds(int index) ;
+  @Nullable Bounds<Double> getBounds(int index) ;
 }

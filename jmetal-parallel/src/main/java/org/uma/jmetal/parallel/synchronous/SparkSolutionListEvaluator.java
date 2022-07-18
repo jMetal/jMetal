@@ -3,6 +3,7 @@ package org.uma.jmetal.parallel.synchronous;
 import java.util.List;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
@@ -23,7 +24,7 @@ public class SparkSolutionListEvaluator<S> implements SolutionListEvaluator<S> {
   }
 
   @Override
-  public List<S> evaluate(List<S> solutionList, Problem<S> problem) {
+  public List<S> evaluate(List<S> solutionList, @NotNull Problem<S> problem) {
     JavaRDD<S> solutionsToEvaluate = sparkContext.parallelize(solutionList);
     JavaRDD<S> evaluatedSolutions = solutionsToEvaluate.map(problem::evaluate);
 

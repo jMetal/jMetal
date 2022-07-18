@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -162,7 +164,7 @@ public class WASFGARanking<S extends Solution<?>> extends GenericSolutionAttribu
 		int indexOfFirstSolution, indexOfSecondSolution, indexOfWeight;
 		double overallConstraintViolationSolution1, overallConstraintViolationSolution2;
 		double minimumValueFirstSolution, minimumValueSecondSolution, value;
-		int[] rank = new int[population.size()];
+		int @NotNull [] rank = new int[population.size()];
 		Arrays.fill(rank, 0);
 
 		//Iteration for each solution
@@ -222,7 +224,7 @@ public class WASFGARanking<S extends Solution<?>> extends GenericSolutionAttribu
 	}
 
 	@Override
-	public Integer getRank(S solution) {
+	public Integer getRank(@NotNull S solution) {
 		Check.notNull(solution);
 
 		Integer result = -1 ;

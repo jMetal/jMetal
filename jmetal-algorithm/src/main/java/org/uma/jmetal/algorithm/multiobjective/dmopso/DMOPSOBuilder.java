@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.dmopso;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -148,13 +150,13 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     return this;
   }
 
-  public DMOPSOBuilder setC1Max(double c1Max) {
+  public @NotNull DMOPSOBuilder setC1Max(double c1Max) {
     this.c1Max = c1Max;
 
     return this;
   }
 
-  public DMOPSOBuilder setC1Min(double c1Min) {
+  public @NotNull DMOPSOBuilder setC1Min(double c1Min) {
     this.c1Min = c1Min;
 
     return this;
@@ -184,7 +186,7 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     return this;
   }
 
-  public DMOPSOBuilder setR2Max(double r2Max) {
+  public @NotNull DMOPSOBuilder setR2Max(double r2Max) {
     this.r2Max = r2Max;
 
     return this;
@@ -208,7 +210,7 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     return this;
   }
 
-  public DMOPSOBuilder setChangeVelocity1(double changeVelocity1) {
+  public @NotNull DMOPSOBuilder setChangeVelocity1(double changeVelocity1) {
     this.changeVelocity1 = changeVelocity1;
 
     return this;
@@ -220,7 +222,7 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     return this;
   }
 
-  public DMOPSOBuilder setMaxAge(int maxAge) {
+  public @NotNull DMOPSOBuilder setMaxAge(int maxAge) {
     this.maxAge = maxAge;
 
     return this;
@@ -238,13 +240,13 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     return this;
   }
 
-  public DMOPSOBuilder setRandomGenerator(PseudoRandomGenerator randomGenerator) {
+  public @NotNull DMOPSOBuilder setRandomGenerator(PseudoRandomGenerator randomGenerator) {
     JMetalRandom.getInstance().setRandomGenerator(randomGenerator);
 
     return this;
   }
 
-  public DMOPSOBuilder setSolutionListEvaluator(SolutionListEvaluator<DoubleSolution> evaluator) {
+  public @NotNull DMOPSOBuilder setSolutionListEvaluator(SolutionListEvaluator<DoubleSolution> evaluator) {
     this.evaluator = evaluator;
 
     return this;
@@ -256,8 +258,8 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     return this;
   }
 
-  public DMOPSO build() {
-    DMOPSO algorithm = null;
+  public @NotNull DMOPSO build() {
+    @Nullable DMOPSO algorithm = null;
     algorithm =
         new DMOPSO(
             problem,

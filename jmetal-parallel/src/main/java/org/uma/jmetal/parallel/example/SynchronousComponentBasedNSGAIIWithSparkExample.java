@@ -3,6 +3,8 @@ package org.uma.jmetal.parallel.example;
 import static java.lang.Math.sin;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.MultiThreadedEvaluation;
@@ -60,7 +62,7 @@ public class SynchronousComponentBasedNSGAIIWithSparkExample extends AbstractAlg
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    @NotNull Termination termination = new TerminationByEvaluations(25000);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
         problem,

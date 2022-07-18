@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -103,9 +105,9 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   }
 
   @Override
-  public List<ParallelTask<S>> createInitialTasks() {
+  public @NotNull List<ParallelTask<S>> createInitialTasks() {
     List<S> initialPopulation = new ArrayList<>();
-    List<ParallelTask<S>> initialTaskList = new ArrayList<>() ;
+    @NotNull List<ParallelTask<S>> initialTaskList = new ArrayList<>() ;
     int bound = populationSize;
     for (int i = 0; i < bound; i++) {
       initialPopulation.add(problem.createSolution());

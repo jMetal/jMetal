@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.bounds.Bounds;
@@ -45,7 +47,7 @@ public class MaF09 extends AbstractDoubleProblem {
     //other constants during the whole process once M&D are defined
     //original polygon
     double r = 1;
-    double[][] p = polygonpoints(numberOfObjectives, r);
+    double[] @NotNull [] p = polygonpoints(numberOfObjectives, r);
     points9 = p;
    //range--line segment
     double[][] rx9 = new double[numberOfObjectives][2];
@@ -87,11 +89,11 @@ public class MaF09 extends AbstractDoubleProblem {
       }
     }
     //evaluate the intersection and symmetric points for each pair of vertexes i,n
-    int[] v4 = new int[4];
+    int @NotNull [] v4 = new int[4];
     int tv;
-    double[] kb1 = new double[3];
+    double @NotNull [] kb1 = new double[3];
     double[] kb2 = new double[3];
-    double[] interp = new double[2];
+    double @NotNull [] interp = new double[2];
     int[] pind = new int[head.length + 1];
     int ic = 0;
     for (int i = 0; i < head.length; i++) { //for each generated polygon
@@ -142,12 +144,12 @@ public class MaF09 extends AbstractDoubleProblem {
    * @param solution The solution to evaluate
    */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     int numberOfVariables_ = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
     double[] x;
-    double[] f = new double[numberOfObjectives];
+    double @NotNull [] f = new double[numberOfObjectives];
 
       double[] arr = new double[10];
       int count = 0;
@@ -196,12 +198,12 @@ public class MaF09 extends AbstractDoubleProblem {
   }
 
   public static double[][] polygonpoints(int m, double r) {
-    double[][] p = new double[m][2];
+    double[] @NotNull [] p = new double[m][2];
     double[] angle;
     double thera = Math.PI / 2, rho = r;
 
     // vertexes with the number of edges(m)
-      double[] arr = new double[10];
+      double @NotNull [] arr = new double[10];
       int count = 0;
       for (int i1 = 0; i1 < m; i1++) {
           double v = thera - 2 * (i1 + 1) * Math.PI / m;
@@ -235,7 +237,7 @@ public class MaF09 extends AbstractDoubleProblem {
   //given vertexes,evaluate the straight lines of a polygon
 
   public double[][] lines_of_polygon(double[][] p) {
-    double[][] c9 = new double[p.length][3];
+    double[] @NotNull [] c9 = new double[p.length][3];
     for (int i = 0; i < p.length - 1; i++) {//		evaluate formula of the straight line l1,...,m-1
       c9[i] = line_of_twoP(p[i], p[i + 1]);
     }
@@ -245,7 +247,7 @@ public class MaF09 extends AbstractDoubleProblem {
   }
   //given two straight lines,evaluate their intersection(assuming there is a intersection between these two lines)
 
-  public static double[] intersection(double[] kb1, double[] kb2) {
+  public static double[] intersection(double @NotNull [] kb1, double[] kb2) {
     double[] interp = new double[2];
     if (kb1[0] == 1) {
       interp[0] = kb1[1];
@@ -309,11 +311,11 @@ public class MaF09 extends AbstractDoubleProblem {
   public static boolean if_inside_polygon(double[] p1, double[][] points) {
     boolean ifin;
     List<Point2D.Double> polygon;
-    Point2D.Double p = new Point2D.Double(p1[0], p1[1]);
+    Point2D.@NotNull Double p = new Point2D.Double(p1[0], p1[1]);
     // if the point is inside the polygon(boundary not included)
       List<Point2D.Double> list = new ArrayList<>();
       for (double[] point : points) {
-          Point2D.Double aDouble = new Point2D.Double(point[0], point[1]);
+          Point2D.@NotNull Double aDouble = new Point2D.Double(point[0], point[1]);
           list.add(aDouble);
       }
       polygon = list;
@@ -322,13 +324,13 @@ public class MaF09 extends AbstractDoubleProblem {
     return ifin;
   }
 
-  public static boolean checkWithJdkGeneralPath(Point2D.Double point,
-      List<Point2D.Double> polygon) {
-    java.awt.geom.GeneralPath p = new java.awt.geom.GeneralPath();
+  public static boolean checkWithJdkGeneralPath(Point2D.@NotNull Double point,
+                                                @NotNull List<Point2D.Double> polygon) {
+    java.awt.geom.@NotNull GeneralPath p = new java.awt.geom.GeneralPath();
     Point2D.Double first = polygon.get(0);
     p.moveTo(first.x, first.y);
     polygon.remove(0);
-    for (Point2D.Double d : polygon) {
+    for (Point2D.@NotNull Double d : polygon) {
       p.lineTo(d.x, d.y);
     }
     p.lineTo(first.x, first.y);

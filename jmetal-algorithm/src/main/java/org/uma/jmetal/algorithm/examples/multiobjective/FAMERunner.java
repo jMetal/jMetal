@@ -15,6 +15,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.fame.FAME;
@@ -48,7 +50,7 @@ public class FAMERunner extends AbstractAlgorithmRunner {
     Algorithm<List<DoubleSolution>> algorithm;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    String problemName = null;
+    @Nullable String problemName = null;
     if (args.length == 0) {
       problemName = "org.uma.jmetal.problem.multiobjective.glt.GLT1";
     } else if (args.length == 1) {

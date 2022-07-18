@@ -3,6 +3,8 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -21,7 +23,7 @@ public class MuCommaLambdaReplacement<S extends Solution<?>> implements Replacem
     this.comparator = comparator;
   }
 
-  public List<S> replace(List<S> population, List<S> offspringPopulation) {
+  public @NotNull List<S> replace(@NotNull List<S> population, List<S> offspringPopulation) {
     Check.that(
         population.size() < offspringPopulation.size(),
         "Mu ("

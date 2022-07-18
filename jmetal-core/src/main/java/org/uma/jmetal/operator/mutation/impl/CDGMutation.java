@@ -13,6 +13,7 @@
 
 package org.uma.jmetal.operator.mutation.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -94,7 +95,7 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
 
   /** Execute() method */
   @Override
-  public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
+  public @NotNull DoubleSolution execute(DoubleSolution solution) throws JMetalException {
     if (null == solution) {
       throw new JMetalException("Null parameter") ;
     }
@@ -104,7 +105,7 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
   }
 
   /** Perform the mutation operation */
-  private void doMutation(double probability, DoubleSolution solution) {
+  private void doMutation(double probability, @NotNull DoubleSolution solution) {
     double rnd, deltaq, tempDelta;
     double y, yl, yu;
 

@@ -1,5 +1,6 @@
 package org.uma.jmetal.qualityindicator.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -40,7 +41,7 @@ public class GenerationalDistance extends QualityIndicator {
    * @param front
    * @return
    */
-  @Override public double compute(double[][] front) {
+  @Override public double compute(double[] @NotNull [] front) {
     Check.notNull(front);
 
     return generationalDistance(front, referenceFront);
@@ -52,7 +53,7 @@ public class GenerationalDistance extends QualityIndicator {
    * @param front           The front
    * @param referenceFront The reference pareto front
    */
-  public double generationalDistance(double[][] front, double[][] referenceFront) {
+  public double generationalDistance(double[] @NotNull [] front, double[][] referenceFront) {
       double sum = 0.0;
       for (double[] doubles : front) {
           double v = Math.pow(VectorUtils.distanceToClosestVector(doubles, referenceFront), pow);
@@ -69,7 +70,7 @@ public class GenerationalDistance extends QualityIndicator {
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "Generational distance quality indicator" ;
   }
 

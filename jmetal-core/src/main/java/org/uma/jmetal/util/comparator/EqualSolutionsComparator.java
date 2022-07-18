@@ -2,6 +2,8 @@ package org.uma.jmetal.util.comparator;
 
 import java.io.Serializable;
 import java.util.Comparator;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 
 /**
@@ -25,7 +27,7 @@ public class EqualSolutionsComparator<S extends Solution<?>> implements Comparat
    * respectively.
    */
   @Override
-  public int compare(S solution1, S solution2) {
+  public int compare(@Nullable S solution1, S solution2) {
     if (solution1 == null) {
       return 1;
     } else if (solution2 == null) {

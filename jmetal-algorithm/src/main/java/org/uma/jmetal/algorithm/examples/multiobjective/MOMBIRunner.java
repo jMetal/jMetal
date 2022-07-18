@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective;
 
-import java.io.FileNotFoundException;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.mombi.MOMBI;
@@ -20,6 +19,9 @@ import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
+import java.io.FileNotFoundException;
+import java.util.List;
+
 /**
  * Class to configure and run the MOMBI algorithm
  *
@@ -32,7 +34,7 @@ public class MOMBIRunner extends AbstractAlgorithmRunner {
    * @throws FileNotFoundException Invoking command: java
    *     org.uma.jmetal.runner.multiobjective.MOMBIRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;

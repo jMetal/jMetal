@@ -1,5 +1,6 @@
 package org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -28,7 +29,7 @@ public class DoubleValueAttributeComparator<S extends Solution<?>> extends Attri
    *     solution2, respectively.
    */
   @Override
-  public int compare(S solution1, S solution2) {
+  public int compare(@NotNull S solution1, S solution2) {
     Check.notNull(solution1);
     Check.notNull(solution2);
 

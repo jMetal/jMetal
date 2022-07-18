@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
@@ -102,7 +103,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunnerZDT1 {
 
     /* End of measure management */
 
-    Thread algorithmThread = new Thread(algorithm);
+    @NotNull Thread algorithmThread = new Thread(algorithm);
     ChangeReferencePoint changeReferencePoint = new ChangeReferencePoint(algorithm, referencePoints, archivesWithReferencePoints, chart) ;
 
     Thread changePointsThread = new Thread(changeReferencePoint) ;
@@ -140,7 +141,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunnerZDT1 {
       this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
     }
 
-    private void refreshChart(List<DoubleSolution> solutionList) {
+    private void refreshChart(@NotNull List<DoubleSolution> solutionList) {
       if (this.chart != null) {
         iteration++;
         this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
@@ -150,7 +151,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunnerZDT1 {
     }
 
     @Override
-    synchronized public void measureGenerated(List<DoubleSolution> solutions) {
+    synchronized public void measureGenerated(@NotNull List<DoubleSolution> solutions) {
       refreshChart(solutions);
     }
   }
@@ -189,7 +190,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunnerZDT1 {
 
     @Override
     public void run() {
-      try (Scanner scanner = new Scanner(System.in)) {
+      try (@NotNull Scanner scanner = new Scanner(System.in)) {
         double v1 ;
         double v2 ;
         

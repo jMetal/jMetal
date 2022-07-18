@@ -1,5 +1,7 @@
 package org.uma.jmetal.solution;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -16,5 +18,5 @@ public interface Solution<T> extends Serializable {
   double[] constraints() ;
   Map<Object,Object> attributes() ;
 
-  Solution<T> copy() ;
+  @Nullable Solution<T> copy() ;
 }

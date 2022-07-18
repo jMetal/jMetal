@@ -3,6 +3,8 @@ package org.uma.jmetal.lab.experiment.component.impl;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
@@ -43,7 +45,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
     boolean computationNotFinished = true ;
 
     while (computationNotFinished && (retryCounter < maxRetries)) {
-      List<ExperimentAlgorithm<?, ?>> unfinishedAlgorithmList = checkTaskStatus() ;
+      @NotNull List<ExperimentAlgorithm<?, ?>> unfinishedAlgorithmList = checkTaskStatus() ;
       if (unfinishedAlgorithmList.size() == 0) {
         computationNotFinished = false ;
       } else {
@@ -67,7 +69,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
     List<ExperimentAlgorithm<?, ?>> unfinishedAlgorithmList = new LinkedList<>();
 
     for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
-      String resultFileName =
+      @NotNull String resultFileName =
           experiment.getExperimentBaseDirectory()
               + "/data/"
               + algorithm.getAlgorithmTag()
@@ -85,7 +87,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
     return unfinishedAlgorithmList;
   }
 
-  public void runMissingExecutions(List<ExperimentAlgorithm<?, ?>> experimentAlgorithms) {
+  public void runMissingExecutions(@NotNull List<ExperimentAlgorithm<?, ?>> experimentAlgorithms) {
     experimentAlgorithms.parallelStream().forEach(algorithm -> algorithm.runAlgorithm(experiment));
   }
 

@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.ibea;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -28,7 +30,7 @@ public class IBEABuilder implements AlgorithmBuilder<IBEA<DoubleSolution>> {
    * Constructor
    * @param problem
    */
-  public IBEABuilder(Problem<DoubleSolution> problem) {
+  public IBEABuilder(@NotNull Problem<DoubleSolution> problem) {
     this.problem = problem;
     populationSize = 100;
     archiveSize = 100;
@@ -71,7 +73,7 @@ public class IBEABuilder implements AlgorithmBuilder<IBEA<DoubleSolution>> {
   }
 
   /* Setters */
-  public IBEABuilder setPopulationSize(int populationSize) {
+  public @NotNull IBEABuilder setPopulationSize(int populationSize) {
     this.populationSize = populationSize;
 
     return this;

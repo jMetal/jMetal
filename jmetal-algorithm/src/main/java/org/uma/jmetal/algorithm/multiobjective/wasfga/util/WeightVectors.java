@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
@@ -127,9 +129,9 @@ public class WeightVectors {
 		
 		try {
 			// Open the file
-			FileInputStream fis = new FileInputStream(filePath);
+			@NotNull FileInputStream fis = new FileInputStream(filePath);
 			InputStreamReader isr = new InputStreamReader(fis);
-			BufferedReader br = new BufferedReader(isr);
+			@NotNull BufferedReader br = new BufferedReader(isr);
 			
 			int numberOfObjectives = 0;
 			int j;
@@ -138,7 +140,7 @@ public class WeightVectors {
 				StringTokenizer st = new StringTokenizer(aux);
 				j = 0;
 				numberOfObjectives = st.countTokens();
-				double[] weight = new double[numberOfObjectives];
+				double @NotNull [] weight = new double[numberOfObjectives];
 				
 				while (st.hasMoreTokens()) {
 					weight[j] = parseDouble(st.nextToken());

@@ -1,6 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.cre;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -48,7 +50,7 @@ public class CRE25 extends AbstractDoubleProblem {
   }
 
   /** EvaluateConstraints() method */
-  public void evaluateConstraints(DoubleSolution solution) {
+  public void evaluateConstraints(@NotNull DoubleSolution solution) {
     double constraint = 0.5 - solution.objectives()[1] / 6.931;
 
     if (constraint < 0.0) {

@@ -1,6 +1,8 @@
 package org.uma.jmetal.operator.selection.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -27,7 +29,7 @@ public class NaryRandomSelection<S> implements SelectionOperator<List<S>, List<S
   }
 
   /** Execute() method */
-  public List<S> execute(List<S> solutionList) {
+  public @NotNull List<S> execute(List<S> solutionList) {
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(

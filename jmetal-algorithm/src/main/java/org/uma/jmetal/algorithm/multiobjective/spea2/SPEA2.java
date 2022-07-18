@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.spea2;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.spea2.util.EnvironmentalSelection;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -65,7 +67,7 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override
-  protected List<S> selection(List<S> population) {
+  protected List<S> selection(@NotNull List<S> population) {
     List<S> union = new ArrayList<>(2*getMaxPopulationSize());
     union.addAll(archive);
     union.addAll(population);
@@ -76,10 +78,10 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
 
   @Override
   protected List<S> reproduction(List<S> population) {
-    List<S> offSpringPopulation= new ArrayList<>(getMaxPopulationSize());
+    @NotNull List<S> offSpringPopulation= new ArrayList<>(getMaxPopulationSize());
 
     while (offSpringPopulation.size() < getMaxPopulationSize()){
-      List<S> parents = new ArrayList<>(2);
+      @NotNull List<S> parents = new ArrayList<>(2);
       S candidateFirstParent = selectionOperator.execute(population);
       parents.add(candidateFirstParent);
       S candidateSecondParent;

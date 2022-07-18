@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.examples;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -12,7 +13,7 @@ public class AlgorithmRunner {
   private long computingTime;
 
   /** Constructor */
-  private AlgorithmRunner(Executor execute) {
+  private AlgorithmRunner(@NotNull Executor execute) {
     computingTime = execute.computingTime;
   }
 

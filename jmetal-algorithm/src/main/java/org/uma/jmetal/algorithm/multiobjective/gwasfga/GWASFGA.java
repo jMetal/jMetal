@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.gwasfga;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.gwasfga.util.GWASFGARanking;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
@@ -22,7 +24,7 @@ import org.uma.jmetal.util.ranking.Ranking;
  * @author Juanjo Durillo
  */
 public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
-  private final AbstractUtilityFunctionsSet<S> achievementScalarizingUtopia;
+  private final @NotNull AbstractUtilityFunctionsSet<S> achievementScalarizingUtopia;
   private final AbstractUtilityFunctionsSet<S> achievementScalarizingNadir;
   private static final long serialVersionUID = 1L;
 
@@ -38,7 +40,7 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
     int evenVectorsSize    = (super.weights.length%2==0) ? halfVectorSize : (halfVectorSize+1);
 
     double [][] evenVectors = new double[evenVectorsSize][getProblem().getNumberOfObjectives()];
-    double [][] oddVectors = new double[halfVectorSize][getProblem().getNumberOfObjectives()];
+    double [] @NotNull [] oddVectors = new double[halfVectorSize][getProblem().getNumberOfObjectives()];
 
     int index = 0;
     for (int i = 0; i < super.weights.length; i = i + 2)

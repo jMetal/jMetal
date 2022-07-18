@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -56,7 +58,7 @@ public class zdtExperiment {
 
         String experimentBaseDirectory = args[0];
 
-        List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
+        @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
         problemList.add(new ExperimentProblem<>(new ZDT1()).setReferenceFront("ZDT1.csv"));
         problemList.add(new ExperimentProblem<>(new ZDT2()).setReferenceFront("ZDT2.csv"));
         problemList.add(new ExperimentProblem<>(new ZDT3()).setReferenceFront("ZDT3.csv"));
@@ -67,7 +69,7 @@ public class zdtExperiment {
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
                 configureAlgorithmList(problemList);
 
-        Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+        @NotNull Experiment<DoubleSolution, List<DoubleSolution>> experiment =
                 new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTAutoAlgorithmExperiments")
                         .setAlgorithmList(algorithmList)
                         .setProblemList(problemList)
@@ -100,7 +102,7 @@ public class zdtExperiment {
      * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of
      * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
      */
-    static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+    static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
             List<ExperimentProblem<DoubleSolution>> problemList) {
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
         for (int run = 0; run < INDEPENDENT_RUNS; run++) {
@@ -115,10 +117,10 @@ public class zdtExperiment {
                 algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
             }
 
-            for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+            for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
                 double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
                 double mutationDistributionIndex = 20.0;
-                Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
+                @NotNull Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                         (DoubleProblem) experimentProblem.getProblem(),
                         new CrowdingDistanceArchive<DoubleSolution>(100))
                         .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
@@ -133,7 +135,7 @@ public class zdtExperiment {
             for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
 
                 /* OMOPSO */
-                String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
+                String @NotNull [] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
                         .getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 25000 "
@@ -166,14 +168,14 @@ public class zdtExperiment {
                         + "--velocityChangeWhenUpperLimitIsReached -1.0 "
                 )
                         .split("\\s+");
-                AutoMOPSO OMOPSO = new AutoMOPSO();
+                @NotNull AutoMOPSO OMOPSO = new AutoMOPSO();
                 OMOPSO.parseAndCheckParameters(parametersOMOPSO);
-                ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
+                @NotNull ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
 
                 algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
 
                 /* AutoMOPSO With config.txt */
-                String[] parametersAutoMOPSOWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                String @NotNull [] parametersAutoMOPSOWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 25000 "
                         + "--swarmSize 22 " +

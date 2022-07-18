@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -37,7 +39,7 @@ public class IntegerSBXCrossoverExample {
    *
    * @param args Command line arguments
    */
-  public static void main(String[] args) {
+  public static void main(String @NotNull [] args) {
     int numberOfPoints ;
     int granularity ;
     double distributionIndex ;
@@ -58,13 +60,13 @@ public class IntegerSBXCrossoverExample {
     IntegerProblem problem ;
 
     problem = new NMMin(1, -50, 50, -100, 100) ;
-    CrossoverOperator<IntegerSolution> crossover = new IntegerSBXCrossover(1.0, distributionIndex) ;
+    @NotNull CrossoverOperator<IntegerSolution> crossover = new IntegerSBXCrossover(1.0, distributionIndex) ;
 
     IntegerSolution solution1 = problem.createSolution() ;
     IntegerSolution solution2 = problem.createSolution() ;
     solution1.variables().set(0, -50);
     solution2.variables().set(0, 50);
-    List<IntegerSolution> parents = Arrays.asList(solution1, solution2) ;
+    @NotNull List<IntegerSolution> parents = Arrays.asList(solution1, solution2) ;
 
     List<IntegerSolution> population = new ArrayList<>(numberOfPoints) ;
     for (int i = 0; i < numberOfPoints ; i++) {
@@ -75,13 +77,13 @@ public class IntegerSBXCrossoverExample {
 
     Collections.sort(population, new IntegerVariableComparator()) ;
 
-    double[][] classifier = classify(population, problem, granularity);
+    double[] @NotNull [] classifier = classify(population, problem, granularity);
 
     PlotFront plot = new PlotSmile(classifier) ;
     plot.plot();
   }
 
-  private static double[][] classify(List<IntegerSolution> solutions, IntegerProblem problem, int granularity) {
+  private static double[][] classify(List<IntegerSolution> solutions, @NotNull IntegerProblem problem, int granularity) {
     Bounds<Integer> bounds = problem.getVariableBounds().get(0);
     double grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity ;
     double[][] classifier = new double[granularity][] ;

@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Arrays;
@@ -47,7 +48,7 @@ public class WFG2 extends WFG {
     }
   }
 
-  public float[] evaluate(float[] z) {
+  public float[] evaluate(float @NotNull [] z) {
     float[] y;
 
     y = normalise(z);
@@ -71,7 +72,7 @@ public class WFG2 extends WFG {
    * WFG2 t1 transformation
    */
   public float[] t1(float[] z, int k) {
-    float[] result = new float[z.length];
+    float @NotNull [] result = new float[z.length];
 
     System.arraycopy(z, 0, result, 0, k);
 
@@ -86,7 +87,7 @@ public class WFG2 extends WFG {
    * WFG2 t2 transformation
    */
   public float[] t2(float[] z, int k) {
-    float[] result = new float[z.length];
+    float @NotNull [] result = new float[z.length];
 
     System.arraycopy(z, 0, result, 0, k);
 
@@ -141,8 +142,8 @@ public class WFG2 extends WFG {
    * @param solution The solution to runAlgorithm
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    float[] variables = new float[getNumberOfVariables()];
-      double[] x = new double[10];
+    float @NotNull [] variables = new float[getNumberOfVariables()];
+      double @NotNull [] x = new double[10];
       int count = 0;
       int bound = getNumberOfVariables();
       for (int i1 = 0; i1 < bound; i1++) {

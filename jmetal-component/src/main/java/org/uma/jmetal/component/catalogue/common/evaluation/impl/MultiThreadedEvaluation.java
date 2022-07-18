@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.common.evaluation.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
@@ -27,7 +29,7 @@ public class MultiThreadedEvaluation<S extends Solution<?>> implements Evaluatio
   }
 
   @Override
-  public List<S> evaluate(List<S> solutionList) {
+  public List<S> evaluate(@NotNull List<S> solutionList) {
     Check.notNull(solutionList);
     solutionList.parallelStream().forEach(problem::evaluate);
     computedEvaluations = solutionList.size();

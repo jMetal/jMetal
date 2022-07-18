@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -46,7 +48,7 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
   }
 
   @Override
-  public Ranking<S> compute(List<S> population) {
+  public @NotNull Ranking<S> compute(@NotNull List<S> population) {
     int numberOfRanksForFeasibleSolutions,
         numberOfRanksForUnfeasibleSolutions,
         rank,
@@ -57,7 +59,7 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
     int[] rankForUnfeasibleSolutions;
     double value, minimumValue;
     List<S> feasibleSolutions = new LinkedList<>();
-    List<S> unfeasibleSolutions = new LinkedList<>();
+    @NotNull List<S> unfeasibleSolutions = new LinkedList<>();
     S solutionToInsert;
 
     // Split the population in feasible and unfeasible solutions
@@ -170,7 +172,7 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
     int indexOfFirstSolution, indexOfSecondSolution, indexOfWeight;
     double overallConstraintViolationSolution1, overallConstraintViolationSolution2;
     double minimumValueFirstSolution, minimumValueSecondSolution, value;
-    int[] rank = new int[population.size()];
+    int @NotNull [] rank = new int[population.size()];
     Arrays.fill(rank, 0);
 
     // Iteration for each solution
@@ -274,7 +276,7 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
   }
 
   @Override
-  public Integer getRank(S solution) {
+  public Integer getRank(@NotNull S solution) {
     Check.notNull(solution);
 
     Integer result = -1 ;

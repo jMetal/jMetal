@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -57,7 +58,7 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
    * @return
    */
   protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(getMaxPopulationSize());
+    @NotNull List<S> population = new ArrayList<>(getMaxPopulationSize());
     int bound = getMaxPopulationSize();
     for (int i = 0; i < bound; i++) {
       S solution = getProblem().createSolution();
@@ -95,12 +96,12 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
    * @return The new created offspring population
    */
   @Override
-  protected List<S> reproduction(List<S> population) {
+  protected List<S> reproduction(@NotNull List<S> population) {
     int numberOfParents = crossoverOperator.getNumberOfRequiredParents() ;
 
     checkNumberOfParents(population, numberOfParents);
 
-    List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
+    @NotNull List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
     for (int i = 0; i < getMaxPopulationSize(); i += numberOfParents) {
       List<S> parents = new ArrayList<>(numberOfParents);
       for (int j = 0; j < numberOfParents; j++) {

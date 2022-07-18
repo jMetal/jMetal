@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -61,7 +63,7 @@ public class FrontUtils {
    * @param front The front
    * @return double [] An array with the minimum value for each objective
    */
-  public static double[] getMinimumValues(Front front) {
+  public static double[] getMinimumValues(@Nullable Front front) {
     if (front == null) {
       throw new NullFrontException();
     } else if (front.getNumberOfPoints() == 0) {
@@ -70,7 +72,7 @@ public class FrontUtils {
 
     int numberOfObjectives = front.getPoint(0).getDimension();
 
-      double[] minimumValue = new double[10];
+      double @NotNull [] minimumValue = new double[10];
       int count = 0;
       for (int i1 = 0; i1 < numberOfObjectives; i1++) {
           double maxValue = Double.MAX_VALUE;
@@ -110,7 +112,7 @@ public class FrontUtils {
    * @param front The front that contains the other points to calculate the distances
    * @return The minimum distance between the point and the front
    */
-  public static double distanceToNearestPoint(Point point, Front front, Distance<double[], double[]> distance) {
+  public static double distanceToNearestPoint(Point point, @Nullable Front front, Distance<double[], double[]> distance) {
     if (front == null) {
       throw new NullFrontException();
     } else if (front.getNumberOfPoints() == 0) {
@@ -152,7 +154,7 @@ public class FrontUtils {
    *              distances
    * @return The minimum distance between the point and the front
    */
-  public static double distanceToClosestPoint(Point point, Front front, Distance<double[], double[]> distance) {
+  public static double distanceToClosestPoint(@Nullable Point point, @Nullable Front front, Distance<double[], double[]> distance) {
     if (front == null) {
       throw new NullFrontException();
     } else if (front.getNumberOfPoints() == 0) {
@@ -180,7 +182,7 @@ public class FrontUtils {
    * @param front The pareto front to inverse
    * @return The inverted pareto front
    */
-  public static Front getInvertedFront(Front front) {
+  public static Front getInvertedFront(@Nullable Front front) {
     if (front == null) {
       throw new NullFrontException();
     } else if (front.getNumberOfPoints() == 0) {
@@ -188,7 +190,7 @@ public class FrontUtils {
     }
 
     int numberOfDimensions = front.getPoint(0).getDimension();
-    Front invertedFront = new ArrayFront(front.getNumberOfPoints(), numberOfDimensions);
+    @NotNull Front invertedFront = new ArrayFront(front.getNumberOfPoints(), numberOfDimensions);
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfDimensions; j++) {
@@ -269,7 +271,7 @@ public class FrontUtils {
    * @return A front as a List<FrontSolution>
    */
 
-  public static List<PointSolution> convertFrontToSolutionList(Front front) {
+  public static List<PointSolution> convertFrontToSolutionList(@Nullable Front front) {
     if (front == null) {
       throw new NullFrontException();
     }

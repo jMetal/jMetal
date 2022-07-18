@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
@@ -65,7 +67,7 @@ public class GenericHUXCrossover<S extends BinarySolution> implements CrossoverO
    * @throws JMetalException
    */
   public List<S> doCrossover(
-      double probability, S parent1, S parent2) throws JMetalException {
+          double probability, S parent1, @NotNull S parent2) throws JMetalException {
     List<S> offspring = new ArrayList<>();
     offspring.add((S) parent1.copy());
     offspring.add((S) parent2.copy());

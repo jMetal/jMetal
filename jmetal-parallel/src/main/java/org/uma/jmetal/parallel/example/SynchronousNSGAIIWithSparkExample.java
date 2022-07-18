@@ -8,6 +8,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -45,7 +46,7 @@ public class SynchronousNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
 
     problem = new ZDT2() {
       @Override
-      public DoubleSolution evaluate(DoubleSolution solution) {
+      public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
         super.evaluate(solution);
         computingDelay();
 
@@ -80,7 +81,7 @@ public class SynchronousNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
             .setAppName("NSGA-II with Spark");
 
     JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
-    SolutionListEvaluator<DoubleSolution> evaluator = new SparkSolutionListEvaluator<>(sparkContext) ;
+    @NotNull SolutionListEvaluator<DoubleSolution> evaluator = new SparkSolutionListEvaluator<>(sparkContext) ;
 
     algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)

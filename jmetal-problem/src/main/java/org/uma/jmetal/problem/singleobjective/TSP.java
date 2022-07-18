@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -33,7 +35,7 @@ public class TSP extends AbstractIntegerPermutationProblem {
   }
 
   /** Evaluate() method */
-  public PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution){
+  public @NotNull PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution){
     double fitness1   ;
 
     fitness1 = 0.0 ;
@@ -68,7 +70,7 @@ public class TSP extends AbstractIntegerPermutationProblem {
       in = new FileInputStream(file) ;
     }
     InputStreamReader isr = new InputStreamReader(in);
-    BufferedReader br = new BufferedReader(isr);
+    @NotNull BufferedReader br = new BufferedReader(isr);
 
     StreamTokenizer token = new StreamTokenizer(br);
     try {
@@ -101,7 +103,7 @@ public class TSP extends AbstractIntegerPermutationProblem {
           token.nextToken() ;
       }
 
-      double [] c = new double[2*numberOfCities] ;
+      double @NotNull [] c = new double[2*numberOfCities] ;
 
       for (int i = 0; i < numberOfCities; i++) {
         token.nextToken() ;

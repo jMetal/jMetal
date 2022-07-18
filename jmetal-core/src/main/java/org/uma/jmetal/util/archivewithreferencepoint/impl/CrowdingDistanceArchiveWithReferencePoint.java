@@ -15,6 +15,8 @@ package org.uma.jmetal.util.archivewithreferencepoint.impl;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
@@ -26,7 +28,7 @@ import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimato
  */
 @SuppressWarnings("serial")
 public class CrowdingDistanceArchiveWithReferencePoint<S extends Solution<?>> extends ArchiveWithReferencePoint<S> {
-  private final DensityEstimator<S> densityEstimator ;
+  private final @NotNull DensityEstimator<S> densityEstimator ;
 
   public CrowdingDistanceArchiveWithReferencePoint(int maxSize, List<Double> refPointDM) {
     super(maxSize, refPointDM, new CrowdingDistanceDensityEstimator<S>().getComparator());

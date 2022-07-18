@@ -3,6 +3,8 @@ package org.uma.jmetal.operator.crossover.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
@@ -45,8 +47,8 @@ public class CompositeCrossover implements CrossoverOperator<CompositeSolution> 
     Check.notNull(solutions);
     Check.that(solutions.size() == 2, "The number of parents is not two: " + solutions.size());
 
-    List<Solution<?>> offspring1 = new ArrayList<>();
-    List<Solution<?>> offspring2 = new ArrayList<>();
+    @NotNull List<Solution<?>> offspring1 = new ArrayList<>();
+    @NotNull List<Solution<?>> offspring2 = new ArrayList<>();
     int numberOfSolutionsInCompositeSolution = solutions.get(0).variables().size();
     for (int i = 0; i < numberOfSolutionsInCompositeSolution; i++) {
       List<Solution<?>> parents =

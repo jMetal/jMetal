@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.randomsearch;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
@@ -41,7 +43,7 @@ public class RandomSearch<S extends Solution<?>> implements Algorithm<List<S>> {
     return nonDominatedArchive.getSolutionList();
   }
 
-  @Override public String getName() {
+  @Override public @NotNull String getName() {
     return "RS" ;
   }
 

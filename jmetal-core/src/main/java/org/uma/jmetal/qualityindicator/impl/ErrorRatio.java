@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -71,7 +72,7 @@ public class ErrorRatio extends QualityIndicator {
    * @return the value of the error ratio indicator
    * @throws JMetalException
    */
-  private double errorRatio(double[][] front, double[][] referenceFront) {
+  private double errorRatio(double[][] front, double[] @NotNull [] referenceFront) {
     int numberOfObjectives = referenceFront[0].length ;
     double sum = 0;
 

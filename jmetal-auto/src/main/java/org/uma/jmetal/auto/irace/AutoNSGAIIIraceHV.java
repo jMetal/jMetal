@@ -3,6 +3,8 @@ package org.uma.jmetal.auto.irace;
 import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
 
 import java.io.IOException;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
@@ -18,20 +20,20 @@ public class AutoNSGAIIIraceHV {
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
     nsgaII.run();
 
-    String referenceFrontFile =
+    @NotNull String referenceFrontFile =
         "resources/referenceFrontsCSV/" + nsgaiiWithParameters.referenceFrontFilename.getValue();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
-    double[][] front = getMatrixWithObjectiveValues(nsgaII.getResult()) ;
+    double[] @NotNull [] front = getMatrixWithObjectiveValues(nsgaII.getResult()) ;
 
-    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    double[] @NotNull [] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
     double[][] normalizedFront =
             NormalizeUtils.normalize(
                     front,
                     NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
                     NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    var qualityIndicator = new PISAHypervolume(normalizedReferenceFront) ;
+    @NotNull var qualityIndicator = new PISAHypervolume(normalizedReferenceFront) ;
     System.out.println(qualityIndicator.compute(normalizedFront) * -1.0) ;
   }
 }

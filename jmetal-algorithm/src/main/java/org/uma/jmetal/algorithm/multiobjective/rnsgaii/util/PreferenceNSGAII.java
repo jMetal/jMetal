@@ -5,13 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 
 public class PreferenceNSGAII<S extends Solution<?>> {
   private List<Double> interestPoint;
   private List<Double> upperBounds = null;
   private List<Double> lowerBounds = null;
-  private List<Double> weights = null;
+  private @Nullable List<Double> weights = null;
 
   public PreferenceNSGAII(List<Double> weights) {
     this.weights = weights;
@@ -21,9 +23,9 @@ public class PreferenceNSGAII<S extends Solution<?>> {
     interestPoint = newInterestPoint;
   }
 
-  public Double evaluate(S solution) {
+  public @NotNull Double evaluate(S solution) {
 
-      List<Double> objectiveValues = new ArrayList<>(solution.objectives().length);
+      @NotNull List<Double> objectiveValues = new ArrayList<>(solution.objectives().length);
       for (double v : solution.objectives()) {
           Double aDouble = v;
           objectiveValues.add(aDouble);

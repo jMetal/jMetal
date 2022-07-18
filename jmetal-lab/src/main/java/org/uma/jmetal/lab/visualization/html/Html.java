@@ -1,5 +1,7 @@
 package org.uma.jmetal.lab.visualization.html;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -62,7 +64,7 @@ public class Html {
     }
   }
 
-  File createFileInDirectory() {
+  @NotNull File createFileInDirectory() {
     Path path = Paths.get(PATH_FOLDER, title + ".html");
 
     try {
@@ -74,8 +76,8 @@ public class Html {
     return path.toFile();
   }
 
-  private void writeToFile(File outputFile) {
-    String output = createDocument();
+  private void writeToFile(@NotNull File outputFile) {
+    @NotNull String output = createDocument();
 
     try (Writer writer =
                  new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8)) {
@@ -85,7 +87,7 @@ public class Html {
     }
   }
 
-  private String createDocument() {
+  private @NotNull String createDocument() {
     return "<!DOCTYPE html>\n" +
             "<html>\n" +
             createHead() +
@@ -111,7 +113,7 @@ public class Html {
 
   private StringBuilder createBody() {
 
-    StringBuilder sb = new StringBuilder();
+    @NotNull StringBuilder sb = new StringBuilder();
 
     sb.append("<body>\n");
 
@@ -134,7 +136,7 @@ public class Html {
     sb.append(" h1 {text-align: center} \n");
 
       StringJoiner joiner = new StringJoiner("", ".component { margin : 1em auto 2em auto; width : 90%}\n", "");
-      for (HtmlComponent component : components) {
+      for (@NotNull HtmlComponent component : components) {
           String css = component.getCSS();
           joiner.add(css);
       }
@@ -143,7 +145,7 @@ public class Html {
     return sb.append("</style>\n");
   }
 
-  private void browse(File file) throws IOException {
+  private void browse(@NotNull File file) throws IOException {
 
     if (Desktop.isDesktopSupported()) {
 

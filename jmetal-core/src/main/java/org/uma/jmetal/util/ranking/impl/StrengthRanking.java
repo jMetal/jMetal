@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -37,7 +39,7 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
   }
 
   @Override
-  public Ranking<S> compute(List<S> solutionList) {
+  public Ranking<S> compute(@NotNull List<S> solutionList) {
     int[] strength = new int[solutionList.size()];
     int[] rawFitness = new int[solutionList.size()];
 
@@ -109,7 +111,7 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
   }
 
   @Override
-  public Integer getRank(S solution) {
+  public Integer getRank(@NotNull S solution) {
     Check.notNull(solution);
 
     Integer result = -1;
@@ -120,7 +122,7 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
   }
 
   @Override
-  public Object getAttributedId() {
+  public @NotNull Object getAttributedId() {
     return attributeId ;
   }
 }

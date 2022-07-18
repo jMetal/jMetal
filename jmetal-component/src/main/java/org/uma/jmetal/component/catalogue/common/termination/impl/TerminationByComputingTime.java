@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.common.termination.impl;
 
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 
 /**
@@ -18,7 +20,7 @@ public class TerminationByComputingTime implements Termination {
   }
 
   @Override
-  public boolean isMet(Map<String, Object> algorithmStatusData) {
+  public boolean isMet(@NotNull Map<String, Object> algorithmStatusData) {
     long currentComputingTime = (long) algorithmStatusData.get("COMPUTING_TIME") ;
     evaluations = (int) algorithmStatusData.get("EVALUATIONS") ;
 

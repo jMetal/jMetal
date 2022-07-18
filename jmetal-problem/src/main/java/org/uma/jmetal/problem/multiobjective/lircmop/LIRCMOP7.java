@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
@@ -27,8 +28,8 @@ public class LIRCMOP7 extends LIRCMOP5 {
   public void evaluateConstraints(DoubleSolution solution) {
     double r = 0.1, theta = -0.25 * Math.PI;
     double[] a_array = new double[] {2.0, 2.5, 2.5};
-    double[] b_array = new double[] {6.0, 12.0, 10.0};
-    double[] xOffset = new double[] {1.2, 2.25, 3.5};
+    double @NotNull [] b_array = new double[] {6.0, 12.0, 10.0};
+    double @NotNull [] xOffset = new double[] {1.2, 2.25, 3.5};
     double[] yOffset = new double[] {1.2, 2.25, 3.5};
     double f1 = solution.objectives()[0];
     double f2 = solution.objectives()[1];

@@ -5,6 +5,7 @@ import static org.uma.jmetal.problem.multiobjective.re.Util.getClosestValue;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -32,7 +33,7 @@ public class RE25 extends AbstractDoubleProblem {
     setName("RE25");
 
     List<Double> lowerLimit = List.of(1.0, 0.6, 0.09);
-    List<Double> upperLimit = List.of(70.0, 3.0, 0.5);
+    @NotNull List<Double> upperLimit = List.of(70.0, 3.0, 0.5);
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -44,7 +45,7 @@ public class RE25 extends AbstractDoubleProblem {
     double x2 = solution.variables().get(1);
     double x3 = getClosestValue(diameterFeasibleIntergers, solution.variables().get(2));
 
-    double[] g = new double[numberOfOriginalConstraints];
+    double @NotNull [] g = new double[numberOfOriginalConstraints];
 
     double cf = ((4.0 * (x2 / x3) - 1) / (4.0 * (x2 / x3) - 4)) + (0.615 * x3 / x2);
     double fMax = 1000.0;

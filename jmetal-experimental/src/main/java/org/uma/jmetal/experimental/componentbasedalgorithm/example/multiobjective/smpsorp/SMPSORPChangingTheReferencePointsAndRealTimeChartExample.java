@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
@@ -89,7 +90,7 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
     algorithm.getObservable().register(runTimeChartObserver);
 
     Thread algorithmThread = new Thread(algorithm);
-    ChangeReferencePoint changeReferencePoint = new ChangeReferencePoint(algorithm, referencePoints, archivesWithReferencePoints, runTimeChartObserver.getChart()) ;
+    @NotNull ChangeReferencePoint changeReferencePoint = new ChangeReferencePoint(algorithm, referencePoints, archivesWithReferencePoints, runTimeChartObserver.getChart()) ;
 
     Thread changePointsThread = new Thread(changeReferencePoint) ;
 
@@ -134,7 +135,7 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
           System.out.println("Introduce the new reference point (between commas):");
           String s = scanner.nextLine() ;
 
-          try (Scanner sl = new Scanner(s)) {
+          try (@NotNull Scanner sl = new Scanner(s)) {
             sl.useDelimiter(",");
 
             for (int i = 0; i < referencePoints.size(); i++) {

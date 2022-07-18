@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
 import java.io.IOException;
 import java.util.Arrays;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -32,7 +34,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class NSGAIIWithMixedSolutionEncodingExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
-    Problem<CompositeSolution> problem =
+    @NotNull Problem<CompositeSolution> problem =
         new MixedIntegerDoubleProblem(10, 10, 100, -100, -1000, +1000);
 
     CompositeCrossover crossover =

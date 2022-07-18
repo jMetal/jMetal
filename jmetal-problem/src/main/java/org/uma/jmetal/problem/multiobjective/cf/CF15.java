@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
@@ -68,13 +70,13 @@ public class CF15 extends AbstractDoubleProblem {
    *
    * @param solution The solution to evaluate
    */
-  public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = VectorUtils.toArray(solution.variables());
+  public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
+    double @NotNull [] x = VectorUtils.toArray(solution.variables());
     double[] f = new double[getNumberOfObjectives()];
-    double[] constraint = new double[getNumberOfConstraints()];
+    double @NotNull [] constraint = new double[getNumberOfConstraints()];
 
     /* ----------------------Evaluate objectives (begin)------------------------- */
-    double[] sx = new double[getNumberOfObjectives()]; // Cumulative squared sum
+    double @NotNull [] sx = new double[getNumberOfObjectives()]; // Cumulative squared sum
 
     // Step 1. Compute squredSum Sx
     double squredSum = 0.0;

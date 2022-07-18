@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -24,7 +25,7 @@ public class Transformations {
       JMetalLogger.logger.severe("wfg.Transformations.bPoly: Param alpha " +
         "must be > 0");
       Class<String> cls = String.class;
-      String name = cls.getName();
+      @NotNull String name = cls.getName();
       throw new JMetalException("Exception in " + name + ".bPoly()");
     }
 
@@ -83,7 +84,7 @@ public class Transformations {
   /**
    * rSum transformation
    */
-  public float rSum(float[] y, float[] w) {
+  public float rSum(float @NotNull [] y, float[] w) {
     float tmp1 = (float) 0.0, tmp2 = (float) 0.0;
     for (int i = 0; i < y.length; i++) {
       tmp1 += y[i] * w[i];
@@ -96,7 +97,7 @@ public class Transformations {
   /**
    * rNonsep transformation
    */
-  public float rNonsep(float[] y, int A) {
+  public float rNonsep(float @NotNull [] y, int A) {
     float tmp, denominator, numerator;
 
     tmp = (float) Math.ceil(A / (float) 2.0);

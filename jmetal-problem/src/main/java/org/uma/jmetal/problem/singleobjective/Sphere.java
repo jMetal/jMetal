@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.singleobjective;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -21,7 +23,7 @@ public class Sphere extends AbstractDoubleProblem {
     setNumberOfObjectives(1);
     setName("Sphere");
 
-    List<Double> lowerLimit = new ArrayList<>() ;
+    @NotNull List<Double> lowerLimit = new ArrayList<>() ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
       for (int i = 0; i < numberOfVariables; i++) {
@@ -34,7 +36,7 @@ public class Sphere extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
       double sum = 0.0;
       for (Double v : solution.variables()) {
           double v1 = v;

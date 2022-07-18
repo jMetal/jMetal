@@ -3,6 +3,7 @@ package org.uma.jmetal.problem.multiobjective.re;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -23,8 +24,8 @@ public class RE24 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("RE24");
 
-    List<Double> lowerLimit = List.of(0.5, 0.5);
-    List<Double> upperLimit = List.of(4.0, 50.0);
+    @NotNull List<Double> lowerLimit = List.of(0.5, 0.5);
+    @NotNull List<Double> upperLimit = List.of(4.0, 50.0);
 
     setVariableBounds(lowerLimit, upperLimit);
   }

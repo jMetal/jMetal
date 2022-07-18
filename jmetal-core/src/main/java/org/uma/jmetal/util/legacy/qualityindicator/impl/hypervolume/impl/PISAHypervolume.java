@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -42,7 +43,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
    * Constructor with reference point
    * @param referencePoint
    */
-  public PISAHypervolume(double[] referencePoint) {
+  public PISAHypervolume(double @NotNull [] referencePoint) {
     super(referencePoint) ;
   }
 
@@ -97,7 +98,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return ((i >= noObjectives) && (betterInAnyObjective > 0));
   }
 
-  private void swap(double[][] front, int i, int j) {
+  private void swap(double[] @NotNull [] front, int i, int j) {
     double[] temp;
 
     temp = front[i];
@@ -229,7 +230,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "PISA implementation of the hypervolume quality indicator";
   }
 
@@ -239,9 +240,9 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   @Override
-  public List<S> computeHypervolumeContribution(List<S> solutionList, List<S> referenceFrontList) {
+  public @NotNull List<S> computeHypervolumeContribution(@NotNull List<S> solutionList, List<S> referenceFrontList) {
     if (solutionList.size() > 1) {
-      Front front = new ArrayFront(solutionList);
+      @NotNull Front front = new ArrayFront(solutionList);
       Front referenceFront = new ArrayFront(referenceFrontList);
 
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
@@ -249,8 +250,8 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       double[] minimumValues = FrontUtils.getMinimumValues(referenceFront);
 
       // STEP 2. Get the normalized front
-      FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
-      Front normalizedFront = frontNormalizer.normalize(front);
+      @NotNull FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
+      @NotNull Front normalizedFront = frontNormalizer.normalize(front);
 
       // compute offsets for reference point in normalized space
         double[] offsets = new double[10];
@@ -263,7 +264,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
         offsets = Arrays.copyOfRange(offsets, 0, count);
         // STEP 3. Inverse the pareto front. This is needed because the original
       // metric by Zitzler is for maximization problem
-      Front invertedFront = FrontUtils.getInvertedFront(normalizedFront);
+      @NotNull Front invertedFront = FrontUtils.getInvertedFront(normalizedFront);
 
       // shift away from origin, so that boundary points also get a contribution > 0
       for (int i = 0; i < invertedFront.getNumberOfPoints(); i++) {

@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.moead;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.MOEADBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -29,8 +31,8 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
  */
 public class MOEADDefaultConfigurationExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    @NotNull String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -44,10 +46,10 @@ public class MOEADDefaultConfigurationExample {
 
     int populationSize = 300;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    @NotNull Termination termination = new TerminationByEvaluations(25000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
+    @NotNull SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
         populationSize,

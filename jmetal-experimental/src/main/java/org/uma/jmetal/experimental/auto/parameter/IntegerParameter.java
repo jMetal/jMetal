@@ -3,6 +3,7 @@ package org.uma.jmetal.experimental.auto.parameter;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 public class IntegerParameter extends Parameter<Integer> {
   private final Integer lowerBound;
@@ -40,7 +41,7 @@ public class IntegerParameter extends Parameter<Integer> {
 
   @Override
   public String toString() {
-    StringBuilder result =
+    @NotNull StringBuilder result =
             new StringBuilder("Name: "
                     + getName()
                     + ": "
@@ -53,7 +54,7 @@ public class IntegerParameter extends Parameter<Integer> {
     for (Parameter<?> parameter : getGlobalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (@NotNull Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
       result.append("\n  -> ").append(parameter.getRight().toString());
     }
     return result.toString();

@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class Normalizer {
@@ -11,7 +13,7 @@ public class Normalizer {
 		this.max = max;
 	}
 	
-	public Double normalize(Double input, int index) {						 			
+	public @NotNull Double normalize(Double input, int index) {
 		Double diff		= max.get(index) - min.get(index);
 		Double output 	= (input-min.get(index))/diff; 
 		

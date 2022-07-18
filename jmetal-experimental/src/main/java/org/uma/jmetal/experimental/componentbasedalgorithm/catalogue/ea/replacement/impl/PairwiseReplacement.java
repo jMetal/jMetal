@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replace
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -28,7 +30,7 @@ public class PairwiseReplacement<S extends Solution<?>> implements Replacement<S
             + ", "
             + offspringPopulation.size());
 
-    List<S> resultPopulation = new ArrayList<>();
+    @NotNull List<S> resultPopulation = new ArrayList<>();
     for (int i = 0; i < population.size(); i++) {
       if (comparator.compare(population.get(i), offspringPopulation.get(i)) < 0) {
         resultPopulation.add(population.get(i)) ;

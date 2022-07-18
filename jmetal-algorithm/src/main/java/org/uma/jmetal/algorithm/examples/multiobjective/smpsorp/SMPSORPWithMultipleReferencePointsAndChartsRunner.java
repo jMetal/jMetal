@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -40,7 +41,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
    *
    * @author Antonio J. Nebro
    */
-  public static void main(String[] args) throws JMetalException, IOException {
+  public static void main(String @NotNull [] args) throws JMetalException, IOException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     MutationOperator<DoubleSolution> mutation;
@@ -101,7 +102,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
     CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
-    ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 80);
+    @NotNull ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.setReferencePoint(referencePoints);
     chart.initChart();
@@ -144,7 +145,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
       this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
     }
 
-    private void refreshChart(List<DoubleSolution> solutionList) {
+    private void refreshChart(@NotNull List<DoubleSolution> solutionList) {
       if (this.chart != null) {
         iteration++;
         this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
@@ -159,7 +160,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
     }
 
     @Override
-    synchronized public void measureGenerated(List<DoubleSolution> solutions) {
+    synchronized public void measureGenerated(@NotNull List<DoubleSolution> solutions) {
       refreshChart(solutions);
     }
   }

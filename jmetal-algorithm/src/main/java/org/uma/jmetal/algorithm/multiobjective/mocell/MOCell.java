@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -77,7 +79,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   protected void initProgress() {
     evaluations = 0;
     currentIndividual = 0;
-    for (S solution : population) {
+    for (@NotNull S solution : population) {
       archive.add((S) solution.copy());
     }
   }
@@ -101,7 +103,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override
-  protected List<S> selection(List<S> population) {
+  protected @NotNull List<S> selection(List<S> population) {
     List<S> parents = new ArrayList<>(2);
     currentNeighbors = neighborhood.getNeighbors(population, currentIndividual);
     currentNeighbors.add(population.get(currentIndividual));
@@ -125,7 +127,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override
-  protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+  protected @NotNull List<S> replacement(@NotNull List<S> population, List<S> offspringPopulation) {
     int flag =
         dominanceComparator.compare(population.get(currentIndividual), offspringPopulation.get(0));
 
@@ -143,7 +145,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     return archive.getSolutionList();
   }
 
-  private List<S> insertNewIndividualWhenItDominatesTheCurrentOne(
+  private @NotNull List<S> insertNewIndividualWhenItDominatesTheCurrentOne(
       List<S> population, List<S> offspringPopulation) {
     population.set(currentIndividual, offspringPopulation.get(0));
     archive.add(offspringPopulation.get(0));
@@ -151,7 +153,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   private List<S> insertNewIndividualWhenItAndTheCurrentOneAreNonDominated(
-      List<S> population, List<S> offspringPopulation) {
+          @NotNull List<S> population, @NotNull List<S> offspringPopulation) {
     currentNeighbors.add(offspringPopulation.get(0));
 
     Ranking<S> rank = new FastNonDominatedSortRanking<S>();

@@ -3,6 +3,8 @@ package org.uma.jmetal.util.densityestimator.impl;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
@@ -34,8 +36,8 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
   @Override
   public void compute(List<S> solutionList) {
     double[][] distance = SolutionListUtils.distanceMatrix(solutionList);
-    double[] strength = new double[solutionList.size()];
-    double[] rawFitness = new double[solutionList.size()];
+    double @NotNull [] strength = new double[solutionList.size()];
+    double @NotNull [] rawFitness = new double[solutionList.size()];
     double kDistance;
 
     // strength(i) = |{j | j <- SolutionSet and i dominate j}|
@@ -68,7 +70,7 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
   }
 
   @Override
-  public Double getValue(S solution) {
+  public Double getValue(@NotNull S solution) {
     Check.notNull(solution);
 
     Double result = 0.0;

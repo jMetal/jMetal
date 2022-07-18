@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -38,7 +40,7 @@ public class MaF08 extends AbstractDoubleProblem {
     double r = 1;
     const8 = polygonpoints(numberOfObjectives, r);
 
-    List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
+    @NotNull List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
       for (int i = 0; i < numberOfVariables; i++) {
@@ -55,7 +57,7 @@ public class MaF08 extends AbstractDoubleProblem {
    * @param solution The solution to evaluate
    */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
 
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
@@ -63,7 +65,7 @@ public class MaF08 extends AbstractDoubleProblem {
     double[] x;
     double[] f;
 
-      double[] result = new double[10];
+      double @NotNull [] result = new double[10];
       int count1 = 0;
       for (Double aDouble : solution.variables()) {
           double v = aDouble;
@@ -73,7 +75,7 @@ public class MaF08 extends AbstractDoubleProblem {
       result = Arrays.copyOfRange(result, 0, count1);
       x = result;
     // evaluate f
-      double[] arr = new double[10];
+      double @NotNull [] arr = new double[10];
       int count = 0;
       for (int i1 = 0; i1 < numberOfObjectives; i1++) {
           double sqrt = Math.sqrt(Math.pow(const8[i1][0] - x[0], 2) + Math.pow(const8[i1][1] - x[1], 2));
@@ -93,7 +95,7 @@ public class MaF08 extends AbstractDoubleProblem {
     double[] startp = new double[2];
     startp[0] = 0;
     startp[1] = 1;
-    double[][] p1 = new double[m][2];
+    double[] @NotNull [] p1 = new double[m][2];
     double[][] p;
     p1[0] = startp;
     // vertexes with the number of edges(m),start vertex(startp),radius(r)
@@ -109,7 +111,7 @@ public class MaF08 extends AbstractDoubleProblem {
     return p;
   }
 
-  public static double[] nextPoint(double arc, double[] startp,
+  public static double[] nextPoint(double arc, double @NotNull [] startp,
       double r) {// arc is radians��evaluation the next vertex with arc and r
     double[] p = new double[2];
     p[0] = startp[0] - r * Math.sin(arc);

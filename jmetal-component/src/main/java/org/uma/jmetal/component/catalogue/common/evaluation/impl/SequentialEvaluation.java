@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.common.evaluation.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
@@ -13,9 +15,9 @@ import org.uma.jmetal.util.errorchecking.Check;
  */
 public class SequentialEvaluation<S extends Solution<?>> implements Evaluation<S> {
   private int computedEvaluations ;
-  private final Problem<S> problem ;
+  private final @NotNull Problem<S> problem ;
 
-  public SequentialEvaluation(Problem<S> problem) {
+  public SequentialEvaluation(@NotNull Problem<S> problem) {
     Check.notNull(problem);
     this.problem = problem ;
     computedEvaluations = 0 ;

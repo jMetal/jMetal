@@ -3,6 +3,8 @@ package org.uma.jmetal.operator.selection.impl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
@@ -52,13 +54,13 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
               "the solutions to selected ("+solutionsToSelect+")")  ;
     }
 
-    Ranking<S> ranking = new FastNonDominatedSortRanking<S>(dominanceComparator);
+    @NotNull Ranking<S> ranking = new FastNonDominatedSortRanking<S>(dominanceComparator);
     ranking.compute(solutionList) ;
 
     return crowdingDistanceSelection(ranking);
   }
 
-  protected List<S> crowdingDistanceSelection(Ranking<S> ranking) {
+  protected @NotNull List<S> crowdingDistanceSelection(Ranking<S> ranking) {
     CrowdingDistanceDensityEstimator<S> crowdingDistance = new CrowdingDistanceDensityEstimator<>() ;
     List<S> population = new ArrayList<>(solutionsToSelect) ;
     int rankingIndex = 0;
@@ -76,11 +78,11 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
     return population ;
   }
 
-  protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
+  protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, @NotNull List<S> population) {
     return ranking.getSubFront(rank).size() < (solutionsToSelect - population.size()) ;
   }
 
-  protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
+  protected void addRankedSolutionsToPopulation(@NotNull Ranking<S> ranking, int rank, List<S> population) {
     List<S> front ;
 
     front = ranking.getSubFront(rank);
@@ -90,7 +92,7 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
       }
   }
 
-  protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S>population) {
+  protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, @NotNull List<S>population) {
     List<S> currentRankedFront = ranking.getSubFront(rank) ;
 
     currentRankedFront.sort(new CrowdingDistanceDensityEstimator<>().getComparator());

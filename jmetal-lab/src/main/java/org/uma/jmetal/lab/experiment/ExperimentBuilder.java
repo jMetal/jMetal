@@ -2,6 +2,9 @@ package org.uma.jmetal.lab.experiment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
@@ -16,7 +19,7 @@ public class ExperimentBuilder<S extends Solution<?>, Result extends List<S>> {
   private final String experimentName ;
   private List<ExperimentAlgorithm<S, Result>> algorithmList;
   private List<ExperimentProblem<S>> problemList;
-  private String referenceFrontDirectory;
+  private @Nullable String referenceFrontDirectory;
   private String experimentBaseDirectory;
   private String outputParetoFrontFileName;
   private String outputParetoSetFileName;
@@ -33,13 +36,13 @@ public class ExperimentBuilder<S extends Solution<?>, Result extends List<S>> {
     this.referenceFrontDirectory = null ;
   }
 
-  public ExperimentBuilder<S, Result> setAlgorithmList(List<ExperimentAlgorithm<S, Result>> algorithmList) {
+  public ExperimentBuilder<S, Result> setAlgorithmList(@NotNull List<ExperimentAlgorithm<S, Result>> algorithmList) {
     this.algorithmList = new ArrayList<>(algorithmList) ;
 
     return this ;
   }
 
-  public ExperimentBuilder<S, Result> setProblemList(List<ExperimentProblem<S>> problemList) {
+  public @NotNull ExperimentBuilder<S, Result> setProblemList(List<ExperimentProblem<S>> problemList) {
     this.problemList = problemList ;
 
     return this ;
@@ -70,7 +73,7 @@ public class ExperimentBuilder<S extends Solution<?>, Result extends List<S>> {
     return this ;
   }
 
-  public ExperimentBuilder<S, Result> setOutputParetoSetFileName(String outputParetoSetFileName) {
+  public @NotNull ExperimentBuilder<S, Result> setOutputParetoSetFileName(String outputParetoSetFileName) {
     this.outputParetoSetFileName = outputParetoSetFileName ;
 
     return this ;
@@ -82,7 +85,7 @@ public class ExperimentBuilder<S extends Solution<?>, Result extends List<S>> {
     return this ;
   }
 
-  public ExperimentBuilder<S, Result> setNumberOfCores(int numberOfCores) {
+  public @NotNull ExperimentBuilder<S, Result> setNumberOfCores(int numberOfCores) {
     this.numberOfCores = numberOfCores;
 
     return this ;

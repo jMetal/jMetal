@@ -3,6 +3,8 @@ package org.uma.jmetal.lab.experiment.studies;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
@@ -117,11 +119,11 @@ public class ZDTStudy {
    * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of
    * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
    */
-  static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+  static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-      for (var experimentProblem : problemList) {
+      for (@NotNull var experimentProblem : problemList) {
         double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
         double mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
@@ -146,7 +148,7 @@ public class ZDTStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (var experimentProblem : problemList) {
+      for (@NotNull var experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(experimentProblem.getProblem(), MOEADBuilder.Variant.MOEAD)
                 .setCrossover(new DifferentialEvolutionCrossover(1.0, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
                 .setMutation(new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),

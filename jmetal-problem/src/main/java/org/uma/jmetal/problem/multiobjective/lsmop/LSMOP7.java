@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Ackley;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Rosenbrock;
@@ -29,12 +30,12 @@ public class LSMOP7 extends AbstractLSMOP5_8 {
   }
 
   @Override
-  protected Function getOddFunction() {
+  protected @NotNull Function getOddFunction() {
     return new Ackley();
   }
 
   @Override
-  protected Function getEvenFunction() {
+  protected @NotNull Function getEvenFunction() {
     return new Rosenbrock();
   }
 }

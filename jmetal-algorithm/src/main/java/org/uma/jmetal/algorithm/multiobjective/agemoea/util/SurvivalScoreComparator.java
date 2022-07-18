@@ -1,8 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoea.util;
 
-import java.util.Comparator;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
+
+import java.util.Comparator;
 
 /**
  * Comparator based on the survival score of AGE-MOEA
@@ -25,7 +27,7 @@ public class SurvivalScoreComparator<S extends Solution<?>> implements Comparato
      * respectively.
      */
     @Override
-    public int compare(S solution1, S solution2) {
+    public int compare(@NotNull S solution1, S solution2) {
         if (ranking.getRank(solution1) < ranking.getRank(solution2))
             return -1;
 

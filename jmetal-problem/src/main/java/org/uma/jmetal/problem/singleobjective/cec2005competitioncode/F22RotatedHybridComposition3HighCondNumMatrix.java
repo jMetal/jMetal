@@ -46,6 +46,7 @@
 //
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class F22RotatedHybridComposition3HighCondNumMatrix extends TestFunc {
@@ -63,8 +64,8 @@ public class F22RotatedHybridComposition3HighCondNumMatrix extends TestFunc {
   private final MyHCJob theJob = new MyHCJob();
 
   // Shifted global optimum
-  private final double[][] m_o;
-  private final double[][][] m_M;
+  private final double[] @NotNull [] m_o;
+  private final double[][] @NotNull [] m_M;
   private final double[] m_sigma = {
     1.0, 1.0, 1.0, 1.0, 1.0,
     2.0, 2.0, 2.0, 2.0, 2.0
@@ -79,7 +80,7 @@ public class F22RotatedHybridComposition3HighCondNumMatrix extends TestFunc {
   };
   private final double[] m_testPoint;
   private final double[] m_testPointM;
-  private final double[] m_fmax;
+  private final double @NotNull [] m_fmax;
 
   // In order to avoid excessive memory allocation,
   // a fixed memory buffer is allocated for each function object.

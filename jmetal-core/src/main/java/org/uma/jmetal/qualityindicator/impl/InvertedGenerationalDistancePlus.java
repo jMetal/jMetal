@@ -3,6 +3,7 @@ package org.uma.jmetal.qualityindicator.impl;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.distance.impl.DominanceDistanceBetweenVectors;
@@ -63,11 +64,11 @@ public class InvertedGenerationalDistancePlus extends QualityIndicator {
     return sum / referenceFront.length;
   }
 
-  @Override public String getName() {
+  @Override public @NotNull String getName() {
     return "IGD+" ;
   }
 
-  @Override public String getDescription() {
+  @Override public @NotNull String getDescription() {
     return "Inverted Generational Distance+" ;
   }
 

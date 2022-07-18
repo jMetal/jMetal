@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.selection.impl;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -12,9 +14,9 @@ import org.uma.jmetal.util.errorchecking.Check;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class BestSolutionSelection<S> implements SelectionOperator<List<S>, S> {
-private final Comparator<S> comparator ;
+private final @NotNull Comparator<S> comparator ;
 
-  public BestSolutionSelection(Comparator<S> comparator) {
+  public BestSolutionSelection(@NotNull Comparator<S> comparator) {
     Check.notNull(comparator);
     this.comparator = comparator ;
   }

@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
@@ -29,7 +31,7 @@ public class NMMin extends AbstractIntegerProblem {
     setNumberOfObjectives(2);
     setName("NMMin");
 
-    List<Integer> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Integer> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Integer> upperLimit = new ArrayList<>(numberOfVariables) ;
 
       for (int i = 0; i < numberOfVariables; i++) {
@@ -42,7 +44,7 @@ public class NMMin extends AbstractIntegerProblem {
 
   /** Evaluate() method */
   @Override
-  public IntegerSolution evaluate(IntegerSolution solution) {
+  public @NotNull IntegerSolution evaluate(@NotNull IntegerSolution solution) {
     int approximationToN;
     int approximationToM ;
 

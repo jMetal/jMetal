@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.ranking.impl.util;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  *
  * This class implements a simple bitset adapted to the Merge Non-dominated Sorting (MNDS) algorithm
@@ -14,7 +16,7 @@ public class MNDSBitsetManager {
 	private final static int WORD_SIZE = 1 << N_BIT_ADDR;
 	private static final long WORD_MASK = 0xffffffffffffffffL;
 	private long[][] bitsets; //N bitsets. Each solution has a bitset
-	private int[][] bsRanges; //N ranges [first sol - last sol]. Each of each bitset of each solution
+	private int[] @Nullable [] bsRanges; //N ranges [first sol - last sol]. Each of each bitset of each solution
 	private int[] wordRanking;//Ranking of each bitset word. A bitset word contains 64 solutions.
 	private int[] ranking, ranking0;
 	private int maxRank;

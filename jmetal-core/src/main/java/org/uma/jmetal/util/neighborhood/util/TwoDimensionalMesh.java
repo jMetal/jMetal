@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
@@ -76,7 +77,7 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
    * represents the shift on rows, and the second the shift on column
    * @return
    */
-  private int getNeighbor(int solution, int [] neighbor) {
+  private int getNeighbor(int solution, int @NotNull [] neighbor) {
     int row = getRow(solution) ;
     int col = getColumn((solution)) ;
 
@@ -101,9 +102,9 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
    * @param neighborhood The list of neighbors we want to obtain as shift regarding to solution
    * @return
    */
-  private List<S> findNeighbors(List<S> solutionSet, int solution, int [][] neighborhood) {
+  private @NotNull List<S> findNeighbors(@NotNull List<S> solutionSet, int solution, int [] @NotNull [] neighborhood) {
       List<S> neighbors = new ArrayList<>(neighborhood.length + 1);
-      for (int[] neighbor : neighborhood) {
+      for (int @NotNull [] neighbor : neighborhood) {
           int i = getNeighbor(solution, neighbor);
           S s = solutionSet.get(i);
           neighbors.add(s);
@@ -118,7 +119,7 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
    * @param solutionPosition Represents the position of the solution
    *
    */
-  public List<S> getNeighbors(List<S> solutionList, int solutionPosition) {
+  public @NotNull List<S> getNeighbors(@NotNull List<S> solutionList, int solutionPosition) {
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(solutionPosition >= 0, "The solution position value is negative: " + solutionPosition);

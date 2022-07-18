@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -59,7 +60,7 @@ public class MaF14 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("MaF14");
 
-    List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
+    @NotNull List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
     for (int i = 0; i < numberOfObjectives - 1; i++) {
@@ -75,13 +76,13 @@ public class MaF14 extends AbstractDoubleProblem {
   }
 
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
 
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
     double[] x;
-    double[] f = new double[numberOfObjectives];
+    double @NotNull [] f = new double[numberOfObjectives];
 
       double[] arr = new double[10];
       int count = 0;
@@ -98,7 +99,7 @@ public class MaF14 extends AbstractDoubleProblem {
       x[i] = (1 + (i + 1) / (double) numberOfVariables) * x[i] - 10 * x[0];
     }
     // evaluate eta,g
-    double[] g = new double[numberOfObjectives];
+    double @NotNull [] g = new double[numberOfObjectives];
     double sub1;
     for (int i = 0; i < numberOfObjectives; i = i + 2) {
       double[] tx = new double[sublen14[i]];
@@ -137,7 +138,7 @@ public class MaF14 extends AbstractDoubleProblem {
     return solution ;
   }
 
-  public static double Rastrigin(double[] x) {
+  public static double Rastrigin(double @NotNull [] x) {
       double eta = 0.0;
       for (double v : x) {
           double v1 = (Math.pow(v, 2) - 10 * Math.cos(2 * Math.PI * v) + 10);

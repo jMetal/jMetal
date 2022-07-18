@@ -2,6 +2,9 @@ package org.uma.jmetal.lab.visualization;
 
 import java.io.IOException;
 import java.util.LinkedList;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.visualization.html.Html;
 import org.uma.jmetal.lab.visualization.html.impl.HtmlFigure;
@@ -60,7 +63,7 @@ public class StudyVisualizer {
     this(path, null);
   }
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String @NotNull [] args) throws IOException {
     String directory;
 
     if (args.length != 1) {
@@ -76,16 +79,16 @@ public class StudyVisualizer {
   public void createHTMLPageForEachIndicator() throws IOException {
     StringColumn indicators = getUniquesValuesOfStringColumn(INDICATOR_NAME);
     for (String indicator : indicators) {
-      Html htmlPage = createHtmlPage(indicator);
+      @NotNull Html htmlPage = createHtmlPage(indicator);
       htmlPage.setPathFolder(folderPath + "/html");
       htmlPage.save();
     }
   }
 
   Html createHtmlPage(String indicator) throws IOException {
-    Html htmlPage = new Html(indicator);
+    @NotNull Html htmlPage = new Html(indicator);
 
-    HtmlGridView tablesGridView = createTestTables(indicator);
+    @NotNull HtmlGridView tablesGridView = createTestTables(indicator);
     htmlPage.addComponent(tablesGridView);
 
     StringColumn problems = getUniquesValuesOfStringColumn(PROBLEM);
@@ -98,14 +101,14 @@ public class StudyVisualizer {
       htmlPage.addComponent(boxPlotsGrid);
     } else {
       for (String problem : problems) {
-        HtmlGridView gridView = createInformationForEachProblem(indicator, problem);
+        @NotNull HtmlGridView gridView = createInformationForEachProblem(indicator, problem);
         htmlPage.addComponent(gridView);
       }
     }
     return htmlPage;
   }
 
-  private HtmlGridView createTestTables(String indicator) {
+  private HtmlGridView createTestTables(@NotNull String indicator) {
     StringColumn algorithms = getUniquesValuesOfStringColumn(ALGORITHM);
     StringColumn problems = getUniquesValuesOfStringColumn(PROBLEM);
     Table tableFilteredByIndicator = filterTableByIndicator(table, indicator);
@@ -121,7 +124,7 @@ public class StudyVisualizer {
     if (indicator.equals("HV")) {
       minimize = false;
     }
-    FriedmanTestTable friedmanTable =
+    @NotNull FriedmanTestTable friedmanTable =
         new FriedmanTestTable(tableFilteredByIndicator, algorithms, problems, minimize);
 
     HtmlGridView htmlGridView = new HtmlGridView();
@@ -134,11 +137,11 @@ public class StudyVisualizer {
   private HtmlGridView createInformationForEachProblem(String indicator, String problem)
       throws IOException {
     HtmlGridView gridView = new HtmlGridView(problem);
-    HtmlFigure boxPlot = createBoxPlot(indicator, problem);
+    @NotNull HtmlFigure boxPlot = createBoxPlot(indicator, problem);
     gridView.addComponent(boxPlot);
     StringColumn algorithms = getUniquesValuesOfStringColumn(ALGORITHM);
     for (String algorithm : algorithms) {
-      HtmlFigure frontPlot = createFrontPlot(indicator, problem, algorithm);
+      @NotNull HtmlFigure frontPlot = createFrontPlot(indicator, problem, algorithm);
       gridView.addComponent(frontPlot);
     }
     return gridView;
@@ -171,7 +174,7 @@ public class StudyVisualizer {
     CsvReadOptions csvReader = CsvReadOptions.builder(path).header(false).build();
     Table funTable = Table.read().usingOptions(csvReader);
     int numberOfObjectives = funTable.columnCount();
-    Trace scatterTrace = null;
+    @Nullable Trace scatterTrace = null;
     if (numberOfObjectives == 2) {
       scatterTrace = ScatterTrace.builder(funTable.column(0), funTable.column(1)).build();
     } else if (numberOfObjectives == 3) {
@@ -189,7 +192,7 @@ public class StudyVisualizer {
     return dropDuplicateRowsInColumn(table.stringColumn(columnName));
   }
 
-  public StringColumn dropDuplicateRowsInColumn(StringColumn column) {
+  public @NotNull StringColumn dropDuplicateRowsInColumn(StringColumn column) {
     LinkedList<String> result = new LinkedList<String>();
     for (int row = 0; row < column.size(); row++) {
       if (!result.contains(column.get(row))) {

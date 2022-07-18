@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.wasfga;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -120,7 +122,7 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
           this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
       }
 
-      private void refreshChart(List<DoubleSolution> solutionList) {
+      private void refreshChart(@NotNull List<DoubleSolution> solutionList) {
           if (this.chart != null) {
               iteration++;
               this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);

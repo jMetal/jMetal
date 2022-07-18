@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.restartstrategy.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
@@ -19,7 +21,7 @@ public class RemoveNSolutionsAccordingToTheHypervolumeContribution<S extends Sol
   }
 
   @Override
-  public int remove(List<S> solutionList, DynamicProblem<S, ?> problem) {
+  public int remove(@Nullable List<S> solutionList, DynamicProblem<S, ?> problem) {
     if (solutionList == null) {
       throw new JMetalException("The solution list is null") ;
     } else if (problem == null) {

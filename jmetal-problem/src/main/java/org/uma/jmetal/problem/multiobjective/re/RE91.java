@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.re;
 
 import java.util.List;
 import java.util.Random;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -13,7 +15,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * @author Antonio J. Nebro
  */
 public class RE91 extends AbstractDoubleProblem {
-  private Random random = new Random() ;
+  private @NotNull Random random = new Random() ;
 
   /** Constructor */
   public RE91() {
@@ -22,7 +24,7 @@ public class RE91 extends AbstractDoubleProblem {
     setName("RE91");
 
     List<Double> lowerLimit = List.of(0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4);
-    List<Double> upperLimit = List.of(1.5, 1.35, 1.5, 1.5, 2.265, 1.2, 1.2);
+    @NotNull List<Double> upperLimit = List.of(1.5, 1.35, 1.5, 1.5, 2.265, 1.2, 1.2);
 
     setVariableBounds(lowerLimit, upperLimit);
   }

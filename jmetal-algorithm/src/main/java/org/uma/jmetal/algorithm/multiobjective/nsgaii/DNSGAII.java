@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -52,7 +54,7 @@ public class DNSGAII<S extends Solution<?>> extends NSGAII<S> {
   }
 
   @Override
-  protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+  protected List<S> replacement(@NotNull List<S> population, List<S> offspringPopulation) {
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
@@ -68,7 +70,7 @@ public class DNSGAII<S extends Solution<?>> extends NSGAII<S> {
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "DIR based NSGA-II";
   }
 }

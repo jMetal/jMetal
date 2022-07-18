@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -88,7 +90,7 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
     return this;
   }
 
-  public RNSGAIIBuilder<S> setMatingPoolSize(int matingPoolSize) {
+  public @NotNull RNSGAIIBuilder<S> setMatingPoolSize(int matingPoolSize) {
     if (matingPoolSize < 0) {
       throw new JMetalException("The mating pool size is negative: " + populationSize);
     }

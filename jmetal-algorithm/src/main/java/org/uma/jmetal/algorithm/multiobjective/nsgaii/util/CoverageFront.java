@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii.util;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -19,7 +21,7 @@ public class CoverageFront<S extends Solution<?>> {
     this.lastCoverageValue = 0;
   }
 
-  public boolean isCoverageWithLast(List<S> front) {
+  public boolean isCoverageWithLast(@NotNull List<S> front) {
     double coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(front));
     double aux = Math.abs(coverage - lastCoverageValue);
     lastCoverageValue = coverage;

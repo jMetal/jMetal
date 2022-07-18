@@ -3,6 +3,8 @@ package org.uma.jmetal.qualityindicator.impl;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.LexicographicalVectorComparator;
@@ -43,7 +45,7 @@ public class GeneralizedSpread extends QualityIndicator {
    * @param front
    * @return
    */
-  @Override public double compute(double[][] front) {
+  @Override public double compute(double[] @NotNull [] front) {
     Check.notNull(front);
 
     return generalizedSpread(front, referenceFront);
@@ -58,10 +60,10 @@ public class GeneralizedSpread extends QualityIndicator {
    *  @param referenceFront The reference pareto front.
    *  @return the value of the generalized spread metric
    **/
-  public double generalizedSpread(double[][] front, double[][] referenceFront) {
+  public double generalizedSpread(double[][] front, double[] @NotNull [] referenceFront) {
     int numberOfObjectives = front[0].length ;
 
-    double[][] extremeValues = new double[numberOfObjectives][] ;
+    double[] @NotNull [] extremeValues = new double[numberOfObjectives][] ;
     for (int i = 0; i < numberOfObjectives; i++) {
       //Arrays.sort(referenceFront, new VectorPositionComparator(i));
       int finalI = i;
@@ -113,7 +115,7 @@ public class GeneralizedSpread extends QualityIndicator {
     return "Generalized Spread quality indicator" ;
   }
 
-  @Override public String getName() {
+  @Override public @NotNull String getName() {
     return "GSPREAD" ;
   }
 

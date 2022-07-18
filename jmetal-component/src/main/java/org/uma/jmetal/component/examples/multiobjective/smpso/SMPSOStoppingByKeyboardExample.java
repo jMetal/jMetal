@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.examples.multiobjective.smpso;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.SMPSOBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -25,12 +27,12 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class SMPSOStoppingByKeyboardExample {
   public static void main(String[] args) throws Exception {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    @NotNull Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     int swarmSize = 100 ;
-    Termination termination = new TerminationByKeyboard();
+    @NotNull Termination termination = new TerminationByKeyboard();
 
     ParticleSwarmOptimizationAlgorithm smpso = new SMPSOBuilder(
         (DoubleProblem) problem,

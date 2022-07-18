@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
@@ -18,7 +20,7 @@ public abstract  class AbstractEvaluation<S extends Solution<?>> implements Eval
   }
 
   @Override
-  public List<S> evaluate(List<S> solutionList) {
+  public @NotNull List<S> evaluate(@NotNull List<S> solutionList) {
     evaluator.evaluate(solutionList, problem) ;
 
     numberOfComputedEvaluations += solutionList.size() ;

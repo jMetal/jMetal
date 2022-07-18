@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -17,7 +18,7 @@ import org.uma.jmetal.util.solutionattribute.impl.LocationAttribute;
 public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
 
   private int solutionsToSelect ;
-  private StrenghtRawFitnessDensityEstimator<S> densityEstimator = new StrenghtRawFitnessDensityEstimator<>(1) ;
+  private @NotNull StrenghtRawFitnessDensityEstimator<S> densityEstimator = new StrenghtRawFitnessDensityEstimator<>(1) ;
 
   public EnvironmentalSelection(int solutionsToSelect) {
     this(solutionsToSelect, 1) ;
@@ -30,7 +31,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
   @Override
   public List<S> execute(List<S> source2) {
     int size;
-    List<S> source = new ArrayList<>(source2.size());
+    @NotNull List<S> source = new ArrayList<>(source2.size());
     source.addAll(source2);
     if (source2.size() < this.solutionsToSelect) {
       size = source.size();
@@ -63,8 +64,8 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
       return aux;
     }
 
-    double [][] distance = SolutionListUtils.distanceMatrix(aux);
-    List<List<Pair<Integer, Double>> > distanceList = new ArrayList<>();
+    double [] @NotNull [] distance = SolutionListUtils.distanceMatrix(aux);
+    @NotNull List<List<Pair<Integer, Double>> > distanceList = new ArrayList<>();
     LocationAttribute<S> location = new LocationAttribute<S>(aux);
     for (int pos = 0; pos < aux.size(); pos++) {
       List<Pair<Integer, Double>> distanceNodeList = new ArrayList<>();
@@ -84,7 +85,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
       double minDistance = Double.MAX_VALUE;
       int toRemove = 0;
       i = 0;
-      for (List<Pair<Integer, Double>> dist : distanceList) {
+      for (@NotNull List<Pair<Integer, Double>> dist : distanceList) {
         if (dist.get(0).getRight() < minDistance) {
           toRemove = i;
           minDistance = dist.get(0).getRight();
@@ -109,7 +110,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
       aux.remove(toRemove);
       distanceList.remove(toRemove);
 
-      for (List<Pair<Integer, Double>> pairs : distanceList) {
+      for (@NotNull List<Pair<Integer, Double>> pairs : distanceList) {
         pairs.removeIf(integerDoublePair -> integerDoublePair.getLeft() == tmp);
       }
     }

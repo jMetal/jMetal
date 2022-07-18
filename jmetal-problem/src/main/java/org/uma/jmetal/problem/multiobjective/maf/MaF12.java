@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -37,7 +38,7 @@ public class MaF12 extends AbstractDoubleProblem {
     K12 = numberOfObjectives - 1;
     L12 = numberOfVariables - K12;
 
-    List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
+    @NotNull List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
     for (int i = 0; i < numberOfVariables; i++) {
@@ -76,8 +77,8 @@ public class MaF12 extends AbstractDoubleProblem {
     // evaluate zi,t1i,t2i,t3i,t4i,yi
     double[] z;
     double[] t1 = new double[numberOfVariables_];
-    double[] t2 = new double[numberOfVariables_];
-    double[] t3 = new double[numberOfObjectives_];
+    double @NotNull [] t2 = new double[numberOfVariables_];
+    double @NotNull [] t3 = new double[numberOfObjectives_];
     double[] y = new double[numberOfObjectives_];
     double sub1, sub2 = 0;
     int lb1 = 0, ub1 = 0, lb2 = 0, ub2 = 0;

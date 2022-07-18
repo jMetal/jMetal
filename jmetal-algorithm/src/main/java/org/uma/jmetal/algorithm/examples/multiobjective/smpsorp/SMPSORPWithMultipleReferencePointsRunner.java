@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
@@ -60,7 +61,7 @@ public class SMPSORPWithMultipleReferencePointsRunner {
 
       List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
       for (List<Double> referencePoint : referencePoints) {
-          CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
+          @NotNull CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
                   swarmSize / referencePoints.size(), referencePoint);
           archivesWithReferencePoints.add(doubleSolutionCrowdingDistanceArchiveWithReferencePoint);
       }

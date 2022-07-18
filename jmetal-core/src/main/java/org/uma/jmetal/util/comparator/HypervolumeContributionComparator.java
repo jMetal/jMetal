@@ -2,6 +2,8 @@ package org.uma.jmetal.util.comparator;
 
 import java.io.Serializable;
 import java.util.Comparator;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
@@ -24,7 +26,7 @@ public class HypervolumeContributionComparator<S extends Solution<?>> implements
    * respectively.
    */
   @Override
-  public int compare(S solution1, S solution2) {
+  public int compare(S solution1, @Nullable S solution2) {
     int result ;
     if (solution1 == null) {
       if (solution2 == null) {

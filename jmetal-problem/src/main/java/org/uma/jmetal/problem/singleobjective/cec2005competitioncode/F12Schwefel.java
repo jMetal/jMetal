@@ -46,6 +46,7 @@
 //
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class F12Schwefel extends TestFunc {
@@ -56,8 +57,8 @@ public class F12Schwefel extends TestFunc {
 
   // Shifted global optimum
   private final double[] m_o;
-  private final double[][] m_a;
-  private final double[][] m_b;
+  private final double[] @NotNull [] m_a;
+  private final double[] @NotNull [] m_b;
 
   // In order to avoid excessive memory allocation,
   // a fixed memory buffer is allocated for each function object.
@@ -84,7 +85,7 @@ public class F12Schwefel extends TestFunc {
     //	1. a 		100x100
     //	2. b 		100x100
     //	3. alpha	1x100
-    double[][] m_data = new double[100 + 100 + 1][mDimension];
+    double[] @NotNull [] m_data = new double[100 + 100 + 1][mDimension];
 
     // Load the shifted global optimum
     Benchmark.loadMatrixFromFile(file_data, m_data.length, mDimension, m_data);

@@ -3,6 +3,7 @@ package org.uma.jmetal.experimental.auto.parameter;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 public class RealParameter extends Parameter<Double> {
   private double lowerBound;
@@ -53,7 +54,7 @@ public class RealParameter extends Parameter<Double> {
     for (Parameter<?> parameter : getGlobalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (@NotNull Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
       result.append("\n  -> ").append(parameter.getRight().toString());
     }
     return result.toString();

@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
@@ -35,7 +37,7 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner problemName [referenceFront]
    */
-  public static void main(String[] args)
+  public static void main(String @NotNull [] args)
       throws JMetalException, InterruptedException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;

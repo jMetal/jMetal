@@ -2,6 +2,8 @@ package org.uma.jmetal.util.comparator;
 
 import java.io.Serializable;
 import java.util.Comparator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 
 /**
@@ -13,7 +15,7 @@ import org.uma.jmetal.solution.Solution;
 public class DirScoreComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
 
   @Override
-  public int compare(S o1, S o2) {
+  public int compare(@NotNull S o1, @NotNull S o2) {
     double score1 = Double.MAX_VALUE;
     double score2 = Double.MAX_VALUE;
 

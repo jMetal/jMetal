@@ -3,6 +3,8 @@ package org.uma.jmetal.util.observer.impl;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -26,12 +28,12 @@ public class WriteSolutionsToFilesObserver implements Observer<Map<String, Objec
    * Constructor
    */
 
-  public WriteSolutionsToFilesObserver(Integer frequency, String outputDirectory) {
+  public WriteSolutionsToFilesObserver(Integer frequency, @NotNull String outputDirectory) {
     this.frequency = frequency ;
     this.counter = 0 ;
     this.outputDirectory = outputDirectory ;
 
-    File file = new File(outputDirectory);
+    @NotNull File file = new File(outputDirectory);
 
     if (file.exists()) {
       if (file.isFile()) {
@@ -72,7 +74,7 @@ public class WriteSolutionsToFilesObserver implements Observer<Map<String, Objec
     counter ++ ;
   }
 
-  public String getName() {
+  public @NotNull String getName() {
     return "Print objectives observer";
   }
 

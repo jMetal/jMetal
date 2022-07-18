@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -124,7 +125,7 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking<S> ranking = new FastNonDominatedSortRanking<>();
+    @NotNull Ranking<S> ranking = new FastNonDominatedSortRanking<>();
     ranking.compute(solutionList);
 
     return ranking;
@@ -140,7 +141,7 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "Nondominated Sorting Genetic Algorithm version II. Version not using the AbstractGeneticAlgorithm template";
   }
 }

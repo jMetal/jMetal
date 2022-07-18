@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFUtilityFunctionSet;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.MOMBI2History;
@@ -105,7 +106,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 
     history.add(iterationMaxs);
 
-    List<Double> mean = history.mean();
+    @NotNull List<Double> mean = history.mean();
     List<Double> var = history.variance(mean);
 
     Double maxVariance = this.getMax(var);
@@ -135,7 +136,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
   }
 
   protected R2Ranking<S> computeRanking(List<S> solutionList) {
-    R2Ranking<S> ranking = new R2RankingNormalized<>(this.getUtilityFunctions(), this.normalizer);
+    @NotNull R2Ranking<S> ranking = new R2RankingNormalized<>(this.getUtilityFunctions(), this.normalizer);
     ranking.computeRanking(solutionList);
 
     return ranking;
@@ -149,12 +150,12 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "MOMBI";
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "Many-Objective Metaheuristic Based on the R2 Indicator, version 2";
   }
 }

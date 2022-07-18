@@ -3,6 +3,8 @@ package org.uma.jmetal.component.catalogue.ea.selection.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -20,10 +22,10 @@ public class RandomSelection<S extends Solution<?>> implements Selection<S> {
     this.numberOfElementsToSelect = numberOfElementsToSelect;
   }
 
-  public List<S> select(List<S> solutionList) {
+  public @NotNull List<S> select(@NotNull List<S> solutionList) {
     Check.notNull(solutionList);
 
-    List<S> matingPool = new ArrayList<>();
+    @NotNull List<S> matingPool = new ArrayList<>();
       int bound = numberOfElementsToSelect;
       for (int i = 0; i < bound; i++) {
           matingPool.add(

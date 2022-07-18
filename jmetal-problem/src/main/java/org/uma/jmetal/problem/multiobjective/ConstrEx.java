@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -16,15 +18,15 @@ public class ConstrEx extends AbstractDoubleProblem {
     setName("ConstrEx");
 
     List<Double> lowerLimit = Arrays.asList(0.1, 0.0);
-    List<Double> upperLimit = Arrays.asList(1.0, 5.0);
+    @NotNull List<Double> upperLimit = Arrays.asList(1.0, 5.0);
 
     setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
+    double @NotNull [] f = new double[solution.objectives().length];
     f[0] = solution.variables().get(0);
     f[1] = (1.0 + solution.variables().get(1)) / solution.variables().get(0);
 

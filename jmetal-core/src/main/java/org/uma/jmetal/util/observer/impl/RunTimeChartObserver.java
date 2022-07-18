@@ -3,6 +3,8 @@ package org.uma.jmetal.util.observer.impl;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.chartcontainer.GenericChartContainer;
@@ -52,7 +54,7 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
     chart.initChart();
   }
 
-  public void setReferencePoins(List<List<Double>> referencePoins) {
+  public void setReferencePoins(@NotNull List<List<Double>> referencePoins) {
     chart.setReferencePoint(referencePoins);
   }
 

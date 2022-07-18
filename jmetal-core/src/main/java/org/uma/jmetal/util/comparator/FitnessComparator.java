@@ -2,6 +2,8 @@ package org.uma.jmetal.util.comparator;
 
 import java.io.Serializable;
 import java.util.Comparator;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.impl.Fitness;
 
@@ -25,7 +27,7 @@ public class FitnessComparator<S extends Solution<?>> implements Comparator<S>, 
    * respectively.
    */
   @Override
-  public int compare(S solution1, S solution2) {
+  public int compare(S solution1, @Nullable S solution2) {
     if (solution1 == null) {
       return 1;
     } else if (solution2 == null) {

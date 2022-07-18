@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -69,7 +70,7 @@ public class WFG8 extends WFG {
    * WFG8 t1 transformation
    */
   public float[] t1(float[] z, int k) {
-    float[] result = new float[z.length];
+    float @NotNull [] result = new float[z.length];
     float[] w = new float[z.length];
 
     for (int i = 0; i < w.length; i++) {
@@ -110,8 +111,8 @@ public class WFG8 extends WFG {
   /**
    * WFG8 t3 transformation
    */
-  public float[] t3(float[] z, int k, int M) {
-    float[] result = new float[M];
+  public float[] t3(float @NotNull [] z, int k, int M) {
+    float @NotNull [] result = new float[M];
     float[] w = new float[z.length];
 
     for (int i = 0; i < z.length; i++) {
@@ -143,7 +144,7 @@ public class WFG8 extends WFG {
    * @throws JMetalException
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    float[] variables = new float[getNumberOfVariables()];
+    float @NotNull [] variables = new float[getNumberOfVariables()];
       double[] x = new double[10];
       int count = 0;
       int bound = getNumberOfVariables();

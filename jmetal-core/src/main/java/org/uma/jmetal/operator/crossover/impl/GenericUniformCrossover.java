@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -46,7 +48,7 @@ public class GenericUniformCrossover<S extends BinarySolution> implements Crosso
   }
 
   @Override
-  public List<S> execute(List<S> solutions) {
+  public List<S> execute(@NotNull List<S> solutions) {
     Check.notNull(solutions);
     Check.that(solutions.size() == 2, "There must be two parents instead of " + solutions.size());
 

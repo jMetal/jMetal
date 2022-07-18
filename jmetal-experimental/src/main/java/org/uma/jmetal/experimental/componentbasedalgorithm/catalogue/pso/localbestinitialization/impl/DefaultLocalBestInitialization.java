@@ -2,6 +2,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localb
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -25,7 +27,7 @@ public class DefaultLocalBestInitialization implements LocalBestInitialization {
       DoubleSolution copy = (DoubleSolution) doubleSolution.copy();
       list.add(copy);
     }
-    DoubleSolution[] localBest = list.toArray(new DoubleSolution[0]);
+    DoubleSolution @NotNull [] localBest = list.toArray(new DoubleSolution[0]);
 
       return localBest ;
   }

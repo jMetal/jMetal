@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -73,7 +74,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "MOCHC45";
   }
 
@@ -158,7 +159,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
 
   @Override
   public List<BinarySolution> getResult() {
-    NonDominatedSolutionListArchive<BinarySolution> archive = new NonDominatedSolutionListArchive<>() ;
+    @NotNull NonDominatedSolutionListArchive<BinarySolution> archive = new NonDominatedSolutionListArchive<>() ;
     for (BinarySolution solution : population) {
       archive.add(solution) ;
     }
@@ -174,7 +175,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
    * @return the hamming distance between solutions
    */
 
-  private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
+  private int hammingDistance(@NotNull BinarySolution solutionOne, @NotNull BinarySolution solutionTwo) {
       int distance = 0;
       int bound = problem.getNumberOfVariables();
       for (int i = 0; i < bound; i++) {

@@ -2,6 +2,9 @@ package org.uma.jmetal.operator.selection.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
@@ -31,13 +34,13 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
   }
 
   @Override
-  public List<S> execute(List<S> solutionList) {
+  public List<S> execute(@NotNull List<S> solutionList) {
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(solutionList.size() >= solutionsToSelect, "The population size (" + solutionList.size() + ") is smaller than" +
             "the solutions to selected (" + solutionsToSelect + ")");
 
-    Ranking<S> ranking = new FastNonDominatedSortRanking<S>();
+    @NotNull Ranking<S> ranking = new FastNonDominatedSortRanking<S>();
     ranking.compute(solutionList);
 
     return preferenceDistanceSelection(ranking, solutionList.get(0).objectives().length);
@@ -73,11 +76,11 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
     return population;
   }
 
-  protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
+  protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, @NotNull List<S> population) {
     return ranking.getSubFront(rank).size() < (solutionsToSelect - population.size());
   }
 
-  protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
+  protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, @NotNull List<S> population) {
     List<S> front;
 
     front = ranking.getSubFront(rank);
@@ -99,7 +102,7 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
     }
   }
 
-  private List<Double> nextInterestPoint(int index, int size) {
+  private @Nullable List<Double> nextInterestPoint(int index, int size) {
     List<Double> result = null;
     if (index < this.interestPoint.size()) {
       result = new ArrayList<>(size);

@@ -6,6 +6,7 @@ import java.util.Vector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.EnvironmentalSelection;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.ReferencePoint;
@@ -82,8 +83,8 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   @Override
-  protected List<S> selection(List<S> population) {
-      List<S> matingPopulation = new ArrayList<>(population.size());
+  protected @NotNull List<S> selection(List<S> population) {
+      @NotNull List<S> matingPopulation = new ArrayList<>(population.size());
       int bound = getMaxPopulationSize();
       for (int i = 0; i < bound; i++) {
           S execute = selectionOperator.execute(population);
@@ -97,7 +98,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   protected List<S> reproduction(List<S> population) {
     List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
     for (int i = 0; i < getMaxPopulationSize(); i+=2) {
-      List<S> parents = new ArrayList<>(2);
+      @NotNull List<S> parents = new ArrayList<>(2);
       parents.add(population.get(i));
       parents.add(population.get(Math.min(i + 1, getMaxPopulationSize()-1)));
 
@@ -113,7 +114,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   
-  private List<ReferencePoint<S>> getReferencePointsCopy() {
+  private @NotNull List<ReferencePoint<S>> getReferencePointsCopy() {
       List<ReferencePoint<S>> copy = new ArrayList<>();
       for (ReferencePoint<S> referencePoint : this.referencePoints) {
           ReferencePoint<S> sReferencePoint = new ReferencePoint<>(referencePoint);
@@ -123,9 +124,9 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
   
   @Override
-  protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+  protected @NotNull List<S> replacement(List<S> population, @NotNull List<S> offspringPopulation) {
    
-	List<S> jointPopulation = new ArrayList<>();
+	@NotNull List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population) ;
     jointPopulation.addAll(offspringPopulation) ;
 
@@ -154,7 +155,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
             new EnvironmentalSelection<>(fronts,getMaxPopulationSize() - pop.size(),getReferencePointsCopy(),
                     getProblem().getNumberOfObjectives());
     
-    var choosen = selection.execute(last);
+    @NotNull var choosen = selection.execute(last);
     pop.addAll(choosen);
      
     return pop;
@@ -165,7 +166,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     return getNonDominatedSolutions(getPopulation()) ;
   }
 
-  protected Ranking<S> computeRanking(List<S> solutionList) {
+  protected @NotNull Ranking<S> computeRanking(List<S> solutionList) {
     Ranking<S> ranking = new FastNonDominatedSortRanking<>() ;
     ranking.compute(solutionList) ;
 
@@ -180,7 +181,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     return "NSGAIII" ;
   }
 
-  @Override public String getDescription() {
+  @Override public @NotNull String getDescription() {
     return "Nondominated Sorting Genetic Algorithm version III" ;
   }
 

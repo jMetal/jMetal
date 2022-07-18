@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.pesa2.util;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -16,7 +17,7 @@ public class PESA2Selection<S extends Solution<?>> implements SelectionOperator<
     randomGenerator = JMetalRandom.getInstance() ;
 	}
 
-  @Override public S execute(AdaptiveGridArchive<S> archive) {
+  @Override public S execute(@NotNull AdaptiveGridArchive<S> archive) {
     int selected;
     int hypercube1 = archive.getGrid().randomOccupiedHypercube();
     int hypercube2 = archive.getGrid().randomOccupiedHypercube();

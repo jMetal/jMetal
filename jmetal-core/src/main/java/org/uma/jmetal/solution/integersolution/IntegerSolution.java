@@ -1,5 +1,6 @@
 package org.uma.jmetal.solution.integersolution;
 
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.bounds.Bounds;
 
@@ -10,5 +11,5 @@ import org.uma.jmetal.util.bounds.Bounds;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface IntegerSolution extends Solution<Integer> {
-  Bounds<Integer> getBounds(int index) ;
+  @Nullable Bounds<Integer> getBounds(int index) ;
 }

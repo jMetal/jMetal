@@ -16,6 +16,7 @@ package org.uma.jmetal.algorithm.multiobjective.cdg;
 import java.util.*;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.problem.Problem;
@@ -95,18 +96,18 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   protected CrossoverOperator<S> crossoverOperator;
 
   public AbstractCDG(
-      Problem<S> problem,
-      int populationSize,
-      int resultPopulationSize,
-      int maxEvaluations,
-      CrossoverOperator<S> crossoverOperator,
-      double neighborhoodSelectionProbability,
-      double sigma_,
-      int k_,
-      int t_,
-      int subproblemNum_,
-      int childGrid_,
-      int childGridNum_) {
+          @NotNull Problem<S> problem,
+          int populationSize,
+          int resultPopulationSize,
+          int maxEvaluations,
+          CrossoverOperator<S> crossoverOperator,
+          double neighborhoodSelectionProbability,
+          double sigma_,
+          int k_,
+          int t_,
+          int subproblemNum_,
+          int childGrid_,
+          int childGridNum_) {
     this.problem = problem;
     this.populationSize = populationSize;
     this.resultPopulationSize = resultPopulationSize;
@@ -149,7 +150,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
     subPNum = new int[childGridNum_];
     team = new ArrayList<>(childGridNum_);
     for (int i = 0; i < childGridNum_; i++) {
-      List<Integer> list = new ArrayList<>(populationSize);
+      @NotNull List<Integer> list = new ArrayList<>(populationSize);
       team.add(list);
     }
 
@@ -162,7 +163,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
     border = new ArrayList<>(problem.getNumberOfObjectives());
     borderLength = 2 * populationSize * (problem.getNumberOfObjectives() - 1);
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      List<S> list = new ArrayList<>(borderLength);
+      @NotNull List<S> list = new ArrayList<>(borderLength);
       tempBorder.add(list);
     }
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
@@ -171,7 +172,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
     }
   }
 
-  protected void initialCDGAttributes(S individual) {
+  protected void initialCDGAttributes(@NotNull S individual) {
     int[] g_ = new int[problem.getNumberOfObjectives()];
     int[] rank_ = new int[problem.getNumberOfObjectives()];
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
@@ -257,8 +258,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void initializeSubP2() {
-    int[] left = new int[problem.getNumberOfObjectives()];
-    int[] right = new int[problem.getNumberOfObjectives()];
+    int @NotNull [] left = new int[problem.getNumberOfObjectives()];
+    int @NotNull [] right = new int[problem.getNumberOfObjectives()];
     int s = 0;
     int ns = 0;
 
@@ -296,8 +297,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void initializeSubP3() {
-    int[] left = new int[problem.getNumberOfObjectives()];
-    int[] right = new int[problem.getNumberOfObjectives()];
+    int @NotNull [] left = new int[problem.getNumberOfObjectives()];
+    int @NotNull [] right = new int[problem.getNumberOfObjectives()];
     int s = 0;
     int ns = 0;
 
@@ -352,7 +353,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
   protected void group2() {
     double[] childDelta;
-    double[] maxFunValue = new double[10];
+    double @NotNull [] maxFunValue = new double[10];
     int count1 = 0;
     int bound1 = problem.getNumberOfObjectives();
     for (int i2 = 0; i2 < bound1; i2++) {
@@ -369,7 +370,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
       }
     }
 
-    double[] arr = new double[10];
+    double @NotNull [] arr = new double[10];
     int count = 0;
     int bound = problem.getNumberOfObjectives();
     for (int i1 = 0; i1 < bound; i1++) {
@@ -384,7 +385,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
     int grid;
     double childSigma = 1e-10;
-    int[] pos = new int[problem.getNumberOfObjectives()];
+    int @NotNull [] pos = new int[problem.getNumberOfObjectives()];
 
     for (int i = 0; i < populationSize; i++) {
       for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
@@ -404,7 +405,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
   protected void group3() {
     double[] childDelta;
-    double[] maxFunValue = new double[10];
+    double @NotNull [] maxFunValue = new double[10];
     int count1 = 0;
     int bound1 = problem.getNumberOfObjectives();
     for (int i2 = 0; i2 < bound1; i2++) {
@@ -436,7 +437,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
     int grid;
     double childSigma = 1e-10;
-    int[] pos = new int[problem.getNumberOfObjectives()];
+    int @NotNull [] pos = new int[problem.getNumberOfObjectives()];
 
     for (int i = 0; i < populationSize; i++) {
       for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
@@ -496,7 +497,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
   protected void getBorder() {
     int[] flag = new int[problem.getNumberOfObjectives()];
-    double[] minFunValue = new double[problem.getNumberOfObjectives()];
+    double @NotNull [] minFunValue = new double[problem.getNumberOfObjectives()];
 
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       tempBorder.get(i).clear();
@@ -750,7 +751,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
     }
   }
 
-  protected boolean isInner(S individual) {
+  protected boolean isInner(@NotNull S individual) {
     boolean flag = true;
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       if (border.get(i).size() == 0) {
@@ -786,7 +787,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void supplyBadSolution() {
-    Random rand = new Random();
+    @NotNull Random rand = new Random();
     do {
       int i = rand.nextInt(badPopulation.size());
       population.add(badPopulation.get(i));
@@ -936,7 +937,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   protected List<S> parentSelection(int subProblemId, NeighborType neighborType) {
     List<Integer> matingPool = matingSelection(subProblemId, 2, neighborType);
 
-    List<S> parents = new ArrayList<>(3);
+    @NotNull List<S> parents = new ArrayList<>(3);
 
     parents.add(population.get(matingPool.get(0)));
     parents.add(population.get(matingPool.get(1)));
@@ -954,7 +955,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
     int neighbourSize;
     int selectedSolution;
 
-    List<Integer> listOfSolutions = new ArrayList<>(numberOfSolutionsToSelect);
+    @NotNull List<Integer> listOfSolutions = new ArrayList<>(numberOfSolutionsToSelect);
 
     neighbourSize = neighborhood[subproblemId].length;
     while (listOfSolutions.size() < numberOfSolutionsToSelect) {

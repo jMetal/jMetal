@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.UF;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -28,7 +30,7 @@ public class UF7 extends AbstractDoubleProblem {
     setNumberOfConstraints(0) ;
     setName("UF7") ;
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     lowerLimit.add(0.0);

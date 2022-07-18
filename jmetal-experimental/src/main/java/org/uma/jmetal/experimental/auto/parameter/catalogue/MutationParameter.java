@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.LinkedPolynomialMutation;
@@ -14,7 +16,7 @@ public class MutationParameter extends CategoricalParameter {
     super("mutation", args, mutationOperators);
   }
 
-  public MutationOperator<DoubleSolution> getParameter() {
+  public @NotNull MutationOperator<DoubleSolution> getParameter() {
     MutationOperator<DoubleSolution> result;
     int numberOfProblemVariables = (int) getNonConfigurableParameter("numberOfProblemVariables") ;
     Double mutationProbability = (Double) findGlobalParameter("mutationProbabilityFactor").getValue() * 1.0/numberOfProblemVariables;

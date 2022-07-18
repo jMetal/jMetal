@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2Ranking;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2RankingAttribute;
@@ -33,7 +35,7 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S> {
     utilityFunctions = this.createUtilityFunction(pathWeights);
   }
 
-  public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
+  public AbstractUtilityFunctionsSet<S> createUtilityFunction(@NotNull String pathWeights) {
     return new TchebycheffUtilityFunctionsSet<>(pathWeights, this.getReferencePoint());
   }
 
@@ -48,8 +50,8 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S> {
   }
 
   @Override
-  protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    List<S> jointPopulation = new ArrayList<>();
+  protected List<S> replacement(List<S> population, @NotNull List<S> offspringPopulation) {
+    @NotNull List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
 
@@ -65,12 +67,12 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S> {
   }
 
   protected void addRankedSolutionsToPopulation(
-      R2Ranking<S> ranking, int index, List<S> population) {
+          @NotNull R2Ranking<S> ranking, int index, @NotNull List<S> population) {
     for (S solution : ranking.getSubfront(index)) population.add(solution);
   }
 
   protected void addLastRankedSolutionsToPopulation(
-      R2Ranking<S> ranking, int index, List<S> population) {
+          @NotNull R2Ranking<S> ranking, int index, @NotNull List<S> population) {
     List<S> front = ranking.getSubfront(index);
     Collections.sort(
         front,

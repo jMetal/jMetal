@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.distance.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -11,7 +12,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 public class EuclideanDistanceBetweenVectors implements Distance<double[], double[]> {
 
   @Override
-  public double compute(double[] vector1, double[] vector2) {
+  public double compute(double @NotNull [] vector1, double @NotNull [] vector2) {
     Check.notNull(vector1);
     Check.notNull(vector2);
     Check.that(vector1.length == vector2.length, "The vectors have different" +

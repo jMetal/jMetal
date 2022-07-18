@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.archive.impl;
 
 import java.util.Comparator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
@@ -15,7 +17,7 @@ public class GenericBoundedArchive<S extends Solution<?>> extends AbstractBounde
   private Comparator<S> comparator;
   private DensityEstimator<S> densityEstimator ;
 
-  public GenericBoundedArchive(int maxSize, DensityEstimator<S> densityEstimator) {
+  public GenericBoundedArchive(int maxSize, @NotNull DensityEstimator<S> densityEstimator) {
     super(maxSize);
     this.densityEstimator = densityEstimator ;
     comparator = densityEstimator.getComparator() ;

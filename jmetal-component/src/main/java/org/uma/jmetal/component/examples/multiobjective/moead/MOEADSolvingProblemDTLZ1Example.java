@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.moead;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.MOEADBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -36,7 +38,7 @@ public class MOEADSolvingProblemDTLZ1Example {
 
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
+    @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -46,7 +48,7 @@ public class MOEADSolvingProblemDTLZ1Example {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    @NotNull var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 91;
 
@@ -92,7 +94,7 @@ public class MOEADSolvingProblemDTLZ1Example {
         SolutionListUtils.getMatrixWithObjectiveValues(population),
         VectorUtils.readVectors(referenceParetoFront, ","));
 
-    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.getName() + " (MOEA/D)");
+    @NotNull PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.getName() + " (MOEA/D)");
     plot.plot();
   }
 }

@@ -2,6 +2,7 @@ package org.uma.jmetal.auto.parameter;
 
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class OrdinalParameter<T> extends Parameter<T> {
   private final List<T> validValues;
@@ -30,12 +31,12 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
 
   @Override
   public String toString() {
-    StringBuilder result =
+    @NotNull StringBuilder result =
             new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues);
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (@NotNull Parameter<?> parameter : getGlobalParameters()) {
       result.append(" -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (@NotNull Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
       result.append("\n  -> ").append(parameter.getRight().toString());
     }
     return result.toString();

@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaiii;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -63,13 +65,13 @@ public class NSGAIIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
     return this ;
   }
 
-  public NSGAIIIBuilder<S> setSelectionOperator(SelectionOperator<List<S>, S> selectionOperator) {
+  public @NotNull NSGAIIIBuilder<S> setSelectionOperator(SelectionOperator<List<S>, S> selectionOperator) {
     this.selectionOperator = selectionOperator ;
 
     return this ;
   }
 
-  public NSGAIIIBuilder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
+  public @NotNull NSGAIIIBuilder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
     this.evaluator = evaluator ;
 
     return this ;
@@ -105,7 +107,7 @@ public class NSGAIIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
     return selectionOperator;
   }
 
-  public NSGAIII<S> build() {
+  public @NotNull NSGAIII<S> build() {
     return new NSGAIII<>(this) ;
   }
 }

@@ -7,6 +7,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.measure.Measure;
 import org.uma.jmetal.util.measure.MeasureListener;
@@ -41,7 +44,7 @@ public class MeasureFactory {
 	 *         any
 	 */
 	@SuppressWarnings("serial")
-	public <Value> PullMeasure<Value> createPullFromPush(
+	public <Value> @NotNull PullMeasure<Value> createPullFromPush(
 			final PushMeasure<Value> push, Value initialValue) {
 		final Object[] cache = { initialValue };
 		final MeasureListener<Value> listener = value -> cache[0] = value;
@@ -95,7 +98,7 @@ public class MeasureFactory {
 	 *         the {@link PullMeasure} at the given frequency
 	 */
 	public <Value> PushMeasure<Value> createPushFromPull(
-			PullMeasure<Value> pull, final long period) {
+            @NotNull PullMeasure<Value> pull, final long period) {
 		SimplePushMeasure<Value> push = new SimplePushMeasure<>(pull.getName(),
 				pull.getDescription());
 		final WeakReference<PullMeasure<Value>> weakPull = new WeakReference<PullMeasure<Value>>(
@@ -108,7 +111,7 @@ public class MeasureFactory {
 		 * created that way. Using a WeakHashMap could probably do the trick.
 		 */
 		Thread thread = new Thread(new Runnable() {
-			private Value lastValue = initialValue;
+			private @Nullable Value lastValue = initialValue;
 
 			@Override
 			public void run() {
@@ -181,7 +184,7 @@ public class MeasureFactory {
 	 *         and the corresponding {@link PullMeasure} built from them
 	 */
 	@SuppressWarnings("serial")
-	public Map<String, PullMeasure<?>> createPullsFromGetters(
+	public @NotNull Map<String, PullMeasure<?>> createPullsFromGetters(
 			final Object object) {
 		Map<String, PullMeasure<?>> measures = new HashMap<String, PullMeasure<?>>();
 		Class<? extends Object> clazz = object.getClass();
@@ -227,10 +230,10 @@ public class MeasureFactory {
 	 *         and the corresponding {@link PullMeasure} built from them
 	 */
 	@SuppressWarnings("serial")
-	public Map<String, PullMeasure<?>> createPullsFromFields(final Object object) {
+	public @NotNull Map<String, PullMeasure<?>> createPullsFromFields(final Object object) {
 		Map<String, PullMeasure<?>> measures = new HashMap<String, PullMeasure<?>>();
 		Class<? extends Object> clazz = object.getClass();
-		for (final Field field : clazz.getFields()) {
+		for (final @NotNull Field field : clazz.getFields()) {
 			String key = field.getName();
 			// TODO exploit return type to restrict the generics
 			measures.put(key, new SimplePullMeasure<Object>(key) {

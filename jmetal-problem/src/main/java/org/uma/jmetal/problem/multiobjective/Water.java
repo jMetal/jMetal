@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -18,7 +20,7 @@ public class Water extends AbstractDoubleProblem {
     setNumberOfConstraints(7);
     setName("Water");
 
-    List<Double> lowerLimit = Arrays.asList(LOWERLIMIT);
+    @NotNull List<Double> lowerLimit = Arrays.asList(LOWERLIMIT);
     List<Double> upperLimit = Arrays.asList(UPPERLIMIT);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -26,7 +28,7 @@ public class Water extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double[] fx = new double[solution.objectives().length];
       double[] x = new double[10];
       int count = 0;

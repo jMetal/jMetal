@@ -1,6 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 
@@ -26,7 +28,7 @@ public class DifferentialEvolutionCrossoverParameter extends CategoricalParamete
         "differentialEvolutionCrossover", args, variants);
   }
 
-  public DifferentialEvolutionCrossover getParameter() {
+  public @NotNull DifferentialEvolutionCrossover getParameter() {
     DifferentialEvolutionCrossover result;
     Double cr = (Double) findSpecificParameter("cr").getValue();
     Double f = (Double) findSpecificParameter("f").getValue();
@@ -41,7 +43,7 @@ public class DifferentialEvolutionCrossoverParameter extends CategoricalParamete
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "differentialEvolutionCrossover";
   }
 }

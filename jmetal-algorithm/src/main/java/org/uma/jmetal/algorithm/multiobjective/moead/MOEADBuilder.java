@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -127,7 +129,7 @@ public class MOEADBuilder implements AlgorithmBuilder<AbstractMOEAD<DoubleSoluti
     return this ;
   }
 
-  public MOEADBuilder setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
+  public @NotNull MOEADBuilder setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
     this.neighborhoodSelectionProbability = neighborhoodSelectionProbability ;
 
     return this ;
@@ -151,7 +153,7 @@ public class MOEADBuilder implements AlgorithmBuilder<AbstractMOEAD<DoubleSoluti
     return this ;
   }
 
-  public MOEADBuilder setMutation(MutationOperator<DoubleSolution> mutation) {
+  public @NotNull MOEADBuilder setMutation(MutationOperator<DoubleSolution> mutation) {
     this.mutation = mutation ;
 
     return this ;
@@ -163,13 +165,13 @@ public class MOEADBuilder implements AlgorithmBuilder<AbstractMOEAD<DoubleSoluti
     return this ;
   }
 
-  public MOEADBuilder setNumberOfThreads(int numberOfThreads) {
+  public @NotNull MOEADBuilder setNumberOfThreads(int numberOfThreads) {
     this.numberOfThreads = numberOfThreads ;
 
     return this ;
   }
 
-  public AbstractMOEAD<DoubleSolution> build() {
+  public @Nullable AbstractMOEAD<DoubleSolution> build() {
     AbstractMOEAD<DoubleSolution> algorithm = null ;
     if (moeadVariant.equals(Variant.MOEAD)) {
       algorithm = new MOEAD(problem, populationSize, resultPopulationSize, maxEvaluations, mutation,

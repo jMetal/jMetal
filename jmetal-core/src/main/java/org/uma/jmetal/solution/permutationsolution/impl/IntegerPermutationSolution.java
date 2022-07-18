@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 
@@ -55,7 +57,7 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
   }
 
   @Override
-  public IntegerPermutationSolution copy() {
+  public @NotNull IntegerPermutationSolution copy() {
     return new IntegerPermutationSolution(this);
   }
 

@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.util.JMetalLogger;
@@ -75,7 +76,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
           directory += "/" + experiment.getProblemList().get(problem).getTag();
           directory += "/" + experiment.getIndicatorList().get(indicator).getName();
           // Read values from data files
-          FileInputStream fis = new FileInputStream(directory);
+          @NotNull FileInputStream fis = new FileInputStream(directory);
           InputStreamReader isr = new InputStreamReader(fis);
           try(BufferedReader br = new BufferedReader(isr)){
           String aux = br.readLine();
@@ -91,7 +92,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     return data ;
   }
 
-  private void computeDataStatistics(List<List<List<List<Double>>>> data) {
+  private void computeDataStatistics(@NotNull List<List<List<List<Double>>>> data) {
     int indicatorListSize = experiment.getIndicatorList().size() ;
     mean = new double[indicatorListSize][][];
     median = new double[indicatorListSize][][];
@@ -162,10 +163,10 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
    * @param values
    * @return
    */
-  private Map<String, Double> computeStatistics(List<Double> values) {
+  private @NotNull Map<String, Double> computeStatistics(@NotNull List<Double> values) {
     Map<String, Double> results = new HashMap<>() ;
 
-    DescriptiveStatistics stats = new DescriptiveStatistics();
+    @NotNull DescriptiveStatistics stats = new DescriptiveStatistics();
     for (Double value : values) {
       stats.addValue(value);
     }

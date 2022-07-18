@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.smpso;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOMeasures;
@@ -55,7 +57,7 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
 
     problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
 
-    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
+    @NotNull BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
@@ -118,7 +120,7 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
   private static class Listener implements MeasureListener<List<DoubleSolution>> {
     private int counter = 0 ;
 
-    @Override synchronized public void measureGenerated(List<DoubleSolution> solutions) {
+    @Override synchronized public void measureGenerated(@NotNull List<DoubleSolution> solutions) {
       if ((counter % 100 == 0)) {
         System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0).variables().get(0)) ;
       }

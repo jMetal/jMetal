@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
@@ -94,7 +97,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     autoConfigurableParameterList.add(variationParameter);
     autoConfigurableParameterList.add(selectionParameter);
 
-    for (Parameter<?> parameter : autoConfigurableParameterList) {
+    for (@NotNull Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
     }
   }
@@ -110,7 +113,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
             "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     crossoverParameter.addGlobalParameter(crossoverRepairStrategy);
 
-    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
+    @NotNull RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
     crossoverParameter.addSpecificParameter("SBX", distributionIndex);
 
     RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
@@ -132,16 +135,16 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
     mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
-    RealParameter distributionIndexForLinkedPolynomialMutation =
+    @NotNull RealParameter distributionIndexForLinkedPolynomialMutation =
         new RealParameter("linkedPolynomialMutationDistributionIndex", args, 5.0, 400.0);
     mutationParameter.addSpecificParameter("linkedPolynomial",
         distributionIndexForLinkedPolynomialMutation);
 
-    RealParameter uniformMutationPerturbation =
+    @NotNull RealParameter uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
-    RealParameter nonUniformMutationPerturbation =
+    @NotNull RealParameter nonUniformMutationPerturbation =
         new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
@@ -161,7 +164,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
 
   private void selection(String[] args) {
     selectionParameter = new SelectionParameter<>(args, Arrays.asList("tournament", "random"));
-    IntegerParameter selectionTournamentSize =
+    @NotNull IntegerParameter selectionTournamentSize =
         new IntegerParameter("selectionTournamentSize", args, 2, 10);
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
   }
@@ -191,10 +194,10 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
    *
    * @return
    */
-  public EvolutionaryAlgorithm<DoubleSolution> create() {
+  public @NotNull EvolutionaryAlgorithm<DoubleSolution> create() {
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
 
-    Archive<DoubleSolution> archive = null;
+    @Nullable Archive<DoubleSolution> archive = null;
 
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
       externalArchiveParameter.setSize(populationSizeParameter.getValue());
@@ -204,8 +207,8 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
 
     Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(
         new DominanceWithConstraintsComparator<>());
-    DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
-    MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
+    @NotNull DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
+    @NotNull MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
         new MultiComparator<>(
             Arrays.asList(
                 Comparator.comparing(ranking::getRank),
@@ -235,7 +238,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
       evaluation = new SequentialEvaluation<>(problem);
     }
 
-    RankingAndDensityEstimatorPreference<DoubleSolution> preferenceForReplacement = new RankingAndDensityEstimatorPreference<>(
+    @NotNull RankingAndDensityEstimatorPreference<DoubleSolution> preferenceForReplacement = new RankingAndDensityEstimatorPreference<>(
         ranking, densityEstimator);
     Replacement<DoubleSolution> replacement =
         new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement,

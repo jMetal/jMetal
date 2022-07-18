@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -80,7 +81,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   static class ComparatorGreater implements Comparator<Point> {
 
     @Override
-    public int compare(Point p, Point q) {
+    public int compare(@NotNull Point p, @NotNull Point q) {
       for (int i = n - 1; i >= 0; i--)
         if (BEATS(p.objectives[i], q.objectives[i]))
           return -1;
@@ -119,7 +120,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   static int safe = 0; // the number of points that don't need sorting
   static int fr = 0;
 
-  static double CalculateHypervolume(double[][] fronton, int noPoints, int noObjectives) {
+  static double CalculateHypervolume(double[] @NotNull [] fronton, int noPoints, int noObjectives) {
 
     n = noObjectives;
     safe = 0;
@@ -144,7 +145,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return x > y ? y : x;
   }
 
-  static int dominates2way(Point p, Point q, int k)
+  static int dominates2way(@NotNull Point p, @NotNull Point q, int k)
   // returns -1 if p dominates q, 1 if q dominates p, 2 if p == q, 0 otherwise
   // k is the highest index inspected
   {
@@ -163,7 +164,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return 2;
   }
 
-  static boolean dominates1way(Point p, Point q, int k)
+  static boolean dominates1way(@NotNull Point p, Point q, int k)
   // returns true if p dominates q or p == q, false otherwise
   // the assumption is that q doesn't dominate p
   // k is the highest index inspected
@@ -276,7 +277,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     fr++;
   }
 
-  static double hv2(Front ps, int k)
+  static double hv2(@NotNull Front ps, int k)
   // returns the hypervolume of ps[0 .. k-1] in 2D
   // assumes that ps is sorted improving
   {
@@ -290,7 +291,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return volume;
   }
 
-  static double inclhv(Point p)
+  static double inclhv(@NotNull Point p)
   // returns the inclusive hypervolume of p
   {
       double volume = 1;
@@ -303,7 +304,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       return volume;
   }
 
-  static double inclhv2(Point p, Point q)
+  static double inclhv2(@NotNull Point p, Point q)
   // returns the hypervolume of {p, q}
   {
     double vp = 1;
@@ -318,7 +319,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return suma;
   }
 
-  static double inclhv3(Point p, Point q, Point r)
+  static double inclhv3(@NotNull Point p, Point q, Point r)
   // returns the hypervolume of {p, q, r}
   {
     double vp = 1;
@@ -359,7 +360,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return vp + vq + vr - vpq - vpr - vqr + vpqr;
   }
 
-  static double inclhv4(Point p, Point q, Point r, Point s)
+  static double inclhv4(Point p, @NotNull Point q, @NotNull Point r, @NotNull Point s)
   // returns the hypervolume of {p, q, r, s}
   {
     double vp = 1;
@@ -496,7 +497,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return vp + vq + vr + vs - vpq - vpr - vps - vqr - vqs - vrs + vpqr + vpqs + vprs + vqrs - vpqrs;
   }
 
-  static double exclhv(Front ps, int p)
+  static double exclhv(@NotNull Front ps, int p)
   // returns the exclusive hypervolume of ps[p] relative to ps[0 .. p-1]
   {
     makeDominatedBit(ps, p);
@@ -587,14 +588,14 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "PISA implementation of the hypervolume quality indicator";
   }
 
   @Override
-  public List<S> computeHypervolumeContribution(List<S> solutionList, List<S> referenceFrontList) {
+  public @NotNull List<S> computeHypervolumeContribution(@NotNull List<S> solutionList, List<S> referenceFrontList) {
     if (solutionList.size() > 1) {
-      org.uma.jmetal.util.legacy.front.Front front = new ArrayFront(solutionList);
+      org.uma.jmetal.util.legacy.front.@NotNull Front front = new ArrayFront(solutionList);
       org.uma.jmetal.util.legacy.front.Front referenceFront = new ArrayFront(referenceFrontList);
 
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
@@ -606,7 +607,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       org.uma.jmetal.util.legacy.front.Front normalizedFront = frontNormalizer.normalize(front);
 
       // compute offsets for reference point in normalized space
-        double[] offsets = new double[10];
+        double @NotNull [] offsets = new double[10];
         int count = 0;
         for (int i1 = 0; i1 < maximumValues.length; i1++) {
             double v = offset / (maximumValues[i1] - minimumValues[i1]);
@@ -616,7 +617,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
         offsets = Arrays.copyOfRange(offsets, 0, count);
         // STEP 3. Inverse the pareto front. This is needed because the original
       // metric by Zitzler is for maximization problem
-      org.uma.jmetal.util.legacy.front.Front invertedFront = FrontUtils.getInvertedFront(normalizedFront);
+      org.uma.jmetal.util.legacy.front.@NotNull Front invertedFront = FrontUtils.getInvertedFront(normalizedFront);
 
       // shift away from origin, so that boundary points also get a contribution > 0
       for (int i = 0; i < invertedFront.getNumberOfPoints(); i++) {
@@ -652,7 +653,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   private double[] hvContributions(double[][] front) {
 
     int numberOfObjectives = front[0].length;
-    double[] contributions = new double[front.length];
+    double @NotNull [] contributions = new double[front.length];
     double[][] frontSubset = new double[front.length - 1][front[0].length];
     LinkedList<double[]> frontCopy = new LinkedList<double[]>();
     Collections.addAll(frontCopy, front);

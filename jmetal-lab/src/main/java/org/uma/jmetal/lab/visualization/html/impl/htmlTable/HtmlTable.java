@@ -1,5 +1,6 @@
 package org.uma.jmetal.lab.visualization.html.impl.htmlTable;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.visualization.html.HtmlComponent;
 /**
  * This class creates a table in HTML
@@ -13,12 +14,12 @@ public class HtmlTable<T> implements HtmlComponent {
   protected String[] headersRow;
   protected T[][] data;
 
-  public HtmlTable<T> setTitle(String title) {
+  public @NotNull HtmlTable<T> setTitle(String title) {
     this.title = title;
     return this;
   }
 
-  public HtmlTable<T> setColumnHeaders(String[] headers) {
+  public HtmlTable<T> setColumnHeaders(String @NotNull [] headers) {
     if (data[0].length != headers.length) return this;
     this.headersColumn = headers;
     return this;
@@ -30,7 +31,7 @@ public class HtmlTable<T> implements HtmlComponent {
     return this;
   }
 
-  public HtmlTable<T> setData(T[][] data) {
+  public @NotNull HtmlTable<T> setData(T[][] data) {
     this.data = data;
     return this;
   }
@@ -70,7 +71,7 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   private StringBuilder appendData() {
-    StringBuilder html = new StringBuilder();
+    @NotNull StringBuilder html = new StringBuilder();
     for (int i = 0; i < data.length; i++) {
       html.append("<tr>");
       if (headersRow != null) {
@@ -83,14 +84,14 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   protected StringBuilder createRowOfData(int index) {
-    StringBuilder html = new StringBuilder();
-    for (T elem : data[index]) {
+    @NotNull StringBuilder html = new StringBuilder();
+    for (@NotNull T elem : data[index]) {
       html.append("<td>").append(elem.toString()).append("</td>");
     }
     return html;
   }
 
-  public String getCSS() {
+  public @NotNull String getCSS() {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("table { margin: auto; }");
     stringBuilder.append("th,td { border:1px solid black; text-align: center; padding: 15px }");

@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.espea.util;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 
 /**
@@ -117,7 +119,7 @@ public class ScalarizationWrapper {
    * @param scalarizationType Chosen scalarization function
    */
   public ScalarizationWrapper(ScalarizationType scalarizationType) {
-    Config config = new Config();
+    @NotNull Config config = new Config();
     config.scalarizationType = scalarizationType;
     this.config = config;
   }

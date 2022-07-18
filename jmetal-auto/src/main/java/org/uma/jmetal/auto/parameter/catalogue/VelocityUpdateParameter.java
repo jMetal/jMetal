@@ -1,6 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.VelocityUpdate;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.impl.ConstrainedVelocityUpdate;
@@ -13,7 +15,7 @@ public class VelocityUpdateParameter extends CategoricalParameter {
     super("velocityUpdate", args, validValues);
   }
 
-  public VelocityUpdate getParameter() {
+  public @NotNull VelocityUpdate getParameter() {
     switch (getValue()) {
       case "defaultVelocityUpdate":
         double c1Min = (double) findGlobalParameter("c1Min").getValue();

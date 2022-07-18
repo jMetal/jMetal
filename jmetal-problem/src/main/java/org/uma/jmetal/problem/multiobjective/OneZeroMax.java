@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
@@ -30,7 +32,7 @@ public class OneZeroMax extends AbstractBinaryProblem {
   }
 
   @Override
-  public List<Integer> getListOfBitsPerVariable() {
+  public @NotNull List<Integer> getListOfBitsPerVariable() {
     return Arrays.asList(bits);
   }
 
@@ -49,7 +51,7 @@ public class OneZeroMax extends AbstractBinaryProblem {
 
   /** Evaluate() method */
   @Override
-    public BinarySolution evaluate(BinarySolution solution) {
+    public BinarySolution evaluate(@NotNull BinarySolution solution) {
     int counterOnes;
     int counterZeroes;
 

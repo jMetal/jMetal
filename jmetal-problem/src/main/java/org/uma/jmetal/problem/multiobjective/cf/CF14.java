@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
@@ -50,7 +52,7 @@ public class CF14 extends AbstractDoubleProblem {
 
     setNumberOfConstraints(4 * k + 2);
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i1 = 0; i1 < numberOfVariables; i1++) {
@@ -68,7 +70,7 @@ public class CF14 extends AbstractDoubleProblem {
    *
    * @param solution The solution to evaluate
    */
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double[] x = VectorUtils.toArray(solution.variables());
     double[] f = new double[getNumberOfObjectives()];
     double[] constraint = new double[getNumberOfConstraints()];

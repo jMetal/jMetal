@@ -9,6 +9,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -34,11 +36,11 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
   protected List<Double> idealOjectiveVector = null;
   protected List<Double> nadirObjectiveVector = null;
-  protected List<Double> rankingCoeficient = null;
+  protected @Nullable List<Double> rankingCoeficient = null;
   protected List<Double> asp = null;
   protected double tolerance;
  // protected int numberReferencePoints;
-  protected JMetalRandom random = null;
+  protected @Nullable JMetalRandom random = null;
   protected double considerationProbability;
   protected  int numberOfObjectives;
   protected double varyingProbability;
@@ -47,11 +49,11 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   protected List<Double> allReferencePoints;
   protected List<Double> currentReferencePoint;
   protected List<Double> distances;
-  private S solutionRun=null;
+  private @Nullable S solutionRun=null;
   
-  public ArtificialDecisionMakerDecisionTree(Problem<S> problem,
-      InteractiveAlgorithm<S,List<S>> algorithm,double considerationProbability,double tolerance,int maxEvaluations
-  ,List<Double> rankingCoeficient,List<Double> asp) {
+  public ArtificialDecisionMakerDecisionTree(@NotNull Problem<S> problem,
+                                             InteractiveAlgorithm<S,List<S>> algorithm, double considerationProbability, double tolerance, int maxEvaluations
+  , @Nullable List<Double> rankingCoeficient, @Nullable List<Double> asp) {
     super(problem, algorithm);
     this.considerationProbability = considerationProbability;
     this.tolerance = tolerance;
@@ -153,7 +155,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   @Override
   protected List<Integer> relevantObjectiveFunctions(List<S> front) {
     List<Integer> order;
-    List<Integer> indexRelevantObjectivesFunctions = new ArrayList<>();
+    @NotNull List<Integer> indexRelevantObjectivesFunctions = new ArrayList<>();
     SortedMap<Double, List<Integer>> map = new TreeMap<>(Collections.reverseOrder());
     for (int i = 0; i < rankingCoeficient.size(); i++) {
       List<Integer> aux = map.getOrDefault(rankingCoeficient.get(i), new ArrayList<>());
@@ -184,9 +186,9 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
   @Override
   protected List<Double> calculateReferencePoints(
-      List<Integer> indexOfRelevantObjectiveFunctions, List<S> front,List<S> paretoOptimalSolutions) {
+          List<Integer> indexOfRelevantObjectiveFunctions, @NotNull List<S> front, List<S> paretoOptimalSolutions) {
     List<Double> result = new ArrayList<>();
-    List<S> temporal = new ArrayList<>(front);
+    @NotNull List<S> temporal = new ArrayList<>(front);
 
       S solution = getSolution(temporal,currentReferencePoint);
       solutionRun = solution;
@@ -209,8 +211,8 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     return result;
   }
 
-  private void calculateDistance(S solution, List<Double> referencePoint) {
-    EuclideanDistanceBetweenSolutionsInObjectiveSpace<S> euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>();
+  private void calculateDistance(S solution, @NotNull List<Double> referencePoint) {
+    @NotNull EuclideanDistanceBetweenSolutionsInObjectiveSpace<S> euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>();
 
     double distance = euclidean
         .compute(solution, getSolutionFromRP(referencePoint));
@@ -248,12 +250,12 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     return distances;
   }
 
-  private S getSolution(List<S> front, List<Double> referencePoint) {
+  private S getSolution(List<S> front, @NotNull List<Double> referencePoint) {
     S result = front.get(0);
     EuclideanDistanceBetweenSolutionsInObjectiveSpace<S> euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>();
     SortedMap<Double, S> map = new TreeMap<>();
     S aux = getSolutionFromRP(referencePoint);
-    for (S solution : front) {
+    for (@NotNull S solution : front) {
       double distance = euclidean.compute(solution,aux);
       map.put(distance, solution);
     }

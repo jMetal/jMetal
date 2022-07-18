@@ -12,6 +12,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -38,7 +40,7 @@ public class ArrayFront implements Front {
   }
 
   /** Constructor */
-  public ArrayFront(List<? extends Solution<?>> solutionList) {
+  public ArrayFront(@Nullable List<? extends Solution<?>> solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The list of solutions is null");
     } else if (solutionList.size() == 0) {
@@ -83,7 +85,7 @@ public class ArrayFront implements Front {
     points = new Point[this.numberOfPoints];
 
     for (int i = 0; i < this.numberOfPoints; i++) {
-      Point point = new ArrayPoint(pointDimensions);
+      @NotNull Point point = new ArrayPoint(pointDimensions);
       for (int j = 0; j < pointDimensions; j++) {
         point.setValue(j, 0.0);
       }
@@ -91,21 +93,21 @@ public class ArrayFront implements Front {
     }
   }
 
-  public ArrayFront(String fileName, String separator) throws FileNotFoundException {
+  public ArrayFront(@NotNull String fileName, String separator) throws FileNotFoundException {
     this();
 
     InputStream inputStream = createInputStream(fileName);
     InputStreamReader isr = new InputStreamReader(inputStream);
-    BufferedReader br = new BufferedReader(isr);
+    @NotNull BufferedReader br = new BufferedReader(isr);
 
-    List<Point> list = new ArrayList<>();
+    @NotNull List<Point> list = new ArrayList<>();
     int numberOfObjectives = 0;
     String line;
     try {
       line = br.readLine();
 
       while (line != null) {
-        String[] stringValues = line.split(separator);
+        String @NotNull [] stringValues = line.split(separator);
         double[] values = new double[10];
         int count = 0;
         for (String stringValue : stringValues) {

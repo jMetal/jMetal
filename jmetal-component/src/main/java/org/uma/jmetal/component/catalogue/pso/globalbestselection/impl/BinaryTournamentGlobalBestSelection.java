@@ -2,6 +2,8 @@ package org.uma.jmetal.component.catalogue.pso.globalbestselection.impl;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -15,7 +17,7 @@ public class BinaryTournamentGlobalBestSelection implements GlobalBestSelection 
   }
 
   @Override
-  public DoubleSolution select(List<DoubleSolution> globalBestList) {
+  public DoubleSolution select(@NotNull List<DoubleSolution> globalBestList) {
     /*
     NaryTournamentSelection<DoubleSolution> tournament = new NaryTournamentSelection<>(
         tournamentSize, comparator);

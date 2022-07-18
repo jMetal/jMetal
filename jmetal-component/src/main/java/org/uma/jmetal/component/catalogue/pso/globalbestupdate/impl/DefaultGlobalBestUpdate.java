@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.pso.globalbestupdate.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.pso.globalbestupdate.GlobalBestUpdate;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
@@ -19,13 +21,13 @@ public class DefaultGlobalBestUpdate implements GlobalBestUpdate {
    * @param globalBest: List or Empty List of auxiliary solutions
    * @return List of global best solutions
    */
-  public BoundedArchive<DoubleSolution> update(List<DoubleSolution> swarm,
-      BoundedArchive<DoubleSolution> globalBest) {
+  public BoundedArchive<DoubleSolution> update(@NotNull List<DoubleSolution> swarm,
+                                               BoundedArchive<DoubleSolution> globalBest) {
     Check.notNull(swarm);
     Check.notNull(globalBest);
     Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());
 
-    for (DoubleSolution particle : swarm) {
+    for (@NotNull DoubleSolution particle : swarm) {
       DoubleSolution copy = (DoubleSolution) particle.copy();
       globalBest.add(copy);
     }

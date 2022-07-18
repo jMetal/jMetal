@@ -2,6 +2,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.global
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -34,7 +36,7 @@ public class TournamentGlobalBestSelection implements GlobalBestSelection {
 */
 
     DoubleSolution one, two;
-    DoubleSolution bestGlobal;
+    @Nullable DoubleSolution bestGlobal;
     int pos1 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
     int pos2 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
     one = globalBestList.get(pos1);

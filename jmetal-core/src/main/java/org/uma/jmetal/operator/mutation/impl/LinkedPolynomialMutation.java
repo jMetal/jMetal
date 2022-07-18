@@ -1,5 +1,6 @@
 package org.uma.jmetal.operator.mutation.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -101,7 +102,7 @@ public class LinkedPolynomialMutation implements MutationOperator<DoubleSolution
 
   /** Execute() method */
   @Override
-  public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
+  public @NotNull DoubleSolution execute(DoubleSolution solution) throws JMetalException {
     Check.notNull(solution);
 
     doMutation(solution);
@@ -109,7 +110,7 @@ public class LinkedPolynomialMutation implements MutationOperator<DoubleSolution
     return solution;
   }
 
-  public double[] execute(double[] x, double[] lowerBound, double[] upperBound) {
+  public double[] execute(double @NotNull [] x, double[] lowerBound, double[] upperBound) {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 

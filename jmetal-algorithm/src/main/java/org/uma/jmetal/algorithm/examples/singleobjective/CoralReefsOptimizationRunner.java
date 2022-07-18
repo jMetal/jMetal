@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.examples.singleobjective;
 
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization.CoralReefsOptimizationBuilder;
@@ -18,6 +18,8 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+import java.util.List;
+
 /**
  * Class to configure and run a coral reefs optimization algorithm. The target
  * problem is OneMax.
@@ -33,11 +35,11 @@ public class CoralReefsOptimizationRunner {
 		Algorithm<List<BinarySolution>> algorithm;
 		BinaryProblem problem = new OneMax(512);
 
-		CrossoverOperator<BinarySolution> crossoverOperator = new SinglePointCrossover(
+		@NotNull CrossoverOperator<BinarySolution> crossoverOperator = new SinglePointCrossover(
 				0.9);
-		MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(
+		@NotNull MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(
 				1.0 / problem.getBitsFromVariable(0));
-		SelectionOperator<List<BinarySolution>, BinarySolution> selectionOperator = new BinaryTournamentSelection<BinarySolution>();
+		@NotNull SelectionOperator<List<BinarySolution>, BinarySolution> selectionOperator = new BinaryTournamentSelection<BinarySolution>();
 
 		algorithm = new CoralReefsOptimizationBuilder<BinarySolution>(problem,
 				selectionOperator, crossoverOperator, mutationOperator)

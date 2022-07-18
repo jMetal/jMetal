@@ -5,6 +5,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
@@ -69,7 +72,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   protected Observable<Map<String, Object>> observable;
 
   public SMPSO(
-          DoubleProblem problem,
+          @NotNull DoubleProblem problem,
           int swarmSize,
           BoundedArchive<DoubleSolution> leaders,
           MutationOperator<DoubleSolution> mutationOperator,
@@ -223,14 +226,14 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override
-  protected void initializeLeader(List<DoubleSolution> swarm) {
+  protected void initializeLeader(@NotNull List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
       leaders.add(particle);
     }
   }
 
   @Override
-  protected void initializeVelocity(List<DoubleSolution> swarm) {
+  protected void initializeVelocity(@NotNull List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
@@ -239,8 +242,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override
-  protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
-    for (DoubleSolution particle : swarm) {
+  protected void initializeParticlesMemory(@NotNull List<DoubleSolution> swarm) {
+    for (@NotNull DoubleSolution particle : swarm) {
       localBest.setAttribute(particle, (DoubleSolution) particle.copy());
     }
   }
@@ -251,8 +254,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     DoubleSolution bestGlobal;
 
     for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-      DoubleSolution bestParticle = (DoubleSolution) localBest.getAttribute(swarm.get(i)).copy();
+      @Nullable DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+      @Nullable DoubleSolution bestParticle = (DoubleSolution) localBest.getAttribute(swarm.get(i)).copy();
 
       bestGlobal = selectGlobalBest();
 
@@ -298,7 +301,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override
-  protected void perturbation(List<DoubleSolution> swarm) {
+  protected void perturbation(@NotNull List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       if ((i % 6) == 0) {
         mutation.execute(swarm.get(i));
@@ -307,14 +310,14 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override
-  protected void updateLeaders(List<DoubleSolution> swarm) {
-    for (DoubleSolution particle : swarm) {
+  protected void updateLeaders(@NotNull List<DoubleSolution> swarm) {
+    for (@NotNull DoubleSolution particle : swarm) {
       leaders.add((DoubleSolution) particle.copy());
     }
   }
 
   @Override
-  protected void updateParticlesMemory(List<DoubleSolution> swarm) {
+  protected void updateParticlesMemory(@NotNull List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       int flag = dominanceComparator.compare(swarm.get(i), localBest.getAttribute(swarm.get(i)));
       if (flag != 1) {
@@ -347,7 +350,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   private double velocityConstriction(
-          double v, double[] deltaMax, double[] deltaMin, int variableIndex) {
+          double v, double @NotNull [] deltaMax, double[] deltaMin, int variableIndex) {
     double result;
 
     double dmax = deltaMax[variableIndex];
@@ -381,7 +384,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "Speed contrained Multiobjective PSO";
   }
 

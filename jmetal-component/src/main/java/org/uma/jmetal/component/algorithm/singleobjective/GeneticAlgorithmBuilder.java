@@ -1,5 +1,6 @@
 package org.uma.jmetal.component.algorithm.singleobjective;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -84,7 +85,7 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public GeneticAlgorithmBuilder<S> setVariation(Variation<S> variation) {
+  public @NotNull GeneticAlgorithmBuilder<S> setVariation(Variation<S> variation) {
     this.variation = variation;
 
     return this;

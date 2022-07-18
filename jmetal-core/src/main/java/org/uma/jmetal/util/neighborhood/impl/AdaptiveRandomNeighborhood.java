@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
@@ -79,7 +80,7 @@ public class AdaptiveRandomNeighborhood<S> implements Neighborhood<S> {
     }
   }
 
-  private List<S> getIthNeighborhood(List<S> solutionList, int index) {
+  private @NotNull List<S> getIthNeighborhood(@NotNull List<S> solutionList, int index) {
     List<S> neighborhood = new ArrayList<>();
     int bound = (numberOfRandomNeighbours + 1);
     for (int i = 0; i < bound; i++) {
@@ -100,7 +101,7 @@ public class AdaptiveRandomNeighborhood<S> implements Neighborhood<S> {
   }
 
   @Override
-  public List<S> getNeighbors(List<S> solutionList, int solutionIndex) {
+  public @NotNull List<S> getNeighbors(List<S> solutionList, int solutionIndex) {
     if (solutionList == null) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.size() != solutionListSize) {

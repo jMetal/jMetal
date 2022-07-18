@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
@@ -68,7 +70,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 public class ConstraintProblemsStudy {
   private static final int INDEPENDENT_RUNS = 25;
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String @NotNull [] args) throws IOException {
     if (args.length != 1) {
       throw new JMetalException("Needed arguments: experimentBaseDirectory");
     }
@@ -117,8 +119,8 @@ public class ConstraintProblemsStudy {
    * ExperimentAlgorithm} has an optional tag component, that can be set as it is shown in this example,
    * where four variants of a same algorithm are defined.
    */
-  static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
-          List<ExperimentProblem<DoubleSolution>> problemList) {
+  static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+          @NotNull List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
 

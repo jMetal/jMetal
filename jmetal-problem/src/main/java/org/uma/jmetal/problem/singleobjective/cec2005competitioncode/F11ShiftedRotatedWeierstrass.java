@@ -46,6 +46,7 @@
 //
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class F11ShiftedRotatedWeierstrass extends TestFunc {
@@ -62,8 +63,8 @@ public class F11ShiftedRotatedWeierstrass extends TestFunc {
   static final public double b = 3.0;
 
   // Shifted global optimum
-  private final double[] m_o;
-  private final double[][] m_matrix;
+  private final double @NotNull [] m_o;
+  private final double[] @NotNull [] m_matrix;
 
   // In order to avoid excessive memory allocation,
   // a fixed memory buffer is allocated for each function object.

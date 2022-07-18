@@ -1,5 +1,6 @@
 package org.uma.jmetal.auto.irace.parameterfilegeneration;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 
 /**
@@ -10,7 +11,7 @@ import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 public class AutoNSGAIIIraceParameterFileGenerator {
 
   public static void main(String[] args) {
-    String[] parameters =
+    String @NotNull [] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--referenceFrontFileName ZDT1.csv "
             + "--maximumNumberOfEvaluations 25000 "
@@ -31,7 +32,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    IraceParameterFileGenerator parameterFileGenerator = new IraceParameterFileGenerator() ;
+    @NotNull IraceParameterFileGenerator parameterFileGenerator = new IraceParameterFileGenerator() ;
     parameterFileGenerator.generateConfigurationFile(new AutoNSGAII(), parameters) ;
   }
 }

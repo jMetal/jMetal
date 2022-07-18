@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.examples.singleobjective.cellulargeneticalgorithm;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -38,7 +40,7 @@ public class AsynchronousCellularGeneticAlgorithmUsingAPermutationSequenceGenera
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    @NotNull var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
@@ -49,11 +51,11 @@ public class AsynchronousCellularGeneticAlgorithmUsingAPermutationSequenceGenera
 
     int rows = 10 ;
     int columns = 10 ;
-    Neighborhood<DoubleSolution> neighborhood = new C9<>(rows, columns) ;
+    @NotNull Neighborhood<DoubleSolution> neighborhood = new C9<>(rows, columns) ;
 
     SequenceGenerator<Integer> solutionIndexGenerator = new IntegerPermutationGenerator(populationSize);
 
-    var variation = new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation) ;
+    @NotNull var variation = new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation) ;
 
     var selection =
         new NeighborhoodSelection<>(

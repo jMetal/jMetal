@@ -2,6 +2,8 @@ package org.uma.jmetal.util.legacy.qualityindicator.impl;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
@@ -39,7 +41,7 @@ public abstract class GenericIndicator<S>
   public void setReferenceParetoFront(String referenceParetoFrontFile) throws FileNotFoundException {
     Check.notNull(referenceParetoFrontFile);
 
-    Front front = new ArrayFront(referenceParetoFrontFile);
+    @NotNull Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
   }
 

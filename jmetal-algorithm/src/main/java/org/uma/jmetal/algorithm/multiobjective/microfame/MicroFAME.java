@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.microfame.util.WFGHypervolumeV2;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.Operator;
@@ -78,7 +79,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     Stagnation = new Input("Estancamiento", new Tuple(0, 1.0));
     Operatoruse = new Input("UsoOperador", new Tuple(0, 1.0));
     Probability = new Output("Probabiliadad", new Tuple(0, 1.0));
-    T1MF_Gauangle lowStagnationUMF =
+    @NotNull T1MF_Gauangle lowStagnationUMF =
         new T1MF_Gauangle("Upper MF for low Stagnation", -0.4, 0.0, 0.4);
     T1MF_Gauangle midStagnationUMF =
         new T1MF_Gauangle("Upper MF for mid Stagnation", 0.1, 0.5, 0.9);
@@ -87,12 +88,12 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
     T1MF_Gauangle lowOperatoruseUMF =
         new T1MF_Gauangle("Upper MF for low Operatoruse", -0.4, 0.0, 0.4);
-    T1MF_Gauangle midOperatoruseUMF =
+    @NotNull T1MF_Gauangle midOperatoruseUMF =
         new T1MF_Gauangle("Upper MF for mid Operatoruse", 0.1, 0.5, 0.9);
     T1MF_Gauangle highOperatoruseUMF =
         new T1MF_Gauangle("Upper MF for highOperatoruse", 0.6, 1.0, 1.4);
 
-    T1MF_Gauangle lowProbabilityUMF =
+    @NotNull T1MF_Gauangle lowProbabilityUMF =
         new T1MF_Gauangle("Upper MF for low Probability", -0.4, 0.0, 0.4);
     T1MF_Gauangle midProbabilityUMF =
         new T1MF_Gauangle("Upper MF for mid Probability", 0.1, 0.5, 0.9);
@@ -102,21 +103,21 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     // SETUP ANTECEDENTS AND CONSECUENTS
     T1_Antecedent lowStagnation = new T1_Antecedent("LowStagnation", lowStagnationUMF, Stagnation);
     T1_Antecedent midStagnation = new T1_Antecedent("MidStagnation", midStagnationUMF, Stagnation);
-    T1_Antecedent highStagnation =
+    @NotNull T1_Antecedent highStagnation =
         new T1_Antecedent("HighStagnation", highStagnationUMF, Stagnation);
 
     T1_Antecedent lowOperatoruse =
         new T1_Antecedent("LowStagnation", lowOperatoruseUMF, Stagnation);
-    T1_Antecedent midOperatoruse =
+    @NotNull T1_Antecedent midOperatoruse =
         new T1_Antecedent("MidStagnation", midOperatoruseUMF, Stagnation);
     T1_Antecedent highOperatoruse =
         new T1_Antecedent("HighStagnation", highOperatoruseUMF, Stagnation);
 
     T1_Consequent lowProbability =
         new T1_Consequent("lowProbability", lowProbabilityUMF, Probability);
-    T1_Consequent midProbability =
+    @NotNull T1_Consequent midProbability =
         new T1_Consequent("MidProbability", midProbabilityUMF, Probability);
-    T1_Consequent highProbability =
+    @NotNull T1_Consequent highProbability =
         new T1_Consequent("HighProbability", highProbabilityUMF, Probability);
 
     rulebase = new T1_Rulebase(9);
@@ -174,7 +175,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
   }
 
   @Override
-  protected List<S> reproduction(List<S> population) {
+  protected @NotNull List<S> reproduction(List<S> population) {
     List<S> offspringPopulation = new ArrayList<>(1);
     List<S> parents = null;
 
@@ -191,7 +192,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     double CR, F;
     CR = 1.0;
     F = 0.5;
-    DifferentialEvolutionCrossover crossoverOperator_DE =
+    @NotNull DifferentialEvolutionCrossover crossoverOperator_DE =
         new DifferentialEvolutionCrossover(
             CR, F, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
@@ -201,7 +202,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     Operator crossoverOperator_SBX =
         new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    Random rnd = new Random();
+    @NotNull Random rnd = new Random();
     int operator = rnd.nextInt(operators_num);
     List<S> offspring = new ArrayList<>(1);
     // RULETTA
@@ -320,7 +321,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     return getNonDominatedSolutions(archive_hv.getSolutionList());
   }
 
-  protected List<S> getNonDominatedSolutions(List<S> solutionList) {
+  protected List<S> getNonDominatedSolutions(@NotNull List<S> solutionList) {
     return SolutionListUtils.getNonDominatedSolutions(solutionList);
   }
 

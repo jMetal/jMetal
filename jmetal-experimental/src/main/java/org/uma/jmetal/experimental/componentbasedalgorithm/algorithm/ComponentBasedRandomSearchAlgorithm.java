@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
@@ -132,7 +134,7 @@ public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implemen
     return archive;
   }
 
-  public ComponentBasedRandomSearchAlgorithm<S> withTermination(Termination termination) {
+  public @NotNull ComponentBasedRandomSearchAlgorithm<S> withTermination(Termination termination) {
     this.termination = termination;
 
     return this;

@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.mopso;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
@@ -54,10 +55,10 @@ public class ComponentBasedAutoMOPSODTLZ {
     AutoMOPSO.print(autoMOPSO.fixedParameterList);
     AutoMOPSO.print(autoMOPSO.autoConfigurableParameterList);
 
-    ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
+    @NotNull ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+    @NotNull RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "irace.MOPSO", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 

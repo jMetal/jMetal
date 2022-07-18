@@ -1,6 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
@@ -47,7 +49,7 @@ public class VariationParameter extends CategoricalParameter {
           (CrossoverParameter) findSpecificParameter("crossover");
       MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
 
-      CrossoverOperator<BinarySolution> crossoverOperator = crossoverParameter.getBinarySolutionParameter();
+      @NotNull CrossoverOperator<BinarySolution> crossoverOperator = crossoverParameter.getBinarySolutionParameter();
       MutationOperator<BinarySolution> mutationOperatorOperator =
           mutationParameter.getBinarySolutionParameter();
 

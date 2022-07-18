@@ -5,6 +5,8 @@ package org.uma.jmetal.algorithm.multiobjective.mochc;
  */
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -94,13 +96,13 @@ public class MOCHCBuilder implements AlgorithmBuilder<MOCHC> {
     return this;
   }
 
-  public MOCHCBuilder setConvergenceValue(int convergenceValue) {
+  public @NotNull MOCHCBuilder setConvergenceValue(int convergenceValue) {
     this.convergenceValue = convergenceValue;
 
     return this;
   }
 
-  public MOCHCBuilder setInitialConvergenceCount(double initialConvergenceCount) {
+  public @NotNull MOCHCBuilder setInitialConvergenceCount(double initialConvergenceCount) {
     this.initialConvergenceCount = initialConvergenceCount;
 
     return this;
@@ -130,7 +132,7 @@ public class MOCHCBuilder implements AlgorithmBuilder<MOCHC> {
     return this;
   }
 
-  public MOCHCBuilder setNewGenerationSelection(SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection) {
+  public @NotNull MOCHCBuilder setNewGenerationSelection(SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection) {
     this.newGenerationSelection = newGenerationSelection;
 
     return this;

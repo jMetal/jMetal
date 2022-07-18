@@ -1,5 +1,8 @@
 package org.uma.jmetal.solution;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +16,7 @@ import java.util.stream.IntStream;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractSolution<T> implements Solution<T> {
-  private final double[] objectives;
+  private final double @NotNull [] objectives;
   private final List<T> variables;
   private final double[] constraints;
   protected Map<Object, Object> attributes;
@@ -68,7 +71,7 @@ public abstract class AbstractSolution<T> implements Solution<T> {
 
   @Override
   public String toString() {
-    StringBuilder result = new StringBuilder("Variables: ");
+    @NotNull StringBuilder result = new StringBuilder("Variables: ");
     for (T variable : variables) {
       result.append(variable).append(" ");
     }
@@ -87,14 +90,14 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
-  public boolean equals(Object object) {
+  public boolean equals(@Nullable Object object) {
     if (object == null)
       return false;
 
     if (this.getClass() != object.getClass())
       return false;
 
-    Solution<T> solution = (Solution<T>) object;
+    @NotNull Solution<T> solution = (Solution<T>) object;
 
     return this.variables().equals(solution.variables());
   }

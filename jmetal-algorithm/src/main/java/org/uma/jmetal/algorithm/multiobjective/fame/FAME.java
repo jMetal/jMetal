@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -137,7 +140,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
 
     engine.configure("Minimum", "Maximum", "Minimum", "Maximum", "Centroid");
 
-    StringBuilder status = new StringBuilder();
+    @NotNull StringBuilder status = new StringBuilder();
     if (!engine.isReady(status)) {
       throw new RuntimeException(
           "Engine not ready. " + "The following errors were encountered:\n" + status.toString());
@@ -163,7 +166,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
 
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = new ArrayList<>(3);
+    @NotNull List<S> matingPopulation = new ArrayList<>(3);
     for (int x = 0; x < 3; x++) {
       double aleat = Math.random();
       if (aleat <= 0.1) // 0.1 n_n wiiii (0.1 lo hace parecido a measo1 (0.05 asco))
@@ -178,7 +181,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
 
   @Override
   protected List<S> reproduction(List<S> population) {
-    List<S> offspringPopulation = new ArrayList<>(1);
+    @NotNull List<S> offspringPopulation = new ArrayList<>(1);
     List<DoubleSolution> parents = null;
 
     double probabilityPolynomial, DristributionIndex;
@@ -189,7 +192,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
     double probabilityUniform, perturbation;
     probabilityUniform = 0.30;
     perturbation = 0.1;
-    UniformMutation mutationUniform = new UniformMutation(probabilityUniform, perturbation);
+    @NotNull UniformMutation mutationUniform = new UniformMutation(probabilityUniform, perturbation);
 
     double CR, F;
     CR = 1.0;
@@ -233,7 +236,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
         parents.add(population.get(0));
         parents.add(population.get(1));
         parents.add(population.get(2));
-        DoubleSolution solution = (DoubleSolution) population.get(2).copy();
+        @Nullable DoubleSolution solution = (DoubleSolution) population.get(2).copy();
         crossoverOperator_DE.setCurrentSolution(solution);
         offspring = (List<S>) crossoverOperator_DE.execute(parents);
         evaluator.evaluate(offspring, getProblem());
@@ -299,14 +302,14 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "FAME ultima version";
   }
 
   @Override
   protected List<S> createInitialPopulation() {
     SpatialSpreadDeviation<S> distancia = new SpatialSpreadDeviation<>();
-    List<S> population = new ArrayList<>(getMaxPopulationSize());
+    @NotNull List<S> population = new ArrayList<>(getMaxPopulationSize());
     for (int i = 0; i < getMaxPopulationSize(); i++) {
       S newIndividual = getProblem().createSolution();
       distancia.setAttribute(newIndividual, 0.0);
@@ -326,7 +329,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    List<S> jointPopulation = new ArrayList<>();
+    @NotNull List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
     Ranking<S> ranking = new FastNonDominatedSortRanking<>();
@@ -335,7 +338,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
     return fast_nondonimated_sort(ranking);
   }
 
-  protected List<S> fast_nondonimated_sort(Ranking<S> ranking) {
+  protected @NotNull List<S> fast_nondonimated_sort(@NotNull Ranking<S> ranking) {
     SpatialSpreadDeviation<S> SSD = new SpatialSpreadDeviation<S>();
     List<S> population = new ArrayList<>(getMaxPopulationSize());
     int rankingIndex = 0;
@@ -357,11 +360,11 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
   }
 
   protected boolean subfrontFillsIntoThePopulation(
-      Ranking<S> ranking, int rank, List<S> population) {
+          @NotNull Ranking<S> ranking, int rank, @NotNull List<S> population) {
     return ranking.getSubFront(rank).size() < (getMaxPopulationSize() - population.size());
   }
 
-  protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
+  protected void addRankedSolutionsToPopulation(@NotNull Ranking<S> ranking, int rank, List<S> population) {
     List<S> front;
 
     front = ranking.getSubFront(rank);

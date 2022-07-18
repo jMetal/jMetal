@@ -58,6 +58,7 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -143,7 +144,7 @@ public class Benchmark {
   //	If the Benchmark class is executed as a stand-alone application,
   //	its job is to run the org.uma.test on all the org.uma.test functions.
   static public void main(String args[]) throws JMetalException {
-    Benchmark theBenchmark = new Benchmark();
+    @NotNull Benchmark theBenchmark = new Benchmark();
     theBenchmark.runTest(0);
   }
 
@@ -197,7 +198,7 @@ public class Benchmark {
   //
 
   // Rosenbrock's function
-  static public double rosenbrock(double[] x) {
+  static public double rosenbrock(double @NotNull [] x) {
 
     double sum = 0.0;
 
@@ -294,7 +295,7 @@ public class Benchmark {
   }
 
   // Weierstrass function
-  static public double weierstrass(double[] x) {
+  static public double weierstrass(double @NotNull [] x) {
     return (weierstrass(x, 0.5, 3.0, 20));
   }
 
@@ -317,7 +318,7 @@ public class Benchmark {
   }
 
   // F8F2
-  static public double F8F2(double[] x) {
+  static public double F8F2(double @NotNull [] x) {
 
     double sum = 0.0;
     for (int i = 1; i < x.length; i++) {
@@ -339,7 +340,7 @@ public class Benchmark {
   }
 
   // Expanded Scaffer's F6 function
-  static public double EScafferF6(double[] x) {
+  static public double EScafferF6(double @NotNull [] x) {
 
     double sum = 0.0;
     for (int i = 1; i < x.length; i++) {
@@ -451,7 +452,7 @@ public class Benchmark {
   }
 
   // (1xD) row vector * (Dx1) column vector = (1) scalar
-  static public double xy(double[] x, double[] y) {
+  static public double xy(double @NotNull [] x, double[] y) {
     double result = 0.0;
     for (int i = 0; i < x.length; i++) {
       double v = (x[i] * y[i]);
@@ -466,7 +467,7 @@ public class Benchmark {
   //
 
   // (1xD) row vector * (DxD) matrix = (1xD) row vector
-  static public void xA(double[] result, double[] x, double[][] A) {
+  static public void xA(double @NotNull [] result, double[] x, double[][] A) {
     for (int i = 0; i < result.length; i++) {
       result[i] = 0.0;
       for (int j = 0; j < result.length; j++) {
@@ -497,7 +498,7 @@ public class Benchmark {
     try {
       JMetalLogger.logger.info("File bias: " + file);
 
-      BufferedReader brSrc = new BufferedReader(new FileReader(file));
+      @NotNull BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadMatrix(brSrc, num_test_points, test_dimension, x);
       loadColumnVector(brSrc, num_test_points, f);
       brSrc.close();
@@ -510,7 +511,7 @@ public class Benchmark {
   static public void loadRowVectorFromFile(String file, int columns, double[] row)
     throws JMetalException {
     try {
-      BufferedReader brSrc =
+      @NotNull BufferedReader brSrc =
               new BufferedReader(
                       new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource(file).getPath()))) ;
       //BufferedReader brSrc = new BufferedReader(new FileReader(file));
@@ -522,10 +523,10 @@ public class Benchmark {
     }
   }
 
-  static public void loadRowVector(BufferedReader brSrc, int columns, double[] row)
+  static public void loadRowVector(@NotNull BufferedReader brSrc, int columns, double[] row)
     throws Exception {
     String stToken;
-    StringTokenizer stTokenizer = new StringTokenizer(brSrc.readLine());
+    @NotNull StringTokenizer stTokenizer = new StringTokenizer(brSrc.readLine());
     for (int i = 0; i < columns; i++) {
       stToken = stTokenizer.nextToken();
       row[i] = Double.parseDouble(stToken);
@@ -587,7 +588,7 @@ public class Benchmark {
     }
   }
 
-  static public void loadMatrix(BufferedReader brSrc, int rows, int columns, double[][] matrix)
+  static public void loadMatrix(@NotNull BufferedReader brSrc, int rows, int columns, double[][] matrix)
     throws Exception {
     for (int i = 0; i < rows; i++) {
       loadRowVector(brSrc, columns, matrix[i]);
@@ -597,7 +598,7 @@ public class Benchmark {
   //
   // Use this function to manufacture new test function objects
   //
-  public TestFunc testFunctionFactory(int func_num, int dimension) throws JMetalException {
+  public @NotNull TestFunc testFunctionFactory(int func_num, int dimension) throws JMetalException {
     TestFunc returnFunc = null;
     try {
       returnFunc = (TestFunc)

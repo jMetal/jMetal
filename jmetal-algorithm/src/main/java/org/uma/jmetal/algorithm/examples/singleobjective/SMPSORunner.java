@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.examples.singleobjective;
 
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -18,6 +18,8 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
+
+import java.util.List;
 
 /**
  * Class for configuring and running the SMPSO algorithm to solve a single-objective problem
@@ -41,7 +43,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
 
     problem = new Rosenbrock(20) ;
 
-    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
+    @NotNull BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;

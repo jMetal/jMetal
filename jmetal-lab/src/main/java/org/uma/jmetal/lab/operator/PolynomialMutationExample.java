@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -56,12 +58,12 @@ public class PolynomialMutationExample {
     DoubleProblem problem ;
 
     problem = new Sphere(1) ;
-    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(1.0, distributionIndex) ;
+    @NotNull MutationOperator<DoubleSolution> mutation = new PolynomialMutation(1.0, distributionIndex) ;
 
     DoubleSolution solution = problem.createSolution() ;
     solution.variables().set(0, 0.0);
 
-    List<DoubleSolution> population = new ArrayList<>(numberOfPoints) ;
+    @NotNull List<DoubleSolution> population = new ArrayList<>(numberOfPoints) ;
     for (int i = 0 ; i < numberOfPoints ; i++) {
       DoubleSolution newSolution = (DoubleSolution) solution.copy();
       mutation.execute(newSolution) ;
@@ -71,13 +73,13 @@ public class PolynomialMutationExample {
     population.sort(Comparator.comparingDouble(sol -> sol.objectives()[0])) ;
 
 
-    double[][] classifier = classify(population, problem, granularity);
+    double[] @NotNull [] classifier = classify(population, problem, granularity);
 
     PlotFront plot = new PlotSmile(classifier, "") ;
     plot.plot();
   }
 
-  private static double[][] classify(List<DoubleSolution> solutions, DoubleProblem problem, int granularity) {
+  private static double[][] classify(@NotNull List<DoubleSolution> solutions, @NotNull DoubleProblem problem, int granularity) {
     Bounds<Double> bounds = problem.getVariableBounds().get(0);
     double grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity ;
     double[][] classifier = new double[granularity][] ;
@@ -87,7 +89,7 @@ public class PolynomialMutationExample {
       classifier[i][1] = 0 ;
     }
 
-    for (DoubleSolution solution : solutions) {
+    for (@NotNull DoubleSolution solution : solutions) {
       boolean found = false ;
       int index = 0 ;
       while (!found) {

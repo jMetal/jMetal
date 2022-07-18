@@ -3,6 +3,7 @@ package org.uma.jmetal.util.solutionattribute.impl;
 import java.util.List;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
@@ -22,17 +23,17 @@ public class DirScore<S extends Solution<?>>  extends GenericSolutionAttribute<S
 
     @Override
     public void computeDensityEstimator(List<S> solutionSet) {
-        int[] dirVector = computeDirVector(solutionSet) ;
+        int @NotNull [] dirVector = computeDirVector(solutionSet) ;
         for(int i = 0;i < dirVector.length; i++){
             S solution = solutionSet.get(i) ;
             solution.attributes().put("dir-score", 1.0 / (double) dirVector[i]);
         }
     }
 
-    private int[] computeDirVector(List<S> solutionSet) {
-        int[] dirVector = new int[solutionSet.size()] ;
+    private int[] computeDirVector(@NotNull List<S> solutionSet) {
+        int @NotNull [] dirVector = new int[solutionSet.size()] ;
 
-        for(double[] vector : referenceVectors){
+        for(double @NotNull [] vector : referenceVectors){
             int minIndex = 0;
             double minDistance = Double.MAX_VALUE;
             for(int i = 0; i < solutionSet.size(); i++){

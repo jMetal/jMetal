@@ -1,5 +1,6 @@
 package org.uma.jmetal.auto.autoconfigurablealgorithm.examples;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOPSO;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -54,7 +55,7 @@ public class SMPSOConfiguredFromAParameterString {
             + "--weightMax 0.5 ")
             .split("\\s+");
 
-    AutoMOPSO autoMOPSO = new AutoMOPSO();
+    @NotNull AutoMOPSO autoMOPSO = new AutoMOPSO();
     autoMOPSO.parseAndCheckParameters(parameters);
 
     AutoMOPSO.print(autoMOPSO.fixedParameterList);

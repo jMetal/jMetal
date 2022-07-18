@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
 import java.io.FileNotFoundException;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -43,9 +45,9 @@ public class MOEADBuilder<S extends Solution<?>> {
   private String weightVectorDirectory ;
   private AggregativeFunction aggregativeFunction = new PenaltyBoundaryIntersection() ;
 
-  public MOEADBuilder(Problem<S> problem, int populationSize,
-      CrossoverOperator<S> crossover, MutationOperator<S> mutation, String weightVectorDirectory,
-      SequenceGenerator<Integer> sequenceGenerator) {
+  public MOEADBuilder(@NotNull Problem<S> problem, int populationSize,
+                      @NotNull CrossoverOperator<S> crossover, MutationOperator<S> mutation, String weightVectorDirectory,
+                      SequenceGenerator<Integer> sequenceGenerator) {
     name = "MOEAD";
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
@@ -100,19 +102,19 @@ public class MOEADBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public MOEADBuilder<S> setEvaluation(Evaluation<S> evaluation) {
+  public @NotNull MOEADBuilder<S> setEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation;
 
     return this;
   }
 
-  public MOEADBuilder<S> setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
+  public @NotNull MOEADBuilder<S> setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
     this.neighborhoodSelectionProbability = neighborhoodSelectionProbability;
 
     return this;
   }
 
-  public MOEADBuilder<S> setMaximumNumberOfReplacedSolutionsy(int maximumNumberOfReplacedSolutions) {
+  public @NotNull MOEADBuilder<S> setMaximumNumberOfReplacedSolutionsy(int maximumNumberOfReplacedSolutions) {
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
 
     return this;

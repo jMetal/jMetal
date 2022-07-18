@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -35,7 +36,7 @@ public class Viennet4 extends AbstractDoubleProblem {
     int numberOfVariables = getNumberOfVariables();
 
     double[] f = new double[solution.objectives().length];
-      double[] x = new double[10];
+      double @NotNull [] x = new double[10];
       int count = 0;
       for (int i1 = 0; i1 < numberOfVariables; i1++) {
           double v = solution.variables().get(i1);
@@ -66,7 +67,7 @@ public class Viennet4 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double @NotNull [] constraint = new double[this.getNumberOfConstraints()];
 
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);

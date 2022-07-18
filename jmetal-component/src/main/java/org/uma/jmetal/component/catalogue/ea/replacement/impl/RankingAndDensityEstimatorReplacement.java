@@ -3,6 +3,8 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.solution.Solution;
@@ -29,14 +31,14 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
   }
 
   public RankingAndDensityEstimatorReplacement(
-      RankingAndDensityEstimatorPreference<S> preference, RemovalPolicy removalPolicy) {
+          @NotNull RankingAndDensityEstimatorPreference<S> preference, RemovalPolicy removalPolicy) {
     this.ranking = preference.getRanking();
     this.densityEstimator = preference.getDensityEstimator();
     this.removalPolicy = removalPolicy;
   }
 
-  public List<S> replace(List<S> solutionList, List<S> offspringList) {
-    List<S> jointPopulation = new ArrayList<>();
+  public @NotNull List<S> replace(@NotNull List<S> solutionList, @NotNull List<S> offspringList) {
+    @NotNull List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(solutionList);
     jointPopulation.addAll(offspringList);
 
@@ -51,7 +53,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     return resultList;
   }
 
-  private List<S> oneShotTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
+  private @NotNull List<S> oneShotTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
     List<S> currentRankSolutions = ranking.getSubFront(rankingId);
     densityEstimator.compute(currentRankSolutions);
 
@@ -78,7 +80,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     List<S> currentRankSolutions = ranking.getSubFront(rankingId);
     densityEstimator.compute(currentRankSolutions);
 
-    List<S> resultList = new ArrayList<>();
+    @NotNull List<S> resultList = new ArrayList<>();
 
     if (currentRankSolutions.size() < sizeOfTheResultingSolutionList) {
       resultList.addAll(ranking.getSubFront(rankingId));

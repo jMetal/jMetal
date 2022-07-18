@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
@@ -68,8 +70,8 @@ public class CF9 extends AbstractDoubleProblem {
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = VectorUtils.toArray(solution.variables());
-    double[] f = new double[getNumberOfObjectives()];
-    double[] constraint = new double[getNumberOfConstraints()];
+    double @NotNull [] f = new double[getNumberOfObjectives()];
+    double @NotNull [] constraint = new double[getNumberOfConstraints()];
 
     /* ----------------------Evaluate objectives (begin)--------------------------*/
     double[] sx = new double[getNumberOfObjectives()]; // Cumulative squared sum
@@ -82,7 +84,7 @@ public class CF9 extends AbstractDoubleProblem {
     }
 
     // Step 2. Compute THETA_
-    double[] theta = new double[10];
+    double @NotNull [] theta = new double[10];
     int count = 0;
     int bound = getNumberOfObjectives() - 1;
     for (int i1 = 0; i1 < bound; i1++) {

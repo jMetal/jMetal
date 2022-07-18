@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
@@ -43,10 +44,10 @@ public class ComponentBasedNSGAII {
     int offspringPopulationSize = 100;
     int maxNumberOfEvaluations = 50000;
 
-    RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue();
+    @NotNull RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue();
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    CrossoverOperator<DoubleSolution> crossover =
+    @NotNull CrossoverOperator<DoubleSolution> crossover =
         new SBXCrossover(crossoverProbability, crossoverDistributionIndex, crossoverSolutionRepair);
 
     RepairDoubleSolution mutationSolutionRepair = new RepairDoubleSolutionWithRandomValue();
@@ -56,15 +57,15 @@ public class ComponentBasedNSGAII {
         new PolynomialMutation(
             mutationProbability, mutationDistributionIndex, mutationSolutionRepair);
 
-    CrossoverAndMutationVariation<DoubleSolution> variation =
+    @NotNull CrossoverAndMutationVariation<DoubleSolution> variation =
             new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation);
 
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
+    @NotNull Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
-    SolutionsCreation<DoubleSolution> createInitialPopulation =
+    @NotNull SolutionsCreation<DoubleSolution> createInitialPopulation =
         new RandomSolutionsCreation<>(problem, populationSize);
 
-    Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
+    @NotNull Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 
     Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
@@ -75,7 +76,7 @@ public class ComponentBasedNSGAII {
 
     int tournamentSize = 2 ;
     Preference<DoubleSolution> preferenceForSelection = new Preference<>(ranking, densityEstimator, preferenceForReplacement) ;
-    MatingPoolSelection<DoubleSolution> selection =
+    @NotNull MatingPoolSelection<DoubleSolution> selection =
         new NaryTournamentMatingPoolSelection<>(
             tournamentSize, variation.getMatingPoolSize(), preferenceForSelection);
 

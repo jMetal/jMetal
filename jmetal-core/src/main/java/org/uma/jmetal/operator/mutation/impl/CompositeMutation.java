@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
@@ -23,7 +24,7 @@ public class CompositeMutation implements MutationOperator<CompositeSolution> {
   private double mutationProbability = 1.0;
 
   /** Constructor */
-  public CompositeMutation(List<?> operators) {
+  public CompositeMutation(@NotNull List<?> operators) {
     Check.notNull(operators);
     Check.collectionIsNotEmpty(operators);
 

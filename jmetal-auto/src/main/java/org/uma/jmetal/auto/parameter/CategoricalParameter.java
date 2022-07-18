@@ -3,6 +3,7 @@ package org.uma.jmetal.auto.parameter;
 import java.util.List;
 import java.util.function.Function;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 public class CategoricalParameter extends Parameter<String> {
   private final List<String> validValues;
@@ -35,13 +36,13 @@ public class CategoricalParameter extends Parameter<String> {
   }
 
   @Override
-  public String toString() {
+  public @NotNull String toString() {
     StringBuilder result =
             new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues);
     for (Parameter<?> parameter : getGlobalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (@NotNull Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
     return result.toString();

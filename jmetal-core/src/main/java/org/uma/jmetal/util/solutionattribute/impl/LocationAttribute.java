@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 
 /**
@@ -18,7 +20,7 @@ public class LocationAttribute <S extends Solution<?>>
 
 	public LocationAttribute(List<S> solutionList) {
 		int location = 0;
-		for (S solution : solutionList)
+		for (@NotNull S solution : solutionList)
 			solution.attributes().put(getAttributeIdentifier(), location++);
 	}
 }

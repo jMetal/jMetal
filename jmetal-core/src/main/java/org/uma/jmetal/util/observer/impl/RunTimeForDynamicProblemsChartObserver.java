@@ -2,6 +2,8 @@ package org.uma.jmetal.util.observer.impl;
 
 import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.style.Styler;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
@@ -68,7 +70,7 @@ public class RunTimeForDynamicProblemsChartObserver<S extends Solution<?>> imple
     return chart ;
   }
 
-  public String getName() {
+  public @NotNull String getName() {
     return "Runtime chart observer";
   }
 

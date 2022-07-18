@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variati
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.Variation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -40,7 +42,7 @@ public class ParallelCrossoverAndMutationVariation<S extends Solution<?>> implem
 
     checkNumberOfParents(matingPopulation, numberOfParents);
 
-    List<List<S>> parentsList = new ArrayList<>();
+    @NotNull List<List<S>> parentsList = new ArrayList<>();
 
     for (int i = 0; i < matingPoolSize; i += numberOfParents) {
       List<S> parents = new ArrayList<>(numberOfParents);
@@ -80,7 +82,7 @@ public class ParallelCrossoverAndMutationVariation<S extends Solution<?>> implem
    * @param population
    * @param numberOfParentsForCrossover
    */
-  private void checkNumberOfParents(List<S> population, int numberOfParentsForCrossover) {
+  private void checkNumberOfParents(@NotNull List<S> population, int numberOfParentsForCrossover) {
     if ((population.size() % numberOfParentsForCrossover) != 0) {
       throw new JMetalException(
           "Wrong number of parents: the remainder if the "

@@ -1,6 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.cre;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -28,7 +30,7 @@ public class CRE23 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
     double x3 = solution.variables().get(2);
@@ -44,7 +46,7 @@ public class CRE23 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double @NotNull [] constraint = new double[this.getNumberOfConstraints()];
     double x1, x2, x3, x4;
 
     x1 = solution.variables().get(0);

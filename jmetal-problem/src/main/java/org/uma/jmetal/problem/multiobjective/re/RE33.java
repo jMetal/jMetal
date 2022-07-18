@@ -3,6 +3,7 @@ package org.uma.jmetal.problem.multiobjective.re;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -23,7 +24,7 @@ public class RE33 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("RE33");
 
-    List<Double> lowerLimit = List.of(55.0, 75.0, 1000.0, 11.0);
+    @NotNull List<Double> lowerLimit = List.of(55.0, 75.0, 1000.0, 11.0);
     List<Double> upperLimit = List.of(80.0, 110.0, 3000.0, 20.0);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -31,7 +32,7 @@ public class RE33 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
     double x3 = solution.variables().get(2);
@@ -40,7 +41,7 @@ public class RE33 extends AbstractDoubleProblem {
     solution.objectives()[0] = 4.9 * 1e-5 * (x2 * x2 - x1 * x1) * (x4 - 1.0);
     solution.objectives()[1] = ((9.82 * 1e6) * (x2 * x2 - x1 * x1)) / (x3 * x4 * (x2 * x2 * x2 - x1 * x1 * x1));
 
-    double[] g = new double[numberOfOriginalConstraints];
+    double @NotNull [] g = new double[numberOfOriginalConstraints];
     g[0] = (x2 - x1) - 20.0;
     g[1] = 0.4 - (x3 / (3.14 * (x2 * x2 - x1 * x1)));
     g[2] =

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.extremevalues.impl.FrontExtremeValues;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
@@ -40,7 +41,7 @@ public class ScalarizationUtils {
    * @param solution The solution whose scalarization value is set.
    * @return The scalarization value of the solution.
    */
-  private static <S extends Solution<?>> double getScalarizationValue(S solution) {
+  private static <S extends Solution<?>> double getScalarizationValue(@NotNull S solution) {
     return (double) solution.attributes().get(new ScalarizationValue<>().getAttributeIdentifier());
   }
 
@@ -70,8 +71,8 @@ public class ScalarizationUtils {
    */
   private static <S extends Solution<?>> double[] getIdealValues(List<S> solutionsList) {
     ArrayFront front = new ArrayFront(solutionsList);
-    FrontExtremeValues extremeValues = new FrontExtremeValues();
-    List<Double> list = extremeValues.findLowestValues(front);
+    @NotNull FrontExtremeValues extremeValues = new FrontExtremeValues();
+    @NotNull List<Double> list = extremeValues.findLowestValues(front);
     return toArray(list);
   }
 
@@ -82,8 +83,8 @@ public class ScalarizationUtils {
    * @return The nadir point.
    */
   private static <S extends Solution<?>> double[] getNadirValues(List<S> solutionsList) {
-    ArrayFront front = new ArrayFront(solutionsList);
-    FrontExtremeValues extremeValues = new FrontExtremeValues();
+    @NotNull ArrayFront front = new ArrayFront(solutionsList);
+    @NotNull FrontExtremeValues extremeValues = new FrontExtremeValues();
     List<Double> list = extremeValues.findHighestValues(front);
     return toArray(list);
   }
@@ -115,7 +116,7 @@ public class ScalarizationUtils {
    * @param solutionsList A list of solutions.
    */
   public static <S extends Solution<?>> void sumOfObjectives(List<S> solutionsList) {
-    for (S solution : solutionsList) {
+    for (@NotNull S solution : solutionsList) {
       double sum = solution.objectives()[0];
         double result = 0.0;
         double[] array = solution.objectives();
@@ -136,8 +137,8 @@ public class ScalarizationUtils {
    * @param solutionsList A list of solutions.
    * @param weights       Positive constants by which objectives are summed.
    */
-  public static <S extends Solution<?>> void weightedSum(List<S> solutionsList, double[] weights) {
-    for (S solution : solutionsList) {
+  public static <S extends Solution<?>> void weightedSum(@NotNull List<S> solutionsList, double[] weights) {
+    for (@NotNull S solution : solutionsList) {
       double sum = weights[0] * solution.objectives()[0];
         double result = 0.0;
         int bound = solution.objectives().length;
@@ -157,7 +158,7 @@ public class ScalarizationUtils {
    * @param solutionsList A list of solutions.
    */
   public static <S extends Solution<?>> void productOfObjectives(List<S> solutionsList) {
-    for (S solution : solutionsList) {
+    for (@NotNull S solution : solutionsList) {
       double product = solution.objectives()[0];
         double acc = 1;
         double[] array = solution.objectives();
@@ -237,8 +238,8 @@ public class ScalarizationUtils {
    * @param weights       Constants by which ideal values and objective values are
    *                      multiplied.
    */
-  public static <S extends Solution<?>> void weightedChebyshev(List<S> solutionsList, double[] idealValues, double[] weights) {
-    for (S solution : solutionsList) {
+  public static <S extends Solution<?>> void weightedChebyshev(@NotNull List<S> solutionsList, double[] idealValues, double[] weights) {
+    for (@NotNull S solution : solutionsList) {
       double max = weights[0] * (solution.objectives()[0] - idealValues[0]);
       for (int i = 1; i < solution.objectives().length; i++) {
         max = Math.max(max, weights[i] * (solution.objectives()[i] - idealValues[i]));
@@ -263,8 +264,8 @@ public class ScalarizationUtils {
    * @param solutionsList A list of solutions.
    * @param nadirValues   The disagreement point.
    */
-  public static <S extends Solution<?>> void nash(List<S> solutionsList, double[] nadirValues) {
-    for (S solution : solutionsList) {
+  public static <S extends Solution<?>> void nash(@NotNull List<S> solutionsList, double @NotNull [] nadirValues) {
+    for (@NotNull S solution : solutionsList) {
       double nash = nadirValues[0] - solution.objectives()[0];
         double acc = 1;
         for (int i = 1; i < nadirValues.length; i++) {
@@ -296,7 +297,7 @@ public class ScalarizationUtils {
    * @param solutionsList A list of solutions.
    * @param extremePoints used for angle computation.
    */
-  public static <S extends Solution<?>> void angleUtility(List<S> solutionsList, double[][] extremePoints) {
+  public static <S extends Solution<?>> void angleUtility(@NotNull List<S> solutionsList, double[][] extremePoints) {
     for (S solution : solutionsList) {
       double fraction = 0.0;
       for (int i = 0; i < extremePoints.length; i++) {
@@ -362,7 +363,7 @@ public class ScalarizationUtils {
    * @param solutionsList A list of solutions.
    */
   public static <S extends Solution<?>> void uniform(List<S> solutionsList) {
-    for (S solution : solutionsList) {
+    for (@NotNull S solution : solutionsList) {
       setScalarizationValue(solution, 1.0);
     }
   }

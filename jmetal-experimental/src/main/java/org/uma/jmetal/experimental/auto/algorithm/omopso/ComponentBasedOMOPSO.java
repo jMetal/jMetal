@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.auto.algorithm.omopso;
 
 import java.util.ArrayList;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.CompositeDoubleSolutionMutation;
@@ -44,11 +46,11 @@ public class ComponentBasedOMOPSO {
     var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
     var evaluation = new SequentialEvaluation<>(problem);
     var termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
-    var velocityInitialization = new DefaultVelocityInitialization();
+    @NotNull var velocityInitialization = new DefaultVelocityInitialization();
     var localBestInitialization = new DefaultLocalBestInitialization();
-    var globalBestInitialization = new DefaultGlobalBestInitialization();
+    @NotNull var globalBestInitialization = new DefaultGlobalBestInitialization();
 
-    BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
+    @NotNull BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
     var globalBestSelection = new TournamentGlobalBestSelection(2, externalArchive.getComparator()) ;
 
     ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
@@ -73,7 +75,7 @@ public class ComponentBasedOMOPSO {
     var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
         velocityChangeWhenUpperLimitIsReached, problem.getVariableBounds());
     int frequencyOfMutation = 7;
-    var perturbation = new FrequencySelectionMutationBasedPerturbation(
+    @NotNull var perturbation = new FrequencySelectionMutationBasedPerturbation(
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0), frequencyOfMutation);
     //var perturbation = new FrequencySelectionMutationBasedPerturbation(mutation);
     var globalBestUpdate = new DefaultGlobalBestUpdate();

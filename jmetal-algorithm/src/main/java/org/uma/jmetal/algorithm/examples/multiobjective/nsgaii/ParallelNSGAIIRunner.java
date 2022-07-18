@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -146,7 +148,7 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
       int maxEvaluations = 25000;
       int populationSize = 100;
 
-      List<Double> referencePoint = Arrays.asList(0.5, 0.5) ;
+      @NotNull List<Double> referencePoint = Arrays.asList(0.5, 0.5) ;
 
       algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
               .setSelectionOperator(selection)
@@ -206,7 +208,7 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
       }
 
       @Override
-      synchronized public void measureGenerated(List<DoubleSolution> solutions) {
+      synchronized public void measureGenerated(@NotNull List<DoubleSolution> solutions) {
         refreshChart(solutions);
       }
     }

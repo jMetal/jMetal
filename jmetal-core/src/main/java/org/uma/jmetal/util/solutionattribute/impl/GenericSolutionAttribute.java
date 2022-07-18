@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
 
@@ -31,12 +32,12 @@ public class GenericSolutionAttribute <S extends Solution<?>, V> implements Solu
 
   @SuppressWarnings("unchecked")
   @Override
-  public V getAttribute(S solution) {
+  public V getAttribute(@NotNull S solution) {
     return (V)solution.attributes().get(getAttributeIdentifier());
   }
 
   @Override
-  public void setAttribute(S solution, V value) {
+  public void setAttribute(@NotNull S solution, V value) {
      solution.attributes().put(getAttributeIdentifier(), value);
   }
 

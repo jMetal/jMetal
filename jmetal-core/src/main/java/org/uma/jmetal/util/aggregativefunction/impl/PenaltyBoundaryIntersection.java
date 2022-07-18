@@ -1,10 +1,12 @@
 package org.uma.jmetal.util.aggregativefunction.impl;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 
 public class PenaltyBoundaryIntersection implements AggregativeFunction {
-  private IdealPoint idealPoint ;
+  private @Nullable IdealPoint idealPoint ;
   private final double theta ;
 
   public PenaltyBoundaryIntersection() {
@@ -17,7 +19,7 @@ public class PenaltyBoundaryIntersection implements AggregativeFunction {
   }
 
   @Override
-  public double compute(double[] vector, double[] weightVector) {
+  public double compute(double @NotNull [] vector, double[] weightVector) {
     double d1, d2, nl;
 
     d1 = d2 = nl = 0.0;

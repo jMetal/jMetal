@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selecti
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
@@ -34,7 +36,7 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
     this.matingPoolSize = matingPoolSize;
   }
 
-  public List<S> select(List<S> solutionList) {
+  public @NotNull List<S> select(List<S> solutionList) {
     if (null != preference) {
       preference.recompute(solutionList) ;
     }

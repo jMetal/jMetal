@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.aggregativefunction.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 
@@ -11,7 +12,7 @@ public class Tschebyscheff implements AggregativeFunction {
   }
 
   @Override
-  public double compute(double[] vector, double[] weightVector) {
+  public double compute(double @NotNull [] vector, double[] weightVector) {
     double maxFun = -1.0e+30;
 
     for (int n = 0; n < vector.length; n++) {

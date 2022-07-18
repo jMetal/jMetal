@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -22,7 +24,7 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 		this.referencePoint = referencePoint;
 	}
 	
-	public ASFUtilityFunctionSet(double [][] weights) {
+	public ASFUtilityFunctionSet(double [] @NotNull [] weights) {
 		super(weights);
 		this.referencePoint = new ArrayList<>(this.getVectorSize());
 		for (int i = 0; i < this.getVectorSize(); i++)
@@ -49,7 +51,7 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 
 		double result = Double.NEGATIVE_INFINITY;
 		List<Double> weightVector 	 =  this.getWeightVector(vector);
-		List<Double> objectiveValues =  new ArrayList<>(solution.objectives().length);
+		@NotNull List<Double> objectiveValues =  new ArrayList<>(solution.objectives().length);
 		for (int i = 0; i < solution.objectives().length;i++) 
 			if (normalizer==null) {
         objectiveValues.add(solution.objectives()[i]);

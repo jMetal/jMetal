@@ -2,6 +2,8 @@ package org.uma.jmetal.component.catalogue.ea.variation.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -44,13 +46,13 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
 
       int numberOfRequiredParentsToCross = crossover.getNumberOfRequiredParents() ;
 
-      List<DoubleSolution> parents = new ArrayList<>(numberOfRequiredParentsToCross);
+      @NotNull List<DoubleSolution> parents = new ArrayList<>(numberOfRequiredParentsToCross);
       for (int j = 0; j < numberOfRequiredParentsToCross; j++) {
         parents.add(matingPool.get(0));
         matingPool.remove(0);
       }
 
-      List<DoubleSolution> offspring = crossover.execute(parents);
+      @NotNull List<DoubleSolution> offspring = crossover.execute(parents);
 
       offspringPopulation.add(mutation.execute(offspring.get(0)));
     }

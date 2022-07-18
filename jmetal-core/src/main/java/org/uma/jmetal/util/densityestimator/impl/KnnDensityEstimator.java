@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -74,7 +75,7 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
 
     /* Get the k-nearest distance of all the solutions */
     for (int i = 0; i < solutionList.size(); i++) {
-      List<Double> distances = new ArrayList<>();
+      @NotNull List<Double> distances = new ArrayList<>();
       for (int j = 0; j < solutionList.size(); j++) {
         distances.add(distanceMatrix[i][j]);
       }
@@ -94,7 +95,7 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
       return true;
   }
 
-  private boolean checkColumnValuesAreEqual(double[][] matrix, int column) {
+  private boolean checkColumnValuesAreEqual(double[] @NotNull [] matrix, int column) {
     double columnValue = matrix[0][column];
 
       for (int i = 1; i < matrix.length; i++) {

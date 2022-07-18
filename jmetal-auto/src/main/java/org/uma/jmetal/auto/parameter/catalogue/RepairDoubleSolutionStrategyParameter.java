@@ -1,6 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
@@ -13,7 +15,7 @@ public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter 
     super(name, args, strategies) ;
   }
 
-  public RepairDoubleSolution getParameter() {
+  public @NotNull RepairDoubleSolution getParameter() {
     RepairDoubleSolution result ;
     switch (getValue()) {
       case "random":

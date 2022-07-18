@@ -1,5 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.lz09;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -26,7 +28,7 @@ public class LZ09 {
   }
 
   // control the PF shape
-  void alphaFunction(double alpha[], List<Double> x, int dim, int type) {
+  void alphaFunction(double alpha[], @NotNull List<Double> x, int dim, int type) {
     if (dim == 2) {
       if (type == 21) {
         alpha[0] = x.get(0);
@@ -227,7 +229,7 @@ public class LZ09 {
     return beta;
   }
 
-  void objective(List<Double> xVar, List<Double> yObj) {
+  void objective(List<Double> xVar, @NotNull List<Double> yObj) {
     // 2-objective case
     if (nobj == 2) {
         boolean result = false;
@@ -240,7 +242,7 @@ public class LZ09 {
         if (result) {
         double g = 0, h = 0, a, b;
         ArrayList<Double> aa = new ArrayList<Double>();
-        ArrayList<Double> bb = new ArrayList<Double>();
+        @NotNull ArrayList<Double> bb = new ArrayList<Double>();
         for (int n = 1; n < nvar; n++) {
           if (n % 2 == 0) {
             a = psfunc2(xVar.get(n), xVar.get(0), n, ltype, 1);  // linkage
@@ -266,7 +268,7 @@ public class LZ09 {
         double g = 0, h = 0, a, b;
         double /*e = 0,*/ c;
         ArrayList<Double> aa = new ArrayList<Double>();
-        ArrayList<Double> bb = new ArrayList<Double>();
+        @NotNull ArrayList<Double> bb = new ArrayList<Double>();
         for (int n = 1; n < nvar; n++) {
           if (n % 3 == 0) {
             a = psfunc2(xVar.get(n), xVar.get(0), n, ltype, 1);
@@ -300,7 +302,7 @@ public class LZ09 {
         double g = 0, h = 0, e = 0, a;
         ArrayList<Double> aa = new ArrayList<Double>();
         ArrayList<Double> bb = new ArrayList<Double>();
-        ArrayList<Double> cc = new ArrayList<Double>();
+        @NotNull ArrayList<Double> cc = new ArrayList<Double>();
         for (int n = 2; n < nvar; n++) {
           a = psfunc3(xVar.get(n), xVar.get(0), xVar.get(1), n, ltype);
           if (n % 3 == 0) {
@@ -316,7 +318,7 @@ public class LZ09 {
         h = betaFunction(bb, dtype);
         e = betaFunction(cc, dtype);
 
-        double alpha[] = new double[3];
+        @NotNull double alpha[] = new double[3];
         alphaFunction(alpha, xVar, 3, ptype);
         yObj.set(0, alpha[0] + h);
         yObj.set(1, alpha[1] + g);

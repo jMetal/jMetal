@@ -2,6 +2,7 @@ package org.uma.jmetal.auto.parameter;
 
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -46,7 +47,7 @@ public class RealParameter extends Parameter<Double> {
   /**
    * @return A list with the lower and upper bounds delimiting the valid values
    */
-  public List<Double> getValidValues() {
+  public @NotNull List<Double> getValidValues() {
     return List.of(lowerBound, upperBound);
   }
 
@@ -62,7 +63,7 @@ public class RealParameter extends Parameter<Double> {
             + lowerBound
             + ". Upper bound: "
             + upperBound);
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (@NotNull Parameter<?> parameter : getGlobalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
     for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {

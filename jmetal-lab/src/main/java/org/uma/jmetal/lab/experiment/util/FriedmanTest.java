@@ -2,6 +2,8 @@ package org.uma.jmetal.lab.experiment.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.jetbrains.annotations.NotNull;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
@@ -17,11 +19,11 @@ public class FriedmanTest {
   private int datasetCount;
 
   public FriedmanTest(
-      boolean minimizar,
-      Table table,
-      StringColumn algorithms,
-      StringColumn problems,
-      String indicatorValueColumnName) {
+          boolean minimizar,
+          Table table,
+          @NotNull StringColumn algorithms,
+          @NotNull StringColumn problems,
+          String indicatorValueColumnName) {
     this.minimizar = minimizar;
     numberOfAlgorithms = algorithms.size();
     datasetCount = table.rowCount();
@@ -36,10 +38,10 @@ public class FriedmanTest {
   }
 
   private double[][] computeAveragePerformancePerAlgorithm(
-      Table table,
-      StringColumn algorithms,
-      StringColumn problems,
-      String indicatorValueColumnName) {
+          Table table,
+          @NotNull StringColumn algorithms,
+          @NotNull StringColumn problems,
+          String indicatorValueColumnName) {
     double[][] mean = new double[problems.size()][algorithms.size()];
     for (int i = 0; i < problems.size(); i++) {
       Table tableFilteredByProblem = filterTableBy(table, problems.name(), problems.get(i));
@@ -66,7 +68,7 @@ public class FriedmanTest {
     return orden;
   }
 
-  private double[] buildRanking(Pareja[][] orden, StringColumn algorithms, StringColumn problems) {
+  private double[] buildRanking(Pareja[][] orden, @NotNull StringColumn algorithms, @NotNull StringColumn problems) {
     Pareja[][] rank = new Pareja[problems.size()][algorithms.size()];
     int position = 0;
     for (int i = 0; i < problems.size(); i++) {
@@ -85,7 +87,7 @@ public class FriedmanTest {
     /*In the case of having the same performance, the rankings are equal*/
     for (int i = 0; i < problems.size(); i++) {
       boolean[] seen = new boolean[algorithms.size()];
-      ArrayList<Integer> notVisited = new ArrayList<>();
+      @NotNull ArrayList<Integer> notVisited = new ArrayList<>();
       Arrays.fill(seen, false);
       for (int j = 0; j < algorithms.size(); j++) {
         notVisited.clear();
@@ -156,7 +158,7 @@ public class FriedmanTest {
   private void studyHypothesis() {
     DoubleColumn pValues = results.doubleColumn("p-value");
     DoubleColumn holmValues = results.doubleColumn("Holm");
-    String[] hypothesis = new String[numberOfAlgorithms];
+    String @NotNull [] hypothesis = new String[numberOfAlgorithms];
     hypothesis[0] = "-";
     for (int i = numberOfAlgorithms - 1; i > 0; i--) {
       if (i < numberOfAlgorithms - 1 && hypothesis[i + 1].equals("Accepted")) {

@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 
 @SuppressWarnings("serial")
@@ -46,7 +48,7 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
     }
 
     for (int i = 0; i < this.getUtilityFunctions().getSize(); i++) {
-      for (S solution : population) {
+      for (@NotNull S solution : population) {
         R2SolutionData solutionData = this.getAttribute(solution);
         solutionData.alpha = this.getUtilityFunctions().evaluate(solution, i);
       }
@@ -74,8 +76,8 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
       }
     }
 
-    Map<Integer, List<S>> fronts = new TreeMap<>(); // sorted on key
-    for (S solution : population) {
+    @NotNull Map<Integer, List<S>> fronts = new TreeMap<>(); // sorted on key
+    for (@NotNull S solution : population) {
       R2SolutionData r2Data = this.getAttribute(solution);
       if (fronts.get(r2Data.rank) == null) fronts.put(r2Data.rank, new LinkedList<S>());
 

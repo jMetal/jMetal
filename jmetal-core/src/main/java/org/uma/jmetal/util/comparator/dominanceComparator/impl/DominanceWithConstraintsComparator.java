@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.comparator.dominanceComparator.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.comparator.constraintcomparator.ConstraintComparator;
@@ -22,7 +24,7 @@ public class DominanceWithConstraintsComparator<S extends Solution<?>> implement
   }
 
   /** Constructor */
-  public DominanceWithConstraintsComparator(ConstraintComparator<S> constraintComparator) {
+  public DominanceWithConstraintsComparator(@NotNull ConstraintComparator<S> constraintComparator) {
     multiComparator = new MultiComparator<>(List.of(constraintComparator, new DefaultDominanceComparator<>())) ;
   }
 

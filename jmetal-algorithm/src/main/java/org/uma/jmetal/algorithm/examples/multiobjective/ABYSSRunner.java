@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective;
 
-import java.io.FileNotFoundException;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.abyss.ABYSSBuilder;
@@ -12,6 +11,9 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+
+import java.io.FileNotFoundException;
+import java.util.List;
 
 /**
  * This class is the main program used to configure and run AbYSS, a
@@ -31,7 +33,7 @@ public class ABYSSRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   java org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws Exception {
+  public static void main(String @NotNull [] args) throws Exception {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     String problemName ;

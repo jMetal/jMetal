@@ -2,6 +2,8 @@ package org.uma.jmetal.component.catalogue.common.termination.impl;
 
 import java.util.Map;
 import java.util.Scanner;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.util.JMetalLogger;
 
@@ -18,12 +20,12 @@ public class TerminationByKeyboard implements Termination {
     keyHit = false;
     evaluations = 0 ;
 
-    KeyboardReader keyboardReader = new KeyboardReader(this) ;
+    @NotNull KeyboardReader keyboardReader = new KeyboardReader(this) ;
     keyboardReader.start();
   }
 
   @Override
-  public boolean isMet(Map<String, Object> algorithmStatusData) {
+  public boolean isMet(@NotNull Map<String, Object> algorithmStatusData) {
     if (keyHit) {
       this.evaluations = (int)algorithmStatusData.get("EVALUATIONS") ;
       JMetalLogger.logger.info("Evaluations: " + evaluations);
@@ -41,7 +43,7 @@ public class TerminationByKeyboard implements Termination {
     @Override
     public void run() {
       System.out.println("Press any key and hit return") ;
-      try (Scanner scanner = new Scanner(System.in)) {
+      try (@NotNull Scanner scanner = new Scanner(System.in)) {
         scanner.nextLine() ;
       }
 

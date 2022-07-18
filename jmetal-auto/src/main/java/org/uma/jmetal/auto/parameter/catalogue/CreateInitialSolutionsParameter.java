@@ -1,6 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.LatinHypercubeSamplingSolutionsCreation;
@@ -23,7 +25,7 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter {
     super(parameterName, args, validValues);
   }
 
-  public SolutionsCreation<DoubleSolution> getParameter(DoubleProblem problem, int populationSize) {
+  public SolutionsCreation<DoubleSolution> getParameter(@NotNull DoubleProblem problem, int populationSize) {
     switch (getValue()) {
       case "random":
         return new RandomSolutionsCreation<>(problem, populationSize);

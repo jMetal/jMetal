@@ -1,10 +1,12 @@
 package org.uma.jmetal.problem.multiobjective.lsmop.functions;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class Griewank implements Function {
     @Override
-    public Double evaluate(List<Double> x) {
+    public Double evaluate(@NotNull List<Double> x) {
         double res = 0.0;
         for (Double value : x) {
             double v = value;

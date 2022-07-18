@@ -2,6 +2,8 @@ package org.uma.jmetal.util.archivewithreferencepoint;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
@@ -31,7 +33,7 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
   }
 
   @Override
-  public synchronized boolean add(S solution) {
+  public synchronized boolean add(@NotNull S solution) {
     boolean result ;
 
     if (referencePointSolution == null) {
@@ -100,7 +102,7 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
     referencePointSolution = null ;
   }
 
-  private int dominanceTest(S solution1, S solution2) {
+  private int dominanceTest(@NotNull S solution1, S solution2) {
     int bestIsOne = 0 ;
     int bestIsTwo = 0 ;
     int result ;

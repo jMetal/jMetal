@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -126,7 +127,7 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
     CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
 
-    ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 80);
+    @NotNull ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.setReferencePoint(convertReferencePointListToListOfLists(referencePoint, problem.getNumberOfObjectives()));
     chart.initChart();
@@ -157,7 +158,7 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
     referencePointList = new ArrayList<>();
 
     for (int i = 0; i <= (referencePoints.size() - numberOfObjectives); i+=numberOfObjectives) {
-        List<Double> newReferencePoint = new ArrayList<>(numberOfObjectives);
+        @NotNull List<Double> newReferencePoint = new ArrayList<>(numberOfObjectives);
         int bound = (i + numberOfObjectives);
         for (int i1 = i; i1 < bound; i1++) {
             Double aDouble = referencePoints.get(i1);
@@ -194,7 +195,7 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
     }
 
     @Override
-    synchronized public void measureGenerated(List<DoubleSolution> solutions) {
+    synchronized public void measureGenerated(@NotNull List<DoubleSolution> solutions) {
       refreshChart(solutions);
     }
   }

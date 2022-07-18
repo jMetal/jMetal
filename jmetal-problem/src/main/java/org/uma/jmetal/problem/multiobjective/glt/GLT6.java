@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -63,7 +64,7 @@ public class GLT6 extends AbstractDoubleProblem {
     return solution ;
   }
 
-  private double g(DoubleSolution solution) {
+  private double g(@NotNull DoubleSolution solution) {
       double result = 0.0;
       int bound = solution.variables().size();
       for (int i = 2; i < bound; i++) {

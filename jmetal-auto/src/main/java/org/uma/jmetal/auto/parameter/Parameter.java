@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.catalogue.CrossoverParameter;
 import org.uma.jmetal.auto.parameter.catalogue.MutationParameter;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -58,7 +59,7 @@ public abstract class Parameter<T> {
     this.args = args;
   }
 
-  private T on(String key, String[] args, Function<String, T> parser) {
+  private T on(String key, String @NotNull [] args, @NotNull Function<String, T> parser) {
     return parser.apply(retrieve(args, key));
   }
 
@@ -78,10 +79,10 @@ public abstract class Parameter<T> {
    * @param parseFunction
    * @return
    */
-  public Parameter<T> parse(Function<String, T> parseFunction) {
+  public @NotNull Parameter<T> parse(Function<String, T> parseFunction) {
     setValue(on("--" + getName(), getArgs(), parseFunction));
 
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (@NotNull Parameter<?> parameter : getGlobalParameters()) {
       parameter.parse().check();
     }
 

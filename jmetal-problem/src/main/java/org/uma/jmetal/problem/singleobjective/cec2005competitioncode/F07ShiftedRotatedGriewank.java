@@ -46,6 +46,7 @@
 //
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class F07ShiftedRotatedGriewank extends TestFunc {
@@ -57,7 +58,7 @@ public class F07ShiftedRotatedGriewank extends TestFunc {
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum
-  private final double[] m_o;
+  private final double @NotNull [] m_o;
   private final double[][] m_matrix;
 
   // In order to avoid excessive memory allocation,

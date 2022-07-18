@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -35,7 +36,7 @@ public class GLT5 extends AbstractDoubleProblem {
     setName("GLT5");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     lowerLimit.add(0.0) ;
     upperLimit.add(1.0) ;
@@ -50,7 +51,7 @@ public class GLT5 extends AbstractDoubleProblem {
   }
 
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     solution.objectives()[0] = (1.0 + g(solution))*
         (1.0 - Math.cos(solution.variables().get(0)*Math.PI/2.0))*
         (1.0 - Math.cos(solution.variables().get(1)*Math.PI/2.0));

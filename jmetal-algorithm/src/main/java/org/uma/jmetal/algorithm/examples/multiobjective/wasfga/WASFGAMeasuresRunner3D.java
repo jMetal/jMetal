@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.wasfga;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -33,7 +35,7 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
    * @throws JMetalException
  * @throws IOException 
    */
-  public static void main(String[] args) throws JMetalException, IOException {
+  public static void main(String @NotNull [] args) throws JMetalException, IOException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
@@ -91,7 +93,7 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
     CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
 
-    ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
+    @NotNull ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.setReferencePoint(referencePoint);
     chart.setVarChart(0, 1);
@@ -136,7 +138,7 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
       }
 
       @Override
-      synchronized public void measureGenerated(List<DoubleSolution> solutions) {
+      synchronized public void measureGenerated(@NotNull List<DoubleSolution> solutions) {
           refreshChart(solutions);
       }
   }

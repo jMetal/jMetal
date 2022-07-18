@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -53,14 +56,14 @@ public class lsmop2With200VariablesExperiment {
 
         String experimentBaseDirectory = args[0];
 
-        List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
+        @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
         problemList.add(new ExperimentProblem<>(new LSMOP2_2_200()).setReferenceFront("LSMOP1.2D.csv"));
 
 
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
                 configureAlgorithmList(problemList);
 
-        Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+        @NotNull Experiment<DoubleSolution, List<DoubleSolution>> experiment =
                 new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("LSMOP2With200VariablesAutoAlgorithmExperiments")
                         .setAlgorithmList(algorithmList)
                         .setProblemList(problemList)
@@ -93,12 +96,12 @@ public class lsmop2With200VariablesExperiment {
      * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of
      * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
      */
-    static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+    static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
             List<ExperimentProblem<DoubleSolution>> problemList) {
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
         for (int run = 0; run < INDEPENDENT_RUNS; run++) {
             for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-                Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
+                @Nullable Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
                         experimentProblem.getProblem(),
                         new SBXCrossover(1.0, 20.0),
                         new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
@@ -123,7 +126,7 @@ public class lsmop2With200VariablesExperiment {
             }
 
 
-            for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+            for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
 
                 /* AutoNSGAII */
                 String[] parameters =
@@ -155,7 +158,7 @@ public class lsmop2With200VariablesExperiment {
 
                 AutoNSGAII autoNSGAII = new AutoNSGAII();
                 autoNSGAII.parseAndCheckParameters(parameters);
-                EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+                @NotNull EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
                 algorithms.add(new ExperimentAlgorithm<>(nsgaII, "AutoNSGAII", experimentProblem, run));
 
@@ -229,7 +232,7 @@ public class lsmop2With200VariablesExperiment {
                         .split("\\s+");
                 AutoMOPSO OMOPSO = new AutoMOPSO();
                 OMOPSO.parseAndCheckParameters(parametersOMOPSO);
-                ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
+                @NotNull ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
 
                 algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
             }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -148,7 +149,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     }
   }
 
-  public List<Integer> tourSelection(int depth) {
+  public @NotNull List<Integer> tourSelection(int depth) {
     List<Integer> selected;
     List<Integer> candidate;
 
@@ -157,16 +158,16 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
       List<Integer> result = new ArrayList<>();
       int bound1 = problem.getNumberOfObjectives();
       for (int i3 = 0; i3 < bound1; i3++) {
-          Integer integer1 = i3;
+          @NotNull Integer integer1 = i3;
           result.add(integer1);
       }
       selected = result;
 
       // set of unselected weights
-      List<Integer> list = new ArrayList<>();
+      @NotNull List<Integer> list = new ArrayList<>();
       int bound = populationSize;
       for (int i1 = problem.getNumberOfObjectives(); i1 < bound; i1++) {
-          Integer integer = i1;
+          @NotNull Integer integer = i1;
           list.add(integer);
       }
       candidate = list;
@@ -196,12 +197,12 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   public void stmSelection() {
 
     int[] idx = new int[populationSize];
-    double[] nicheCount = new double[populationSize];
+    double @NotNull [] nicheCount = new double[populationSize];
 
     int[][] solPref = new int[jointPopulation.size()][];
     double[][] solMatrix = new double[jointPopulation.size()][];
     double[][] distMatrix = new double[jointPopulation.size()][];
-    double[][] fitnessMatrix = new double[jointPopulation.size()][];
+    double[] @NotNull [] fitnessMatrix = new double[jointPopulation.size()][];
 
     for (int i = 0; i < jointPopulation.size(); i++) {
       solPref[i] = new int[populationSize];
@@ -209,8 +210,8 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
       distMatrix[i] = new double[populationSize];
       fitnessMatrix[i] = new double[populationSize];
     }
-    int[][] subpPref = new int[populationSize][];
-    double[][] subpMatrix = new double[populationSize][];
+    int[] @NotNull [] subpPref = new int[populationSize][];
+    double[] @NotNull [] subpMatrix = new double[populationSize][];
     for (int i = 0; i < populationSize; i++) {
       subpPref[i] = new int[jointPopulation.size()];
       subpMatrix[i] = new double[jointPopulation.size()];
@@ -283,12 +284,12 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     // List of men that are not currently engaged.
       LinkedList<Integer> freeMen = new LinkedList<>();
       for (int i = 0; i < menSize; i++) {
-          Integer integer = i;
+          @NotNull Integer integer = i;
           freeMen.add(integer);
       }
 
       // next[i] is the next woman to whom i has not yet proposed.
-    int[] next = new int[womenSize];
+    int @NotNull [] next = new int[womenSize];
 
     while (!freeMen.isEmpty()) {
       int m = freeMen.remove();
@@ -334,7 +335,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   /**
    * Calculate the perpendicular distance between the solution and reference line
    */
-  public double calculateDistance(DoubleSolution individual, double[] lambda) {
+  public double calculateDistance(@NotNull DoubleSolution individual, double[] lambda) {
     double scale;
     double distance;
 
@@ -390,7 +391,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
           sum += v2;
       }
       distanceSum = sum;
-      double[] result = new double[10];
+      double @NotNull [] result = new double[10];
       int count1 = 0;
       int bound1 = problem.getNumberOfObjectives();
       for (int i1 = 0; i1 < bound1; i1++) {
@@ -449,7 +450,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "Multi-Objective Evolutionary Algorithm based on Decomposition. Version with Stable Matching Model";
   }
 }

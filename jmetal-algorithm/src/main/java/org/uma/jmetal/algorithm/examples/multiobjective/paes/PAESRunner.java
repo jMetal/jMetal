@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.paes;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.paes.PAES;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -24,7 +26,7 @@ public class PAESRunner extends AbstractAlgorithmRunner {
    * @throws SecurityException Invoking command: java
    *     org.uma.jmetal.runner.multiobjective.PAESRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
     String referenceParetoFront = "";
 
     String problemName;
@@ -38,7 +40,7 @@ public class PAESRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/Kursawe.csv";
     }
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
+    @NotNull Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     MutationOperator<DoubleSolution> mutation =
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);

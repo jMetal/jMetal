@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -23,8 +24,8 @@ public class FDA5 extends FDA implements Serializable {
     setNumberOfObjectives(numberOfObjectives);
     setName("FDA5");
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
@@ -35,7 +36,7 @@ public class FDA5 extends FDA implements Serializable {
   }
 
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double[] f = new double[solution.objectives().length];
     double g = this.evalG(solution, M - 1);
     double Ft = 1.0d + 100.0d * Math.pow(Math.sin(0.5d * Math.PI * time), 4.0d);
@@ -48,7 +49,7 @@ public class FDA5 extends FDA implements Serializable {
     return solution ;
   }
 
-  private double evalF1(DoubleSolution solution, double g, double Ft) {
+  private double evalF1(@NotNull DoubleSolution solution, double g, double Ft) {
     double f = 1.0d + g;
       double mult = 1.0d;
       for (int i = 1; i <= M - 1; i++) {
@@ -59,7 +60,7 @@ public class FDA5 extends FDA implements Serializable {
       return f * mult;
   }
 
-  private double evalFK(DoubleSolution solution, double g, int k, double Ft) {
+  private double evalFK(@NotNull DoubleSolution solution, double g, int k, double Ft) {
     double f = 1.0d + g;
       double mult = 1.0d;
       int bound = M - k;
@@ -91,7 +92,7 @@ public class FDA5 extends FDA implements Serializable {
     return g + Gt;
   }
 
-  private double evalFM(DoubleSolution solution, double g, double Ft) {
+  private double evalFM(@NotNull DoubleSolution solution, double g, double Ft) {
     double fm = 1.0d + g;
     double y_1 = Math.pow(solution.variables().get(0), Ft);
     double mult = Math.sin(y_1 * Math.PI / 2.0d);

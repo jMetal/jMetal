@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.examples.singleobjective.randomsearch;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.RandomSearchAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -28,8 +30,8 @@ public class RandomSearchSingleObjectiveBinaryEncodingExample extends AbstractAl
   public static void main(String[] args) throws JMetalException {
     BinaryProblem problem = new OneMax(512) ;
     Termination termination = new TerminationByEvaluations(50000);
-    Evaluation<BinarySolution> evaluation = new SequentialEvaluation<>(problem) ;
-    SolutionsCreation<BinarySolution> solutionsCreation = new RandomSolutionsCreation<>(problem, 1) ;
+    @NotNull Evaluation<BinarySolution> evaluation = new SequentialEvaluation<>(problem) ;
+    @NotNull SolutionsCreation<BinarySolution> solutionsCreation = new RandomSolutionsCreation<>(problem, 1) ;
 
     var algorithm = new RandomSearchAlgorithm<>(
           "Random Search", solutionsCreation, evaluation,

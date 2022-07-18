@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -73,7 +74,7 @@ public class MaF13 extends AbstractDoubleProblem {
       x = arr;
 
     // evaluate J,y,sub1,sub2,sub3,sub4
-      double[] y = new double[10];
+      double @NotNull [] y = new double[10];
       int count = 0;
       for (int i1 = 0; i1 < numberOfVariables_; i1++) {
           double v = x[i1] - 2 * x[1] * Math.sin(2 * Math.PI * x[0] + (i1 + 1) * Math.PI / numberOfVariables_);
@@ -81,10 +82,10 @@ public class MaF13 extends AbstractDoubleProblem {
           y[count++] = v;
       }
       y = Arrays.copyOfRange(y, 0, count);
-      ArrayList<Integer> J1 = new ArrayList<Integer>();
-    ArrayList<Integer> J2 = new ArrayList<Integer>();
+      @NotNull ArrayList<Integer> J1 = new ArrayList<Integer>();
+    @NotNull ArrayList<Integer> J2 = new ArrayList<Integer>();
     ArrayList<Integer> J3 = new ArrayList<Integer>();
-    ArrayList<Integer> J4 = new ArrayList<Integer>();
+    @NotNull ArrayList<Integer> J4 = new ArrayList<Integer>();
     double sub1 = 0, sub2 = 0, sub3 = 0, sub4 = 0;
     for (int i = 4; i <= numberOfVariables_; i = i + 3) {
       J1.add(i);

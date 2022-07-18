@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -39,8 +42,8 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("BigOpt2015");
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-8.0);
@@ -52,7 +55,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     List<List<Double>> s1;
     List<Double> s1Temp;
 
@@ -102,14 +105,14 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     return solution;
   }
 
-  private void loadData(String problemId, String fName, int dType, int dLength) {
+  private void loadData(String problemId, @NotNull String fName, int dType, int dLength) {
     List<List<Double>> list;
-    String fileName = "/cec2015Comp/" + problemId + fName;
+    @NotNull String fileName = "/cec2015Comp/" + problemId + fName;
 
     InputStream inputStream = createInputStream(fileName);
 
     InputStreamReader isr = new InputStreamReader(inputStream);
-    BufferedReader br = new BufferedReader(isr);
+    @NotNull BufferedReader br = new BufferedReader(isr);
 
     list = new ArrayList<>();
     String aux;
@@ -117,7 +120,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
       aux = br.readLine();
 
       while (aux != null) {
-        StringTokenizer tokenizer = new StringTokenizer(aux);
+        @NotNull StringTokenizer tokenizer = new StringTokenizer(aux);
         List<Double> doubleList = new ArrayList<>();
         while (tokenizer.hasMoreTokens()) {
           double value = parseDouble(tokenizer.nextToken());
@@ -167,14 +170,14 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     loadData(problemId, "A.txt", dType, dType);
   }
 
-  private InputStream createInputStream(String fileName) {
-    InputStream inputStream = getClass().getResourceAsStream(fileName);
+  private InputStream createInputStream(@NotNull String fileName) {
+    @Nullable InputStream inputStream = getClass().getResourceAsStream(fileName);
 
     return inputStream;
   }
 
   List<Double> newMeanStandardDeviation(List<Double> list) {
-    List<Double> result = new ArrayList<>();
+    @NotNull List<Double> result = new ArrayList<>();
 
     double sum = 0.0;
     for (Double aDouble : list) {
@@ -198,7 +201,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     return result;
   }
 
-  double vectorCorrelation(List<Double> list1, List<Double> list2) {
+  double vectorCorrelation(@NotNull List<Double> list1, List<Double> list2) {
     List<Double> a1 = newMeanStandardDeviation(list1);
     List<Double> b1 = newMeanStandardDeviation(list2);
 
@@ -218,13 +221,13 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     } else return 0;
   }
 
-  List<List<Double>> correlation(List<List<Double>> list1, List<List<Double>> list2) {
+  List<List<Double>> correlation(@NotNull List<List<Double>> list1, List<List<Double>> list2) {
     List<List<Double>> m;
     List<Double> temp;
 
     m = new ArrayList<>();
 
-    for (List<Double> i : list1) {
+    for (@NotNull List<Double> i : list1) {
       temp = new ArrayList<>();
       for (List<Double> j : list2) {
         temp.add(vectorCorrelation(i, j));
@@ -236,7 +239,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     return m;
   }
 
-  double diagonal1(List<List<Double>> list) {
+  double diagonal1(@NotNull List<List<Double>> list) {
     double sum = 0;
 
     for (int i = 0; i < list.size(); i++) {
@@ -264,7 +267,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     return sum / list.size() / (list.size() - 1);
   }
 
-  List<List<Double>> multiplyWithOutAMP(List<List<Double>> list1, List<List<Double>> list2) {
+  List<List<Double>> multiplyWithOutAMP(List<List<Double>> list1, @NotNull List<List<Double>> list2) {
     List<List<Double>> c;
     List<Double> cTemp;
 

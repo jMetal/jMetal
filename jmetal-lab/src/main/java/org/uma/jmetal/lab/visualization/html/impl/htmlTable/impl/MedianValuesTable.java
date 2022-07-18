@@ -3,6 +3,8 @@ package org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collections;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.HtmlTable;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
@@ -22,11 +24,11 @@ public class MedianValuesTable extends HtmlTable<Double> {
   private Objective objective = Objective.MINIMIZE;
 
   public MedianValuesTable(
-      Table table,
-      String indicator,
-      StringColumn algorithms,
-      StringColumn problems,
-      String indicatorValueColumnName) {
+          @NotNull Table table,
+          String indicator,
+          @NotNull StringColumn algorithms,
+          StringColumn problems,
+          String indicatorValueColumnName) {
     this.title = "Median values";
     this.headersColumn = algorithms.asObjectArray();
     this.headersRow = problems.asObjectArray();
@@ -49,7 +51,7 @@ public class MedianValuesTable extends HtmlTable<Double> {
     }
   }
 
-  private Table filterTableBy(Table table, String columnName, String value) {
+  private Table filterTableBy(@NotNull Table table, String columnName, String value) {
     return table.where(table.stringColumn(columnName).isEqualTo(value));
   }
 
@@ -73,7 +75,7 @@ public class MedianValuesTable extends HtmlTable<Double> {
     return html;
   }
 
-  private Double[] getDataOrderedByObjective(Double[] data) {
+  private Double[] getDataOrderedByObjective(Double @NotNull [] data) {
     Double[] orderedData = data.clone();
     if (objective == Objective.MAXIMIZE) Arrays.sort(orderedData, Collections.reverseOrder());
     if (objective == Objective.MINIMIZE) Arrays.sort(orderedData);

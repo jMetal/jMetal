@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.singleobjective;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.CovarianceMatrixAdaptationEvolutionStrategy;
@@ -12,6 +11,9 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  */
 public class CovarianceMatrixAdaptationEvolutionStrategyRunner {
@@ -20,7 +22,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategyRunner {
   public static void main(String[] args) throws Exception {
 
     Algorithm<DoubleSolution> algorithm;
-    DoubleProblem problem = new Sphere() ;
+    @NotNull DoubleProblem problem = new Sphere() ;
 
     algorithm = new CovarianceMatrixAdaptationEvolutionStrategy.Builder(problem)
             .build() ;

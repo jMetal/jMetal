@@ -1,6 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.mocell;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -61,7 +64,7 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
     return this;
   }
 
-  public MOCellBuilder<S> setPopulationSize(int populationSize) {
+  public @NotNull MOCellBuilder<S> setPopulationSize(int populationSize) {
     if (populationSize < 0) {
       throw new JMetalException("Population size is negative: " + populationSize);
     }
@@ -72,7 +75,7 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
     return this;
   }
 
-  public MOCellBuilder<S> setArchive(BoundedArchive<S> archive) {
+  public @NotNull MOCellBuilder<S> setArchive(BoundedArchive<S> archive) {
     this.archive = archive ;
 
     return this;
@@ -84,7 +87,7 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
     return this;
   }
 
-  public MOCellBuilder<S> setSelectionOperator(SelectionOperator<List<S>,S> selectionOperator) {
+  public @NotNull MOCellBuilder<S> setSelectionOperator(@Nullable SelectionOperator<List<S>,S> selectionOperator) {
     if (selectionOperator == null) {
       throw new JMetalException("selectionOperator is null");
     }
@@ -93,7 +96,7 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
     return this;
   }
 
-  public MOCellBuilder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
+  public MOCellBuilder<S> setSolutionListEvaluator(@Nullable SolutionListEvaluator<S> evaluator) {
     if (evaluator == null) {
       throw new JMetalException("evaluator is null");
     }
@@ -102,8 +105,8 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
     return this;
   }
 
-  public MOCell<S> build() {
-    MOCell<S> algorithm = new MOCell<S>(problem, maxEvaluations, populationSize, archive,
+  public @NotNull MOCell<S> build() {
+    @NotNull MOCell<S> algorithm = new MOCell<S>(problem, maxEvaluations, populationSize, archive,
         neighborhood, crossoverOperator, mutationOperator, selectionOperator, evaluator);
     
     return algorithm ;

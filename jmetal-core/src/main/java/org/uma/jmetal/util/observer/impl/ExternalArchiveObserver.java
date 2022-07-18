@@ -2,6 +2,8 @@ package org.uma.jmetal.util.observer.impl;
 
 import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.observable.Observable;
@@ -22,7 +24,7 @@ public class ExternalArchiveObserver<S extends Solution<?>> implements Observer<
   }
 
   @Override
-  public void update(Observable<Map<String, Object>> observable, Map<String, Object> data) {
+  public void update(Observable<Map<String, Object>> observable, @NotNull Map<String, Object> data) {
     List<S> population = (List<S>) data.get("POPULATION");
     for (S solution : population) {
       archive.add((S) solution.copy());

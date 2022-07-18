@@ -3,6 +3,9 @@ package org.uma.jmetal.parallel.asynchronous.multithreaded;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.parallel.asynchronous.algorithm.AsynchronousParallelAlgorithm;
 import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
 
@@ -19,9 +22,9 @@ public abstract class Master<T extends ParallelTask<?>,R>
   }
 
   @Override
-  public void submitInitialTasks(List<T> initialTasks) {
+  public void submitInitialTasks(@NotNull List<T> initialTasks) {
     if (initialTasks.size() >= numberOfCores) {
-        for (T initialTask : initialTasks) {
+        for (@NotNull T initialTask : initialTasks) {
             submitTask(initialTask);
         }
     } else {
@@ -37,7 +40,7 @@ public abstract class Master<T extends ParallelTask<?>,R>
   }
 
   @Override
-  public T waitForComputedTask() {
+  public @Nullable T waitForComputedTask() {
     T evaluatedTask = null;
     try {
       evaluatedTask = completedTaskQueue.take();
@@ -59,7 +62,7 @@ public abstract class Master<T extends ParallelTask<?>,R>
   public abstract T createNewTask();
 
   @Override
-  public boolean thereAreInitialTasksPending(List<T> initialTasks) {
+  public boolean thereAreInitialTasksPending(@NotNull List<T> initialTasks) {
     return initialTasks.size() > 0;
   }
 

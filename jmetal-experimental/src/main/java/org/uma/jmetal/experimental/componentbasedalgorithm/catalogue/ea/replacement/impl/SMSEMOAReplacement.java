@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
@@ -27,7 +28,7 @@ public class SMSEMOAReplacement<S extends Solution<?>>
     this.hypervolume = hypervolume;
   }
 
-  public List<S> replace(List<S> solutionList, List<S> offspringList) {
+  public List<S> replace(@NotNull List<S> solutionList, List<S> offspringList) {
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(solutionList);
     jointPopulation.addAll(offspringList);
@@ -38,7 +39,7 @@ public class SMSEMOAReplacement<S extends Solution<?>>
 
     lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront, jointPopulation) ;
 
-      List<S> resultPopulation = new ArrayList<>();
+      @NotNull List<S> resultPopulation = new ArrayList<>();
       int bound = ranking.getNumberOfSubFronts() - 1;
       for (int i1 = 0; i1 < bound; i1++) {
           List<S> subFront = ranking.getSubFront(i1);

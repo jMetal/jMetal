@@ -3,6 +3,8 @@ package org.uma.jmetal.parallel.example;
 import static java.lang.Math.sin;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -26,7 +28,7 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
     int maxEvaluations = 25000;
     int numberOfCores = 32;
 
-    DoubleProblem problem = new ZDT1() {
+    @NotNull DoubleProblem problem = new ZDT1() {
       @Override
       public DoubleSolution evaluate(DoubleSolution solution) {
         super.evaluate(solution);
@@ -53,7 +55,7 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
 
     long initTime = System.currentTimeMillis();
 
-    AsynchronousMultiThreadedNSGAII<DoubleSolution> nsgaii =
+    @NotNull AsynchronousMultiThreadedNSGAII<DoubleSolution> nsgaii =
             new AsynchronousMultiThreadedNSGAII<DoubleSolution>(
                     numberOfCores, problem, populationSize, crossover, mutation, new TerminationByEvaluations(maxEvaluations));
 

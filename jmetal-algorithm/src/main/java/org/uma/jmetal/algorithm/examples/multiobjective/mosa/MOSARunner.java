@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.mosa;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.mosa.MOSA;
 import org.uma.jmetal.algorithm.multiobjective.mosa.cooling.impl.Exponential;
@@ -25,7 +27,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  */
 public class MOSARunner extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2_2D";
+    @NotNull String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2_2D";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.2D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);

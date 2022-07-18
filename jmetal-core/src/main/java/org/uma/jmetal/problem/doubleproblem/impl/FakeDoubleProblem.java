@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.doubleproblem.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -15,7 +17,7 @@ public class FakeDoubleProblem extends AbstractDoubleProblem {
     setNumberOfObjectives(numberOfObjectives);
     setNumberOfConstraints(numberOfConstraints);
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i = 0; i < numberOfVariables; i++) {

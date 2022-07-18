@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.SwingWrapper;
@@ -48,7 +51,7 @@ public class ChartContainerWithReferencePoints {
     this.setFrontChart(objective1, objective2, null);
   }
 
-  public void setFrontChart(int objective1, int objective2, String referenceFrontFileName) throws FileNotFoundException {
+  public void setFrontChart(int objective1, int objective2, @Nullable String referenceFrontFileName) throws FileNotFoundException {
     this.objective1 = objective1;
     this.objective2 = objective2;
     this.frontChart = new XYChartBuilder().xAxisTitle("Objective " + this.objective1)
@@ -59,8 +62,8 @@ public class ChartContainerWithReferencePoints {
       this.displayReferenceFront(referenceFrontFileName);
     }
 
-    double[] xData = new double[] { 0 };
-    double[] yData = new double[] { 0 };
+    double @NotNull [] xData = new double[] { 0 };
+    double @NotNull [] yData = new double[] { 0 };
     XYSeries frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
     frontChartSeries.setMarkerColor(Color.blue);
 
@@ -81,7 +84,7 @@ public class ChartContainerWithReferencePoints {
     }
   }
 
-  public synchronized void updateReferencePoint(List<List<Double>> referencePoint){
+  public synchronized void updateReferencePoint(@NotNull List<List<Double>> referencePoint){
     for (int i = 0; i < referencePoint.size(); i++) {
       double rp1 = referencePoint.get(i).get(this.objective1);
       double rp2 = referencePoint.get(i).get(this.objective2);
@@ -103,7 +106,7 @@ public class ChartContainerWithReferencePoints {
     this.swingWrapper.displayChartMatrix();
   }
 
-  public void updateFrontCharts(List<DoubleSolution> solutionList) {
+  public void updateFrontCharts(@NotNull List<DoubleSolution> solutionList) {
     if (this.frontChart != null) {
       this.frontChart.updateXYSeries(this.name,
           this.getSolutionsForObjective(solutionList, this.objective1),
@@ -138,17 +141,17 @@ public class ChartContainerWithReferencePoints {
     }
   }
 
-  private void displayFront(String name, String fileName, int objective1, int objective2)
+  private void displayFront(String name, @NotNull String fileName, int objective1, int objective2)
       throws FileNotFoundException {
     ArrayFront front = new ArrayFront(fileName, ",");
     double[][] data = FrontUtils.convertFrontToArray(front);
-    double[] xData = getObjectiveValues(data, objective1);
+    double @NotNull [] xData = getObjectiveValues(data, objective1);
     double[] yData = getObjectiveValues(data, objective2);
     XYSeries referenceFront = this.frontChart.addSeries(name, xData, yData);
     referenceFront.setMarkerColor(Color.red);
   }
 
-  private void displayReferenceFront(String fileName) throws FileNotFoundException {
+  private void displayReferenceFront(@NotNull String fileName) throws FileNotFoundException {
     this.displayReferenceFront(fileName, this.objective1, this.objective2);
   }
 
@@ -157,7 +160,7 @@ public class ChartContainerWithReferencePoints {
   }
 
   private double[] getObjectiveValues(double[][] data, int obj) {
-    double[] values = new double[10];
+    double @NotNull [] values = new double[10];
     int count = 0;
     for (double[] datum : data) {
       double v = datum[obj];
@@ -171,7 +174,7 @@ public class ChartContainerWithReferencePoints {
   private double[] getSolutionsForObjective(List<DoubleSolution> solutionList, int objective) {
     double[] result = new double[10];
     int count = 0;
-    for (DoubleSolution doubleSolution : solutionList) {
+    for (@NotNull DoubleSolution doubleSolution : solutionList) {
       double v = doubleSolution.objectives()[objective];
       if (result.length == count) result = Arrays.copyOf(result, count * 2);
       result[count++] = v;
@@ -180,7 +183,7 @@ public class ChartContainerWithReferencePoints {
     return result;
   }
 
-  public void saveChart(String fileName, BitmapFormat format) throws IOException {
+  public void saveChart(String fileName, @NotNull BitmapFormat format) throws IOException {
     for (String chart : this.charts.keySet()) {
       BitmapEncoder.saveBitmap(this.charts.get(chart), fileName + "_" + chart, format);
     }
@@ -190,7 +193,7 @@ public class ChartContainerWithReferencePoints {
     return this.name;
   }
 
-  public ChartContainerWithReferencePoints setName(String name) {
+  public @NotNull ChartContainerWithReferencePoints setName(String name) {
     this.name = name;
     return this;
   }
@@ -199,7 +202,7 @@ public class ChartContainerWithReferencePoints {
     return this.delay;
   }
 
-  public ChartContainerWithReferencePoints setDelay(int delay) {
+  public @NotNull ChartContainerWithReferencePoints setDelay(int delay) {
     this.delay = delay;
     return this;
   }

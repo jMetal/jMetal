@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -34,7 +36,7 @@ public class MaF05 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("MaF05");
 
-    List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
+    @NotNull List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
       for (int i1 = 0; i1 < numberOfVariables; i1++) {
@@ -45,7 +47,7 @@ public class MaF05 extends AbstractDoubleProblem {
       setVariableBounds(lower, upper);
 
     //other constants during the whole process once M&D are defined
-      double[] c5 = new double[10];
+      double @NotNull [] c5 = new double[10];
       int count = 0;
       for (int i = 0; i < numberOfObjectives; i++) {
           double pow = Math.pow(2, i + 1);
@@ -70,7 +72,7 @@ public class MaF05 extends AbstractDoubleProblem {
     double[] x;
     double[] f = new double[numberOfObjectives];
 
-      double[] arr = new double[10];
+      double @NotNull [] arr = new double[10];
       int count = 0;
       for (int i2 = 0; i2 < numberOfVariables; i2++) {
           double v = solution.variables().get(i2);

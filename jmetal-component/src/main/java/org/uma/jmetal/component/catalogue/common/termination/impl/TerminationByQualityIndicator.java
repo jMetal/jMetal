@@ -2,6 +2,8 @@ package org.uma.jmetal.component.catalogue.common.termination.impl;
 
 import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
@@ -26,7 +28,7 @@ public class TerminationByQualityIndicator implements Termination {
   private double computedIndicatorValue ;
 
   public TerminationByQualityIndicator(
-      QualityIndicator qualityIndicator, double[][] referenceFront, double percentage, int evaluationsLimit) {
+          @NotNull QualityIndicator qualityIndicator, double[] @NotNull [] referenceFront, double percentage, int evaluationsLimit) {
     this.qualityIndicator = qualityIndicator;
     this.percentage = percentage;
     this.referenceFront = referenceFront;

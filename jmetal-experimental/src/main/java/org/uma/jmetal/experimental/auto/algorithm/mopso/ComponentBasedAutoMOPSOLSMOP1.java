@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.mopso;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -15,7 +16,7 @@ public class ComponentBasedAutoMOPSOLSMOP1 {
     public static void main(String[] args) {
         String referenceFrontFileName = "LSMOP1.2D.csv";
 
-        String[] parameters =
+        String @NotNull [] parameters =
                 ("--problemName org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_20 "
                         + "--referenceFrontFileName "
                         + referenceFrontFileName

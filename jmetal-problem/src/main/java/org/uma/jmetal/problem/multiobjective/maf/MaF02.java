@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -60,7 +62,7 @@ public class MaF02 extends AbstractDoubleProblem {
     int numberOfObjectives = solution.objectives().length;
 
     double[] x;
-    double[] f = new double[numberOfObjectives];
+    double @NotNull [] f = new double[numberOfObjectives];
 
       double[] arr = new double[10];
       int count = 0;
@@ -73,7 +75,7 @@ public class MaF02 extends AbstractDoubleProblem {
       x = arr;
 
     double[] g = new double[numberOfObjectives];
-    double[] thet = new double[numberOfObjectives - 1];
+    double @NotNull [] thet = new double[numberOfObjectives - 1];
     int lb, ub;
     // evaluate g, thet
     for (int i = 0; i < numberOfObjectives - 1; i++) {

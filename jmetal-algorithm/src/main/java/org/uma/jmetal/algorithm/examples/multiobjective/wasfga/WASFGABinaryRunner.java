@@ -3,6 +3,9 @@ package org.uma.jmetal.algorithm.examples.multiobjective.wasfga;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGA;
@@ -28,14 +31,14 @@ public class WASFGABinaryRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   java org.uma.jmetal.runner.multiobjective.WASFGA.WASFGARunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
     BinaryProblem problem;
     Algorithm<List<BinarySolution>> algorithm;
     CrossoverOperator<BinarySolution> crossover;
     MutationOperator<BinarySolution> mutation;
     SelectionOperator<List<BinarySolution>, BinarySolution> selection;
     String referenceParetoFront = "" ;
-    List<Double> referencePoint = null;
+    @Nullable List<Double> referencePoint = null;
 
     String problemName ;
     if (args.length == 1) {

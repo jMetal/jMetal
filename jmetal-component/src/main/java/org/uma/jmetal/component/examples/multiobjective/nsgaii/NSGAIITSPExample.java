@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -31,7 +33,7 @@ public class NSGAIITSPExample {
         new MultiobjectiveTSP(
             "resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
 
-    CrossoverOperator<PermutationSolution<Integer>> crossover = new PMXCrossover(0.9);
+    @NotNull CrossoverOperator<PermutationSolution<Integer>> crossover = new PMXCrossover(0.9);
 
     double mutationProbability = 0.2;
     MutationOperator<PermutationSolution<Integer>> mutation = new PermutationSwapMutation<>(mutationProbability);
@@ -39,7 +41,7 @@ public class NSGAIITSPExample {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(125000);
+    @NotNull Termination termination = new TerminationByEvaluations(125000);
 
     EvolutionaryAlgorithm<PermutationSolution<Integer>> nsgaii = new NSGAIIBuilder<>(
                     problem,

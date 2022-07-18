@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.wasfga;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.mombi.AbstractMOMBI;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
@@ -39,7 +41,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 	protected double epsilon ;
 	protected double[][] weights;
 	
-	private final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
+	private final @NotNull AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
 	private List<Double> interestPoint = null;
 	private String weightVectorsFileName = "" ;
 
@@ -94,7 +96,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 						"") ;
 	}
 
-	public AbstractUtilityFunctionsSet<S> createUtilityFunction() {
+	public @NotNull AbstractUtilityFunctionsSet<S> createUtilityFunction() {
 		//If a file with weight vectors is not given as parameter, weights are calculated or read from the resources file of jMetal
 		if ("".equals(this.weightVectorsFileName)) {
 			//For two biobjective problems weights are computed
@@ -161,11 +163,11 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 		return ranking;
 	}
 
-    protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
+    protected void addRankedSolutionsToPopulation(@NotNull Ranking<S> ranking, int index, @NotNull List<S> population) {
 		population.addAll(ranking.getSubFront(index));
 	}
 
-    protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
+    protected void addLastRankedSolutionsToPopulation(@NotNull Ranking<S> ranking, int index, @NotNull List<S> population) {
 		List<S> front 	= ranking.getSubFront(index);
 		int remain 		= this.getPopulationSize() - population.size();
 		population.addAll(front.subList(0, remain));
@@ -194,7 +196,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 		return getNonDominatedSolutions(getPopulation());
 	}
 
-	protected List<S> getNonDominatedSolutions(List<S> solutionList) {
+	protected List<S> getNonDominatedSolutions(@NotNull List<S> solutionList) {
 		return SolutionListUtils.getNonDominatedSolutions(solutionList);
 	}
 

@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.Variation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
@@ -13,7 +15,7 @@ public class VariationParameter extends CategoricalParameter {
     super("variation", args, variationStrategies);
   }
 
-  public Variation<?> getParameter() {
+  public @NotNull Variation<?> getParameter() {
     Variation<?> result;
     int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").getValue() ;
 
@@ -23,8 +25,8 @@ public class VariationParameter extends CategoricalParameter {
             (CrossoverParameter) findSpecificParameter("crossover");
         MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
 
-        CrossoverOperator<DoubleSolution> crossoverOperator = crossoverParameter.getParameter();
-        MutationOperator<DoubleSolution> mutationOperatorOperator =
+        @NotNull CrossoverOperator<DoubleSolution> crossoverOperator = crossoverParameter.getParameter();
+        @NotNull MutationOperator<DoubleSolution> mutationOperatorOperator =
             mutationParameter.getParameter();
 
         result =

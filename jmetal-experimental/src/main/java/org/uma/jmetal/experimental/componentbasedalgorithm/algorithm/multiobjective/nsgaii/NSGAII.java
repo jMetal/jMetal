@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjec
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
@@ -58,13 +60,13 @@ public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlg
 
   /** Constructor */
   public NSGAII(
-      Problem<S> problem,
-      int populationSize,
-      int offspringPopulationSize,
-      CrossoverOperator<S> crossoverOperator,
-      MutationOperator<S> mutationOperator,
-      Termination termination,
-      Ranking<S> ranking) {
+          Problem<S> problem,
+          int populationSize,
+          int offspringPopulationSize,
+          @NotNull CrossoverOperator<S> crossoverOperator,
+          MutationOperator<S> mutationOperator,
+          Termination termination,
+          Ranking<S> ranking) {
     this.name = "NSGA-II";
     this.problem = problem;
     this.observable = new DefaultObservable<>(name);

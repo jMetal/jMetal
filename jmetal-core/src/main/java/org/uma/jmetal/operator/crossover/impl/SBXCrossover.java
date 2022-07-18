@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
@@ -96,7 +98,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
 
   /** Execute() method */
   @Override
-  public List<DoubleSolution> execute(List<DoubleSolution> solutions) {
+  public List<DoubleSolution> execute(@NotNull List<DoubleSolution> solutions) {
     Check.notNull(solutions);
     Check.that(solutions.size() == 2, "There must be two parents instead of " + solutions.size());
 
@@ -106,7 +108,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
   /** doCrossover method */
   public List<DoubleSolution> doCrossover(
       double probability, DoubleSolution parent1, DoubleSolution parent2) {
-    List<DoubleSolution> offspring = new ArrayList<DoubleSolution>(2);
+    @NotNull List<DoubleSolution> offspring = new ArrayList<DoubleSolution>(2);
 
     offspring.add((DoubleSolution) parent1.copy());
     offspring.add((DoubleSolution) parent2.copy());

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
 import org.uma.jmetal.algorithm.multiobjective.mochc.MOCHCBuilder;
@@ -73,7 +75,7 @@ public class BinaryProblemsStudy {
     }
     String experimentBaseDirectory = args[0];
 
-    List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
+    @NotNull List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new ZDT5()));
     problemList.add(new ExperimentProblem<>(new OneZeroMax(512)));
 
@@ -132,7 +134,7 @@ public class BinaryProblemsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problem, run));
       }
 
-      for (ExperimentProblem<BinarySolution> problem : problemList) {
+      for (@NotNull ExperimentProblem<BinarySolution> problem : problemList) {
         Algorithm<List<BinarySolution>> algorithm = new SPEA2Builder<>(
                 problem.getProblem(),
                 new SinglePointCrossover(1.0),

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -27,7 +28,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 	protected int iterations = 0;
 	protected final SolutionListEvaluator<S> evaluator;
-	protected final List<Double> referencePoint;
+	protected final @NotNull List<Double> referencePoint;
 	protected final List<Double> nadirPoint;
 
 	/**
@@ -84,7 +85,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 	@Override
 	protected List<S> selection(List<S> population) {
-		List<S> matingPopulation = new ArrayList<>(population.size());
+		@NotNull List<S> matingPopulation = new ArrayList<>(population.size());
 		int bound = this.getMaxPopulationSize();
 		for (int i = 0; i < bound; i++) {
 			S execute = selectionOperator.execute(population);
@@ -95,7 +96,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	}
 
 	@Override
-	protected List<S> reproduction(List<S> population) {
+	protected @NotNull List<S> reproduction(@NotNull List<S> population) {
 		List<S> offspringPopulation = new ArrayList<>(this.getMaxPopulationSize());
 		for (int i = 0; i < this.getMaxPopulationSize(); i += 2) {
 			List<S> parents = new ArrayList<>(2);
@@ -170,18 +171,18 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 			this.getReferencePoint().set(i, Math.min(this.getReferencePoint().get(i),s.objectives()[i]));
 	}
 
-	protected void updateNadirPoint(S s) {
+	protected void updateNadirPoint(@NotNull S s) {
 		for (int i = 0; i < s.objectives().length; i++)
 			this.getNadirPoint().set(i, Math.max(this.getNadirPoint().get(i),s.objectives()[i]));
 	}
 
 	public void updateReferencePoint(List<S> population) {
-		for (S solution : population)
+		for (@NotNull S solution : population)
 			this.updateReferencePoint(solution);
 	}
 
 	public void updateNadirPoint(List<S> population) {
-		for (S solution : population)
+		for (@NotNull S solution : population)
 			this.updateNadirPoint(solution);
 	}
 

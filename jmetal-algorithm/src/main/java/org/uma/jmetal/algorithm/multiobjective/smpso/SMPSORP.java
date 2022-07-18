@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -93,14 +95,14 @@ public class SMPSORP
    * Constructor
    */
   public SMPSORP(DoubleProblem problem, int swarmSize,
-      List<ArchiveWithReferencePoint<DoubleSolution>> leaders,
-      List<List<Double>> referencePoints,
-      MutationOperator<DoubleSolution> mutationOperator, int maxIterations, double r1Min,
-      double r1Max,
-      double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
-      double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
-      DominanceComparator<DoubleSolution> dominanceComparator,
-      SolutionListEvaluator<DoubleSolution> evaluator) {
+                 List<ArchiveWithReferencePoint<DoubleSolution>> leaders,
+                 @NotNull List<List<Double>> referencePoints,
+                 MutationOperator<DoubleSolution> mutationOperator, int maxIterations, double r1Min,
+                 double r1Max,
+                 double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
+                 double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
+                 DominanceComparator<DoubleSolution> dominanceComparator,
+                 SolutionListEvaluator<DoubleSolution> evaluator) {
     this.problem = problem;
     this.swarmSize = swarmSize;
     this.leaders = leaders;
@@ -155,7 +157,7 @@ public class SMPSORP
   }
 
   protected void updateLeadersDensityEstimator() {
-    for (BoundedArchive<DoubleSolution> leader : leaders) {
+    for (@NotNull BoundedArchive<DoubleSolution> leader : leaders) {
       leader.computeDensityEstimator();
     }
   }
@@ -205,14 +207,14 @@ public class SMPSORP
   @Override
   protected void initializeLeader(List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
-      for (BoundedArchive<DoubleSolution> leader : leaders) {
+      for (@NotNull BoundedArchive<DoubleSolution> leader : leaders) {
         leader.add((DoubleSolution) particle.copy());
       }
     }
   }
 
   @Override
-  protected void initializeVelocity(List<DoubleSolution> swarm) {
+  protected void initializeVelocity(@NotNull List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
@@ -308,9 +310,9 @@ public class SMPSORP
   }
 
   @Override
-  public List<DoubleSolution> getResult() {
+  public @NotNull List<DoubleSolution> getResult() {
       List<DoubleSolution> resultList = new ArrayList<>();
-      for (ArchiveWithReferencePoint<DoubleSolution> leader : leaders) {
+      for (@NotNull ArchiveWithReferencePoint<DoubleSolution> leader : leaders) {
           for (DoubleSolution doubleSolution : leader.getSolutionList()) {
               resultList.add(doubleSolution);
           }
@@ -326,7 +328,7 @@ public class SMPSORP
     BoundedArchive<DoubleSolution> selectedSwarm = leaders.get(selectedSwarmIndex);
 
     DoubleSolution one, two;
-    DoubleSolution bestGlobal;
+    @Nullable DoubleSolution bestGlobal;
     int pos1 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
     int pos2 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
 
@@ -342,7 +344,7 @@ public class SMPSORP
     return bestGlobal;
   }
 
-  private double velocityConstriction(double v, double[] deltaMax, double[] deltaMin,
+  private double velocityConstriction(double v, double[] deltaMax, double @NotNull [] deltaMin,
       int variableIndex) {
 
     double result;

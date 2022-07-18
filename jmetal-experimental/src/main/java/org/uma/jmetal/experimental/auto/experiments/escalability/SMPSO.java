@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.auto.experiments.escalability;
 import static org.uma.jmetal.util.VectorUtils.readVectors;
 
 import java.io.IOException;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByQualityIndicator;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -33,10 +35,10 @@ public class SMPSO {
 
   public static void main(String[] args) throws IOException {
     DoubleProblem problem = new ZDT1(1000);
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
+    @NotNull String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
     int swarmSize = 100;
 
-    var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
+    @NotNull var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
     var evaluation = new SequentialEvaluation<>(problem);
     var termination = new TerminationByQualityIndicator(new PISAHypervolume(),
         readVectors(referenceFrontFileName, ","),
@@ -60,12 +62,12 @@ public class SMPSO {
     double weight = 0.1;
     var inertiaWeightStrategy = new ConstantValueStrategy(weight);
 
-    var velocityUpdate = new ConstrainedVelocityUpdate(r1Min, r1Max, r2Min, r2Max, c1Min, c1Max,
+    @NotNull var velocityUpdate = new ConstrainedVelocityUpdate(r1Min, r1Max, r2Min, r2Max, c1Min, c1Max,
         c2Min, c2Max, problem);
 
     double velocityChangeWhenLowerLimitIsReached = -1.0;
     double velocityChangeWhenUpperLimitIsReached = -1.0;
-    var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
+    @NotNull var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
         velocityChangeWhenUpperLimitIsReached, problem.getVariableBounds());
 
     int frequencyOfMutation = 6;
@@ -75,7 +77,7 @@ public class SMPSO {
     var globalBestUpdate = new DefaultGlobalBestUpdate();
     var localBestUpdate = new DefaultLocalBestUpdate(new DefaultDominanceComparator<>());
 
-    var smpso = new ParticleSwarmOptimizationAlgorithm("SMPSO",
+    @NotNull var smpso = new ParticleSwarmOptimizationAlgorithm("SMPSO",
         swarmInitialization,
         evaluation,
         termination,

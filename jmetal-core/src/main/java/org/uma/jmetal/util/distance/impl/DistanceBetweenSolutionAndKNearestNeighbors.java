@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.Distance;
@@ -32,7 +33,7 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
    * @return
    */
   @Override
-  public double compute(S solution, List<S> solutionList) {
+  public double compute(S solution, @NotNull List<S> solutionList) {
     List<Double> listOfDistances = knnDistances(solution, solutionList) ;
     listOfDistances.sort(Comparator.naturalOrder());
 
@@ -53,7 +54,7 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
    * @param solutionList
    * @return A list with the distances
    */
-  private List<Double> knnDistances(S solution, List<S> solutionList) {
+  private @NotNull List<Double> knnDistances(S solution, List<S> solutionList) {
     List<Double> listOfDistances = new ArrayList<>();
     for (S s : solutionList) {
       double distanceBetweenSolutions = distance.compute(solution, s);

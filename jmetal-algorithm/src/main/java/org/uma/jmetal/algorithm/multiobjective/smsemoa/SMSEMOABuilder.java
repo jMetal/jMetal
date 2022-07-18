@@ -2,6 +2,9 @@ package org.uma.jmetal.algorithm.multiobjective.smsemoa;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -49,7 +52,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
     this.dominanceComparator = new DominanceWithConstraintsComparator<>()  ;
   }
 
-  public SMSEMOABuilder<S> setPopulationSize(int populationSize) {
+  public @NotNull SMSEMOABuilder<S> setPopulationSize(int populationSize) {
     this.populationSize = populationSize ;
 
     return this ;
@@ -61,7 +64,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
     return this ;
   }
 
-  public SMSEMOABuilder<S> setCrossoverOperator(CrossoverOperator<S> crossover) {
+  public @NotNull SMSEMOABuilder<S> setCrossoverOperator(CrossoverOperator<S> crossover) {
     crossoverOperator = crossover ;
 
     return this ;
@@ -73,7 +76,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
     return this ;
   }
 
-  public SMSEMOABuilder<S> setSelectionOperator(SelectionOperator<List<S>, S> selection) {
+  public @NotNull SMSEMOABuilder<S> setSelectionOperator(SelectionOperator<List<S>, S> selection) {
     selectionOperator = selection ;
 
     return this ;
@@ -86,13 +89,13 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
   }
 
 
-  public SMSEMOABuilder<S> setOffset(double offset) {
+  public @NotNull SMSEMOABuilder<S> setOffset(double offset) {
     this.offset = offset ;
 
     return this ;
   }
 
-  public SMSEMOABuilder<S> setDominanceComparator(Comparator<S> dominanceComparator) {
+  public SMSEMOABuilder<S> setDominanceComparator(@Nullable Comparator<S> dominanceComparator) {
     if (dominanceComparator == null) {
       throw new JMetalException("dominanceComparator is null");
     }

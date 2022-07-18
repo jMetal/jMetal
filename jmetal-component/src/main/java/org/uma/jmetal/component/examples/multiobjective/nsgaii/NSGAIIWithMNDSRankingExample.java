@@ -2,6 +2,8 @@ package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -30,7 +32,7 @@ import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
  */
 public class NSGAIIWithMNDSRankingExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
+    @NotNull String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);

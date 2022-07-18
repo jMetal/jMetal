@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smpso;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -103,7 +105,7 @@ public class SMPSOWithArchive extends SMPSO {
   @Override
   protected void updateLeaders(List<DoubleSolution> swarm) {
     super.updateLeaders(swarm);
-    for (DoubleSolution particle : swarm) {
+    for (@NotNull DoubleSolution particle : swarm) {
       archive.add((DoubleSolution) particle.copy());
     }
   }

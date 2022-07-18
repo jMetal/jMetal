@@ -1,5 +1,6 @@
 package org.uma.jmetal.operator.mutation.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -60,7 +61,7 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
 
   /* Execute() method */
   @Override
-  public PermutationSolution<T> execute(PermutationSolution<T> solution) {
+  public @NotNull PermutationSolution<T> execute(@NotNull PermutationSolution<T> solution) {
     Check.notNull(solution);
 
     doMutation(solution);

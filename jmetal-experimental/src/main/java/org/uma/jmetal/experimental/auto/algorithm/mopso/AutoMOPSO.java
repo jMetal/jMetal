@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.auto.algorithm.mopso;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
@@ -48,8 +50,8 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceC
  * @autor Daniel Doblas
  */
 public class AutoMOPSO {
-  public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
-  public List<Parameter<?>> fixedParameterList = new ArrayList<>();
+  public @NotNull List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
+  public @NotNull List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
   private StringParameter problemNameParameter;
   public StringParameter referenceFrontFilenameParameter;
@@ -172,12 +174,12 @@ public class AutoMOPSO {
     //    new ProbabilityParameter("mutationProbability", args);
     RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0.0, 2.0) ;
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
-    RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
+    @NotNull RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutationParameter.addGlobalParameter(mutationRepairStrategy);
 
-    RealParameter distributionIndexForPolynomialMutation =
+    @NotNull RealParameter distributionIndexForPolynomialMutation =
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
     mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
@@ -185,11 +187,11 @@ public class AutoMOPSO {
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
-    RealParameter nonUniformMutationPerturbation =
+    @NotNull RealParameter nonUniformMutationPerturbation =
         new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
+    @NotNull Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables", problem.getNumberOfVariables());
 
     // TODO: the upper bound  must be the swarm size
@@ -229,7 +231,7 @@ public class AutoMOPSO {
   /**
    * Create an instance of MOPSO from the parsed parameters
    */
-  public ParticleSwarmOptimizationAlgorithm create() {
+  public @NotNull ParticleSwarmOptimizationAlgorithm create() {
     Problem<DoubleSolution> problem = getProblem() ;
     int swarmSize = swarmSizeParameter.getValue();
     int maximumNumberOfEvaluations = maximumNumberOfEvaluationsParameter.getValue();
@@ -237,12 +239,12 @@ public class AutoMOPSO {
 
     var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
 
-    var evaluation = new SequentialEvaluation<>(problem);
+    @NotNull var evaluation = new SequentialEvaluation<>(problem);
     var termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
 
     externalArchiveParameter.setSize(archiveSizeParameter.getValue());
     BoundedArchive<DoubleSolution> externalArchive = (BoundedArchive<DoubleSolution>) externalArchiveParameter.getParameter();
-    var velocityInitialization = new DefaultVelocityInitialization();
+    @NotNull var velocityInitialization = new DefaultVelocityInitialization();
 
     if (velocityUpdateParameter.getValue().equals("constrainedVelocityUpdate")) {
       velocityUpdateParameter.addNonConfigurableParameter("problem", problem);
@@ -301,7 +303,7 @@ public class AutoMOPSO {
     return mopso;
   }
 
-  public static void print(List<Parameter<?>> parameterList) {
+  public static void print(@NotNull List<Parameter<?>> parameterList) {
     for (Parameter<?> parameter : parameterList) {
       System.out.println(parameter);
     }

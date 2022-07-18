@@ -1,5 +1,6 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 
 /**
@@ -18,7 +19,7 @@ public abstract class Hypervolume extends QualityIndicator {
   }
 
   public Hypervolume(double[] referencePoint) {
-    double[][] referenceFront = new double[referencePoint.length][referencePoint.length];
+    double[] @NotNull [] referenceFront = new double[referencePoint.length][referencePoint.length];
     for (int i = 0; i < referencePoint.length; i++) {
       double[] point = new double[referencePoint.length] ;
       for (int j = 0; j < referencePoint.length; j++) {
@@ -35,7 +36,7 @@ public abstract class Hypervolume extends QualityIndicator {
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "HV";
   }
 

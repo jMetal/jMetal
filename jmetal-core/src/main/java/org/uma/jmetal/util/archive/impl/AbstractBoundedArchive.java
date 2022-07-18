@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.archive.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
@@ -51,7 +53,7 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
 
   public abstract void prune();
 
-  public Archive<S> join(Archive<S> archive) {
+  public Archive<S> join(@NotNull Archive<S> archive) {
       for (S s : archive.getSolutionList()) {
           add(s);
       }

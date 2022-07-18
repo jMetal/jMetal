@@ -15,6 +15,8 @@ package org.uma.jmetal.algorithm.multiobjective.microfame.util;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -45,7 +47,7 @@ public class HVTournamentSelection<S extends Solution<?>> implements SelectionOp
 
   @Override
   /** Execute() method */
-  public S execute(List<S> solutionList) {
+  public S execute(@Nullable List<S> solutionList) {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null");
     } else if (solutionList.isEmpty()) {

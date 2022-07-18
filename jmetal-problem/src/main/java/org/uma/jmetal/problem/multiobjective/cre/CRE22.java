@@ -1,6 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.cre;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -24,14 +26,14 @@ public class CRE22 extends AbstractDoubleProblem {
     setName("CRE22");
 
     List<Double> lowerLimit = List.of(0.125, 0.1, 0.1, 0.125);
-    List<Double> upperLimit = List.of(5.0, 10.0, 10.0, 5.0);
+    @NotNull List<Double> upperLimit = List.of(5.0, 10.0, 10.0, 5.0);
 
     setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
     double x3 = solution.variables().get(2);

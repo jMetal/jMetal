@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -115,7 +116,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
         //       String path =
         // Paths.get(VectorFileUtils.class.getClassLoader().getResource(filePath).toURI()).toString
         // ();
-        String path = "/" + dataDirectory + "/" + dataFileName ;
+        @NotNull String path = "/" + dataDirectory + "/" + dataFileName ;
 
         InputStream inputStream =
             getClass()
@@ -131,7 +132,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
         int j = 0;
         String aux = br.readLine();
         while (aux != null) {
-          StringTokenizer st = new StringTokenizer(aux);
+          @NotNull StringTokenizer st = new StringTokenizer(aux);
           j = 0;
           while (st.hasMoreTokens()) {
             double value = parseDouble(st.nextToken());
@@ -153,7 +154,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
    * Initialize neighborhoods
    */
   protected void initializeNeighborhood() {
-    double[] x = new double[populationSize];
+    double @NotNull [] x = new double[populationSize];
     int[] idx = new int[populationSize];
 
     for (int i = 0; i < populationSize; i++) {
@@ -182,7 +183,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     return neighborType ;
   }
 
-  protected List<S> parentSelection(int subProblemId, NeighborType neighborType) {
+  protected @NotNull List<S> parentSelection(int subProblemId, NeighborType neighborType) {
     List<Integer> matingPool = matingSelection(subProblemId, 2, neighborType);
 
     List<S> parents = new ArrayList<>(3);
@@ -203,7 +204,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     int neighbourSize;
     int selectedSolution;
 
-    List<Integer> listOfSolutions = new ArrayList<>(numberOfSolutionsToSelect) ;
+    @NotNull List<Integer> listOfSolutions = new ArrayList<>(numberOfSolutionsToSelect) ;
 
     neighbourSize = neighborhood[subproblemId].length;
     while (listOfSolutions.size() < numberOfSolutionsToSelect) {
@@ -237,7 +238,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
    * @throws JMetalException
    */
   @SuppressWarnings("unchecked")
-  protected  void updateNeighborhood(S individual, int subProblemId, NeighborType neighborType) throws JMetalException {
+  protected  void updateNeighborhood(@NotNull S individual, int subProblemId, NeighborType neighborType) throws JMetalException {
     int size;
     int time;
 
@@ -248,7 +249,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     } else {
       size = population.size();
     }
-    int[] perm = new int[size];
+    int @NotNull [] perm = new int[size];
 
     MOEADUtils.randomPermutation(perm, size);
 

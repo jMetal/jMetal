@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.comparator.dominanceComparator.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -61,7 +63,7 @@ public class GDominanceComparator<S extends Solution<?>> implements DominanceCom
     return result ;
   }
 
-  private int flag(S solution) {
+  private int flag(@NotNull S solution) {
     int result = 1 ;
     for (int i = 0; i < solution.objectives().length; i++) {
       if (solution.objectives()[i] > referencePoint.get(i)) {

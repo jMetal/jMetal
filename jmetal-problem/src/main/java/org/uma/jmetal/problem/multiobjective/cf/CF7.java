@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.VectorUtils;
@@ -48,7 +50,7 @@ public class CF7 extends AbstractDoubleProblem {
 
     setNumberOfConstraints(2 * k + 2);
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i1 = 0; i1 < numberOfVariables; i1++) {
@@ -68,8 +70,8 @@ public class CF7 extends AbstractDoubleProblem {
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = VectorUtils.toArray(solution.variables());
-    double[] f = new double[getNumberOfObjectives()];
-    double[] constraint = new double[getNumberOfConstraints()];
+    double @NotNull [] f = new double[getNumberOfObjectives()];
+    double @NotNull [] constraint = new double[getNumberOfConstraints()];
 
     /* ----------------------Evaluate objectives (begin)--------------------------*/
     double[] sx = new double[getNumberOfObjectives()]; // Cumulative squared sum

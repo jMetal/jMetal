@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.multiobjective.paes;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.multiobjective.pesa2.util.AdaptiveGridArchive;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -45,11 +47,11 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   public PAES(
-      Problem<S> problem,
-      int maxEvaluations,
-      int archiveSize,
-      int biSections,
-      MutationOperator<S> mutationOperator) {
+          @NotNull Problem<S> problem,
+          int maxEvaluations,
+          int archiveSize,
+          int biSections,
+          MutationOperator<S> mutationOperator) {
     this(
         problem,
         maxEvaluations,
@@ -96,7 +98,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   @Override
-  protected List<S> evaluatePopulation(List<S> population) {
+  protected @NotNull List<S> evaluatePopulation(List<S> population) {
     getProblem().evaluate(population.get(0));
     return population;
   }
@@ -117,7 +119,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   @Override
-  protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+  protected List<S> replacement(List<S> population, @NotNull List<S> offspringPopulation) {
     S current = population.get(0);
     S mutatedSolution = (S) offspringPopulation.get(0).copy();
 
@@ -143,7 +145,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "PAES";
   }
 

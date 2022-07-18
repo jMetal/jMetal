@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import javax.management.JMException;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.impl.AbstractScatterSearch;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
@@ -67,7 +70,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   protected Comparator<DoubleSolution> equalComparator;
   protected Comparator<DoubleSolution> crowdingDistanceComparator;
 
-  public ABYSS(DoubleProblem problem, int maxEvaluations, int populationSize, int referenceSet1Size,
+  public ABYSS(@NotNull DoubleProblem problem, int maxEvaluations, int populationSize, int referenceSet1Size,
                int referenceSet2Size, int archiveSize, Archive<DoubleSolution> archive,
                LocalSearchOperator<DoubleSolution> localSearch,
                CrossoverOperator<DoubleSolution> crossoverOperator,
@@ -179,7 +182,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
    */
   @Override public void referenceSetUpdate(DoubleSolution solution) {
     if (refSet1Test(solution)) {
-      for (DoubleSolution solutionInRefSet2 : referenceSet2) {
+      for (@NotNull DoubleSolution solutionInRefSet2 : referenceSet2) {
         double aux = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(solution, solutionInRefSet2);
         if (aux < distanceToSolutionListAttribute.getAttribute(solutionInRefSet2)) {
           distanceToSolutionListAttribute.setAttribute(solutionInRefSet2, aux);
@@ -374,7 +377,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
    * @return
    */
   @Override
-  public List<List<DoubleSolution>> subsetGeneration() {
+  public @NotNull List<List<DoubleSolution>> subsetGeneration() {
     List<List<DoubleSolution>> solutionGroupsList ;
 
     solutionGroupsList = generatePairsFromSolutionList(referenceSet1) ;
@@ -387,8 +390,8 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   /**
    * Generate all pair combinations of the referenceSet1
    */
-  public List<List<DoubleSolution>> generatePairsFromSolutionList(List<DoubleSolution> solutionList) {
-    List<List<DoubleSolution>> subset = new ArrayList<>() ;
+  public @NotNull List<List<DoubleSolution>> generatePairsFromSolutionList(@NotNull List<DoubleSolution> solutionList) {
+    @NotNull List<List<DoubleSolution>> subset = new ArrayList<>() ;
     for (int i = 0; i < solutionList.size(); i++) {
       DoubleSolution solution1 = solutionList.get(i);
       for (int j = i + 1; j < solutionList.size(); j++) {
@@ -412,7 +415,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
 
   @Override
   public List<DoubleSolution> solutionCombination(List<List<DoubleSolution>> solutionList) {
-    List<DoubleSolution> resultList = new ArrayList<>() ;
+    @NotNull List<DoubleSolution> resultList = new ArrayList<>() ;
     for (List<DoubleSolution> pair : solutionList) {
       List<DoubleSolution> offspring = crossover.execute(pair);
 
@@ -463,7 +466,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       insert = getPopulationSize() - getPopulation().size();
 
     for (int i = 0; i < insert; i++) {
-      DoubleSolution solution = (DoubleSolution) crowdingArchive.getSolutionList().get(i).copy();
+      @Nullable DoubleSolution solution = (DoubleSolution) crowdingArchive.getSolutionList().get(i).copy();
       solution.attributes().put(SOLUTION_IS_MARKED, false);
       getPopulation().add(solution);
     }
@@ -486,7 +489,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     return "AbYSS" ;
   }
 
-  @Override public String getDescription() {
+  @Override public @NotNull String getDescription() {
     return "Archived based hYbrid Scatter Search Algorithm" ;
   }
 }

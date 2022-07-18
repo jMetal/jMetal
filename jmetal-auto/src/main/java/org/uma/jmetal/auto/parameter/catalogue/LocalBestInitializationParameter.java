@@ -1,6 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.component.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
@@ -11,7 +13,7 @@ public class LocalBestInitializationParameter extends CategoricalParameter {
     super("localBestInitialization", args, localBestInitializationStrategies);
   }
 
-  public LocalBestInitialization getParameter() {
+  public @NotNull LocalBestInitialization getParameter() {
     LocalBestInitialization result;
 
     if ("defaultLocalBestInitialization".equals(getValue())) {
@@ -24,7 +26,7 @@ public class LocalBestInitializationParameter extends CategoricalParameter {
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "localBestInitialization";
   }
 }

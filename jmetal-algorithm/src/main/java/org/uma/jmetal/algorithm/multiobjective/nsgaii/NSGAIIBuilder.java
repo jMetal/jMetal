@@ -1,6 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -95,7 +98,7 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
     return this;
   }
 
-  public NSGAIIBuilder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
+  public @NotNull NSGAIIBuilder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
     if (evaluator == null) {
       throw new JMetalException("evaluator is null");
     }
@@ -104,7 +107,7 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
     return this;
   }
 
-  public NSGAIIBuilder<S> setDominanceComparator(DominanceComparator<S> dominanceComparator) {
+  public @NotNull NSGAIIBuilder<S> setDominanceComparator(DominanceComparator<S> dominanceComparator) {
     Check.notNull(dominanceComparator);
     this.dominanceComparator = dominanceComparator ;
 
@@ -119,7 +122,7 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
   }
 
   public NSGAII<S> build() {
-    NSGAII<S> algorithm = null ;
+    @Nullable NSGAII<S> algorithm = null ;
     if (variant.equals(NSGAIIVariant.NSGAII)) {
       algorithm = new NSGAII<S>(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
               crossoverOperator,

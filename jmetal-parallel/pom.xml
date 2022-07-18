@@ -104,5 +104,11 @@
             <artifactId>jppf-client</artifactId>
             <version>6.3-alpha</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>23.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

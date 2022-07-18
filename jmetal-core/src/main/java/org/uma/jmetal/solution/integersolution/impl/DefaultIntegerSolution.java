@@ -3,6 +3,8 @@ package org.uma.jmetal.solution.integersolution.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.bounds.Bounds;
@@ -35,7 +37,7 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
   /**
    * Copy constructor
    */
-  public DefaultIntegerSolution(DefaultIntegerSolution solution) {
+  public DefaultIntegerSolution(@NotNull DefaultIntegerSolution solution) {
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
     int bound2 = solution.variables().size();

@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.JMetalLogger;
 
 import java.util.Arrays;
@@ -12,7 +13,7 @@ public class CMAESUtils {
 
   // Symmetric Householder reduction to tridiagonal form, taken from JAMA package.
 
-  public static void tred2(int n, double v[][], double d[], double e[]) {
+  public static void tred2(int n, @NotNull double v[][], double d[], double e[]) {
 
     //  This is derived from the Algol procedures tred2 by
     //  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
@@ -146,7 +147,7 @@ public class CMAESUtils {
 
   // Symmetric tridiagonal QL algorithm, taken from JAMA package.
 
-  public static void tql2(int n, double d[], double e[], double v[][]) {
+  public static void tql2(int n, double d[], @NotNull double e[], double v[][]) {
 
     //  This is derived from the Algol procedures tql2, by
     //  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
@@ -199,7 +200,7 @@ public class CMAESUtils {
 
   } // tql2
 
-  private static double specificShift(int idx, int n, double[] d, double[] e) {
+  private static double specificShift(int idx, int n, double @NotNull [] d, double[] e) {
 
     double g = d[idx];
     double p = (d[idx + 1] - g) / (2.0 * e[idx]);
@@ -219,7 +220,7 @@ public class CMAESUtils {
   }
 
   private static void implicitQLTransformation(int l, int m, int n, double v[][],
-        double[] d, double[] e) {
+                                               double @NotNull [] d, double[] e) {
 
     double dl1 = d[l + 1];
     double p = d[m];

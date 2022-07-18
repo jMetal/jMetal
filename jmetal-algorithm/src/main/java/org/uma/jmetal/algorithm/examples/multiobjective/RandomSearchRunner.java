@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective;
 
-import java.io.FileNotFoundException;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.randomsearch.RandomSearchBuilder;
@@ -11,6 +10,9 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.errorchecking.JMetalException;
+
+import java.io.FileNotFoundException;
+import java.util.List;
 
 /**
  * Class for configuring and running the random search algorithm
@@ -25,7 +27,7 @@ public class RandomSearchRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   java org.uma.jmetal.runner.multiobjective.RandomSearchRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
 

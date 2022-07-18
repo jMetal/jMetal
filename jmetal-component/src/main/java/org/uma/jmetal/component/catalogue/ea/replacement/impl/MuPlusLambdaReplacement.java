@@ -3,6 +3,8 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
 
@@ -19,7 +21,7 @@ public class MuPlusLambdaReplacement<S extends Solution<?>> implements Replaceme
     this.comparator = comparator ;
   }
 
-  public List<S> replace(List<S> population, List<S> offspringPopulation) {
+  public @NotNull List<S> replace(@NotNull List<S> population, List<S> offspringPopulation) {
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);

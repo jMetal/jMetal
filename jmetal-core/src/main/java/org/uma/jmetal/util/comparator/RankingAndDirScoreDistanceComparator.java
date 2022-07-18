@@ -2,6 +2,8 @@ package org.uma.jmetal.util.comparator;
 
 import java.io.Serializable;
 import java.util.Comparator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
@@ -22,7 +24,7 @@ public class RankingAndDirScoreDistanceComparator<S extends Solution<?>>
     this(new FastNonDominatedSortRanking<>());
   }
 
-  public RankingAndDirScoreDistanceComparator(Ranking<S> ranking) {
+  public RankingAndDirScoreDistanceComparator(@NotNull Ranking<S> ranking) {
     rankComparator = Comparator.comparing(ranking::getRank);
     dirScoreComparator = new DirScoreComparator<>();
   }

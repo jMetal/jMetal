@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -58,7 +59,7 @@ public class WFG3 extends WFG {
     y = t2(y, k);
     y = t3(y, k, m);
 
-    float[] result = new float[m];
+    float @NotNull [] result = new float[m];
     float[] x = calculateX(y);
     for (int m = 1; m <= this.m; m++) {
       result[m - 1] = d * x[this.m - 1] + s[m - 1] * (new Shapes()).linear(x, m);
@@ -105,7 +106,7 @@ public class WFG3 extends WFG {
   /**
    * WFG3 t3 transformation
    */
-  public float[] t3(float[] z, int k, int M) {
+  public float[] t3(float @NotNull [] z, int k, int M) {
     float[] result = new float[M];
     float[] w = new float[z.length];
 

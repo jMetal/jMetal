@@ -1,6 +1,7 @@
 package org.uma.jmetal.util.pseudorandom.impl;
 
 import org.apache.commons.math3.random.MersenneTwister;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
@@ -49,7 +50,7 @@ public class MersenneTwisterGenerator implements PseudoRandomGenerator {
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return NAME ;
   }
 }

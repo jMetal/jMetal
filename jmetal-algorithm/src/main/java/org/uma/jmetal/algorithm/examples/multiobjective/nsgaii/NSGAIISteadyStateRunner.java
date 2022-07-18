@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -31,7 +33,7 @@ public class NSGAIISteadyStateRunner extends AbstractAlgorithmRunner {
    *                               java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIISteadyStateRunner problemName [referenceFront]
    */
 
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;

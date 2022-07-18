@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -39,7 +40,7 @@ public class DifferentialEvolutionBuilder {
     return this;
   }
 
-  public DifferentialEvolutionBuilder setMaxEvaluations(int maxEvaluations) {
+  public @NotNull DifferentialEvolutionBuilder setMaxEvaluations(int maxEvaluations) {
     if (maxEvaluations < 0) {
       throw new JMetalException("MaxEvaluations is negative: " + maxEvaluations);
     }
@@ -55,7 +56,7 @@ public class DifferentialEvolutionBuilder {
     return this;
   }
 
-  public DifferentialEvolutionBuilder setSelection(DifferentialEvolutionSelection selection) {
+  public @NotNull DifferentialEvolutionBuilder setSelection(DifferentialEvolutionSelection selection) {
     this.selectionOperator = selection;
 
     return this;

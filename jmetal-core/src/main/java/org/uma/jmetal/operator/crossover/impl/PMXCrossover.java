@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -84,7 +85,7 @@ public class PMXCrossover implements
    * @param parents     Parents
    * @return An array containing the two offspring
    */
-  public List<PermutationSolution<Integer>> doCrossover(double probability, List<PermutationSolution<Integer>> parents) {
+  public @NotNull List<PermutationSolution<Integer>> doCrossover(double probability, List<PermutationSolution<Integer>> parents) {
     List<PermutationSolution<Integer>> offspring = new ArrayList<>(2);
 
     offspring.add((PermutationSolution<Integer>) parents.get(0).copy()) ;
@@ -111,7 +112,7 @@ public class PMXCrossover implements
 
       // STEP 2: Get the subchains to interchange
       int replacement1[];
-      int replacement2[] = new int[permutationLength];
+      @NotNull int replacement2[] = new int[permutationLength];
         int[] arr = new int[10];
         int count = 0;
         for (int i1 = 0; i1 < permutationLength; i1++) {

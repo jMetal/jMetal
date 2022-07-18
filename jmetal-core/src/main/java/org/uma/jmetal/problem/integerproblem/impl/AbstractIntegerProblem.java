@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
@@ -47,7 +49,7 @@ public abstract class AbstractIntegerProblem implements IntegerProblem{
     return numberOfConstraints ;
   }
 
-  public void setVariableBounds(List<Integer> lowerBounds, List<Integer> upperBounds) {
+  public void setVariableBounds(List<Integer> lowerBounds, @NotNull List<Integer> upperBounds) {
     Check.notNull(lowerBounds);
     Check.notNull(upperBounds);
     Check.that(
@@ -57,7 +59,7 @@ public abstract class AbstractIntegerProblem implements IntegerProblem{
     List<Bounds<Integer>> list = new ArrayList<>();
     int bound = lowerBounds.size();
     for (int i = 0; i < bound; i++) {
-      Bounds<Integer> integerBounds = Bounds.create(lowerBounds.get(i), upperBounds.get(i));
+      @NotNull Bounds<Integer> integerBounds = Bounds.create(lowerBounds.get(i), upperBounds.get(i));
       list.add(integerBounds);
     }
     bounds =
@@ -65,7 +67,7 @@ public abstract class AbstractIntegerProblem implements IntegerProblem{
   }
 
   @Override
-  public IntegerSolution createSolution() {
+  public @NotNull IntegerSolution createSolution() {
     return new DefaultIntegerSolution(getVariableBounds(), getNumberOfObjectives(), getNumberOfConstraints());
   }
 

@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
@@ -12,7 +14,7 @@ public class DensityEstimatorParameter<S extends Solution<?>> extends Categorica
     super(name, args, validDensityEstimators);
   }
 
-  public DensityEstimator<S> getParameter() {
+  public @NotNull DensityEstimator<S> getParameter() {
     DensityEstimator<S> result ;
     switch (getValue()) {
       case "crowdingDistance":

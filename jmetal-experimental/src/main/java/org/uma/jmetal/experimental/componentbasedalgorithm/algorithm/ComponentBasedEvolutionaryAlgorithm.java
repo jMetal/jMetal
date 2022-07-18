@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -131,7 +133,7 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
   protected List<S> evaluatePopulation(List<S> population) {
     var solutionList = evaluation.evaluate(population) ;
     if (null != archive) {
-      Archive<S> sArchive = archive;
+      @NotNull Archive<S> sArchive = archive;
       for (S s : solutionList) {
         sArchive.add(s);
       }
@@ -197,7 +199,7 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
   }
 
 
-  public ComponentBasedEvolutionaryAlgorithm<S> withTermination(Termination termination) {
+  public @NotNull ComponentBasedEvolutionaryAlgorithm<S> withTermination(Termination termination) {
     this.termination = termination;
 
     return this ;
@@ -209,7 +211,7 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
     return this ;
   }
 
-  public ComponentBasedEvolutionaryAlgorithm<S> withVariation(Variation<S> variation) {
+  public @NotNull ComponentBasedEvolutionaryAlgorithm<S> withVariation(Variation<S> variation) {
     this.variation = variation;
 
     return this ;

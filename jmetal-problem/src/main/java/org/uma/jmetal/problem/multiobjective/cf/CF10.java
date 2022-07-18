@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
@@ -50,7 +52,7 @@ public class CF10 extends AbstractDoubleProblem {
 
     setNumberOfConstraints(2 * k + 2);
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i1 = 0; i1 < numberOfVariables; i1++) {
@@ -68,13 +70,13 @@ public class CF10 extends AbstractDoubleProblem {
    *
    * @param solution The solution to evaluate
    */
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double[] x = VectorUtils.toArray(solution.variables());
     double[] f = new double[getNumberOfObjectives()];
-    double[] constraint = new double[getNumberOfConstraints()];
+    double @NotNull [] constraint = new double[getNumberOfConstraints()];
 
     /* ----------------------Evaluate objectives (begin)--------------------------*/
-    double[] sx = new double[getNumberOfObjectives()]; // Cumulative squared sum
+    double @NotNull [] sx = new double[getNumberOfObjectives()]; // Cumulative squared sum
 
     // Step 1. Compute squredSum Sx
     double squredSum = 0.0;
@@ -84,7 +86,7 @@ public class CF10 extends AbstractDoubleProblem {
     }
 
     // Step 2. Compute THETA_
-    double[] theta = new double[10];
+    double @NotNull [] theta = new double[10];
     int count = 0;
     int bound2 = getNumberOfObjectives() - 1;
     for (int i3 = 0; i3 < bound2; i3++) {

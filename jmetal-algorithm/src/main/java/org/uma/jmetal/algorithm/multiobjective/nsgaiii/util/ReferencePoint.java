@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -41,17 +42,17 @@ public class ReferencePoint<S extends Solution<?>> {
   }
 
   public void generateReferencePoints(
-          List<ReferencePoint<S>> referencePoints,
+          @NotNull List<ReferencePoint<S>> referencePoints,
           int numberOfObjectives,
           int numberOfDivisions) {
 
-    ReferencePoint<S> refPoint = new ReferencePoint<>(numberOfObjectives) ;
+    @NotNull ReferencePoint<S> refPoint = new ReferencePoint<>(numberOfObjectives) ;
     generateRecursive(referencePoints, refPoint, numberOfObjectives, numberOfDivisions, numberOfDivisions, 0);
   }
 
   private void generateRecursive(
           List<ReferencePoint<S>> referencePoints,
-          ReferencePoint<S> refPoint,
+          @NotNull ReferencePoint<S> refPoint,
           int numberOfObjectives,
           int left,
           int total,

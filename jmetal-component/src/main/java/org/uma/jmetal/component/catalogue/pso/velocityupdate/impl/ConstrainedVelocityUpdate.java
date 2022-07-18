@@ -1,6 +1,9 @@
 package org.uma.jmetal.component.catalogue.pso.velocityupdate.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.component.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.VelocityUpdate;
@@ -48,14 +51,14 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
    * @param c2Max:     Max value for c2.
    */
   public ConstrainedVelocityUpdate(double r1Min,
-      double r1Max,
-      double r2Min,
-      double r2Max,
-      double c1Min,
-      double c1Max,
-      double c2Min,
-      double c2Max,
-      DoubleProblem problem) {
+                                   double r1Max,
+                                   double r2Min,
+                                   double r2Max,
+                                   double c1Min,
+                                   double c1Max,
+                                   double c2Min,
+                                   double c2Max,
+                                   @NotNull DoubleProblem problem) {
     this.r1Max = r1Max;
     this.r1Min = r1Min;
     this.r2Max = r2Max;
@@ -94,13 +97,13 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
    * @return Updated speed.
    */
   public double[][] update(List<DoubleSolution> swarm, double[][] speed, DoubleSolution[] localBest,
-      BoundedArchive<DoubleSolution> leaders, GlobalBestSelection globalBestSelection,
-      InertiaWeightComputingStrategy inertiaWeightComputingStrategy) {
+                           @NotNull BoundedArchive<DoubleSolution> leaders, GlobalBestSelection globalBestSelection,
+                           InertiaWeightComputingStrategy inertiaWeightComputingStrategy) {
     double r1, r2, c1, c2;
     DoubleSolution bestGlobal;
 
     for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+      @Nullable DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       DoubleSolution bestParticle = (DoubleSolution) localBest[i].copy();
 
       bestGlobal = globalBestSelection.select(leaders.getSolutionList()) ;
@@ -139,7 +142,7 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
    * @return
    */
   private double velocityConstriction(
-      double v, double[] deltaMax, double[] deltaMin, int variableIndex) {
+          double v, double[] deltaMax, double @NotNull [] deltaMin, int variableIndex) {
     double result;
 
     double dmax = deltaMax[variableIndex];

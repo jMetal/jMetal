@@ -2,6 +2,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.sol
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -31,7 +33,7 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
   }
 
   public List<DoubleSolution> create() {
-    List<DoubleSolution> solutionList = new ArrayList<>(numberOfSolutionsToCreate);
+    @NotNull List<DoubleSolution> solutionList = new ArrayList<>(numberOfSolutionsToCreate);
 
     for (int i = 0; i < numberOfSolutionsToCreate; i++) {
       List<Double> variables = generateVariables();
@@ -47,8 +49,8 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
     return solutionList;
   }
 
-  private List<Double> generateVariables() {
-    List<Double> vars = new ArrayList<>(problem.getNumberOfVariables());
+  private @NotNull List<Double> generateVariables() {
+    @NotNull List<Double> vars = new ArrayList<>(problem.getNumberOfVariables());
 
     double value;
     int range;

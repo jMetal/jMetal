@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.evaluator.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -25,7 +27,7 @@ public class MultiThreadedSolutionListEvaluator<S> implements SolutionListEvalua
   }
 
   @Override
-  public List<S> evaluate(List<S> solutionList, Problem<S> problem) {
+  public @NotNull List<S> evaluate(List<S> solutionList, @NotNull Problem<S> problem) {
     solutionList.parallelStream().forEach(problem::evaluate);
 
     return solutionList;

@@ -3,6 +3,8 @@ package org.uma.jmetal.util.restartstrategy.impl;
 import static org.uma.jmetal.util.SolutionListUtils.removeSolutionsFromList;
 
 import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -19,7 +21,7 @@ public class RemoveFirstNSolutions<S extends Solution<?>> implements RemoveSolut
   }
 
   @Override
-  public int remove(List<S> solutionList, DynamicProblem<S, ?> problem) {
+  public int remove(List<S> solutionList, @Nullable DynamicProblem<S, ?> problem) {
     if (solutionList == null) {
       throw new JMetalException("The solution list is null") ;
     } else if (problem == null) {

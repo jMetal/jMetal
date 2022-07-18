@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.smpso;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
@@ -51,7 +53,7 @@ public class SMPSOBigDataRunner extends AbstractAlgorithmRunner {
 
     problem = new BigOpt2015(instanceName) ;
 
-    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(20) ;
+    @NotNull BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(20) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;

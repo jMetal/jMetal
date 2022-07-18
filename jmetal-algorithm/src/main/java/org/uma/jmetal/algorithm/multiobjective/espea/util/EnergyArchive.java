@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.espea.util;
 
 import java.util.Comparator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.ScalarizationWrapper.ScalarizationType;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -148,7 +150,7 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public @NotNull Comparator<S> getComparator() {
     return fitnessComparator;
   }
 
@@ -168,13 +170,13 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
     // Distance matrix
     double[][] distanceMatrix;
     if (normalizeObjectives) {
-      FrontNormalizer normalizer = new FrontNormalizer(getSolutionList());
+      @NotNull FrontNormalizer normalizer = new FrontNormalizer(getSolutionList());
       distanceMatrix = SolutionListUtils.distanceMatrix(normalizer.normalize(getSolutionList()));
     } else
       distanceMatrix = SolutionListUtils.distanceMatrix(getSolutionList());
 
     // Set fitness based on replacement strategy
-    double[] energyVector = energyVector(distanceMatrix);
+    double @NotNull [] energyVector = energyVector(distanceMatrix);
     double[] replacementVector = replacementVector(distanceMatrix);
     // Flag for memorizing whether solution can improve archive
     boolean eligible = false;
@@ -282,10 +284,10 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
    * @param distanceMatrix Distance between archive members
    * @return The replacement energy vector.
    */
-  private double[] replacementVector(double[][] distanceMatrix) {
+  private double[] replacementVector(double[] @NotNull [] distanceMatrix) {
     double[] replacementVector = new double[distanceMatrix.length - 1];
     // Energy between archive member k and new solution
-    double[] individualEnergy = new double[distanceMatrix.length - 1];
+    double @NotNull [] individualEnergy = new double[distanceMatrix.length - 1];
     // Sum of all individual energies
     double totalEnergy = 0.0;
     for (int i = 0; i < replacementVector.length; i++) {

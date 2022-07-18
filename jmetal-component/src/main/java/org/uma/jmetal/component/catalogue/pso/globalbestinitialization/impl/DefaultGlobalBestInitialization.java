@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
@@ -19,8 +21,8 @@ public class DefaultGlobalBestInitialization implements GlobalBestInitialization
    * @param: globalBest: List or Empty List of auxiliary solutions
    * @return: globalBest: List with different global solutions.
    */
-  public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm,
-      BoundedArchive<DoubleSolution> globalBest) {
+  public @NotNull BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm,
+                                                            BoundedArchive<DoubleSolution> globalBest) {
     Check.notNull(swarm);
     Check.notNull(globalBest);
     Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());

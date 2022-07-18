@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -38,17 +40,17 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
   private List<DoubleSolution> archive ;
 
   public MOEADIEpsilon(
-      Problem<DoubleSolution> problem,
-      int populationSize,
-      int resultPopulationSize,
-      int maxEvaluations,
-      MutationOperator<DoubleSolution> mutation,
-      CrossoverOperator<DoubleSolution> crossover,
-      FunctionType functionType,
-      String dataDirectory,
-      double neighborhoodSelectionProbability,
-      int maximumNumberOfReplacedSolutions,
-      int neighborSize) {
+          @NotNull Problem<DoubleSolution> problem,
+          int populationSize,
+          int resultPopulationSize,
+          int maxEvaluations,
+          MutationOperator<DoubleSolution> mutation,
+          CrossoverOperator<DoubleSolution> crossover,
+          FunctionType functionType,
+          String dataDirectory,
+          double neighborhoodSelectionProbability,
+          int maximumNumberOfReplacedSolutions,
+          int neighborSize) {
     super(
         problem,
         populationSize,
@@ -119,7 +121,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         List<DoubleSolution> parents = parentSelection(subProblemId, neighborType);
 
         differentialEvolutionCrossover.setCurrentSolution(population.get(subProblemId));
-        List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
+        @NotNull List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
 
         DoubleSolution child = children.get(0);
         mutationOperator.execute(child);
@@ -212,7 +214,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "MOEA/D IEpsilon";
   }
 
@@ -226,7 +228,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
       List<DoubleSolution> feasibleSolutions = new ArrayList<>();
       for (DoubleSolution doubleSolution : population) {
           if (isFeasible(doubleSolution)) {
-              DoubleSolution copy = (DoubleSolution) doubleSolution.copy();
+              @Nullable DoubleSolution copy = (DoubleSolution) doubleSolution.copy();
               feasibleSolutions.add(copy);
           }
       }

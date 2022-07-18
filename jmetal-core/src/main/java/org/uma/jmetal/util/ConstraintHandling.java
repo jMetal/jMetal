@@ -2,6 +2,8 @@ package org.uma.jmetal.util;
 
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -70,7 +72,7 @@ public class ConstraintHandling {
    * @param numberOfViolatedConstraints
    * @param <S>
    */
-  public static <S extends Solution<?>> void numberOfViolatedConstraints(S solution, int numberOfViolatedConstraints) {
+  public static <S extends Solution<?>> void numberOfViolatedConstraints(@NotNull S solution, int numberOfViolatedConstraints) {
     solution.attributes().put(PRECOMPUTED.NUMBER_OF_VIOLATED_CONSTRAINTS, numberOfViolatedConstraints) ;
   }
 
@@ -83,7 +85,7 @@ public class ConstraintHandling {
    * @param <S>
    * @return
    */
-  public static <S extends Solution<?>> double overallConstraintViolationDegree(S solution) {
+  public static <S extends Solution<?>> double overallConstraintViolationDegree(@NotNull S solution) {
     double overallConstraintViolation =
         (double) solution.attributes().getOrDefault(
             PRECOMPUTED.OVERALL_CONSTRAINT_VIOLATION,
@@ -111,7 +113,7 @@ public class ConstraintHandling {
   public static <S extends Solution<?>> double feasibilityRatio(List<S> solutions) {
     Check.collectionIsNotEmpty(solutions);
     long count = 0L;
-    for (S solution : solutions) {
+    for (@NotNull S solution : solutions) {
       if (isFeasible(solution)) {
         count++;
       }

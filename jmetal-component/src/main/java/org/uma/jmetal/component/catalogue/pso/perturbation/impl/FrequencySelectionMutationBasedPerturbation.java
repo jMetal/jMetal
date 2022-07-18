@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.pso.perturbation.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.pso.perturbation.Perturbation;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -45,7 +47,7 @@ public class FrequencySelectionMutationBasedPerturbation implements Perturbation
    * @param swarm: List of possible soultions.
    * @return List of mutated possible solutions.
    */
-  public List<DoubleSolution> perturb(List<DoubleSolution> swarm) {
+  public @NotNull List<DoubleSolution> perturb(@NotNull List<DoubleSolution> swarm) {
     Check.notNull(swarm);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 

@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.point.util.comparator;
 
 import java.util.Comparator;
+
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
@@ -22,7 +24,7 @@ public class LexicographicalPointComparator implements Comparator<Point> {
    * @return The following value: -1 if point1 < point2, 1 if point1 > point2 or 0 in other case.
    */
   @Override
-  public int compare(Point pointOne, Point pointTwo) {
+  public int compare(@Nullable Point pointOne, Point pointTwo) {
     if (pointOne ==  null) {
       throw new JMetalException("PointOne is null") ;
     } else if (pointTwo == null) {

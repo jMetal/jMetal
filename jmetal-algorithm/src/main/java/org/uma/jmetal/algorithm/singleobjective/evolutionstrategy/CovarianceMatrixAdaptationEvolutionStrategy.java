@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util.CMAESUtils;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -89,7 +91,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private double chiN;
 
-  private DoubleSolution bestSolutionEver = null;
+  private @Nullable DoubleSolution bestSolutionEver = null;
 
   private Random rand;
 
@@ -139,12 +141,12 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       sigma = DEFAULT_SIGMA;
     }
 
-    public Builder setLambda(int lambda) {
+    public @NotNull Builder setLambda(int lambda) {
       this.lambda = lambda;
       return this;
     }
 
-    public Builder setMaxEvaluations(int maxEvaluations) {
+    public @NotNull Builder setMaxEvaluations(int maxEvaluations) {
       this.maxEvaluations = maxEvaluations;
       return this;
     }
@@ -187,7 +189,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     return population;
   }
 
-  @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
+  @Override protected @NotNull List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
     for (DoubleSolution solution : population) {
       getProblem().evaluate(solution);
     }
@@ -198,7 +200,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     return population;
   }
 
-  @Override protected List<DoubleSolution> reproduction(List<DoubleSolution> population) {
+  @Override protected @NotNull List<DoubleSolution> reproduction(List<DoubleSolution> population) {
 
     List<DoubleSolution> offspringPopulation = new ArrayList<>(lambda);
     int bound = lambda;
@@ -371,7 +373,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     int numberOfVariables = getProblem().getNumberOfVariables();
 
-    double[] artmp = new double[numberOfVariables];
+    double @NotNull [] artmp = new double[numberOfVariables];
     for (int i = 0; i < numberOfVariables; i++) {
       artmp[i] = 0;
       for (int j = 0; j < numberOfVariables; j++) {
@@ -448,13 +450,13 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       }
 
       // eigen decomposition, b==normalized eigenvectors
-      double[] offdiag = new double[numberOfVariables];
+      double @NotNull [] offdiag = new double[numberOfVariables];
       CMAESUtils.tred2(numberOfVariables, b, diagD, offdiag);
       CMAESUtils.tql2(numberOfVariables, diagD, offdiag, b);
 
       checkEigenCorrectness();
 
-      double[][] artmp2 = new double[numberOfVariables][numberOfVariables];
+      double[] @NotNull [] artmp2 = new double[numberOfVariables][numberOfVariables];
       for (int i = 0; i < numberOfVariables; i++) {
         if (diagD[i] > 0) {
           diagD[i] = Math.sqrt(diagD[i]);

@@ -2,6 +2,9 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.bounds.Bounds;
@@ -63,7 +66,7 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
 
   /** Execute() method */
   @Override
-  public List<IntegerSolution> execute(List<IntegerSolution> solutions) {
+  public List<IntegerSolution> execute(@Nullable List<IntegerSolution> solutions) {
     if (null == solutions) {
       throw new JMetalException("Null parameter") ;
     } else if (solutions.size() != 2) {
@@ -75,7 +78,7 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
 
   /** doCrossover method */
   public List<IntegerSolution> doCrossover(
-          double probability, IntegerSolution parent1, IntegerSolution parent2) {
+          double probability, IntegerSolution parent1, @NotNull IntegerSolution parent2) {
     List<IntegerSolution> offspring = new ArrayList<IntegerSolution>(2);
 
     offspring.add((IntegerSolution) parent1.copy()) ;

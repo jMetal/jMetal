@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -41,10 +43,10 @@ public class Kursawe extends AbstractDoubleProblem {
   }
 
   /** Evaluate() method */
-  public DoubleSolution evaluate(DoubleSolution solution){
+  public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution){
     double aux, xi, xj;
     double[] fx = new double[solution.objectives().length];
-    double[] x = new double[getNumberOfVariables()];
+    double @NotNull [] x = new double[getNumberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i) ;
     }

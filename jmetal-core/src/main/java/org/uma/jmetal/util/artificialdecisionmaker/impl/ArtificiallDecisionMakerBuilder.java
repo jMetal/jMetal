@@ -1,6 +1,9 @@
 package org.uma.jmetal.util.artificialdecisionmaker.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.problem.Problem;
@@ -41,12 +44,12 @@ public class ArtificiallDecisionMakerBuilder<S extends Solution<?>> implements A
     return this;
   }
 
-  public ArtificiallDecisionMakerBuilder<S> setAsp(List<Double> asp) {
+  public @NotNull ArtificiallDecisionMakerBuilder<S> setAsp(List<Double> asp) {
     this.asp = asp;
     return this;
   }
 
-  public ArtificiallDecisionMakerBuilder<S> setAlgorithm(InteractiveAlgorithm<S,List<S>> algorithm) {
+  public ArtificiallDecisionMakerBuilder<S> setAlgorithm(@Nullable InteractiveAlgorithm<S,List<S>> algorithm) {
     if (algorithm==null) {
       throw new JMetalException("algorithm is null");
     }
@@ -62,7 +65,7 @@ public class ArtificiallDecisionMakerBuilder<S extends Solution<?>> implements A
     return this;
   }
 
-  public ArtificiallDecisionMakerBuilder<S> setTolerance(double tolerance) {
+  public @NotNull ArtificiallDecisionMakerBuilder<S> setTolerance(double tolerance) {
     if (tolerance < 0.0) {
       throw new JMetalException("tolerance is negative: " + tolerance);
     }
@@ -70,7 +73,7 @@ public class ArtificiallDecisionMakerBuilder<S extends Solution<?>> implements A
     return this;
   }
 
-  public ArtificiallDecisionMakerBuilder<S> setRankingCoeficient(List<Double> rankingCoeficient) {
+  public @NotNull ArtificiallDecisionMakerBuilder<S> setRankingCoeficient(List<Double> rankingCoeficient) {
     this.rankingCoeficient = rankingCoeficient;
     return this;
   }
@@ -82,7 +85,7 @@ public class ArtificiallDecisionMakerBuilder<S extends Solution<?>> implements A
 
 
   public ArtificialDecisionMakerDecisionTree<S> build() {
-    ArtificialDecisionMakerDecisionTree<S> algorithmRun = null ;
+    @Nullable ArtificialDecisionMakerDecisionTree<S> algorithmRun = null ;
     algorithmRun = new ArtificialDecisionMakerDecisionTree<S>(problem,algorithm,considerationProbability,tolerance, maxEvaluations,
           rankingCoeficient,asp);
 

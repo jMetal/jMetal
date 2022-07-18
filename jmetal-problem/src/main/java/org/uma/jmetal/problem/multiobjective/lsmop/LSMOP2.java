@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Griewank;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Schwefel;
@@ -33,12 +34,12 @@ public class LSMOP2 extends AbstractLSMOP1_4 {
   }
 
   @Override
-  protected Function getOddFunction() {
+  protected @NotNull Function getOddFunction() {
     return new Griewank();
   }
 
   @Override
-  protected Function getEvenFunction() {
+  protected @NotNull Function getEvenFunction() {
     return new Schwefel();
   }
 

@@ -2,6 +2,8 @@ package org.uma.jmetal.lab.visualization.html.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.visualization.html.HtmlComponent;
 /**
  * This class makes possible to group elements inside the HTML file using the flexbox technology.
@@ -34,7 +36,7 @@ public class HtmlGridView implements HtmlComponent {
       stringBuilder.append("<h2>").append(title).append("</h2>\n");
     }
     stringBuilder.append("<div class='grid-container'>\n");
-    for (HtmlComponent component : components) {
+    for (@NotNull HtmlComponent component : components) {
       stringBuilder.append("<div class='grid-item'>\n");
       stringBuilder.append(component.getHtml());
       stringBuilder.append("</div>\n");
@@ -44,7 +46,7 @@ public class HtmlGridView implements HtmlComponent {
   }
 
   @Override
-  public String getCSS() {
+  public @NotNull String getCSS() {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("h2 { text-align: center; }");
     stringBuilder.append(".grid-container")

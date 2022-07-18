@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.sequencegenerator.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
@@ -18,7 +19,7 @@ public class IntegerPermutationGenerator implements SequenceGenerator<Integer> {
   }
 
   @Override
-  public Integer getValue() {
+  public @NotNull Integer getValue() {
     return sequence[index];
   }
 
@@ -33,9 +34,9 @@ public class IntegerPermutationGenerator implements SequenceGenerator<Integer> {
 
   private int[] randomPermutation(int size) {
     int[] permutation = new int[size] ;
-    JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
-    int[] index = new int[size];
-    boolean[] flag = new boolean[size];
+    @NotNull JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
+    int @NotNull [] index = new int[size];
+    boolean @NotNull [] flag = new boolean[size];
 
     for (int n = 0; n < size; n++) {
       index[n] = n;

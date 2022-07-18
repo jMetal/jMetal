@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -53,14 +55,14 @@ public class lsmop1With100VariablesExperiment {
 
         String experimentBaseDirectory = args[0];
 
-        List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
+        @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
         problemList.add(new ExperimentProblem<>(new LSMOP1_2_100()).setReferenceFront("LSMOP1.2D.csv"));
 
 
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
                 configureAlgorithmList(problemList);
 
-        Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+        @NotNull Experiment<DoubleSolution, List<DoubleSolution>> experiment =
                 new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("LSMOP1With100VariablesAutoAlgorithmExperiments")
                         .setAlgorithmList(algorithmList)
                         .setProblemList(problemList)
@@ -111,7 +113,7 @@ public class lsmop1With100VariablesExperiment {
             for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
                 double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
                 double mutationDistributionIndex = 20.0;
-                Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
+                @NotNull Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                         (DoubleProblem) experimentProblem.getProblem(),
                         new CrowdingDistanceArchive<DoubleSolution>(100))
                         .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
@@ -191,7 +193,7 @@ public class lsmop1With100VariablesExperiment {
                         + "--wMax 0.1337 "
                 )
                         .split("\\s+");
-                AutoMOPSO AutoMOPSO = new AutoMOPSO();
+                @NotNull AutoMOPSO AutoMOPSO = new AutoMOPSO();
                 AutoMOPSO.parseAndCheckParameters(parametersAutoMOPSO);
                 ParticleSwarmOptimizationAlgorithm automopso = AutoMOPSO.create();
 
@@ -229,7 +231,7 @@ public class lsmop1With100VariablesExperiment {
                         .split("\\s+");
                 AutoMOPSO OMOPSO = new AutoMOPSO();
                 OMOPSO.parseAndCheckParameters(parametersOMOPSO);
-                ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
+                @NotNull ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
 
                 algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
             }

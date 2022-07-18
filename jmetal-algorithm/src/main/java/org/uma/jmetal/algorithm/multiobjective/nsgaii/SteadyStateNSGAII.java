@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -47,8 +49,8 @@ public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
     return matingPopulation;
   }
 
-  @Override protected List<S> reproduction(List<S> population) {
-    List<S> offspringPopulation = new ArrayList<>(1);
+  @Override protected List<S> reproduction(@NotNull List<S> population) {
+    @NotNull List<S> offspringPopulation = new ArrayList<>(1);
 
     List<S> parents = new ArrayList<>(2);
     parents.add(population.get(0));

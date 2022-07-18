@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.pso.velocityinitialization.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.pso.velocityinitialization.VelocityInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -20,7 +22,7 @@ public class DefaultVelocityInitialization implements VelocityInitialization {
     Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());
 
     int numberOfVariables = swarm.get(0).variables().size() ;
-    double[][] speed = new double[swarm.size()][numberOfVariables] ;
+    double[] @NotNull [] speed = new double[swarm.size()][numberOfVariables] ;
 
     for (int i = 0 ; i < speed.length; i++) {
       for (int j = 0; j < numberOfVariables; j++) {

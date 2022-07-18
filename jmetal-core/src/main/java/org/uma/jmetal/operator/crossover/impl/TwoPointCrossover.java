@@ -1,6 +1,8 @@
 package org.uma.jmetal.operator.crossover.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
 
@@ -16,7 +18,7 @@ public class TwoPointCrossover<T> implements CrossoverOperator<Solution<T>> {
   }
 
   @Override
-  public List<Solution<T>> execute(List<Solution<T>> solutions) {
+  public List<Solution<T>> execute(@NotNull List<Solution<T>> solutions) {
     return operator.execute(solutions);
   }
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
@@ -88,17 +90,17 @@ public class AutoNSGAII {
     autoConfigurableParameterList.add(variationParameter);
     autoConfigurableParameterList.add(selectionParameter);
 
-    for (Parameter<?> parameter : autoConfigurableParameterList) {
+    for (@NotNull Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
     }
   }
 
   private void variation(String[] args) {
-    CrossoverParameter crossoverParameter = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
-    ProbabilityParameter crossoverProbability =
+    @NotNull CrossoverParameter crossoverParameter = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
+    @NotNull ProbabilityParameter crossoverProbability =
         new ProbabilityParameter("crossoverProbability", args);
     crossoverParameter.addGlobalParameter(crossoverProbability);
-    RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
+    @NotNull RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
             "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     crossoverParameter.addGlobalParameter(crossoverRepairStrategy);
@@ -106,10 +108,10 @@ public class AutoNSGAII {
     RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
     crossoverParameter.addSpecificParameter("SBX", distributionIndex);
 
-    RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
+    @NotNull RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
     crossoverParameter.addSpecificParameter("BLX_ALPHA", alpha);
 
-    MutationParameter mutationParameter =
+    @NotNull MutationParameter mutationParameter =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
 
     RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0.0, 2.0) ;
@@ -119,7 +121,7 @@ public class AutoNSGAII {
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutationParameter.addGlobalParameter(mutationRepairStrategy);
 
-    RealParameter distributionIndexForPolynomialMutation =
+    @NotNull RealParameter distributionIndexForPolynomialMutation =
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
     mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
@@ -157,7 +159,7 @@ public class AutoNSGAII {
 
   private void selection(String[] args) {
     selectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random"));
-    IntegerParameter selectionTournamentSize =
+    @NotNull IntegerParameter selectionTournamentSize =
         new IntegerParameter("selectionTournamentSize", args, 2, 10);
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
   }
@@ -185,9 +187,9 @@ public class AutoNSGAII {
    *
    * @return
    */
-  public EvolutionaryAlgorithm<DoubleSolution> create() {
+  public @NotNull EvolutionaryAlgorithm<DoubleSolution> create() {
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
+    @NotNull Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
 
     Archive<DoubleSolution> archive = null;
 
@@ -221,7 +223,7 @@ public class AutoNSGAII {
             selectionParameter.getParameter(
                 variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
+    @NotNull Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
     Preference<DoubleSolution> preferenceForReplacement = new Preference<>(ranking, densityEstimator) ;
     Replacement<DoubleSolution> replacement =
@@ -230,7 +232,7 @@ public class AutoNSGAII {
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
-    var nsgaii = new EvolutionaryAlgorithm<>(
+    @NotNull var nsgaii = new EvolutionaryAlgorithm<>(
             "NSGA-II",
             evaluation,
             initialSolutionsCreation,

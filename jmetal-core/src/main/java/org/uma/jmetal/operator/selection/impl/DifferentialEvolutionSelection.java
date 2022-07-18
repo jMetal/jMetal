@@ -3,6 +3,8 @@ package org.uma.jmetal.operator.selection.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -70,7 +72,7 @@ public class DifferentialEvolutionSelection
             + " solutions: "
             + solutionList.size());
 
-    List<Integer> indexList = new ArrayList<>();
+    @NotNull List<Integer> indexList = new ArrayList<>();
 
     int solutionsToSelect =
         selectCurrentSolution ? numberOfSolutionsToSelect - 1 : numberOfSolutionsToSelect;

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -81,8 +83,8 @@ public class NSGAIISolvingConstrainedProblemRunner extends AbstractAlgorithmRunn
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-      List<DoubleSolution> population = new ArrayList<>();
-      for (DoubleSolution doubleSolution : algorithm.getResult()) {
+      @NotNull List<DoubleSolution> population = new ArrayList<>();
+      for (@NotNull DoubleSolution doubleSolution : algorithm.getResult()) {
           if (ConstraintHandling.isFeasible(doubleSolution)) {
               population.add(doubleSolution);
           }

@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.singleobjective;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.StandardPSO2011;
@@ -15,6 +14,9 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class to configure and run a StandardPSO2007. The algorithm can be configured to use threads. The
  * number of cores is specified as an optional parameter. The target problem is Sphere.
@@ -25,7 +27,7 @@ public class StandardPSO2011Runner {
   private static final int DEFAULT_NUMBER_OF_CORES = 1;
 
   /** Usage: java org.uma.jmetal.runner.singleobjective.StandardPSO2007Runner [cores] */
-  public static void main(String[] args) throws Exception {
+  public static void main(String @NotNull [] args) throws Exception {
 
     DoubleProblem problem;
     Algorithm<DoubleSolution> algorithm;

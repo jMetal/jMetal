@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.extremevalues.ExtremeValuesFinder;
 import org.uma.jmetal.util.legacy.front.Front;
@@ -16,7 +17,7 @@ import org.uma.jmetal.util.legacy.front.Front;
  */
 public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Double>> {
 
-  @Override public List<Double> findLowestValues(Front front) {
+  @Override public @NotNull List<Double> findLowestValues(Front front) {
     List<Double> minimumValue;
 
     if (front == null) {

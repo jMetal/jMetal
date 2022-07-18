@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -61,7 +62,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     return evaluations >= maxEvaluations ;
   }
 
-  @Override protected List<S> evaluatePopulation(List<S> population) {
+  @Override protected List<S> evaluatePopulation(@NotNull List<S> population) {
     for (S solution : population) {
       getProblem().evaluate(solution);
     }
@@ -78,7 +79,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
       return matingPopulation;
   }
 
-  @Override protected List<S> reproduction(List<S> population) {
+  @Override protected @NotNull List<S> reproduction(List<S> population) {
     List<S> offspringPopulation = new ArrayList<>(1);
 
     List<S> parents = new ArrayList<>(2);
@@ -93,12 +94,12 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     return offspringPopulation;
   }
 
-  @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+  @Override protected List<S> replacement(@NotNull List<S> population, List<S> offspringPopulation) {
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
 
-    Ranking<S> ranking = new MergeNonDominatedSortRanking<>();
+    @NotNull Ranking<S> ranking = new MergeNonDominatedSortRanking<>();
     ranking.compute(jointPopulation) ;
 
     List<S> lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
@@ -118,11 +119,11 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     return getPopulation();
   }
 
-  @Override public String getName() {
+  @Override public @NotNull String getName() {
     return "SMSEMOA" ;
   }
 
-  @Override public String getDescription() {
+  @Override public @NotNull String getDescription() {
     return "S metric selection EMOA" ;
   }
 }

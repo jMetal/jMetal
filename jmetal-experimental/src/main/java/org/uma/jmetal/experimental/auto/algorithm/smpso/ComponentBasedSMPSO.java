@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.smpso;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -37,9 +38,9 @@ public class ComponentBasedSMPSO {
 
     var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
     var evaluation = new SequentialEvaluation<>(problem);
-    var termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
+    @NotNull var termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
     var velocityInitialization = new DefaultVelocityInitialization();
-    var localBestInitialization = new DefaultLocalBestInitialization();
+    @NotNull var localBestInitialization = new DefaultLocalBestInitialization();
     var globalBestInitialization = new DefaultGlobalBestInitialization();
 
     BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);

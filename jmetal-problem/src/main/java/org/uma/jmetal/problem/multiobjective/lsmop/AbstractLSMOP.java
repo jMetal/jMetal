@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -20,7 +21,7 @@ public abstract class AbstractLSMOP extends AbstractDoubleProblem {
     setNumberOfObjectives(numberOfObjectives);
 
     List<Double> lowerLimit = new ArrayList<Double>(numberOfVariables);
-    List<Double> upperLimit = new ArrayList<Double>(numberOfVariables);
+    @NotNull List<Double> upperLimit = new ArrayList<Double>(numberOfVariables);
 
     for (int i = 0; i < getNumberOfObjectives() - 1; i++) {
       lowerLimit.add(0.0);
@@ -38,7 +39,7 @@ public abstract class AbstractLSMOP extends AbstractDoubleProblem {
     double c = 3.8 * 0.1 * (1 - 0.1);
     double sum = c;
 
-    List<Double> c_list = new ArrayList<>(getNumberOfObjectives());
+    @NotNull List<Double> c_list = new ArrayList<>(getNumberOfObjectives());
     c_list.add(c);
     for (int i = 0; i < getNumberOfObjectives() - 1; i++) {
       c = 3.8 * c * (1.0 - c);

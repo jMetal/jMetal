@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
@@ -65,7 +66,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
 
       List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
       for (List<Double> referencePoint : referencePoints) {
-          CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
+          @NotNull CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
                   swarmSize / referencePoints.size(), referencePoint);
           archivesWithReferencePoints.add(doubleSolutionCrowdingDistanceArchiveWithReferencePoint);
       }
@@ -93,7 +94,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
     CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure(
         "currentIteration");
 
-    ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 300);
+    @NotNull ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 300);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.setReferencePoint(referencePoints);
     chart.initChart();
@@ -141,7 +142,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
       this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
     }
 
-    private void refreshChart(List<DoubleSolution> solutionList) {
+    private void refreshChart(@NotNull List<DoubleSolution> solutionList) {
       if (this.chart != null) {
         iteration++;
         this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
@@ -151,7 +152,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
     }
 
     @Override
-    synchronized public void measureGenerated(List<DoubleSolution> solutions) {
+    synchronized public void measureGenerated(@NotNull List<DoubleSolution> solutions) {
       refreshChart(solutions);
     }
   }

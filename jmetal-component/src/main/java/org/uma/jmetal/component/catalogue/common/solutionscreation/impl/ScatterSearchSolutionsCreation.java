@@ -2,6 +2,8 @@ package org.uma.jmetal.component.catalogue.common.solutionscreation.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -19,7 +21,7 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
   protected int[][] reverseFrequency;
 
   public ScatterSearchSolutionsCreation(
-      DoubleProblem problem, int numberOfSolutionsToCreate, int numberOfSubRanges) {
+          @NotNull DoubleProblem problem, int numberOfSolutionsToCreate, int numberOfSubRanges) {
     this.problem = problem;
     this.numberOfSolutionsToCreate = numberOfSolutionsToCreate;
     this.numberOfSubRanges = numberOfSubRanges;
@@ -31,7 +33,7 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
   }
 
   public List<DoubleSolution> create() {
-    List<DoubleSolution> solutionList = new ArrayList<>(numberOfSolutionsToCreate);
+    @NotNull List<DoubleSolution> solutionList = new ArrayList<>(numberOfSolutionsToCreate);
 
     for (int i = 0; i < numberOfSolutionsToCreate; i++) {
       List<Double> variables = generateVariables();

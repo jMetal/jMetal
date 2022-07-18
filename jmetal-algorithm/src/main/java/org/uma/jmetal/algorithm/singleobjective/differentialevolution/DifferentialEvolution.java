@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
@@ -71,7 +72,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
   }
 
   @Override protected List<DoubleSolution> createInitialPopulation() {
-    List<DoubleSolution> population = new ArrayList<>(populationSize);
+    @NotNull List<DoubleSolution> population = new ArrayList<>(populationSize);
     int bound = populationSize;
     for (int i = 0; i < bound; i++) {
       DoubleSolution solution = getProblem().createSolution();
@@ -104,9 +105,9 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
     return offspringPopulation;
   }
 
-  @Override protected List<DoubleSolution> replacement(List<DoubleSolution> population,
-      List<DoubleSolution> offspringPopulation) {
-    List<DoubleSolution> pop = new ArrayList<>();
+  @Override protected @NotNull List<DoubleSolution> replacement(@NotNull List<DoubleSolution> population,
+                                                                List<DoubleSolution> offspringPopulation) {
+    @NotNull List<DoubleSolution> pop = new ArrayList<>();
 
     for (int i = 0; i < populationSize; i++) {
       if (comparator.compare(population.get(i), offspringPopulation.get(i)) < 0) {
@@ -129,7 +130,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
     return getPopulation().get(0);
   }
 
-  @Override public String getName() {
+  @Override public @NotNull String getName() {
     return "DE" ;
   }
 

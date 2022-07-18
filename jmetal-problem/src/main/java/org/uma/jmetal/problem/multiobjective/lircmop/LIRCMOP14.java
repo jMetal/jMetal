@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class LIRCMOP14 extends LIRCMOP13 {
   }
 
   /** EvaluateConstraints() method */
-  public void evaluateConstraints(DoubleSolution solution) {
+  public void evaluateConstraints(@NotNull DoubleSolution solution) {
     double[] constraint = new double[getNumberOfConstraints()];
 
       double f = 0.0;

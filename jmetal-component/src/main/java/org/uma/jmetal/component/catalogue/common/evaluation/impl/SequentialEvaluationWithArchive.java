@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.common.evaluation.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
@@ -19,10 +21,10 @@ public class SequentialEvaluationWithArchive<S extends Solution<?>> extends Sequ
   }
 
   @Override
-  public List<S> evaluate(List<S> solutionList) {
+  public List<S> evaluate(@NotNull List<S> solutionList) {
     List<S> solutions = super.evaluate(solutionList) ;
 
-      for (S solution : solutions) {
+      for (@NotNull S solution : solutions) {
           archive.add((S) solution.copy());
       }
 

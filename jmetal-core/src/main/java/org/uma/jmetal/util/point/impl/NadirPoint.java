@@ -2,6 +2,8 @@ package org.uma.jmetal.util.point.impl;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -18,7 +20,7 @@ public class NadirPoint extends ArrayPoint {
   }
 
   @Override
-  public void update(double[] point) {
+  public void update(double @NotNull [] point) {
     Check.that(point.length == this.point.length, "The point to be update have a dimension of " + point.length + " "
             + "while the parameter point has a dimension of " + point.length);
 
@@ -30,7 +32,7 @@ public class NadirPoint extends ArrayPoint {
   }
 
   public void update(List<? extends Solution<?>> solutionList) {
-    for (Solution<?> solution : solutionList) {
+    for (@NotNull Solution<?> solution : solutionList) {
       update(solution.objectives()) ;
     }
   }

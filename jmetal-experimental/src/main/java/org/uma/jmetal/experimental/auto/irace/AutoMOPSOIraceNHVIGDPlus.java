@@ -3,6 +3,8 @@ package org.uma.jmetal.experimental.auto.irace;
 import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
 
 import java.io.IOException;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.auto.algorithm.mopso.AutoMOPSO;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
@@ -13,7 +15,7 @@ import org.uma.jmetal.util.VectorUtils;
 public class AutoMOPSOIraceNHVIGDPlus {
 
   public static void main(String[] args) throws IOException {
-    AutoMOPSO mopsoWithParameters = new AutoMOPSO();
+    @NotNull AutoMOPSO mopsoWithParameters = new AutoMOPSO();
     mopsoWithParameters.parseAndCheckParameters(args);
 
     ParticleSwarmOptimizationAlgorithm mopso = mopsoWithParameters.create();
@@ -32,8 +34,8 @@ public class AutoMOPSOIraceNHVIGDPlus {
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    var normalizedHypervolume = new NormalizedHypervolume(normalizedReferenceFront);
-    var igdPlus = new InvertedGenerationalDistancePlus(normalizedReferenceFront);
+    @NotNull var normalizedHypervolume = new NormalizedHypervolume(normalizedReferenceFront);
+    @NotNull var igdPlus = new InvertedGenerationalDistancePlus(normalizedReferenceFront);
     System.out.println(
         normalizedHypervolume.compute(normalizedFront) * igdPlus.compute(normalizedFront));
   }

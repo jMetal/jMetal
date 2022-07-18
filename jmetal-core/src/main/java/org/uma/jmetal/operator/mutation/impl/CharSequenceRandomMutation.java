@@ -1,5 +1,6 @@
 package org.uma.jmetal.operator.mutation.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.sequencesolution.impl.CharSequenceSolution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -43,7 +44,7 @@ public class CharSequenceRandomMutation implements MutationOperator<CharSequence
   }
 
   /** Performs the operation */
-  public void doMutation(CharSequenceSolution solution) {
+  public void doMutation(@NotNull CharSequenceSolution solution) {
     int sequenceLength = solution.variables().size();
 
     for (int i = 0; i < sequenceLength; i++) {

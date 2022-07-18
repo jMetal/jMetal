@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.singleobjective.geneticalgorithm;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder;
@@ -18,6 +17,9 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to configure and run a generational genetic algorithm. The target problem is TSP.
@@ -54,7 +56,7 @@ public class GenerationalGeneticAlgorithmTSPRunner {
             .execute() ;
 
     PermutationSolution<Integer> solution = algorithm.getResult() ;
-    List<PermutationSolution<Integer>> population = new ArrayList<>(1) ;
+    @NotNull List<PermutationSolution<Integer>> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
     long computingTime = algorithmRunner.getComputingTime() ;

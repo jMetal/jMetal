@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.util.measure.Measure;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.PullMeasure;
@@ -30,7 +32,7 @@ public class SimpleMeasureManager implements MeasureManager {
 	/**
 	 * The {@link PullMeasure}s registered to this {@link SimpleMeasureManager}.
 	 */
-	private Map<Object, PullMeasure<?>> pullers = new HashMap<>();
+	private @NotNull Map<Object, PullMeasure<?>> pullers = new HashMap<>();
 	/**
 	 * The {@link PushMeasure}s registered to this {@link SimpleMeasureManager}.
 	 */
@@ -43,7 +45,7 @@ public class SimpleMeasureManager implements MeasureManager {
 	 * {@link #getPushMeasure(Object)}.
 	 */
 	@Override
-	public Collection<Object> getMeasureKeys() {
+	public @NotNull Collection<Object> getMeasureKeys() {
 		HashSet<Object> keys = new HashSet<>();
 		keys.addAll(pullers.keySet());
 		keys.addAll(pushers.keySet());

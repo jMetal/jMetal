@@ -131,5 +131,11 @@
             <artifactId>non-dominated-sorting-implementations</artifactId>
             <version>0.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>23.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

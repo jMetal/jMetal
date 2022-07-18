@@ -2,6 +2,8 @@ package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.Comparator;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentSelection;
@@ -14,7 +16,7 @@ public class SelectionParameter<S extends Solution<?>> extends CategoricalParame
     super("selection", args, selectionStrategies) ;
   }
 
-  public Selection<S> getParameter(int matingPoolSize, Comparator<S> comparator) {
+  public @NotNull Selection<S> getParameter(int matingPoolSize, Comparator<S> comparator) {
     Selection<S> result ;
     switch(getValue()) {
       case "tournament":

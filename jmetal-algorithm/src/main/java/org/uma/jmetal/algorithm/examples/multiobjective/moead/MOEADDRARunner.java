@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.moead;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
@@ -26,7 +28,7 @@ public class MOEADDRARunner extends AbstractAlgorithmRunner {
    * @throws SecurityException Invoking command: java
    *     org.uma.jmetal.runner.multiobjective.moead.MOEADRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws FileNotFoundException {
+  public static void main(String @NotNull [] args) throws FileNotFoundException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     MutationOperator<DoubleSolution> mutation;

@@ -1,6 +1,7 @@
 package org.uma.jmetal.experimental.auto.algorithm.mopso;
 
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
@@ -14,7 +15,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithNonUniforM
   public static void main(String[] args) {
     String referenceFrontFileName = "ZDT4.csv";
 
-    String[] parameters = ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
+    String @NotNull [] parameters = ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
         + "--referenceFrontFileName " + referenceFrontFileName + " "
         + "--maximumNumberOfEvaluations 25000 "
         + "--swarmSize 100 "
@@ -53,7 +54,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithNonUniforM
     AutoMOPSO.print(autoMOPSO.fixedParameterList);
     AutoMOPSO.print(autoMOPSO.autoConfigurableParameterList);
 
-    ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
+    @NotNull ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =

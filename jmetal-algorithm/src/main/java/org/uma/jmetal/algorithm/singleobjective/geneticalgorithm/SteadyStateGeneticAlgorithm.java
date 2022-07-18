@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -44,7 +45,7 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
     return (evaluations >= maxEvaluations);
   }
 
-  @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+  @Override protected List<S> replacement(@NotNull List<S> population, List<S> offspringPopulation) {
     population.sort(comparator);
     int worstSolutionIndex = population.size() - 1;
     if (comparator.compare(population.get(worstSolutionIndex), offspringPopulation.get(0)) > 0) {
@@ -56,7 +57,7 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
   }
 
   @Override protected List<S> reproduction(List<S> matingPopulation) {
-    List<S> offspringPopulation = new ArrayList<>(1);
+    @NotNull List<S> offspringPopulation = new ArrayList<>(1);
 
     List<S> parents = new ArrayList<>(2);
     parents.add(matingPopulation.get(0));

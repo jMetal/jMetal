@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -85,7 +86,7 @@ public class WFGHypervolumeV2<S extends Solution<?>> extends Hypervolume<S> {
     }
 
     @Override
-    public Double evaluate(List<S> paretoFrontApproximation) {
+    public @NotNull Double evaluate(List<S> paretoFrontApproximation) {
             if (paretoFrontApproximation == null) {
       throw new JMetalException("The pareto front approximation is null") ;
     }
@@ -119,7 +120,7 @@ public class WFGHypervolumeV2<S extends Solution<?>> extends Hypervolume<S> {
     int nPoints;
     POINT [] points;
     
-    public FRONT(double frente[][])
+    public FRONT(@NotNull double frente[][])
     {
         points=new POINT[frente.length];
         this.nPoints=frente.length;
@@ -141,7 +142,7 @@ public class WFGHypervolumeV2<S extends Solution<?>> extends Hypervolume<S> {
     static int fr=0;
 
     
-     static double CalculateHypervolume(double [][] fronton, int  noPoints,int  noObjectives){
+     static double CalculateHypervolume(double [] @NotNull [] fronton, int  noPoints, int  noObjectives){
 
         n=noObjectives;
         safe=0;
@@ -171,7 +172,7 @@ static double WORSE(double x, double y)
 
 
 
-static int dominates2way(POINT p, POINT q, int k)
+static int dominates2way(@NotNull POINT p, POINT q, int k)
 // returns -1 if p dominates q, 1 if q dominates p, 2 if p == q, 0 otherwise 
 // k is the highest index inspected 
 {
@@ -189,7 +190,7 @@ static int dominates2way(POINT p, POINT q, int k)
 }
 
 
-static boolean dominates1way(POINT p, POINT q, int k)
+static boolean dominates1way(@NotNull POINT p, POINT q, int k)
 // returns true if p dominates q or p == q, false otherwise 
 // the assumption is that q doesn't dominate p 
 // k is the highest index inspected 
@@ -305,7 +306,7 @@ static double hv2(FRONT ps, int k)
 }
 
 
-static double inclhv(POINT p)
+static double inclhv(@NotNull POINT p)
 // returns the inclusive hypervolume of p
 {
     double volume = 1;
@@ -335,7 +336,7 @@ static double inclhv2(POINT p, POINT q)
 }
 
 
-static double inclhv3(POINT p, POINT q, POINT r)
+static double inclhv3(POINT p, @NotNull POINT q, POINT r)
 // returns the hypervolume of {p, q, r}
 {
   double vp   = 1; double vq   = 1; double vr   = 1;
@@ -381,7 +382,7 @@ static double inclhv3(POINT p, POINT q, POINT r)
 }
 
 
-static double inclhv4(POINT p, POINT q, POINT r, POINT s)
+static double inclhv4(@NotNull POINT p, @NotNull POINT q, POINT r, @NotNull POINT s)
 // returns the hypervolume of {p, q, r, s}
 {
   double vp    = 1; double vq   = 1; double vr   = 1; double vs   = 1;
@@ -536,7 +537,7 @@ static double exclhv(FRONT ps, int p)
 }
 
 
-static double hv(FRONT ps)
+static double hv(@NotNull FRONT ps)
 // returns the hypervolume of ps[0 ..] 
 {
   // process small fronts with the IEA 
@@ -613,17 +614,17 @@ static double hv(FRONT ps)
 
 
   @Override
-  public List<S> computeHypervolumeContribution(List<S> solutionList, List<S> referenceFrontList) {
+  public List<S> computeHypervolumeContribution(@NotNull List<S> solutionList, List<S> referenceFrontList) {
     if (solutionList.size() > 1) {
       Front front = new ArrayFront(solutionList) ;
       Front referenceFront = new ArrayFront(referenceFrontList) ;
 
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
       double[] maximumValues = FrontUtils.getMaximumValues(referenceFront) ;
-      double[] minimumValues = FrontUtils.getMinimumValues(referenceFront) ;
+      double @NotNull [] minimumValues = FrontUtils.getMinimumValues(referenceFront) ;
 
       // STEP 2. Get the normalized front
-      FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues) ;
+      @NotNull FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues) ;
       Front normalizedFront = frontNormalizer.normalize(front) ;
 
       // compute offsets for reference point in normalized space
@@ -676,9 +677,9 @@ static double hv(FRONT ps)
   private double[] hvContributions(double[][] front) {
 
     int numberOfObjectives = front[0].length ;
-    double[] contributions = new double[front.length];
+    double @NotNull [] contributions = new double[front.length];
     double[][] frontSubset = new double[front.length - 1][front[0].length];
-    LinkedList<double[]> frontCopy = new LinkedList<double[]>();
+    @NotNull LinkedList<double[]> frontCopy = new LinkedList<double[]>();
     Collections.addAll(frontCopy, front);
     double[][] totalFront = frontCopy.toArray(frontSubset);
     double totalVolume =

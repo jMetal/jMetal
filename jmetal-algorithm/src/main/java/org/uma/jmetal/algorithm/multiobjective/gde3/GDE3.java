@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
@@ -80,7 +81,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
 
   @Override
   protected List<DoubleSolution> createInitialPopulation() {
-      List<DoubleSolution> population = new ArrayList<>(getMaxPopulationSize());
+      @NotNull List<DoubleSolution> population = new ArrayList<>(getMaxPopulationSize());
       int bound = getMaxPopulationSize();
       for (int i = 0; i < bound; i++) {
           DoubleSolution solution = getProblem().createSolution();
@@ -181,7 +182,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   }
 
   @Override
-  public String getDescription() {
+  public @NotNull String getDescription() {
     return "Generalized Differential Evolution version 3";
   }
 }

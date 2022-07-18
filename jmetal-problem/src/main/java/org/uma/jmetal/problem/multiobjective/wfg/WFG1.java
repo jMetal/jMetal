@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -52,7 +53,7 @@ public class WFG1 extends WFG {
   }
 
   /** Evaluate */
-  public float[] evaluate(float[] z) {
+  public float[] evaluate(float @NotNull [] z) {
     float[] y;
 
     y = normalise(z);
@@ -81,7 +82,7 @@ public class WFG1 extends WFG {
    * WFG1 t1 transformation
    */
   public float[] t1(float[] z, int k) {
-    float[] result = new float[z.length];
+    float @NotNull [] result = new float[z.length];
 
     System.arraycopy(z, 0, result, 0, k);
 
@@ -95,7 +96,7 @@ public class WFG1 extends WFG {
   /**
    * WFG1 t2 transformation
    */
-  public float[] t2(float[] z, int k) {
+  public float[] t2(float @NotNull [] z, int k) {
     float[] result = new float[z.length];
 
     System.arraycopy(z, 0, result, 0, k);
@@ -112,8 +113,8 @@ public class WFG1 extends WFG {
    *
    * @throws JMetalException
    */
-  public float[] t3(float[] z) throws JMetalException {
-    float[] result = new float[z.length];
+  public float[] t3(float @NotNull [] z) throws JMetalException {
+    float @NotNull [] result = new float[z.length];
 
     for (int i = 0; i < z.length; i++) {
       result[i] = (new Transformations()).bPoly(z[i], (float) 0.02);
@@ -127,7 +128,7 @@ public class WFG1 extends WFG {
    */
   public float[] t4(float[] z, int k, int M) {
     float[] result = new float[M];
-    float[] w = new float[z.length];
+    float @NotNull [] w = new float[z.length];
 
     for (int i = 0; i < z.length; i++) {
       w[i] = (float) 2.0 * (i + 1);
@@ -157,8 +158,8 @@ public class WFG1 extends WFG {
    * @param solution The solution to runAlgorithm
    * @throws JMetalException
    */
-  public DoubleSolution evaluate(DoubleSolution solution) {
-    float[] variables = new float[getNumberOfVariables()];
+  public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
+    float @NotNull [] variables = new float[getNumberOfVariables()];
       double[] x = new double[10];
       int count = 0;
       int bound = getNumberOfVariables();

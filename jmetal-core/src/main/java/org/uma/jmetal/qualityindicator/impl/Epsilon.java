@@ -1,5 +1,6 @@
 package org.uma.jmetal.qualityindicator.impl;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -59,7 +60,7 @@ public class Epsilon extends QualityIndicator {
    * @return the value of the epsilon indicator
    * @throws JMetalException
    */
-  private double epsilon(double[][] front, double[][] referenceFront) throws JMetalException {
+  private double epsilon(double[] @NotNull [] front, double[][] referenceFront) throws JMetalException {
 
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 

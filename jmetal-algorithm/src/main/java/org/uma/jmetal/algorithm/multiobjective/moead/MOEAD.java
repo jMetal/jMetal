@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -48,7 +50,7 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
 
     evaluations = populationSize ;
     do {
-      int[] permutation = new int[populationSize];
+      int @NotNull [] permutation = new int[populationSize];
       MOEADUtils.randomPermutation(permutation, populationSize);
 
       for (int i = 0; i < populationSize; i++) {
@@ -58,7 +60,7 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
         List<DoubleSolution> parents = parentSelection(subProblemId, neighborType) ;
 
         differentialEvolutionCrossover.setCurrentSolution(population.get(subProblemId));
-        List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
+        @NotNull List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
 
         DoubleSolution child = children.get(0) ;
         mutationOperator.execute(child);
@@ -83,11 +85,11 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
     }
   }
 
-  @Override public String getName() {
+  @Override public @NotNull String getName() {
     return "MOEAD" ;
   }
 
-  @Override public String getDescription() {
+  @Override public @NotNull String getDescription() {
     return "Multi-Objective Evolutionary Algorithm based on Decomposition" ;
   }
 }

@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem;
 
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
 
@@ -14,7 +15,7 @@ public abstract class AbstractGenericProblem<S> implements Problem<S> {
   private int numberOfVariables = 0 ;
   private int numberOfObjectives = 0 ;
   private int numberOfConstraints = 0 ;
-  private String name = null ;
+  private @Nullable String name = null ;
 
   /* Getters */
   @Override

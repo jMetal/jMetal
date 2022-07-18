@@ -13,6 +13,7 @@ import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
@@ -97,7 +98,7 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
   private void initializeNeighborhood() {
     EuclideanDistance euclideanDistance = new EuclideanDistance();
     double[] x = new double[numberOfWeightVectors];
-    int[] idx = new int[numberOfWeightVectors];
+    int @NotNull [] idx = new int[numberOfWeightVectors];
 
     for (int i = 0; i < numberOfWeightVectors; i++) {
       // calculate the distances based on weight vectors

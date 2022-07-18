@@ -1,6 +1,8 @@
 package org.uma.jmetal.operator.mutation.impl;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
@@ -76,7 +78,7 @@ public class GroupedAndLinkedPolynomialMutation implements MutationOperator<Doub
 
   /** Execute() method */
   @Override
-  public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
+  public DoubleSolution execute(@NotNull DoubleSolution solution) throws JMetalException {
     Check.notNull(solution);
 
     doMutation(solution);
@@ -85,7 +87,7 @@ public class GroupedAndLinkedPolynomialMutation implements MutationOperator<Doub
   }
 
   /** Perform the mutation operation */
-  private void doMutation(DoubleSolution solution) {
+  private void doMutation(@NotNull DoubleSolution solution) {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 

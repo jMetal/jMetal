@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
@@ -81,7 +84,7 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
 
     for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
         List<IntegerSolution> solutionsPerAlgorithm = new ArrayList<>();
-        for (DummyIntegerSolution solution : nonDominatedSolutions) {
+        for (@NotNull DummyIntegerSolution solution : nonDominatedSolutions) {
             if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
                 solutionsPerAlgorithm.add(solution);
             }
@@ -110,7 +113,7 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
 
   private void writeReferenceFrontFile(
           String outputDirectoryName,
-          ExperimentProblem<?> problem,
+          @NotNull ExperimentProblem<?> problem,
           List<DummyIntegerSolution> nonDominatedSolutions) {
     String referenceFrontFileName = outputDirectoryName + "/" + problem.getReferenceFront();
 
@@ -137,16 +140,16 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
    */
   private List<DummyIntegerSolution> getNonDominatedSolutions(ExperimentProblem<?> problem)
       throws IOException {
-    NonDominatedSolutionListArchive<DummyIntegerSolution> nonDominatedSolutionArchive =
+    @NotNull NonDominatedSolutionListArchive<DummyIntegerSolution> nonDominatedSolutionArchive =
             new NonDominatedSolutionListArchive<>();
 
-      ArrayList<ExperimentAlgorithm<?, ?>> experimentAlgorithms = new ArrayList<>();
+      @NotNull ArrayList<ExperimentAlgorithm<?, ?>> experimentAlgorithms = new ArrayList<>();
       for (ExperimentAlgorithm<?, ?> s : experiment.getAlgorithmList()) {
           if (s.getProblemTag().equals(problem.getTag())) {
               experimentAlgorithms.add(s);
           }
       }
-      for (ExperimentAlgorithm<?, ?> algorithm :
+      for (@NotNull ExperimentAlgorithm<?, ?> algorithm :
               experimentAlgorithms) {
       String problemDirectory =
               experiment.getExperimentBaseDirectory()
@@ -155,7 +158,7 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
                       + "/"
                       + problem.getTag();
 
-      String frontFileName =
+      @NotNull String frontFileName =
               problemDirectory
                       + "/"
                       + experiment.getOutputParetoFrontFileName()
@@ -204,8 +207,8 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
    * @param frontWithObjectiveValues
    * @return
    */
-  private List<DummyIntegerSolution> createSolutionListFrontFiles(
-          String algorithmName, double[][] frontWithVariableValues, double[][] frontWithObjectiveValues) {
+  private @NotNull List<DummyIntegerSolution> createSolutionListFrontFiles(
+          String algorithmName, double[] @NotNull [] frontWithVariableValues, double[][] frontWithObjectiveValues) {
     if (frontWithVariableValues.length
             != frontWithObjectiveValues.length) {
       throw new JMetalException(
@@ -220,9 +223,9 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
     int numberOfVariables = frontWithVariableValues[0].length;
     int numberOfObjectives = frontWithObjectiveValues[0].length;
 
-    List<DummyIntegerSolution> solutionList = new ArrayList<>();
+    @NotNull List<DummyIntegerSolution> solutionList = new ArrayList<>();
     for (int i = 0; i < frontWithVariableValues.length; i++) {
-      DummyIntegerSolution solution = new DummyIntegerSolution(numberOfVariables, numberOfObjectives);
+      @NotNull DummyIntegerSolution solution = new DummyIntegerSolution(numberOfVariables, numberOfObjectives);
       for (int vars = 0; vars < numberOfVariables; vars++) {
         solution.variables().set(vars, (int)frontWithVariableValues[i][vars]);
       }
@@ -256,7 +259,7 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
      */
 
     @Override
-    public Bounds<Integer> getBounds(int index) {
+    public @Nullable Bounds<Integer> getBounds(int index) {
       return null;
     }
   }

@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.FileOutputContext;
@@ -20,7 +22,7 @@ public class StoredSolutionsUtils {
   private static final String DEFAULT_REGEX = "[ \t,]";
   private static final GenericSolutionAttribute<Solution<?>, String> textRepresentation = SolutionTextRepresentation.getAttribute();
 
-  public static List<PointSolution> readSolutionsFromFile(String inputFileName, int numberOfObjectives) {
+  public static @NotNull List<PointSolution> readSolutionsFromFile(String inputFileName, int numberOfObjectives) {
     Stream<String> lines;
 
     try {
@@ -29,7 +31,7 @@ public class StoredSolutionsUtils {
       throw new JMetalException(e);
     }
 
-    List<PointSolution> solutions = lines
+    @NotNull List<PointSolution> solutions = lines
       .map(line -> {
         String[] textNumbers = line.split(DEFAULT_REGEX, numberOfObjectives + 1);
         PointSolution solution = new PointSolution(numberOfObjectives);
@@ -47,7 +49,7 @@ public class StoredSolutionsUtils {
     return solutions;
   }
 
-  public static <S extends Solution<?>> void writeToOutput(List<S> solutionList, FileOutputContext context) {
+  public static <S extends Solution<?>> void writeToOutput(List<S> solutionList, @NotNull FileOutputContext context) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     try {

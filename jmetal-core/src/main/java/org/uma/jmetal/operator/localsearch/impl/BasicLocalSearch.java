@@ -1,6 +1,8 @@
 package org.uma.jmetal.operator.localsearch.impl;
 
 import java.util.Comparator;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
@@ -68,7 +70,7 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
    * @return An improved solution
    */
   @SuppressWarnings("unchecked")
-  public S execute(S solution) {
+  public S execute(@NotNull S solution) {
     int best;
     evaluations = 0;
 

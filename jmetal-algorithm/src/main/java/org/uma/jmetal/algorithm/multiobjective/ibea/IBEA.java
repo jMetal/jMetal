@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -36,7 +37,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
   protected MutationOperator<S> mutationOperator;
   protected SelectionOperator<List<S>, S> selectionOperator;
 
-  protected Fitness<S> solutionFitness = new Fitness<S>();
+  protected @NotNull Fitness<S> solutionFitness = new Fitness<S>();
 
   /**
    * Constructor
@@ -100,7 +101,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
           parent2 = selectionOperator.execute(archive);
         } while (k < IBEA.TOURNAMENTS_ROUNDS);
 
-        List<S> parents = new ArrayList<>(2);
+        @NotNull List<S> parents = new ArrayList<>(2);
         parents.add(parent1);
         parents.add(parent2);
 
@@ -230,7 +231,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
   public void calculateFitness(List<S> solutionSet) {
     // Obtains the lower and upper bounds of the population
     double[] maximumValues = new double[problem.getNumberOfObjectives()];
-    double[] minimumValues = new double[problem.getNumberOfObjectives()];
+    double @NotNull [] minimumValues = new double[problem.getNumberOfObjectives()];
 
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       maximumValues[i] = -Double.MAX_VALUE;

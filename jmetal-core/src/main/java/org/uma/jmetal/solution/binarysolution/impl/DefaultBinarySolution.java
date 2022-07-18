@@ -3,6 +3,8 @@ package org.uma.jmetal.solution.binarysolution.impl;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
@@ -24,14 +26,14 @@ public class DefaultBinarySolution
   /**
    * Constructor
    */
-  public DefaultBinarySolution(List<Integer> bitsPerVariable, int numberOfObjectives) {
+  public DefaultBinarySolution(@NotNull List<Integer> bitsPerVariable, int numberOfObjectives) {
     this(bitsPerVariable, numberOfObjectives, 0);
   }
 
   /**
    * Constructor
    */
-  public DefaultBinarySolution(List<Integer> bitsPerVariable, int numberOfObjectives, int numberOfConstraints) {
+  public DefaultBinarySolution(@NotNull List<Integer> bitsPerVariable, int numberOfObjectives, int numberOfConstraints) {
     super(bitsPerVariable.size(), numberOfObjectives, numberOfConstraints);
     this.bitsPerVariable = bitsPerVariable;
 
@@ -56,8 +58,8 @@ public class DefaultBinarySolution
     attributes = new HashMap<>(solution.attributes);
   }
 
-  private static BinarySet createNewBinarySet(int numberOfBits, JMetalRandom randomGenerator) {
-    BinarySet bitSet = new BinarySet(numberOfBits);
+  private static @NotNull BinarySet createNewBinarySet(int numberOfBits, JMetalRandom randomGenerator) {
+    @NotNull BinarySet bitSet = new BinarySet(numberOfBits);
 
     for (int i = 0; i < numberOfBits; i++) {
       double rnd = randomGenerator.nextDouble();
@@ -76,14 +78,14 @@ public class DefaultBinarySolution
   }
 
   @Override
-  public DefaultBinarySolution copy() {
+  public @NotNull DefaultBinarySolution copy() {
     return new DefaultBinarySolution(this);
   }
 
   @Override
   public int getTotalNumberOfBits() {
     int sum = 0;
-    for (BinarySet binarySet : variables()) {
+    for (@NotNull BinarySet binarySet : variables()) {
       int binarySetLength = binarySet.getBinarySetLength();
       sum += binarySetLength;
     }

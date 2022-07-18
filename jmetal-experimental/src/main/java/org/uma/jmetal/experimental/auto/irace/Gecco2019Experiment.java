@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -262,7 +264,7 @@ public class Gecco2019Experiment {
                 + "--wMax 0.5 "
         )
                 .split("\\s+");
-        AutoMOPSO OMOPSO = new AutoMOPSO();
+        @NotNull AutoMOPSO OMOPSO = new AutoMOPSO();
         OMOPSO.parseAndCheckParameters(parametersOMOPSO);
         ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
 

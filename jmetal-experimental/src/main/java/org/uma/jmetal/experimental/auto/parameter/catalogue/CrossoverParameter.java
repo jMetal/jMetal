@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
@@ -12,7 +14,7 @@ public class CrossoverParameter extends CategoricalParameter {
     super("crossover", args, crossoverOperators);
   }
 
-  public CrossoverOperator<DoubleSolution> getParameter() {
+  public @NotNull CrossoverOperator<DoubleSolution> getParameter() {
     CrossoverOperator<DoubleSolution> result;
     Double crossoverProbability = (Double) findGlobalParameter("crossoverProbability").getValue();
     RepairDoubleSolutionStrategyParameter repairDoubleSolution =

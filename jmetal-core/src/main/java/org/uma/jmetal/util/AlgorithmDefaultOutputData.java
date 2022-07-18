@@ -3,14 +3,16 @@ package org.uma.jmetal.util;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 public class AlgorithmDefaultOutputData {
 
-  public static <S extends Solution<?>> void generateSingleObjectiveAlgorithmOutputData(S solution, long computingTime) {
-    List<S> population = new ArrayList<>(1) ;
+  public static <S extends Solution<?>> void generateSingleObjectiveAlgorithmOutputData(@NotNull S solution, long computingTime) {
+    @NotNull List<S> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
     new SolutionListOutput(population)

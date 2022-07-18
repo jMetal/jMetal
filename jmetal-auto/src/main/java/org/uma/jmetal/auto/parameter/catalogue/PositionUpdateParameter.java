@@ -1,6 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.pso.positionupdate.PositionUpdate;
 import org.uma.jmetal.component.catalogue.pso.positionupdate.impl.DefaultPositionUpdate;
@@ -13,7 +15,7 @@ public class PositionUpdateParameter extends CategoricalParameter {
     super("positionUpdate", args, positionUpdateStrategies);
   }
 
-  public PositionUpdate getParameter() {
+  public @NotNull PositionUpdate getParameter() {
     PositionUpdate result;
     switch (getValue()) {
       case "defaultPositionUpdate":

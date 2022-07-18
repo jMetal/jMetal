@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective.re;
 import static org.uma.jmetal.problem.multiobjective.re.Util.getClosestValue;
 
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -31,7 +33,7 @@ public class RE22 extends AbstractDoubleProblem {
     setName("RE22");
 
     List<Double> lowerLimit = List.of(0.2, 0.0, 0.0);
-    List<Double> upperLimit = List.of(15.0, 20.0, 40.0);
+    @NotNull List<Double> upperLimit = List.of(15.0, 20.0, 40.0);
 
     setVariableBounds(lowerLimit, upperLimit);
   }

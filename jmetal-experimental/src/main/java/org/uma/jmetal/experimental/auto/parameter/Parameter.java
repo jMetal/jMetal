@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.function.Function;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
@@ -50,7 +52,7 @@ public abstract class Parameter<T> {
   public Parameter<T> parse(Function<String, T> parseFunction) {
     setValue(on("--" + getName(), getArgs(), parseFunction));
 
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (@NotNull Parameter<?> parameter : getGlobalParameters()) {
       parameter.parse().check();
     }
 
@@ -75,7 +77,7 @@ public abstract class Parameter<T> {
     specificParameters.add(new ImmutablePair<>(dependsOn, parameter));
   }
 
-  public List<Parameter<?>> getGlobalParameters() {
+  public @NotNull List<Parameter<?>> getGlobalParameters() {
     return globalParameters;
   }
 
@@ -103,7 +105,7 @@ public abstract class Parameter<T> {
     return args;
   }
 
-  public Parameter<?> findGlobalParameter(String parameterName) {
+  public @Nullable Parameter<?> findGlobalParameter(String parameterName) {
 
       for (Parameter<?> parameter : getGlobalParameters()) {
           if (parameter.getName().equals(parameterName)) {
@@ -113,9 +115,9 @@ public abstract class Parameter<T> {
       return null;
   }
 
-  public Parameter<?> findSpecificParameter(String parameterName) {
+  public @Nullable Parameter<?> findSpecificParameter(String parameterName) {
 
-      for (Pair<String, Parameter<?>> pair : getSpecificParameters()) {
+      for (@NotNull Pair<String, Parameter<?>> pair : getSpecificParameters()) {
           if (pair.getRight().getName().equals(parameterName)) {
               return Objects.requireNonNull(pair)
                       .getValue();
@@ -126,7 +128,7 @@ public abstract class Parameter<T> {
 
   @Override
   public String toString() {
-    StringBuilder result = new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue());
+    @NotNull StringBuilder result = new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue());
     if (globalParameters.size() > 0) {
       result.append("\n\t");
       for (Parameter<?> parameter : globalParameters) {

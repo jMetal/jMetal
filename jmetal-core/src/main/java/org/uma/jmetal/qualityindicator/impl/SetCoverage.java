@@ -3,6 +3,7 @@ package org.uma.jmetal.qualityindicator.impl;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -33,7 +34,7 @@ public class SetCoverage extends QualityIndicator {
   }
 
   @Override
-  public double compute(double[][] front) {
+  public double compute(double[] @NotNull [] front) {
     Check.notNull(front);
 
     return compute(front, referenceFront);
@@ -50,7 +51,7 @@ public class SetCoverage extends QualityIndicator {
    * @param referenceFront
    * @return The value of the set coverage
    */
-  public double compute(double[][] front, double[][] referenceFront) {
+  public double compute(double[][] front, double[] @NotNull [] referenceFront) {
     Check.notNull(front);
     Check.notNull(referenceFront);
 
@@ -65,7 +66,7 @@ public class SetCoverage extends QualityIndicator {
       }
     } else {
         long count = 0L;
-        for (double[] vector : referenceFront) {
+        for (double @NotNull [] vector : referenceFront) {
             if (VectorUtils.isVectorDominatedByAFront(vector, front)) {
                 count++;
             }

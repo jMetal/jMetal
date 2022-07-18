@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.examples.multiobjective.smpso;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -34,7 +36,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner problemName [referenceFront]
    */
-  public static void main(String[] args)
+  public static void main(String @NotNull [] args)
           throws JMetalException, InterruptedException, IOException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
@@ -55,7 +57,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
 
     problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
 
-    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
+    @NotNull BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;

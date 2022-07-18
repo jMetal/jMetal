@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -112,7 +114,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     return population;
   }
 
-  @Override protected List<BinarySolution> selection(List<BinarySolution> population) {
+  @Override protected List<BinarySolution> selection(@NotNull List<BinarySolution> population) {
       List<BinarySolution> matingPopulation = new ArrayList<>(population.size());
       int bound = population.size();
       for (int i = 0; i < bound; i++) {
@@ -123,7 +125,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
       return matingPopulation;
   }
 
-  @Override protected List<BinarySolution> reproduction(List<BinarySolution> matingPopulation) {
+  @Override protected @NotNull List<BinarySolution> reproduction(List<BinarySolution> matingPopulation) {
     List<BinarySolution> offspringPopulation = new ArrayList<>();
 
     for (int i = 0; i < matingPopulation.size(); i += 2) {
@@ -144,7 +146,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
   @Override protected List<BinarySolution> replacement(List<BinarySolution> population,
       List<BinarySolution> offspringPopulation) {
-    List<BinarySolution> union = new ArrayList<>();
+    @NotNull List<BinarySolution> union = new ArrayList<>();
     union.addAll(population);
     union.addAll(offspringPopulation);
 
@@ -165,7 +167,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
         newPopulation.add((BinarySolution) population.get(i).copy());
       }
       for (int i = preserve; i < getMaxPopulationSize(); i++) {
-        BinarySolution solution = (BinarySolution) population.get(i).copy();
+        @Nullable BinarySolution solution = (BinarySolution) population.get(i).copy();
         cataclysmicMutation.execute(solution);
 
         newPopulation.add(solution);
@@ -192,7 +194,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
    * @return the hamming distance between solutions
    */
 
-  private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
+  private int hammingDistance(@NotNull BinarySolution solutionOne, BinarySolution solutionTwo) {
       int distance = 0;
       int bound = problem.getNumberOfVariables();
       for (int i = 0; i < bound; i++) {

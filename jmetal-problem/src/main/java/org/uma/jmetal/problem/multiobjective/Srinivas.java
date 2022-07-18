@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -17,7 +19,7 @@ public class Srinivas extends AbstractDoubleProblem {
     setNumberOfConstraints(2);
     setName("Srinivas");
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     for (int i = 0; i < numberOfVariables; i++) {
@@ -30,7 +32,7 @@ public class Srinivas extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public DoubleSolution evaluate(DoubleSolution solution) {
+  public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[solution.variables().size()];
 
     double x1 = solution.variables().get(0);

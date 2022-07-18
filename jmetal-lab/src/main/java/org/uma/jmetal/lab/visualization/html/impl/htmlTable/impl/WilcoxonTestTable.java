@@ -2,6 +2,7 @@ package org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl;
 
 import java.util.Arrays;
 import org.apache.commons.math3.stat.inference.WilcoxonSignedRankTest;
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.HtmlTable;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
@@ -18,11 +19,11 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
   private static final String[] INDICATORS_TO_MAXIMIZE = {"HV"};
 
   public WilcoxonTestTable(
-      Table table,
-      String indicator,
-      StringColumn algorithms,
-      StringColumn problems,
-      String indicatorValueColumnName) {
+          Table table,
+          String indicator,
+          StringColumn algorithms,
+          @NotNull StringColumn problems,
+          String indicatorValueColumnName) {
     this.title = "Wilcoxon Test";
     this.headersColumn = algorithms.last(algorithms.size() - 1).asObjectArray();
     this.headersRow = algorithms.asObjectArray();
@@ -56,7 +57,7 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
   }
 
   public static double[] convertDoubleArray(Double[] array) {
-      double[] result = new double[10];
+      double @NotNull [] result = new double[10];
       int count = 0;
       for (Double aDouble : array) {
           double v = aDouble;
@@ -67,7 +68,7 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
       return result;
   }
 
-  private Table filterTableBy(Table table, String columnName, String value) {
+  private Table filterTableBy(@NotNull Table table, String columnName, String value) {
     return table.where(table.stringColumn(columnName).isEqualTo(value));
   }
 
@@ -87,8 +88,8 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
   }
 
   protected StringBuilder createRowOfData(int index) {
-    StringBuilder html = new StringBuilder();
-    for (Difference[] differences : data[index]) {
+    @NotNull StringBuilder html = new StringBuilder();
+    for (Difference @NotNull [] differences : data[index]) {
       html.append("<td>");
       html.append("<div class='horizontal'>");
       for (Difference difference : differences) {

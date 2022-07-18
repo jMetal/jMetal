@@ -3,6 +3,8 @@ package org.uma.jmetal.util.fileoutput;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -12,7 +14,7 @@ public class SolutionListOutput {
   private FileOutputContext varFileContext;
   private FileOutputContext funFileContext;
   private String varFileName = "VAR";
-  private String funFileName = "FUN";
+  private @NotNull String funFileName = "FUN";
   private List<? extends Solution<?>> solutionList;
   private List<Boolean> isObjectiveToBeMinimized;
 
@@ -29,7 +31,7 @@ public class SolutionListOutput {
     return this;
   }
 
-  public SolutionListOutput setFunFileOutputContext(FileOutputContext fileContext) {
+  public @NotNull SolutionListOutput setFunFileOutputContext(FileOutputContext fileContext) {
     funFileContext = fileContext;
 
     return this;
@@ -76,7 +78,7 @@ public class SolutionListOutput {
   }
 
   public void printObjectivesToFile(
-      FileOutputContext context, List<? extends Solution<?>> solutionList) {
+          FileOutputContext context, @NotNull List<? extends Solution<?>> solutionList) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     try {
@@ -99,9 +101,9 @@ public class SolutionListOutput {
   }
 
   public void printObjectivesToFile(
-      FileOutputContext context,
-      List<? extends Solution<?>> solutionList,
-      List<Boolean> minimizeObjective) {
+          FileOutputContext context,
+          List<? extends Solution<?>> solutionList,
+          @NotNull List<Boolean> minimizeObjective) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     try {
@@ -148,7 +150,7 @@ public class SolutionListOutput {
     printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionList, minimizeObjective);
   }
 
-  public void printObjectivesToFile(String fileName, List<Boolean> minimizeObjective, String separator) {
+  public void printObjectivesToFile(String fileName, @NotNull List<Boolean> minimizeObjective, String separator) {
     printObjectivesToFile(new DefaultFileOutputContext(fileName, separator), solutionList, minimizeObjective);
   }
 
