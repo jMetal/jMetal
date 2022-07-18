@@ -1,7 +1,11 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
@@ -34,12 +38,9 @@ public class SMSEMOAReplacement<S extends Solution<?>>
 
     lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront, jointPopulation) ;
 
-    List<S> resultPopulation = new ArrayList<>() ;
-    for (int i = 0; i < ranking.getNumberOfSubFronts()-1; i++) {
-      resultPopulation.addAll(ranking.getSubFront(i));
-    }
+    List<S> resultPopulation = IntStream.range(0, ranking.getNumberOfSubFronts() - 1).mapToObj(i -> ranking.getSubFront(i)).flatMap(Collection::stream).collect(Collectors.toList());
 
-    for (int i = 0; i < lastSubfront.size()-1; i++) {
+      for (int i = 0; i < lastSubfront.size()-1; i++) {
       resultPopulation.add(lastSubfront.get(i)) ;
     }
 

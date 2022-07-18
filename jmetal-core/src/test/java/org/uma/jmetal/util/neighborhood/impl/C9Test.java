@@ -9,6 +9,9 @@ import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.Test;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
@@ -31,12 +34,9 @@ public class C9Test {
     int columns = 1 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
   }
@@ -55,12 +55,9 @@ public class C9Test {
     int columns = 2 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1))) ;
   }
@@ -79,12 +76,9 @@ public class C9Test {
     int columns = 2 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1))) ;
   }
@@ -104,12 +98,9 @@ public class C9Test {
     int columns = 2 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(2), list.get(3))) ;
     assertThat(result, not(hasItems(list.get(0)))) ;
@@ -130,12 +121,9 @@ public class C9Test {
     int columns = 2 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(2), list.get(3))) ;
     assertThat(result, not(hasItems(list.get(1)))) ;
@@ -156,12 +144,9 @@ public class C9Test {
     int columns = 2 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1), list.get(3))) ;
     assertThat(result, not(hasItems(list.get(2)))) ;
@@ -182,12 +167,9 @@ public class C9Test {
     int columns = 2 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 3) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 3) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1), list.get(2))) ;
     assertThat(result, not(hasItems(list.get(3)))) ;
@@ -208,12 +190,9 @@ public class C9Test {
     int columns = 4 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(3), list.get(4), list.get(5), list.get(7))) ;
     assertThat(result, not(hasItems(list.get(2), list.get(6)))) ;
@@ -234,12 +213,9 @@ public class C9Test {
     int columns = 4 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1), list.get(2), list.get(4), list.get(6))) ;
     assertThat(result, not(hasItems(list.get(3), list.get(5), list.get(7)))) ;
@@ -261,12 +237,9 @@ public class C9Test {
     int columns = 4 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1), list.get(2), list.get(4), list.get(6), list.get(8), list.get(9))) ;
     assertThat(result, not(hasItems(list.get(3), list.get(5), list.get(7), list.get(10), list.get(11)))) ;
@@ -288,12 +261,9 @@ public class C9Test {
     int columns = 4 ;
     C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 11) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 11) ;
     assertEquals(8, result.size()) ;
     assertThat(result, hasItems(list.get(2), list.get(3), list.get(6), list.get(7), list.get(8), list.get(10))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(4), list.get(5), list.get(9), list.get(11)))) ;

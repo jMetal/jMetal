@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.ibea;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -207,14 +209,10 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
    * Calculate the fitness for the individual at position pos
    */
   public void fitness(List<S> solutionSet, int pos) {
-    double fitness = 0.0;
+    double fitness;
     double kappa = 0.05;
 
-    for (int i = 0; i < solutionSet.size(); i++) {
-      if (i != pos) {
-        fitness += Math.exp((-1 * indicatorValues.get(i).get(pos) / maxIndicatorValue) / kappa);
-      }
-    }
+      fitness = IntStream.range(0, solutionSet.size()).filter(i -> i != pos).mapToDouble(i -> Math.exp((-1 * indicatorValues.get(i).get(pos) / maxIndicatorValue) / kappa)).sum();
     solutionFitness.setAttribute(solutionSet.get(pos), fitness);
   }
 

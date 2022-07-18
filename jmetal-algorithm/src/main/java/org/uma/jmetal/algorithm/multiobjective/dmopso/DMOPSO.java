@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -354,12 +356,9 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
       fitness = maxFun;
 
     }else if(functionType == FunctionType.AGG){
-      double sum = 0.0;
-      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
-        sum += (lambda[n]) * sol.objectives()[n];
-      }
+      double sum = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(n -> (lambda[n]) * sol.objectives()[n]).sum();
 
-      fitness = sum;
+        fitness = sum;
 
     }else if(functionType == FunctionType.PBI){
       double d1, d2, nl;
@@ -391,13 +390,11 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   private void shuffleGlobalBest(){
-    int[] aux = new int[swarmSize];
+    int[] aux;
     int rnd;
     int tmp;
 
-    for (int i = 0; i < swarmSize; i++) {
-      aux[i] = i;
-    }
+      aux = IntStream.range(0, swarmSize).toArray();
 
     for (int i = 0; i < swarmSize; i++) {
       rnd = randomGenerator.nextInt(i, swarmSize - 1);

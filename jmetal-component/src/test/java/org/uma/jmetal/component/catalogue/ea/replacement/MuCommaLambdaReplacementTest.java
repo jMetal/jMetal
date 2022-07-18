@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.MuCommaLambdaReplacement;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
@@ -19,17 +22,11 @@ class MuCommaLambdaReplacementTest {
     int mu = 10;
     int lambda = 12;
     FakeDoubleProblem problem = new FakeDoubleProblem();
-    List<DoubleSolution> population = new ArrayList<>();
-    for (int i = 0; i < mu; i++) {
-      population.add(problem.createSolution());
-    }
+    List<DoubleSolution> population = IntStream.range(0, mu).mapToObj(i -> problem.createSolution()).collect(Collectors.toList());
 
-    List<DoubleSolution> offspringPopulation = new ArrayList<>();
-    for (int i = 0; i < lambda; i++) {
-      offspringPopulation.add(problem.createSolution());
-    }
+      List<DoubleSolution> offspringPopulation = IntStream.range(0, lambda).mapToObj(i -> problem.createSolution()).collect(Collectors.toList());
 
-    MuCommaLambdaReplacement<DoubleSolution> replacement = new MuCommaLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
+      MuCommaLambdaReplacement<DoubleSolution> replacement = new MuCommaLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
 
     assertEquals(mu, replacement.replace(population, offspringPopulation).size()) ;
   }
@@ -39,17 +36,11 @@ class MuCommaLambdaReplacementTest {
     int mu = 10;
     int lambda = 10;
     FakeDoubleProblem problem = new FakeDoubleProblem();
-    List<DoubleSolution> population = new ArrayList<>();
-    for (int i = 0; i < mu; i++) {
-      population.add(problem.createSolution());
-    }
+    List<DoubleSolution> population = IntStream.range(0, mu).mapToObj(i -> problem.createSolution()).collect(Collectors.toList());
 
-    List<DoubleSolution> offspringPopulation = new ArrayList<>();
-    for (int i = 0; i < lambda; i++) {
-      offspringPopulation.add(problem.createSolution());
-    }
+      List<DoubleSolution> offspringPopulation = IntStream.range(0, lambda).mapToObj(i -> problem.createSolution()).collect(Collectors.toList());
 
-    MuCommaLambdaReplacement<DoubleSolution> replacement = new MuCommaLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
+      MuCommaLambdaReplacement<DoubleSolution> replacement = new MuCommaLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
 
 
     assertThrows(
@@ -61,17 +52,11 @@ class MuCommaLambdaReplacementTest {
     int mu = 10;
     int lambda = 8;
     FakeDoubleProblem problem = new FakeDoubleProblem();
-    List<DoubleSolution> population = new ArrayList<>();
-    for (int i = 0; i < mu; i++) {
-      population.add(problem.createSolution());
-    }
+    List<DoubleSolution> population = IntStream.range(0, mu).mapToObj(i -> problem.createSolution()).collect(Collectors.toList());
 
-    List<DoubleSolution> offspringPopulation = new ArrayList<>();
-    for (int i = 0; i < lambda; i++) {
-      offspringPopulation.add(problem.createSolution());
-    }
+      List<DoubleSolution> offspringPopulation = IntStream.range(0, lambda).mapToObj(i -> problem.createSolution()).collect(Collectors.toList());
 
-    MuCommaLambdaReplacement<DoubleSolution> replacement = new MuCommaLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
+      MuCommaLambdaReplacement<DoubleSolution> replacement = new MuCommaLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
 
 
     assertThrows(InvalidConditionException.class, () -> replacement.replace(population, offspringPopulation)) ;

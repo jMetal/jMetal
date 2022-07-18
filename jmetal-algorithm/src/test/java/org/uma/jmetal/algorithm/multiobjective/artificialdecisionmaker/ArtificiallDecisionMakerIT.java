@@ -4,6 +4,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -60,12 +63,9 @@ public class ArtificiallDecisionMakerIT {
     NadirPoint nadirPoint = new NadirPoint(problem.getNumberOfObjectives());
     nadirPoint.update(problem.createSolution().objectives());
     double considerationProbability = 0.1;
-    List<Double> rankingCoeficient = new ArrayList<>();
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      rankingCoeficient.add(1.0 / problem.getNumberOfObjectives());
-    }
+    List<Double> rankingCoeficient = IntStream.range(0, problem.getNumberOfObjectives()).mapToObj(i -> 1.0 / problem.getNumberOfObjectives()).collect(Collectors.toList());
 
-    for (int cont = 0; cont < numberIterations; cont++) {
+      for (int cont = 0; cont < numberIterations; cont++) {
       List<Double> referencePoint = new ArrayList<>();
 
       double epsilon = 0.01;

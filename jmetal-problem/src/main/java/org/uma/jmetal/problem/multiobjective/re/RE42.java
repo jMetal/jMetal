@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.re;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -31,11 +33,9 @@ public class RE42 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double [] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++)
-      x[i] = solution.variables().get(i);
+    double [] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    double x_L = x[0];
+      double x_L = x[0];
     double x_B = x[1];
     double x_D = x[2];
     double x_T = x[3];

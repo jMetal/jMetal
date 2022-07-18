@@ -53,19 +53,14 @@ public class MaF03 extends AbstractDoubleProblem {
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables];
+    double[] x;
     double[] f = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    double g = 0;
+    double g = IntStream.range(numberOfObjectives - 1, numberOfVariables).mapToDouble(i -> (Math.pow(x[i] - 0.5, 2) - Math.cos(20 * Math.PI * (x[i] - 0.5)))).sum();
     // evaluate g
-    for (int i = numberOfObjectives - 1; i < numberOfVariables; i++) {
-      g += (Math.pow(x[i] - 0.5, 2) - Math.cos(20 * Math.PI * (x[i] - 0.5)));
-    }
-    g = 100 * (numberOfVariables - numberOfObjectives + 1 + g);
+      g = 100 * (numberOfVariables - numberOfObjectives + 1 + g);
     double subf1 = 1, subf3 = 1 + g;
     // evaluate fm,fm-1,...2,f1
     f[numberOfObjectives - 1] = Math.pow(Math.sin(Math.PI * x[0] / 2) * subf3, 2);

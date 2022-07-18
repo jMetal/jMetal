@@ -5,6 +5,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.Test;
 
 public class BoundedRandomGeneratorTest {
@@ -32,11 +35,8 @@ public class BoundedRandomGeneratorTest {
 		int max = 5;
 
 		// Generate random values
-		Map<Integer, Integer> counters = new HashMap<>();
-		for (int i = min; i <= max; i++) {
-			counters.put(i, 0);
-		}
-		for (int i = 0; i <= 10000; i++) {
+		Map<Integer, Integer> counters = IntStream.rangeClosed(min, max).boxed().collect(Collectors.toMap(i -> i, i -> 0, (a, b) -> b));
+        for (int i = 0; i <= 10000; i++) {
 			Integer value = generator.getRandomValue(min, max);
 			counters.put(value, counters.get(value) + 1);
 		}
@@ -73,11 +73,8 @@ public class BoundedRandomGeneratorTest {
 		int max = 5;
 
 		// Generate random values
-		Map<Integer, Integer> counters = new HashMap<>();
-		for (int i = min; i <= max; i++) {
-			counters.put(i, 0);
-		}
-		for (int i = 0; i <= 10000; i++) {
+		Map<Integer, Integer> counters = IntStream.rangeClosed(min, max).boxed().collect(Collectors.toMap(i -> i, i -> 0, (a, b) -> b));
+        for (int i = 0; i <= 10000; i++) {
 			Integer value = generator.getRandomValue(min, max);
 			counters.put(value, counters.get(value) + 1);
 		}

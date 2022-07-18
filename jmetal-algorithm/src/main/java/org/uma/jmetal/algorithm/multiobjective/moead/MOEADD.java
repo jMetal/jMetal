@@ -1,7 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -130,17 +134,9 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
     int nLength = neighborhood[cid].length;
 
-    ArrayList<Integer> activeList = new ArrayList<>();
+    ArrayList<Integer> activeList;
     if (type == 1) {
-      for (int i = 0; i < nLength; i++) {
-        int idx = neighborhood[cid][i];
-        for (int j = 0; j < populationSize; j++) {
-          if (subregionIdx[idx][j] == 1) {
-            activeList.add(idx);
-            break;
-          }
-        }
-      }
+        activeList = Arrays.stream(neighborhood[cid]).filter(idx -> IntStream.range(0, populationSize).anyMatch(j -> subregionIdx[idx][j] == 1)).boxed().collect(Collectors.toCollection(ArrayList::new));
       if (activeList.size() < 2) {
         activeList.clear();
         for (int i = 0; i < populationSize; i++) {
@@ -174,14 +170,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
       parents.add(population.get(list1.get(p1)));
       parents.add(population.get(list2.get(p2)));
     } else {
-      for (int i = 0; i < populationSize; i++) {
-        for (int j = 0; j < populationSize; j++) {
-          if (subregionIdx[i][j] == 1) {
-            activeList.add(i);
-            break;
-          }
-        }
-      }
+        activeList = IntStream.range(0, populationSize).filter(i -> IntStream.range(0, populationSize).anyMatch(j -> subregionIdx[i][j] == 1)).boxed().collect(Collectors.toCollection(ArrayList::new));
       int activeSize = activeList.size();
       rnd1 = randomGenerator.nextInt(0, activeSize - 1);
       do {
@@ -228,11 +217,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
         frontSize++;
         lastFront.add(indiv);
       } else {
-        for (int i = 0; i < populationSize; i++) {
-          if (rankIdx[numRanks - 1][i] == 1) {
-            lastFront.add((S) population.get(i));
-          }
-        }
+          lastFront = IntStream.range(0, populationSize).filter(i -> rankIdx[numRanks - 1][i] == 1).mapToObj(i -> (S) population.get(i)).collect(Collectors.toCollection(() -> new ArrayList<>(populationSize)));
         if ((ranking.getRank(indiv)) == (numRanks - 1)) {
 //        if (rankSolution.getOrDefault(indiv, 0) == (numRanks - 1)) {
           frontSize++;
@@ -408,14 +393,10 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     //int indivRank = indiv.getRank();
     int indivRank = ranking.getRank(indiv);
 
-    ArrayList<Integer> curLevel = new ArrayList<>();  // used to keep the solutions in the current non-domination level
+    ArrayList<Integer> curLevel;  // used to keep the solutions in the current non-domination level
     ArrayList<Integer> dominateList = new ArrayList<>();  // used to keep the solutions need to be moved
 
-    for (int i = 0; i < populationSize; i++) {
-      if (rankIdx[indivRank][i] == 1) {
-        curLevel.add(i);
-      }
-    }
+      curLevel = IntStream.range(0, populationSize).filter(i -> rankIdx[indivRank][i] == 1).boxed().collect(Collectors.toCollection(ArrayList::new));
 
     int flag;
     // find the solutions belonging to the 'indivRank+1'th level and are dominated by 'indiv'
@@ -1106,14 +1087,9 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
    */
   public double sumFitness(int location) {
 
-    double sum = 0;
-    for (int i = 0; i < populationSize; i++) {
-      if (subregionIdx[location][i] == 1) {
-        sum = sum + fitnessFunction(population.get(i), lambda[location]);
-      }
-    }
+    double sum = IntStream.range(0, populationSize).filter(i -> subregionIdx[location][i] == 1).mapToDouble(i -> fitnessFunction(population.get(i), lambda[location])).sum();
 
-    return sum;
+      return sum;
   }
 
   /**
@@ -1123,14 +1099,9 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   public void deleteCrowdIndiv_same(int crowdIdx, int nicheCount, double indivFitness, S indiv) {
 
     // find the solution indices within this crowdIdx subregion
-    ArrayList<Integer> indList = new ArrayList<>();
-    for (int i = 0; i < populationSize; i++) {
-      if (subregionIdx[crowdIdx][i] == 1) {
-        indList.add(i);
-      }
-    }
+    ArrayList<Integer> indList = IntStream.range(0, populationSize).filter(i -> subregionIdx[crowdIdx][i] == 1).boxed().collect(Collectors.toCollection(ArrayList::new));
 
-    // find the solution with the worst fitness value
+      // find the solution with the worst fitness value
     int listSize = indList.size();
     int worstIdx = indList.get(0);
     double maxFitness = fitnessFunction(population.get(worstIdx), lambda[crowdIdx]);
@@ -1156,14 +1127,9 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   public void deleteCrowdIndiv_diff(int crowdIdx, int curLocation, int nicheCount, S indiv) {
 
     // find the solution indices within this crowdIdx subregion
-    ArrayList<Integer> indList = new ArrayList<>();
-    for (int i = 0; i < populationSize; i++) {
-      if (subregionIdx[crowdIdx][i] == 1) {
-        indList.add(i);
-      }
-    }
+    ArrayList<Integer> indList = IntStream.range(0, populationSize).filter(i -> subregionIdx[crowdIdx][i] == 1).boxed().collect(Collectors.toCollection(ArrayList::new));
 
-    // find the solution with the worst fitness value
+      // find the solution with the worst fitness value
     int worstIdx = indList.get(0);
     double maxFitness = fitnessFunction(population.get(worstIdx), lambda[crowdIdx]);
     for (int i = 1; i < nicheCount; i++) {
@@ -1187,14 +1153,9 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
    */
   public int countOnes(int location) {
 
-    int count = 0;
-    for (int i = 0; i < populationSize; i++) {
-      if (subregionIdx[location][i] == 1) {
-        count++;
-      }
-    }
+    int count = (int) IntStream.range(0, populationSize).filter(i -> subregionIdx[location][i] == 1).count();
 
-    return count;
+      return count;
   }
 
   /**
@@ -1202,14 +1163,9 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
    */
   public int countRankOnes(int location) {
 
-    int count = 0;
-    for (int i = 0; i < populationSize; i++) {
-      if (rankIdx[location][i] == 1) {
-        count++;
-      }
-    }
+    int count = (int) IntStream.range(0, populationSize).filter(i -> rankIdx[location][i] == 1).count();
 
-    return count;
+      return count;
   }
 
   /**
@@ -1217,13 +1173,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
    */
   public int findPosition(S indiv) {
 
-    for (int i = 0; i < populationSize; i++) {
-      if (indiv.equals(population.get(i))) {
-        return i;
-      }
-    }
+      return IntStream.range(0, populationSize).filter(i -> indiv.equals(population.get(i))).findFirst().orElse(-1);
 
-    return -1;
   }
 
   /**
@@ -1231,13 +1182,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
    */
   public int findRegion(int idx) {
 
-    for (int i = 0; i < populationSize; i++) {
-      if (subregionIdx[i][idx] == 1) {
-        return i;
-      }
-    }
+      return IntStream.range(0, populationSize).filter(i -> subregionIdx[i][idx] == 1).findFirst().orElse(-1);
 
-    return -1;
   }
 
   /**
@@ -1303,8 +1249,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     double scale;
     double distance;
 
-    double[] vecInd = new double[problem.getNumberOfObjectives()];
-    double[] vecProj = new double[problem.getNumberOfObjectives()];
+    double[] vecInd;
+    double[] vecProj;
 
     // normalize the weight vector (line segment)
     double nd = norm_vector(lambda);
@@ -1313,14 +1259,10 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     }
 
     // vecInd has been normalized to the range [0,1]
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      vecInd[i] = (individual.objectives()[i] - z_[i]) / (nz_[i] - z_[i]);
-    }
+      vecInd = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> (individual.objectives()[i] - z_[i]) / (nz_[i] - z_[i])).toArray();
 
     scale = innerproduct(vecInd, lambda);
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      vecProj[i] = vecInd[i] - scale * lambda[i];
-    }
+      vecProj = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> vecInd[i] - scale * lambda[i]).toArray();
 
     distance = norm_vector(vecProj);
 
@@ -1336,21 +1278,17 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
       lambda[i] = lambda[i] / nd;
     }
 
-    double[] realA = new double[problem.getNumberOfObjectives()];
-    double[] realB = new double[problem.getNumberOfObjectives()];
+    double[] realA;
+    double[] realB;
 
     // difference between current point and reference point
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      realA[i] = (indiv.objectives()[i] - z_[i]);
-    }
+      realA = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> (indiv.objectives()[i] - z_[i])).toArray();
 
     // distance along the line segment
     double d1 = Math.abs(innerproduct(realA, lambda));
 
     // distance to the line segment
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      realB[i] = (indiv.objectives()[i] - (z_[i] + d1 * lambda[i]));
-    }
+      realB = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> (indiv.objectives()[i] - (z_[i] + d1 * lambda[i]))).toArray();
 
     double distance = norm_vector(realB);
 
@@ -1361,26 +1299,18 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
    * Calculate the dot product of two vectors
    */
   public double innerproduct(double[] vec1, double[] vec2) {
-    double sum = 0;
+    double sum = IntStream.range(0, vec1.length).mapToDouble(i -> vec1[i] * vec2[i]).sum();
 
-    for (int i = 0; i < vec1.length; i++) {
-      sum += vec1[i] * vec2[i];
-    }
-
-    return sum;
+      return sum;
   }
 
   /**
    * Calculate the norm of the vector
    */
   public double norm_vector(double[] z) {
-    double sum = 0;
+    double sum = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> z[i] * z[i]).sum();
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      sum += z[i] * z[i];
-    }
-
-    return Math.sqrt(sum);
+      return Math.sqrt(sum);
   }
 
   public int countTest() {

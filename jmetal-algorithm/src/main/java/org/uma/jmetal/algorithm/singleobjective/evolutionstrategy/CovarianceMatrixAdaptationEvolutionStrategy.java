@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util.CMAESUtils;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -179,11 +182,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   @Override protected List<DoubleSolution> createInitialPopulation() {
-    List<DoubleSolution> population = new ArrayList<>(lambda);
-    for (int i = 0; i < lambda; i++) {
-      DoubleSolution newIndividual = getProblem().createSolution();
-      population.add(newIndividual);
-    }
+    List<DoubleSolution> population = IntStream.range(0, lambda).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(lambda)));
     return population;
   }
 
@@ -200,11 +199,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   @Override protected List<DoubleSolution> reproduction(List<DoubleSolution> population) {
 
-    List<DoubleSolution> offspringPopulation = new ArrayList<>(lambda);
-
-    for (int iNk = 0; iNk < lambda; iNk++) {
-      offspringPopulation.add(sampleSolution());
-    }
+    List<DoubleSolution> offspringPopulation = IntStream.range(0, lambda).mapToObj(iNk -> sampleSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(lambda)));
 
     return offspringPopulation;
   }
@@ -499,13 +494,11 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     DoubleSolution solution = getProblem().createSolution();
 
     int numberOfVariables = getProblem().getNumberOfVariables();
-    double[] artmp = new double[numberOfVariables];
+    double[] artmp;
     double sum;
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      //TODO: Check the correctness of this random (http://en.wikipedia.org/wiki/CMA-ES)
-      artmp[i] = diagD[i] * rand.nextGaussian();
-    }
+    //TODO: Check the correctness of this random (http://en.wikipedia.org/wiki/CMA-ES)
+    artmp = IntStream.range(0, numberOfVariables).mapToDouble(i -> diagD[i] * rand.nextGaussian()).toArray();
     for (int i = 0; i < numberOfVariables; i++) {
       sum = 0.0;
       for (int j = 0; j < numberOfVariables; j++) {

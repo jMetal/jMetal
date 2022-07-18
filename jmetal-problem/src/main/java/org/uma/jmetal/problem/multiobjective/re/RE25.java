@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective.re;
 import static org.uma.jmetal.problem.multiobjective.re.Util.getClosestValue;
 
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -69,7 +71,7 @@ public class RE25 extends AbstractDoubleProblem {
     }
 
     solution.objectives()[0] = (Math.PI * Math.PI * x2 * x3 * x3 * (x1 + 2)) / 4.0;
-    solution.objectives()[1] = g[0] + g[1] + g[2] + g[3] + g[4] + g[5];
+    solution.objectives()[1] = IntStream.of(0, 1, 2, 3, 4, 5).mapToDouble(i -> g[i]).sum();
 
     return solution;
   }

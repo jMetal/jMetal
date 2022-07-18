@@ -43,10 +43,7 @@ public class NIntegerMin extends AbstractIntegerProblem {
 
     approximationToN = 0;
 
-    for (int i = 0; i < solution.variables().size(); i++) {
-      int value = solution.variables().get(i) ;
-      approximationToN += Math.abs(valueN - value) ;
-    }
+      approximationToN += solution.variables().stream().mapToInt(integer -> integer).map(value -> Math.abs(valueN - value)).sum();
 
     solution.objectives()[0] = approximationToN;
 

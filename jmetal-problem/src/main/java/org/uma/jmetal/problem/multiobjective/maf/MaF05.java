@@ -44,11 +44,8 @@ public class MaF05 extends AbstractDoubleProblem {
     setVariableBounds(lower, upper);
 
     //other constants during the whole process once M&D are defined
-    double[] c5 = new double[numberOfObjectives];
-    for (int i = 0; i < numberOfObjectives; i++) {
-      c5[i] = Math.pow(2, i + 1);
-    }
-    const5 = c5;
+    double[] c5 = IntStream.range(0, numberOfObjectives).mapToDouble(i -> Math.pow(2, i + 1)).toArray();
+      const5 = c5;
   }
 
   /**
@@ -62,18 +59,13 @@ public class MaF05 extends AbstractDoubleProblem {
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables];
+    double[] x;
     double[] f = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i);
-    }
-    double g = 0;
+      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+    double g = IntStream.range(numberOfObjectives - 1, numberOfVariables).mapToDouble(i -> Math.pow(x[i] - 0.5, 2)).sum();
     // evaluate g
-    for (int i = numberOfObjectives - 1; i < numberOfVariables; i++) {
-      g += Math.pow(x[i] - 0.5, 2);
-    }
-    double subf1 = 1, subf3 = 1 + g;
+      double subf1 = 1, subf3 = 1 + g;
     // evaluate fm,fm-1,...2,f1
     f[numberOfObjectives - 1] =
         2 * Math.pow(Math.sin(Math.PI * Math.pow(x[0], 100) / 2) * subf3, 1);

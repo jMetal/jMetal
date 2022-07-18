@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -25,12 +27,9 @@ public class Binh2 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] fx = new double[solution.objectives().length];
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.variables().get(i);
-    }
+    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    fx[0] = 4.0 * x[0] * x[0] + 4 * x[1] * x[1];
+      fx[0] = 4.0 * x[0] * x[0] + 4 * x[1] * x[1];
     fx[1] = (x[0] - 5.0) * (x[0] - 5.0) + (x[1] - 5.0) * (x[1] - 5.0);
 
     solution.objectives()[0] = fx[0];

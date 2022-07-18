@@ -124,11 +124,9 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         this.P = computeGeometry(normalizedFront, selected);
 
         // Proximity Score
-        double[] nn = new double[normalizedFront.size()];
+        double[] nn;
         double[] utopia = new double[numberOfObjectives];
-        for (int i=0; i<nn.length; i++){
-            nn[i] = minkowskiDistance(normalizedFront.get(i), utopia, P);
-        }
+        nn = normalizedFront.stream().mapToDouble(doubles -> minkowskiDistance(doubles, utopia, P)).toArray();
 
         // Diversity Score
         double[][] distances = pairwiseDistances(normalizedFront, P);
@@ -170,12 +168,10 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      */
     protected double computeGeometry(List<double[]> normalizedFront, List<Integer> extremePoints) {
         // nadir point
-        double[] nadir = new double[this.numberOfObjectives];
+        double[] nadir;
         double[] utopia = new double[this.numberOfObjectives];
 
-        for (int i=0; i<this.numberOfObjectives; i++){
-            nadir[i] = 1;
-        }
+        nadir = IntStream.range(0, this.numberOfObjectives).mapToDouble(i -> 1).toArray();
 
         // find central point
         double[] d = new double[normalizedFront.size()] ;
@@ -279,9 +275,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     }
 
     public double minkowskiDistance(double[] a, double[] b, double p){
-        double value =0;
-        for (int i=0; i<a.length; i++)
-            value += Math.pow(Math.abs(a[i] - b[i]), p);
+        double value = IntStream.range(0, a.length).mapToDouble(i -> Math.pow(Math.abs(a[i] - b[i]), p)).sum();
 
         return Math.pow(value, 1.0 / p);
     }
@@ -304,10 +298,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
 
         double t = dotProduct(pa, ba) / dotProduct(ba, ba);
 
-        double d = 0;
-        for (int i = 0; i < P.length; i += 1) {
-            d += Math.pow(pa[i] - t * ba[i], 2.0);
-        }
+        double d = IntStream.range(0, P.length).mapToDouble(i -> Math.pow(pa[i] - t * ba[i], 2.0)).sum();
 
         return Math.sqrt(d);
     }
@@ -319,10 +310,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      * @return the doc product
      */
     protected double dotProduct(double[] array1, double[] array2){
-        double sum = 0;
-        for (int i = 0; i < array1.length; i++) {
-            sum += array1[i] * array2[i];
-        }
+        double sum = IntStream.range(0, array1.length).mapToDouble(i -> array1[i] * array2[i]).sum();
         return sum;
     }
 
@@ -356,38 +344,28 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             }
         }
 
-        List<Double> intercepts = new ArrayList<>();
+        List<Double> intercepts;
 
         if (duplicate) // cannot construct the unique hyperplane (this is a casual method to deal with
         // the condition)
         {
-            for (int f = 0; f < numberOfObjectives; f += 1) {
-                // extreme_points[f] stands for the individual with the largest value of objective f
-                intercepts.add(extreme_points.get(f).objectives()[f]);
-            }
+            // extreme_points[f] stands for the individual with the largest value of objective f
+            intercepts = IntStream.range(0, numberOfObjectives).mapToObj(f -> extreme_points.get(f).objectives()[f]).collect(Collectors.toList());
         } else {
             // Find the equation of the hyperplane
-            List<Double> b = new ArrayList<>(); // (pop[0].objs().size(), 1.0);
-            for (int i = 0; i < numberOfObjectives; i++) b.add(1.0);
+            List<Double> b = IntStream.range(0, numberOfObjectives).mapToObj(i -> 1.0).collect(Collectors.toList()); // (pop[0].objs().size(), 1.0);
 
-            List<List<Double>> A = new ArrayList<>();
-            for (S s : extreme_points) {
-                List<Double> aux = new ArrayList<>();
-                for (int i = 0; i < numberOfObjectives; i++) aux.add(s.objectives()[i]);
-                A.add(aux);
-            }
+            List<List<Double>> A = extreme_points.stream().<List<Double>>map(s -> stream(s.objectives(), 0, numberOfObjectives).collect(Collectors.toList())).collect(Collectors.toList());
             List<Double> x = guassianElimination(A, b);
 
             // Find intercepts
-            for (int f = 0; f < numberOfObjectives; f += 1) {
-                intercepts.add(1.0 / x.get(f));
-            }
+            intercepts = IntStream.range(0, numberOfObjectives).mapToObj(f -> 1.0 / x.get(f)).collect(Collectors.toList());
         }
         return intercepts;
     }
 
     public List<Double> guassianElimination(List<List<Double>> A, List<Double> b) {
-        List<Double> x = new ArrayList<>();
+        List<Double> x;
 
         int N = A.size();
         for (int i = 0; i < N; i += 1) {
@@ -403,7 +381,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             }
         }
 
-        for (int i = 0; i < N; i++) x.add(0.0);
+        x = IntStream.range(0, N).mapToObj(i -> 0.0).collect(Collectors.toList());
 
         for (int i = N - 1; i >= 0; i -= 1) {
             for (int known = i + 1; known < N; known += 1) {

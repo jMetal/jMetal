@@ -5,6 +5,8 @@ import static org.junit.Assert.assertArrayEquals;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.junit.Test;
 import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
@@ -19,19 +21,7 @@ public class DefaultIntegerPermutationSolutionTest {
         new MockIntegerPermutationProblem(permutationLength);
     PermutationSolution<Integer> solution = problem.createSolution();
 
-    List<Integer> values = new ArrayList<>();
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      values.add(solution.variables().get(i));
-    }
-
-    Collections.sort(values);
-
-    List<Integer> expectedList = new ArrayList<>(permutationLength);
-    for (int i = 0; i < permutationLength; i++) {
-      expectedList.add(i);
-    }
-
-    assertArrayEquals(expectedList.toArray(), values.toArray());
+      assertArrayEquals(IntStream.range(0, permutationLength).boxed().toArray(), IntStream.range(0, problem.getNumberOfVariables()).mapToObj(i -> solution.variables().get(i)).sorted().toArray());
   }
 
   /** Mock class representing a integer permutation problem */

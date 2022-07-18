@@ -11,6 +11,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.stream.IntStream;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -274,11 +276,8 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
   private String printDocumentFooter(String fileContents, double[] averageRanking) {
     double term1 = (12*(double)numberOfProblems)/(numberOfAlgorithms*(numberOfAlgorithms+1));
     double term2 = numberOfAlgorithms*(numberOfAlgorithms+1)*(numberOfAlgorithms+1)/(4.0);
-    double sum = 0;
-    for (int i=0; i<numberOfAlgorithms;i++) {
-      sum += averageRanking[i] * averageRanking[i];
-    }
-    double friedman = (sum - term2) * term1;
+    double sum = IntStream.range(0, numberOfAlgorithms).mapToDouble(i -> averageRanking[i] * averageRanking[i]).sum();
+      double friedman = (sum - term2) * term1;
 
     String output = fileContents + "\n" + "\n\nFriedman statistic considering reduction performance (distributed according to " +
         "chi-square with "+(numberOfAlgorithms-1)+" degrees of freedom: "+friedman+").\n\n";

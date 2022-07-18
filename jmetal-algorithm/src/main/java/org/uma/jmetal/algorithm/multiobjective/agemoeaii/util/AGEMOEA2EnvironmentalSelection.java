@@ -1,6 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoeaii.util;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.solution.Solution;
 
@@ -116,10 +119,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
      * @return value of the derivative for Lp with p=x
      */
     protected double originalFunction(double[] point, double x) {
-        double f = 0.0;
-        for (int i = 0; i < point.length; i++) {
-            f += Math.pow(Math.abs(point[i]), x);
-        }
+        double f = Arrays.stream(point).map(v -> Math.pow(Math.abs(v), x)).sum();
         return Math.log(f);
     }
 
@@ -167,9 +167,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
      * @return middle point
      */
     protected double[] midPoint(double[] A, double[] B) {
-        double[] midpoint = new double[A.length];
-        for (int i = 0; i < A.length; i++)
-            midpoint[i] = A[i] * 0.5 + B[i] * 0.5;
+        double[] midpoint = IntStream.range(0, A.length).mapToDouble(i -> A[i] * 0.5 + B[i] * 0.5).toArray();
 
         return midpoint;
     }

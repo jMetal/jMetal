@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.zdt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -54,11 +56,8 @@ public class ZDT1 extends AbstractDoubleProblem {
    * @param solution Solution
    */
   protected double evalG(DoubleSolution solution) {
-    double g = 0.0;
-    for (int i = 1; i < solution.variables().size(); i++) {
-      g += solution.variables().get(i);
-    }
-    double constant = 9.0 / (solution.variables().size() - 1);
+    double g = IntStream.range(1, solution.variables().size()).mapToDouble(i -> solution.variables().get(i)).sum();
+      double constant = 9.0 / (solution.variables().size() - 1);
 
     return constant * g + 1.0;
   }

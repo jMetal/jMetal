@@ -48,6 +48,8 @@ package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
+import java.util.stream.IntStream;
+
 public class F03ShiftedRotatedHighCondElliptic extends TestFunc {
 
   // Fixed (class) parameters
@@ -99,13 +101,9 @@ public class F03ShiftedRotatedHighCondElliptic extends TestFunc {
     Benchmark.shift(m_z, x, m_o);
     Benchmark.rotate(m_zM, m_z, m_matrix);
 
-    double sum = 0.0;
+    double sum = IntStream.range(0, mDimension).mapToDouble(i -> Math.pow(constant, i) * m_zM[i] * m_zM[i]).sum();
 
-    for (int i = 0; i < mDimension; i++) {
-      sum += Math.pow(constant, i) * m_zM[i] * m_zM[i];
-    }
-
-    result = sum + mBias;
+      result = sum + mBias;
 
     return (result);
   }

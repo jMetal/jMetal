@@ -16,6 +16,8 @@ package org.uma.jmetal.problem.multiobjective.zdt;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -79,12 +81,9 @@ public class ZDT5 extends AbstractBinaryProblem {
    * @param solution The solution.
    */
   public double evalG(BinarySolution solution) {
-    double res = 0.0;
-    for (int i = 1; i < solution.variables().size(); i++) {
-      res += evalV(u(solution.variables().get(i)));
-    }
+    double res = IntStream.range(1, solution.variables().size()).mapToDouble(i -> evalV(u(solution.variables().get(i)))).sum();
 
-    return res;
+      return res;
   }
 
   /**

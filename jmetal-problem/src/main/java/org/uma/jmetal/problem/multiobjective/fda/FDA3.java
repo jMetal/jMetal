@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective.fda;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -55,12 +57,10 @@ public class FDA3 extends FDA implements Serializable {
   }
 
   private double evalF(DoubleSolution solution, int limitInf, int limitSup) {
-    double f = 0.0d;
+    double f;
     double aux = 2.0d * Math.sin(0.5d * Math.PI * time);
     double Ft = Math.pow(10.0d, aux);
-    for (int i = limitInf; i < limitSup; i++) {
-      f += Math.pow(solution.variables().get(i), Ft);
-    }
+      f = IntStream.range(limitInf, limitSup).mapToDouble(i -> Math.pow(solution.variables().get(i), Ft)).sum();
     return f;
   }
 
@@ -71,11 +71,9 @@ public class FDA3 extends FDA implements Serializable {
    */
   private double evalG(DoubleSolution solution, int limitInf) {
 
-    double g = 0.0d;
+    double g;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-    for (int i = limitInf; i < solution.variables().size(); i++) {
-      g += Math.pow((solution.variables().get(i) - Gt), 2.0);
-    }
+      g = IntStream.range(limitInf, solution.variables().size()).mapToDouble(i -> Math.pow((solution.variables().get(i) - Gt), 2.0)).sum();
     g = g + 1.0 + Gt;
     return g;
   }

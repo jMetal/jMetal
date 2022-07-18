@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.dtlz;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -42,20 +43,15 @@ public class DTLZ7 extends AbstractDoubleProblem {
     int numberOfObjectives = solution.objectives().length;
 
     double[] f = new double[numberOfObjectives];
-    double[] x = new double[numberOfVariables];
+    double[] x;
 
     int k = getNumberOfVariables() - solution.objectives().length + 1;
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    double g = 0.0;
-    for (int i = numberOfVariables - k; i < numberOfVariables; i++) {
-      g += x[i];
-    }
+    double g = Arrays.stream(x, numberOfVariables - k, numberOfVariables).sum();
 
-    g = 1 + (9.0 * g) / k;
+      g = 1 + (9.0 * g) / k;
 
     System.arraycopy(x, 0, f, 0, numberOfObjectives - 1);
 

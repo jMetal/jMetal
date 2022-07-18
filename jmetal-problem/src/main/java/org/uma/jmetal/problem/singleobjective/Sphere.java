@@ -35,12 +35,9 @@ public class Sphere extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double sum = 0.0;
-    for (double v : solution.variables()) {
-      sum += v * v;
-    }
+    double sum = solution.variables().stream().mapToDouble(v -> v).map(v -> v * v).sum();
 
-    solution.objectives()[0] = sum;
+      solution.objectives()[0] = sum;
 
     return solution ;
   }

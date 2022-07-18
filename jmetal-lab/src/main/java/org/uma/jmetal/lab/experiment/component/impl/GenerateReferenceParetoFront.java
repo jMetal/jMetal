@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
@@ -97,14 +99,9 @@ public class GenerateReferenceParetoFront implements ExperimentComponent {
     GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
     for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
-      List<PointSolution> solutionsPerAlgorithm = new ArrayList<>() ;
-      for (PointSolution solution : nonDominatedSolutions) {
-        if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
-          solutionsPerAlgorithm.add(solution) ;
-        }
-      }
+      List<PointSolution> solutionsPerAlgorithm = nonDominatedSolutions.stream().filter(solution -> algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))).collect(Collectors.toList());
 
-      new SolutionListOutput(solutionsPerAlgorithm)
+        new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
               outputDirectoryName + "/" + problem.getTag() + "." +
                   algorithm.getAlgorithmTag() + ".csv", ","

@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.problem.Problem;
@@ -355,21 +357,17 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void group2() {
-    double[] childDelta = new double[problem.getNumberOfObjectives()];
-    double[] maxFunValue = new double[problem.getNumberOfObjectives()];
+    double[] childDelta;
+    double[] maxFunValue = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> 0).toArray();
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) maxFunValue[i] = 0;
-
-    for (int i = 0; i < population.size(); i++) {
+      for (int i = 0; i < population.size(); i++) {
       for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
         if (population.get(i).objectives()[j] > maxFunValue[j])
           maxFunValue[j] = population.get(i).objectives()[j];
       }
     }
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      childDelta[i] = (maxFunValue[i] - idealPoint[i]) / childGrid_;
-    }
+      childDelta = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> (maxFunValue[i] - idealPoint[i]) / childGrid_).toArray();
 
     for (int i = 1; i < childGridNum_; i++) team.get(i).clear();
 
@@ -394,21 +392,17 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void group3() {
-    double[] childDelta = new double[problem.getNumberOfObjectives()];
-    double[] maxFunValue = new double[problem.getNumberOfObjectives()];
+    double[] childDelta;
+    double[] maxFunValue = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> 0).toArray();
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) maxFunValue[i] = 0;
-
-    for (int i = 0; i < population.size(); i++) {
+      for (int i = 0; i < population.size(); i++) {
       for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
         if (population.get(i).objectives()[j] > maxFunValue[j])
           maxFunValue[j] = population.get(i).objectives()[j];
       }
     }
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      childDelta[i] = (maxFunValue[i] - idealPoint[i]) / childGrid_;
-    }
+      childDelta = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> (maxFunValue[i] - idealPoint[i]) / childGrid_).toArray();
 
     for (int i = 1; i < childGridNum_; i++) team.get(i).clear();
 
@@ -496,12 +490,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
         sum = sum + flag[j];
       }
       if (sum == 1) {
-        od = 0;
-        for (int j = 0; j < problem.getNumberOfObjectives(); j++)
-          if (flag[j] == 1) {
-            od = j;
-            break;
-          }
+          od = IntStream.range(0, problem.getNumberOfObjectives()).filter(j -> flag[j] == 1).findFirst().orElse(0);
         tempBorder.get(od).add(population.get(i));
       }
     }
@@ -635,9 +624,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected int getGridPos(int j, double funValue) {
-    int g = 0;
-    for (int i = 0; i < k_; i++) if (funValue > gridDetalSum_[j][i]) g++;
-    if (g == k_) g = k_ - 1;
+    int g = (int) IntStream.range(0, k_).filter(i -> funValue > gridDetalSum_[j][i]).count();
+      if (g == k_) g = k_ - 1;
     return g;
   }
 

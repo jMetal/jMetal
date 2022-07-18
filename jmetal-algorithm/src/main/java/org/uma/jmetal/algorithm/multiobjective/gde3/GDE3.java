@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
@@ -77,12 +80,8 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
 
   @Override
   protected List<DoubleSolution> createInitialPopulation() {
-    List<DoubleSolution> population = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      DoubleSolution newIndividual = getProblem().createSolution();
-      population.add(newIndividual);
-    }
-    return population;
+    List<DoubleSolution> population = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(getMaxPopulationSize())));
+      return population;
   }
 
   /**

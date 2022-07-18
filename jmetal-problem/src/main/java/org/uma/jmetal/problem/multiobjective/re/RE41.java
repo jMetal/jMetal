@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.re;
 
+import java.util.Arrays;
 import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -82,12 +83,9 @@ public class RE41 extends AbstractDoubleProblem {
       else g[i] = 0;
     }
 
-    double valueObjectiveThree = 0.0;
-    for (int i = 0; i < numberOfOriginalConstraints; i++) {
-      valueObjectiveThree += g[i];
-    }
+    double valueObjectiveThree = Arrays.stream(g, 0, numberOfOriginalConstraints).sum();
 
-    solution.objectives()[3] = valueObjectiveThree;
+      solution.objectives()[3] = valueObjectiveThree;
 
     return solution;
   }

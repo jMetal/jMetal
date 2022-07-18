@@ -43,16 +43,9 @@ public class QualityIndicatorUtils {
    * @return
    */
   public static QualityIndicator getIndicatorFromName(String name, List<QualityIndicator> list) {
-    QualityIndicator result = null;
+    QualityIndicator result = list.stream().filter(indicator -> indicator.getName().equals(name)).findFirst().orElse(null);
 
-    for (QualityIndicator indicator : list) {
-      if (indicator.getName().equals(name)) {
-        result = indicator;
-        break;
-      }
-    }
-
-    Check.notNull(result);
+      Check.notNull(result);
 
     return result;
   }

@@ -1,6 +1,9 @@
 package org.uma.jmetal.util;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -201,11 +204,8 @@ public class AdaptiveGrid<S extends Solution<?>> {
     }
 
     //Calculate the location into the hypercubes
-    int location = 0;
-    for (int obj = 0; obj < numberOfObjectives; obj++) {
-      location += position[obj] * Math.pow(2.0, obj * bisections);
-    }
-    return location;
+    int location = IntStream.range(0, numberOfObjectives).map(obj -> (int) (position[obj] * Math.pow(2.0, obj * bisections))).sum();
+      return location;
   }
 
   /**
@@ -313,14 +313,9 @@ public class AdaptiveGrid<S extends Solution<?>> {
    */
   public int rouletteWheel(BoundedRandomGenerator<Double> randomGenerator) {
     //Calculate the inverse sum
-    double inverseSum = 0.0;
-    for (int hypercube : hypercubes) {
-      if (hypercube > 0) {
-        inverseSum += 1.0 / (double) hypercube;
-      }
-    }
+    double inverseSum = Arrays.stream(hypercubes).filter(hypercube -> hypercube > 0).mapToDouble(hypercube -> 1.0 / (double) hypercube).sum();
 
-    //Calculate a random value between 0 and sumaInversa
+      //Calculate a random value between 0 and sumaInversa
     double random = randomGenerator.getRandomValue(0.0, inverseSum);
     int hypercube = 0;
     double accumulatedSum = 0.0;
@@ -344,14 +339,9 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * return the number of hypercubes with more than zero solutions.
    */
   public void calculateOccupied() {
-    int total = 0;
-    for (int hypercube : hypercubes) {
-      if (hypercube > 0) {
-        total++;
-      }
-    }
+    int total = (int) Arrays.stream(hypercubes).filter(hypercube -> hypercube > 0).count();
 
-    occupied = new int[total];
+      occupied = new int[total];
     int base = 0;
     for (int i = 0; i < hypercubes.length; i++) {
       if (hypercubes[i] > 0) {
@@ -402,13 +392,9 @@ public class AdaptiveGrid<S extends Solution<?>> {
     if (occupiedHypercubes() == 0) {
       result = 0.0;
     } else {
-      double sum = 0.0;
+      double sum = Arrays.stream(occupied).mapToDouble(value -> hypercubes[value]).sum();
 
-      for (int value : occupied) {
-        sum += hypercubes[value];
-      }
-
-      result = sum / occupiedHypercubes();
+        result = sum / occupiedHypercubes();
     }
     return result;
   }

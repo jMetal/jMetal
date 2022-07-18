@@ -1,6 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.cre;
 
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -29,13 +31,9 @@ public class CRE51 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.variables().get(i);
-    }
-
-    solution.objectives()[0] = 106780.37 * (x[1] + x[2]) + 61704.67;
+      solution.objectives()[0] = 106780.37 * (x[1] + x[2]) + 61704.67;
     solution.objectives()[1] = 3000 * x[0];
     solution.objectives()[2] = 305700 * 2289 * x[1] / Math.pow(0.06 * 2289, 0.65);
     solution.objectives()[3] = 250 * 2289 * Math.exp(-39.75 * x[1] + 9.9 * x[2] + 2.74);

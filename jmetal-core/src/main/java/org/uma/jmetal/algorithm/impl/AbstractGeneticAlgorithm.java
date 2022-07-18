@@ -2,6 +2,9 @@ package org.uma.jmetal.algorithm.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -54,12 +57,8 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
    * @return
    */
   protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      S newIndividual = getProblem().createSolution();
-      population.add(newIndividual);
-    }
-    return population;
+    List<S> population = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(getMaxPopulationSize())));
+      return population;
   }
 
   /**
@@ -70,13 +69,9 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
    */
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = new ArrayList<>(population.size());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      S solution = selectionOperator.execute(population);
-      matingPopulation.add(solution);
-    }
+    List<S> matingPopulation = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> selectionOperator.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
 
-    return matingPopulation;
+      return matingPopulation;
   }
 
   /**

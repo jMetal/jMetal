@@ -2,6 +2,9 @@ package org.uma.jmetal.util.artificialdecisionmaker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import weka.classifiers.Classifier;
@@ -37,11 +40,9 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       Attribute attr = new Attribute("my-numeric");
 
       //nominal
-      ArrayList<String> myNomVals = new ArrayList<>();
+      ArrayList<String> myNomVals = IntStream.range(0, numberOfObjectives).mapToObj(i -> VALUE_STRING + i).collect(Collectors.toCollection(ArrayList::new));
 
-      for (int i=0; i<numberOfObjectives; i++)
-        myNomVals.add(VALUE_STRING+i);
-      Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
+        Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
       //System.out.println(attr1.isNominal());
 
       //string
@@ -119,11 +120,9 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       Attribute attr = new Attribute("my-numeric");
 
       //nominal
-      ArrayList<String> myNomVals = new ArrayList<>();
+      ArrayList<String> myNomVals = IntStream.range(0, numberOfVariables).mapToObj(i -> VALUE_STRING + i).collect(Collectors.toCollection(ArrayList::new));
 
-      for (int i=0; i<numberOfVariables; i++)
-        myNomVals.add(VALUE_STRING+i);
-      Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
+        Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
 
       //string
       Attribute attr2 = new Attribute(MY_STRING, (List<String>)null);

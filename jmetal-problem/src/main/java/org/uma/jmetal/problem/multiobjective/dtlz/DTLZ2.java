@@ -44,23 +44,14 @@ public class DTLZ2 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
     int numberOfObjectives = solution.objectives().length;
-    double[] f = new double[numberOfObjectives];
-    double[] x = new double[numberOfVariables] ;
+    double[] f;
+    double[] x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i) ;
-    }
+      int k = getNumberOfVariables() - solution.objectives().length + 1;
 
-    int k = getNumberOfVariables() - solution.objectives().length + 1;
+    double g = IntStream.range(numberOfVariables - k, numberOfVariables).mapToDouble(i -> (x[i] - 0.5) * (x[i] - 0.5)).sum();
 
-    double g = 0.0;
-    for (int i = numberOfVariables - k; i < numberOfVariables; i++) {
-      g += (x[i] - 0.5) * (x[i] - 0.5);
-    }
-
-    for (int i = 0; i < numberOfObjectives; i++) {
-      f[i] = 1.0 + g;
-    }
+    f = IntStream.range(0, numberOfObjectives).mapToDouble(i -> 1.0 + g).toArray();
 
     for (int i = 0; i < numberOfObjectives; i++) {
       for (int j = 0; j < numberOfObjectives - (i + 1); j++) {

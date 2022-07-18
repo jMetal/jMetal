@@ -2,6 +2,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjecti
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smpso.SMPSORP;
@@ -54,15 +56,10 @@ public class SMPSORPWithMultipleReferencePointsAndRealTimeChartExample {
     int maxEvaluations = 25000;
     int swarmSize = 100;
 
-    List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
+    List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = referencePoints.stream().map(referencePoint -> new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
+            swarmSize / referencePoints.size(), referencePoint)).collect(Collectors.toList());
 
-    for (int i = 0; i < referencePoints.size(); i++) {
-      archivesWithReferencePoints.add(
-              new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
-                      swarmSize / referencePoints.size(), referencePoints.get(i)));
-    }
-
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
+      Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
     Termination termination = new TerminationByEvaluations(maxEvaluations);
 
     algorithm = new SMPSORP(problem,

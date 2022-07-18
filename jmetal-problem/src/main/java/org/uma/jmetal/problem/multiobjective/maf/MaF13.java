@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -56,20 +58,14 @@ public class MaF13 extends AbstractDoubleProblem {
     int numberOfVariables_ = solution.variables().size();
     int numberOfObjectives_ = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables_];
+    double[] x;
     double[] f = new double[numberOfObjectives_];
 
-    for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = IntStream.range(0, numberOfVariables_).mapToDouble(i -> solution.variables().get(i)).toArray();
 
     // evaluate J,y,sub1,sub2,sub3,sub4
-    double[] y = new double[numberOfVariables_];
-    for (int i = 0; i < numberOfVariables_; i++) {
-      y[i] =
-          x[i] - 2 * x[1] * Math.sin(2 * Math.PI * x[0] + (i + 1) * Math.PI / numberOfVariables_);
-    }
-    ArrayList<Integer> J1 = new ArrayList<Integer>();
+    double[] y = IntStream.range(0, numberOfVariables_).mapToDouble(i -> x[i] - 2 * x[1] * Math.sin(2 * Math.PI * x[0] + (i + 1) * Math.PI / numberOfVariables_)).toArray();
+      ArrayList<Integer> J1 = new ArrayList<Integer>();
     ArrayList<Integer> J2 = new ArrayList<Integer>();
     ArrayList<Integer> J3 = new ArrayList<Integer>();
     ArrayList<Integer> J4 = new ArrayList<Integer>();

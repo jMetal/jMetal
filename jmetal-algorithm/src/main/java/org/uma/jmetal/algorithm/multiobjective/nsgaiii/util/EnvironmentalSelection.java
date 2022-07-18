@@ -1,8 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaiii.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -96,7 +100,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
   }
 
   public List<Double> guassianElimination(List<List<Double>> A, List<Double> b) {
-    List<Double> x = new ArrayList<>();
+    List<Double> x;
 
     int N = A.size();
     for (int i = 0; i < N; i += 1) {
@@ -112,7 +116,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
       }
     }
 
-    for (int i = 0; i < N; i++) x.add(0.0);
+      x = IntStream.range(0, N).mapToObj(i -> 0.0).collect(Collectors.toList());
 
     for (int i = N - 1; i >= 0; i -= 1) {
       for (int known = i + 1; known < N; known += 1) {
@@ -133,32 +137,22 @@ public class EnvironmentalSelection<S extends Solution<?>>
       }
     }
 
-    List<Double> intercepts = new ArrayList<>();
+    List<Double> intercepts;
 
     if (duplicate) // cannot construct the unique hyperplane (this is a casual method to deal with
                    // the condition)
     {
-      for (int f = 0; f < numberOfObjectives; f += 1) {
         // extreme_points[f] stands for the individual with the largest value of objective f
-        intercepts.add(extreme_points.get(f).objectives()[f]);
-      }
+        intercepts = IntStream.range(0, numberOfObjectives).mapToObj(f -> extreme_points.get(f).objectives()[f]).collect(Collectors.toList());
     } else {
       // Find the equation of the hyperplane
-      List<Double> b = new ArrayList<>(); // (pop[0].objs().size(), 1.0);
-      for (int i = 0; i < numberOfObjectives; i++) b.add(1.0);
+      List<Double> b = IntStream.range(0, numberOfObjectives).mapToObj(i -> 1.0).collect(Collectors.toList()); // (pop[0].objs().size(), 1.0);
 
-      List<List<Double>> A = new ArrayList<>();
-      for (S s : extreme_points) {
-        List<Double> aux = new ArrayList<>();
-        for (int i = 0; i < numberOfObjectives; i++) aux.add(s.objectives()[i]);
-        A.add(aux);
-      }
+        List<List<Double>> A = extreme_points.stream().<List<Double>>map(s -> Arrays.stream(s.objectives(), 0, numberOfObjectives).collect(Collectors.toList())).collect(Collectors.toList());
       List<Double> x = guassianElimination(A, b);
 
       // Find intercepts
-      for (int f = 0; f < numberOfObjectives; f += 1) {
-        intercepts.add(1.0 / x.get(f));
-      }
+        intercepts = IntStream.range(0, numberOfObjectives).mapToObj(f -> 1.0 / x.get(f)).collect(Collectors.toList());
     }
     return intercepts;
   }
@@ -188,11 +182,8 @@ public class EnvironmentalSelection<S extends Solution<?>>
     }
     double k = numerator / denominator;
 
-    double d = 0;
-    for (int i = 0; i < direction.size(); i += 1) {
-      d += Math.pow(k * direction.get(i) - point.get(i), 2.0);
-    }
-    return Math.sqrt(d);
+    double d = IntStream.range(0, direction.size()).mapToDouble(i -> Math.pow(k * direction.get(i) - point.get(i), 2.0)).sum();
+      return Math.sqrt(d);
   }
 
   public void associate(List<S> population) {

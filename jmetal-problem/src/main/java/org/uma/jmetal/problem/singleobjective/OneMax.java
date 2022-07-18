@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.singleobjective;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
@@ -55,11 +57,7 @@ public class OneMax extends AbstractBinaryProblem {
 
     BitSet bitset = solution.variables().get(0);
 
-    for (int i = 0; i < bitset.length(); i++) {
-      if (bitset.get(i)) {
-        counterOnes++;
-      }
-    }
+      counterOnes += IntStream.range(0, bitset.length()).filter(bitset::get).count();
 
     // OneMax is a maximization problem: multiply by -1 to minimize
     solution.objectives()[0] = -1.0 * counterOnes;

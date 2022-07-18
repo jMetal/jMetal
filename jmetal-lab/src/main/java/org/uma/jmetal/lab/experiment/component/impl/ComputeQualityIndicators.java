@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -148,15 +149,9 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
           List<String> fileArray;
           fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
 
-          List<Pair<Double, Integer>> list = new ArrayList<>();
+          List<Pair<Double, Integer>> list = IntStream.range(0, fileArray.size()).mapToObj(i -> new ImmutablePair<>(Double.parseDouble(fileArray.get(i)), i)).sorted(Comparator.comparingDouble(pair -> Math.abs(pair.getLeft()))).collect(Collectors.toList());
 
-          for (int i = 0; i < fileArray.size(); i++) {
-            Pair<Double, Integer> pair = new ImmutablePair<>(Double.parseDouble(fileArray.get(i)), i);
-            list.add(pair);
-          }
-
-          list.sort(Comparator.comparingDouble(pair -> Math.abs(pair.getLeft())));
-          String bestFunFileName;
+            String bestFunFileName;
           String bestVarFileName;
           String medianFunFileName;
           String medianVarFileName;

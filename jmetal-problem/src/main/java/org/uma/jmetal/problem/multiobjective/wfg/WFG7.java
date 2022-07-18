@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.wfg;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+import java.util.stream.IntStream;
+
 @SuppressWarnings("serial")
 public class WFG7 extends WFG {
   /**
@@ -128,13 +130,9 @@ public class WFG7 extends WFG {
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
     float[] variables = new float[getNumberOfVariables()];
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.variables().get(i);
-    }
-
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+      for (int i = 0; i < getNumberOfVariables(); i++) {
       variables[i] = (float) x[i] ;
     }
 

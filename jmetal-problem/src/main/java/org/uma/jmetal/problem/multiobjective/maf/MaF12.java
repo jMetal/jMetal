@@ -1,7 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -56,30 +59,24 @@ public class MaF12 extends AbstractDoubleProblem {
     int numberOfVariables_ = solution.variables().size();
     int numberOfObjectives_ = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables_];
+    double[] x;
     double[] f = new double[numberOfObjectives_];
 
-    for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = IntStream.range(0, numberOfVariables_).mapToDouble(i -> solution.variables().get(i)).toArray();
 
     double subf1 = 1;
     // evaluate zi,t1i,t2i,t3i,t4i,yi
-    double[] z = new double[numberOfVariables_];
+    double[] z;
     double[] t1 = new double[numberOfVariables_];
     double[] t2 = new double[numberOfVariables_];
     double[] t3 = new double[numberOfObjectives_];
     double[] y = new double[numberOfObjectives_];
     double sub1, sub2 = 0;
     int lb1 = 0, ub1 = 0, lb2 = 0, ub2 = 0;
-    for (int i = 0; i < numberOfVariables_; i++) {
-      z[i] = x[i] / (2 * i + 2);
-    }
+      z = IntStream.range(0, numberOfVariables_).mapToDouble(i -> x[i] / (2 * i + 2)).toArray();
     for (int i = 0; i < numberOfVariables_ - 1; i++) {
       sub1 = 0;
-      for (int j = i + 1; j < numberOfVariables_; j++) {
-        sub1 += z[j];
-      }
+        sub1 += Arrays.stream(z, i + 1, numberOfVariables_).sum();
       sub2 = sub1 / (numberOfVariables_ - i - 1);
       t1[i] = Math.pow(z[i], 0.02 + 49.98 * (0.98 / 49.98 - (1 - 2 * sub2) * Math
           .abs(Math.floor(0.5 - sub2) + 0.98 / 49.98)));

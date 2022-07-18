@@ -6,6 +6,9 @@ import static org.uma.jmetal.util.ConstraintHandling.isFeasible;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -70,11 +73,8 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
     initializePopulation();
     idealPoint.update(population);
 
-    double[] constraints = new double[populationSize];
-    for (int i = 0; i < populationSize; i++) {
-      constraints[i] = ConstraintHandling.overallConstraintViolationDegree(population.get(i));
-      }
-    Arrays.sort(constraints);
+    double[] constraints = IntStream.range(0, populationSize).mapToDouble(i -> ConstraintHandling.overallConstraintViolationDegree(population.get(i))).toArray();
+      Arrays.sort(constraints);
     double epsilonZero = Math.abs(constraints[(int) Math.ceil(0.05 * populationSize)]);
 
     if (phiMax < Math.abs(constraints[0])) {
@@ -215,14 +215,9 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
   }
 
   private void updateExternalArchive() {
-    List<DoubleSolution> feasibleSolutions = new ArrayList<>() ;
-    for (DoubleSolution solution: population) {
-      if (isFeasible(solution)) {
-        feasibleSolutions.add((DoubleSolution) solution.copy()) ;
-      }
-    }
+    List<DoubleSolution> feasibleSolutions = population.stream().filter(ConstraintHandling::isFeasible).map(solution -> (DoubleSolution) solution.copy()).collect(Collectors.toList());
 
-    if (feasibleSolutions.size() > 0) {
+      if (feasibleSolutions.size() > 0) {
       feasibleSolutions.addAll(archive) ;
       Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>() ;
       ranking.compute(feasibleSolutions) ;

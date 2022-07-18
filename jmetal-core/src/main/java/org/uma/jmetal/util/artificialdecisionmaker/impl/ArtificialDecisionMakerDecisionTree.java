@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
+
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -150,7 +152,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
   @Override
   protected List<Integer> relevantObjectiveFunctions(List<S> front) {
-    List<Integer> order = new ArrayList<>();
+    List<Integer> order;
     List<Integer> indexRelevantObjectivesFunctions = new ArrayList<>();
     SortedMap<Double, List<Integer>> map = new TreeMap<>(Collections.reverseOrder());
     for (int i = 0; i < rankingCoeficient.size(); i++) {
@@ -159,9 +161,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
       map.putIfAbsent(rankingCoeficient.get(i),aux);
     }
     Set<Double> keys =map.keySet();
-    for (Double key:keys) {
-      order.addAll(map.get(key));
-    }
+      order = keys.stream().flatMap(key -> map.get(key).stream()).collect(Collectors.toList());
     S solution = getSolution(front,currentReferencePoint);
     for (Integer i : order) {
       double rand = random.nextDouble(0.0, 1.0);

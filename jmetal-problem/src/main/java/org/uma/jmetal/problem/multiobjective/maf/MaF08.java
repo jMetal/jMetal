@@ -59,16 +59,12 @@ public class MaF08 extends AbstractDoubleProblem {
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables];
-    double[] f = new double[numberOfObjectives];
+    double[] x;
+    double[] f;
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = solution.variables().stream().mapToDouble(aDouble -> aDouble).toArray();
     // evaluate f
-    for (int i = 0; i < numberOfObjectives; i++) {
-      f[i] = Math.sqrt(Math.pow(const8[i][0] - x[0], 2) + Math.pow(const8[i][1] - x[1], 2));
-    }
+      f = IntStream.range(0, numberOfObjectives).mapToDouble(i -> Math.sqrt(Math.pow(const8[i][0] - x[0], 2) + Math.pow(const8[i][1] - x[1], 2))).toArray();
 
     for (int i = 0; i < numberOfObjectives; i++) {
       solution.objectives()[i] = f[i];
@@ -81,15 +77,13 @@ public class MaF08 extends AbstractDoubleProblem {
     startp[0] = 0;
     startp[1] = 1;
     double[][] p1 = new double[m][2];
-    double[][] p = new double[m][2];
+    double[][] p;
     p1[0] = startp;
     // vertexes with the number of edges(m),start vertex(startp),radius(r)
     for (int i = 1; i < m; i++) {
       p1[i] = nextPoint(2 * Math.PI / m * i, startp, r);
     }
-    for (int i = 0; i < m; i++) {
-      p[i] = p1[m - i - 1];
-    }
+      p = IntStream.range(0, m).mapToObj(i -> p1[m - i - 1]).toArray(double[][]::new);
     return p;
   }
 

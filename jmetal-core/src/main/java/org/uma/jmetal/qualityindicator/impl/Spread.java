@@ -2,6 +2,8 @@ package org.uma.jmetal.qualityindicator.impl;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.comparator.LexicographicalVectorComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
@@ -60,16 +62,14 @@ public class Spread extends QualityIndicator {
     double dl = distance.compute(front[front.length - 1],
             referenceFront[referenceFront.length - 1]) ;
 
-    double mean = 0.0;
+    double mean;
     double diversitySum = df + dl;
 
     int numberOfPoints = front.length ;
 
     // STEP 3. Calculate the mean of distances between points i and (i - 1).
     // (the points are in lexicografical order)
-    for (int i = 0; i < (numberOfPoints - 1); i++) {
-      mean += distance.compute(front[i], front[i + 1]);
-    }
+      mean = IntStream.range(0, (numberOfPoints - 1)).mapToDouble(i -> distance.compute(front[i], front[i + 1])).sum();
 
     mean = mean / (double) (numberOfPoints - 1);
 

@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.singleobjective;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -37,13 +39,9 @@ public class Griewank extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
-    double[] x = new double[numberOfVariables] ;
+    double[] x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i) ;
-    }
-
-    double sum = 0.0;
+      double sum = 0.0;
     double mult = 1.0;
     double d = 4000.0;
     for (int var = 0; var < numberOfVariables; var++) {

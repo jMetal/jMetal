@@ -10,6 +10,9 @@ import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -120,12 +123,9 @@ public class NaryRandomSelectionTest {
     int solutionsToBeReturned = 4 ;
 
     NaryRandomSelection<BinarySolution> selection = new NaryRandomSelection<BinarySolution>(solutionsToBeReturned) ;
-    List<BinarySolution> list = new ArrayList<>(listSize) ;
-    for (int i = 0; i < listSize; i++) {
-      list.add(mock(BinarySolution.class));
-    }
+    List<BinarySolution> list = IntStream.range(0, listSize).mapToObj(i -> mock(BinarySolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(listSize)));
 
-    List<BinarySolution> result = (List<BinarySolution>) selection.execute(list);
+      List<BinarySolution> result = (List<BinarySolution>) selection.execute(list);
     assertEquals(solutionsToBeReturned, result.size());
   }
 

@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -295,12 +297,9 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
 
       fitness = maxFun;
     } else if (MOEAD.FunctionType.AGG.equals(functionType)) {
-      double sum = 0.0;
-      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
-        sum += (lambda[n]) * individual.objectives()[n];
-      }
+      double sum = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(n -> (lambda[n]) * individual.objectives()[n]).sum();
 
-      fitness = sum;
+        fitness = sum;
 
     } else if (MOEAD.FunctionType.PBI.equals(functionType)) {
       double d1, d2, nl;

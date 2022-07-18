@@ -2,6 +2,9 @@ package org.uma.jmetal.util.extremevalues.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.extremevalues.ExtremeValuesFinder;
 import org.uma.jmetal.util.legacy.front.Front;
@@ -14,7 +17,7 @@ import org.uma.jmetal.util.legacy.front.Front;
 public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Double>> {
 
   @Override public List<Double> findLowestValues(Front front) {
-    List<Double> minimumValue = new ArrayList<>() ;
+    List<Double> minimumValue;
 
     if (front == null) {
       throw new JMetalException("The front is null") ;
@@ -24,9 +27,7 @@ public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Doub
 
     int numberOfObjectives = front.getPointDimensions() ;
 
-    for (int i = 0; i < numberOfObjectives; i++) {
-      minimumValue.add(Double.POSITIVE_INFINITY);
-    }
+      minimumValue = IntStream.range(0, numberOfObjectives).mapToObj(i -> Double.POSITIVE_INFINITY).collect(Collectors.toList());
 
     for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
@@ -40,7 +41,7 @@ public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Doub
   }
 
   @Override public List<Double> findHighestValues(Front front) {
-    List<Double> maximumValue = new ArrayList<>() ;
+    List<Double> maximumValue;
 
     if (front == null) {
       throw new JMetalException("The front is null") ;
@@ -50,9 +51,7 @@ public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Doub
 
     int numberOfObjectives = front.getPointDimensions() ;
 
-    for (int i = 0; i < numberOfObjectives; i++) {
-      maximumValue.add(Double.NEGATIVE_INFINITY);
-    }
+      maximumValue = IntStream.range(0, numberOfObjectives).mapToObj(i -> Double.NEGATIVE_INFINITY).collect(Collectors.toList());
 
     for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {

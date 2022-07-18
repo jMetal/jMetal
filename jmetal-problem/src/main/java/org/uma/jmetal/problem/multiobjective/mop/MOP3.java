@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.mop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -61,12 +63,8 @@ public class MOP3 extends AbstractDoubleProblem {
    * @param solution Solution
    */
   private double evalG(DoubleSolution solution) {
-    double g = 0.0;
-    for (int i = 1; i < solution.variables().size(); i++) {
-      double t = solution.variables().get(i) - Math.sin(0.5 * Math.PI * solution.variables().get(0));
-      g += Math.abs(t) / (1 + Math.exp(5 * Math.abs(t)));
-    }
-    g = 10 * Math.sin(0.5 * Math.PI * solution.variables().get(0)) * g;
+    double g = IntStream.range(1, solution.variables().size()).mapToDouble(i -> solution.variables().get(i) - Math.sin(0.5 * Math.PI * solution.variables().get(0))).map(t -> Math.abs(t) / (1 + Math.exp(5 * Math.abs(t)))).sum();
+      g = 10 * Math.sin(0.5 * Math.PI * solution.variables().get(0)) * g;
     return g;
   }
 

@@ -81,23 +81,17 @@ public class CF16 extends AbstractDoubleProblem {
     }
 
     // Step 2. Compute THETA_
-    double[] theta = new double[getNumberOfObjectives() - 1];
-    for (int i = 0; i < getNumberOfObjectives() - 1; i++) {
-      theta[i] = 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i]);
-    }
+    double[] theta = IntStream.range(0, getNumberOfObjectives() - 1).mapToDouble(i -> 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i])).toArray();
 
-    // Step 3. Compute T_
+      // Step 3. Compute T_
     double t;
     t = (1 - sx[0]) * (1 - sx[0]); // (1 - XI^2)^2
 
     // Compute h function. Here is Sphere function
     double OptX = 0.2;
-    double h = 0.0;
-    for (int i = getNumberOfObjectives(); i < getNumberOfVariables(); i++) {
-      h = h + ((x[i] - OptX) * (x[i] - OptX));
-    }
+    double h = IntStream.range(getNumberOfObjectives(), getNumberOfVariables()).mapToDouble(i -> ((x[i] - OptX) * (x[i] - OptX))).sum();
 
-    t = t + h; // Add sum2 to T_
+      t = t + h; // Add sum2 to T_
 
     // Step 4. Specify PF shape: Convex
     double sumProd = 1.0;

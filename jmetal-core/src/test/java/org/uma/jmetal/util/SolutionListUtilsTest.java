@@ -16,6 +16,9 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -105,12 +108,9 @@ public class SolutionListUtilsTest {
       shouldFindBestSolutionReturnTheLastOneIfThisIsTheBestSolutionInALastInAListWithFiveSolutions() {
     @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class);
-    List<IntegerSolution> list = new ArrayList<>();
-    for (int i = 0; i < 5; i++) {
-      list.add(mock(IntegerSolution.class));
-    }
+    List<IntegerSolution> list = IntStream.range(0, 5).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toList());
 
-    when(comparator.compare(any(), any()))
+      when(comparator.compare(any(), any()))
         .thenReturn(1, 0, 0, 1);
     assertSame(list.get(4), SolutionListUtils.findBestSolution(list, comparator));
     verify(comparator, times(4))
@@ -201,12 +201,9 @@ public class SolutionListUtilsTest {
       shouldFindIndexOfBestSolutionReturn4IfTheBestSolutionIsTheLastInAListWithFiveSolutions() {
     @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class);
-    List<IntegerSolution> list = new ArrayList<>();
-    for (int i = 0; i < 5; i++) {
-      list.add(mock(IntegerSolution.class));
-    }
+    List<IntegerSolution> list = IntStream.range(0, 5).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toList());
 
-    when(comparator.compare(any(), any()))
+      when(comparator.compare(any(), any()))
         .thenReturn(1, 0, 0, 1);
     assertEquals(4, SolutionListUtils.findIndexOfBestSolution(list, comparator));
     verify(comparator, times(4))
@@ -291,12 +288,9 @@ public class SolutionListUtilsTest {
     int listSize = 20;
     int solutionsToBeReturned = 4;
 
-    List<BinarySolution> list = new ArrayList<>(listSize);
-    for (int i = 0; i < listSize; i++) {
-      list.add(mock(BinarySolution.class));
-    }
+    List<BinarySolution> list = IntStream.range(0, listSize).mapToObj(i -> mock(BinarySolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(listSize)));
 
-    List<BinarySolution> result =
+      List<BinarySolution> result =
         SolutionListUtils.selectNRandomDifferentSolutions(solutionsToBeReturned, list);
     assertEquals(solutionsToBeReturned, result.size());
   }

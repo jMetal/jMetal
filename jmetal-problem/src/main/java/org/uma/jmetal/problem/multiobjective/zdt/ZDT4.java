@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.zdt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
@@ -42,13 +44,10 @@ public class ZDT4 extends ZDT1 {
    * @param solution Solution
    */
   public double evalG(DoubleSolution solution) {
-    double g = 0.0;
-    for (int var = 1; var < solution.variables().size(); var++) {
-      g += Math.pow(solution.variables().get(var), 2.0) +
-        -10.0 * Math.cos(4.0 * Math.PI * solution.variables().get(var));
-    }
+    double g = IntStream.range(1, solution.variables().size()).mapToDouble(var -> Math.pow(solution.variables().get(var), 2.0) +
+            -10.0 * Math.cos(4.0 * Math.PI * solution.variables().get(var))).sum();
 
-    double constant = 1.0 + 10.0 * (solution.variables().size() - 1);
+      double constant = 1.0 + 10.0 * (solution.variables().size() - 1);
     return g + constant;
   }
 

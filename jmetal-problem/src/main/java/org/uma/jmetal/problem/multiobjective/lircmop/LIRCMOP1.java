@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.lircmop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -36,12 +38,9 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.variables().get(i);
-    }
+    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    solution.objectives()[0] = x[0] + g1(x);
+      solution.objectives()[0] = x[0] + g1(x);
     solution.objectives()[1] = 1 - x[0] * x[0] + g2(x);
 
     evaluateConstraints(solution);
@@ -50,12 +49,9 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.variables().get(i);
-    }
+    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    final double a = 0.51;
+      final double a = 0.51;
     final double b = 0.5;
 
     solution.constraints()[0] = (a - g1(x)) * (g1(x) - b);
@@ -63,19 +59,13 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
   }
 
   protected double g1(double[] x) {
-    double result = 0.0;
-    for (int i = 2; i < getNumberOfVariables(); i += 2) {
-      result += Math.pow(x[i] - Math.sin(0.5 * Math.PI * x[0]), 2.0);
-    }
-    return result;
+    double result = IntStream.iterate(2, i -> i < getNumberOfVariables(), i -> i + 2).mapToDouble(i -> Math.pow(x[i] - Math.sin(0.5 * Math.PI * x[0]), 2.0)).sum();
+      return result;
   }
 
   protected double g2(double[] x) {
-    double result = 0.0;
-    for (int i = 1; i < getNumberOfVariables(); i += 2) {
-      result += Math.pow(x[i] - Math.cos(0.5 * Math.PI * x[0]), 2.0);
-    }
+    double result = IntStream.iterate(1, i -> i < getNumberOfVariables(), i -> i + 2).mapToDouble(i -> Math.pow(x[i] - Math.cos(0.5 * Math.PI * x[0]), 2.0)).sum();
 
-    return result;
+      return result;
   }
 }

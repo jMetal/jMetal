@@ -3,6 +3,9 @@ package org.uma.jmetal.algorithm.multiobjective.mochc;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -94,12 +97,8 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   }
 
   @Override protected List<BinarySolution> createInitialPopulation() {
-    List<BinarySolution> population = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      BinarySolution newIndividual = problem.createSolution();
-      population.add(newIndividual);
-    }
-    return population;
+    List<BinarySolution> population = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> problem.createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(getMaxPopulationSize())));
+      return population;
   }
 
   @Override protected List<BinarySolution> evaluatePopulation(List<BinarySolution> population) {
@@ -109,13 +108,9 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   }
 
   @Override protected List<BinarySolution> selection(List<BinarySolution> population) {
-    List<BinarySolution> matingPopulation = new ArrayList<>(population.size());
-    for (int i = 0; i < population.size(); i ++) {
-      BinarySolution solution = parentSelection.execute(population);
-      matingPopulation.add(solution);
-    }
+    List<BinarySolution> matingPopulation = IntStream.range(0, population.size()).mapToObj(i -> parentSelection.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
 
-    return matingPopulation;
+      return matingPopulation;
   }
 
   @Override protected List<BinarySolution> reproduction(List<BinarySolution> matingPopulation) {
@@ -188,12 +183,9 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
    */
 
   private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
-    int distance = 0;
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      distance += hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i));
-    }
+    int distance = IntStream.range(0, problem.getNumberOfVariables()).map(i -> hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i))).sum();
 
-    return distance;
+      return distance;
   }
 
   private int hammingDistance(BinarySet bitSet1, BinarySet bitSet2) {

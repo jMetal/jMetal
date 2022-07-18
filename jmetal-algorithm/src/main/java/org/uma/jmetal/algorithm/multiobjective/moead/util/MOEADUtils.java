@@ -2,6 +2,9 @@ package org.uma.jmetal.algorithm.multiobjective.moead.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
@@ -47,11 +50,8 @@ public class MOEADUtils {
 
   public static double distVector(double[] vector1, double[] vector2) {
     int dim = vector1.length;
-    double sum = 0;
-    for (int n = 0; n < dim; n++) {
-      sum += (vector1[n] - vector2[n]) * (vector1[n] - vector2[n]);
-    }
-    return Math.sqrt(sum);
+    double sum = IntStream.range(0, dim).mapToDouble(n -> (vector1[n] - vector2[n]) * (vector1[n] - vector2[n])).sum();
+      return Math.sqrt(sum);
   }
 
   public static void minFastSort(double x[], int idx[], int n, int m) {
@@ -199,12 +199,10 @@ public class MOEADUtils {
     int randomIndex = JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1);
 
     // create a list containing all the solutions but the selected one (only references to them)
-    List<S> candidate = new ArrayList<>();
+    List<S> candidate;
     resultSolutionList.add(solutionList.get(randomIndex));
 
-    for (int i = 0; i < solutionList.size(); i++) {
-      if (i != randomIndex) candidate.add(solutionList.get(i));
-    }
+      candidate = IntStream.range(0, solutionList.size()).filter(i -> i != randomIndex).mapToObj(solutionList::get).collect(Collectors.toList());
 
     while (resultSolutionList.size() < newSolutionListSize) {
       int index = 0;

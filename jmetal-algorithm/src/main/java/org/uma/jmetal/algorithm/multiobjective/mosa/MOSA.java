@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.multiobjective.mosa;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.multiobjective.mosa.cooling.CoolingScheme;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -161,14 +163,10 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   protected double compute_acceptance_probability(S currentSolution, S mutatedSolution, double temperature) {
-    double value = 0.0;
+    double value = IntStream.range(0, currentSolution.objectives().length).mapToDouble(i -> (mutatedSolution.objectives()[i] - currentSolution.objectives()[i])
+            / Math.max(temperature, minimumTemperature)).sum();
 
-    for (int i = 0; i < currentSolution.objectives().length; i++) {
-      value += (mutatedSolution.objectives()[i] - currentSolution.objectives()[i])
-              / Math.max(temperature, minimumTemperature);
-    }
-
-    double probability = Math.exp(-1.0 * value);
+      double probability = Math.exp(-1.0 * value);
     Check.probabilityIsValid(probability);
     return probability;
   }

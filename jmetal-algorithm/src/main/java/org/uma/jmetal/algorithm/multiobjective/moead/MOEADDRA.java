@@ -2,6 +2,9 @@ package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -117,18 +120,14 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
   }
 
   public List<Integer> tourSelection(int depth) {
-    List<Integer> selected = new ArrayList<Integer>();
-    List<Integer> candidate = new ArrayList<Integer>();
+    List<Integer> selected;
+    List<Integer> candidate;
 
-    for (int k = 0; k < problem.getNumberOfObjectives(); k++) {
       // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL (NOT SORTED!!!!)
-      selected.add(k);
-    }
+      selected = IntStream.range(0, problem.getNumberOfObjectives()).boxed().collect(Collectors.toList());
 
-    for (int n = problem.getNumberOfObjectives(); n < populationSize; n++) {
       // set of unselected weights
-      candidate.add(n);
-    }
+      candidate = IntStream.range(problem.getNumberOfObjectives(), populationSize).boxed().collect(Collectors.toList());
 
     while (selected.size() < (int) (populationSize / 5.0)) {
       int best_idd = (int) (randomGenerator.nextDouble() * candidate.size());

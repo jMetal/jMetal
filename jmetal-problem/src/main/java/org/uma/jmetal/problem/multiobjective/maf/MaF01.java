@@ -52,17 +52,13 @@ public class MaF01 extends AbstractDoubleProblem {
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables];
+    double[] x;
     double[] f = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    double g = 0, subf1 = 1, subf3;
-    for (int j = numberOfObjectives - 1; j < numberOfVariables; j++) {
-      g += (Math.pow(x[j] - 0.5, 2));
-    }
+    double g, subf1 = 1, subf3;
+      g = IntStream.range(numberOfObjectives - 1, numberOfVariables).mapToDouble(j -> (Math.pow(x[j] - 0.5, 2))).sum();
     subf3 = 1 + g;
 
     f[numberOfObjectives - 1] = x[0] * subf3;

@@ -8,6 +8,9 @@ import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
@@ -94,12 +97,9 @@ public class TwoDimensionalMeshTest {
     int columns = 3 ;
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 4) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 4) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(1))) ;
     assertThat(result, hasItem(list.get(3))) ;
@@ -123,12 +123,9 @@ public class TwoDimensionalMeshTest {
     int columns = 3 ;
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
     assertThat(result, hasItem(list.get(7))) ;
@@ -152,12 +149,9 @@ public class TwoDimensionalMeshTest {
     int columns = 3 ;
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(1))) ;
     assertThat(result, hasItem(list.get(2))) ;
@@ -181,12 +175,9 @@ public class TwoDimensionalMeshTest {
     int columns = 3 ;
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(1))) ;
     assertThat(result, hasItem(list.get(0))) ;
@@ -210,12 +201,9 @@ public class TwoDimensionalMeshTest {
     int columns = 3 ;
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 8) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 8) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(2))) ;
     assertThat(result, hasItem(list.get(6))) ;
@@ -238,12 +226,9 @@ public class TwoDimensionalMeshTest {
     int columns = 3 ;
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0);
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0);
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(1))) ;
     assertThat(result, hasItem(list.get(3))) ;
@@ -265,12 +250,9 @@ public class TwoDimensionalMeshTest {
     int columns = 3 ;
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 3) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 3) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
     assertThat(result, hasItem(list.get(4))) ;
@@ -292,12 +274,9 @@ public class TwoDimensionalMeshTest {
     int columns = 2 ;
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(2))) ;
     assertThat(result, hasItem(list.get(1))) ;

@@ -1,6 +1,8 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -64,12 +66,9 @@ public class InvertedGenerationalDistance extends QualityIndicator {
    * @param referenceFront The reference pareto front
    */
   public double invertedGenerationalDistance(double[][] front, double[][] referenceFront) {
-    double sum = 0.0;
-    for (double[] vector : referenceFront) {
-      sum += Math.pow(VectorUtils.distanceToClosestVector(vector, front), pow);
-    }
+    double sum = Arrays.stream(referenceFront).mapToDouble(vector -> Math.pow(VectorUtils.distanceToClosestVector(vector, front), pow)).sum();
 
-    sum = Math.pow(sum, 1.0 / pow);
+      sum = Math.pow(sum, 1.0 / pow);
 
     return sum / referenceFront.length;
   }

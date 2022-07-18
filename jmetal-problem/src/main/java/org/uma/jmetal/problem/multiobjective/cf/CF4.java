@@ -66,32 +66,19 @@ public class CF4 extends AbstractDoubleProblem {
     }
 
     // Step 2. Compute THETA_
-    double[] theta = new double[getNumberOfObjectives() - 1];
-    for (int i = 0; i < getNumberOfObjectives() - 1; i++) {
-      theta[i] = 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i]);
-    }
+    double[] theta = IntStream.range(0, getNumberOfObjectives() - 1).mapToDouble(i -> 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i])).toArray();
 
-    // Step 3. Compute T_
+      // Step 3. Compute T_
     double t;
     t = (1 - sx[0]) * (1 - sx[0]); // (1 - XI^2)^2
 
     // Compute h function. Here is Griewank function
     double OptX = 0.2;
-    double sum2 = 0.0;
+    double sum2 = IntStream.range(getNumberOfObjectives(), getNumberOfVariables()).mapToDouble(i -> ((x[i] - OptX) * (x[i] - OptX))).sum();
 
-    for (int i = getNumberOfObjectives(); i < getNumberOfVariables(); i++) {
-      sum2 = sum2 + ((x[i] - OptX) * (x[i] - OptX));
-    }
+      double prod = IntStream.range(getNumberOfObjectives(), getNumberOfVariables()).mapToDouble(i -> Math.cos(10 * Math.PI * (x[i] - OptX) / Math.sqrt(i + 1 - getNumberOfObjectives()))).reduce(1.0, (a, b) -> a * b);
 
-    double prod = 1.0;
-
-    for (int i = getNumberOfObjectives(); i < getNumberOfVariables(); i++) {
-      prod =
-          prod
-              * Math.cos(10 * Math.PI * (x[i] - OptX) / Math.sqrt(i + 1 - getNumberOfObjectives()));
-    }
-
-    double h = 5 * (1 + sum2 - prod);
+      double h = 5 * (1 + sum2 - prod);
 
     t = t + h; // Add h to T_
 

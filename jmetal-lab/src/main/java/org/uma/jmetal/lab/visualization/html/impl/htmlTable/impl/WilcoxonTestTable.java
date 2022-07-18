@@ -56,11 +56,8 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
   }
 
   public static double[] convertDoubleArray(Double[] array) {
-    double[] result = new double[array.length];
-    for (int i = 0; i < array.length; i++) {
-      result[i] = array[i];
-    }
-    return result;
+    double[] result = Arrays.stream(array).mapToDouble(aDouble -> aDouble).toArray();
+      return result;
   }
 
   private Table filterTableBy(Table table, String columnName, String value) {

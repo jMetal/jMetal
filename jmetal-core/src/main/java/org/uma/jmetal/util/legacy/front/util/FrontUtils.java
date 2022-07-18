@@ -2,6 +2,8 @@ package org.uma.jmetal.util.legacy.front.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -32,12 +34,9 @@ public class FrontUtils {
 
     int numberOfObjectives = front.getPoint(0).getDimension();
 
-    double[] maximumValue = new double[numberOfObjectives];
-    for (int i = 0; i < numberOfObjectives; i++) {
-      maximumValue[i] = Double.NEGATIVE_INFINITY;
-    }
+    double[] maximumValue = IntStream.range(0, numberOfObjectives).mapToDouble(i -> Double.NEGATIVE_INFINITY).toArray();
 
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
+      for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
         if (front.getPoint(i).getValue(j) > maximumValue[j]) {
           maximumValue[j] = front.getPoint(i).getValue(j);
@@ -63,12 +62,9 @@ public class FrontUtils {
 
     int numberOfObjectives = front.getPoint(0).getDimension();
 
-    double[] minimumValue = new double[numberOfObjectives];
-    for (int i = 0; i < numberOfObjectives; i++) {
-      minimumValue[i] = Double.MAX_VALUE;
-    }
+    double[] minimumValue = IntStream.range(0, numberOfObjectives).mapToDouble(i -> Double.MAX_VALUE).toArray();
 
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
+      for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
         if (front.getPoint(i).getValue(j) < minimumValue[j]) {
           minimumValue[j] = front.getPoint(i).getValue(j);

@@ -1,7 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.uma.jmetal.solution.Solution;
 
 public class PreferenceNSGAII<S extends Solution<?>> {
@@ -20,13 +23,9 @@ public class PreferenceNSGAII<S extends Solution<?>> {
 
   public Double evaluate(S solution) {
 
-    List<Double> objectiveValues = new ArrayList<>(solution.objectives().length);
+    List<Double> objectiveValues = Arrays.stream(solution.objectives()).boxed().collect(Collectors.toCollection(() -> new ArrayList<>(solution.objectives().length)));
 
-    for (int i = 0; i < solution.objectives().length; ++i) {
-      objectiveValues.add(solution.objectives()[i]);
-    }
-
-    double normalizeDiff = 0.0D;
+      double normalizeDiff = 0.0D;
     double distance = 0.0D;
     for (int i = 0; i < solution.objectives().length; i++) {
       if (this.upperBounds != null && this.lowerBounds != null) {

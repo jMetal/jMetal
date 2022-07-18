@@ -2,6 +2,9 @@ package org.uma.jmetal.problem.multiobjective.re;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -23,15 +26,13 @@ public class RE21 extends AbstractDoubleProblem {
     setName("RE21");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
+    List<Double> upperLimit;
 
     double f = 10;
     double sigma = 10;
     double tmpVar = (f / sigma);
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      upperLimit.add(3 * tmpVar);
-    }
+      upperLimit = IntStream.range(0, numberOfVariables).mapToObj(i -> 3 * tmpVar).collect(Collectors.toCollection(() -> new ArrayList<>(numberOfVariables)));
 
     lowerLimit.add(0, tmpVar);
     lowerLimit.add(1, Math.sqrt(2.0) * tmpVar);

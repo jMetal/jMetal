@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
@@ -60,11 +62,8 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
         mom.variables().size() >= crossovers,
         "The number of crossovers is higher than the number of variables");
 
-    int[] crossoverPoints = new int[crossovers];
-    for (int i = 0; i < crossoverPoints.length; i++) {
-      crossoverPoints[i] = randomNumberGenerator.nextInt(0, mom.variables().size() - 1);
-    }
-    Solution<T> girl = mom.copy();
+    int[] crossoverPoints = IntStream.range(0, crossovers).map(i -> randomNumberGenerator.nextInt(0, mom.variables().size() - 1)).toArray();
+      Solution<T> girl = mom.copy();
     Solution<T> boy = dad.copy();
     boolean swap = false;
 

@@ -7,8 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
+
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -127,12 +130,9 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
 
   @Override
   public List<S> getNeighbors(List<S> solutionList, int solutionIndex) {
-    List<S> neighbourSolutions = new ArrayList<>();
+    List<S> neighbourSolutions = Arrays.stream(neighborhood[solutionIndex]).mapToObj(solutionList::get).collect(Collectors.toList());
 
-    for (int neighborIndex : neighborhood[solutionIndex]) {
-      neighbourSolutions.add(solutionList.get(neighborIndex));
-    }
-    return neighbourSolutions;
+      return neighbourSolutions;
   }
 
   public int getNumberOfWeightVectors() {

@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.glt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -61,15 +63,9 @@ public class GLT5 extends AbstractDoubleProblem {
   }
 
   private double g(DoubleSolution solution) {
-    double result = 0.0 ;
+    double result = IntStream.range(2, solution.variables().size()).mapToDouble(i -> solution.variables().get(i)
+            - Math.sin(2 * Math.PI * solution.variables().get(0) + i * Math.PI / solution.variables().size())).map(value -> value * value).sum();
 
-    for (int i = 2; i < solution.variables().size(); i++) {
-      double value =solution.variables().get(i)
-          - Math.sin(2*Math.PI*solution.variables().get(0)+i*Math.PI/solution.variables().size()) ;
-
-      result += value * value ;
-    }
-
-    return result ;
+      return result ;
   }
 }

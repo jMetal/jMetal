@@ -3,6 +3,9 @@ package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
@@ -68,12 +71,8 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
   }
 
   @Override protected List<DoubleSolution> createInitialPopulation() {
-    List<DoubleSolution> population = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i++) {
-      DoubleSolution newIndividual = getProblem().createSolution();
-      population.add(newIndividual);
-    }
-    return population;
+    List<DoubleSolution> population = IntStream.range(0, populationSize).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(populationSize)));
+      return population;
   }
 
   @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {

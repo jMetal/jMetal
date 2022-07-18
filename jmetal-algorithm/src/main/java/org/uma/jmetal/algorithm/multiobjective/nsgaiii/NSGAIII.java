@@ -3,6 +3,9 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaiii;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.EnvironmentalSelection;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.ReferencePoint;
@@ -80,13 +83,9 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = new ArrayList<>(population.size()) ;
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      S solution = selectionOperator.execute(population);
-      matingPopulation.add(solution) ;
-    }
+    List<S> matingPopulation = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> selectionOperator.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
 
-    return matingPopulation;
+      return matingPopulation;
   }
 
   @Override
@@ -110,11 +109,8 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   
   private List<ReferencePoint<S>> getReferencePointsCopy() {
-	  List<ReferencePoint<S>> copy = new ArrayList<>();
-	  for (ReferencePoint<S> r : this.referencePoints) {
-		  copy.add(new ReferencePoint<>(r));
-	  }
-	  return copy;
+	  List<ReferencePoint<S>> copy = this.referencePoints.stream().map(ReferencePoint::new).collect(Collectors.toList());
+      return copy;
   }
   
   @Override

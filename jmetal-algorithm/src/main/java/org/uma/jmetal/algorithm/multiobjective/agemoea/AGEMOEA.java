@@ -2,6 +2,9 @@ package org.uma.jmetal.algorithm.multiobjective.agemoea;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.solution.Solution;
@@ -57,13 +60,9 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = new ArrayList<>(population.size()) ;
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      S solution = selectionOperator.execute(population);
-      matingPopulation.add((S) solution.copy()) ;
-    }
+    List<S> matingPopulation = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> selectionOperator.execute(population)).map(solution -> (S) solution.copy()).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
 
-    return matingPopulation;
+      return matingPopulation;
   }
 
   @Override

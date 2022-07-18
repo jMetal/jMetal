@@ -1,7 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -59,12 +62,10 @@ public class MaF11 extends AbstractDoubleProblem {
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables];
+    double[] x;
     double[] f = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
 
     // evaluate zi,t1i,t2i,t3i,t4i,yi
     double[] z = new double[numberOfVariables];
@@ -92,18 +93,14 @@ public class MaF11 extends AbstractDoubleProblem {
       sub1 = 0;
       lb = i * K11 / (numberOfObjectives - 1) + 1;
       ub = (i + 1) * K11 / (numberOfObjectives - 1);
-      for (int j = lb - 1; j < ub; j++) {
-        sub1 += t2[j];
-      }
+        sub1 += Arrays.stream(t2, lb - 1, ub).sum();
       t3[i] = sub1 / sub2;
     }
     lb = K11 + 1;
     ub = (numberOfVariables + K11) / 2;
     sub1 = 0;
     sub2 = (numberOfVariables - K11) / 2;
-    for (int j = lb - 1; j < ub; j++) {
-      sub1 += t2[j];
-    }
+      sub1 += Arrays.stream(t2, lb - 1, ub).sum();
     t3[numberOfObjectives - 1] = sub1 / sub2;
     for (int i = 0; i < numberOfObjectives - 1; i++) {
       y[i] = (t3[i] - 0.5) * Math.max(1, t3[numberOfObjectives - 1]) + 0.5;

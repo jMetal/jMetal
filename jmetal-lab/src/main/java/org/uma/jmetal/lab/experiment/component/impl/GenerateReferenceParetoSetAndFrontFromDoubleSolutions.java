@@ -80,14 +80,9 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
             new GenericSolutionAttribute<DoubleSolution, String>();
 
     for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
-      List<DoubleSolution> solutionsPerAlgorithm = new ArrayList<>();
-      for (DoubleSolution solution : nonDominatedSolutions) {
-        if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
-          solutionsPerAlgorithm.add(solution);
-        }
-      }
+      List<DoubleSolution> solutionsPerAlgorithm = nonDominatedSolutions.stream().filter(solution -> algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))).collect(Collectors.toList());
 
-      new SolutionListOutput(solutionsPerAlgorithm)
+        new SolutionListOutput(solutionsPerAlgorithm)
               .printObjectivesToFile(
                       outputDirectoryName
                               + "/"

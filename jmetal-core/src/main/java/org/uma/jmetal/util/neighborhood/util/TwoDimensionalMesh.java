@@ -1,7 +1,10 @@
 package org.uma.jmetal.util.neighborhood.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
@@ -99,14 +102,9 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
    * @return
    */
   private List<S> findNeighbors(List<S> solutionSet, int solution, int [][] neighborhood) {
-    List<S> neighbors = new ArrayList<>(neighborhood.length+1);
+    List<S> neighbors = Arrays.stream(neighborhood).mapToInt(neighbor -> getNeighbor(solution, neighbor)).mapToObj(solutionSet::get).collect(Collectors.toCollection(() -> new ArrayList<>(neighborhood.length + 1)));
 
-    for (int [] neighbor : neighborhood) {
-      int index = getNeighbor(solution, neighbor) ;
-      neighbors.add(solutionSet.get(index));
-    }
-
-    return neighbors;
+      return neighbors;
   }
 
   /**

@@ -3,6 +3,10 @@ package org.uma.jmetal.algorithm.multiobjective.smsemoa;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -65,13 +69,9 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   @Override protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = new ArrayList<>(2);
-    for (int i = 0; i < 2; i++) {
-      S solution = selectionOperator.execute(population);
-      matingPopulation.add(solution);
-    }
+    List<S> matingPopulation = IntStream.range(0, 2).mapToObj(i -> selectionOperator.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(2)));
 
-    return matingPopulation;
+      return matingPopulation;
   }
 
   @Override protected List<S> reproduction(List<S> population) {
@@ -101,14 +101,9 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
     lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront, jointPopulation) ;
 
-    List<S> resultPopulation = new ArrayList<>() ;
-    for (int i = 0; i < ranking.getNumberOfSubFronts()-1; i++) {
-      for (S solution : ranking.getSubFront(i)) {
-        resultPopulation.add(solution);
-      }
-    }
+    List<S> resultPopulation = IntStream.range(0, ranking.getNumberOfSubFronts() - 1).mapToObj(i -> ranking.getSubFront(i).stream()).flatMap(Function.identity()).collect(Collectors.toList());
 
-    for (int i = 0; i < lastSubfront.size()-1; i++) {
+      for (int i = 0; i < lastSubfront.size()-1; i++) {
       resultPopulation.add(lastSubfront.get(i)) ;
     }
 

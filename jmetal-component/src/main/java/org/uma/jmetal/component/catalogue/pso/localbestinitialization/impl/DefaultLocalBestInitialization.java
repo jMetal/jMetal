@@ -19,11 +19,8 @@ public class DefaultLocalBestInitialization implements LocalBestInitialization {
     Check.notNull(swarm);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
-    DoubleSolution[] localBest = new DoubleSolution[swarm.size()] ;
-    for (int i = 0; i < swarm.size(); i++) {
-      localBest[i] = (DoubleSolution) swarm.get(i).copy() ;
-    }
+    DoubleSolution[] localBest = swarm.stream().map(doubleSolution -> (DoubleSolution) doubleSolution.copy()).toArray(DoubleSolution[]::new);
 
-    return localBest ;
+      return localBest ;
   }
 }

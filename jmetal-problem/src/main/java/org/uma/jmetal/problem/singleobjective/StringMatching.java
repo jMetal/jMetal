@@ -5,6 +5,8 @@ import org.uma.jmetal.solution.sequencesolution.impl.CharSequenceSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
+import java.util.stream.IntStream;
+
 /** This problem consists in finding a string matching a target string. */
 @SuppressWarnings("serial")
 public class StringMatching extends CharSequenceProblem {
@@ -35,16 +37,11 @@ public class StringMatching extends CharSequenceProblem {
   @Override
   public CharSequenceSolution evaluate(CharSequenceSolution solution) {
     Check.that(solution.getLength() == targetString.length(), "The solution has an invalid length");
-    int counter = 0;
+    int counter = (int) IntStream.range(0, targetString.length()).filter(i -> targetString.charAt(i) != solution.variables().get(i)).count();
 
-    for (int i = 0; i < targetString.length(); i++) {
-      if (targetString.charAt(i) != solution.variables().get(i)) {
-        counter++;
-        // counter += Math.abs(targetString.charAt(i) - solution.variables().get(i)) ;
-      }
-    }
+      // counter += Math.abs(targetString.charAt(i) - solution.variables().get(i)) ;
 
-    solution.objectives()[0] = counter;
+      solution.objectives()[0] = counter;
 
     return solution ;
   }

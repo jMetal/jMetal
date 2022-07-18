@@ -47,23 +47,16 @@ public class DTLZ4 extends AbstractDoubleProblem {
     int numberOfObjectives = solution.objectives().length ;
     double alpha = 100.0;
 
-    double[] f = new double[numberOfObjectives];
-    double[] x = new double[numberOfVariables] ;
+    double[] f;
+    double[] x;
 
     int k = getNumberOfVariables() - solution.objectives().length + 1;
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i) ;
-    }
+      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    double g = 0.0;
-    for (int i = numberOfVariables - k; i < numberOfVariables; i++) {
-      g += (x[i] - 0.5) * (x[i] - 0.5);
-    }
+    double g = IntStream.range(numberOfVariables - k, numberOfVariables).mapToDouble(i -> (x[i] - 0.5) * (x[i] - 0.5)).sum();
 
-    for (int i = 0; i < numberOfObjectives; i++) {
-      f[i] = 1.0 + g;
-    }
+    f = IntStream.range(0, numberOfObjectives).mapToDouble(i -> 1.0 + g).toArray();
 
     for (int i = 0; i < numberOfObjectives; i++) {
       for (int j = 0; j < numberOfObjectives - (i + 1); j++) {

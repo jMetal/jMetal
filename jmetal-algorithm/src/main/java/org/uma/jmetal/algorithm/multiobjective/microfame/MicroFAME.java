@@ -4,8 +4,12 @@ import generic.Input;
 import generic.Output;
 import generic.Tuple;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.multiobjective.microfame.util.WFGHypervolumeV2;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.Operator;
@@ -160,12 +164,9 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = new ArrayList<>(3);
-    for (int x = 0; x < 3; x++) {
-      matingPopulation.add((S) selectionOperator.execute(archive_hv.getSolutionList()));
-    }
+    List<S> matingPopulation = IntStream.range(0, 3).mapToObj(x -> (S) selectionOperator.execute(archive_hv.getSolutionList())).collect(Collectors.toCollection(() -> new ArrayList<>(3)));
 
-    return matingPopulation;
+      return matingPopulation;
   }
 
   @Override
@@ -200,11 +201,8 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     int operator = rnd.nextInt(operators_num);
     List<S> offspring = new ArrayList<>(1);
     // RULETTA
-    double counter = 0;
-    for (int x = 0; x < operators_num; x++) {
-      counter += operators_desirability[x];
-    }
-    while (counter > 0) {
+    double counter = Arrays.stream(operators_desirability, 0, operators_num).sum();
+      while (counter > 0) {
       counter -= operators_desirability[operator];
       if (counter <= 0) {
         break;
@@ -294,12 +292,8 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
   @Override
   protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(archive_hv.getMaxSize());
-    for (int i = 0; i < archive_hv.getMaxSize(); i++) {
-      S newIndividual = getProblem().createSolution();
-      population.add(newIndividual);
-    }
-    evaluator.evaluate(population, getProblem());
+    List<S> population = IntStream.range(0, archive_hv.getMaxSize()).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(archive_hv.getMaxSize())));
+      evaluator.evaluate(population, getProblem());
     for (int i = 0; i < archive_hv.getMaxSize(); i++) {
       archive_hv.add(population.get(i));
     }

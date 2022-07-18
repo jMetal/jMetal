@@ -1,7 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.espea.util;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.extremevalues.impl.FrontExtremeValues;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
@@ -48,11 +51,8 @@ public class ScalarizationUtils {
    * @return Array of doubles.
    */
   private static double[] toArray(List<Double> list) {
-    double[] values = new double[list.size()];
-    for (int i = 0; i < values.length; i++) {
-      values[i] = list.get(i);
-    }
-    return values;
+    double[] values = list.stream().mapToDouble(aDouble -> aDouble).toArray();
+      return values;
   }
 
   /**
@@ -110,9 +110,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void sumOfObjectives(List<S> solutionsList) {
     for (S solution : solutionsList) {
       double sum = solution.objectives()[0];
-      for (int i = 1; i < solution.objectives().length; i++) {
-        sum += solution.objectives()[i];
-      }
+        sum += Arrays.stream(solution.objectives(), 1, solution.objectives().length).sum();
       setScalarizationValue(solution, sum);
     }
   }
@@ -127,9 +125,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void weightedSum(List<S> solutionsList, double[] weights) {
     for (S solution : solutionsList) {
       double sum = weights[0] * solution.objectives()[0];
-      for (int i = 1; i < solution.objectives().length; i++) {
-        sum += weights[i] * solution.objectives()[i];
-      }
+        sum += IntStream.range(1, solution.objectives().length).mapToDouble(i -> weights[i] * solution.objectives()[i]).sum();
       setScalarizationValue(solution, sum);
     }
 
@@ -143,9 +139,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void productOfObjectives(List<S> solutionsList) {
     for (S solution : solutionsList) {
       double product = solution.objectives()[0];
-      for (int i = 1; i < solution.objectives().length; i++) {
-        product *= solution.objectives()[i];
-      }
+        product *= Arrays.stream(solution.objectives(), 1, solution.objectives().length).reduce(1, (a, b) -> a * b);
       setScalarizationValue(solution, product);
     }
   }
@@ -160,9 +154,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void weightedProduct(List<S> solutionsList, double[] weights) {
     for (S solution : solutionsList) {
       double product = Math.pow(solution.objectives()[0], weights[0]);
-      for (int i = 1; i < solution.objectives().length; i++) {
-        product *= Math.pow(solution.objectives()[i], weights[i]);
-      }
+        product *= IntStream.range(1, solution.objectives().length).mapToDouble(i -> Math.pow(solution.objectives()[i], weights[i])).reduce(1, (a, b) -> a * b);
       setScalarizationValue(solution, product);
     }
   }
@@ -241,9 +233,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void nash(List<S> solutionsList, double[] nadirValues) {
     for (S solution : solutionsList) {
       double nash = nadirValues[0] - solution.objectives()[0];
-      for (int i = 1; i < nadirValues.length; i++) {
-        nash *= (nadirValues[i] - solution.objectives()[i]);
-      }
+        nash *= IntStream.range(1, nadirValues.length).mapToDouble(i -> (nadirValues[i] - solution.objectives()[i])).reduce(1, (a, b) -> a * b);
       // The Nash bargaining solution is originally maximized. To conform
       // with minimization the bargaining value is negated.
       setScalarizationValue(solution, -nash);

@@ -13,6 +13,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -79,11 +82,8 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	 * @return
 	 */
 	public List<Double> evaluate(S solution) {
-		List<Double> result = new ArrayList<>(this.getSize());
-		for (int i = 0; i < this.getSize(); i++) {
-			result.add(evaluate(solution,i));
-		}
-		return result;
+		List<Double> result = IntStream.range(0, this.getSize()).mapToObj(i -> evaluate(solution, i)).collect(Collectors.toCollection(() -> new ArrayList<>(this.getSize())));
+        return result;
 	}
 	
 	/**

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -98,13 +100,9 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
    */
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = new ArrayList<>(population.size());
-    for (int i = 0; i < matingPoolSize; i++) {
-      S solution = selectionOperator.execute(population);
-      matingPopulation.add(solution);
-    }
+    List<S> matingPopulation = IntStream.range(0, matingPoolSize).mapToObj(i -> selectionOperator.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
 
-    List<S> newList = population.stream().map(solution -> (S) solution.copy())
+      List<S> newList = population.stream().map(solution -> (S) solution.copy())
         .collect(Collectors.toList());
 
     return matingPopulation;

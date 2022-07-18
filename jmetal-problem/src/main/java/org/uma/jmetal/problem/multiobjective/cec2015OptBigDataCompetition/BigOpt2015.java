@@ -176,19 +176,13 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   List<Double> newMeanStandardDeviation(List<Double> list) {
     List<Double> result = new ArrayList<>();
 
-    double sum = 0;
-    for (double value : list) {
-      sum += value;
-    }
+    double sum = list.stream().mapToDouble(value -> value).sum();
 
-    double mean = sum / list.size();
+      double mean = sum / list.size();
 
-    double accum = 0;
-    for (double value : list) {
-      accum += (value - mean) * (value - mean);
-    }
+    double accum = list.stream().mapToDouble(value -> value).map(value -> (value - mean) * (value - mean)).sum();
 
-    double stdev = Math.sqrt(accum / (list.size() - 1));
+      double stdev = Math.sqrt(accum / (list.size() - 1));
     result.add(mean);
     result.add(stdev);
 

@@ -1,6 +1,9 @@
 package org.uma.jmetal.util.observer.impl;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.observable.Observable;
@@ -39,11 +42,8 @@ public class FitnessObserver implements Observer<Map<String, Object>> {
 
     if (solution!=null && evaluations != null) {
       if (evaluations % frequency == 0) {
-        StringBuilder objectiveValues = new StringBuilder();
-        for (Double objective: solution.objectives()) {
-          objectiveValues.append(objective).append(" ");
-        }
-        JMetalLogger.logger.info("Evaluations: " + evaluations + ". Fitness: " + objectiveValues);
+        String objectiveValues = Arrays.stream(solution.objectives()).map(objective -> objective + " ").collect(Collectors.joining());
+          JMetalLogger.logger.info("Evaluations: " + evaluations + ". Fitness: " + objectiveValues);
       }
     } else {
       JMetalLogger.logger.warning(getClass().getName()+

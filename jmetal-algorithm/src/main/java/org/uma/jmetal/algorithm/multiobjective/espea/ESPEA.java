@@ -2,6 +2,9 @@ package org.uma.jmetal.algorithm.multiobjective.espea;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.EnergyArchive;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.EnergyArchive.ReplacementStrategy;
@@ -140,14 +143,9 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     // Chosen operator depends on archive size
     CrossoverOperator<S> chosenOperator = archive.isFull() ? fullArchiveCrossoverOperator : crossoverOperator;
 
-    List<S> matingPopulation = new ArrayList<>(chosenOperator.getNumberOfRequiredParents());
+    List<S> matingPopulation = IntStream.range(0, chosenOperator.getNumberOfRequiredParents()).mapToObj(i -> selectionOperator.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(chosenOperator.getNumberOfRequiredParents())));
 
-    for (int i = 0; i < chosenOperator.getNumberOfRequiredParents(); i++) {
-      S solution = selectionOperator.execute(population);
-      matingPopulation.add(solution);
-    }
-
-    return matingPopulation;
+      return matingPopulation;
   }
 
   /*

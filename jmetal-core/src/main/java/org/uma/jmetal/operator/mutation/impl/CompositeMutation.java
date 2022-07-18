@@ -2,6 +2,9 @@ package org.uma.jmetal.operator.mutation.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
@@ -44,11 +47,9 @@ public class CompositeMutation implements MutationOperator<CompositeSolution> {
   public CompositeSolution execute(CompositeSolution solution) {
     Check.notNull(solution);
 
-    List<Solution<?>> mutatedSolutionComponents = new ArrayList<>();
+    List<Solution<?>> mutatedSolutionComponents;
     int numberOfSolutionsInCompositeSolution = solution.variables().size();
-    for (int i = 0; i < numberOfSolutionsInCompositeSolution; i++) {
-      mutatedSolutionComponents.add(operators.get(i).execute(solution.variables().get(i))) ;
-    }
+      mutatedSolutionComponents = IntStream.range(0, numberOfSolutionsInCompositeSolution).mapToObj(i -> operators.get(i).execute(solution.variables().get(i))).collect(Collectors.toList());
 
     return new CompositeSolution(mutatedSolutionComponents);
   }

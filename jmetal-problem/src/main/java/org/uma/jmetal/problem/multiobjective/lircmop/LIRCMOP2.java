@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.lircmop;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+import java.util.stream.IntStream;
+
 /**
  * Class representing problem LIR-CMOP2, defined in: An Improved epsilon-constrained Method in
  * MOEA/D for CMOPs with Large Infeasible Regions Fan, Z., Li, W., Cai, X. et al. Soft Comput
@@ -20,12 +22,9 @@ public class LIRCMOP2 extends LIRCMOP1 {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] fx = new double[solution.objectives().length];
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.variables().get(i);
-    }
+    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    fx[0] = x[0] + g1(x);
+      fx[0] = x[0] + g1(x);
     fx[1] = 1 - Math.sqrt(x[0]) + g2(x);
 
     solution.objectives()[0] = fx[0];

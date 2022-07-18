@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.fda;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -45,20 +47,15 @@ public class FDA4 extends FDA {
 
   private double evalF1(DoubleSolution solution, double g) {
     double f = 1.0d + g;
-    double mult = 1.0d;
-    for (int i = 1; i <= M - 1; i++) {
-      mult *= Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
-    }
-    return f * mult;
+    double mult = IntStream.rangeClosed(1, M - 1).mapToDouble(i -> Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d)).reduce(1.0d, (a, b) -> a * b);
+      return f * mult;
   }
 
   private double evalFK(DoubleSolution solution, double g, int k) {
     double f = 1.0d + g;
-    double mult = 1.0d;
+    double mult;
     double aux = Math.sin((solution.variables().get(M - k) * Math.PI) / 2.0d);
-    for (int i = 1; i <= M - k; i++) {
-      mult *= Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
-    }
+      mult = IntStream.rangeClosed(1, M - k).mapToDouble(i -> Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d)).reduce(1.0d, (a, b) -> a * b);
     mult *= aux;
     return f * mult;
   }
@@ -69,11 +66,9 @@ public class FDA4 extends FDA {
    * @param solution Solution
    */
   private double evalG(DoubleSolution solution, int limitInf) {
-    double g = 0.0d;
+    double g;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-    for (int i = limitInf; i < solution.variables().size(); i++) {
-      g += Math.pow((solution.variables().get(i) - Gt), 2.0d);
-    }
+      g = IntStream.range(limitInf, solution.variables().size()).mapToDouble(i -> Math.pow((solution.variables().get(i) - Gt), 2.0d)).sum();
     return g;
   }
 

@@ -80,14 +80,9 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
             new GenericSolutionAttribute<>();
 
     for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
-      List<IntegerSolution> solutionsPerAlgorithm = new ArrayList<>();
-      for (IntegerSolution solution : nonDominatedSolutions) {
-        if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
-          solutionsPerAlgorithm.add(solution);
-        }
-      }
+      List<IntegerSolution> solutionsPerAlgorithm = nonDominatedSolutions.stream().filter(solution -> algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))).collect(Collectors.toList());
 
-      new SolutionListOutput(solutionsPerAlgorithm)
+        new SolutionListOutput(solutionsPerAlgorithm)
               .printObjectivesToFile(
                       outputDirectoryName
                               + "/"

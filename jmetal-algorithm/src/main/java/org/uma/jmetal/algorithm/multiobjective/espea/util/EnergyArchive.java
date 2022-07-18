@@ -232,13 +232,8 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
    */
   private void scaleToPositive() {
     // Obtain min value
-    double minScalarization = Double.MAX_VALUE;
-    for (S solution : getSolutionList()) {
-      if (scalarization.getAttribute(solution) < minScalarization) {
-        minScalarization = scalarization.getAttribute(solution);
-      }
-    }
-    if (minScalarization < 0) {
+    double minScalarization = getSolutionList().stream().map(scalarization::getAttribute).mapToDouble(solution -> solution).min().orElse(Double.MAX_VALUE);
+      if (minScalarization < 0) {
       // Avoid scalarization values of 0
       double eps = 10e-6;
       for (S solution : getSolutionList()) {

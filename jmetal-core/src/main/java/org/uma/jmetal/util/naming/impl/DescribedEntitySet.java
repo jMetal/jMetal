@@ -28,11 +28,8 @@ public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<E
 
   @Override
   public boolean addAll(Collection<? extends Entity> c) {
-    boolean isModified = false;
-    for (Entity entity : c) {
-      isModified |= add(entity);
-    }
-    return isModified;
+    boolean isModified = c.stream().map(this::add).reduce(false, (a, b) -> a || b);
+      return isModified;
   }
 
   @SuppressWarnings("unchecked")

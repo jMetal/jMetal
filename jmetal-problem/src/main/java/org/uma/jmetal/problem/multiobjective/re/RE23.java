@@ -1,6 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.re;
 
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -49,7 +51,7 @@ public class RE23 extends AbstractDoubleProblem {
             + (1.7781 * x2 * x3 * x3)
             + (3.1661 * x1 * x1 * x4)
             + (19.84 * x1 * x1 * x3);
-    solution.objectives()[1] = g[0] + g[1] + g[2];
+    solution.objectives()[1] = IntStream.of(0, 1, 2).mapToDouble(i -> g[i]).sum();
 
     return solution;
   }

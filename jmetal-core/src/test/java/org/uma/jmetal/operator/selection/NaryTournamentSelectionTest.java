@@ -11,6 +11,9 @@ import static org.mockito.Mockito.mock;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
@@ -59,11 +62,8 @@ public class NaryTournamentSelectionTest {
   public void shouldExecuteReturnAValidSolutionIsWithCorrectParameters() {
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
-    List<DoubleSolution> population = new ArrayList<>(POPULATION_SIZE) ;
-    for (int i = 0 ; i < POPULATION_SIZE; i++) {
-      population.add(problem.createSolution());
-    }
-    NaryTournamentSelection<DoubleSolution> selection = new NaryTournamentSelection<>() ;
+    List<DoubleSolution> population = IntStream.range(0, POPULATION_SIZE).mapToObj(i -> problem.createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(POPULATION_SIZE)));
+      NaryTournamentSelection<DoubleSolution> selection = new NaryTournamentSelection<>() ;
 
     assertNotNull(selection.execute(population));
   }

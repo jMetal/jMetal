@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.uma.jmetal.algorithm.DynamicAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -80,12 +82,9 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S>
       boolean coverage = false;
       if (lastReceivedFront != null) {
         coverageFront.updateFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
-        List<PointSolution> pointSolutionList = new ArrayList<>();
+        List<PointSolution> pointSolutionList;
         List<S> list = getPopulation();
-        for (S s : list) {
-          PointSolution pointSolution = new PointSolution(s);
-          pointSolutionList.add(pointSolution);
-        }
+          pointSolutionList = list.stream().map(PointSolution::new).collect(Collectors.toList());
         coverage = coverageFront.isCoverageWithLast(pointSolutionList);
       }
 

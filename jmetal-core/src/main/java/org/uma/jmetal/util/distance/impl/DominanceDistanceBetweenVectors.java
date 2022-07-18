@@ -3,6 +3,8 @@ package org.uma.jmetal.util.distance.impl;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.errorchecking.Check;
 
+import java.util.stream.IntStream;
+
 /**
  * Class for calculating the dominance distance between two vectors
  *
@@ -17,12 +19,8 @@ public class DominanceDistanceBetweenVectors implements Distance<double[], doubl
     Check.that(vector1.length == vector2.length, "The vectors have different" +
             "dimension: " + vector1.length + " and " + vector2.length);
 
-    double distance = 0.0;
+    double distance = IntStream.range(0, vector1.length).mapToDouble(i -> Math.max(vector2[i] - vector1[i], 0.0)).map(max -> Math.pow(max, 2)).sum();
 
-    for (int i = 0; i < vector1.length; i++) {
-      double max = Math.max(vector2[i] - vector1[i], 0.0) ;
-      distance += Math.pow(max, 2);
-    }
-    return Math.sqrt(distance);
+      return Math.sqrt(distance);
   }
 }

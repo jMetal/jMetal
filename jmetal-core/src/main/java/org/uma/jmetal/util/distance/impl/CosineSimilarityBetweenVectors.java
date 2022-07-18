@@ -2,6 +2,8 @@ package org.uma.jmetal.util.distance.impl;
 
 import org.uma.jmetal.util.distance.Distance;
 
+import java.util.stream.IntStream;
+
 /**
  * Class for calculating the cosine similarity between two vectors.
  *
@@ -17,22 +19,14 @@ public class CosineSimilarityBetweenVectors implements Distance<double[], double
 
   @Override
   public double compute(double[] vector1, double[] vector2) {
-    double sum = 0.0;
+    double sum = IntStream.range(0, vector1.length).mapToDouble(i -> (vector1[i] - referencePoint[i]) * (vector2[i] - referencePoint[i])).sum();
 
-    for (int i = 0; i < vector1.length; i++) {
-      sum += (vector1[i] - referencePoint[i]) * (vector2[i] - referencePoint[i]);
-    }
-
-    return sum / (sumOfDistancesToIdealPoint(vector1) * sumOfDistancesToIdealPoint(vector2));
+      return sum / (sumOfDistancesToIdealPoint(vector1) * sumOfDistancesToIdealPoint(vector2));
   }
 
   private double sumOfDistancesToIdealPoint(double[] vector) {
-    double sum = 0.0;
+    double sum = IntStream.range(0, vector.length).mapToDouble(i -> Math.pow(vector[i] - referencePoint[i], 2.0)).sum();
 
-    for (int i = 0; i < vector.length; i++) {
-      sum += Math.pow(vector[i] - referencePoint[i], 2.0);
-    }
-
-    return Math.sqrt(sum);
+      return Math.sqrt(sum);
   }
 }

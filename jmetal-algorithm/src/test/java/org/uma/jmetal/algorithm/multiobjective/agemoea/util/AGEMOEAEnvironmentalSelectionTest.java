@@ -2,8 +2,11 @@ package org.uma.jmetal.algorithm.multiobjective.agemoea.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
@@ -69,10 +72,7 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         extremes.add(1);
         extremes.add(2);
 
-        List<double[]> objectiveVectors = new ArrayList<>();
-        for (DefaultDoubleSolution solution : front) {
-            objectiveVectors.add(solution.objectives());
-        }
+        List<double[]> objectiveVectors = front.stream().map(AbstractSolution::objectives).collect(Collectors.toList());
 
         double p = es.computeGeometry(objectiveVectors, extremes);
 
@@ -98,10 +98,7 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         extremes.add(0);
         extremes.add(1);
 
-        List<double[]> objectiveVectors = new ArrayList<>();
-        for (DefaultDoubleSolution solution : front) {
-            objectiveVectors.add(solution.objectives());
-        }
+        List<double[]> objectiveVectors = front.stream().map(AbstractSolution::objectives).collect(Collectors.toList());
 
         double p = es.computeGeometry(objectiveVectors, extremes);
 

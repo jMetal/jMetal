@@ -1,8 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -145,19 +149,15 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   }
 
   public List<Integer> tourSelection(int depth) {
-    List<Integer> selected = new ArrayList<Integer>();
-    List<Integer> candidate = new ArrayList<Integer>();
+    List<Integer> selected;
+    List<Integer> candidate;
 
-    for (int k = 0; k < problem.getNumberOfObjectives(); k++) {
       // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL
       // (NOT SORTED!!!!)
-      selected.add(k);
-    }
+      selected = IntStream.range(0, problem.getNumberOfObjectives()).boxed().collect(Collectors.toList());
 
-    for (int n = problem.getNumberOfObjectives(); n < populationSize; n++) {
       // set of unselected weights
-      candidate.add(n);
-    }
+      candidate = IntStream.range(problem.getNumberOfObjectives(), populationSize).boxed().collect(Collectors.toList());
 
     while (selected.size() < (int) (populationSize / 5.0)) {
       int best_idd = (int) (randomGenerator.nextDouble() * candidate.size());
@@ -255,20 +255,15 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
     // Indicates the mating status
     int[] statusMan = new int[menSize];
-    int[] statusWoman = new int[womenSize];
+    int[] statusWoman;
 
     final int NOT_ENGAGED = -1;
-    for (int i = 0; i < womenSize; i++) {
-      statusWoman[i] = NOT_ENGAGED;
-    }
+      statusWoman = IntStream.range(0, womenSize).map(i -> NOT_ENGAGED).toArray();
 
     // List of men that are not currently engaged.
-    LinkedList<Integer> freeMen = new LinkedList<Integer>();
-    for (int i = 0; i < menSize; i++) {
-      freeMen.add(i);
-    }
+    LinkedList<Integer> freeMen = IntStream.range(0, menSize).boxed().collect(Collectors.toCollection(LinkedList::new));
 
-    // next[i] is the next woman to whom i has not yet proposed.
+      // next[i] is the next woman to whom i has not yet proposed.
     int[] next = new int[womenSize];
 
     while (!freeMen.isEmpty()) {
@@ -319,19 +314,15 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     double scale;
     double distance;
 
-    double[] vecInd = new double[problem.getNumberOfObjectives()];
-    double[] vecProj = new double[problem.getNumberOfObjectives()];
+    double[] vecInd;
+    double[] vecProj;
 
     // vecInd has been normalized to the range [0,1]
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      vecInd[i] = (individual.objectives()[i] - idealPoint.getValue(i)) /
-          (nadirPoint.getValue(i) - idealPoint.getValue(i));
-    }
+      vecInd = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> (individual.objectives()[i] - idealPoint.getValue(i)) /
+              (nadirPoint.getValue(i) - idealPoint.getValue(i))).toArray();
 
     scale = innerproduct(vecInd, lambda) / innerproduct(lambda, lambda);
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      vecProj[i] = vecInd[i] - scale * lambda[i];
-    }
+      vecProj = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> vecInd[i] - scale * lambda[i]).toArray();
 
     distance = norm_vector(vecProj);
 
@@ -344,20 +335,14 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   public double calculateDistance2(DoubleSolution individual, double[] lambda) {
 
     double distance;
-    double distanceSum = 0.0;
+    double distanceSum;
 
-    double[] vecInd = new double[problem.getNumberOfObjectives()];
-    double[] normalizedObj = new double[problem.getNumberOfObjectives()];
+    double[] vecInd;
+    double[] normalizedObj;
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      distanceSum += individual.objectives()[i];
-    }
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      normalizedObj[i] = individual.objectives()[i] / distanceSum;
-    }
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      vecInd[i] = normalizedObj[i] - lambda[i];
-    }
+      distanceSum = Arrays.stream(individual.objectives(), 0, problem.getNumberOfObjectives()).sum();
+    normalizedObj = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> individual.objectives()[i] / distanceSum).toArray();
+      vecInd = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> normalizedObj[i] - lambda[i]).toArray();
 
     distance = norm_vector(vecInd);
 
@@ -368,26 +353,18 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
    * Calculate the norm of the vector
    */
   public double norm_vector(double[] z) {
-    double sum = 0;
+    double sum = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> z[i] * z[i]).sum();
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      sum += z[i] * z[i];
-    }
-
-    return Math.sqrt(sum);
+      return Math.sqrt(sum);
   }
 
   /**
    * Calculate the dot product of two vectors
    */
   public double innerproduct(double[] vec1, double[] vec2) {
-    double sum = 0;
+    double sum = IntStream.range(0, vec1.length).mapToDouble(i -> vec1[i] * vec2[i]).sum();
 
-    for (int i = 0; i < vec1.length; i++) {
-      sum += vec1[i] * vec2[i];
-    }
-
-    return sum;
+      return sum;
   }
 
   @Override

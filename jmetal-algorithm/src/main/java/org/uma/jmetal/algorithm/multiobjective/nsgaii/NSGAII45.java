@@ -2,6 +2,9 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -105,12 +108,8 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i++) {
-      S newIndividual = problem.createSolution();
-      population.add(newIndividual);
-    }
-    return population;
+    List<S> population = IntStream.range(0, populationSize).mapToObj(i -> problem.createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(populationSize)));
+      return population;
   }
 
   protected List<S> evaluatePopulation(List<S> population) {

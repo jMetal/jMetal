@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
@@ -139,13 +140,9 @@ public class SolutionListUtils {
    */
   public static <S extends Solution<?>> List<S> normalizeSolutionList(
       List<S> solutions, double[] minValues, double[] maxValues) {
-    List<S> normalizedSolutions = new ArrayList<>(solutions.size());
+    List<S> normalizedSolutions = solutions.stream().map(solution -> SolutionUtils.normalize(solution, minValues, maxValues)).collect(Collectors.toCollection(() -> new ArrayList<>(solutions.size())));
 
-    for (S solution : solutions) {
-      normalizedSolutions.add(SolutionUtils.normalize(solution, minValues, maxValues));
-    }
-
-    return normalizedSolutions;
+      return normalizedSolutions;
   }
 
   /**
@@ -405,12 +402,9 @@ public class SolutionListUtils {
    */
   public static <S extends Solution<?>> double[] getObjectiveArrayFromSolutionList(
       List<S> solutionList, int objective) {
-    double[] result = new double[solutionList.size()];
+    double[] result = solutionList.stream().mapToDouble(s -> s.objectives()[objective]).toArray();
 
-    for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).objectives()[objective];
-    }
-    return result;
+      return result;
   }
 
   /**
@@ -478,12 +472,9 @@ public class SolutionListUtils {
       solutions.remove(largestDistanceSolutionIndex);
     }
 
-    List<S> resultList = new ArrayList<>();
-    for (S solution : selectedSolutions) {
-      resultList.add(originalSolutionList.get((int) solution.attributes().get("INDEX_")));
-    }
+    List<S> resultList = selectedSolutions.stream().map(solution -> originalSolutionList.get((int) solution.attributes().get("INDEX_"))).collect(Collectors.toList());
 
-    return resultList;
+      return resultList;
   }
 
   /**

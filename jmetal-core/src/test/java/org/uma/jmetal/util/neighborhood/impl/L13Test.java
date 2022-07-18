@@ -9,6 +9,9 @@ import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.Test;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
@@ -55,12 +58,9 @@ public class L13Test {
     int columns = 2 ;
     L13<IntegerSolution> neighborhood = new L13<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(12, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1))) ;
   }
@@ -79,12 +79,9 @@ public class L13Test {
     int columns = 2 ;
     L13<IntegerSolution> neighborhood = new L13<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(12, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1))) ;
   }
@@ -104,12 +101,9 @@ public class L13Test {
     int columns = 2 ;
     L13<IntegerSolution> neighborhood = new L13<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(12, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(2), list.get(3))) ;
   }
@@ -129,12 +123,9 @@ public class L13Test {
     int columns = 2 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(3))) ;
     assertThat(result, not(hasItems(list.get(1), list.get(2)))) ;
@@ -155,12 +146,9 @@ public class L13Test {
     int columns = 2 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(3))) ;
     assertThat(result, not(hasItems(list.get(1), list.get(2)))) ;
@@ -181,12 +169,9 @@ public class L13Test {
     int columns = 2 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 3) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 3) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(2))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(3)))) ;
@@ -207,12 +192,9 @@ public class L13Test {
     int columns = 4 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(4), list.get(6))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(2), list.get(3), list.get(7), list.get(5)))) ;
@@ -235,12 +217,9 @@ public class L13Test {
     int columns = 2 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(3), list.get(4), list.get(7))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(2), list.get(5), list.get(6)))) ;
@@ -263,12 +242,9 @@ public class L13Test {
     int columns = 2 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(2), list.get(6))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(3), list.get(4), list.get(5), list.get(7)))) ;
@@ -290,12 +266,9 @@ public class L13Test {
     int columns = 3 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 4) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 4) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(3), list.get(5), list.get(7))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(2), list.get(4), list.get(6)))) ;
@@ -317,12 +290,9 @@ public class L13Test {
     int columns = 3 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 8) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 8) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(2), list.get(5), list.get(6), list.get(7))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(3), list.get(4), list.get(8)))) ;

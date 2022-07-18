@@ -2,7 +2,9 @@ package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -69,11 +71,8 @@ public class MaF09 extends AbstractDoubleProblem {
     //generated other polygons
     int maxinterval = (int) Math.ceil(numberOfObjectives / 2.0 - 2);
     maxinter9 = maxinterval;
-    int lenp = 0;
-    for (int i = 2; i <= 1 + maxinterval; i++) {
-      lenp += i;
-    }
-    lenp *= (numberOfObjectives * 2);
+    int lenp = IntStream.rangeClosed(2, 1 + maxinterval).sum();
+      lenp *= (numberOfObjectives * 2);
     double[][] opoly9 = new double[lenp][2];
     int[] head = new int[maxinterval * numberOfObjectives];//i
     int[] tail = new int[maxinterval * numberOfObjectives];//n
@@ -143,12 +142,10 @@ public class MaF09 extends AbstractDoubleProblem {
     int numberOfVariables_ = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables_];
+    double[] x;
     double[] f = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = IntStream.range(0, numberOfVariables_).mapToDouble(i -> solution.variables().get(i)).toArray();
 
     // check if the point is infeasible
     boolean infeasible = false;
@@ -188,13 +185,11 @@ public class MaF09 extends AbstractDoubleProblem {
 
   public static double[][] polygonpoints(int m, double r) {
     double[][] p = new double[m][2];
-    double[] angle = new double[m];
+    double[] angle;
     double thera = Math.PI / 2, rho = r;
 
     // vertexes with the number of edges(m)
-    for (int i = 0; i < m; i++) {
-      angle[i] = thera - 2 * (i + 1) * Math.PI / m;
-    }
+      angle = IntStream.range(0, m).mapToDouble(i -> thera - 2 * (i + 1) * Math.PI / m).toArray();
     for (int i = 0; i < m; i++) {
       p[i][0] = rho * Math.cos(angle[i]);
       p[i][1] = rho * Math.sin(angle[i]);
@@ -293,12 +288,10 @@ public class MaF09 extends AbstractDoubleProblem {
 
   public static boolean if_inside_polygon(double[] p1, double[][] points) {
     boolean ifin;
-    List<Point2D.Double> polygon = new ArrayList<Point2D.Double>();
+    List<Point2D.Double> polygon;
     Point2D.Double p = new Point2D.Double(p1[0], p1[1]);
     // if the point is inside the polygon(boundary not included)
-    for (int i = 0; i < points.length; i++) {
-      polygon.add(new Point2D.Double(points[i][0], points[i][1]));
-    }
+      polygon = Arrays.stream(points).map(point -> new Point2D.Double(point[0], point[1])).collect(Collectors.toList());
     ifin = checkWithJdkGeneralPath(p, polygon);
 
     return ifin;

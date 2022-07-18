@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective.wfg;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
+import java.util.stream.IntStream;
+
 /**
  * This class implements the WFG6 problem
  * Reference: Simon Huband, Luigi Barone, Lyndon While, Phil Hingston
@@ -109,13 +111,9 @@ public class WFG6 extends WFG {
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
     float[] variables = new float[getNumberOfVariables()];
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.variables().get(i);
-    }
-
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+      for (int i = 0; i < getNumberOfVariables(); i++) {
       variables[i] = (float) x[i] ;
     }
 

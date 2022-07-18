@@ -5,6 +5,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
@@ -48,14 +51,11 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
     List<List<Integer>> iDominate = new ArrayList<>(population.size());
 
     // front[i] contains the list of individuals belonging to the front i
-    ArrayList<List<Integer>> front = new ArrayList<>(population.size() + 1);
+    ArrayList<List<Integer>> front = IntStream.range(0, population.size() + 1).mapToObj(i -> new LinkedList<Integer>()).collect(Collectors.toCollection(() -> new ArrayList<>(population.size() + 1)));
 
     // Initialize the fronts
-    for (int i = 0; i < population.size() + 1; i++) {
-      front.add(new LinkedList<Integer>());
-    }
 
-    // Fast non dominated sorting algorithm
+      // Fast non dominated sorting algorithm
     // Contribution of Guillaume Jacquenot
     for (int p = 0; p < population.size(); p++) {
       // Initialize the list of individuals that i dominate and the number

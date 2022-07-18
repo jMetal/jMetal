@@ -1,7 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -81,12 +84,10 @@ public class MaF15 extends AbstractDoubleProblem {
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables];
+    double[] x;
     double[] f = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
 
     // change x
     for (int i = numberOfObjectives - 1; i < numberOfVariables; i++) {
@@ -146,10 +147,7 @@ public class MaF15 extends AbstractDoubleProblem {
   }
 
   public static double Sphere(double[] x) {
-    double eta = 0;
-    for (int i = 0; i < x.length; i++) {
-      eta += Math.pow(x[i], 2);
-    }
-    return eta;
+    double eta = Arrays.stream(x).map(v -> Math.pow(v, 2)).sum();
+      return eta;
   }
 }

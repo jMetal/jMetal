@@ -3,6 +3,8 @@ package org.uma.jmetal.util.densityestimator.impl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -84,23 +86,13 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
   private boolean checkMatrixRowsAreEqual(double[][] matrix) {
     int numberOfColumns = matrix[0].length;
 
-    for (int i = 1; i < numberOfColumns; i++) {
-      if (!checkColumnValuesAreEqual(matrix, i)) {
-        return false;
-      }
-    }
-    return true;
+      return IntStream.range(1, numberOfColumns).allMatch(i -> checkColumnValuesAreEqual(matrix, i));
   }
 
   private boolean checkColumnValuesAreEqual(double[][] matrix, int column) {
     double columnValue = matrix[0][column];
-    for (int i = 1; i < matrix.length; i++) {
-      if (matrix[i][column] != columnValue) {
-        return false;
-      }
-    }
 
-    return true;
+      return IntStream.range(1, matrix.length).noneMatch(i -> matrix[i][column] != columnValue);
   }
 
   @Override

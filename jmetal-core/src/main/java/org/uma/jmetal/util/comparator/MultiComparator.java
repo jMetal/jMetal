@@ -52,14 +52,7 @@ public class MultiComparator<T> implements Comparator<T> {
    * @return -1 if o1 is smaller than o2, 1 if o2 is bigger than o2, and 0 otherwise
    */
   public int compare(T o1, T o2) {
-    for (Comparator<T> comparator : comparatorList) {
-      int flag = comparator.compare(o1, o2);
-      if (flag == 0) {
-        continue;
-      }
-      return flag;
-    }
-    return 0;
+      return comparatorList.stream().mapToInt(comparator -> comparator.compare(o1, o2)).filter(flag -> flag != 0).findFirst().orElse(0);
   }
 
   /**

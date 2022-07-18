@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective.fda;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -48,22 +50,14 @@ public class FDA5 extends FDA implements Serializable {
 
   private double evalF1(DoubleSolution solution, double g, double Ft) {
     double f = 1.0d + g;
-    double mult = 1.0d;
-    for (int i = 1; i <= M - 1; i++) {
-      double y_i = Math.pow(solution.variables().get(i - 1), Ft);
-      mult *= Math.cos(y_i * Math.PI / 2.0d);
-    }
-    return f * mult;
+    double mult = IntStream.rangeClosed(1, M - 1).mapToDouble(i -> Math.pow(solution.variables().get(i - 1), Ft)).map(y_i -> Math.cos(y_i * Math.PI / 2.0d)).reduce(1.0d, (a, b) -> a * b);
+      return f * mult;
   }
 
   private double evalFK(DoubleSolution solution, double g, int k, double Ft) {
     double f = 1.0d + g;
-    double mult = 1.0d;
-    for (int i = 1; i <= M - k; i++) {
-      double y_i = Math.pow(solution.variables().get(i - 1), Ft);
-      mult *= Math.cos(y_i * Math.PI / 2.0d);
-    }
-    double yy = Math.pow(solution.variables().get(M - k), Ft);
+    double mult = IntStream.rangeClosed(1, M - k).mapToDouble(i -> Math.pow(solution.variables().get(i - 1), Ft)).map(y_i -> Math.cos(y_i * Math.PI / 2.0d)).reduce(1.0d, (a, b) -> a * b);
+      double yy = Math.pow(solution.variables().get(M - k), Ft);
     mult *= Math.sin(yy * Math.PI / 2.0d);
     return f * mult;
   }
@@ -74,11 +68,9 @@ public class FDA5 extends FDA implements Serializable {
    * @param solution Solution
    */
   private double evalG(DoubleSolution solution, int limitInf) {
-    double g = 0.0d;
+    double g;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-    for (int i = limitInf; i < solution.variables().size(); i++) {
-      g += Math.pow((solution.variables().get(i) - Gt), 2.0d);
-    }
+      g = IntStream.range(limitInf, solution.variables().size()).mapToDouble(i -> Math.pow((solution.variables().get(i) - Gt), 2.0d)).sum();
     return g + Gt;
   }
 

@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 
 /**
@@ -42,11 +45,9 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
    * Returns the mean of the values contained in the history
    */
   public List<Double> mean() {
-    List<Double> result = new ArrayList<>(this.numberOfObjectives);
-    for (int i = 0; i < this.numberOfObjectives; i++)
-      result.add(0.0);
+    List<Double> result = IntStream.range(0, this.numberOfObjectives).mapToObj(i -> 0.0).collect(Collectors.toCollection(() -> new ArrayList<>(this.numberOfObjectives)));
 
-    for (List<Double> historyMember : this.history)
+      for (List<Double> historyMember : this.history)
       for (int i = 0; i < this.numberOfObjectives;i++)
         result.set(i, result.get(i) + historyMember.get(i));
 
@@ -61,11 +62,9 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
    * Returns the variance of the values contained in the history
    */
   public List<Double> variance(List<Double> mean) {
-    List<Double> result = new ArrayList<>(this.numberOfObjectives);
-    for (int i = 0; i < this.numberOfObjectives; i++)
-      result.add(0.0);
+    List<Double> result = IntStream.range(0, this.numberOfObjectives).mapToObj(i -> 0.0).collect(Collectors.toCollection(() -> new ArrayList<>(this.numberOfObjectives)));
 
-    for (List<Double> historyMember : this.history)
+      for (List<Double> historyMember : this.history)
       for (int i = 0; i < this.numberOfObjectives; i++)
         result.set(i, result.get(i) + Math.pow(historyMember.get(i)-mean.get(i), 2.0));
 

@@ -1,7 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -63,11 +66,9 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 
 		
 		List<Double> weightVector 	 =  this.getWeightVector(vector);
-		List<Double> objectiveValues =  new ArrayList<>(solution.objectives().length);
-		for (int i = 0; i < solution.objectives().length;i++) 			
-				objectiveValues.add(solution.objectives()[i]);
-		
-		double result = -1e10;
+		List<Double> objectiveValues = Arrays.stream(solution.objectives()).boxed().collect(Collectors.toCollection(() -> new ArrayList<>(solution.objectives().length)));
+
+        double result = -1e10;
 		double secondSum = 0.0;
 		for (int i = 0; i < weightVector.size(); i++) {
 									

@@ -2,6 +2,9 @@ package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util;
 
 import org.uma.jmetal.util.JMetalLogger;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 public class CMAESUtils {
 
   private CMAESUtils () {
@@ -24,11 +27,9 @@ public class CMAESUtils {
 
       // Scale to avoid under/overflow.
 
-      double scale = 0.0;
+      double scale;
       double h = 0.0;
-      for (int k = 0; k < i; k++) {
-        scale = scale + Math.abs(d[k]);
-      }
+        scale = IntStream.range(0, i).mapToDouble(k -> Math.abs(d[k])).sum();
       if (scale == 0.0) {
         e[i] = d[i - 1];
         for (int j = 0; j < i; j++) {
@@ -317,11 +318,8 @@ public class CMAESUtils {
   }
 
   public static double norm(double[] vector) {
-    double result = 0.0;
-    for (int i = 0; i < vector.length; i++) {
-      result += vector[i] * vector[i];
-    }
-    return result;
+    double result = Arrays.stream(vector).map(v -> v * v).sum();
+      return result;
   }
 
   /**

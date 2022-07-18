@@ -1,6 +1,8 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -53,7 +55,7 @@ public class SetCoverage extends QualityIndicator {
     Check.notNull(referenceFront);
 
     double result ;
-    int sum = 0 ;
+    int sum;
 
     if (referenceFront.length == 0) {
       if (front.length ==0) {
@@ -62,11 +64,7 @@ public class SetCoverage extends QualityIndicator {
         result = 1.0 ;
       }
     } else {
-      for (double[] vector : referenceFront) {
-        if (VectorUtils.isVectorDominatedByAFront(vector, front)) {
-          sum++;
-        }
-      }
+        sum = (int) Arrays.stream(referenceFront).filter(vector -> VectorUtils.isVectorDominatedByAFront(vector, front)).count();
       result = (double)sum/referenceFront.length ;
     }
     return result ;

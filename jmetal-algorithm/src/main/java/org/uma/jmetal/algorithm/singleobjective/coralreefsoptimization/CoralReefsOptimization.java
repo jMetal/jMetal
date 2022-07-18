@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractCoralReefsOptimization;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -59,14 +62,11 @@ public class CoralReefsOptimization<S>
 
 	@Override
 	protected List<S> createInitialPopulation() {
-		List<S> population = new ArrayList<>(getN() * getM());
+		List<S> population;
 
 		int quantity = (int) (getRho() * getN() * getM());
 
-		for (int i = 0; i < quantity; i++) {
-			S newIndividual = problem.createSolution();
-			population.add(newIndividual);
-		}
+		population = IntStream.range(0, quantity).mapToObj(i -> problem.createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(getN() * getM())));
 		return population;
 	}
 
@@ -75,12 +75,8 @@ public class CoralReefsOptimization<S>
 		int popSize = getPopulationSize();
 		MersenneTwisterGenerator random = new MersenneTwisterGenerator();
 
-		ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>(popSize);
-
-		for (int i = 0; i < popSize; i++) {
-			coordinates.add(new Coordinate(random.nextInt(0, getN() - 1),
-					random.nextInt(0, getM() - 1)));
-		}
+		ArrayList<Coordinate> coordinates = IntStream.range(0, popSize).mapToObj(i -> new Coordinate(random.nextInt(0, getN() - 1),
+				random.nextInt(0, getM() - 1))).collect(Collectors.toCollection(() -> new ArrayList<>(popSize)));
 
 		return coordinates;
 	}
@@ -139,11 +135,7 @@ public class CoralReefsOptimization<S>
 	protected List<S> asexualReproduction(List<S> brooders) {
 		int sz = brooders.size();
 
-		List<S> larvae = new ArrayList<S>(sz);
-
-		for (int i = 0; i < sz; i++) {
-			larvae.add(mutationOperator.execute(brooders.get(i)));
-		}
+		List<S> larvae = IntStream.range(0, sz).mapToObj(i -> mutationOperator.execute(brooders.get(i))).collect(Collectors.toCollection(() -> new ArrayList<>(sz)));
 
 		return larvae;
 	}

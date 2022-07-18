@@ -2,6 +2,9 @@ package org.uma.jmetal.util.neighborhood.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;
@@ -29,7 +32,7 @@ public class KNearestNeighborhood<S extends Solution<?>> implements Neighborhood
 
   @Override
   public List<S> getNeighbors(List<S> solutionList, int solutionIndex) {
-    List<S> neighbourSolutions = new ArrayList<>();
+    List<S> neighbourSolutions;
     double[] distances = new double[solutionList.size()];
     int[] indexes = new int[solutionList.size()];
 
@@ -41,9 +44,7 @@ public class KNearestNeighborhood<S extends Solution<?>> implements Neighborhood
     minFastSort(distances, indexes, solutionList.size(), neighborSize);
 
 
-    for (int i = 1; i <= neighborSize; i++) {
-      neighbourSolutions.add(solutionList.get(indexes[i]));
-    }
+      neighbourSolutions = IntStream.rangeClosed(1, neighborSize).mapToObj(i -> solutionList.get(indexes[i])).collect(Collectors.toList());
 
     return neighbourSolutions;
   }

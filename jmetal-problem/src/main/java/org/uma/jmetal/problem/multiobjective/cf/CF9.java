@@ -77,12 +77,9 @@ public class CF9 extends AbstractDoubleProblem {
     }
 
     // Step 2. Compute THETA_
-    double[] theta = new double[getNumberOfObjectives() - 1];
-    for (int i = 0; i < getNumberOfObjectives() - 1; i++) {
-      theta[i] = 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i]);
-    }
+    double[] theta = IntStream.range(0, getNumberOfObjectives() - 1).mapToDouble(i -> 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i])).toArray();
 
-    // Step 3. Compute T_
+      // Step 3. Compute T_
     double t;
     t = (1 - sx[0]) * (1 - sx[0]); // (1 - XI^2)^2
 

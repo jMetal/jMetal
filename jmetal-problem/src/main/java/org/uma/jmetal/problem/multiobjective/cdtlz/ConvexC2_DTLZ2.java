@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
@@ -49,17 +50,12 @@ public class ConvexC2_DTLZ2 extends DTLZ2 {
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[getNumberOfConstraints()];
 
-    double sum = 0;
-    for (int i = 0; i < solution.objectives().length; i++) {
-      sum += solution.objectives()[i];
-    }
+    double sum = Arrays.stream(solution.objectives()).sum();
 
-    double lambda = sum / solution.objectives().length;
+      double lambda = sum / solution.objectives().length;
 
     sum = 0;
-    for (int i = 0; i < solution.objectives().length; i++) {
-      sum += Math.pow(solution.objectives()[i] - lambda, 2.0);
-    }
+      sum += Arrays.stream(solution.objectives()).map(v -> Math.pow(v - lambda, 2.0)).sum();
 
     constraint[0] = sum - Math.pow(rValue.get(solution.objectives().length), 2.0);
 

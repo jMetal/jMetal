@@ -3,11 +3,7 @@ package org.uma.jmetal.util.chartcontainer;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
@@ -220,27 +216,18 @@ public class ChartContainer {
   }
 
   private double[] getObjectiveValues(double[][] data, int obj) {
-    double[] values = new double[data.length];
-    for (int i = 0; i < data.length; i++) {
-      values[i] = data[i][obj];
-    }
-    return values;
+    double[] values = Arrays.stream(data).mapToDouble(datum -> datum[obj]).toArray();
+      return values;
   }
 
   private double[] getSolutionsForObjective(List<DoubleSolution> solutionList, int objective) {
-    double[] result = new double[solutionList.size()];
-    for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).objectives()[objective];
-    }
-    return result;
+    double[] result = solutionList.stream().mapToDouble(doubleSolution -> doubleSolution.objectives()[objective]).toArray();
+      return result;
   }
 
   private double[] getVariableValues(List<DoubleSolution> solutionList, int variable) {
-    double[] result = new double[solutionList.size()];
-    for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).variables().get(variable);
-    }
-    return result;
+    double[] result = solutionList.stream().mapToDouble(doubleSolution -> doubleSolution.variables().get(variable)).toArray();
+      return result;
   }
 
   public void saveChart(String fileName, BitmapFormat format) throws IOException {

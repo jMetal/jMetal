@@ -2,6 +2,9 @@ package org.uma.jmetal.problem.multiobjective.lsmop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -68,12 +71,9 @@ public abstract class AbstractLSMOP extends AbstractDoubleProblem {
 
   @java.lang.Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    List<Double> variables = new ArrayList<>(getNumberOfVariables());
+    List<Double> variables = IntStream.range(0, getNumberOfVariables()).mapToObj(i -> solution.variables().get(i)).collect(Collectors.toCollection(() -> new ArrayList<>(getNumberOfVariables())));
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      variables.add(solution.variables().get(i));
-    }
-    List<Double> y = evaluate(variables);
+      List<Double> y = evaluate(variables);
 
     for (int i = 0; i < getNumberOfObjectives(); i++) {
       solution.objectives()[i] = y.get(i);

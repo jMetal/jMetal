@@ -17,6 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -154,12 +157,9 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
     referencePointList = new ArrayList<>();
 
     for (int i = 0; i <= (referencePoints.size() - numberOfObjectives); i+=numberOfObjectives) {
-      List<Double> newReferencePoint = new ArrayList<>(numberOfObjectives) ;
-      for (int j = i; j < (i + numberOfObjectives); j++) {
-        newReferencePoint.add(referencePoints.get(j)) ;
-      }
+      List<Double> newReferencePoint = IntStream.range(i, (i + numberOfObjectives)).mapToObj(referencePoints::get).collect(Collectors.toCollection(() -> new ArrayList<>(numberOfObjectives)));
 
-      referencePointList.add(newReferencePoint) ;
+        referencePointList.add(newReferencePoint) ;
     }
 
     return referencePointList ;

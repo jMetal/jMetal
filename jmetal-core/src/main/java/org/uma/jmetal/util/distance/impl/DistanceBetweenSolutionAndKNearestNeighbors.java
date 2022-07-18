@@ -3,6 +3,8 @@ package org.uma.jmetal.util.distance.impl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.Distance;
@@ -52,14 +54,8 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
    * @return A list with the distances
    */
   private List<Double> knnDistances(S solution, List<S> solutionList) {
-    List<Double> listOfDistances = new ArrayList<>() ;
-    for (int i = 0 ; i< solutionList.size(); i++) {
-      double distanceBetweenSolutions = distance.compute(solution, solutionList.get(i)) ;
-      if (distanceBetweenSolutions != 0) {
-        listOfDistances.add(distanceBetweenSolutions) ;
-      }
-    }
+    List<Double> listOfDistances = solutionList.stream().mapToDouble(s -> distance.compute(solution, s)).filter(distanceBetweenSolutions -> distanceBetweenSolutions != 0).boxed().collect(Collectors.toList());
 
-    return listOfDistances ;
+      return listOfDistances ;
   }
 }

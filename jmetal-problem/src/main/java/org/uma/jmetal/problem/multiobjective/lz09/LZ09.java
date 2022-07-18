@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.multiobjective.lz09;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Base class to implement the problem of the lz09 benchmark, which is
@@ -90,17 +91,13 @@ public class LZ09 {
 
     if (type == 1) {
       beta = 0;
-      for (int i = 0; i < dim; i++) {
-        beta += x.get(i) * x.get(i);
-      }
+      beta += IntStream.range(0, dim).mapToDouble(i -> x.get(i) * x.get(i)).sum();
       beta = 2.0 * beta / dim;
     }
 
     if (type == 2) {
       beta = 0;
-      for (int i = 0; i < dim; i++) {
-        beta += Math.sqrt(i + 1) * x.get(i) * x.get(i);
-      }
+      beta += IntStream.range(0, dim).mapToDouble(i -> Math.sqrt(i + 1) * x.get(i) * x.get(i)).sum();
       beta = 2.0 * beta / dim;
     }
 
@@ -223,7 +220,7 @@ public class LZ09 {
   void objective(List<Double> xVar, List<Double> yObj) {
     // 2-objective case
     if (nobj == 2) {
-      if (ltype == 21 || ltype == 22 || ltype == 23 || ltype == 24 || ltype == 26) {
+      if (IntStream.of(21, 22, 23, 24, 26).anyMatch(i -> ltype == i)) {
         double g = 0, h = 0, a, b;
         ArrayList<Double> aa = new ArrayList<Double>();
         ArrayList<Double> bb = new ArrayList<Double>();

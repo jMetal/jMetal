@@ -15,6 +15,8 @@ package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -307,14 +309,9 @@ public class SMPSORP
 
   @Override
   public List<DoubleSolution> getResult() {
-    List<DoubleSolution> resultList = new ArrayList<>();
-    for (BoundedArchive<DoubleSolution> leader : leaders) {
-      for (DoubleSolution solution : leader.getSolutionList()) {
-        resultList.add(solution);
-      }
-    }
+    List<DoubleSolution> resultList = leaders.stream().flatMap(leader -> leader.getSolutionList().stream()).collect(Collectors.toList());
 
-    return resultList;
+      return resultList;
   }
 
   protected DoubleSolution selectGlobalBest() {

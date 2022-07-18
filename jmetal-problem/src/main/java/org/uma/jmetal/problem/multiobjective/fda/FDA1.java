@@ -61,11 +61,8 @@ public class FDA1 extends FDA {
   private double evalG(DoubleSolution solution) {
 
     double gT = Math.sin(0.5 * Math.PI * time);
-    double g = 0.0;
-    for (int i = 1; i < solution.variables().size(); i++) {
-      g += Math.pow((solution.variables().get(i) - gT), 2);
-    }
-    g = g + 1.0;
+    double g = IntStream.range(1, solution.variables().size()).mapToDouble(i -> Math.pow((solution.variables().get(i) - gT), 2)).sum();
+      g = g + 1.0;
     return g;
   }
 

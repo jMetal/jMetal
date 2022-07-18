@@ -4,6 +4,8 @@ import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
+import java.util.Arrays;
+
 /**
  * This class implements the generational distance indicator.
  * Reference: Van Veldhuizen, D.A., Lamont, G.B.: Multiobjective Evolutionary
@@ -51,12 +53,9 @@ public class GenerationalDistance extends QualityIndicator {
    * @param referenceFront The reference pareto front
    */
   public double generationalDistance(double[][] front, double[][] referenceFront) {
-    double sum = 0.0;
-    for (int i = 0; i < front.length;  i++) {
-      sum += Math.pow(VectorUtils.distanceToClosestVector(front[i], referenceFront), pow);
-    }
+    double sum = Arrays.stream(front).mapToDouble(doubles -> Math.pow(VectorUtils.distanceToClosestVector(doubles, referenceFront), pow)).sum();
 
-    sum = Math.pow(sum, 1.0 / pow);
+      sum = Math.pow(sum, 1.0 / pow);
 
     return sum / front.length;
   }

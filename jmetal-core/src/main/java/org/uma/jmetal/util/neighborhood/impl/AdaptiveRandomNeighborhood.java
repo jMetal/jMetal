@@ -2,6 +2,9 @@ package org.uma.jmetal.util.neighborhood.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
@@ -77,13 +80,9 @@ public class AdaptiveRandomNeighborhood<S> implements Neighborhood<S> {
   }
 
   private List<S> getIthNeighborhood(List<S> solutionList, int index) {
-    List<S> neighborhood = new ArrayList<>() ;
-    for (int i = 0 ; i < (numberOfRandomNeighbours + 1); i++) {
-      int neighboursIndex = neighbours.get(index).get(i) ;
-      neighborhood.add(solutionList.get(neighboursIndex));
-    }
+    List<S> neighborhood = IntStream.range(0, (numberOfRandomNeighbours + 1)).map(i -> neighbours.get(index).get(i)).mapToObj(solutionList::get).collect(Collectors.toList());
 
-    return neighborhood ;
+      return neighborhood ;
   }
 
   /**

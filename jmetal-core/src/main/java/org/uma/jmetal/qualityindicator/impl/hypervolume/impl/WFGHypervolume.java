@@ -3,6 +3,8 @@ package org.uma.jmetal.qualityindicator.impl.hypervolume.impl;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -137,8 +139,7 @@ public class WFGHypervolume extends Hypervolume {
   // the assumption is that q doesn't dominate p
   // k is the highest index inspected
   {
-    for (int i = k; i >= 0; i--) if (BEATS(q.objectives[i], p.objectives[i])) return false;
-    return true;
+      return IntStream.iterate(k, i -> i >= 0, i -> i - 1).noneMatch(i -> BEATS(q.objectives[i], p.objectives[i]));
   }
 
   static void makeDominatedBit(Front ps, int p)
@@ -245,19 +246,16 @@ public class WFGHypervolume extends Hypervolume {
   // assumes that ps is sorted improving
   {
     double volume = ps.points[0].objectives[0] * ps.points[0].objectives[1];
-    for (int i = 1; i < k; i++)
-      volume +=
-              ps.points[i].objectives[1]
-                      * (ps.points[i].objectives[0] - ps.points[i - 1].objectives[0]);
+      volume += IntStream.range(1, k).mapToDouble(i -> ps.points[i].objectives[1]
+              * (ps.points[i].objectives[0] - ps.points[i - 1].objectives[0])).sum();
     return volume;
   }
 
   static double inclhv(Point p)
   // returns the inclusive hypervolume of p
   {
-    double volume = 1;
-    for (int i = 0; i < n; i++) volume *= p.objectives[i];
-    return volume;
+    double volume = Arrays.stream(p.objectives, 0, n).reduce(1, (a, b) -> a * b);
+      return volume;
   }
 
   static double inclhv2(Point p, Point q)
@@ -499,12 +497,9 @@ public class WFGHypervolume extends Hypervolume {
     if (n == 3 && safe > 0) {
       double volume = ps.points[0].objectives[2] * hv2(ps, safe);
       n--;
-      for (int i = safe;
-           i < ps.nPoints;
-           i++) { // we can ditch dominated points here, but they will be ditched anyway in
+        // we can ditch dominated points here, but they will be ditched anyway in
         // makeDominatedBit
-        volume += ps.points[i].objectives[n] * exclhv(ps, i);
-      }
+        volume += IntStream.range(safe, ps.nPoints).mapToDouble(i -> ps.points[i].objectives[n] * exclhv(ps, i)).sum();
       n++;
       return volume;
     } else {

@@ -2,6 +2,9 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.sol
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -52,13 +55,9 @@ public class LatinHypercubeSamplingSolutionsCreation
   }
 
   private List<Integer> getPermutation(int permutationLength) {
-    List<Integer> randomSequence = new ArrayList<>(permutationLength);
+    List<Integer> randomSequence = IntStream.range(0, permutationLength).boxed().collect(Collectors.toCollection(() -> new ArrayList<>(permutationLength)));
 
-    for (int j = 0; j < permutationLength; j++) {
-      randomSequence.add(j);
-    }
-
-    java.util.Collections.shuffle(randomSequence);
+      java.util.Collections.shuffle(randomSequence);
 
     return randomSequence;
   }

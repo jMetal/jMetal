@@ -7,6 +7,7 @@ import com.fuzzylite.term.Triangle;
 import com.fuzzylite.variable.InputVariable;
 import com.fuzzylite.variable.OutputVariable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
@@ -206,11 +207,8 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
     int operator = rnd.nextInt(operators);
     List<S> offspring = new ArrayList<>(1);
     // ROULETTE
-    double cont = 0;
-    for (int x = 0; x < operators; x++) {
-      cont += OpProb[x];
-    }
-    while (cont > 0) {
+    double cont = Arrays.stream(OpProb, 0, operators).sum();
+      while (cont > 0) {
       cont -= OpProb[operator];
       if (cont <= 0) {
         break;

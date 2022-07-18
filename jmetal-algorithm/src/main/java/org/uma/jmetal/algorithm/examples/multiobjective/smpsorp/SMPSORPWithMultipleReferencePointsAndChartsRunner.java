@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -70,15 +72,10 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
     int maxIterations = 250;
     int swarmSize = 100 ;
 
-    List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
+    List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = referencePoints.stream().map(referencePoint -> new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
+            swarmSize / referencePoints.size(), referencePoint)).collect(Collectors.toList());
 
-    for (int i = 0 ; i < referencePoints.size(); i++) {
-      archivesWithReferencePoints.add(
-          new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
-              swarmSize/referencePoints.size(), referencePoints.get(i))) ;
-    }
-
-    algorithm = new SMPSORP(problem,
+      algorithm = new SMPSORP(problem,
             swarmSize,
             archivesWithReferencePoints,
             referencePoints,

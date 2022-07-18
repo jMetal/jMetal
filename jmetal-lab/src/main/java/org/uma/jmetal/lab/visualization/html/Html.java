@@ -12,6 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * This class creates the skeleton of a HTML file.
  *
@@ -130,12 +132,7 @@ public class Html {
 
     sb.append(" h1 {text-align: center} \n");
 
-    sb.append(".component { margin : 1em auto 2em auto; width : 90%}\n");
-
-    for (HtmlComponent component : components) {
-
-      sb.append(component.getCSS());
-    }
+      sb.append(components.stream().map(HtmlComponent::getCSS).collect(Collectors.joining("", ".component { margin : 1em auto 2em auto; width : 90%}\n", "")));
 
     return sb.append("</style>\n");
   }

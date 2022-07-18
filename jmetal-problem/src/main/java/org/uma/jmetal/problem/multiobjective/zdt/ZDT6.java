@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.zdt;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+import java.util.stream.IntStream;
+
 /**
  * Class representing problem ZDT6 Difined in E. Zitzler, K. Deb, and L. Thiele, "Comparison of
  * Multiobjective Evolutionary Algorithms: Empirical Results," Evolutionary Computation, vol. 8, no.
@@ -48,11 +50,8 @@ public class ZDT6 extends ZDT1 {
    * @param solution Solution
    */
   protected double evalG(DoubleSolution solution) {
-    double g = 0.0;
-    for (int var = 1; var < solution.variables().size(); var++) {
-      g += solution.variables().get(var);
-    }
-    g = g / (solution.variables().size() - 1);
+    double g = IntStream.range(1, solution.variables().size()).mapToDouble(var -> solution.variables().get(var)).sum();
+      g = g / (solution.variables().size() - 1);
     g = Math.pow(g, 0.25);
     g = 9.0 * g;
     g = 1.0 + g;

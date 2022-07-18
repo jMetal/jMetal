@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -173,12 +175,9 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
    */
 
   private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
-    int distance = 0;
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      distance += hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i));
-    }
+    int distance = IntStream.range(0, problem.getNumberOfVariables()).map(i -> hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i))).sum();
 
-    return distance;
+      return distance;
   }
 
   private int hammingDistance(BinarySet bitSet1, BinarySet bitSet2) {

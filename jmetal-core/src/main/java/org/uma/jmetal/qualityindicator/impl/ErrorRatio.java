@@ -2,6 +2,8 @@ package org.uma.jmetal.qualityindicator.impl;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -78,14 +80,8 @@ public class ErrorRatio extends QualityIndicator {
       boolean thePointIsInTheParetoFront = false;
       for (int j = 0; j < referenceFront.length; j++) {
         double[] currentParetoFrontPoint = referenceFront[j];
-        boolean found = true;
-        for (int k = 0; k < numberOfObjectives; k++) {
-          if(currentPoint[k] != currentParetoFrontPoint[k]){
-            found = false;
-            break;
-          }
-        }
-        if(found){
+        boolean found = IntStream.range(0, numberOfObjectives).noneMatch(k -> currentPoint[k] != currentParetoFrontPoint[k]);
+          if(found){
           thePointIsInTheParetoFront = true;
           break;
         }

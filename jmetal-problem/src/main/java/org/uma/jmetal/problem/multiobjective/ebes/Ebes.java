@@ -25,6 +25,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -922,7 +925,8 @@ public class Ebes extends AbstractDoubleProblem {
           double xn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aX_][hi];
           double yn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aY_][hi];
           double zn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aZ_][hi];
-          fx[j] += Math.sqrt(Math.pow(xn, 2.0) + Math.pow(yn, 2.0) + Math.pow(zn, 2.0));
+          double sum = DoubleStream.of(xn, yn, zn).map(v -> Math.pow(v, 2.0)).sum();
+          fx[j] += Math.sqrt(sum);
         }
         solution.objectives()[j] = fx[j];
         // END minimizing sum of displacement in nodes ---------------------------------------------
@@ -989,11 +993,7 @@ public class Ebes extends AbstractDoubleProblem {
    */
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[this.getNumberOfConstraints()];
-    double[] x = new double[getNumberOfVariables()];
-
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.variables().get(i);
-    }
+    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
 
     double x1, x2, x3, x4;
     int var = 0;
@@ -1304,7 +1304,7 @@ public class Ebes extends AbstractDoubleProblem {
         double xn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aX_][hi];
         double yn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aY_][hi];
         double zn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aZ_][hi];
-        deltaN = Math.sqrt(Math.pow(xn, 2) + Math.pow(yn, 2) + Math.pow(zn, 2));
+        deltaN = Math.sqrt(DoubleStream.of(xn, yn, zn).map(v -> Math.pow(v, 2)).sum());
         constraint[con] = (-deltaN + nodeCheck_[i][1]);
         con += 1;
       }
@@ -1319,10 +1319,7 @@ public class Ebes extends AbstractDoubleProblem {
     // asignaciÃƒÂ³n de las variables para cada grupo
     // y determinaciÃƒÂ³n de las caracterÃƒÂ­sticas mecÃƒÂ¡nicas
 
-    double[] x = new double[solution.variables().size()];
-    for (int i = 0; i < solution.variables().size(); i++) {
-      x[i] = solution.variables().get(i);
-    }
+    double[] x = solution.variables().stream().mapToDouble(aDouble -> aDouble).toArray();
 
     double x1, x2, x3, x4;
 
@@ -5744,7 +5741,7 @@ public class Ebes extends AbstractDoubleProblem {
   public double FunctionsMahalanobis_Distance_With_Variance(int hi) {
     // Mahalanobis Distance With Variance for estimated value respect to estimated data
 
-    double MD = 0.0; // mahalanobis distance
+    double MD; // mahalanobis distance
     double[] MDi = new double[geometryCheck_.length]; // mahalanobis distance
 
     for (int i = 0; i < geometryCheck_.length; i++) {
@@ -5812,9 +5809,7 @@ public class Ebes extends AbstractDoubleProblem {
       MDi[i] = Math.sqrt(1 / (1 - Math.pow(r, 2.0)) * MDi[i]);
     }
 
-    for (int i = 0; i < geometryCheck_.length; i++) {
-      MD += MDi[i];
-    }
+    MD = Arrays.stream(MDi, 0, geometryCheck_.length).sum();
 
     return MD;
   }

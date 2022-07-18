@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.FriedmanTest;
@@ -168,11 +170,8 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     double term1 =
         (12 * (double) numberOfProblems) / (numberOfAlgorithms * (numberOfAlgorithms + 1));
     double term2 = numberOfAlgorithms * (numberOfAlgorithms + 1) * (numberOfAlgorithms + 1) / (4.0);
-    double sum = 0;
-    for (int i = 0; i < numberOfAlgorithms; i++) {
-      sum += averageRanking[i] * averageRanking[i];
-    }
-    double friedman = (sum - term2) * term1;
+    double sum = IntStream.range(0, numberOfAlgorithms).mapToDouble(i -> averageRanking[i] * averageRanking[i]).sum();
+      double friedman = (sum - term2) * term1;
 
     String output =
         fileContents

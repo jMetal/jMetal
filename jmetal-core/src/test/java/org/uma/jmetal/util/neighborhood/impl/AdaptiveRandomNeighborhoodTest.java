@@ -12,6 +12,9 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -84,12 +87,9 @@ public class AdaptiveRandomNeighborhoodTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution position value is negative: -1"));
 
-    List<IntegerSolution> list = new ArrayList<>() ;
-    for (int i = 0; i < solutionListSize; i++) {
-      list.add(mock(IntegerSolution.class));
-    }
+    List<IntegerSolution> list = IntStream.range(0, solutionListSize).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toList());
 
-    neighborhood.getNeighbors(list, -1) ;
+      neighborhood.getNeighbors(list, -1) ;
   }
 
   @Test
@@ -102,12 +102,9 @@ public class AdaptiveRandomNeighborhoodTest {
     exception.expectMessage(containsString("The solution position value: 6 " +
             "is equal or greater than the solution list size: " + solutionListSize));
 
-    List<IntegerSolution> list = new ArrayList<>() ;
-    for (int i = 0; i < solutionListSize; i++) {
-      list.add(mock(IntegerSolution.class));
-    }
+    List<IntegerSolution> list = IntStream.range(0, solutionListSize).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toList());
 
-    neighborhood.getNeighbors(list, 6) ;
+      neighborhood.getNeighbors(list, 6) ;
   }
 
   @Test
@@ -120,12 +117,9 @@ public class AdaptiveRandomNeighborhoodTest {
     exception.expectMessage(containsString("The solution list size: 3 " +
             "is different to the value: " + solutionListSize));
 
-    List<IntegerSolution> list = new ArrayList<>() ;
-    for (int i = 0; i < solutionListSize - 1; i++) {
-      list.add(mock(IntegerSolution.class));
-    }
+    List<IntegerSolution> list = IntStream.range(0, solutionListSize - 1).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toList());
 
-    neighborhood.getNeighbors(list, 1) ;
+      neighborhood.getNeighbors(list, 1) ;
   }
 
   /**
@@ -142,12 +136,9 @@ public class AdaptiveRandomNeighborhoodTest {
     AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, numberOfNeighbors) ;
 
-    List<IntegerSolution> list = new ArrayList<>(solutionListSize) ;
-    for (int i = 0 ; i < solutionListSize; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, solutionListSize).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(solutionListSize)));
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(numberOfNeighbors + 1, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
   }
@@ -176,12 +167,9 @@ public class AdaptiveRandomNeighborhoodTest {
 
     ReflectionTestUtils.setField(neighborhood, "randomGenerator", randomGenerator);
 
-    List<IntegerSolution> list = new ArrayList<>(solutionListSize) ;
-    for (int i = 0 ; i < solutionListSize; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+    List<IntegerSolution> list = IntStream.range(0, solutionListSize).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(solutionListSize)));
 
-    neighborhood.recompute();
+      neighborhood.recompute();
 
     List<IntegerSolution> result ;
     result = neighborhood.getNeighbors(list, 0) ;

@@ -5,6 +5,8 @@ import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 
+import java.util.stream.IntStream;
+
 @SuppressWarnings("serial")
 public abstract class AbstractBinaryProblem extends AbstractGenericProblem<BinarySolution>
         implements BinaryProblem {
@@ -16,10 +18,7 @@ public abstract class AbstractBinaryProblem extends AbstractGenericProblem<Binar
 
   @Override
   public int getTotalNumberOfBits() {
-    int count = 0;
-    for (int i = 0; i < this.getNumberOfVariables(); i++) {
-      count += this.getListOfBitsPerVariable().get(i);
-    }
+    int count = IntStream.range(0, this.getNumberOfVariables()).map(i -> this.getListOfBitsPerVariable().get(i)).sum();
 
     return count;
   }

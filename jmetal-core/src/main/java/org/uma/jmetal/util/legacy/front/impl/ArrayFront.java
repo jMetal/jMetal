@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -104,12 +106,9 @@ public class ArrayFront implements Front {
 
       while (line != null) {
         String[] stringValues = line.split(separator);
-        double[] values = new double[stringValues.length];
-        for (int i = 0; i < stringValues.length; i++) {
-          values[i] = Double.valueOf(stringValues[i]);
-        }
+        double[] values = Arrays.stream(stringValues).mapToDouble(Double::valueOf).toArray();
 
-        if (numberOfObjectives == 0) {
+          if (numberOfObjectives == 0) {
           numberOfObjectives = stringValues.length;
         } else {
           Check.that(
@@ -244,11 +243,8 @@ public class ArrayFront implements Front {
 
   @Override
   public double[][] getMatrix() {
-    double[][] matrix = new double[getNumberOfPoints()][];
-    for (int i = 0; i < getNumberOfPoints(); i++) {
-      matrix[i] = points[i].getValues();
-    }
+    double[][] matrix = IntStream.range(0, getNumberOfPoints()).mapToObj(i -> points[i].getValues()).toArray(double[][]::new);
 
-    return matrix;
+      return matrix;
   }
 }

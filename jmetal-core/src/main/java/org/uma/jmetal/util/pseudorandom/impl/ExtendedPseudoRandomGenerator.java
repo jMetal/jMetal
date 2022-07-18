@@ -2,6 +2,8 @@ package org.uma.jmetal.util.pseudorandom.impl;
 
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
+import java.util.stream.IntStream;
+
 /**
  * Extended pseudo random number generator based on the decorator pattern.
  * Two new methods are added: randNormal() and randSphere()
@@ -79,12 +81,10 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
    */
   public double[] randSphere(int dimension) {
     int D = dimension;
-    double[] x = new double[dimension];
+    double[] x;
 
     double length = 0;
-    for (int i = 0; i < dimension; i++) {
-      x[i] = 0.0;
-    }
+      x = IntStream.range(0, dimension).mapToDouble(i -> 0.0).toArray();
 
     // --------- Step 1. Direction
 
@@ -118,12 +118,10 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
    */
   public double[] randSphere(int dimension, double center, double radius) {
     int d = dimension;
-    double[] x = new double[dimension];
+    double[] x;
 
     double length = 0;
-    for (int i = 0; i < dimension; i++) {
-      x[i] = 0.0;
-    }
+      x = IntStream.range(0, dimension).mapToDouble(i -> 0.0).toArray();
 
     // --------- Step 1. Direction
 

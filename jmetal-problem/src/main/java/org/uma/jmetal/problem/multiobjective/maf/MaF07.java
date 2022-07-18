@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -52,28 +53,20 @@ public class MaF07 extends AbstractDoubleProblem {
     int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables];
-    double[] f = new double[numberOfObjectives];
+    double[] x;
+    double[] f;
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
 
     // evaluate g,h
-    double g = 0, h = 0, sub1;
-    for (int i = numberOfObjectives - 1; i < numberOfVariables; i++) {
-      g += x[i];
-    }
+    double g, h, sub1;
+      g = Arrays.stream(x, numberOfObjectives - 1, numberOfVariables).sum();
     g = 1 + 9 * g / (numberOfVariables - numberOfObjectives + 1);
     sub1 = 1 + g;
-    for (int i = 0; i < numberOfObjectives - 1; i++) {
-      h += (x[i] * (1 + Math.sin(3 * Math.PI * x[i])) / sub1);
-    }
+      h = IntStream.range(0, numberOfObjectives - 1).mapToDouble(i -> (x[i] * (1 + Math.sin(3 * Math.PI * x[i])) / sub1)).sum();
     h = numberOfObjectives - h;
     // evaluate f1,...,m-1,m
-    for (int i = 0; i < numberOfObjectives; i++) {
-      f[i] = x[i];
-    }
+      f = Arrays.stream(x, 0, numberOfObjectives).toArray();
     f[numberOfObjectives - 1] = h * sub1;
 
     for (int i = 0; i < numberOfObjectives; i++) {

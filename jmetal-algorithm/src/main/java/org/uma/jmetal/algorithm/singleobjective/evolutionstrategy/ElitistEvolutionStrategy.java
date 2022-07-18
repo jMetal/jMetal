@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
@@ -52,13 +55,9 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
   }
 
   @Override protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(mu);
-    for (int i = 0; i < mu; i++) {
-      S newIndividual = getProblem().createSolution();
-      population.add(newIndividual);
-    }
+    List<S> population = IntStream.range(0, mu).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(mu)));
 
-    return population;
+      return population;
   }
 
   @Override protected List<S> evaluatePopulation(List<S> population) {
@@ -95,11 +94,8 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
 
     Collections.sort(offspringPopulation, comparator) ;
 
-    List<S> newPopulation = new ArrayList<>(mu);
-    for (int i = 0; i < mu; i++) {
-      newPopulation.add(offspringPopulation.get(i));
-    }
-    return newPopulation;
+    List<S> newPopulation = IntStream.range(0, mu).mapToObj(offspringPopulation::get).collect(Collectors.toCollection(() -> new ArrayList<>(mu)));
+      return newPopulation;
   }
 
   @Override public S getResult() {

@@ -134,11 +134,8 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
   }
 
   private double[] getSolutionsForObjective(List<S> solutionList, int objective) {
-    double[] result = new double[solutionList.size()];
-    for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).objectives()[objective];
-    }
-    return result;
+    double[] result = solutionList.stream().mapToDouble(s -> s.objectives()[objective]).toArray();
+      return result;
   }
 
   public void saveChart(String fileName, BitmapEncoder.BitmapFormat format) throws IOException {

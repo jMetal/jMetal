@@ -3,6 +3,9 @@ package org.uma.jmetal.algorithm.multiobjective.mombi;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFUtilityFunctionSet;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.MOMBI2History;
@@ -86,13 +89,9 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
   // ToDo: refactor this method (first implementation just try to mimic c implementation)
   @Override
   public void updateReferencePoint(List<S> population) {
-    List<Double> iterationMaxs = new ArrayList<>(maxs.size());
+    List<Double> iterationMaxs = IntStream.range(0, this.getProblem().getNumberOfObjectives()).mapToObj(i -> Double.NEGATIVE_INFINITY).collect(Collectors.toCollection(() -> new ArrayList<>(maxs.size())));
 
-    for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {
-      iterationMaxs.add(Double.NEGATIVE_INFINITY);
-    }
-
-    for (S solution : population) {
+      for (S solution : population) {
       updateReferencePoint(solution);
       for (int i = 0; i < solution.objectives().length; i++) {
         iterationMaxs.set(i, Math.max(iterationMaxs.get(i), solution.objectives()[i]));

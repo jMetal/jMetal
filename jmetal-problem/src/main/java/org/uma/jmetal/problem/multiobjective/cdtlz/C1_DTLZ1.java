@@ -3,6 +3,8 @@ package org.uma.jmetal.problem.multiobjective.cdtlz;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+import java.util.stream.IntStream;
+
 /**
  * Problem C1-DTLZ1, defined in:
  * Jain, H. and K. Deb.  "An Evolutionary Many-Objective Optimization Algorithm Using Reference-Point-Based
@@ -33,11 +35,8 @@ public class C1_DTLZ1 extends DTLZ1 {
   }
 
   public void evaluateConstraints(DoubleSolution solution) {
-    double sum = 0 ;
-    for (int i = 0; i < solution.objectives().length - 2; i++) {
-      sum += solution.objectives()[i] / 0.5 ;
-    }
+    double sum = IntStream.range(0, solution.objectives().length - 2).mapToDouble(i -> solution.objectives()[i] / 0.5).sum();
 
-    solution.constraints()[0] = 1.0 - solution.objectives()[(solution.objectives().length-1)] - sum ;
+      solution.constraints()[0] = 1.0 - solution.objectives()[(solution.objectives().length-1)] - sum ;
   }
 }

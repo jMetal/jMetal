@@ -1,6 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
 import java.util.logging.Level;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -156,13 +158,9 @@ public class WFG1 extends WFG {
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
     float[] variables = new float[getNumberOfVariables()];
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.variables().get(i);
-    }
-
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+      for (int i = 0; i < getNumberOfVariables(); i++) {
       variables[i] = (float) x[i] ;
     }
 

@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -250,11 +252,8 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       Front normalizedFront = frontNormalizer.normalize(front);
 
       // compute offsets for reference point in normalized space
-      double[] offsets = new double[maximumValues.length];
-      for (int i = 0; i < maximumValues.length; i++) {
-        offsets[i] = offset / (maximumValues[i] - minimumValues[i]);
-      }
-      // STEP 3. Inverse the pareto front. This is needed because the original
+      double[] offsets = IntStream.range(0, maximumValues.length).mapToDouble(i -> offset / (maximumValues[i] - minimumValues[i])).toArray();
+        // STEP 3. Inverse the pareto front. This is needed because the original
       // metric by Zitzler is for maximization problem
       Front invertedFront = FrontUtils.getInvertedFront(normalizedFront);
 

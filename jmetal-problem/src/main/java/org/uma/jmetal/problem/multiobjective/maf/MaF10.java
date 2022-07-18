@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -53,12 +55,10 @@ public class MaF10 extends AbstractDoubleProblem {
     int numberOfVariables_ = solution.variables().size();
     int numberOfObjectives_ = solution.objectives().length;
 
-    double[] x = new double[numberOfVariables_];
+    double[] x;
     double[] f = new double[numberOfObjectives_];
 
-    for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.variables().get(i);
-    }
+      x = IntStream.range(0, numberOfVariables_).mapToDouble(i -> solution.variables().get(i)).toArray();
 
     // evaluate zi,t1i,t2i,t3i,t4i,yi
     double[] z = new double[numberOfVariables_];
