@@ -1,8 +1,6 @@
 package org.uma.jmetal.util.bounds;
 
 import java.io.Serializable;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Describes a pair of lower and upper bounds for a {@link Comparable} value.
@@ -72,41 +70,5 @@ public interface Bounds<T extends Comparable<T>> extends Serializable {
         }
       };
     }
-  }
-
-  /**
-   * Utility method to convert a legacy {@link Pair} into a {@link Bounds}. The
-   * resulting {@link Bounds} represents the state of the {@link Pair} at call
-   * time. Later changes of the {@link Pair} do not reflect on the previously
-   * created {@link Bounds}. It allows to not keep a reference on the {@link Pair}
-   * instance, which can be garbage collected.
-   * 
-   * @param <T>
-   *          the type of elements
-   * @param pair
-   *          the {@link Pair} to translate
-   * @return the resulting {@link Bounds}
-   * @deprecated This method is here for legacy purpose. Do not use since it
-   *             should disappear soon.
-   */
-  @Deprecated
-  public static <T extends Comparable<T>> Bounds<T> fromPair(Pair<T, T> pair) {
-    return create(pair.getLeft(), pair.getRight());
-  }
-
-  /**
-   * Utility method to convert this {@link Bounds} into a legacy {@link Pair}. The
-   * resulting {@link Pair} represents the state of the {@link Bounds} at call
-   * time. Later changes of the {@link Bounds} do not reflect on the previously
-   * created {@link Pair}. It allows to not keep a reference on the {@link Bounds}
-   * instance, which can be garbage collected.
-   * 
-   * @return a {@link Pair} representing this {@link Bounds}
-   * @deprecated This method is here for legacy purpose. Do not use since it
-   *             should disappear soon.
-   */
-  @Deprecated
-  default public Pair<T, T> toPair() {
-    return new ImmutablePair<>(getLowerBound(), getUpperBound());
   }
 }

@@ -15,7 +15,7 @@ public class VariationParameter extends CategoricalParameter {
     super("variation", args, variationStrategies);
   }
 
-  public Variation<DoubleSolution> getDoubleSolutionParameter() {
+  public Variation<? extends DoubleSolution> getDoubleSolutionParameter() {
     Variation<DoubleSolution> result;
     int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").getValue() ;
 
@@ -38,7 +38,7 @@ public class VariationParameter extends CategoricalParameter {
     return result;
   }
 
-  public Variation<BinarySolution> getBinarySolutionParameter() {
+  public Variation<? extends BinarySolution> getBinarySolutionParameter() {
     Variation<BinarySolution> result;
     int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").getValue() ;
 

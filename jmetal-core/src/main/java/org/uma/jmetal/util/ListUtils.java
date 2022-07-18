@@ -1,6 +1,7 @@
 package org.uma.jmetal.util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -125,35 +126,14 @@ public class ListUtils {
    * @param secondList A <code>list</code>
    * @return true if both are contains equals solutions, false in other case
    */
-  public static <S extends Comparable<?>> boolean listAreEquals(List<S> firstList, List<S> secondList) {
+  public static <S> boolean listAreEquals(List<S> firstList, List<S> secondList) {
     Check.notNull(firstList);
     Check.notNull(secondList);
 
     if (firstList.size() != secondList.size()) {
       return false ;
     } else {
-      List<S> sortedFirstList = firstList.stream().sorted().collect(Collectors.toList());
-      List<S> sortedSecondList = secondList.stream().sorted().collect(Collectors.toList());
-      return sortedFirstList.equals(sortedSecondList) ;
+      return new HashSet<>(firstList).containsAll(secondList) ;
     }
-    /*
-
-    for (S solution : firstList) {
-      int j = 0;
-      found = false;
-      while (j < secondList.size()) {
-        if (solution.equals(secondList.get(j))) {
-          found = true;
-          break;
-        }
-        j++;
-      }
-      if (!found) {
-        return false;
-      }
-    }
-    return true;
-
-     */
   }
 }

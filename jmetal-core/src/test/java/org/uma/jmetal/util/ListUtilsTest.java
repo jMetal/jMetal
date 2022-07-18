@@ -216,5 +216,4 @@ class ListUtilsTest {
       assertThat(ListUtils.listAreEquals(list1, list2)).isTrue();
     }
   }
-
 }

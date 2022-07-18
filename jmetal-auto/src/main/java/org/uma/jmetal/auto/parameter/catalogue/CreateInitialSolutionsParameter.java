@@ -23,7 +23,7 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter {
     super(parameterName, args, validValues);
   }
 
-  public SolutionsCreation<DoubleSolution> getParameter(DoubleProblem problem, int populationSize) {
+  public SolutionsCreation<? extends DoubleSolution> getParameter(DoubleProblem problem, int populationSize) {
     switch (getValue()) {
       case "random":
         return new RandomSolutionsCreation<>(problem, populationSize);
@@ -37,7 +37,7 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter {
     }
   }
 
-  public SolutionsCreation<BinarySolution> getParameter(BinaryProblem problem, int populationSize) {
+  public SolutionsCreation<? extends BinarySolution> getParameter(BinaryProblem problem, int populationSize) {
     switch (getValue()) {
       case "random":
         return new RandomSolutionsCreation<>(problem, populationSize);
