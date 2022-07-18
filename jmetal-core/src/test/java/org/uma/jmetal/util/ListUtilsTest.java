@@ -14,10 +14,15 @@ import org.uma.jmetal.util.errorchecking.exception.NegativeValueException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
+/**
+ * Test classes for class {@link ListUtils}
+ *
+ * @author Antonio J. Nebro (ajnebro@uma.es)
+ */
 class ListUtilsTest {
 
   @Nested
-  @DisplayName("Test cases for method randomSelectionWithoutReplacement")
+  @DisplayName("Test cases for method randomSelectionWithoutReplacement()")
   class RandomSelectionWithoutReplacementTestCases {
 
     @Test
@@ -91,7 +96,7 @@ class ListUtilsTest {
   }
 
   @Nested
-  @DisplayName("Test cases for method randomSelectionWithReplacement")
+  @DisplayName("Test cases for method randomSelectionWithReplacement()")
   class RandomSelectionWithReplacementTestCases {
 
     @Test
@@ -153,4 +158,63 @@ class ListUtilsTest {
           .hasSize(numberOfRequestedElements) ;
     }
   }
+
+  @Nested
+  @DisplayName("Test cases for method listAreEquals()")
+  class listAreEqualsTestCases {
+    @Test
+    void comparingTwoListsRaisesAnExceptionIfTheFirstOneIsNull() {
+      assertThatThrownBy(
+          () -> ListUtils.listAreEquals(null, List.of(4))).isInstanceOf(
+          NullParameterException.class);
+    }
+
+    @Test
+    void comparingTwoListsRaisesAnExceptionIfTheSecondOneIsNull() {
+      assertThatThrownBy(
+          () -> ListUtils.listAreEquals(List.of(4), null)).isInstanceOf(
+          NullParameterException.class);
+    }
+
+    @Test
+    void comparingTwoListOfDifferentLengthReturnsFalse() {
+      List<Double> list1 = List.of(1.0, 2.0) ;
+      List<Double> list2 = List.of(1.0, 2.0, 3.0) ;
+
+      assertThat(ListUtils.listAreEquals(list1, list2)).isFalse();
+    }
+
+    @Test
+    void comparingTwoListWithTheSameElementReturnsTrue() {
+      List<Double> list1 = List.of(1.0) ;
+      List<Double> list2 = List.of(1.0) ;
+
+      assertThat(ListUtils.listAreEquals(list1, list2)).isTrue();
+    }
+
+    @Test
+    void comparingTwoListWithADifferentElementReturnsFalse() {
+      List<Double> list1 = List.of(1.0) ;
+      List<Double> list2 = List.of(3.0) ;
+
+      assertThat(ListUtils.listAreEquals(list1, list2)).isFalse();
+    }
+
+    @Test
+    void comparingTwoListWithTwoEqualsElementsReturnsTrue() {
+      List<Double> list1 = List.of(1.0, 2.0) ;
+      List<Double> list2 = List.of(2.0, 1.0) ;
+
+      assertThat(ListUtils.listAreEquals(list1, list2)).isTrue();
+    }
+
+    @Test
+    void comparingTwoListWithFourEqualsElementsReturnsTrue() {
+      List<String> list1 = List.of("this", "dog", "is", "white") ;
+      List<String> list2 = List.of("dog", "white", "this", "is") ;
+
+      assertThat(ListUtils.listAreEquals(list1, list2)).isTrue();
+    }
+  }
+
 }

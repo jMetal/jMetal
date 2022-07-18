@@ -121,18 +121,28 @@ public class ListUtils {
   /**
    * Compares two lists to determine if they are equals
    *
-   * @param solutions A <code>list</code>
-   * @param newSolutionList A <code>list</code>
+   * @param firstList A <code>list</code>
+   * @param secondList A <code>list</code>
    * @return true if both are contains equals solutions, false in other case
    */
-  public static <S> boolean listAreEquals(List<S> solutions, List<S> newSolutionList) {
-    boolean found;
-    for (S solution : solutions) {
+  public static <S extends Comparable<?>> boolean listAreEquals(List<S> firstList, List<S> secondList) {
+    Check.notNull(firstList);
+    Check.notNull(secondList);
 
+    if (firstList.size() != secondList.size()) {
+      return false ;
+    } else {
+      List<S> sortedFirstList = firstList.stream().sorted().collect(Collectors.toList());
+      List<S> sortedSecondList = secondList.stream().sorted().collect(Collectors.toList());
+      return sortedFirstList.equals(sortedSecondList) ;
+    }
+    /*
+
+    for (S solution : firstList) {
       int j = 0;
       found = false;
-      while (j < newSolutionList.size()) {
-        if (solution.equals(newSolutionList.get(j))) {
+      while (j < secondList.size()) {
+        if (solution.equals(secondList.get(j))) {
           found = true;
           break;
         }
@@ -143,5 +153,7 @@ public class ListUtils {
       }
     }
     return true;
+
+     */
   }
 }

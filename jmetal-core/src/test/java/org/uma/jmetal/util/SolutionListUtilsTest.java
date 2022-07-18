@@ -311,41 +311,6 @@ public class SolutionListUtilsTest {
   }
 
   @Test
-  public void shouldSolutionListsAreEqualsReturnIfTwoIdenticalSolutionListsAreCompared() {
-    List<BinarySolution> list1 = new ArrayList<>(3);
-    List<BinarySolution> list2 = new ArrayList<>(3);
-
-    for (int i = 0; i < 3; i++) {
-      BinarySolution solution = mock(BinarySolution.class);
-      list1.add(solution);
-      list2.add(solution);
-    }
-
-    assertTrue(ListUtils.listAreEquals(list1, list2));
-  }
-
-  @Test
-  public void
-      shouldSolutionListsAreEqualsReturnIfTwoSolutionListsWithIdenticalSolutionsAreCompared() {
-    List<BinarySolution> list1 = new ArrayList<>(3);
-    List<BinarySolution> list2 = new ArrayList<>(3);
-
-    List<BinarySolution> solutions =
-        Arrays.asList(
-            mock(BinarySolution.class), mock(BinarySolution.class), mock(BinarySolution.class));
-
-    for (BinarySolution solution : solutions) {
-      list1.add(solution);
-    }
-
-    list2.add(solutions.get(2));
-    list2.add(solutions.get(1));
-    list2.add(solutions.get(0));
-
-    assertTrue(ListUtils.listAreEquals(list1, list2));
-  }
-
-  @Test
   public void shouldFillPopulationWithNewSolutionsDoNothingIfTheMaxSizeIsLowerThanTheListSize() {
     List<DoubleSolution> solutions =
         Arrays.asList(
