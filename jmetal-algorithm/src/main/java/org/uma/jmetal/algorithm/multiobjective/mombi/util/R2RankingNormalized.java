@@ -49,18 +49,15 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
 
       Collections.sort(
           population,
-          new Comparator<S>() {
-            @Override
-            public int compare(S o1, S o2) {
-              R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
-              R2SolutionData data1 = (R2SolutionData) attribute.getAttribute(o1);
-              R2SolutionData data2 = (R2SolutionData) attribute.getAttribute(o2);
+              (o1, o2) -> {
+                R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
+                R2SolutionData data1 = (R2SolutionData) attribute.getAttribute(o1);
+                R2SolutionData data2 = (R2SolutionData) attribute.getAttribute(o2);
 
-              if (data1.alpha < data2.alpha) return -1;
-              else if (data1.alpha > data2.alpha) return 1;
-              else return 0;
-            }
-          });
+                if (data1.alpha < data2.alpha) return -1;
+                else if (data1.alpha > data2.alpha) return 1;
+                else return 0;
+              });
 
       int rank = 1;
       for (S p : population) {

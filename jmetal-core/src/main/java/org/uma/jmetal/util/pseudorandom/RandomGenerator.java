@@ -77,16 +77,12 @@ public interface RandomGenerator<Value> extends Serializable {
    * @return a {@link RandomGenerator} which provides only acceptable values
    */
   static <T> RandomGenerator<T> filter(RandomGenerator<T> generator, Predicate<T> filter) {
-    return new RandomGenerator<T>() {
-
-      @Override
-      public T getRandomValue() {
-        T value;
-        do {
-          value = generator.getRandomValue();
-        } while (!filter.test(value));
-        return value;
-      }
+    return () -> {
+      T value;
+      do {
+        value = generator.getRandomValue();
+      } while (!filter.test(value));
+      return value;
     };
   }
 }

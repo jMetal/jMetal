@@ -27,13 +27,7 @@ public class CountingMeasureTest {
 	public void testIncrementNotificationsOccur() {
 		CountingMeasure measure = new CountingMeasure(15);
 		final boolean[] isCalled = { false };
-		measure.register(new MeasureListener<Long>() {
-
-			@Override
-			public void measureGenerated(Long value) {
-				isCalled[0] = true;
-			}
-		});
+		measure.register(value -> isCalled[0] = true);
 
 		isCalled[0] = false;
 		measure.increment();
@@ -52,13 +46,9 @@ public class CountingMeasureTest {
 	public void testGetAlignedWithNotifications() {
 		final CountingMeasure measure = new CountingMeasure(15);
 		final int[] notifications = { 0 };
-		measure.register(new MeasureListener<Long>() {
-
-			@Override
-			public void measureGenerated(Long value) {
-				notifications[0]++;
-				assertEquals(value, measure.get());
-			}
+		measure.register(value -> {
+			notifications[0]++;
+			assertEquals(value, measure.get());
 		});
 		measure.increment();
 		assertEquals(1, notifications[0]);
@@ -181,13 +171,7 @@ public class CountingMeasureTest {
 	public void testResetNotificationsOccur() {
 		CountingMeasure measure = new CountingMeasure(15);
 		final boolean[] isCalled = { false };
-		measure.register(new MeasureListener<Long>() {
-
-			@Override
-			public void measureGenerated(Long value) {
-				isCalled[0] = true;
-			}
-		});
+		measure.register(value -> isCalled[0] = true);
 
 		isCalled[0] = false;
 		measure.reset();
@@ -210,13 +194,7 @@ public class CountingMeasureTest {
 	public void testIncrementNotificationsOccurIfNonZero() {
 		CountingMeasure measure = new CountingMeasure(15);
 		final boolean[] isCalled = { false };
-		measure.register(new MeasureListener<Long>() {
-
-			@Override
-			public void measureGenerated(Long value) {
-				isCalled[0] = true;
-			}
-		});
+		measure.register(value -> isCalled[0] = true);
 
 		isCalled[0] = false;
 		measure.increment(3);

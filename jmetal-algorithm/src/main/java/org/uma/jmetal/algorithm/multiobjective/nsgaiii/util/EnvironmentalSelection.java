@@ -148,7 +148,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
       // Find the equation of the hyperplane
       List<Double> b = IntStream.range(0, numberOfObjectives).mapToObj(i -> 1.0).collect(Collectors.toList()); // (pop[0].objs().size(), 1.0);
 
-        List<List<Double>> A = extreme_points.stream().<List<Double>>map(s -> Arrays.stream(s.objectives(), 0, numberOfObjectives).collect(Collectors.toList())).collect(Collectors.toList());
+        List<List<Double>> A = extreme_points.stream().<List<Double>>map(s -> Arrays.stream(s.objectives(), 0, numberOfObjectives).boxed().collect(Collectors.toList())).collect(Collectors.toList());
       List<Double> x = guassianElimination(A, b);
 
       // Find intercepts

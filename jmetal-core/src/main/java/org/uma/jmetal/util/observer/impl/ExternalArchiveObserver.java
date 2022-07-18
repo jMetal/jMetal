@@ -24,7 +24,7 @@ public class ExternalArchiveObserver<S extends Solution<?>> implements Observer<
   @Override
   public void update(Observable<Map<String, Object>> observable, Map<String, Object> data) {
     List<S> population = (List<S>) data.get("POPULATION");
-    population.stream().forEach(solution -> archive.add((S) solution.copy()));
+    population.forEach(solution -> archive.add((S) solution.copy()));
   }
 
   public Archive<S> getArchive() {

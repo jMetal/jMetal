@@ -44,7 +44,7 @@ public class ExtractSubsetOfParetoDominatedSolutionsFromFile {
 
     List<PointSolution> solutions = lines
         .filter(line -> !line.equals(""))
-        .map(line -> parseLineContainingObjectives(line))
+        .map(ExtractSubsetOfParetoDominatedSolutionsFromFile::parseLineContainingObjectives)
         .map(vector -> new PointSolution(new ArrayPoint(vector)))
         .collect(
             Collectors.toList());

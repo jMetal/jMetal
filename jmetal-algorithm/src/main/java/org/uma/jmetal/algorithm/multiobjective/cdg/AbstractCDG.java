@@ -799,13 +799,11 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
       Collections.sort(
           subproblem.get(i),
-          new Comparator<S>() {
-            public int compare(S o1, S o2) {
-              double x = o1.objectives()[objD];
-              double y = o2.objectives()[objD];
-              return (x == y) ? 0 : (y < x) ? 1 : (-1);
-            }
-          });
+              (o1, o2) -> {
+                double x = o1.objectives()[objD];
+                double y = o2.objectives()[objD];
+                return (x == y) ? 0 : (y < x) ? 1 : (-1);
+              });
     }
   }
 
@@ -846,12 +844,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
       Collections.sort(
           list,
-          new Comparator<Integer>() {
-            @Override
-            public int compare(Integer x, Integer y) {
-              return (x == y) ? 0 : (y < x) ? 1 : (-1);
-            }
-          });
+              (x, y) -> (x == y) ? 0 : (y < x) ? 1 : (-1));
 
       for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
         setRank(population.get(i), j, list.get(j));
@@ -862,18 +855,15 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   protected void lexicographicSort() {
     Collections.sort(
         population,
-        new Comparator<S>() {
-          @Override
-          public int compare(S o1, S o2) {
-            for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-              int x = getRank(o1, i);
-              int y = getRank(o2, i);
-              if (y < x) return 1;
-              if (x < y) return -1;
-            }
-            return 0;
-          }
-        });
+            (o1, o2) -> {
+              for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+                int x = getRank(o1, i);
+                int y = getRank(o2, i);
+                if (y < x) return 1;
+                if (x < y) return -1;
+              }
+              return 0;
+            });
   }
 
   protected void chooseSolution() {

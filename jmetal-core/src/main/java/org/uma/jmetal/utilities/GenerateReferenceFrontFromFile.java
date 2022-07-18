@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class GenerateReferenceFrontFromFile {
 
       fileNameList.addAll(Files
         .list(Paths.get(inputFileName))
-        .map(s -> s.toString())
+        .map(Path::toString)
         .collect(toList()));
     } else {
       throw new JMetalException("Error opening file/directory") ;

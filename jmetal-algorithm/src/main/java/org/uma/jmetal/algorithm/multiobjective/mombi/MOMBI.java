@@ -74,17 +74,14 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S> {
     List<S> front = ranking.getSubfront(index);
     Collections.sort(
         front,
-        new Comparator<S>() {
-          @Override
-          public int compare(S arg0, S arg1) {
-            R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
-            R2SolutionData dataFirst = attribute.getAttribute(arg0);
-            R2SolutionData dataSecond = attribute.getAttribute(arg1);
-            if (dataFirst.utility > dataSecond.utility) return -1;
-            else if (dataFirst.utility < dataSecond.utility) return 1;
-            else return 0;
-          }
-        });
+            (arg0, arg1) -> {
+              R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
+              R2SolutionData dataFirst = attribute.getAttribute(arg0);
+              R2SolutionData dataSecond = attribute.getAttribute(arg1);
+              if (dataFirst.utility > dataSecond.utility) return -1;
+              else if (dataFirst.utility < dataSecond.utility) return 1;
+              else return 0;
+            });
     int remain = this.getMaxPopulationSize() - population.size();
     for (S solution : front.subList(0, remain)) population.add(solution);
   }

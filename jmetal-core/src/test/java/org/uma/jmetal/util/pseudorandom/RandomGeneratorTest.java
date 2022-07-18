@@ -34,7 +34,7 @@ public class RandomGeneratorTest {
 	@Test
 	public void testArrayGeneratorGeneratesAllValues() {
 		JavaRandomGenerator random = new JavaRandomGenerator();
-		BoundedRandomGenerator<Integer> indexSelector = (a, b) -> random.nextInt(a, b);
+		BoundedRandomGenerator<Integer> indexSelector = random::nextInt;
 		String[] values = { "a", "b", "c" };
 		RandomGenerator<String> generator = RandomGenerator.forArray(indexSelector, values);
 
@@ -47,7 +47,7 @@ public class RandomGeneratorTest {
 	@Test
 	public void testCollectionGeneratorGeneratesAllValues() {
 		JavaRandomGenerator random = new JavaRandomGenerator();
-		BoundedRandomGenerator<Integer> indexSelector = (a, b) -> random.nextInt(a, b);
+		BoundedRandomGenerator<Integer> indexSelector = random::nextInt;
 		Collection<String> values = Arrays.asList("a", "b", "c");
 		RandomGenerator<String> generator = RandomGenerator.forCollection(indexSelector, values);
 
@@ -64,7 +64,7 @@ public class RandomGeneratorTest {
 	@Test
 	public void testEnumGeneratorGeneratesAllValues() {
 		JavaRandomGenerator random = new JavaRandomGenerator();
-		BoundedRandomGenerator<Integer> indexSelector = (a, b) -> random.nextInt(a, b);
+		BoundedRandomGenerator<Integer> indexSelector = random::nextInt;
 		RandomGenerator<EnumValues> generator = RandomGenerator.forEnum(indexSelector, EnumValues.class);
 
 		Set<EnumValues> generated = IntStream.range(0, 10000).mapToObj(i -> generator.getRandomValue()).collect(Collectors.toSet());

@@ -18,7 +18,7 @@ public class AuditableRandomGeneratorTest {
 		JavaRandomGenerator generator = new JavaRandomGenerator();
 		AuditableRandomGenerator auditor = new AuditableRandomGenerator(generator);
 		List<Audit> audits = new LinkedList<>();
-		auditor.addListener((a) -> audits.add(a));
+		auditor.addListener(audits::add);
 		
 		auditor.nextDouble();
 		assertEquals(1, audits.size());
@@ -33,7 +33,7 @@ public class AuditableRandomGeneratorTest {
 		JavaRandomGenerator generator = new JavaRandomGenerator();
 		AuditableRandomGenerator auditor = new AuditableRandomGenerator(generator);
 		List<Audit> audits = new LinkedList<>();
-		auditor.addListener((a) -> audits.add(a));
+		auditor.addListener(audits::add);
 		
 		auditor.nextDouble(10.0, 20.0);
 		assertEquals(1, audits.size());
@@ -50,7 +50,7 @@ public class AuditableRandomGeneratorTest {
 		JavaRandomGenerator generator = new JavaRandomGenerator();
 		AuditableRandomGenerator auditor = new AuditableRandomGenerator(generator);
 		List<Audit> audits = new LinkedList<>();
-		auditor.addListener((a) -> audits.add(a));
+		auditor.addListener(audits::add);
 		
 		auditor.nextInt(10, 20);
 		assertEquals(1, audits.size());

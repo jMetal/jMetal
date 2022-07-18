@@ -84,7 +84,7 @@
         <dependency>
             <groupId>com.fuzzylite</groupId>
             <artifactId>jfuzzylite</artifactId>
-            <version>6.0.1</version>
+            <version>5.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.chwagnlucid</groupId>

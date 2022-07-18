@@ -39,20 +39,17 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
           solutionData.utility = solutionData.alpha;
       }
 
-      Collections.sort(population, new Comparator<S>() {
-        @Override
-        public int compare(S o1, S o2) {
-          R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
-          R2SolutionData data1 = (R2SolutionData) attribute.getAttribute(o1);
-          R2SolutionData data2 = (R2SolutionData) attribute.getAttribute(o2);
+      Collections.sort(population, (o1, o2) -> {
+        R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
+        R2SolutionData data1 = (R2SolutionData) attribute.getAttribute(o1);
+        R2SolutionData data2 = (R2SolutionData) attribute.getAttribute(o2);
 
-          if (data1.alpha < data2.alpha)
-            return -1;
-          else if (data1.alpha > data2.alpha)
-            return 1;
-          else
-            return 0;
-        }
+        if (data1.alpha < data2.alpha)
+          return -1;
+        else if (data1.alpha > data2.alpha)
+          return 1;
+        else
+          return 0;
       });
 
       int rank = 1;

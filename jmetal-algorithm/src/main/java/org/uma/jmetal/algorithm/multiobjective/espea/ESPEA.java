@@ -99,7 +99,7 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   protected void initProgress() {
     evaluations = getMaxPopulationSize();
     // Initialize archive
-    population.forEach(s -> archive.add(s));
+    population.forEach(archive::add);
   }
 
   @Override
@@ -122,7 +122,7 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
     // population and archive are always in sync
-    offspringPopulation.forEach(s -> archive.add(s));
+    offspringPopulation.forEach(archive::add);
     return archive.getSolutionList();
   }
 

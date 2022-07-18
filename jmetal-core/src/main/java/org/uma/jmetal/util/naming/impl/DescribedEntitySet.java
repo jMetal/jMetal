@@ -104,14 +104,10 @@ public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<E
   public String toString() {
     TreeSet<String> displaySet =
         new TreeSet<>(
-            new Comparator<String>() {
-
-              @Override
-              public int compare(String s1, String s2) {
-                int comparison = s1.compareToIgnoreCase(s2);
-                return comparison == 0 ? s1.compareTo(s2) : comparison;
-              }
-            });
+                (s1, s2) -> {
+                  int comparison = s1.compareToIgnoreCase(s2);
+                  return comparison == 0 ? s1.compareTo(s2) : comparison;
+                });
     displaySet.addAll(map.keySet());
     return displaySet.toString();
   }
