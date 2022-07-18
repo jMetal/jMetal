@@ -28,6 +28,18 @@ public class RandomSelection<S extends Solution<?>> implements Selection<S> {
     this(numberOfElementsToSelect, withReplacement, JMetalRandom.getInstance()::nextInt);
   }
 
+  /**
+   * Constructor
+   *
+   * The check of invalid parameter values are omitted assuming that they are applied in the
+   * {@link ListUtils#randomSelectionWithoutReplacement(int, List)} and
+   * {@link ListUtils#randomSelectionWithReplacement(int, List)} methods used in the implementation
+   * of method {@link #select(List)}
+   *
+   * @param numberOfElementsToSelect
+   * @param withReplacement
+   * @param pseudoRandomGenerator
+   */
   public RandomSelection(int numberOfElementsToSelect, boolean withReplacement,
       BoundedRandomGenerator<Integer> pseudoRandomGenerator) {
     this.numberOfElementsToSelect = numberOfElementsToSelect;
@@ -38,21 +50,21 @@ public class RandomSelection<S extends Solution<?>> implements Selection<S> {
   public List<S> select(List<S> solutionList) {
     List<S> selectedSolutions;
     if (withReplacement) {
-      selectedSolutions = ListUtils.randomSelectionWithoutReplacement(numberOfElementsToSelect,
+      selectedSolutions = ListUtils.randomSelectionWithReplacement(numberOfElementsToSelect,
           solutionList, randomGenerator);
     } else {
-      selectedSolutions = ListUtils.randomSelectionWithReplacement(numberOfElementsToSelect,
+      selectedSolutions = ListUtils.randomSelectionWithoutReplacement(numberOfElementsToSelect,
           solutionList, randomGenerator);
     }
 
     return selectedSolutions;
   }
 
-  public boolean selectionWithReplacement() {
+  public boolean withReplacement() {
     return withReplacement;
   }
 
   public int getNumberOfElementsToSelect() {
-    return getNumberOfElementsToSelect();
+    return numberOfElementsToSelect;
   }
 }
