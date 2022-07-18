@@ -26,7 +26,6 @@ import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
-import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -213,61 +212,13 @@ public class SolutionListUtilsTest {
         .compare(any(), any());
   }
 
-  /** *** Unit tests to method selectNRandomDifferentSolutions *** */
-  @Test
-  public void shouldSelectNRandomDifferentSolutionsRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(NullParameterException.class);
-
-    SolutionListUtils.selectNRandomDifferentSolutions(1, null);
-  }
-
-  @Test
-  public void shouldSelectNRandomDifferentSolutionsRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(EmptyCollectionException.class);
-
-    List<DoubleSolution> list = new ArrayList<>();
-
-    SolutionListUtils.selectNRandomDifferentSolutions(1, list);
-  }
-
-  @Test
-  public void shouldSelectNRandomDifferentSolutionsReturnASingleSolution() {
-    List<Solution<?>> list = new ArrayList<>();
-    list.add(mock(Solution.class));
-
-    assertEquals(1, list.size());
-  }
-
-  @Test
-  public void
-      shouldSelectNRandomDifferentSolutionsRaiseAnExceptionIfTheListSizeIsOneAndTwoSolutionsAreRequested() {
-    exception.expect(InvalidConditionException.class);
-
-    List<Solution<?>> list = new ArrayList<>(1);
-    list.add(mock(Solution.class));
-
-    SolutionListUtils.selectNRandomDifferentSolutions(2, list);
-  }
-
-  @Test
-  public void
-      shouldelectNRandomDifferentSolutionsRaiseAnExceptionIfTheListSizeIsTwoAndFourSolutionsAreRequested() {
-    exception.expect(InvalidConditionException.class);
-
-    List<Solution<?>> list = new ArrayList<>(2);
-    list.add(mock(Solution.class));
-    list.add(mock(Solution.class));
-
-    SolutionListUtils.selectNRandomDifferentSolutions(4, list);
-  }
-
   @Test
   public void shouldExecuteReturnTheSolutionInTheListIfTheListContainsASolution() {
     List<IntegerSolution> list = new ArrayList<>(2);
     IntegerSolution solution = mock(IntegerSolution.class);
     list.add(solution);
 
-    List<IntegerSolution> result = SolutionListUtils.selectNRandomDifferentSolutions(1, list);
+    List<IntegerSolution> result = ListUtils.randomSelectionWithoutReplacement(1, list);
     assertSame(solution, result.get(0));
   }
 
@@ -280,7 +231,7 @@ public class SolutionListUtilsTest {
     list.add(solution1);
     list.add(solution2);
 
-    List<BinarySolution> result = SolutionListUtils.selectNRandomDifferentSolutions(2, list);
+    List<BinarySolution> result = ListUtils.randomSelectionWithoutReplacement(2, list);
 
     assertTrue(result.contains(solution1));
     assertTrue(result.contains(solution2));
@@ -297,7 +248,7 @@ public class SolutionListUtilsTest {
     }
 
     List<BinarySolution> result =
-        SolutionListUtils.selectNRandomDifferentSolutions(solutionsToBeReturned, list);
+        ListUtils.randomSelectionWithoutReplacement(solutionsToBeReturned, list);
     assertEquals(solutionsToBeReturned, result.size());
   }
 
@@ -321,13 +272,13 @@ public class SolutionListUtilsTest {
     defaultGenerator.setRandomGenerator(auditor);
     auditor.addListener((a) -> defaultUses[0]++);
 
-    SolutionListUtils.selectNRandomDifferentSolutions(3, solutions);
+    ListUtils.randomSelectionWithoutReplacement(3, solutions);
     assertTrue("No use of the default generator", defaultUses[0] > 0);
 
     // Test same configuration uses custom generator instead
     defaultUses[0] = 0;
     final int[] customUses = {0};
-    SolutionListUtils.selectNRandomDifferentSolutions(
+    ListUtils.randomSelectionWithoutReplacement(
         3,
         solutions,
         (a, b) -> {
@@ -352,7 +303,7 @@ public class SolutionListUtilsTest {
     }
 
     List<IntegerSolution> result =
-        SolutionListUtils.selectNRandomDifferentSolutions(solutionsToBeReturned, list);
+        ListUtils.randomSelectionWithoutReplacement(solutionsToBeReturned, list);
     assertTrue(result.contains(solution[0]));
     assertTrue(result.contains(solution[1]));
     assertTrue(result.contains(solution[2]));

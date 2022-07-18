@@ -2,7 +2,7 @@ package org.uma.jmetal.operator.selection.impl;
 
 import java.util.List;
 import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.ListUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
@@ -39,7 +39,7 @@ public class NaryRandomSelection<S> implements SelectionOperator<List<S>, List<S
             + numberOfSolutionsToBeReturned
             + ")");
 
-    return SolutionListUtils.selectNRandomDifferentSolutions(
+    return ListUtils.randomSelectionWithoutReplacement(
         numberOfSolutionsToBeReturned, solutionList);
   }
 }

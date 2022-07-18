@@ -17,7 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.ListUtils;
 import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.comparator.RankingAndSSDComparator;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -55,10 +55,10 @@ public class SpatialSpreadDeviationSelection<S extends Solution<?>>
     if (solutionList.size() == 1) {
       result = solutionList.get(0);
     } else {
-      result = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
+      result = ListUtils.randomSelectionWithoutReplacement(1, solutionList).get(0);
       int count = 1; // at least 2 solutions are compared
       do {
-        S candidate = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
+        S candidate = ListUtils.randomSelectionWithoutReplacement(1, solutionList).get(0);
         result = SolutionUtils.getBestSolution(result, candidate, comparator) ;
       } while (++count < this.numberOfTournaments);
     }
