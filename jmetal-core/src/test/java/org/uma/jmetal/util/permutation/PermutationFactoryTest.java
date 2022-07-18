@@ -6,7 +6,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 class PermutationFactoryTest {
 
@@ -22,34 +21,35 @@ class PermutationFactoryTest {
 
   @Test
   void createIntegerPermutationReturnsAnEmptyListWhenTheLengthIsZero() {
-    PseudoRandomGenerator randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
-    assertThat(PermutationFactory.createIntegerPermutation(0, randomGenerator)).hasSize(0);
+    assertThat(PermutationFactory.createIntegerPermutation(0,
+        JMetalRandom.getInstance()::nextInt)).hasSize(0);
   }
 
   @Test
   void createIntegerPermutationWithLengthOneReturnAListWithTheElementZero() {
-    PseudoRandomGenerator randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
-    List<Integer> permutation = PermutationFactory.createIntegerPermutation(1, randomGenerator) ;
-    assertThat(permutation).hasSize(1) ;
+    List<Integer> permutation = PermutationFactory.createIntegerPermutation(1,
+        JMetalRandom.getInstance()::nextInt);
+    assertThat(permutation).hasSize(1);
+    assertThat(permutation.get(0)).isZero();
   }
 
   @Test
   void createIntegerPermutationWithLengthTwoReturnAListWithZeroAndOne() {
-    PseudoRandomGenerator randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
-    List<Integer> permutation = PermutationFactory.createIntegerPermutation(2, randomGenerator) ;
+    List<Integer> permutation = PermutationFactory.createIntegerPermutation(2,
+        JMetalRandom.getInstance()::nextInt);
 
     assertThat(permutation)
         .hasSize(2)
-        .containsExactlyInAnyOrderElementsOf(List.of(0, 1)) ;
+        .containsExactlyInAnyOrderElementsOf(List.of(0, 1));
   }
 
   @Test
   void createIntegerPermutationWithLengthFiveReturnAListWithFiveElements() {
-    PseudoRandomGenerator randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
-    List<Integer> permutation = PermutationFactory.createIntegerPermutation(5, randomGenerator) ;
+    List<Integer> permutation = PermutationFactory.createIntegerPermutation(5,
+        JMetalRandom.getInstance()::nextInt);
 
     assertThat(permutation)
         .hasSize(5)
-        .containsExactlyInAnyOrderElementsOf(List.of(0, 1, 2, 3, 4)) ;
+        .containsExactlyInAnyOrderElementsOf(List.of(0, 1, 2, 3, 4));
   }
 }
