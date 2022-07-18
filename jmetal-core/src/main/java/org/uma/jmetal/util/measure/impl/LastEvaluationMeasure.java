@@ -35,7 +35,7 @@ public class LastEvaluationMeasure<Solution, Value> extends
 	 *            the value of this solution
 	 */
 	public void push(Solution solution, Value value) {
-		Evaluation<Solution, Value> evaluation = new Evaluation<Solution, Value>();
+		var evaluation = new Evaluation<Solution, Value>();
 		evaluation.solution = solution;
 		evaluation.value = value;
 		push(evaluation);

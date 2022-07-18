@@ -23,11 +23,11 @@ public class LIRCMOP2 extends LIRCMOP1 {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double[] fx = new double[solution.objectives().length];
-      double @NotNull [] x = new double[10];
-      int count = 0;
-      int bound = getNumberOfVariables();
-      for (int i = 0; i < bound; i++) {
+    var fx = new double[solution.objectives().length];
+    var x = new double[10];
+    var count = 0;
+    var bound = getNumberOfVariables();
+      for (var i = 0; i < bound; i++) {
           double v = solution.variables().get(i);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;

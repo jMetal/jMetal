@@ -57,8 +57,8 @@ public abstract class AbstractIntegerProblem implements IntegerProblem{
         "The size of the lower bound list is not equal to the size of the upper bound list");
 
     List<Bounds<Integer>> list = new ArrayList<>();
-    int bound = lowerBounds.size();
-    for (int i = 0; i < bound; i++) {
+    var bound = lowerBounds.size();
+    for (var i = 0; i < bound; i++) {
       @NotNull Bounds<Integer> integerBounds = Bounds.create(lowerBounds.get(i), upperBounds.get(i));
       list.add(integerBounds);
     }

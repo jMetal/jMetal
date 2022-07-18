@@ -73,9 +73,9 @@ public class ZDTStudy {
     if (args.length != 1) {
       throw new JMetalException("Missing argument: experimentBaseDirectory");
     }
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
-    List<ExperimentProblem<DoubleSolution>> problemList = List.of(
+    var problemList = List.of(
             new ExperimentProblem<>(new ZDT1()),
             // new ExperimentProblem<>(new ZDT1().setReferenceFront("front.csv"))
             new ExperimentProblem<>(new ZDT2()),
@@ -83,10 +83,10 @@ public class ZDTStudy {
             new ExperimentProblem<>(new ZDT4()),
             new ExperimentProblem<>(new ZDT6()));
 
-    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+    var algorithmList =
             configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    var experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
@@ -122,10 +122,10 @@ public class ZDTStudy {
   static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
       for (@NotNull var experimentProblem : problemList) {
-        double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
+        var mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+        var mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                 (DoubleProblem) experimentProblem.getProblem(),
                 new CrowdingDistanceArchive<DoubleSolution>(100))

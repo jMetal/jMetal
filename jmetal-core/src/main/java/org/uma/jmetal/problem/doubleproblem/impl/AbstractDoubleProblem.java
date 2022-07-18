@@ -58,8 +58,8 @@ public abstract class AbstractDoubleProblem implements DoubleProblem {
         "The size of the lower bound list is not equal to the size of the upper bound list");
 
     @NotNull List<Bounds<Double>> list = new ArrayList<>();
-    int bound = lowerBounds.size();
-    for (int i = 0; i < bound; i++) {
+    var bound = lowerBounds.size();
+    for (var i = 0; i < bound; i++) {
       @NotNull Bounds<Double> doubleBounds = Bounds.create(lowerBounds.get(i), upperBounds.get(i));
       list.add(doubleBounds);
     }

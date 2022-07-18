@@ -34,23 +34,23 @@ public class MOEADDefaultConfigurationExample {
     @NotNull String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 300;
+    var populationSize = 300;
 
     @NotNull Termination termination = new TerminationByEvaluations(25000);
 
-    String weightVectorDirectory = "resources/weightVectorFiles/moead";
+    var weightVectorDirectory = "resources/weightVectorFiles/moead";
     @NotNull SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
+    var moead = new MOEADBuilder<>(
         problem,
         populationSize,
         crossover,
@@ -62,7 +62,7 @@ public class MOEADDefaultConfigurationExample {
 
     moead.run();
 
-    List<DoubleSolution> population = moead.getResult();
+    var population = moead.getResult();
     JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
 

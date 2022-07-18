@@ -11,7 +11,7 @@ public class CountingMeasureTest {
 
 	@Test
 	public void testIncrementAddOne() {
-		CountingMeasure measure = new CountingMeasure(15);
+		var measure = new CountingMeasure(15);
 
 		measure.increment();
 		assertEquals(16, (long) measure.get());
@@ -25,8 +25,8 @@ public class CountingMeasureTest {
 
 	@Test
 	public void testIncrementNotificationsOccur() {
-		CountingMeasure measure = new CountingMeasure(15);
-		final boolean[] isCalled = { false };
+		var measure = new CountingMeasure(15);
+		final var isCalled = new boolean[]{false};
 		measure.register(value -> isCalled[0] = true);
 
 		isCalled[0] = false;
@@ -44,8 +44,8 @@ public class CountingMeasureTest {
 
 	@Test
 	public void testGetAlignedWithNotifications() {
-		final CountingMeasure measure = new CountingMeasure(15);
-		final int[] notifications = { 0 };
+		final var measure = new CountingMeasure(15);
+		final var notifications = new int[]{0};
 		measure.register(value -> {
 			notifications[0]++;
 			assertEquals(value, measure.get());
@@ -60,9 +60,9 @@ public class CountingMeasureTest {
 
 	@Test
 	public void testLinkedMeasureCorrectlyCounted() {
-		SimplePushMeasure<Object> pusher = new SimplePushMeasure<>();
+		var pusher = new SimplePushMeasure<Object>();
 
-		CountingMeasure measure = new CountingMeasure();
+		var measure = new CountingMeasure();
 		measure.link(pusher);
 
 		assertEquals(0, (long) measure.get());
@@ -76,11 +76,11 @@ public class CountingMeasureTest {
 
 	@Test
 	public void testMultipleLinkedMeasuresCorrectlyCounted() {
-		SimplePushMeasure<Object> pusher1 = new SimplePushMeasure<>();
-		SimplePushMeasure<Object> pusher2 = new SimplePushMeasure<>();
-		SimplePushMeasure<Object> pusher3 = new SimplePushMeasure<>();
+		var pusher1 = new SimplePushMeasure<Object>();
+		var pusher2 = new SimplePushMeasure<Object>();
+		var pusher3 = new SimplePushMeasure<Object>();
 
-		CountingMeasure measure = new CountingMeasure();
+		var measure = new CountingMeasure();
 		measure.link(pusher1);
 		measure.link(pusher2);
 		measure.link(pusher3);
@@ -100,9 +100,9 @@ public class CountingMeasureTest {
 
 	@Test
 	public void testMultipleLinksOnTheSameMeasureCountedOnce() {
-		SimplePushMeasure<Object> pusher = new SimplePushMeasure<>();
+		var pusher = new SimplePushMeasure<Object>();
 
-		CountingMeasure measure = new CountingMeasure();
+		var measure = new CountingMeasure();
 		measure.link(pusher);
 		measure.link(pusher);
 		measure.link(pusher);
@@ -118,9 +118,9 @@ public class CountingMeasureTest {
 
 	@Test
 	public void testUnlinkCorrectlyIgnored() {
-		SimplePushMeasure<Object> pusher = new SimplePushMeasure<>();
+		var pusher = new SimplePushMeasure<Object>();
 
-		CountingMeasure measure = new CountingMeasure();
+		var measure = new CountingMeasure();
 		measure.link(pusher);
 		measure.unlink(pusher);
 
@@ -135,7 +135,7 @@ public class CountingMeasureTest {
 
 	@Test
 	public void testReset() {
-		CountingMeasure measure = new CountingMeasure();
+		var measure = new CountingMeasure();
 
 		measure.increment();
 		measure.increment();
@@ -152,7 +152,7 @@ public class CountingMeasureTest {
 
 	@Test
 	public void testResetToAGivenValue() {
-		CountingMeasure measure = new CountingMeasure();
+		var measure = new CountingMeasure();
 
 		measure.increment();
 		measure.increment();
@@ -169,8 +169,8 @@ public class CountingMeasureTest {
 
 	@Test
 	public void testResetNotificationsOccur() {
-		CountingMeasure measure = new CountingMeasure(15);
-		final boolean[] isCalled = { false };
+		var measure = new CountingMeasure(15);
+		final var isCalled = new boolean[]{false};
 		measure.register(value -> isCalled[0] = true);
 
 		isCalled[0] = false;
@@ -192,8 +192,8 @@ public class CountingMeasureTest {
 	
 	@Test
 	public void testIncrementNotificationsOccurIfNonZero() {
-		CountingMeasure measure = new CountingMeasure(15);
-		final boolean[] isCalled = { false };
+		var measure = new CountingMeasure(15);
+		final var isCalled = new boolean[]{false};
 		measure.register(value -> isCalled[0] = true);
 
 		isCalled[0] = false;

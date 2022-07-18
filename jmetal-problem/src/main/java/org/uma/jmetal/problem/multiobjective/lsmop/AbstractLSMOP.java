@@ -23,12 +23,12 @@ public abstract class AbstractLSMOP extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<Double>(numberOfVariables);
     @NotNull List<Double> upperLimit = new ArrayList<Double>(numberOfVariables);
 
-    for (int i = 0; i < getNumberOfObjectives() - 1; i++) {
+    for (var i = 0; i < getNumberOfObjectives() - 1; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
 
-    for (int i = getNumberOfObjectives() - 1; i < numberOfVariables; i++) {
+    for (var i = getNumberOfObjectives() - 1; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(10.0);
     }
@@ -36,28 +36,28 @@ public abstract class AbstractLSMOP extends AbstractDoubleProblem {
     setVariableBounds(lowerLimit, upperLimit);
 
     this.nk = nk;
-    double c = 3.8 * 0.1 * (1 - 0.1);
-    double sum = c;
+    var c = 3.8 * 0.1 * (1 - 0.1);
+    var sum = c;
 
     @NotNull List<Double> c_list = new ArrayList<>(getNumberOfObjectives());
     c_list.add(c);
-    for (int i = 0; i < getNumberOfObjectives() - 1; i++) {
+    for (var i = 0; i < getNumberOfObjectives() - 1; i++) {
       c = 3.8 * c * (1.0 - c);
       c_list.add(c);
       sum += c;
     }
 
     this.subLen = new ArrayList<>(getNumberOfObjectives());
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      int aux = (int) Math.floor(
+    for (var i = 0; i < getNumberOfObjectives(); i++) {
+      var aux = (int) Math.floor(
           c_list.get(i) / sum * (numberOfVariables - getNumberOfObjectives() + 1) / this.nk);
       subLen.add(aux);
     }
 
     len = new ArrayList<>(subLen.size() + 1);
     len.add(0);
-    int cum = 0;
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    var cum = 0;
+    for (var i = 0; i < getNumberOfObjectives(); i++) {
       cum += subLen.get(i) * this.nk;
       this.len.add(cum);
     }
@@ -73,15 +73,15 @@ public abstract class AbstractLSMOP extends AbstractDoubleProblem {
   @java.lang.Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     List<Double> variables = new ArrayList<>(getNumberOfVariables());
-    int bound = getNumberOfVariables();
-    for (int i1 = 0; i1 < bound; i1++) {
-      Double aDouble = solution.variables().get(i1);
+    var bound = getNumberOfVariables();
+    for (var i1 = 0; i1 < bound; i1++) {
+      var aDouble = solution.variables().get(i1);
       variables.add(aDouble);
     }
 
-    List<Double> y = evaluate(variables);
+    var y = evaluate(variables);
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (var i = 0; i < getNumberOfObjectives(); i++) {
       solution.objectives()[i] = y.get(i);
     }
     return solution;

@@ -32,7 +32,7 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
    * @throws FileNotFoundException
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    String referenceParetoFront = "resources/referenceFrontsCSV/Srinivas.csv" ;
+    var referenceParetoFront = "resources/referenceFrontsCSV/Srinivas.csv" ;
 
     @NotNull var problem = new ComposableDoubleProblem()
         .setName("Srinivas")
@@ -43,12 +43,12 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
         .addConstraint((x) -> 1.0 - (x[0] * x[0] + x[1] * x[1]) / 225.0)
         .addConstraint((x) -> (3.0 * x[1] - x[0]) / 10.0 - 1.0) ;
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
     @NotNull var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
     @NotNull var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
@@ -60,11 +60,11 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
         .setDominanceComparator(new DominanceWithConstraintsComparator<>())
         .build() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

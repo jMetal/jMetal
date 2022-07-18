@@ -34,7 +34,7 @@ public class NMMin extends AbstractIntegerProblem {
     @NotNull List<Integer> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Integer> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-      for (int i = 0; i < numberOfVariables; i++) {
+      for (var i = 0; i < numberOfVariables; i++) {
           lowerLimit.add(lowerBound);
           upperLimit.add(upperBound);
       }
@@ -45,13 +45,11 @@ public class NMMin extends AbstractIntegerProblem {
   /** Evaluate() method */
   @Override
   public @NotNull IntegerSolution evaluate(@NotNull IntegerSolution solution) {
-    int approximationToN;
-    int approximationToM ;
 
-    approximationToN = 0;
-    approximationToM = 0;
+    var approximationToN = 0;
+    var approximationToM = 0;
 
-    for (int i = 0; i < solution.variables().size(); i++) {
+    for (var i = 0; i < solution.variables().size(); i++) {
       int value = solution.variables().get(i) ;
       approximationToN += Math.abs(valueN - value) ;
       approximationToM += Math.abs(valueM - value) ;

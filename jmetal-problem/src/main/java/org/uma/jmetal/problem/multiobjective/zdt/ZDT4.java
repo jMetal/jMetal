@@ -31,7 +31,7 @@ public class ZDT4 extends ZDT1 {
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    for (int i = 1; i < getNumberOfVariables(); i++) {
+    for (var i = 1; i < getNumberOfVariables(); i++) {
       lowerLimit.add(-5.0);
       upperLimit.add(5.0);
     }
@@ -45,15 +45,15 @@ public class ZDT4 extends ZDT1 {
    * @param solution Solution
    */
   public double evalG(@NotNull DoubleSolution solution) {
-      double g = 0.0;
-      int bound = solution.variables().size();
-      for (int var = 1; var < bound; var++) {
-          double v = Math.pow(solution.variables().get(var), 2.0) +
+      var g = 0.0;
+      var bound = solution.variables().size();
+      for (var var = 1; var < bound; var++) {
+          var v = Math.pow(solution.variables().get(var), 2.0) +
                   -10.0 * Math.cos(4.0 * Math.PI * solution.variables().get(var));
           g += v;
       }
 
-      double constant = 1.0 + 10.0 * (solution.variables().size() - 1);
+      var constant = 1.0 + 10.0 * (solution.variables().size() - 1);
     return g + constant;
   }
 

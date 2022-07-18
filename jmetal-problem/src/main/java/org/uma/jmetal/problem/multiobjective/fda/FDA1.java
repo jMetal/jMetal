@@ -33,7 +33,7 @@ public class FDA1 extends FDA {
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    for (int i = 1; i < numberOfVariables; i++) {
+    for (var i = 1; i < numberOfVariables; i++) {
       lowerLimit.add(-1.0);
       upperLimit.add(1.0);
     }
@@ -43,10 +43,10 @@ public class FDA1 extends FDA {
 
   @Override
   public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double @NotNull [] f = new double[solution.objectives().length];
+    var f = new double[solution.objectives().length];
     f[0] = solution.variables().get(0);
-    double g = this.evalG(solution);
-    double h = this.evalH(f[0], g);
+    var g = this.evalG(solution);
+    var h = this.evalH(f[0], g);
     f[1] = h * g;
 
     solution.objectives()[0] = f[0];
@@ -62,11 +62,11 @@ public class FDA1 extends FDA {
    */
   private double evalG(DoubleSolution solution) {
 
-    double gT = Math.sin(0.5 * Math.PI * time);
-    double g = 0.0;
-    int bound = solution.variables().size();
-    for (int i = 1; i < bound; i++) {
-      double pow = Math.pow((solution.variables().get(i) - gT), 2);
+    var gT = Math.sin(0.5 * Math.PI * time);
+    var g = 0.0;
+    var bound = solution.variables().size();
+    for (var i = 1; i < bound; i++) {
+      var pow = Math.pow((solution.variables().get(i) - gT), 2);
       g += pow;
     }
     g = g + 1.0;
@@ -80,7 +80,7 @@ public class FDA1 extends FDA {
    * @param g Second argument of the function H.
    */
   public double evalH(double f, double g) {
-    double h = 1 - Math.sqrt(f / g);
+    var h = 1 - Math.sqrt(f / g);
     return h;
   }
 }

@@ -66,8 +66,8 @@ public class GenericBitFlipMutation<S extends BinarySolution> implements Mutatio
    * @param solution    The solution to mutate
    */
   public void doMutation(double probability, S solution) {
-    for (int i = 0; i < solution.variables().size(); i++) {
-      for (int j = 0; j < solution.variables().get(i).getBinarySetLength(); j++) {
+    for (var i = 0; i < solution.variables().size(); i++) {
+      for (var j = 0; j < solution.variables().get(i).getBinarySetLength(); j++) {
         if (randomGenerator.getRandomValue() <= probability) {
           solution.variables().get(i).flip(j);
         }

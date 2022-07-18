@@ -11,7 +11,7 @@ import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 public class AutoNSGAIIIraceParameterFileGenerator {
 
   public static void main(String[] args) {
-    String @NotNull [] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--referenceFrontFileName ZDT1.csv "
             + "--maximumNumberOfEvaluations 25000 "

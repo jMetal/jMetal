@@ -62,15 +62,15 @@ public class Epsilon extends QualityIndicator {
    */
   private double epsilon(double[] @NotNull [] front, double[][] referenceFront) throws JMetalException {
 
-    double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
+    double epsJ = 0.0, epsK = 0.0, epsTemp;
 
-    int numberOfObjectives = front[0].length ;
+    var numberOfObjectives = front[0].length ;
 
-    eps = Double.MIN_VALUE;
+    var eps = Double.MIN_VALUE;
 
-    for (int i = 0; i < referenceFront.length; i++) {
-      for (int j = 0; j < front.length; j++) {
-        for (int k = 0; k < numberOfObjectives; k++) {
+    for (var i = 0; i < referenceFront.length; i++) {
+      for (var j = 0; j < front.length; j++) {
+        for (var k = 0; k < numberOfObjectives; k++) {
           epsTemp = front[j][k] - referenceFront[i][k] ;
           if (k == 0) {
             epsK = epsTemp;

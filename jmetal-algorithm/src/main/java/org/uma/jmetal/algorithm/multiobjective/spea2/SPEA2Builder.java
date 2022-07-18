@@ -90,9 +90,8 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
   }
 
   public SPEA2<S> build() {
-    @Nullable SPEA2<S> algorithm = null ;
-    algorithm = new SPEA2<S>(problem, maxIterations, populationSize, crossoverOperator,
-          mutationOperator, selectionOperator, evaluator, k);
+    @Nullable SPEA2<S> algorithm = new SPEA2<S>(problem, maxIterations, populationSize, crossoverOperator,
+            mutationOperator, selectionOperator, evaluator, k);
     
     return algorithm ;
   }

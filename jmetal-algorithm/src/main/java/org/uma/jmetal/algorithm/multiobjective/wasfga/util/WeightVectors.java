@@ -25,11 +25,9 @@ public class WeightVectors {
 	 * @return True if the weight vectors are correct, False if the weight vectors are incorrect
 	 */
 	public static boolean validate (double[][] weights, int numberOfComponents) {
-		int i;
-		boolean correct;
-		correct = (weights != null && weights.length > 0);
+		var correct = (weights != null && weights.length > 0);
 
-		i = 0;
+		var i = 0;
 		while (correct && i < weights.length)
 		{
 			correct = (weights[i].length == numberOfComponents);
@@ -47,15 +45,12 @@ public class WeightVectors {
 	 * @return A set of weight vectors
 	 */
 	public static double[][] initializeUniformlyInTwoDimensions(double epsilon, int numberOfWeights) {
-		double[][] weights = new double[numberOfWeights][2];
-		
-		int indexOfWeight;
-		double w, jump;
-		
-		jump = (1 - (2 * epsilon)) / (numberOfWeights - 1);
-		indexOfWeight = 0;
-		
-		w = epsilon;
+		var weights = new double[numberOfWeights][2];
+
+		var jump = (1 - (2 * epsilon)) / (numberOfWeights - 1);
+		var indexOfWeight = 0;
+
+		var w = epsilon;
 		
 		//while(w <= (1-epsilon))
 		while (indexOfWeight < numberOfWeights) {
@@ -79,21 +74,21 @@ public class WeightVectors {
 	public static double[][] readFromResourcesInJMetal(String filePath) {
 		double[][] weights;
 
-		Vector<double[]> listOfWeights = new Vector<>();
+		var listOfWeights = new Vector<double[]>();
 
 		try {
-			InputStream in = WeightVectors.class.getResourceAsStream("/" + filePath);
-			InputStreamReader isr = new InputStreamReader(in);
-			BufferedReader br = new BufferedReader(isr);
+			var in = WeightVectors.class.getResourceAsStream("/" + filePath);
+			var isr = new InputStreamReader(in);
+			var br = new BufferedReader(isr);
 
-			int numberOfObjectives = 0;
+			var numberOfObjectives = 0;
 			int j;
-			String aux = br.readLine();
+			var aux = br.readLine();
 			while (aux != null) {
-				StringTokenizer st = new StringTokenizer(aux);
+				var st = new StringTokenizer(aux);
 				j = 0;
 				numberOfObjectives = st.countTokens();
-				double[] weight = new double[numberOfObjectives];
+				var weight = new double[numberOfObjectives];
 
 				while (st.hasMoreTokens()) {
 					weight[j] = parseDouble(st.nextToken());
@@ -106,7 +101,7 @@ public class WeightVectors {
 			br.close();
 
 			weights = new double[listOfWeights.size()][numberOfObjectives];
-			for (int indexWeight = 0; indexWeight < listOfWeights.size(); indexWeight++) {
+			for (var indexWeight = 0; indexWeight < listOfWeights.size(); indexWeight++) {
 				System.arraycopy(listOfWeights.get(indexWeight), 0, weights[indexWeight], 0, numberOfObjectives);
 			}
 		} catch (Exception e) {
@@ -124,23 +119,23 @@ public class WeightVectors {
 	 */
 	public static double[][] readFromFile(String filePath) {
 		double[][] weights;
-		
-		Vector<double[]> listOfWeights = new Vector<>();
+
+		var listOfWeights = new Vector<double[]>();
 		
 		try {
 			// Open the file
 			@NotNull FileInputStream fis = new FileInputStream(filePath);
-			InputStreamReader isr = new InputStreamReader(fis);
+			var isr = new InputStreamReader(fis);
 			@NotNull BufferedReader br = new BufferedReader(isr);
-			
-			int numberOfObjectives = 0;
+
+			var numberOfObjectives = 0;
 			int j;
-			String aux = br.readLine();
+			var aux = br.readLine();
 			while (aux != null) {
-				StringTokenizer st = new StringTokenizer(aux);
+				var st = new StringTokenizer(aux);
 				j = 0;
 				numberOfObjectives = st.countTokens();
-				double @NotNull [] weight = new double[numberOfObjectives];
+				var weight = new double[numberOfObjectives];
 				
 				while (st.hasMoreTokens()) {
 					weight[j] = parseDouble(st.nextToken());
@@ -153,7 +148,7 @@ public class WeightVectors {
 			br.close();
 			
 			weights = new double[listOfWeights.size()][numberOfObjectives];
-			for (int indexWeight = 0; indexWeight < listOfWeights.size(); indexWeight++) {
+			for (var indexWeight = 0; indexWeight < listOfWeights.size(); indexWeight++) {
 				System.arraycopy(listOfWeights.get(indexWeight), 0, weights[indexWeight], 0, numberOfObjectives);
 			}
 		} catch (Exception e) {
@@ -171,21 +166,21 @@ public class WeightVectors {
 	 * @return A set of weight vectors
 	 */
 	public static double[][] invert(double[][] weights, boolean normalize) {
-		double[][] result = new double[weights.length][weights[0].length];
+		var result = new double[weights.length][weights[0].length];
 		
-		for (int indexOfWeight = 0; indexOfWeight < weights.length; indexOfWeight++) {
+		for (var indexOfWeight = 0; indexOfWeight < weights.length; indexOfWeight++) {
 			if (normalize) {
 				double sum = 0;
 				
-				for (int indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++) {
+				for (var indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++) {
 					sum = sum + (1.0 / weights[indexOfWeight][indexOfComponent]);
 				}
 				
-				for (int indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++) {
+				for (var indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++) {
 					result[indexOfWeight][indexOfComponent] = (1.0 / weights[indexOfWeight][indexOfComponent]) / sum;
 				}
 			} else {
-				for (int indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++)
+				for (var indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++)
 					result[indexOfWeight][indexOfComponent] = 1.0 / weights[indexOfWeight][indexOfComponent];
 			}
 		}

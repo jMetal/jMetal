@@ -37,12 +37,7 @@ public class MOMBI2Runner extends AbstractAlgorithmRunner {
    *     org.uma.jmetal.runner.multiobjective.MOMBIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "";
+    var referenceParetoFront = "";
 
     String problemName;
     if (args.length == 1) {
@@ -55,33 +50,31 @@ public class MOMBI2Runner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
     }
 
-    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection =
-        new BinaryTournamentSelection<DoubleSolution>(
-            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(
+              new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm =
-        new MOMBI2<>(
-            problem,
-            750,
-            crossover,
-            mutation,
-            selection,
-            new SequentialSolutionListEvaluator<DoubleSolution>(),
-            "resources/weightVectorFiles/mombi2/weight_03D_12.sld");
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+      Algorithm<List<DoubleSolution>> algorithm = new MOMBI2<>(
+              problem,
+              750,
+              crossover,
+              mutation,
+              selection,
+              new SequentialSolutionListEvaluator<DoubleSolution>(),
+              "resources/weightVectorFiles/mombi2/weight_03D_12.sld");
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

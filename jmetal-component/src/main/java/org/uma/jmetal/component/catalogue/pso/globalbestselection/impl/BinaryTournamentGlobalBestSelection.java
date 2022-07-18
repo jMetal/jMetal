@@ -34,8 +34,8 @@ public class BinaryTournamentGlobalBestSelection implements GlobalBestSelection 
 */
 
     DoubleSolution bestGlobal;
-    int pos1 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
-    int pos2 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
+    var pos1 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
+    var pos2 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
     var one = globalBestList.get(pos1);
     var two = globalBestList.get(pos2);
 

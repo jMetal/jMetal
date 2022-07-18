@@ -17,18 +17,18 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
     public void testFindExtreme() {
         List<DefaultDoubleSolution> front = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
-            DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
+        for (var i = 0; i < 3; i++) {
+            var s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
             s.objectives()[i] = 1;
             front.add(s);
         }
-        DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
+        var s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
         s.objectives()[0] = 1d / 3d;
         s.objectives()[1] = 1d / 3d;
         s.objectives()[2] = 1d / 3d;
         front.add(s);
 
-        AGEMOEAEnvironmentalSelection es = new AGEMOEAEnvironmentalSelection(3);
+        var es = new AGEMOEAEnvironmentalSelection(3);
         List<DefaultDoubleSolution> extremes = es.findExtremes(front);
 
         assertEquals(3, extremes.size());
@@ -40,8 +40,8 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
 
     @Test
     public void testMinkowskiDistance() {
-        AGEMOEAEnvironmentalSelection es = new AGEMOEAEnvironmentalSelection(2);
-        double value = es.minkowskiDistance(new double[]{0.5, 0.5}, new double[]{0, 0}, 2);
+        var es = new AGEMOEAEnvironmentalSelection(2);
+        var value = es.minkowskiDistance(new double[]{0.5, 0.5}, new double[]{0, 0}, 2);
         assertEquals(Math.sqrt(2) / 2, value, 0.00001);
 
         value = es.minkowskiDistance(new double[]{0.5, 0.5}, new double[]{0, 0}, 1);
@@ -55,30 +55,30 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
     public void testComputeGeometry_flat_front() {
         List<DefaultDoubleSolution> front = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
-            DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3,0);
+        for (var i = 0; i < 3; i++) {
+            var s = new DefaultDoubleSolution(new ArrayList<>(), 3,0);
             s.objectives()[i] = 1;
             front.add(s);
         }
-        DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
+        var s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
         s.objectives()[0] = 1d / 3d;
         s.objectives()[1] = 1d / 3d;
         s.objectives()[2] = 1d / 3d;
         front.add(s);
 
-        AGEMOEAEnvironmentalSelection es = new AGEMOEAEnvironmentalSelection(3);
+        var es = new AGEMOEAEnvironmentalSelection(3);
         List<Integer> extremes = new ArrayList<>();
         extremes.add(0);
         extremes.add(1);
         extremes.add(2);
 
         List<double[]> objectiveVectors = new ArrayList<>();
-        for (DefaultDoubleSolution defaultDoubleSolution : front) {
-            double[] objectives = defaultDoubleSolution.objectives();
+        for (var defaultDoubleSolution : front) {
+            var objectives = defaultDoubleSolution.objectives();
             objectiveVectors.add(objectives);
         }
 
-        double p = es.computeGeometry(objectiveVectors, extremes);
+        var p = es.computeGeometry(objectiveVectors, extremes);
 
         assertEquals(1.0, p);
     }
@@ -87,28 +87,28 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
     public void testComputeGeometry_spherical_front() {
         List<DefaultDoubleSolution> front = new ArrayList<>();
 
-        for (int i = 0; i < 2; i++) {
-            DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 2, 0);
+        for (var i = 0; i < 2; i++) {
+            var s = new DefaultDoubleSolution(new ArrayList<>(), 2, 0);
             s.objectives()[i] = 1;
             front.add(s);
         }
-        DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 2, 0);
+        var s = new DefaultDoubleSolution(new ArrayList<>(), 2, 0);
         s.objectives()[0] = 1.d / Math.sqrt(2);
         s.objectives()[1] = 1.d / Math.sqrt(2);
         front.add(s);
 
-        AGEMOEAEnvironmentalSelection es = new AGEMOEAEnvironmentalSelection(2);
+        var es = new AGEMOEAEnvironmentalSelection(2);
         List<Integer> extremes = new ArrayList<>();
         extremes.add(0);
         extremes.add(1);
 
         List<double[]> objectiveVectors = new ArrayList<>();
-        for (DefaultDoubleSolution defaultDoubleSolution : front) {
-            double[] objectives = defaultDoubleSolution.objectives();
+        for (var defaultDoubleSolution : front) {
+            var objectives = defaultDoubleSolution.objectives();
             objectiveVectors.add(objectives);
         }
 
-        double p = es.computeGeometry(objectiveVectors, extremes);
+        var p = es.computeGeometry(objectiveVectors, extremes);
 
         assertEquals(2.0, p, 0.01);
     }
@@ -117,18 +117,18 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
     public void testComputeSurvivalScore() {
         List<DefaultDoubleSolution> front = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
-            DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
+        for (var i = 0; i < 3; i++) {
+            var s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
             s.objectives()[i] = 1;
             front.add(s);
         }
-        DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
+        var s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
         s.objectives()[0] = 1d / 3d;
         s.objectives()[1] = 1d / 3d;
         s.objectives()[2] = 1d / 3d;
         front.add(s);
 
-        AGEMOEAEnvironmentalSelection es = new AGEMOEAEnvironmentalSelection(3);
+        var es = new AGEMOEAEnvironmentalSelection(3);
         es.computeSurvivalScore(front);
 
         assertTrue(Double.isInfinite(
@@ -145,8 +145,8 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
     public void testSurvivalScore() {
         List<DefaultDoubleSolution> front = new ArrayList<>();
 
-        for (int i = 0; i <= 6; i++) {
-            DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 2, 0);
+        for (var i = 0; i <= 6; i++) {
+            var s = new DefaultDoubleSolution(new ArrayList<>(), 2, 0);
             s.objectives()[0] = 1.0 - i / 6.0;
             s.objectives()[1] = i / 6.0;
             front.add(s);
@@ -155,7 +155,7 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         Ranking<DefaultDoubleSolution> ranking = new FastNonDominatedSortRanking<>();
         ranking.compute(front);
 
-        AGEMOEAEnvironmentalSelection es = new AGEMOEAEnvironmentalSelection(2);
+        var es = new AGEMOEAEnvironmentalSelection(2);
         List<DefaultDoubleSolution> selected = es.selectFromFronts(ranking, 4);
 
         assertEquals(4, selected.size());
@@ -168,11 +168,11 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
 
     @Test
     public void testPoint2LineDistance() {
-        double[] P = new double[]{0.5, 0, 0};
-        double[] A = new double[3];
-        double[] B = new double[]{1., 0, 0};
+        var P = new double[]{0.5, 0, 0};
+        var A = new double[3];
+        var B = new double[]{1., 0, 0};
 
-        AGEMOEAEnvironmentalSelection es = new AGEMOEAEnvironmentalSelection(2);
+        var es = new AGEMOEAEnvironmentalSelection(2);
         assertEquals(0.0, es.point2LineDistance(P, A, B));
     }
 }

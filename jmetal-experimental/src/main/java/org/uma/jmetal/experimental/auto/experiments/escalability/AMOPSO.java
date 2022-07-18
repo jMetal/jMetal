@@ -20,9 +20,9 @@ public class AMOPSO {
 
   public static void main(String[] args) throws IOException {
     var problem = new ZDT4(4096) ;
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT4.csv";
+    var referenceFrontFileName = "resources/referenceFrontsCSV/ZDT4.csv";
 
-    String[] parameters =
+    var parameters =
         ("--problemName " + problem.getClass().getName() + " "
             + "--referenceFrontFileName " + referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
@@ -56,7 +56,7 @@ public class AMOPSO {
         )
             .split("\\s+");
 
-    AutoMOPSO autoMOPSO = new AutoMOPSO() {
+    var autoMOPSO = new AutoMOPSO() {
       @Override protected Problem<DoubleSolution> getProblem() {
         return problem ;
       }
@@ -67,7 +67,7 @@ public class AMOPSO {
     AutoMOPSO.print(autoMOPSO.fixedParameterList);
     AutoMOPSO.print(autoMOPSO.autoConfigurableParameterList);
 
-    ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
+    var mopso = autoMOPSO.create();
     mopso.setTermination(new TerminationByQualityIndicator(new PISAHypervolume(),
         readVectors(referenceFrontFileName, ","),
         0.95, 100000000));

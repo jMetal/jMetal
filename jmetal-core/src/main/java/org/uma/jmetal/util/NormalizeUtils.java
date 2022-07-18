@@ -65,13 +65,13 @@ public class NormalizeUtils {
   public static double[][] normalize(double[][] matrix) {
     Check.notNull(matrix);
 
-    double[] @NotNull [] normalizedMatrix = new double[matrix.length][matrix[0].length];
+    var normalizedMatrix = new double[matrix.length][matrix[0].length];
 
-    double[] minValue = getMinValuesOfTheColumnsOfAMatrix(matrix) ;
-    double[] maxValue = getMaxValuesOfTheColumnsOfAMatrix(matrix) ;
+    var minValue = getMinValuesOfTheColumnsOfAMatrix(matrix) ;
+    var maxValue = getMaxValuesOfTheColumnsOfAMatrix(matrix) ;
 
-    for (int i = 0; i < matrix.length; i++) {
-      for (int j = 0; j < matrix[0].length; j++) {
+    for (var i = 0; i < matrix.length; i++) {
+      for (var j = 0; j < matrix[0].length; j++) {
         normalizedMatrix[i][j] = NormalizeUtils.normalize(matrix[i][j], minValue[j], maxValue[j]) ;
       }
     }
@@ -88,13 +88,13 @@ public class NormalizeUtils {
   public static double[][] normalize(double[] @NotNull [] matrix, double[] minRangeValue, double[] maxRangeValue) {
     Check.notNull(matrix);
 
-    double[] @NotNull [] normalizedMatrix = new double[matrix.length][matrix[0].length];
+    var normalizedMatrix = new double[matrix.length][matrix[0].length];
 
     //double[] minValue = getMinValuesOfTheColumnsOfAMatrix(matrix) ;
     //double[] maxValue = getMaxValuesOfTheColumnsOfAMatrix(matrix) ;
 
-    for (int i = 0; i < matrix.length; i++) {
-      for (int j = 0; j < matrix[0].length; j++) {
+    for (var i = 0; i < matrix.length; i++) {
+      for (var j = 0; j < matrix[0].length; j++) {
         normalizedMatrix[i][j] = normalize(matrix[i][j], minRangeValue[j], maxRangeValue[j]) ;
       }
     }
@@ -109,9 +109,9 @@ public class NormalizeUtils {
    * @return The normalized vector
    */
   public static double[] getNormalizedVector(double[] vector, double min, double max) {
-    double[] normalizedVector = new double[vector.length];
+    var normalizedVector = new double[vector.length];
 
-      for (int i = 0; i < vector.length; i++) {
+      for (var i = 0; i < vector.length; i++) {
           normalizedVector[i] = normalize(vector[i], min, max);
       }
 
@@ -125,13 +125,13 @@ public class NormalizeUtils {
    * @return
    */
   public static double[]getMinValuesOfTheColumnsOfAMatrix(double[][] matrix) {
-    int rowLength = matrix[0].length ;
-    double @NotNull [] minValues = new double[rowLength] ;
+    var rowLength = matrix[0].length ;
+    var minValues = new double[rowLength] ;
 
     Arrays.fill(minValues, Double.MAX_VALUE);
 
-    for (int j = 0; j < rowLength; j++) {
-      for (double[] values : matrix) {
+    for (var j = 0; j < rowLength; j++) {
+      for (var values : matrix) {
         if (values[j] < minValues[j]) {
           minValues[j] = values[j];
         }
@@ -148,13 +148,13 @@ public class NormalizeUtils {
    * @return
    */
   public static double[]getMaxValuesOfTheColumnsOfAMatrix(double[][] matrix) {
-    int rowLength = matrix[0].length ;
-    double[] maxValues = new double[rowLength] ;
+    var rowLength = matrix[0].length ;
+    var maxValues = new double[rowLength] ;
 
     Arrays.fill(maxValues, Double.MIN_VALUE);
 
-    for (int j = 0; j < rowLength; j++) {
-      for (double[] values : matrix) {
+    for (var j = 0; j < rowLength; j++) {
+      for (var values : matrix) {
         if (values[j] > maxValues[j]) {
           maxValues[j] = values[j];
         }

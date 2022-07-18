@@ -32,12 +32,12 @@ public class FDA3 extends FDA implements Serializable {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = limitInfI; i < limitSupI; i++) {
+    for (var i = limitInfI; i < limitSupI; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
 
-    for (int i = limitInfII; i < numberOfVariables; i++) {
+    for (var i = limitInfII; i < numberOfVariables; i++) {
       lowerLimit.add(-1.0);
       upperLimit.add(1.0);
     }
@@ -47,10 +47,10 @@ public class FDA3 extends FDA implements Serializable {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
+    var f = new double[solution.objectives().length];
     f[0] = this.evalF(solution, limitInfI, limitSupI);
-    double g = this.evalG(solution, limitInfII);
-    double h = this.evalH(f[0], g);
+    var g = this.evalG(solution, limitInfII);
+    var h = this.evalH(f[0], g);
     f[1] = g * h;
     solution.objectives()[0] = f[0];
     solution.objectives()[1] = f[1];
@@ -58,15 +58,14 @@ public class FDA3 extends FDA implements Serializable {
   }
 
   private double evalF(@NotNull DoubleSolution solution, int limitInf, int limitSup) {
-    double f;
-    double aux = 2.0d * Math.sin(0.5d * Math.PI * time);
-    double Ft = Math.pow(10.0d, aux);
-      double sum = 0.0;
-      for (int i = limitInf; i < limitSup; i++) {
-          double pow = Math.pow(solution.variables().get(i), Ft);
+    var aux = 2.0d * Math.sin(0.5d * Math.PI * time);
+    var Ft = Math.pow(10.0d, aux);
+    var sum = 0.0;
+      for (var i = limitInf; i < limitSup; i++) {
+        var pow = Math.pow(solution.variables().get(i), Ft);
           sum += pow;
       }
-      f = sum;
+    var f = sum;
     return f;
   }
 
@@ -78,11 +77,11 @@ public class FDA3 extends FDA implements Serializable {
   private double evalG(DoubleSolution solution, int limitInf) {
 
     double g;
-    double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-      double sum = 0.0;
-      int bound = solution.variables().size();
-      for (int i = limitInf; i < bound; i++) {
-          double pow = Math.pow((solution.variables().get(i) - Gt), 2.0);
+    var Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
+    var sum = 0.0;
+    var bound = solution.variables().size();
+      for (var i = limitInf; i < bound; i++) {
+        var pow = Math.pow((solution.variables().get(i) - Gt), 2.0);
           sum += pow;
       }
       g = sum;
@@ -97,7 +96,7 @@ public class FDA3 extends FDA implements Serializable {
    * @param g Second argument of the function H.
    */
   private double evalH(double f, double g) {
-    double h = 1.0d - Math.sqrt(f / g);
+    var h = 1.0d - Math.sqrt(f / g);
     return h;
   }
 }

@@ -21,9 +21,9 @@ public class VariationParameter extends CategoricalParameter {
 
     switch (getValue()) {
       case "crossoverAndMutationVariation":
-        CrossoverParameter crossoverParameter =
+        var crossoverParameter =
             (CrossoverParameter) findSpecificParameter("crossover");
-        MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
+        var mutationParameter = (MutationParameter) findSpecificParameter("mutation");
 
         @NotNull CrossoverOperator<DoubleSolution> crossoverOperator = crossoverParameter.getParameter();
         @NotNull MutationOperator<DoubleSolution> mutationOperatorOperator =

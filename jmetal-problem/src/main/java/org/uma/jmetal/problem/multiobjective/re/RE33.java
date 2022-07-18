@@ -25,7 +25,7 @@ public class RE33 extends AbstractDoubleProblem {
     setName("RE33");
 
     @NotNull List<Double> lowerLimit = List.of(55.0, 75.0, 1000.0, 11.0);
-    List<Double> upperLimit = List.of(80.0, 110.0, 3000.0, 20.0);
+    var upperLimit = List.of(80.0, 110.0, 3000.0, 20.0);
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -41,21 +41,21 @@ public class RE33 extends AbstractDoubleProblem {
     solution.objectives()[0] = 4.9 * 1e-5 * (x2 * x2 - x1 * x1) * (x4 - 1.0);
     solution.objectives()[1] = ((9.82 * 1e6) * (x2 * x2 - x1 * x1)) / (x3 * x4 * (x2 * x2 * x2 - x1 * x1 * x1));
 
-    double @NotNull [] g = new double[numberOfOriginalConstraints];
+    var g = new double[numberOfOriginalConstraints];
     g[0] = (x2 - x1) - 20.0;
     g[1] = 0.4 - (x3 / (3.14 * (x2 * x2 - x1 * x1)));
     g[2] =
         1.0 - (2.22 * 1e-3 * x3 * (x2 * x2 * x2 - x1 * x1 * x1)) / Math.pow((x2 * x2 - x1 * x1), 2);
     g[3] = (2.66 * 1e-2 * x3 * x4 * (x2 * x2 * x2 - x1 * x1 * x1)) / (x2 * x2 - x1 * x1) - 900.0;
 
-    for (int i = 0; i < numberOfOriginalConstraints; i++) {
+    for (var i = 0; i < numberOfOriginalConstraints; i++) {
       if (g[i] < 0.0) g[i] = -g[i];
       else g[i] = 0;
     }
 
-      double sum = 0.0;
-      for (int i : new int[]{0, 1, 2, 3}) {
-          double v = g[i];
+    var sum = 0.0;
+      for (var i : new int[]{0, 1, 2, 3}) {
+        var v = g[i];
           sum += v;
       }
       solution.objectives()[2] = sum;

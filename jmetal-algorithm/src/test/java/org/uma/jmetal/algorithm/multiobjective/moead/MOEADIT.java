@@ -25,15 +25,15 @@ public class MOEADIT {
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() {
-    LZ09F2 problem = new LZ09F2();
+    var problem = new LZ09F2();
 
-    double cr = 1.0;
-    double f = 0.5;
+    var cr = 1.0;
+    var f = 0.5;
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
             DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
         mutationDistributionIndex);
 
@@ -52,22 +52,22 @@ public class MOEADIT {
         .build();
 
     algorithm.run() ;
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     assertTrue(population.size() == 100);
   }
 
   @Test
   public void shouldTheHypervolumeHaveAMinimumValueWhenSolvingTheLZ09F2Instance() throws IOException {
-    LZ09F2 problem = new LZ09F2();
+    var problem = new LZ09F2();
 
-    double cr = 1.0;
-    double f = 0.5;
+    var cr = 1.0;
+    var f = 0.5;
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
             DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
         mutationDistributionIndex);
 
@@ -85,7 +85,7 @@ public class MOEADIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator hypervolume =
             new org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume(
@@ -94,24 +94,24 @@ public class MOEADIT {
     // Rationale: the default problem is LZ09F2", and MOEA/D, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.65);
   }
 
   @Test
   public void shouldTheHypervolumeHaveAMinimumValueWhenSolvingTheLZ09F6Instance() throws Exception {
-    LZ09F6 problem = new LZ09F6();
+    var problem = new LZ09F6();
 
     JMetalRandom.getInstance().setSeed(1);
 
-    double cr = 1.0;
-    double f = 0.5;
+    var cr = 1.0;
+    var f = 0.5;
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
             DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
             mutationDistributionIndex);
 
@@ -130,7 +130,7 @@ public class MOEADIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
@@ -138,7 +138,7 @@ public class MOEADIT {
 
     // Rationale: the default problem is LZ09F6", and MOEA/D, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.35
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.35);
 

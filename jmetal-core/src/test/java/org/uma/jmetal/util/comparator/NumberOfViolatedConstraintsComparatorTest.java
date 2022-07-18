@@ -35,31 +35,31 @@ public class NumberOfViolatedConstraintsComparatorTest {
   @Test
   public void compareRaiseAnExceptionIfTheFirstSolutionIsNull() {
     DoubleSolution solution1 = null ;
-    DoubleSolution solution2 = Mockito.mock(DoubleSolution.class) ;
+    var solution2 = Mockito.mock(DoubleSolution.class) ;
     assertThrows(NullParameterException.class, () -> comparator.compare(solution1, solution2)) ;
   }
 
   @Test
   public void compareRaiseAnExceptionIfTheSecondSolutionIsNull() {
-    DoubleSolution solution1 = Mockito.mock(DoubleSolution.class) ;
+    var solution1 = Mockito.mock(DoubleSolution.class) ;
     DoubleSolution solution2 = null ;
     assertThrows(NullParameterException.class, () -> comparator.compare(solution1, solution2)) ;
   }
 
   @Test
   public void compareReturnsZeroIfTheSolutionsHaveNoConstraints() {
-    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
-    DoubleSolution solution1 = problem.createSolution() ;
-    DoubleSolution solution2 = problem.createSolution() ;
+    var problem = new FakeDoubleProblem(2, 2, 0) ;
+    var solution1 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
 
     assertThat(comparator.compare(solution1, solution2)).isEqualTo(0); ;
   }
 
   @Test
   public void compareReturnsZeroIfTheSolutionsHaveConstraintsAndTheyAreFeasible() {
-    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 1) ;
-    DoubleSolution solution1 = problem.createSolution() ;
-    DoubleSolution solution2 = problem.createSolution() ;
+    var problem = new FakeDoubleProblem(2, 2, 1) ;
+    var solution1 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution1.constraints()[0] = 1.0 ;
     solution2.constraints()[0] = 1.0 ;
 
@@ -68,9 +68,9 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsMinusOneIfTheFirstSolutionIsFeasibleAndTheSecondOneIsNot() {
-    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 1) ;
-    DoubleSolution solution1 = problem.createSolution() ;
-    DoubleSolution solution2 = problem.createSolution() ;
+    var problem = new FakeDoubleProblem(2, 2, 1) ;
+    var solution1 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution1.constraints()[0] = 0.0 ;
     solution2.constraints()[0] = -1.0 ;
 
@@ -79,9 +79,9 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsOneIfTheSecondSolutionIsFeasibleAndTheFirstOneIsNot() {
-    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 1) ;
-    DoubleSolution solution1 = problem.createSolution() ;
-    DoubleSolution solution2 = problem.createSolution() ;
+    var problem = new FakeDoubleProblem(2, 2, 1) ;
+    var solution1 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution1.constraints()[0] = -2.0 ;
     solution2.constraints()[0] = 0.0 ;
 
@@ -90,9 +90,9 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsZeroIfBothSolutionsHaveTheSameNumberOfViolatedConstraints() {
-    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 3) ;
-    DoubleSolution solution1 = problem.createSolution() ;
-    DoubleSolution solution2 = problem.createSolution() ;
+    var problem = new FakeDoubleProblem(2, 2, 3) ;
+    var solution1 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution1.constraints()[0] = -1.0 ;
     solution1.constraints()[1] = 0.0 ;
     solution1.constraints()[2] = -2.0 ;
@@ -105,9 +105,9 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsOneIfTheFirstSolutionViolatesMoreConstraintsThanTheSecondOne() {
-    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 3) ;
-    DoubleSolution solution1 = problem.createSolution() ;
-    DoubleSolution solution2 = problem.createSolution() ;
+    var problem = new FakeDoubleProblem(2, 2, 3) ;
+    var solution1 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution1.constraints()[0] = -1.0 ;
     solution1.constraints()[1] = 0.0 ;
     solution1.constraints()[2] = -2.0 ;
@@ -120,9 +120,9 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsMinusOneIfTheSecondSolutionViolatesMoreConstraintsThanTheFirstOne() {
-    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 3) ;
-    DoubleSolution solution1 = problem.createSolution() ;
-    DoubleSolution solution2 = problem.createSolution() ;
+    var problem = new FakeDoubleProblem(2, 2, 3) ;
+    var solution1 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution1.constraints()[0] = -1.0 ;
     solution1.constraints()[1] = 0.0 ;
     solution1.constraints()[2] = 0.0 ;

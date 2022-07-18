@@ -59,9 +59,9 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
    */
   protected List<S> createInitialPopulation() {
     @NotNull List<S> population = new ArrayList<>(getMaxPopulationSize());
-    int bound = getMaxPopulationSize();
-    for (int i = 0; i < bound; i++) {
-      S solution = getProblem().createSolution();
+    var bound = getMaxPopulationSize();
+    for (var i = 0; i < bound; i++) {
+      var solution = getProblem().createSolution();
       population.add(solution);
     }
     return population;
@@ -76,9 +76,9 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
   @Override
   protected List<S> selection(List<S> population) {
     List<S> matingPopulation = new ArrayList<>(population.size());
-    int bound = getMaxPopulationSize();
-    for (int i = 0; i < bound; i++) {
-      S execute = selectionOperator.execute(population);
+    var bound = getMaxPopulationSize();
+    for (var i = 0; i < bound; i++) {
+      var execute = selectionOperator.execute(population);
       matingPopulation.add(execute);
     }
 
@@ -97,20 +97,20 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
    */
   @Override
   protected List<S> reproduction(@NotNull List<S> population) {
-    int numberOfParents = crossoverOperator.getNumberOfRequiredParents() ;
+    var numberOfParents = crossoverOperator.getNumberOfRequiredParents() ;
 
     checkNumberOfParents(population, numberOfParents);
 
     @NotNull List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i += numberOfParents) {
+    for (var i = 0; i < getMaxPopulationSize(); i += numberOfParents) {
       List<S> parents = new ArrayList<>(numberOfParents);
-      for (int j = 0; j < numberOfParents; j++) {
+      for (var j = 0; j < numberOfParents; j++) {
         parents.add(population.get(i+j));
       }
 
-      List<S> offspring = crossoverOperator.execute(parents);
+      var offspring = crossoverOperator.execute(parents);
 
-      for(S s: offspring){
+      for(var s: offspring){
         mutationOperator.execute(s);
         offspringPopulation.add(s);
       }

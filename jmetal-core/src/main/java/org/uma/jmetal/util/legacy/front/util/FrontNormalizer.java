@@ -67,12 +67,11 @@ public class FrontNormalizer {
    * @return
    */
   public List<? extends Solution<?>> normalize(List<? extends Solution<?>> solutionList) {
-    Front normalizedFront ;
     if (solutionList == null) {
       throw new JMetalException("The front is null") ;
     }
 
-    normalizedFront = getNormalizedFront(new ArrayFront(solutionList), maximumValues, minimumValues);
+    var normalizedFront = getNormalizedFront(new ArrayFront(solutionList), maximumValues, minimumValues);
 
     return FrontUtils.convertFrontToSolutionList(normalizedFront) ;
   }
@@ -100,10 +99,10 @@ public class FrontNormalizer {
     }
 
     @NotNull Front normalizedFront = new ArrayFront(front) ;
-    int numberOfPointDimensions = front.getPoint(0).getDimension() ;
+    var numberOfPointDimensions = front.getPoint(0).getDimension() ;
 
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      for (int j = 0; j < numberOfPointDimensions; j++) {
+    for (var i = 0; i < front.getNumberOfPoints(); i++) {
+      for (var j = 0; j < numberOfPointDimensions; j++) {
         if ((maximumValues[j] - minimumValues[j]) == 0) {
           throw new JMetalException("Maximum and minimum values of index " + j + " "
               + "are the same: " + maximumValues[j]);

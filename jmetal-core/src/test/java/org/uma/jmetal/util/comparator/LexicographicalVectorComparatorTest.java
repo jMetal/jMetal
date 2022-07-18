@@ -38,32 +38,32 @@ public class LexicographicalVectorComparatorTest {
 
   @Test
   public void shouldCompareIdenticalPointsButTheFirstValueReturnPlus1() {
-    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0};
-    double[] point2 = new double[]{-1.0, 0.0, 5.0, 7.0};
+      var point1 = new double[]{1.0, 0.0, 5.0, 7.0};
+      var point2 = new double[]{-1.0, 0.0, 5.0, 7.0};
 
     assertEquals(1, comparator.compare(point1, point2));
   }
 
   @Test
   public void shouldCompareIdenticalPointsButTheFirstValueReturnMinus1() {
-    double[] point1 = new double[]{-1.0, 0.0, 5.0, 7.0};
-    double[] point2 = new double[]{1.0, 0.0, 5.0, 7.0};
+      var point1 = new double[]{-1.0, 0.0, 5.0, 7.0};
+      var point2 = new double[]{1.0, 0.0, 5.0, 7.0};
 
     assertEquals(-1, comparator.compare(point1, point2));
   }
 
   @Test
   public void shouldCompareIdenticalPointsButTheLastValueReturnMinus1() {
-    double[] point1 = new double[]{1.0, 0.0, 5.0, 0.0};
-    double[] point2 = new double[]{1.0, 0.0, 5.0, 7.0};
+      var point1 = new double[]{1.0, 0.0, 5.0, 0.0};
+      var point2 = new double[]{1.0, 0.0, 5.0, 7.0};
 
     assertEquals(-1, comparator.compare(point1, point2));
   }
 
   @Test
   public void shouldCompareIdenticalPointsButTheLastValueReturnPlus1() {
-    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0};
-    double[] point2 = new double[]{1.0, 0.0, 5.0, 0.0};
+      var point1 = new double[]{1.0, 0.0, 5.0, 7.0};
+      var point2 = new double[]{1.0, 0.0, 5.0, 0.0};
 
     assertEquals(1, comparator.compare(point1, point2));
   }
@@ -75,8 +75,8 @@ public class LexicographicalVectorComparatorTest {
 
   @Test
   public void shouldCompareDifferentLengthPointsWithTheSameValuesInTheCommonPositionsReturnZero() {
-    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0};
-    double[] point2 = new double[]{1.0, 0.0, 5.0};
+      var point1 = new double[]{1.0, 0.0, 5.0, 7.0};
+      var point2 = new double[]{1.0, 0.0, 5.0};
 
     assertEquals(0, comparator.compare(point1, point2));
   }

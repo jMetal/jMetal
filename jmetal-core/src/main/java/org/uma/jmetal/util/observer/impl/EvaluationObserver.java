@@ -33,7 +33,7 @@ public class EvaluationObserver implements Observer<Map<String, Object>> {
    */
   @Override
   public void update(Observable<Map<String, Object>> observable, Map<String, Object> data) {
-    Integer evaluations = (Integer)data.get("EVALUATIONS") ;
+    var evaluations = (Integer)data.get("EVALUATIONS") ;
 
     if (evaluations!=null) {
       if (evaluations % frequency == 0) {

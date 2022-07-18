@@ -45,8 +45,8 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldGetMaximumValuesWithAFrontWithOnePointReturnTheCorrectValue() {
-    int numberOfPoints = 1 ;
-    int numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point = new ArrayPoint(numberOfDimensions) ;
@@ -55,15 +55,15 @@ public class FrontUtilsTest {
 
     front.setPoint(0, point);
 
-    double[] expectedResult = {10.0, 12.0} ;
+    var expectedResult = new double[]{10.0, 12.0};
 
     assertArrayEquals(expectedResult, FrontUtils.getMaximumValues(front), EPSILON) ;
   }
 
   @Test
   public void shouldGetMaximumValuesWithAFrontWithThreePointReturnTheCorrectValue() {
-    int numberOfPoints = 3 ;
-    int numberOfDimensions = 3 ;
+    var numberOfPoints = 3 ;
+    var numberOfDimensions = 3 ;
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
@@ -83,7 +83,7 @@ public class FrontUtilsTest {
     front.setPoint(1, point2);
     front.setPoint(2, point3);
 
-    double[] expectedResult = {10.0, 80.0, 3.0} ;
+    var expectedResult = new double[]{10.0, 80.0, 3.0};
 
     assertArrayEquals(expectedResult, FrontUtils.getMaximumValues(front), EPSILON) ;
   }
@@ -108,8 +108,8 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldGetMinimumValuesWithAFrontWithOnePointReturnTheCorrectValue() {
-    int numberOfPoints = 1 ;
-    int numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point = new ArrayPoint(numberOfDimensions) ;
@@ -118,15 +118,15 @@ public class FrontUtilsTest {
 
     front.setPoint(0, point);
 
-    double[] expectedResult = {10.0, 12.0} ;
+    var expectedResult = new double[]{10.0, 12.0};
 
     assertArrayEquals(expectedResult, FrontUtils.getMaximumValues(front), EPSILON) ;
   }
 
   @Test
   public void shouldGetMinimumValuesWithAFrontWithThreePointReturnTheCorrectValue() {
-    int numberOfPoints = 3 ;
-    int numberOfDimensions = 3 ;
+    var numberOfPoints = 3 ;
+    var numberOfDimensions = 3 ;
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
@@ -146,7 +146,7 @@ public class FrontUtilsTest {
     front.setPoint(1, point2);
     front.setPoint(2, point3);
 
-    double[] expectedResult = {5.0, 12.0, -1.0} ;
+    var expectedResult = new double[]{5.0, 12.0, -1.0};
 
     assertArrayEquals(expectedResult, FrontUtils.getMinimumValues(front), EPSILON) ;
   }
@@ -184,8 +184,8 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldDistanceToNearestPointReturnMaxDoubleIfThePointIsTheOnlyPointInTheFront() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
 
     Point point = new ArrayPoint(numberOfDimensions) ;
     point.setValue(0, 2);
@@ -199,8 +199,8 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldDistanceToNearestPointReturnTheCorrectValueIfTheFrontHasHasOnePoint() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 2);
@@ -221,8 +221,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldDistanceToNearestPointReturnTheCorrectValueIfTheFrontHasTwoPointsCaseA() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 2 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 2 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 2);
@@ -272,8 +272,8 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldDistanceToClosestPointReturnMaxZeroIfThePointIsTheOnlyPointInTheFront() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
 
     Point point = new ArrayPoint(numberOfDimensions) ;
     point.setValue(0, 2);
@@ -287,8 +287,8 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldDistanceToClosestPointReturnTheCorrectValueIfTheFrontHasHasOnePoint() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 2);
@@ -309,8 +309,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldDistanceToNearestPointClosestTheCorrectValueIfTheFrontHasTwoPointsCaseA() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 2 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 2 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 2);
@@ -333,8 +333,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldDistanceToNearestPointClosestTheCorrectValueIfTheFrontHasTwoPointsCaseB() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 2 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 2 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 2);
@@ -361,8 +361,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldDistanceToNearestPointClosestTheCorrectValueIfTheFrontHasTwoPointsCaseC() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 2 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 2 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 6);
@@ -406,8 +406,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldGetInvertedFrontReturnTheCorrectFrontIfItComposedOfOnePointCaseA() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 0.5);
@@ -416,7 +416,7 @@ public class FrontUtilsTest {
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
     front.setPoint(0, point1);
 
-    Front newFront = FrontUtils.getInvertedFront(front) ;
+    var newFront = FrontUtils.getInvertedFront(front) ;
 
     assertEquals(0.5, newFront.getPoint(0).getValue(0), EPSILON);
     assertEquals(0.5, newFront.getPoint(0).getValue(1), EPSILON);
@@ -427,8 +427,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldGetInvertedFrontReturnTheCorrectFrontIfItComposedOfOnePointCaseB() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 0.0);
@@ -437,7 +437,7 @@ public class FrontUtilsTest {
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
     front.setPoint(0, point1);
 
-    Front newFront = FrontUtils.getInvertedFront(front) ;
+    var newFront = FrontUtils.getInvertedFront(front) ;
 
     assertEquals(1.0, newFront.getPoint(0).getValue(0), EPSILON);
     assertEquals(0.0, newFront.getPoint(0).getValue(1), EPSILON);
@@ -448,8 +448,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldGetInvertedFrontReturnTheCorrectFrontIfItComposedOfOnePointCaseC() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 3.0);
@@ -458,7 +458,7 @@ public class FrontUtilsTest {
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
     front.setPoint(0, point1);
 
-    Front newFront = FrontUtils.getInvertedFront(front) ;
+    var newFront = FrontUtils.getInvertedFront(front) ;
 
     assertEquals(0.0, newFront.getPoint(0).getValue(0), EPSILON);
     assertEquals(1.0, newFront.getPoint(0).getValue(1), EPSILON);
@@ -470,8 +470,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldGetInvertedFrontReturnTheCorrectFrontIfItComposedOfFourPoints() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 4 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 4 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 0.1);
@@ -492,7 +492,7 @@ public class FrontUtilsTest {
     front.setPoint(2, point3);
     front.setPoint(3, point4);
 
-    Front newFront = FrontUtils.getInvertedFront(front) ;
+    var newFront = FrontUtils.getInvertedFront(front) ;
 
     assertEquals(0.9, newFront.getPoint(0).getValue(0), EPSILON);
     assertEquals(0.1, newFront.getPoint(0).getValue(1), EPSILON);
@@ -514,13 +514,12 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldConvertFrontToArrayReturnAnEmptyArrayIfTheFrontIsEmpty() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 0 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 0 ;
 
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
 
-    double[][] doubleFront ;
-    doubleFront = FrontUtils.convertFrontToArray(front) ;
+    var doubleFront = FrontUtils.convertFrontToArray(front);
 
     assertEquals(0, doubleFront.length);
   }
@@ -530,8 +529,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldConvertFrontToArrayReturnTheCorrectArrayCaseA() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
 
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
 
@@ -541,8 +540,7 @@ public class FrontUtilsTest {
 
     front.setPoint(0, point1);
 
-    double[][] doubleFront ;
-    doubleFront = FrontUtils.convertFrontToArray(front) ;
+    var doubleFront = FrontUtils.convertFrontToArray(front);
 
     assertEquals(1, doubleFront.length);
     assertEquals(0.1, doubleFront[0][0], EPSILON);
@@ -554,8 +552,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldConvertFrontToArrayReturnTheCorrectArrayCaseB() {
-    int numberOfDimensions = 4 ;
-    int numberOfPoints = 3 ;
+    var numberOfDimensions = 4 ;
+    var numberOfPoints = 3 ;
 
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
 
@@ -579,8 +577,7 @@ public class FrontUtilsTest {
     front.setPoint(1, point2);
     front.setPoint(2, point3);
 
-    double[][] doubleFront ;
-    doubleFront = FrontUtils.convertFrontToArray(front) ;
+    var doubleFront = FrontUtils.convertFrontToArray(front);
 
     assertEquals(3, doubleFront.length);
     assertEquals(0.1, doubleFront[0][0], EPSILON);
@@ -599,13 +596,12 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldConvertFrontToSolutionListReturnAnEmptyListIfTheFrontIsEmpty() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 0 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 0 ;
 
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
 
-    List<PointSolution> list ;
-    list = FrontUtils.convertFrontToSolutionList(front) ;
+    var list = FrontUtils.convertFrontToSolutionList(front);
 
     assertEquals(0, list.size());
   }
@@ -615,8 +611,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldConvertFrontToSolutionListReturnTheCorrectListCaseA() {
-    int numberOfDimensions = 2 ;
-    int numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
 
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
 
@@ -626,8 +622,7 @@ public class FrontUtilsTest {
 
     front.setPoint(0, point1);
 
-    List<PointSolution> list ;
-    list = FrontUtils.convertFrontToSolutionList(front) ;
+    var list = FrontUtils.convertFrontToSolutionList(front);
 
     assertEquals(1, list.size());
     assertEquals(0.1, list.get(0).objectives()[0], EPSILON);
@@ -639,8 +634,8 @@ public class FrontUtilsTest {
    */
   @Test
   public void shouldConvertFrontToSolutionListReturnTheCorrectListCaseB() {
-    int numberOfDimensions = 4 ;
-    int numberOfPoints = 3 ;
+    var numberOfDimensions = 4 ;
+    var numberOfPoints = 3 ;
 
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
 
@@ -664,8 +659,7 @@ public class FrontUtilsTest {
     front.setPoint(1, point2);
     front.setPoint(2, point3);
 
-    List<PointSolution> list ;
-    list = FrontUtils.convertFrontToSolutionList(front) ;
+    var list = FrontUtils.convertFrontToSolutionList(front);
 
     assertEquals(3, list.size());
     assertEquals(0.1, list.get(0).objectives()[0], EPSILON);

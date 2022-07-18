@@ -50,19 +50,19 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
 
     evaluations = populationSize ;
     do {
-      int @NotNull [] permutation = new int[populationSize];
+      var permutation = new int[populationSize];
       MOEADUtils.randomPermutation(permutation, populationSize);
 
-      for (int i = 0; i < populationSize; i++) {
-        int subProblemId = permutation[i];
+      for (var i = 0; i < populationSize; i++) {
+        var subProblemId = permutation[i];
 
-        NeighborType neighborType = chooseNeighborType() ;
-        List<DoubleSolution> parents = parentSelection(subProblemId, neighborType) ;
+        var neighborType = chooseNeighborType() ;
+        var parents = parentSelection(subProblemId, neighborType) ;
 
         differentialEvolutionCrossover.setCurrentSolution(population.get(subProblemId));
         @NotNull List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
 
-        DoubleSolution child = children.get(0) ;
+        var child = children.get(0) ;
         mutationOperator.execute(child);
         problem.evaluate(child);
 
@@ -77,8 +77,8 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
 
   protected void initializePopulation() {
     population = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i++) {
-      DoubleSolution newSolution = (DoubleSolution)problem.createSolution();
+    for (var i = 0; i < populationSize; i++) {
+      var newSolution = (DoubleSolution)problem.createSolution();
 
       problem.evaluate(newSolution);
       population.add(newSolution);

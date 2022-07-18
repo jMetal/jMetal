@@ -35,7 +35,6 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
    * [cores]
    */
   public static void main(String @NotNull [] args) throws Exception {
-    Algorithm<BinarySolution> algorithm;
     BinaryProblem problem = new OneMax(512);
 
     int numberOfCores;
@@ -51,7 +50,7 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
     @NotNull SelectionOperator<List<BinarySolution>, BinarySolution> selectionOperator =
         new BinaryTournamentSelection<BinarySolution>();
 
-    GeneticAlgorithmBuilder<BinarySolution> builder =
+    var builder =
         new GeneticAlgorithmBuilder<BinarySolution>(problem, crossoverOperator, mutationOperator)
             .setPopulationSize(100)
             .setMaxEvaluations(25000)
@@ -59,17 +58,17 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
             .setSolutionListEvaluator(
                 new MultiThreadedSolutionListEvaluator<BinarySolution>(numberOfCores));
 
-    algorithm = builder.build();
+    var algorithm = builder.build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
     builder.getEvaluator().shutdown();
 
-    BinarySolution solution = algorithm.getResult();
+    var solution = algorithm.getResult();
     @NotNull List<BinarySolution> population = new ArrayList<>(1);
     population.add(solution);
 
-    long computingTime = algorithmRunner.getComputingTime();
+    var computingTime = algorithmRunner.getComputingTime();
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))

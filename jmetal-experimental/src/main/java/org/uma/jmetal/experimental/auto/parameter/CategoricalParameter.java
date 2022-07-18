@@ -37,9 +37,9 @@ public class CategoricalParameter extends Parameter<String> {
 
   @Override
   public String toString() {
-    StringBuilder result =
+    var result =
             new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues);
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (var parameter : getGlobalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
     for (@NotNull Pair<String, Parameter<?>> parameter : getSpecificParameters()) {

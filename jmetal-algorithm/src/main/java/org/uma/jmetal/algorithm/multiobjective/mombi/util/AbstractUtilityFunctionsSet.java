@@ -36,9 +36,9 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	
 	public AbstractUtilityFunctionsSet(double [] @NotNull [] weights) {
 		this.weightVectors = new ArrayList<>();
-		for (int i = 0; i < weights.length; i++) {
+		for (var i = 0; i < weights.length; i++) {
 			this.weightVectors.add(new ArrayList<Double>());
-			for (int j = 0; j < weights[i].length;j++) {
+			for (var j = 0; j < weights[i].length; j++) {
 				this.weightVectors.get(i).add(weights[i][j]);
 			}
 		}
@@ -84,9 +84,9 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	 */
 	public @NotNull List<Double> evaluate(S solution) {
 		List<Double> result = new ArrayList<>(this.getSize());
-		int bound = this.getSize();
-		for (int i = 0; i < bound; i++) {
-			Double evaluate = evaluate(solution, i);
+		var bound = this.getSize();
+		for (var i = 0; i < bound; i++) {
+			var evaluate = evaluate(solution, i);
 			result.add(evaluate);
 		}
 		return result;
@@ -116,7 +116,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	 * @param filePath The path in the file system of the file containing the weight vectors
 	 */
 	public void loadWeightsFromFile(String filePath)  {
-		InputStream in = getClass().getClassLoader().getResourceAsStream(filePath);
+		var in = getClass().getClassLoader().getResourceAsStream(filePath);
 		if (in == null) {
 			try {
 				in = new FileInputStream(filePath) ;
@@ -124,8 +124,8 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 				e.printStackTrace();
 			}
 		}
-		InputStreamReader isr = new InputStreamReader(in);
-		BufferedReader buffer = new BufferedReader(isr);
+		var isr = new InputStreamReader(in);
+		var buffer = new BufferedReader(isr);
 
 		// First line format: # <num_weights> <num_objectives>
 		String line = null;
@@ -133,22 +133,22 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 			line = buffer.readLine();
 
 
-			StringTokenizer st = new StringTokenizer(line);
+			var st = new StringTokenizer(line);
 			st.nextToken(); // reading the #
 
 			// reading the number of weights (only used as estimator
 			// of the number of them)
-			int number_of_weight_vectors = parseInt(st.nextToken());
+			var number_of_weight_vectors = parseInt(st.nextToken());
 			this.weightVectors = new ArrayList<>(number_of_weight_vectors);
 
 			// reading the number of objectives
-			int number_of_objectives     = parseInt(st.nextToken());
+			var number_of_objectives     = parseInt(st.nextToken());
 			this.vectorSize 			 = number_of_objectives;
 
 			while ((line = buffer.readLine())!=null) {
 				st = new StringTokenizer(line);
 				@NotNull List<Double> new_vector = new ArrayList<>(number_of_objectives);
-				for (int i = 0; i < number_of_objectives; i++)
+				for (var i = 0; i < number_of_objectives; i++)
 					new_vector.add(parseDouble(st.nextToken()));
 				this.weightVectors.add(new_vector);
 			}

@@ -30,37 +30,37 @@ public class CompositeMutationTest {
 
   @Test
   public void shouldConstructorCreateAValidOperatorWhenAddingASingleMutationOperator() {
-    PolynomialMutation mutation = new PolynomialMutation(0.9, 20.0);
+    var mutation = new PolynomialMutation(0.9, 20.0);
     List<MutationOperator<?>> operatorList = new ArrayList<>();
     operatorList.add(mutation);
 
-    CompositeMutation operator = new CompositeMutation(operatorList);
+    var operator = new CompositeMutation(operatorList);
     assertNotNull(operator);
     assertEquals(1, operator.getOperators().size());
   }
 
   @Test
   public void shouldConstructorCreateAValidOperatorWhenAddingTwoMutationOperators() {
-    PolynomialMutation polynomialMutation = new PolynomialMutation(0.9, 20.0);
-    BitFlipMutation bitFlipMutation = new BitFlipMutation(0.9);
+    var polynomialMutation = new PolynomialMutation(0.9, 20.0);
+    var bitFlipMutation = new BitFlipMutation(0.9);
 
     List<MutationOperator<?>> operatorList = new ArrayList<>();
     operatorList.add(polynomialMutation);
     operatorList.add(bitFlipMutation);
 
-    CompositeMutation operator = new CompositeMutation(operatorList);
+    var operator = new CompositeMutation(operatorList);
     assertNotNull(operator);
     assertEquals(2, operator.getOperators().size());
   }
 
   @Test
   public void shouldExecuteWorkProperlyWithASingleMutationOperator() {
-    CompositeMutation operator =
+    var operator =
             new CompositeMutation(Arrays.asList(new PolynomialMutation(1.0, 20.0)));
-    FakeDoubleProblem problem = new FakeDoubleProblem();
-    CompositeSolution solution = new CompositeSolution(Arrays.asList(problem.createSolution()));
+    var problem = new FakeDoubleProblem();
+    var solution = new CompositeSolution(Arrays.asList(problem.createSolution()));
 
-    CompositeSolution mutatedSolution = operator.execute(solution) ;
+    var mutatedSolution = operator.execute(solution) ;
 
     assertNotNull(mutatedSolution);
     assertEquals(1, mutatedSolution.variables().size());
@@ -69,18 +69,18 @@ public class CompositeMutationTest {
 
   @Test
   public void shouldExecuteWorkProperlyWithTwoMutationOperators() {
-    CompositeMutation operator =
+    var operator =
             new CompositeMutation(
                     Arrays.asList(new PolynomialMutation(1.0, 20.0), new BitFlipMutation(0.01)));
 
-    FakeDoubleProblem doubleProblem = new FakeDoubleProblem(2, 2, 0);
-    CompositeSolution solution =
+    var doubleProblem = new FakeDoubleProblem(2, 2, 0);
+    var solution =
             new CompositeSolution(
                     Arrays.asList(
                             doubleProblem.createSolution(),
                             new DefaultBinarySolution(Arrays.asList(20, 20), 2)));
 
-    CompositeSolution mutatedSolution = operator.execute(solution);
+    var mutatedSolution = operator.execute(solution);
 
     assertNotNull(mutatedSolution);
     assertEquals(2, mutatedSolution.variables().size());
@@ -88,12 +88,12 @@ public class CompositeMutationTest {
 
   @Test (expected = ClassCastException.class)
   public void shouldExecuteRaiseAnExceptionIfTheTypesOfTheSolutionsDoNotMatchTheMutationOperators() {
-    CompositeMutation operator =
+    var operator =
             new CompositeMutation(
                     Arrays.asList(new PolynomialMutation(1.0, 20.0), new BitFlipMutation(0.01)));
 
-    FakeDoubleProblem doubleProblem = new FakeDoubleProblem(2, 2, 0);
-    CompositeSolution solution =
+    var doubleProblem = new FakeDoubleProblem(2, 2, 0);
+    var solution =
             new CompositeSolution(
                     Arrays.asList(
                             doubleProblem.createSolution(),

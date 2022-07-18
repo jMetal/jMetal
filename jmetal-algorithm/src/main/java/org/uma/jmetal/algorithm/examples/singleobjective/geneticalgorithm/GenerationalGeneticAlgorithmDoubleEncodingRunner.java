@@ -30,7 +30,6 @@ public class GenerationalGeneticAlgorithmDoubleEncodingRunner {
    * Usage: java org.uma.jmetal.runner.singleobjective.GenerationalGeneticAlgorithmDoubleEncodingRunner
    */
   public static void main(String[] args) throws Exception {
-    Algorithm<DoubleSolution> algorithm;
     DoubleProblem problem = new Sphere(20) ;
 
     @NotNull CrossoverOperator<DoubleSolution> crossover =
@@ -39,20 +38,20 @@ public class GenerationalGeneticAlgorithmDoubleEncodingRunner {
             new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>() ;
 
-    algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
+    var algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
             .setPopulationSize(100)
             .setMaxEvaluations(25000)
             .setSelectionOperator(selection)
-            .build() ;
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    DoubleSolution solution = algorithm.getResult() ;
+    var solution = algorithm.getResult() ;
     @NotNull List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionListOutput(population)
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))

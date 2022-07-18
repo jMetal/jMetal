@@ -14,9 +14,9 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class ComponentBasedAutoMOPSOLSMOP1 {
 
     public static void main(String[] args) {
-        String referenceFrontFileName = "LSMOP1.2D.csv";
+        var referenceFrontFileName = "LSMOP1.2D.csv";
 
-        String @NotNull [] parameters =
+        var parameters =
                 ("--problemName org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_20 "
                         + "--referenceFrontFileName "
                         + referenceFrontFileName
@@ -51,17 +51,17 @@ public class ComponentBasedAutoMOPSOLSMOP1 {
             + "--weightMax 0.5 ")
                         .split("\\s+");
 
-        AutoMOPSO autoMOPSO = new AutoMOPSO();
+        var autoMOPSO = new AutoMOPSO();
         autoMOPSO.parseAndCheckParameters(parameters);
 
         AutoMOPSO.print(autoMOPSO.fixedParameterList);
         AutoMOPSO.print(autoMOPSO.autoConfigurableParameterList);
 
-        ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
+        var mopso = autoMOPSO.create();
 
-        EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-        RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-                new RunTimeChartObserver<>(
+        var evaluationObserver = new EvaluationObserver(1000);
+        var runTimeChartObserver =
+                new RunTimeChartObserver<DoubleSolution>(
                         "irace.MOPSO", 80, 500,"resources/referenceFrontsCSV/" + referenceFrontFileName);
 
         //mopso.getObservable().register(runTimeChartObserver);

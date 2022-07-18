@@ -36,7 +36,7 @@ public class SMPSO {
   public static void main(String[] args) throws IOException {
     DoubleProblem problem = new ZDT1(1000);
     @NotNull String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
-    int swarmSize = 100;
+    var swarmSize = 100;
 
     @NotNull var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
     var evaluation = new SequentialEvaluation<>(problem);
@@ -48,29 +48,29 @@ public class SMPSO {
     var globalBestInitialization = new DefaultGlobalBestInitialization();
 
     BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
-    GlobalBestSelection globalBestSelection; //= new TournamentGlobalBestSelection(2, externalArchive.getComparator());
-    globalBestSelection = new BinaryTournamentGlobalBestSelection(externalArchive.getComparator());
+    //= new TournamentGlobalBestSelection(2, externalArchive.getComparator());
+    GlobalBestSelection globalBestSelection = new BinaryTournamentGlobalBestSelection(externalArchive.getComparator());
 
-    double r1Min = 0.0;
-    double r1Max = 1.0;
-    double r2Min = 0.0;
-    double r2Max = 1.0;
-    double c1Min = 1.5;
-    double c1Max = 2.5;
-    double c2Min = 1.5;
-    double c2Max = 2.5;
-    double weight = 0.1;
+    var r1Min = 0.0;
+    var r1Max = 1.0;
+    var r2Min = 0.0;
+    var r2Max = 1.0;
+    var c1Min = 1.5;
+    var c1Max = 2.5;
+    var c2Min = 1.5;
+    var c2Max = 2.5;
+    var weight = 0.1;
     var inertiaWeightStrategy = new ConstantValueStrategy(weight);
 
     @NotNull var velocityUpdate = new ConstrainedVelocityUpdate(r1Min, r1Max, r2Min, r2Max, c1Min, c1Max,
         c2Min, c2Max, problem);
 
-    double velocityChangeWhenLowerLimitIsReached = -1.0;
-    double velocityChangeWhenUpperLimitIsReached = -1.0;
+    var velocityChangeWhenLowerLimitIsReached = -1.0;
+    var velocityChangeWhenUpperLimitIsReached = -1.0;
     @NotNull var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
         velocityChangeWhenUpperLimitIsReached, problem.getVariableBounds());
 
-    int frequencyOfMutation = 6;
+    var frequencyOfMutation = 6;
     var mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
     var perturbation = new FrequencySelectionMutationBasedPerturbation(mutationOperator,
         frequencyOfMutation);

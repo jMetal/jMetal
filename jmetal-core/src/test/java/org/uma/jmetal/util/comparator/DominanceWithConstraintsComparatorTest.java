@@ -20,8 +20,8 @@ class DominanceWithConstraintsComparatorTest {
 
   @Test
   public void compareTwoFeasibleSolutionsIgnoreTheConstraints() {
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
-    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    var solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    var solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
     solution1.objectives()[0] = 1.0;
     solution1.objectives()[1] = 5.0;
     solution1.constraints()[0] = 0 ;
@@ -36,8 +36,8 @@ class DominanceWithConstraintsComparatorTest {
 
   @Test
   public void compareTwoSolutionsWithTheSameConstraintValuesIgnoreTheConstraints() {
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
-    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    var solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    var solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
     solution1.objectives()[0] = 1.0;
     solution1.objectives()[1] = 5.0;
     solution1.constraints()[0] = -2 ;
@@ -56,8 +56,8 @@ class DominanceWithConstraintsComparatorTest {
 
   @Test
   public void compareReturnsMinusOneIfTheFirstSolutionHasABetterConstraintViolationValue() {
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
-    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    var solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    var solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
     solution1.objectives()[0] = 1.0;
     solution1.objectives()[1] = 1.0;
     solution1.constraints()[0] = -1 ;
@@ -76,8 +76,8 @@ class DominanceWithConstraintsComparatorTest {
 
   @Test
   public void compareReturnsOneIfTheSecondSolutionHasABetterConstraintViolationValue() {
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
-    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    var solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    var solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
     solution1.objectives()[0] = 0.0;
     solution1.objectives()[1] = 0.0;
     solution1.constraints()[0] = -2 ;

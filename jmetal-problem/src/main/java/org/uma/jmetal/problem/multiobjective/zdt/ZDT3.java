@@ -28,9 +28,8 @@ public class ZDT3 extends ZDT1 {
    * @param g Second argument of the function H.
    */
   protected double evalH(double f, double g) {
-    double h ;
-    h = 1.0 - Math.sqrt(f / g)
-      - (f / g) * Math.sin(10.0 * Math.PI * f);
+    var h = 1.0 - Math.sqrt(f / g)
+              - (f / g) * Math.sin(10.0 * Math.PI * f);
     return h;
   }
 }

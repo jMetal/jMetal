@@ -24,20 +24,17 @@ public class SMSEMOAIT {
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem()
       throws Exception {
-    ZDT4 problem = new ZDT4();
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
+    var problem = new ZDT4();
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    Hypervolume<DoubleSolution> hypervolumeImplementation;
-    hypervolumeImplementation = new PISAHypervolume<>();
+      Hypervolume<DoubleSolution> hypervolumeImplementation = new PISAHypervolume<>();
     hypervolumeImplementation.setOffset(100.0);
 
     algorithm =
@@ -50,7 +47,7 @@ public class SMSEMOAIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     /*
     Rationale: the default problem is ZDT4, and usually SMSEMOA, configured with standard
@@ -63,19 +60,15 @@ public class SMSEMOAIT {
   public void shouldTheHypervolumeHaveAMinimumValue() throws Exception {
     DoubleProblem problem = new ZDT1();
 
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
-
-    Hypervolume<DoubleSolution> hypervolumeImplementation;
-    hypervolumeImplementation = new PISAHypervolume<>();
+      Hypervolume<DoubleSolution> hypervolumeImplementation = new PISAHypervolume<>();
     hypervolumeImplementation.setOffset(100.0);
 
     algorithm =
@@ -88,7 +81,7 @@ public class SMSEMOAIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
         new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT1.csv");

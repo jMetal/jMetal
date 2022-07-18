@@ -145,7 +145,7 @@ public class MOCHCBuilder implements AlgorithmBuilder<MOCHC> {
   }
 
   public MOCHC build() {
-    MOCHC algorithm =
+    var algorithm =
         new MOCHC(problem, populationSize, maxEvaluations, convergenceValue, preservedPopulation,
             initialConvergenceCount, crossoverOperator, cataclysmicMutation, newGenerationSelection,
             parentSelection, evaluator);

@@ -16,11 +16,11 @@ public class IraceParameterFileGenerator {
   public void generateConfigurationFile(AutoConfigurableAlgorithm autoConfigurableAlgorithm, String[] parameters) {
     autoConfigurableAlgorithm.parseAndCheckParameters(parameters) ;
 
-    List<Parameter<?>> parameterList = autoConfigurableAlgorithm.getAutoConfigurableParameterList() ;
+    var parameterList = autoConfigurableAlgorithm.getAutoConfigurableParameterList() ;
 
-    StringBuilder stringBuilder = new StringBuilder();
+    var stringBuilder = new StringBuilder();
 
-    for (Parameter<?> parameter : parameterList) {
+    for (var parameter : parameterList) {
       decodeParameter(parameter, stringBuilder);
       stringBuilder.append("#\n");
     }
@@ -42,7 +42,7 @@ public class IraceParameterFileGenerator {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
     }
 
-    for (Pair<String, Parameter<?>> specificParameter : parameter.getSpecificParameters()) {
+    for (var specificParameter : parameter.getSpecificParameters()) {
       decodeParameterSpecific(specificParameter, stringBuilder, parameter);
     }
   }
@@ -52,7 +52,7 @@ public class IraceParameterFileGenerator {
     if (parentParameter instanceof CategoricalParameter) {
       var validValues = ((CategoricalParameter) parentParameter).getValidValues();
       dependenceString = new StringBuilder();
-      for (String value : validValues) {
+      for (var value : validValues) {
         dependenceString.append("\"").append(value).append("\"").append(",");
       }
       dependenceString = new StringBuilder(dependenceString.substring(0, dependenceString.length() - 1));
@@ -67,7 +67,7 @@ public class IraceParameterFileGenerator {
                     decodeValidValues(parameter),
                     "| " + parentParameter.getName() + " %in% c(" + dependenceString + ")"));
 
-    for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
+    for (var globalParameter : parameter.getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
     }
 
@@ -92,13 +92,13 @@ public class IraceParameterFileGenerator {
       decodeParameterGlobal(globalParameter, stringBuilder, pair.getValue());
     }
 
-    for (Pair<String, Parameter<?>> specificParameter : pair.getValue().getSpecificParameters()) {
+    for (var specificParameter : pair.getValue().getSpecificParameters()) {
       decodeParameterSpecific(specificParameter, stringBuilder, pair.getValue());
     }
   }
 
   private String decodeType(Parameter<?> parameter) {
-    String result = " ";
+    var result = " ";
     if (parameter instanceof CategoricalParameter) {
       result = "c";
     } else if (parameter instanceof OrdinalParameter) {
@@ -115,7 +115,7 @@ public class IraceParameterFileGenerator {
   }
 
   private String decodeValidValues(Parameter<?> parameter) {
-    String result = " ";
+    var result = " ";
 
     if (parameter instanceof CategoricalParameter) {
       result = ((CategoricalParameter) parameter).getValidValues().toString();

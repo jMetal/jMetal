@@ -71,12 +71,12 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
 
     while (evaluations < maxEvaluations) {
       List<S> offspringPopulation = new ArrayList<>(populationSize);
-      for (int i = 0; i < populationSize; i += 2) {
+      for (var i = 0; i < populationSize; i += 2) {
         List<S> parents = new ArrayList<>(2);
         parents.add(selectionOperator.execute(population));
         parents.add(selectionOperator.execute(population));
 
-        List<S> offspring = crossoverOperator.execute(parents);
+        var offspring = crossoverOperator.execute(parents);
 
         mutationOperator.execute(offspring.get(0));
         mutationOperator.execute(offspring.get(1));
@@ -94,8 +94,7 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
       Ranking<S> ranking = new FastNonDominatedSortRanking<>();
       ranking.compute(jointPopulation);
 
-      RankingAndCrowdingSelection<S> rankingAndCrowdingSelection;
-      rankingAndCrowdingSelection = new RankingAndCrowdingSelection<>(populationSize);
+      var rankingAndCrowdingSelection = new RankingAndCrowdingSelection<S>(populationSize);
 
       population = rankingAndCrowdingSelection.execute(jointPopulation);
 
@@ -110,9 +109,9 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
 
   protected List<S> createInitialPopulation() {
       List<S> population = new ArrayList<>(populationSize);
-      int bound = populationSize;
-      for (int i = 0; i < bound; i++) {
-          S solution = problem.createSolution();
+    var bound = populationSize;
+      for (var i = 0; i < bound; i++) {
+        var solution = problem.createSolution();
           population.add(solution);
       }
       return population;

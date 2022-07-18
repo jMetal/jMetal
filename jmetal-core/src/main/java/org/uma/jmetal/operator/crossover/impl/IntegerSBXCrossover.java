@@ -106,7 +106,7 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
               y2 = valueX1;
             }
 
-            Bounds<Integer> bounds = parent1.getBounds(i);
+            var bounds = parent1.getBounds(i);
             yL = bounds.getLowerBound();
             yu = bounds.getUpperBound();
             rand = randomGenerator.getRandomValue();

@@ -19,26 +19,24 @@ public class EuclideanDistanceBetweenSolutionsInSolutionSpace<S extends Solution
 
   @Override
   public double compute(@NotNull S solution1, @NotNull S solution2) {
-    double[] vector1;
-    double[] vector2;
-    double @NotNull [] result = new double[10];
-    int count1 = 0;
-    for (Double aDouble : solution1.variables()) {
+      var result = new double[10];
+      var count1 = 0;
+    for (var aDouble : solution1.variables()) {
       double value1 = aDouble;
       if (result.length == count1) result = Arrays.copyOf(result, count1 * 2);
       result[count1++] = value1;
     }
     result = Arrays.copyOfRange(result, 0, count1);
-    vector1 = result;
-    double[] arr = new double[10];
-    int count = 0;
-    for (Double value : solution2.variables()) {
+      var vector1 = result;
+      var arr = new double[10];
+      var count = 0;
+    for (var value : solution2.variables()) {
       double v = value;
       if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
       arr[count++] = v;
     }
     arr = Arrays.copyOfRange(arr, 0, count);
-    vector2 = arr;
+      var vector2 = arr;
     return distance.compute(vector1, vector2) ;
   }
 }

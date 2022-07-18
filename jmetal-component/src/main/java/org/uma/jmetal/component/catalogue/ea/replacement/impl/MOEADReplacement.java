@@ -35,22 +35,22 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
   @Override
   public List<S> replace(
       List<S> population, List<S> offspringPopulation) {
-    S newSolution = offspringPopulation.get(0);
+    var newSolution = offspringPopulation.get(0);
     aggregativeFunction.update(newSolution.objectives());
 
-    Neighborhood.NeighborType neighborType = matingPoolSelection.getNeighborType();
+    var neighborType = matingPoolSelection.getNeighborType();
     @NotNull IntegerPermutationGenerator randomPermutation =
         new IntegerPermutationGenerator(
             neighborType.equals(Neighborhood.NeighborType.NEIGHBOR)
                 ? weightVectorNeighborhood.neighborhoodSize()
                 : population.size());
 
-    int replacements = 0;
+    var replacements = 0;
 
-    for (int i = 0;
-        i < randomPermutation.getSequenceLength()
+    for (var i = 0;
+         i < randomPermutation.getSequenceLength()
             && (replacements < maximumNumberOfReplacedSolutions);
-        i++) {
+         i++) {
       int k;
       if (neighborType.equals(Neighborhood.NeighborType.NEIGHBOR)) {
         k =
@@ -61,10 +61,10 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
       }
       randomPermutation.generateNext();
 
-      double f1 =
+      var f1 =
           aggregativeFunction.compute(
               population.get(k).objectives(), weightVectorNeighborhood.getWeightVector()[k]);
-      double f2 =
+      var f2 =
           aggregativeFunction.compute(
               newSolution.objectives(), weightVectorNeighborhood.getWeightVector()[k]);
 

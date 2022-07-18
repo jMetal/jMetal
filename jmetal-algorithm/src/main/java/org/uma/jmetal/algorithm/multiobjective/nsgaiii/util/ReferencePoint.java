@@ -26,7 +26,7 @@ public class ReferencePoint<S extends Solution<?>> {
   /** Constructor */
   public ReferencePoint(int size) {
     position = new ArrayList<>();
-    for (int i =0; i < size; i++)
+    for (var i = 0; i < size; i++)
       position.add(0.0);
     memberSize = 0 ;
     potentialMembers = new ArrayList<>();
@@ -34,7 +34,7 @@ public class ReferencePoint<S extends Solution<?>> {
 
   public ReferencePoint(ReferencePoint<S> point) {
     position = new ArrayList<>(point.position.size());
-    for (Double d : point.position) {
+    for (var d : point.position) {
       position.add(d);
     }
     memberSize = 0 ;
@@ -61,7 +61,7 @@ public class ReferencePoint<S extends Solution<?>> {
       refPoint.position.set(element, (double) left / total) ;
       referencePoints.add(new ReferencePoint<>(refPoint)) ;
     } else {
-      for (int i = 0 ; i <= left; i +=1) {
+      for (var i = 0; i <= left; i +=1) {
         refPoint.position.set(element, (double)i/total) ;
 
         generateRecursive(referencePoints, refPoint, numberOfObjectives, left-i, total, element+1);
@@ -88,7 +88,7 @@ public class ReferencePoint<S extends Solution<?>> {
   }
   
   public S RandomMember() {
-    int index = this.potentialMembers.size()>1 ? JMetalRandom.getInstance().nextInt(0, this.potentialMembers.size()-1):0;
+    var index = this.potentialMembers.size()>1 ? JMetalRandom.getInstance().nextInt(0, this.potentialMembers.size()-1):0;
     return this.potentialMembers.remove(index).getLeft();
   }
 }

@@ -41,7 +41,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 
     List<S> aux = new ArrayList<>(source.size());
 
-    int i = 0;
+    var i = 0;
     while (i < source.size()){
       double fitness = densityEstimator.getValue(source.get(i)) ;
       if (fitness<1.0){
@@ -53,9 +53,9 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
     }
 
     if (aux.size() < size){
-      Comparator<S> comparator = densityEstimator.getComparator() ;
+      var comparator = densityEstimator.getComparator() ;
       source.sort(comparator);
-      int remain = size - aux.size();
+      var remain = size - aux.size();
       for (i = 0; i < remain; i++){
         aux.add(source.get(i));
       }
@@ -64,12 +64,12 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
       return aux;
     }
 
-    double [] @NotNull [] distance = SolutionListUtils.distanceMatrix(aux);
+    var distance = SolutionListUtils.distanceMatrix(aux);
     @NotNull List<List<Pair<Integer, Double>> > distanceList = new ArrayList<>();
-    LocationAttribute<S> location = new LocationAttribute<S>(aux);
-    for (int pos = 0; pos < aux.size(); pos++) {
+    var location = new LocationAttribute<S>(aux);
+    for (var pos = 0; pos < aux.size(); pos++) {
       List<Pair<Integer, Double>> distanceNodeList = new ArrayList<>();
-      for (int ref = 0; ref < aux.size(); ref++) {
+      for (var ref = 0; ref < aux.size(); ref++) {
         if (pos != ref) {
           distanceNodeList.add(Pair.of(ref, distance[pos][ref]));
         }
@@ -77,13 +77,13 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
       distanceList.add(distanceNodeList);
     }
 
-    for (List<Pair<Integer, Double>> pairs : distanceList) {
+    for (var pairs : distanceList) {
       pairs.sort(Comparator.comparing(Pair::getRight));
     }
 
     while (aux.size() > size) {
-      double minDistance = Double.MAX_VALUE;
-      int toRemove = 0;
+      var minDistance = Double.MAX_VALUE;
+      var toRemove = 0;
       i = 0;
       for (@NotNull List<Pair<Integer, Double>> dist : distanceList) {
         if (dist.get(0).getRight() < minDistance) {
@@ -91,7 +91,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
           minDistance = dist.get(0).getRight();
           //i y toRemove have the same distance to the first solution
         } else if (dist.get(0).getRight().equals(minDistance)) {
-          int k = 0;
+          var k = 0;
           while ((dist.get(k).getRight().equals(
                   distanceList.get(toRemove).get(k).getRight())) &&
                   k < (distanceList.get(i).size() - 1)) {
@@ -106,7 +106,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
         i++;
       }
 
-      int tmp =  (int) location.getAttribute(aux.get(toRemove));
+      var tmp =  (int) location.getAttribute(aux.get(toRemove));
       aux.remove(toRemove);
       distanceList.remove(toRemove);
 

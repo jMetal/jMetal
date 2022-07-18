@@ -38,11 +38,8 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String @NotNull [] args)
           throws JMetalException, InterruptedException, IOException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
 
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -55,33 +52,33 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFronts/Golinski.csv" ;
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     @NotNull BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int maxIterations = 3000 ;
-    int swarmSize = 200 ;
+    var maxIterations = 3000 ;
+    var swarmSize = 200 ;
 
-    algorithm = new SMPSOBuilder(problem, archive)
-        .setMutation(mutation)
-        .setMaxIterations(maxIterations)
-        .setSwarmSize(swarmSize)
-        .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
-        .setVariant(SMPSOBuilder.SMPSOVariant.Measures)
-        .build();
+    Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(problem, archive)
+            .setMutation(mutation)
+            .setMaxIterations(maxIterations)
+            .setSwarmSize(swarmSize)
+            .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+            .setVariant(SMPSOBuilder.SMPSOVariant.Measures)
+            .build();
 
     /* Measure management */
-    MeasureManager measureManager = ((SMPSOMeasures)algorithm).getMeasureManager() ;
+    var measureManager = ((SMPSOMeasures)algorithm).getMeasureManager() ;
 
-    BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
+    var solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
-    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
+    var iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
-    ChartContainer chart = new ChartContainer(algorithm.getName(), 80);
+    var chart = new ChartContainer(algorithm.getName(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
     //chart.setVarChart(0, 1);
     chart.initChart();
@@ -91,11 +88,11 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
 
     /* End of measure management */
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
     chart.saveChart("./chart", BitmapEncoder.BitmapFormat.PNG);
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

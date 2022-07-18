@@ -33,9 +33,9 @@ public class StoredSolutionsUtils {
 
     @NotNull List<PointSolution> solutions = lines
       .map(line -> {
-        String[] textNumbers = line.split(DEFAULT_REGEX, numberOfObjectives + 1);
-        PointSolution solution = new PointSolution(numberOfObjectives);
-        for (int i = 0; i < numberOfObjectives; i++) {
+        var textNumbers = line.split(DEFAULT_REGEX, numberOfObjectives + 1);
+        var solution = new PointSolution(numberOfObjectives);
+        for (var i = 0; i < numberOfObjectives; i++) {
           solution.objectives()[i] = Double.parseDouble(textNumbers[i]);
         }
         solution.attributes().put(textRepresentation, line);
@@ -50,11 +50,11 @@ public class StoredSolutionsUtils {
   }
 
   public static <S extends Solution<?>> void writeToOutput(List<S> solutionList, @NotNull FileOutputContext context) {
-    BufferedWriter bufferedWriter = context.getFileWriter();
+    var bufferedWriter = context.getFileWriter();
 
     try {
       for (Solution<?> s : solutionList) {
-        String formatedTextRepresentation = (String)s.attributes().get(SolutionTextRepresentation.getAttribute());
+        var formatedTextRepresentation = (String)s.attributes().get(SolutionTextRepresentation.getAttribute());
         if (formatedTextRepresentation != null) {
           bufferedWriter.write((String) s.attributes().get(SolutionTextRepresentation.getAttribute()));
           bufferedWriter.newLine();

@@ -128,8 +128,8 @@ public class F16RotatedHybridComposition1 extends TestFunc {
     theJob.z = m_z;
     theJob.zM = m_zM;
     // Calculate/estimate the fmax for all the functions involved
-    for (int i = 0; i < NUM_FUNC; i++) {
-      for (int j = 0; j < mDimension; j++) {
+    for (var i = 0; i < NUM_FUNC; i++) {
+      for (var j = 0; j < mDimension; j++) {
         m_testPoint[j] = (5.0 / m_lambda[i]);
       }
       Benchmark.rotate(m_testPointM, m_testPoint, m_M[i]);
@@ -141,7 +141,7 @@ public class F16RotatedHybridComposition1 extends TestFunc {
   // Function body
   public double f(double[] x) throws JMetalException {
 
-    double result = 0.0;
+    var result = 0.0;
 
     result = Benchmark.hybrid_composition(x, theJob);
 
@@ -153,7 +153,7 @@ public class F16RotatedHybridComposition1 extends TestFunc {
 
   private class MyHCJob extends HCJob {
     public double basicFunc(int func_no, double[] x) throws JMetalException {
-      double result = 0.0;
+      var result = 0.0;
       switch (func_no) {
         case 0:
         case 1:

@@ -151,8 +151,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
     deltaMax = new double[problem.getNumberOfVariables()];
     deltaMin = new double[problem.getNumberOfVariables()];
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      Bounds<Double> bounds = problem.getVariableBounds().get(i);
+    for (var i = 0; i < problem.getNumberOfVariables(); i++) {
+      var bounds = problem.getVariableBounds().get(i);
       deltaMax[i] = (bounds.getUpperBound() - bounds.getLowerBound()) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
@@ -212,7 +212,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
-    for (int i = 0; i < swarmSize; i++) {
+    for (var i = 0; i < swarmSize; i++) {
       newSolution = problem.createSolution();
       swarm.add(newSolution);
     }
@@ -227,15 +227,15 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override
   protected void initializeLeader(@NotNull List<DoubleSolution> swarm) {
-    for (DoubleSolution particle : swarm) {
+    for (var particle : swarm) {
       leaders.add(particle);
     }
   }
 
   @Override
   protected void initializeVelocity(@NotNull List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+    for (var i = 0; i < swarm.size(); i++) {
+      for (var j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
     }
@@ -253,7 +253,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     double r1, r2, c1, c2;
     DoubleSolution bestGlobal;
 
-    for (int i = 0; i < swarm.size(); i++) {
+    for (var i = 0; i < swarm.size(); i++) {
       @Nullable DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       @Nullable DoubleSolution bestParticle = (DoubleSolution) localBest.getAttribute(swarm.get(i)).copy();
 
@@ -264,7 +264,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
 
-      for (int var = 0; var < particle.variables().size(); var++) {
+      for (var var = 0; var < particle.variables().size(); var++) {
         speed[i][var] =
                 velocityConstriction(
                         constrictionCoefficient(c1, c2)
@@ -280,14 +280,14 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override
   protected void updatePosition(List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarmSize; i++) {
-      DoubleSolution particle = swarm.get(i);
-      for (int j = 0; j < particle.variables().size(); j++) {
+    for (var i = 0; i < swarmSize; i++) {
+      var particle = swarm.get(i);
+      for (var j = 0; j < particle.variables().size(); j++) {
         particle.variables().set(j, particle.variables().get(j) + speed[i][j]);
 
-        Bounds<Double> bounds = problem.getVariableBounds().get(j);
-        Double lowerBound = bounds.getLowerBound();
-        Double upperBound = bounds.getUpperBound();
+        var bounds = problem.getVariableBounds().get(j);
+        var lowerBound = bounds.getLowerBound();
+        var upperBound = bounds.getUpperBound();
         if (particle.variables().get(j) < lowerBound) {
           particle.variables().set(j, lowerBound);
           speed[i][j] = speed[i][j] * changeVelocity1;
@@ -302,7 +302,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override
   protected void perturbation(@NotNull List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
+    for (var i = 0; i < swarm.size(); i++) {
       if ((i % 6) == 0) {
         mutation.execute(swarm.get(i));
       }
@@ -318,10 +318,10 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override
   protected void updateParticlesMemory(@NotNull List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      int flag = dominanceComparator.compare(swarm.get(i), localBest.getAttribute(swarm.get(i)));
+    for (var i = 0; i < swarm.size(); i++) {
+      var flag = dominanceComparator.compare(swarm.get(i), localBest.getAttribute(swarm.get(i)));
       if (flag != 1) {
-        DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+        var particle = (DoubleSolution) swarm.get(i).copy();
         localBest.setAttribute(swarm.get(i), particle);
       }
     }
@@ -333,12 +333,11 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   protected DoubleSolution selectGlobalBest() {
-    DoubleSolution one, two;
     DoubleSolution bestGlobal;
-    int pos1 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
-    int pos2 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
-    one = leaders.getSolutionList().get(pos1);
-    two = leaders.getSolutionList().get(pos2);
+    var pos1 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
+    var pos2 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
+    var one = leaders.getSolutionList().get(pos1);
+    var two = leaders.getSolutionList().get(pos2);
 
     if (leaders.getComparator().compare(one, two) < 1) {
       bestGlobal = (DoubleSolution) one.copy();
@@ -351,12 +350,11 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   private double velocityConstriction(
           double v, double @NotNull [] deltaMax, double[] deltaMin, int variableIndex) {
-    double result;
 
-    double dmax = deltaMax[variableIndex];
-    double dmin = deltaMin[variableIndex];
+    var dmax = deltaMax[variableIndex];
+    var dmin = deltaMin[variableIndex];
 
-    result = v;
+    var result = v;
 
     if (v > dmax) {
       result = dmax;
@@ -370,7 +368,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   protected double constrictionCoefficient(double c1, double c2) {
-    double rho = c1 + c2;
+    var rho = c1 + c2;
     if (rho <= 4) {
       return 1.0;
     } else {

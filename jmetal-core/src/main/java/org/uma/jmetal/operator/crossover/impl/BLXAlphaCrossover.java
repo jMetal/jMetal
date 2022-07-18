@@ -100,7 +100,7 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
 
     if (randomGenerator.getRandomValue() <= probability) {
       for (i = 0; i < parent1.variables().size(); i++) {
-        Bounds<Double> bounds = parent1.getBounds(i);
+        var bounds = parent1.getBounds(i);
         upperBound = bounds.getUpperBound();
         lowerBound = bounds.getLowerBound();
         valueX1 = parent1.variables().get(i);
@@ -108,7 +108,6 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
 
         double max;
         double min;
-        double range;
 
         if (valueX2 > valueX1) {
           max = valueX2;
@@ -118,13 +117,10 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
           min = valueX2;
         }
 
-        range = max - min;
+        var range = max - min;
 
-        double minRange;
-        double maxRange;
-
-        minRange = min - range * alpha;
-        maxRange = max + range * alpha;
+        var minRange = min - range * alpha;
+        var maxRange = max + range * alpha;
 
         random = randomGenerator.getRandomValue();
         valueY1 = minRange + random * (maxRange - minRange);

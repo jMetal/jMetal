@@ -18,18 +18,18 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
   public void shouldGetDistanceReturnZeroIfTheSolutionListContainsOnlyTheSolution() {
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
-    DoubleSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
     solution.variables().set(0, 1.0) ;
     solution.variables().set(1, 1.0) ;
 
     List<DoubleSolution> solutionList = new ArrayList<>() ;
     solutionList.add(solution) ;
 
-    int k = 1  ;
-    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =
-            new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
+    var k = 1  ;
+    var distance =
+            new DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
 
-    double receivedValue = distance.compute(solution, solutionList) ;
+    var receivedValue = distance.compute(solution, solutionList) ;
     assertEquals(0.0, receivedValue, EPSILON) ;
   }
 
@@ -37,21 +37,21 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
   public void shouldGetDistanceWorkProperlyIfTheListContainsOnlyASolution() {
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
-    DoubleSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
     solution.variables().set(0, 1.0) ;
     solution.variables().set(1, 1.0) ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.variables().set(0, 2.0) ;
     solution2.variables().set(1, 2.0) ;
 
     List<DoubleSolution> solutionList = new ArrayList<>() ;
     solutionList.add(solution2) ;
 
-    int k = 1 ;
-    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =
-            new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
-    double receivedValue = distance.compute(solution, solutionList) ;
+    var k = 1 ;
+    var distance =
+            new DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
+    var receivedValue = distance.compute(solution, solutionList) ;
     assertEquals(Math.sqrt(2), receivedValue, EPSILON) ;
   }
 
@@ -60,29 +60,29 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
 
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
-    DoubleSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
     solution.variables().set(0, 1.0) ;
     solution.variables().set(1, 1.0) ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.variables().set(0, 2.0) ;
     solution2.variables().set(1, 2.0) ;
 
-    DoubleSolution solution3 = problem.createSolution() ;
+    var solution3 = problem.createSolution() ;
     solution3.variables().set(0, 3.0) ;
     solution3.variables().set(1, 3.0) ;
 
-    DoubleSolution solution4 = problem.createSolution() ;
+    var solution4 = problem.createSolution() ;
     solution4.variables().set(0, 4.0) ;
     solution4.variables().set(1, 4.0) ;
 
-    List<DoubleSolution> solutionList = List.of(solution, solution2, solution3, solution4) ;
+    var solutionList = List.of(solution, solution2, solution3, solution4) ;
 
-    int k = 2 ;
-    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =
-            new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
+    var k = 2 ;
+    var distance =
+            new DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
 
-    double receivedValue = distance.compute(solution, solutionList) ;
+    var receivedValue = distance.compute(solution, solutionList) ;
     assertEquals((Math.sqrt(4+4)), receivedValue, EPSILON) ;
   }
 }

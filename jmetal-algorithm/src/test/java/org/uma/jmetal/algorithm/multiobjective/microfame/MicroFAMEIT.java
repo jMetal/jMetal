@@ -22,19 +22,16 @@ public class MicroFAMEIT {
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    int archiveSize = 100;
-    int evaluations = 25000;
+    var archiveSize = 100;
+    var evaluations = 25000;
 
-    problem = new ZDT1();
+      Problem<DoubleSolution> problem = new ZDT1();
 
     var crossover = new NullCrossover<DoubleSolution>();
     var mutation = new NullMutation<DoubleSolution>();
-    selection = new HVTournamentSelection(5);
-    algorithm = new MicroFAME<>(problem, evaluations, archiveSize, crossover, mutation, selection);
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new HVTournamentSelection(5);
+      Algorithm<List<DoubleSolution>> algorithm = new MicroFAME<>(problem, evaluations, archiveSize, crossover, mutation, selection);
 
     algorithm.run();
 
@@ -48,19 +45,16 @@ public class MicroFAMEIT {
 
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    int archiveSize = 100;
-    int evaluations = 25000;
+    var archiveSize = 100;
+    var evaluations = 25000;
 
-    problem = new ZDT1();
+      Problem<DoubleSolution> problem = new ZDT1();
 
     var crossover = new NullCrossover<DoubleSolution>();
     var mutation = new NullMutation<DoubleSolution>();
-    selection = new HVTournamentSelection(5);
-    algorithm = new MicroFAME<>(problem, evaluations, archiveSize, crossover, mutation, selection);
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new HVTournamentSelection(5);
+      Algorithm<List<DoubleSolution>> algorithm = new MicroFAME<>(problem, evaluations, archiveSize, crossover, mutation, selection);
 
     algorithm.run();
 
@@ -71,7 +65,7 @@ public class MicroFAMEIT {
     // Rationale: the default problem is ZDT1, and AbYSS, configured with standard settings,
     // should return find a front with a hypervolume value higher than 0.22
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(algorithm.getResult()));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(algorithm.getResult()));
 
     assertTrue(hv > 0.65);
 

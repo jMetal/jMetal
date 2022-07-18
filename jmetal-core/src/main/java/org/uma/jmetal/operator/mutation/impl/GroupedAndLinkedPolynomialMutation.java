@@ -88,17 +88,17 @@ public class GroupedAndLinkedPolynomialMutation implements MutationOperator<Doub
 
   /** Perform the mutation operation */
   private void doMutation(@NotNull DoubleSolution solution) {
-    double rnd, delta1, delta2, mutPow, deltaq;
+    double delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 
     variableGrouping.computeGroups(solution.variables());
-    int groupIndex = randomGenerator.nextInt(0, variableGrouping.numberOfGroups() - 1);
-    List<Integer> variableIndex = variableGrouping.getGroup(groupIndex);
+    var groupIndex = randomGenerator.nextInt(0, variableGrouping.numberOfGroups() - 1);
+    var variableIndex = variableGrouping.getGroup(groupIndex);
 
-    rnd = randomGenerator.nextDouble();
-    for (int i = 0; i < variableIndex.size(); i++) {
+    var rnd = randomGenerator.nextDouble();
+    for (var i = 0; i < variableIndex.size(); i++) {
       y = solution.variables().get(variableIndex.get(i));
-      Bounds<Double> bounds = solution.getBounds(variableIndex.get(i));
+      var bounds = solution.getBounds(variableIndex.get(i));
       yl = bounds.getLowerBound();
       yu = bounds.getUpperBound();
       if (yl == yu) {

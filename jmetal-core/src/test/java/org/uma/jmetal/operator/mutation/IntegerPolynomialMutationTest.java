@@ -25,7 +25,7 @@ public class IntegerPolynomialMutationTest {
 
   @Test
   public void shouldConstructorWithoutParameterAssignTheDefaultValues() {
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation() ;
+    var mutation = new IntegerPolynomialMutation() ;
     assertEquals(0.01, (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
     assertEquals(20.0, (Double) ReflectionTestUtils
@@ -35,7 +35,7 @@ public class IntegerPolynomialMutationTest {
   @Test
   public void shouldConstructorWithProblemAndDistributionIndexParametersAssignTheCorrectValues() {
     IntegerProblem problem = new FakeIntegerProblem(4, 2, 0) ;
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(problem, 10.0) ;
+    var mutation = new IntegerPolynomialMutation(problem, 10.0) ;
     assertEquals(1.0/problem.getNumberOfVariables(), (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
     assertEquals(10.0, (Double) ReflectionTestUtils
@@ -44,60 +44,60 @@ public class IntegerPolynomialMutationTest {
 
   @Test
   public void shouldConstructorAssignTheCorrectProbabilityValue() {
-    double mutationProbability = 0.1 ;
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, 2.0) ;
+    var mutationProbability = 0.1 ;
+    var mutation = new IntegerPolynomialMutation(mutationProbability, 2.0) ;
     assertEquals(mutationProbability, (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
   }
 
   @Test
   public void shouldConstructorAssignTheCorrectDistributionIndex() {
-    double distributionIndex = 15.0 ;
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(0.1, distributionIndex) ;
+    var distributionIndex = 15.0 ;
+    var mutation = new IntegerPolynomialMutation(0.1, distributionIndex) ;
     assertEquals(distributionIndex, (Double) ReflectionTestUtils
         .getField(mutation, "distributionIndex"), EPSILON) ;
   }
 
   @Test (expected = JMetalException.class)
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
-    double mutationProbability = -0.1 ;
+    var mutationProbability = -0.1 ;
     new IntegerPolynomialMutation(mutationProbability, 2.0) ;
   }
 
   @Test (expected = JMetalException.class)
   public void shouldConstructorFailWhenPassedANegativeDistributionIndex() {
-    double distributionIndex = -0.1 ;
+    var distributionIndex = -0.1 ;
     new IntegerPolynomialMutation(0.1, distributionIndex) ;
   }
 
   @Test
   public void shouldGetMutationProbabilityReturnTheRightValue() {
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(0.1, 20.0) ;
+    var mutation = new IntegerPolynomialMutation(0.1, 20.0) ;
     assertEquals(0.1, mutation.getMutationProbability(), EPSILON) ;
   }
 
   @Test
   public void shouldGetDistributionIndexReturnTheRightValue() {
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(0.1, 30.0) ;
+    var mutation = new IntegerPolynomialMutation(0.1, 30.0) ;
     assertEquals(30.0, mutation.getDistributionIndex(), EPSILON) ;
   }
 
   @Test (expected = JMetalException.class)
   public void shouldExecuteWithNullParameterThrowAnException() {
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(0.1, 20.0) ;
+    var mutation = new IntegerPolynomialMutation(0.1, 20.0) ;
 
     mutation.execute(null) ;
   }
 
   @Test
   public void shouldMutateASingleVariableSolutionReturnTheSameSolutionIfProbabilityIsZero() {
-    double mutationProbability = 0.0;
-    double distributionIndex = 20.0 ;
+    var mutationProbability = 0.0;
+    var distributionIndex = 20.0 ;
 
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
+    var mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
     IntegerProblem problem = new FakeIntegerProblem(1,2,0) ;
-    IntegerSolution solution = problem.createSolution() ;
-    IntegerSolution oldSolution = (IntegerSolution)solution.copy() ;
+    var solution = problem.createSolution() ;
+    var oldSolution = (IntegerSolution)solution.copy() ;
 
     mutation.execute(solution) ;
 
@@ -108,15 +108,15 @@ public class IntegerPolynomialMutationTest {
   public void shouldMutateASingleVariableSolutionReturnTheSameSolutionIfItIsNotMutated() {
     @SuppressWarnings("unchecked")
     RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
-    double mutationProbability = 0.1;
-    double distributionIndex = 20.0 ;
+    var mutationProbability = 0.1;
+    var distributionIndex = 20.0 ;
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(1.0) ;
 
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
+    var mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
     IntegerProblem problem = new FakeIntegerProblem(1, 2, 0) ;
-    IntegerSolution solution = problem.createSolution() ;
-    IntegerSolution oldSolution = (IntegerSolution)solution.copy() ;
+    var solution = problem.createSolution() ;
+    var oldSolution = (IntegerSolution)solution.copy() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
@@ -131,20 +131,20 @@ public class IntegerPolynomialMutationTest {
   public void shouldMutateASingleVariableSolutionReturnAValidSolution() {
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
-    double mutationProbability = 0.1;
-    double distributionIndex = 20.0 ;
+    var mutationProbability = 0.1;
+    var distributionIndex = 20.0 ;
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.6) ;
 
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
+    var mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
     IntegerProblem problem = new FakeIntegerProblem(1,2,0) ;
-    IntegerSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
     mutation.execute(solution) ;
 
-    Bounds<Integer> bounds = solution.getBounds(0);
+    var bounds = solution.getBounds(0);
     assertThat(solution.variables().get(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound()));
     assertThat(solution.variables().get(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
     verify(randomGenerator, times(2)).getRandomValue();
@@ -155,20 +155,20 @@ public class IntegerPolynomialMutationTest {
   public void shouldMutateASingleVariableSolutionReturnAnotherValidSolution() {
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
-    double mutationProbability = 0.1;
-    double distributionIndex = 20.0 ;
+    var mutationProbability = 0.1;
+    var distributionIndex = 20.0 ;
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
+    var mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
     IntegerProblem problem = new FakeIntegerProblem(1, 2, 0) ;
-    IntegerSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
     mutation.execute(solution) ;
 
-    Bounds<Integer> bounds = solution.getBounds(0);
+    var bounds = solution.getBounds(0);
     assertThat(solution.variables().get(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound())) ;
     assertThat(solution.variables().get(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
     verify(randomGenerator, times(2)).getRandomValue();
@@ -179,18 +179,18 @@ public class IntegerPolynomialMutationTest {
   public void shouldMutateASingleVariableSolutionWithSameLowerAndUpperBoundsReturnTheBoundValue() {
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
-    double mutationProbability = 0.1;
-    double distributionIndex = 20.0 ;
+    var mutationProbability = 0.1;
+    var distributionIndex = 20.0 ;
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
-    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
+    var mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
 
-    FakeIntegerProblem problem = new FakeIntegerProblem(1, 2, 0) ;
+    var problem = new FakeIntegerProblem(1, 2, 0) ;
     ReflectionTestUtils.setField(problem, "lowerLimit", Arrays.asList(new Integer[]{1}));
     ReflectionTestUtils.setField(problem, "upperLimit", Arrays.asList(new Integer[]{1}));
 
-    IntegerSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 

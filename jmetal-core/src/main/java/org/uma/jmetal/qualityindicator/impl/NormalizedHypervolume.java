@@ -20,7 +20,7 @@ public class NormalizedHypervolume extends QualityIndicator {
 
   public NormalizedHypervolume(double[] referencePoint) {
     // TODO: add a unit test
-    double[][] referenceFront = {referencePoint};
+    var referenceFront = new double[][]{referencePoint};
     hypervolume = new PISAHypervolume(referenceFront);
 
     referenceFrontHypervolume = hypervolume.compute(referenceFront);
@@ -59,7 +59,7 @@ public class NormalizedHypervolume extends QualityIndicator {
 
   @Override
   public double compute(double[][] front) {
-    double hypervolumeValue = hypervolume.compute(front);
+    var hypervolumeValue = hypervolume.compute(front);
 
     return 1 - (hypervolumeValue / referenceFrontHypervolume);
   }

@@ -89,7 +89,7 @@ public class F08ShiftedRotatedAckleyGlobalOptBound extends TestFunc {
     // Load the matrix
     Benchmark.loadMatrixFromFile(file_m, mDimension, mDimension, m_matrix);
 
-    for (int i = 0; i < mDimension; i += 2) {
+    for (var i = 0; i < mDimension; i += 2) {
       m_o[i] = -32.0;
     }
   }
@@ -97,7 +97,7 @@ public class F08ShiftedRotatedAckleyGlobalOptBound extends TestFunc {
   // Function body
   public double f(double[] x) {
 
-    double result = 0.0;
+    var result = 0.0;
 
     Benchmark.shift(m_z, x, m_o);
     Benchmark.rotate(m_zM, m_z, m_matrix);

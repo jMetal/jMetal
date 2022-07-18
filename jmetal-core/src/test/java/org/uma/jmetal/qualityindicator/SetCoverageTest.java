@@ -32,23 +32,23 @@ public class SetCoverageTest {
 
   @Test
   public void shouldExecuteReturnZeroIfTheFrontsContainOnePointWhichIsTheSame() {
-   double[][] frontA = {{10.0, 12.0, -1.0}} ;
-   double[][] frontB = {{10.0, 12.0, -1.0}} ;
+    var frontA = new double[][]{{10.0, 12.0, -1.0}};
+    var frontB = new double[][]{{10.0, 12.0, -1.0}};
 
     Assertions.assertEquals(0.0, setCoverage.compute(frontA, frontB), EPSILON);
   }
 
   @Test
   public void shouldExecuteReturnZeroIfBothFrontsAreEmpty() {
-    double[][] frontA = {{}} ;
-    double[][] frontB = {{}} ;
+    var frontA = new double[][]{{}};
+    var frontB = new double[][]{{}};
 
     Assertions.assertEquals(0.0, setCoverage.compute(frontA, frontB), EPSILON);
   }
 
   @Test
   public void shouldExecuteReturnOneIfTheSecondFrontIsEmpty() {
-    double[][] frontA = {{10.0, 12.0}} ;
+    var frontA = new double[][]{{10.0, 12.0}};
     double[][] frontB = {} ;
 
     Assertions.assertEquals(1.0, setCoverage.compute(frontA, frontB), EPSILON);
@@ -60,8 +60,8 @@ public class SetCoverageTest {
    */
   @Test
   public void shouldExecuteReturnTheRightValueIfTheFrontsContainOnePointWhichIsNotTheSame() {
-    double[][] frontA = {{2.0, 3.0}} ;
-    double[][] frontB = {{1.0, 2.0}} ;
+    var frontA = new double[][]{{2.0, 3.0}};
+    var frontB = new double[][]{{1.0, 2.0}};
 
     Assertions.assertEquals(0.0, setCoverage.compute(frontA, frontB), EPSILON);
     Assertions.assertEquals(1.0, setCoverage.compute(frontB, frontA), EPSILON);
@@ -74,8 +74,8 @@ public class SetCoverageTest {
    */
   @Test
   public void shouldExecuteReturnTheCorrectValueCaseA() {
-    double[][] frontA = {{0.0, 6.0}, {2.0, 3.0}, {4.0, 2.0}} ;
-    double[][] frontB = {{1.0, 7.0}, {2.0, 3.0}, {3.5, 1.0}} ;
+    var frontA = new double[][]{{0.0, 6.0}, {2.0, 3.0}, {4.0, 2.0}};
+    var frontB = new double[][]{{1.0, 7.0}, {2.0, 3.0}, {3.5, 1.0}};
 
     Assertions.assertEquals(1.0/3.0, setCoverage.compute(frontA, frontB), EPSILON);
     Assertions.assertEquals(1.0/3.0, setCoverage.compute(frontB, frontA), EPSILON);
@@ -88,8 +88,8 @@ public class SetCoverageTest {
    */
   @Test
   public void shouldExecuteReturnTheCorrectValueCaseB() {
-    double[][] frontA = {{0.0, 6.0}, {2.0, 3.0}, {4.0, 2.0}} ;
-    double[][] frontB = {{1.0, 7.0}, {2.5, 3.0}, {5.0, 2.5}} ;
+    var frontA = new double[][]{{0.0, 6.0}, {2.0, 3.0}, {4.0, 2.0}};
+    var frontB = new double[][]{{1.0, 7.0}, {2.5, 3.0}, {5.0, 2.5}};
 
     Assertions.assertEquals(1.0, setCoverage.compute(frontA, frontB), EPSILON);
     Assertions.assertEquals(0.0, setCoverage.compute(frontB, frontA), EPSILON);

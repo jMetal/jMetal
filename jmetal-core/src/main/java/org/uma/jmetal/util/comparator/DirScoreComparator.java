@@ -16,11 +16,11 @@ public class DirScoreComparator<S extends Solution<?>> implements Comparator<S>,
 
   @Override
   public int compare(@NotNull S o1, @NotNull S o2) {
-    double score1 = Double.MAX_VALUE;
-    double score2 = Double.MAX_VALUE;
+    var score1 = Double.MAX_VALUE;
+    var score2 = Double.MAX_VALUE;
 
-    Object scoreObj1 = o1.attributes().get("dir-score");
-    Object scoreObj2 = o2.attributes().get("dir-score");
+    var scoreObj1 = o1.attributes().get("dir-score");
+    var scoreObj2 = o2.attributes().get("dir-score");
 
     if (scoreObj1 != null) {
       score1 = (double) scoreObj1;

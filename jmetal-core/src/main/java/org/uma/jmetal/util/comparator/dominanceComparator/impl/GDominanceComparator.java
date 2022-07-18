@@ -45,7 +45,7 @@ public class GDominanceComparator<S extends Solution<?>> implements DominanceCom
           solution2.objectives().length) ;
     }
 
-    int result = flagComparison(solution1, solution2);
+    var result = flagComparison(solution1, solution2);
 
     return result ;
   }
@@ -64,15 +64,15 @@ public class GDominanceComparator<S extends Solution<?>> implements DominanceCom
   }
 
   private int flag(@NotNull S solution) {
-    int result = 1 ;
-    for (int i = 0; i < solution.objectives().length; i++) {
+    var result = 1 ;
+    for (var i = 0; i < solution.objectives().length; i++) {
       if (solution.objectives()[i] > referencePoint.get(i)) {
         result = 0 ;
       }
     }
     if (result == 0) {
       result = 1 ;
-      for (int i = 0; i < solution.objectives().length; i++) {
+      for (var i = 0; i < solution.objectives().length; i++) {
         if (solution.objectives()[i] < referencePoint.get(i)) {
           result = 0 ;
         }

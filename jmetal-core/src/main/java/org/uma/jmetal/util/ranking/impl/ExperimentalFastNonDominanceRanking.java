@@ -43,20 +43,20 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
   @Override
   public Ranking<S> compute(@NotNull List<S> solutionList) {
     subFronts.clear();
-    int nSolutions = solutionList.size();
+    var nSolutions = solutionList.size();
     if (nSolutions == 0) {
       return this;
     }
 
     // We have at least one individual
-    S first = solutionList.get(0);
-    int nObjectives = first.objectives().length;
-    boolean hasConstraintViolation = getConstraint(first) < 0;
+    var first = solutionList.get(0);
+    var nObjectives = first.objectives().length;
+    var hasConstraintViolation = getConstraint(first) < 0;
 
     // Iterate over all individuals to check if all have the same number of objectives,
     // and to get whether we have meaningful constraints
-    for (int i = 1; i < nSolutions; ++i) {
-      S current = solutionList.get(i);
+    for (var i = 1; i < nSolutions; ++i) {
+      var current = solutionList.get(i);
       if (nObjectives != current.objectives().length) {
         throw new IllegalArgumentException("Solutions have different numbers of objectives");
       }
@@ -70,11 +70,11 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
       // Need to apply the constraint comparator first
       List<S> defensiveCopy = new ArrayList<>(solutionList);
       defensiveCopy.sort((Comparator<? super S>) constraintViolationComparator);
-      int rankOffset = 0;
-      int lastSpanStart = 0;
-      double lastConstraint = getConstraint(defensiveCopy.get(0));
-      for (int i = 1; i < nSolutions; ++i) {
-        double currConstraint = getConstraint(defensiveCopy.get(i));
+      var rankOffset = 0;
+      var lastSpanStart = 0;
+      var lastConstraint = getConstraint(defensiveCopy.get(0));
+      for (var i = 1; i < nSolutions; ++i) {
+        var currConstraint = getConstraint(defensiveCopy.get(i));
         if (lastConstraint != currConstraint) {
           lastConstraint = currConstraint;
           rankOffset = 1 + runSorting(defensiveCopy, lastSpanStart, i, nObjectives, rankOffset);
@@ -89,16 +89,16 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
 
   private int runSorting(List<S> solutions, int from, int until, int dimension, int rankOffset) {
     ensureEnoughSpace(until - from, dimension);
-    double[] @NotNull [] points = new double[until - from][];
-    int[] ranks = new int[until - from];
-    for (int i = from; i < until; ++i) {
+    var points = new double[until - from][];
+    var ranks = new int[until - from];
+    for (var i = from; i < until; ++i) {
       points[i - from] = solutions.get(i).objectives();
     }
     sortingInstance.sort(points, ranks, until - from);
-    int maxRank = 0;
-    for (int i = from; i < until; ++i) {
-      S current = solutions.get(i);
-      int rank = ranks[i - from] + rankOffset;
+    var maxRank = 0;
+    for (var i = from; i < until; ++i) {
+      var current = solutions.get(i);
+      var rank = ranks[i - from] + rankOffset;
       maxRank = Math.max(maxRank, rank);
       current.attributes().put(attributeId, rank);
       while (subFronts.size() <= rank) {

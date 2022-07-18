@@ -7,16 +7,16 @@ import java.util.List;
 public class Griewank implements Function {
     @Override
     public Double evaluate(@NotNull List<Double> x) {
-        double res = 0.0;
-        for (Double value : x) {
+        var res = 0.0;
+        for (var value : x) {
             double v = value;
-            double v1 = Math.pow(v, 2.0) / 4000.0;
+            var v1 = Math.pow(v, 2.0) / 4000.0;
             res += v1;
         }
 
-        double aux = 1.0;
-        for (int i = 1; i <= x.size(); i++) {
-            double tmp = Math.sqrt(i);
+        var aux = 1.0;
+        for (var i = 1; i <= x.size(); i++) {
+            var tmp = Math.sqrt(i);
             tmp = x.get(i-1) / tmp;
             tmp = Math.cos(tmp);
             aux *= tmp;

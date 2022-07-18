@@ -59,14 +59,14 @@ public class QualityIndicatorUtils {
   }
 
   public static void printQualityIndicators(double[][] front, double[][] referenceFront){
-    double[] @NotNull [] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
-    double[][] normalizedFront =
+      var normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+      var normalizedFront =
             NormalizeUtils.normalize(
                     front,
                     NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
                     NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    List<QualityIndicator> qualityIndicators = getAvailableIndicators(normalizedReferenceFront) ;
+      var qualityIndicators = getAvailableIndicators(normalizedReferenceFront) ;
     for (@NotNull QualityIndicator indicator: qualityIndicators) {
       JMetalLogger.logger.info(() ->indicator.getName() + ": " + indicator.compute(normalizedFront)) ;
     }

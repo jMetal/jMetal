@@ -30,7 +30,7 @@ public class NIntegerMin extends AbstractIntegerProblem {
     @NotNull List<Integer> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Integer> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-      for (int i = 0; i < numberOfVariables; i++) {
+      for (var i = 0; i < numberOfVariables; i++) {
           lowerLimit.add(lowerBound);
           upperLimit.add(upperBound);
       }
@@ -41,14 +41,13 @@ public class NIntegerMin extends AbstractIntegerProblem {
   /** Evaluate() method */
   @Override
   public IntegerSolution evaluate(IntegerSolution solution) {
-    int approximationToN;
 
-    approximationToN = 0;
+    var approximationToN = 0;
 
-      int sum = 0;
-      for (Integer integer : solution.variables()) {
+    var sum = 0;
+      for (var integer : solution.variables()) {
           int value = integer;
-          int abs = Math.abs(valueN - value);
+        var abs = Math.abs(valueN - value);
           sum += abs;
       }
       approximationToN += sum;

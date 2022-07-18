@@ -17,7 +17,7 @@ public class ConstrEx extends AbstractDoubleProblem {
     setNumberOfConstraints(2);
     setName("ConstrEx");
 
-    List<Double> lowerLimit = Arrays.asList(0.1, 0.0);
+    var lowerLimit = Arrays.asList(0.1, 0.0);
     @NotNull List<Double> upperLimit = Arrays.asList(1.0, 5.0);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -26,7 +26,7 @@ public class ConstrEx extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double @NotNull [] f = new double[solution.objectives().length];
+    var f = new double[solution.objectives().length];
     f[0] = solution.variables().get(0);
     f[1] = (1.0 + solution.variables().get(1)) / solution.variables().get(0);
 

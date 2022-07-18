@@ -31,7 +31,7 @@ public class PairwiseReplacement<S extends Solution<?>> implements Replacement<S
             + offspringPopulation.size());
 
     @NotNull List<S> resultPopulation = new ArrayList<>();
-    for (int i = 0; i < population.size(); i++) {
+    for (var i = 0; i < population.size(); i++) {
       if (comparator.compare(population.get(i), offspringPopulation.get(i)) < 0) {
         resultPopulation.add(population.get(i)) ;
       } else {

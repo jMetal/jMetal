@@ -46,7 +46,7 @@ public class MeasureFactory {
 	@SuppressWarnings("serial")
 	public <Value> @NotNull PullMeasure<Value> createPullFromPush(
 			final PushMeasure<Value> push, Value initialValue) {
-		final Object[] cache = { initialValue };
+		final var cache = new Object[]{initialValue};
 		final MeasureListener<Value> listener = value -> cache[0] = value;
 		push.register(listener);
 		return new PullMeasure<Value>() {
@@ -99,28 +99,28 @@ public class MeasureFactory {
 	 */
 	public <Value> PushMeasure<Value> createPushFromPull(
             @NotNull PullMeasure<Value> pull, final long period) {
-		SimplePushMeasure<Value> push = new SimplePushMeasure<>(pull.getName(),
+		var push = new SimplePushMeasure<Value>(pull.getName(),
 				pull.getDescription());
-		final WeakReference<PullMeasure<Value>> weakPull = new WeakReference<PullMeasure<Value>>(
+		final var weakPull = new WeakReference<PullMeasure<Value>>(
 				pull);
-		final WeakReference<SimplePushMeasure<Value>> weakPush = new WeakReference<SimplePushMeasure<Value>>(
+		final var weakPush = new WeakReference<SimplePushMeasure<Value>>(
 				push);
-		final Value initialValue = pull.get();
+		final var initialValue = pull.get();
 		/*
 		 * TODO Use a static thread to run the checks of all the measures
 		 * created that way. Using a WeakHashMap could probably do the trick.
 		 */
-		Thread thread = new Thread(new Runnable() {
+		var thread = new Thread(new Runnable() {
 			private @Nullable Value lastValue = initialValue;
 
 			@Override
 			public void run() {
-				boolean isThreadNeeded = true;
+				var isThreadNeeded = true;
 				long alreadyConsumed = 0;
 				while (isThreadNeeded) {
 					if (alreadyConsumed > period) {
-						long realConsumption = alreadyConsumed;
-						long missed = alreadyConsumed / period;
+						var realConsumption = alreadyConsumed;
+						var missed = alreadyConsumed / period;
 						alreadyConsumed = alreadyConsumed % period;
 						log.warning("Too much time consumed in the last measuring ("
 								+ realConsumption
@@ -139,14 +139,14 @@ public class MeasureFactory {
 						throw new JMetalException("Error in run method: ", e) ;
 					}
 
-					long measureStart = System.currentTimeMillis();
+					var measureStart = System.currentTimeMillis();
 
-					PullMeasure<Value> pull = weakPull.get();
-					SimplePushMeasure<Value> push = weakPush.get();
+					var pull = weakPull.get();
+					var push = weakPush.get();
 					if (pull == null || push == null) {
 						isThreadNeeded = false;
 					} else {
-						Value value = pull.get();
+						var value = pull.get();
 						if (value == lastValue || value != null
 								&& value.equals(lastValue)) {
 							// still the same, don't notify
@@ -158,7 +158,7 @@ public class MeasureFactory {
 					pull = null;
 					push = null;
 
-					long measureEnd = System.currentTimeMillis();
+					var measureEnd = System.currentTimeMillis();
 					alreadyConsumed = measureEnd - measureStart;
 				}
 			}
@@ -187,13 +187,13 @@ public class MeasureFactory {
 	public @NotNull Map<String, PullMeasure<?>> createPullsFromGetters(
 			final Object object) {
 		Map<String, PullMeasure<?>> measures = new HashMap<String, PullMeasure<?>>();
-		Class<? extends Object> clazz = object.getClass();
-		for (final Method method : clazz.getMethods()) {
+		var clazz = object.getClass();
+		for (final var method : clazz.getMethods()) {
 			if (method.getParameterTypes().length == 0
 					&& !method.getReturnType().equals(Void.TYPE)
 					&& !method.getName().equals("getClass")
 					&& method.getName().matches("get[^a-z].*")) {
-				String key = method.getName().substring(3);
+				var key = method.getName().substring(3);
 				// TODO exploit return type to restrict the generics
 				measures.put(key, new SimplePullMeasure<Object>(key) {
 
@@ -232,9 +232,9 @@ public class MeasureFactory {
 	@SuppressWarnings("serial")
 	public @NotNull Map<String, PullMeasure<?>> createPullsFromFields(final Object object) {
 		Map<String, PullMeasure<?>> measures = new HashMap<String, PullMeasure<?>>();
-		Class<? extends Object> clazz = object.getClass();
+		var clazz = object.getClass();
 		for (final @NotNull Field field : clazz.getFields()) {
-			String key = field.getName();
+			var key = field.getName();
 			// TODO exploit return type to restrict the generics
 			measures.put(key, new SimplePullMeasure<Object>(key) {
 

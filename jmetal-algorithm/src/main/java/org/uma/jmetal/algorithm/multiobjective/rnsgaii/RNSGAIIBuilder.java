@@ -110,9 +110,8 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
   }
 
   public RNSGAII<S> build() {
-    RNSGAII<S> algorithm;
 
-    algorithm = new RNSGAII<>(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
+    var algorithm = new RNSGAII<S>(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
             crossoverOperator, mutationOperator, selectionOperator, evaluator, interestPoint, epsilon);
 
     return algorithm;

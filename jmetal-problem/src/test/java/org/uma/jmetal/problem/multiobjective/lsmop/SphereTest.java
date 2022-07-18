@@ -25,7 +25,7 @@ class SphereTest {
     x.add(8.0);
     x.add(9.0);
     double result = function.evaluate(x);
-    DecimalFormat df = new DecimalFormat("#.#");
+    var df = new DecimalFormat("#.#");
     // 285 is the value computed with the reference Matlab implementation
     assertEquals(df.format(285.0), df.format(result));
 

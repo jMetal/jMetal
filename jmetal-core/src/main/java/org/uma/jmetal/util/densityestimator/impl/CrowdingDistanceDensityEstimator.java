@@ -24,7 +24,7 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
    */
   @Override
   public void compute(List<S> solutionList) {
-    int size = solutionList.size();
+    var size = solutionList.size();
 
     if (size == 0) {
       return;
@@ -44,13 +44,13 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
     // Use a new SolutionSet to avoid altering the original solutionSet
     List<S> front = new ArrayList<>(solutionList);
 
-    for (int i = 0; i < size; i++) {
+    for (var i = 0; i < size; i++) {
       front.get(i).attributes().put(attributeId, 0.0);
     }
 
-    int numberOfObjectives = solutionList.get(0).objectives().length ;
+    var numberOfObjectives = solutionList.get(0).objectives().length ;
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
       front.sort(new ObjectiveComparator<>(i));
 
@@ -59,8 +59,8 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
       //   we also don't update the crowding distance, as they all will "go to eleven",
       //   which makes no sense as this objective just appears to be non-discriminating.
 
-      double minObjective = front.get(0).objectives()[i];
-      double maxObjective = front.get(front.size() - 1).objectives()[i];
+      var minObjective = front.get(0).objectives()[i];
+      var maxObjective = front.get(front.size() - 1).objectives()[i];
       if (minObjective == maxObjective) {
         continue; // otherwise all crowding distances will be NaN = 0.0 / 0.0 except for two
       }
@@ -70,8 +70,8 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
       front.get(size - 1).attributes().put(attributeId, Double.POSITIVE_INFINITY);
 
       // Increase the crowding distances for all the intermediate points
-      for (int j = 1; j < size - 1; j++) {
-        double distance = front.get(j + 1).objectives()[i] - front.get(j - 1).objectives()[i];
+      for (var j = 1; j < size - 1; j++) {
+        var distance = front.get(j + 1).objectives()[i] - front.get(j - 1).objectives()[i];
         distance = distance / (maxObjective - minObjective);
         distance += (double) front.get(j).attributes().get(attributeId);
         front.get(j).attributes().put(attributeId, distance);

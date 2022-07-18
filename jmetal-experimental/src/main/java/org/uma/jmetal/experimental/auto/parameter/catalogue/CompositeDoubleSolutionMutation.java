@@ -29,7 +29,7 @@ public class CompositeDoubleSolutionMutation implements MutationOperator<DoubleS
     Check.collectionIsNotEmpty(operators);
 
     this.operators = new ArrayList<>();
-    for (int i = 0; i < operators.size(); i++) {
+    for (var i = 0; i < operators.size(); i++) {
       Check.that(
           operators.get(i) instanceof MutationOperator,
           "The operator list does not contain an object implementing class CrossoverOperator");
@@ -52,7 +52,7 @@ public class CompositeDoubleSolutionMutation implements MutationOperator<DoubleS
 
   public DoubleSolution execute(DoubleSolution solution) {
     Check.notNull(solution);
-    Random random = new Random();
+    var random = new Random();
 
     solution = operators.get(random.nextInt(operators.size())).execute(solution) ;
 

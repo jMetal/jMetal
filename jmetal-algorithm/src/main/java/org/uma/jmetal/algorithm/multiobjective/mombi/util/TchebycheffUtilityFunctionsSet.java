@@ -26,7 +26,7 @@ public class TchebycheffUtilityFunctionsSet<S extends Solution<?>>
   public TchebycheffUtilityFunctionsSet(String file_path) {
     super(file_path);
     this.referencePoint = new ArrayList<>(this.getVectorSize());
-    for (int i = 0; i < this.getVectorSize(); i++) this.referencePoint.add(0.0);
+    for (var i = 0; i < this.getVectorSize(); i++) this.referencePoint.add(0.0);
   }
 
   @Override
@@ -34,9 +34,9 @@ public class TchebycheffUtilityFunctionsSet<S extends Solution<?>>
     if ((vector < 0) || (vector >= this.getSize()))
       throw new JMetalException("Vector value " + vector + " invalid");
 
-    double result = Double.NEGATIVE_INFINITY;
-    List<Double> weightVector = this.getWeightVector(vector);
-    for (int i = 0; i < weightVector.size(); i++)
+    var result = Double.NEGATIVE_INFINITY;
+    var weightVector = this.getWeightVector(vector);
+    for (var i = 0; i < weightVector.size(); i++)
       result =
           Math.max(
               result,

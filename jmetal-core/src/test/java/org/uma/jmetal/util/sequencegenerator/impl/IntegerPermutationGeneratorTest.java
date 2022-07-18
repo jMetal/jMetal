@@ -47,10 +47,10 @@ public class IntegerPermutationGeneratorTest {
 
   @Test
   public void shouldGetValueTheRigthValuesWhenInvokedTwiceAndSequenceLengthIsTwo() {
-    int sequenceLength = 2;
-    int[] values = new int[sequenceLength];
+    var sequenceLength = 2;
+    var values = new int[sequenceLength];
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(sequenceLength);
-      for (int i = 0; i < sequenceLength; i++) {
+      for (var i = 0; i < sequenceLength; i++) {
           values[i] = sequenceGenerator.getValue();
           sequenceGenerator.generateNext();
       }
@@ -60,10 +60,10 @@ public class IntegerPermutationGeneratorTest {
 
   @Test
   public void shouldGetValueTheRigthValuesWhenInvokedFiveTimesAndSequenceLengthIsFive() {
-    int sequenceLength = 5;
-    int[] values = new int[sequenceLength];
+    var sequenceLength = 5;
+    var values = new int[sequenceLength];
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(sequenceLength);
-      for (int i = 0; i < sequenceLength; i++) {
+      for (var i = 0; i < sequenceLength; i++) {
           values[i] = sequenceGenerator.getValue();
           sequenceGenerator.generateNext();
       }
@@ -75,10 +75,10 @@ public class IntegerPermutationGeneratorTest {
 
   @Test
   public void shouldGetValueTheRigthValuesWhenInvokedFiveTimesAndSequenceLengthIsThree() {
-    int sequenceLength = 3;
+    var sequenceLength = 3;
     List<Integer> values = new ArrayList<>(5);
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(sequenceLength);
-      for (int i = 0; i < 5; i++) {
+      for (var i = 0; i < 5; i++) {
           values.add(sequenceGenerator.getValue());
           sequenceGenerator.generateNext();
       }

@@ -18,12 +18,12 @@ public class InertiaWeightComputingParameter extends CategoricalParameter {
 
     switch (getValue()) {
       case "constantValue":
-        Double weight = (Double) findSpecificParameter("weight").getValue();
+        var weight = (Double) findSpecificParameter("weight").getValue();
         result = new ConstantValueStrategy(weight) ;
         break;
       case "randomSelectedValue":
-        Double weightMin = (Double) findSpecificParameter("weightMin").getValue();
-        Double weightMax = (Double) findSpecificParameter("weightMax").getValue();
+        var weightMin = (Double) findSpecificParameter("weightMin").getValue();
+        var weightMax = (Double) findSpecificParameter("weightMax").getValue();
         result = new RandomSelectedValueStrategy(weightMin, weightMax) ;
         break;
       case "linearDecreasingValue":

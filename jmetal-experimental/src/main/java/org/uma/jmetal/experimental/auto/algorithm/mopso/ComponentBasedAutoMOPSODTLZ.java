@@ -12,9 +12,9 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class ComponentBasedAutoMOPSODTLZ {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "DTLZ7.2D.csv";
+    var referenceFrontFileName = "DTLZ7.2D.csv";
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7_2D "
             + "--referenceFrontFileName "
             + referenceFrontFileName
@@ -49,7 +49,7 @@ public class ComponentBasedAutoMOPSODTLZ {
             + "--weightMax 0.5 ")
             .split("\\s+");
 
-    AutoMOPSO autoMOPSO = new AutoMOPSO();
+    var autoMOPSO = new AutoMOPSO();
     autoMOPSO.parseAndCheckParameters(parameters);
 
     AutoMOPSO.print(autoMOPSO.fixedParameterList);
@@ -57,7 +57,7 @@ public class ComponentBasedAutoMOPSODTLZ {
 
     @NotNull ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    var evaluationObserver = new EvaluationObserver(1000);
     @NotNull RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "irace.MOPSO", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);

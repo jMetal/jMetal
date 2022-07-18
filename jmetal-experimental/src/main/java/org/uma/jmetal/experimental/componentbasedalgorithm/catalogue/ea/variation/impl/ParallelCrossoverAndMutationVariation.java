@@ -30,7 +30,7 @@ public class ParallelCrossoverAndMutationVariation<S extends Solution<?>> implem
             * crossover.getNumberOfRequiredParents()
             / crossover.getNumberOfGeneratedChildren();
 
-    int remainder = matingPoolSize % crossover.getNumberOfRequiredParents();
+    var remainder = matingPoolSize % crossover.getNumberOfRequiredParents();
     if (remainder != 0) {
       matingPoolSize += remainder;
     }
@@ -38,23 +38,23 @@ public class ParallelCrossoverAndMutationVariation<S extends Solution<?>> implem
 
   @Override
   public List<S> variate(List<S> population, List<S> matingPopulation) {
-    int numberOfParents = crossover.getNumberOfRequiredParents();
+    var numberOfParents = crossover.getNumberOfRequiredParents();
 
     checkNumberOfParents(matingPopulation, numberOfParents);
 
     @NotNull List<List<S>> parentsList = new ArrayList<>();
 
-    for (int i = 0; i < matingPoolSize; i += numberOfParents) {
+    for (var i = 0; i < matingPoolSize; i += numberOfParents) {
       List<S> parents = new ArrayList<>(numberOfParents);
-      for (int j = 0; j < numberOfParents; j++) {
+      for (var j = 0; j < numberOfParents; j++) {
         parents.add(matingPopulation.get(i + j));
       }
       parentsList.add(parents);
     }
 
-    List<S> offspringPopulation = parentsList.stream().flatMap(parents -> {
-      List<S> offspring = crossover.execute(parents);
-        for (S solution : offspring) {
+    var offspringPopulation = parentsList.stream().flatMap(parents -> {
+      var offspring = crossover.execute(parents);
+        for (var solution : offspring) {
             mutation.execute(solution);
         }
 

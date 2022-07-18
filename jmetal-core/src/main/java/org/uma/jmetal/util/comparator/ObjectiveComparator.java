@@ -57,8 +57,8 @@ public class ObjectiveComparator<S extends Solution<?>> implements Comparator<S>
     Check.that(solution2.objectives().length > objectiveId, "The solution2 has "
         + solution2.objectives().length + " objectives and the objective to sort is" + objectiveId);
 
-    double objective1 = solution1.objectives()[this.objectiveId];
-    double objective2 = solution2.objectives()[this.objectiveId];
+    var objective1 = solution1.objectives()[this.objectiveId];
+    var objective2 = solution2.objectives()[this.objectiveId];
     int result;
     if (order == Ordering.ASCENDING) {
       result = Double.compare(objective1, objective2);

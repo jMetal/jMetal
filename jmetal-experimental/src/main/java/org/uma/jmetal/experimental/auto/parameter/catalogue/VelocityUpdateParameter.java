@@ -16,17 +16,17 @@ public class VelocityUpdateParameter extends CategoricalParameter {
   public VelocityUpdate getParameter() {
     switch (getValue()) {
       case "defaultVelocityUpdate":
-        double c1Min = (double) findGlobalParameter("c1Min").getValue();
-        double c1Max = (double) findGlobalParameter("c1Max").getValue();
-        double c2Min = (double) findGlobalParameter("c2Min").getValue();
-        double c2Max = (double) findGlobalParameter("c2Max").getValue();
+        var c1Min = (double) findGlobalParameter("c1Min").getValue();
+        var c1Max = (double) findGlobalParameter("c1Max").getValue();
+        var c2Min = (double) findGlobalParameter("c2Min").getValue();
+        var c2Max = (double) findGlobalParameter("c2Max").getValue();
         return new DefaultVelocityUpdate(c1Min, c1Max, c2Min, c2Max);
       case "constrainedVelocityUpdate":
         c1Min = (double) findGlobalParameter("c1Min").getValue();
         c1Max = (double) findGlobalParameter("c1Max").getValue();
         c2Min = (double) findGlobalParameter("c2Min").getValue();
         c2Max = (double) findGlobalParameter("c2Max").getValue();
-        DoubleProblem problem = (DoubleProblem) getNonConfigurableParameter("problem");
+        var problem = (DoubleProblem) getNonConfigurableParameter("problem");
         return new ConstrainedVelocityUpdate(c1Min, c1Max, c2Min, c2Max, problem) {
         };
       default:

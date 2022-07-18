@@ -44,7 +44,7 @@ public class ZDT5 extends AbstractBinaryProblem {
     bitsPerVariable = new ArrayList<>(numberOfVariables);
 
     bitsPerVariable.add(30);
-    for (int i = 1; i < numberOfVariables; i++) {
+    for (var i = 1; i < numberOfVariables; i++) {
       bitsPerVariable.add(5);
     }
   }
@@ -63,10 +63,10 @@ public class ZDT5 extends AbstractBinaryProblem {
 
   /** Evaluate() method */
   public BinarySolution evaluate(BinarySolution solution) {
-    double[] f = new double[solution.objectives().length];
+    var f = new double[solution.objectives().length];
     f[0] = 1 + u(solution.variables().get(0));
-    double g = evalG(solution);
-    double h = evalH(f[0], g);
+    var g = evalG(solution);
+    var h = evalH(f[0], g);
     f[1] = h * g;
 
     solution.objectives()[0] = f[0];
@@ -81,10 +81,10 @@ public class ZDT5 extends AbstractBinaryProblem {
    * @param solution The solution.
    */
   public double evalG(BinarySolution solution) {
-      double res = 0.0;
-      int bound = solution.variables().size();
-      for (int i = 1; i < bound; i++) {
-          double v = evalV(u(solution.variables().get(i)));
+    var res = 0.0;
+    var bound = solution.variables().size();
+      for (var i = 1; i < bound; i++) {
+        var v = evalV(u(solution.variables().get(i)));
           res += v;
       }
 

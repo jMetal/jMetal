@@ -53,7 +53,7 @@ public class RealParameter extends Parameter<Double> {
 
   @Override
   public String toString() {
-    StringBuilder result =
+    var result =
         new StringBuilder("Name: "
             + getName()
             + ": "
@@ -66,7 +66,7 @@ public class RealParameter extends Parameter<Double> {
     for (@NotNull Parameter<?> parameter : getGlobalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (var parameter : getSpecificParameters()) {
       result.append("\n  -> ").append(parameter.getRight().toString());
     }
     return result.toString();

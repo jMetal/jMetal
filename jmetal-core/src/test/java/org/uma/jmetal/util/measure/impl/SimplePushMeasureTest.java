@@ -11,7 +11,7 @@ public class SimplePushMeasureTest {
 	public void testNotifiedWhenRegistered() {
 		final Integer[] lastReceived = { null };
 		MeasureListener<Integer> listener = value -> lastReceived[0] = value;
-		SimplePushMeasure<Integer> pusher = new SimplePushMeasure<Integer>();
+		var pusher = new SimplePushMeasure<Integer>();
 		pusher.register(listener);
 
 		pusher.push(3);
@@ -26,7 +26,7 @@ public class SimplePushMeasureTest {
 	public void testNotNotifiedWhenUnregistered() {
 		final Integer[] lastReceived = { null };
 		MeasureListener<Integer> listener = value -> lastReceived[0] = value;
-		SimplePushMeasure<Integer> pusher = new SimplePushMeasure<Integer>();
+		var pusher = new SimplePushMeasure<Integer>();
 		pusher.register(listener);
 		pusher.unregister(listener);
 

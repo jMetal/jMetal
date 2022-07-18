@@ -17,7 +17,7 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
   public CharSequenceSolution(int stringLength, int numberOfObjectives) {
     super(stringLength, numberOfObjectives);
 
-    for (int i = 0; i < stringLength; i++) {
+    for (var i = 0; i < stringLength; i++) {
       variables().set(i, ' ');
     }
   }
@@ -26,15 +26,15 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
   public CharSequenceSolution(@NotNull CharSequenceSolution solution) {
     super(solution.getLength(), solution.objectives().length);
 
-    for (int i = 0; i < objectives().length; i++) {
+    for (var i = 0; i < objectives().length; i++) {
       objectives()[i] = solution.objectives()[i];
     }
 
-    for (int i = 0; i < variables().size(); i++) {
+    for (var i = 0; i < variables().size(); i++) {
       variables().set(i, solution.variables().get(i));
     }
 
-    for (int i = 0; i < constraints().length; i++) {
+    for (var i = 0; i < constraints().length; i++) {
       constraints()[i] =  solution.constraints()[i];
     }
 

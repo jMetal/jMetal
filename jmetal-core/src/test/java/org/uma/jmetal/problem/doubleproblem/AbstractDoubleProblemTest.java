@@ -41,7 +41,7 @@ class AbstractDoubleProblemTest {
   void createSolutionProducesAValidInstance() {
     problem.setVariableBounds(List.of(1.0,2.0,3.0), List.of(2.0,3.0,4.0));
 
-    DoubleSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
     assertThat(solution.variables()).hasSize(3) ;
     assertThat(solution.objectives()).isEmpty(); ;
     assertThat(solution.constraints()).isEmpty(); ;

@@ -43,13 +43,12 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
   @Override
   public void run() throws IOException {
     @NotNull String rDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_R_DIRECTORY;
-    File rOutput;
-    rOutput = new File(rDirectoryName);
+    var rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
       new File(rDirectoryName).mkdirs();
       JMetalLogger.logger.info("GenerateWilcoxonTestTablesWithR. Creating " + rDirectoryName + " directory");
     }
-    for (QualityIndicator indicator : experiment.getIndicatorList()) {
+    for (var indicator : experiment.getIndicatorList()) {
       @NotNull String rFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".R";
       @NotNull String latexFileName = indicator.getName() + ".Wilcoxon" + ".tex";
 
@@ -64,7 +63,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
   }
 
   private void printHeaderLatexCommands(String rFileName, String latexFileName) throws IOException {
-    try(FileWriter os = new FileWriter(rFileName, false)){
+    try(var os = new FileWriter(rFileName, false)){
     @NotNull String output = "write(\"\", \"" + latexFileName + "\",append=FALSE)";
     os.write(output + "\n");
 
@@ -85,26 +84,23 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
   }
 
   private void printEndLatexCommands(@NotNull String rFileName, String latexFileName) throws IOException {
-    try(FileWriter os = new FileWriter(rFileName, true)){
-    String output = "latexTail <- function() { " + "\n" +
+    try(var os = new FileWriter(rFileName, true)){
+      var output = "latexTail <- function() { " + "\n" +
         "  write(\"\\\\end{document}\", \"" + latexFileName + APPEND_STRING + "}" + "\n";
     os.write(output + "\n");
     }
   }
 
   private void printTableHeader(QualityIndicator indicator, @NotNull String rFileName, String latexFileName) throws IOException {
-    try(FileWriter os = new FileWriter(rFileName, true)){
+    try(var os = new FileWriter(rFileName, true)){
 
-    @NotNull String latexTableLabel = "";
-    String latexTableCaption = "";
-
-    // Write function latexTableHeader
-    latexTableCaption = "  write(\"\\\\caption{\", \"" + latexFileName + APPEND_STRING +
-        "  write(problem, \"" + latexFileName + APPEND_STRING +
-        "  write(\"." + indicator.getName() + ".}\", \"" + latexFileName + APPEND_STRING;
-    latexTableLabel = "  write(\"\\\\label{Table:\", \"" + latexFileName + APPEND_STRING +
-        "  write(problem, \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"." + indicator.getName() + ".}\", \"" + latexFileName + APPEND_STRING;
+      // Write function latexTableHeader
+      var latexTableCaption = "  write(\"\\\\caption{\", \"" + latexFileName + APPEND_STRING +
+              "  write(problem, \"" + latexFileName + APPEND_STRING +
+              "  write(\"." + indicator.getName() + ".}\", \"" + latexFileName + APPEND_STRING;
+      @NotNull String latexTableLabel = "  write(\"\\\\label{Table:\", \"" + latexFileName + APPEND_STRING +
+              "  write(problem, \"" + latexFileName + "\", append=TRUE)" + "\n" +
+              "  write(\"." + indicator.getName() + ".}\", \"" + latexFileName + APPEND_STRING;
 
     // Generate function latexTableHeader()
     @NotNull String output = "latexTableHeader <- function(problem, tabularString, latexTableFirstLine) {" + "\n" +
@@ -129,7 +125,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     // Generate function latexTableTail()
     try(@NotNull FileWriter os = new FileWriter(rFileName, true)){
 
-    String output = "latexTableTail <- function() { " + "\n" +
+      var output = "latexTableTail <- function() { " + "\n" +
         "  write(\"\\\\hline\", \"" + latexFileName + APPEND_STRING +
         "  write(\"\\\\end{tabular}\", \"" + latexFileName + APPEND_STRING +
         "  write(\"\\\\end{scriptsize}\", \"" + latexFileName + APPEND_STRING +
@@ -140,7 +136,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
   }
 
   private void printLines(QualityIndicator indicator, @NotNull String rFileName, String latexFileName) throws IOException {
-    try(FileWriter os = new FileWriter(rFileName, true)){
+    try(var os = new FileWriter(rFileName, true)){
 
     String output ;
     if (indicator.isTheLowerTheIndicatorValueTheBetter()) {
@@ -210,41 +206,41 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
   }
 
   private void printGenerateMainScript(@NotNull QualityIndicator indicator, String rFileName, String latexFileName) throws IOException {
-    try(FileWriter os = new FileWriter(rFileName, true)){
+    try(var os = new FileWriter(rFileName, true)){
 
     // Start of the R script
-    String output = "### START OF SCRIPT ";
+      var output = "### START OF SCRIPT ";
     os.write(output + "\n");
 
-    String problemList = "problemList <-c(";
-    String algorithmList = "algorithmList <-c(";
+      var problemList = "problemList <-c(";
+      var algorithmList = "algorithmList <-c(";
 
-    for (int i = 0; i < (experiment.getProblemList().size() - 1); i++) {
+    for (var i = 0; i < (experiment.getProblemList().size() - 1); i++) {
       problemList += "\"" + experiment.getProblemList().get(i).getTag() + "\", ";
     }
     problemList += "\"" + experiment.getProblemList().get(experiment.getProblemList().size() - 1).getTag() + "\") ";
 
-    for (int i = 0; i < (experiment.getAlgorithmList().size() - 1); i++) {
+    for (var i = 0; i < (experiment.getAlgorithmList().size() - 1); i++) {
       algorithmList += "\"" + experiment.getAlgorithmList().get(i).getAlgorithmTag() + "\", ";
     }
     algorithmList += "\"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + "\") ";
 
     @NotNull String latexTabularAlignment = "l";
-    for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
+    for (var i = 1; i < experiment.getAlgorithmList().size(); i++) {
       latexTabularAlignment += "c";
     }
 
     latexTabularAlignment = "l";
     @NotNull String latexTableFirstLine = "\\\\hline ";
 
-    for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
+    for (var i = 1; i < experiment.getAlgorithmList().size(); i++) {
       latexTabularAlignment += "c";
       latexTableFirstLine += " & " + experiment.getAlgorithmList().get(i).getAlgorithmTag();
     }
     latexTableFirstLine += "\\\\\\\\ \"";
 
     @NotNull String tabularString = "tabularString <-c(" + "\""+ latexTabularAlignment + "\""+ ") " ;
-    String tableFirstLine = "latexTableFirstLine <-c(" + "\"" + latexTableFirstLine + ") " ;
+      var tableFirstLine = "latexTableFirstLine <-c(" + "\"" + latexTableFirstLine + ") " ;
 
     output = "# Constants" + "\n" +
         problemList + "\n" +
@@ -266,7 +262,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     // The tabular environment and the latexTableFirstLine encodings.variable must be redefined
     latexTabularAlignment = "| l | ";
     latexTableFirstLine = "\\\\hline \\\\multicolumn{1}{|c|}{}";
-    for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
+    for (var i = 1; i < experiment.getAlgorithmList().size(); i++) {
       latexTabularAlignment += StringUtils.repeat("c", experiment.getProblemList().size());
       latexTableFirstLine += " & \\\\multicolumn{" + experiment.getProblemList().size() + "}{c|}{" + experiment.getAlgorithmList().get(i).getAlgorithmTag()+"}";
       latexTabularAlignment += " | " ;

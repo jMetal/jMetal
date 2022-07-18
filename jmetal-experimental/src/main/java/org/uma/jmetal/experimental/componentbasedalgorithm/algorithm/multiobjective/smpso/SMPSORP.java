@@ -141,8 +141,8 @@ public class SMPSORP
 
     deltaMax = new double[problem.getNumberOfVariables()];
     deltaMin = new double[problem.getNumberOfVariables()];
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      Bounds<Double> bounds = problem.getVariableBounds().get(i);
+    for (var i = 0; i < problem.getNumberOfVariables(); i++) {
+      var bounds = problem.getVariableBounds().get(i);
       deltaMax[i] = (bounds.getUpperBound() - bounds.getLowerBound()) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
@@ -156,9 +156,9 @@ public class SMPSORP
 
 
     referencePointSolutions = new ArrayList<>() ;
-    for (int i = 0; i < referencePoints.size(); i++) {
-      DoubleSolution refPoint = problem.createSolution() ;
-      for (int j = 0; j < referencePoints.get(0).size(); j++) {
+    for (var i = 0; i < referencePoints.size(); i++) {
+      var refPoint = problem.createSolution() ;
+      for (var j = 0; j < referencePoints.get(0).size(); j++) {
         refPoint.objectives()[j] = referencePoints.get(i).get(j);
       }
 
@@ -221,7 +221,7 @@ public class SMPSORP
     @NotNull List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
-    for (int i = 0; i < swarmSize; i++) {
+    for (var i = 0; i < swarmSize; i++) {
       newSolution = problem.createSolution();
       swarm.add(newSolution);
     }
@@ -243,15 +243,15 @@ public class SMPSORP
   }
 
   @Override protected void initializeVelocity(@NotNull List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+    for (var i = 0; i < swarm.size(); i++) {
+      for (var j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
     }
   }
 
   @Override protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
-    for (DoubleSolution particle : swarm) {
+    for (var particle : swarm) {
       localBest.setAttribute(particle, (DoubleSolution) particle.copy());
     }
   }
@@ -260,9 +260,9 @@ public class SMPSORP
     double r1, r2, c1, c2;
     DoubleSolution bestGlobal;
 
-    for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-      DoubleSolution bestParticle = (DoubleSolution) localBest.getAttribute(swarm.get(i)).copy();
+    for (var i = 0; i < swarm.size(); i++) {
+      var particle = (DoubleSolution) swarm.get(i).copy();
+      var bestParticle = (DoubleSolution) localBest.getAttribute(swarm.get(i)).copy();
 
       bestGlobal = selectGlobalBest();
 
@@ -271,7 +271,7 @@ public class SMPSORP
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
 
-      for (int var = 0; var < particle.variables().size(); var++) {
+      for (var var = 0; var < particle.variables().size(); var++) {
         speed[i][var] =
                 velocityConstriction(
                         constrictionCoefficient(c1, c2)
@@ -286,14 +286,14 @@ public class SMPSORP
   }
 
   @Override protected void updatePosition(List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarmSize; i++) {
-      DoubleSolution particle = swarm.get(i);
-      for (int j = 0; j < particle.variables().size(); j++) {
+    for (var i = 0; i < swarmSize; i++) {
+      var particle = swarm.get(i);
+      for (var j = 0; j < particle.variables().size(); j++) {
         particle.variables().set(j, particle.variables().get(j) + speed[i][j]);
 
-        Bounds<Double> bounds = problem.getVariableBounds().get(j);
-        Double lowerBound = bounds.getLowerBound();
-        Double upperBound = bounds.getUpperBound();
+        var bounds = problem.getVariableBounds().get(j);
+        var lowerBound = bounds.getLowerBound();
+        var upperBound = bounds.getUpperBound();
         if (particle.variables().get(j) < lowerBound) {
           particle.variables().set(j, lowerBound);
           speed[i][j] = speed[i][j] * changeVelocity1;
@@ -307,7 +307,7 @@ public class SMPSORP
   }
 
   @Override protected void perturbation(@NotNull List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
+    for (var i = 0; i < swarm.size(); i++) {
       if ((i % 6) == 0) {
         mutation.execute(swarm.get(i));
       }
@@ -315,7 +315,7 @@ public class SMPSORP
   }
 
   @Override protected void updateLeaders(@NotNull List<DoubleSolution> swarm) {
-    for (DoubleSolution particle : swarm) {
+    for (var particle : swarm) {
       for (BoundedArchive<DoubleSolution> leader : leaders) {
         leader.add((DoubleSolution) particle.copy());
       }
@@ -323,8 +323,8 @@ public class SMPSORP
   }
 
   @Override protected void updateParticlesMemory(List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      int flag = dominanceComparator.compare(swarm.get(i), localBest.getAttribute(swarm.get(i)));
+    for (var i = 0; i < swarm.size(); i++) {
+      var flag = dominanceComparator.compare(swarm.get(i), localBest.getAttribute(swarm.get(i)));
       if (flag != 1) {
         @Nullable DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
         localBest.setAttribute(swarm.get(i), particle);
@@ -334,8 +334,8 @@ public class SMPSORP
 
   @Override public @NotNull List<DoubleSolution> getResult() {
       @NotNull List<DoubleSolution> resultList = new ArrayList<>();
-      for (ArchiveWithReferencePoint<DoubleSolution> leader : leaders) {
-          for (DoubleSolution doubleSolution : leader.getSolutionList()) {
+      for (var leader : leaders) {
+          for (var doubleSolution : leader.getSolutionList()) {
               resultList.add(doubleSolution);
           }
       }
@@ -344,18 +344,16 @@ public class SMPSORP
   }
 
   protected DoubleSolution selectGlobalBest() {
-    int selectedSwarmIndex ;
 
-    selectedSwarmIndex = randomGenerator.nextInt(0, leaders.size() - 1) ;
+    var selectedSwarmIndex = randomGenerator.nextInt(0, leaders.size() - 1);
     BoundedArchive<DoubleSolution> selectedSwarm = leaders.get(selectedSwarmIndex) ;
 
-    DoubleSolution one, two;
     @Nullable DoubleSolution bestGlobal;
-    int pos1 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
-    int pos2 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
+    var pos1 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
+    var pos2 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
 
-    one = selectedSwarm.getSolutionList().get(pos1);
-    two = selectedSwarm.getSolutionList().get(pos2);
+    var one = selectedSwarm.getSolutionList().get(pos1);
+    var two = selectedSwarm.getSolutionList().get(pos2);
 
     if (selectedSwarm.getComparator().compare(one, two) < 1) {
       bestGlobal = (DoubleSolution) one.copy();
@@ -369,12 +367,10 @@ public class SMPSORP
   private double velocityConstriction(double v, double[] deltaMax, double @NotNull [] deltaMin,
                                       int variableIndex) {
 
-    double result;
+    var dmax = deltaMax[variableIndex];
+    var dmin = deltaMin[variableIndex];
 
-    double dmax = deltaMax[variableIndex];
-    double dmin = deltaMin[variableIndex];
-
-    result = v;
+    var result = v;
 
     if (v > dmax) {
       result = dmax;
@@ -388,7 +384,7 @@ public class SMPSORP
   }
 
   private double constrictionCoefficient(double c1, double c2) {
-    double rho = c1 + c2;
+    var rho = c1 + c2;
     if (rho <= 4) {
       return 1.0;
     } else {
@@ -405,11 +401,11 @@ public class SMPSORP
   }
 
   public void removeDominatedSolutionsInArchives() {
-    for (ArchiveWithReferencePoint<DoubleSolution> archive: leaders) {
-      int i = 0 ;
+    for (var archive: leaders) {
+      var i = 0 ;
       while (i < archive.getSolutionList().size()) {
-        boolean dominated = false ;
-        for (DoubleSolution referencePoint : referencePointSolutions) {
+        var dominated = false ;
+        for (var referencePoint : referencePointSolutions) {
           if (dominanceComparator.compare(archive.getSolutionList().get(i), referencePoint) == 0) {
             dominated = true ;
           }
@@ -425,7 +421,7 @@ public class SMPSORP
   }
 
   public synchronized void changeReferencePoints(List<List<Double>> referencePoints) {
-    for (int i = 0; i < leaders.size(); i++) {
+    for (var i = 0; i < leaders.size(); i++) {
       leaders.get(i).changeReferencePoint(referencePoints.get(i));
     }
   }

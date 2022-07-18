@@ -14,7 +14,7 @@ public class ComponentBasedAutoMOPSOV2WFG {
   public static void main(String[] args) {
     @NotNull String referenceFrontFileName = "WFG4.2D.csv";
 
-    String @NotNull [] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.wfg.WFG4 "
             + "--referenceFrontFileName "
             + referenceFrontFileName
@@ -24,13 +24,13 @@ public class ComponentBasedAutoMOPSOV2WFG {
         )
             .split("\\s+");
 
-    AutoMOPSO autoMOPSO = new AutoMOPSO();
+    var autoMOPSO = new AutoMOPSO();
     autoMOPSO.parseAndCheckParameters(parameters);
 
     AutoMOPSO.print(autoMOPSO.fixedParameterList);
     AutoMOPSO.print(autoMOPSO.autoConfigurableParameterList);
 
-    ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
+    var mopso = autoMOPSO.create();
 
     @NotNull EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     @NotNull RunTimeChartObserver<DoubleSolution> runTimeChartObserver =

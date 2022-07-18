@@ -23,7 +23,7 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
 
   @Override
   public boolean add(S solution) {
-    boolean success = archive.add(solution);
+    var success = archive.add(solution);
     if (success) {
       prune();
     }
@@ -54,7 +54,7 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
   public abstract void prune();
 
   public Archive<S> join(@NotNull Archive<S> archive) {
-      for (S s : archive.getSolutionList()) {
+      for (var s : archive.getSolutionList()) {
           add(s);
       }
 

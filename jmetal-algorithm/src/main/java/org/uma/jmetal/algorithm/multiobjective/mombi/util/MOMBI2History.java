@@ -24,7 +24,7 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
     this.numberOfObjectives = numberOfObjectives;
     this.history            = new LinkedList<>();
     this.marks				= new ArrayList<>(this.numberOfObjectives);
-    for (int i = 0; i < this.numberOfObjectives;i++) {
+    for (var i = 0; i < this.numberOfObjectives; i++) {
       this.marks.add(MAX_LENGHT);
     }
   }
@@ -47,17 +47,17 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
    */
   public List<Double> mean() {
       List<Double> result = new ArrayList<>(this.numberOfObjectives);
-      for (int i1 = 0; i1 < this.numberOfObjectives; i1++) {
+      for (var i1 = 0; i1 < this.numberOfObjectives; i1++) {
           Double aDouble = 0.0;
           result.add(aDouble);
       }
 
       for (@NotNull List<Double> historyMember : this.history)
-      for (int i = 0; i < this.numberOfObjectives;i++)
+      for (var i = 0; i < this.numberOfObjectives; i++)
         result.set(i, result.get(i) + historyMember.get(i));
 
 
-    for (int i = 0; i < this.numberOfObjectives; i++)
+    for (var i = 0; i < this.numberOfObjectives; i++)
       result.set(i, result.get(i)/(double)this.history.size());
 
     return result;
@@ -68,16 +68,16 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
    */
   public List<Double> variance(List<Double> mean) {
       @NotNull List<Double> result = new ArrayList<>(this.numberOfObjectives);
-      for (int i1 = 0; i1 < this.numberOfObjectives; i1++) {
+      for (var i1 = 0; i1 < this.numberOfObjectives; i1++) {
           Double aDouble = 0.0;
           result.add(aDouble);
       }
 
-      for (List<Double> historyMember : this.history)
-      for (int i = 0; i < this.numberOfObjectives; i++)
+      for (var historyMember : this.history)
+      for (var i = 0; i < this.numberOfObjectives; i++)
         result.set(i, result.get(i) + Math.pow(historyMember.get(i)-mean.get(i), 2.0));
 
-    for (int i = 0; i < this.numberOfObjectives; i++)
+    for (var i = 0; i < this.numberOfObjectives; i++)
       result.set(i, result.get(i) / (double)this.history.size());
 
     return result;
@@ -89,7 +89,7 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
   public List<Double> std(List<Double> mean) {
     @NotNull List<Double> result = new ArrayList<>(mean.size());
     result.addAll(this.variance(mean));
-    for (int i = 0; i < result.size(); i++)
+    for (var i = 0; i < result.size(); i++)
       result.set(i,Math.sqrt(result.get(i)));
 
     return result;
@@ -111,7 +111,7 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
   public @NotNull Double getMaxObjective(int index) {
     Double result = Double.NEGATIVE_INFINITY;
 
-    for (List<Double> list : this.history)
+    for (var list : this.history)
       result = Math.max(result, list.get(index));
 
     return result;

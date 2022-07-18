@@ -36,15 +36,9 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
  * @throws IOException 
    */
   public static void main(String[] args) throws JMetalException, IOException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "" ;
-    List<Double> referencePoint = null;
+      var referenceParetoFront = "" ;
 
-    String problemName ;
+      String problemName ;
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
@@ -55,39 +49,39 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
-    problem = ProblemFactory.<DoubleSolution> loadProblem(problemName);
+      var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    referencePoint = new ArrayList<>();
+      List<Double> referencePoint = new ArrayList<>();
     referencePoint.add(0.6);
     referencePoint.add(0.4);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+      var crossoverProbability = 0.9 ;
+      var crossoverDistributionIndex = 20.0 ;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+      var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+      var mutationDistributionIndex = 20.0 ;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    double epsilon = 0.01 ;
-    algorithm = new WASFGAMeasures<DoubleSolution>(
-    				problem,
-						100,
-						250,
-						crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
-            epsilon,
-            referencePoint) ;
+      var epsilon = 0.01 ;
+      Algorithm<List<DoubleSolution>> algorithm = new WASFGAMeasures<DoubleSolution>(
+              problem,
+              100,
+              250,
+              crossover, mutation, selection, new SequentialSolutionListEvaluator<DoubleSolution>(),
+              epsilon,
+              referencePoint);
     
     /* Measure management */
-    MeasureManager measureManager = ((WASFGAMeasures<DoubleSolution>) algorithm).getMeasureManager();
+      var measureManager = ((WASFGAMeasures<DoubleSolution>) algorithm).getMeasureManager();
 
-    BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
+      var solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
-    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
+      var iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
 
-    ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
+      var chart = new ChartContainer(algorithm.getName(), 200);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.setReferencePoint(referencePoint);
     chart.setVarChart(0, 1);
@@ -97,13 +91,13 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
     iterationMeasure.register(new IterationListener(chart));
 
     /* End of measure management */
-    
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+
+      var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
     chart.saveChart("WASFGA", BitmapFormat.PNG);
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+      var population = algorithm.getResult() ;
+      var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

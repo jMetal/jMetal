@@ -39,12 +39,9 @@ public class CDGRunner extends AbstractAlgorithmRunner {
    *     problemName [referenceFront]
    */
   public static void main(String[] args) throws FileNotFoundException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    DifferentialEvolutionCrossover crossover;
 
-    String problemName;
-    String referenceParetoFront = "";
+      String problemName;
+    var referenceParetoFront = "";
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
@@ -54,27 +51,25 @@ public class CDGRunner extends AbstractAlgorithmRunner {
       problemName = "(none)";
     }
 
-    problem = new GLT4(10);
+      DoubleProblem problem = new GLT4(10);
 
-    double cr = 1.0;
-    double f = 0.5;
-    crossover =
-        new DifferentialEvolutionCrossover(
-            cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+    var cr = 1.0;
+    var f = 0.5;
+    var crossover = new DifferentialEvolutionCrossover(
+              cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    algorithm =
-        new CDGBuilder(problem)
-            .setCrossover(crossover)
-            .setMaxEvaluations(300 * 1000)
-            .setPopulationSize(300)
-            .setResultPopulationSize(300)
-            .setNeighborhoodSelectionProbability(0.9)
-            .build();
+      Algorithm<List<DoubleSolution>> algorithm = new CDGBuilder(problem)
+              .setCrossover(crossover)
+              .setMaxEvaluations(300 * 1000)
+              .setPopulationSize(300)
+              .setResultPopulationSize(300)
+              .setNeighborhoodSelectionProbability(0.9)
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

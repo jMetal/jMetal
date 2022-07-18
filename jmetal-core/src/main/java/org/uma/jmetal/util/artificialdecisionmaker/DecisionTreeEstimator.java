@@ -32,26 +32,26 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
 
 
   public double doPrediction(int index, @NotNull S testSolution) {
-    double result = 0.0d;
+    var result = 0.0d;
 
     try {
-      int numberOfObjectives = solutionList.get(0).objectives().length;
+      var numberOfObjectives = solutionList.get(0).objectives().length;
       //Attributes
       //numeric
       @NotNull Attribute attr = new Attribute("my-numeric");
 
       //nominal
-      ArrayList<String> myNomVals = new ArrayList<>();
-      for (int i1 = 0; i1 < numberOfObjectives; i1++) {
-        String s = VALUE_STRING + i1;
+      var myNomVals = new ArrayList<String>();
+      for (var i1 = 0; i1 < numberOfObjectives; i1++) {
+        var s = VALUE_STRING + i1;
         myNomVals.add(s);
       }
 
-      Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
+      var attr1 = new Attribute(NOMINAL_STRING, myNomVals);
       //System.out.println(attr1.isNominal());
 
       //string
-      Attribute attr2 = new Attribute(MY_STRING, (List<String>)null);
+      var attr2 = new Attribute(MY_STRING, (List<String>)null);
       //System.out.println(attr2.isString());
 
       //2.create dataset
@@ -59,13 +59,13 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       attrs.add(attr);
       attrs.add(attr1);
       attrs.add(attr2);
-      Instances dataset = new Instances("my_dataset", attrs, 0);
+      var dataset = new Instances("my_dataset", attrs, 0);
 
       //Add instances
       for (@NotNull S solution : solutionList) {
         //instaces
-        for (int i = 0; i <numberOfObjectives ; i++) {
-          double[] attValues = new double[dataset.numAttributes()];
+        for (var i = 0; i <numberOfObjectives ; i++) {
+          var attValues = new double[dataset.numAttributes()];
           attValues[0] = solution.objectives()[i];
           attValues[1] = dataset.attribute(NOMINAL_STRING).indexOfValue(VALUE_STRING+i);
           attValues[2] = dataset.attribute(MY_STRING).addStringValue(solution.toString()+i);
@@ -78,7 +78,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       @NotNull Instances datasetTest = new Instances("my_dataset_test", attrs, 0);
 
       //Add instances
-      for (int i = 0; i < numberOfObjectives; i++) {
+      for (var i = 0; i < numberOfObjectives; i++) {
         Instance test = new DenseInstance(3);
         test.setValue(attr, testSolution.objectives()[i]);
         test.setValue(attr1, VALUE_STRING+i);
@@ -105,7 +105,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       dataset.setClassIndex(1);
       datasetTest.setClassIndex(1);
       //do eval
-      Evaluation eval = new Evaluation(datasetTest); //trainset
+      var eval = new Evaluation(datasetTest); //trainset
       eval.evaluateModel(classifier, datasetTest); //testset
       result = classifier.classifyInstance(datasetTest.get(index));
     } catch (Exception e) {
@@ -116,38 +116,38 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
 
 
   public double doPredictionVariable(int index, @NotNull S testSolution) {
-    double result = 0.0d;
+    var result = 0.0d;
 
     try {
-      int numberOfVariables = solutionList.get(0).variables().size();
+      var numberOfVariables = solutionList.get(0).variables().size();
       //Attributes
       //numeric
       @NotNull Attribute attr = new Attribute("my-numeric");
 
       //nominal
-      ArrayList<String> myNomVals = new ArrayList<>();
-      for (int i1 = 0; i1 < numberOfVariables; i1++) {
-        String s = VALUE_STRING + i1;
+      var myNomVals = new ArrayList<String>();
+      for (var i1 = 0; i1 < numberOfVariables; i1++) {
+        var s = VALUE_STRING + i1;
         myNomVals.add(s);
       }
 
-      Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
+      var attr1 = new Attribute(NOMINAL_STRING, myNomVals);
 
       //string
-      Attribute attr2 = new Attribute(MY_STRING, (List<String>)null);
+      var attr2 = new Attribute(MY_STRING, (List<String>)null);
 
       //2.create dataset
-      ArrayList<Attribute> attrs = new ArrayList<>();
+      var attrs = new ArrayList<Attribute>();
       attrs.add(attr);
       attrs.add(attr1);
       attrs.add(attr2);
-      Instances dataset = new Instances("my_dataset", attrs, 0);
+      var dataset = new Instances("my_dataset", attrs, 0);
 
       //Add instances
       for (@NotNull S solution : solutionList) {
         //instaces
-        for (int i = 0; i <numberOfVariables ; i++) {
-          double @NotNull [] attValues = new double[dataset.numAttributes()];
+        for (var i = 0; i <numberOfVariables ; i++) {
+          var attValues = new double[dataset.numAttributes()];
           attValues[0] = ((DoubleSolution)solution).variables().get(i);
           attValues[1] = dataset.attribute(NOMINAL_STRING).indexOfValue(VALUE_STRING+i);
           attValues[2] = dataset.attribute(MY_STRING).addStringValue(solution.toString()+i);
@@ -160,7 +160,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       @NotNull Instances datasetTest = new Instances("my_dataset_test", attrs, 0);
 
       //Add instances
-      for (int i = 0; i < numberOfVariables; i++) {
+      for (var i = 0; i < numberOfVariables; i++) {
         Instance test = new DenseInstance(3);
         test.setValue(attr, ((DoubleSolution)testSolution).variables().get(i));
         test.setValue(attr1, VALUE_STRING+i);
@@ -173,7 +173,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       //split to 70:30 learn and test set
 
       //Preprocess strings (almost no classifier supports them)
-      StringToWordVector filter = new StringToWordVector();
+      var filter = new StringToWordVector();
 
       filter.setInputFormat(dataset);
       dataset = Filter.useFilter(dataset, filter);
@@ -187,7 +187,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       dataset.setClassIndex(1);
       datasetTest.setClassIndex(1);
       //do eval
-      Evaluation eval = new Evaluation(datasetTest); //trainset
+      var eval = new Evaluation(datasetTest); //trainset
       eval.evaluateModel(classifier, datasetTest); //testset
       result = classifier.classifyInstance(datasetTest.get(index));
     } catch (Exception e) {

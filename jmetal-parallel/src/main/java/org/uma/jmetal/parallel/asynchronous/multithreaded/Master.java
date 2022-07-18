@@ -28,8 +28,8 @@ public abstract class Master<T extends ParallelTask<?>,R>
             submitTask(initialTask);
         }
     } else {
-      int idleWorkers = numberOfCores - initialTasks.size();
-        for (T initialTask : initialTasks) {
+      var idleWorkers = numberOfCores - initialTasks.size();
+        for (var initialTask : initialTasks) {
             submitTask(initialTask);
         }
         while (idleWorkers > 0) {
@@ -68,7 +68,7 @@ public abstract class Master<T extends ParallelTask<?>,R>
 
   @Override
   public T getInitialTask(List<T> initialTasks) {
-    T initialTask = initialTasks.get(0);
+    var initialTask = initialTasks.get(0);
     initialTasks.remove(0);
     return initialTask;
   }

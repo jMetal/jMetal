@@ -38,7 +38,7 @@ public class  DefaultFileOutputContext implements FileOutputContext {
     } catch (FileNotFoundException e) {
       throw new JMetalException("Exception when calling method getFileWriter()", e) ;
     }
-    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+    var outputStreamWriter = new OutputStreamWriter(outputStream);
 
     return new BufferedWriter(outputStreamWriter);
   }

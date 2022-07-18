@@ -13,9 +13,9 @@ public class PISAHypervolumeTest {
 
   @Test
   public void shouldConstructorWithReferencePointCreateAValidInstance() {
-    PISAHypervolume hypervolume = new PISAHypervolume(new double[] {1.0, 1.0});
+      var hypervolume = new PISAHypervolume(new double[] {1.0, 1.0});
 
-    double[][] referenceFront = hypervolume.getReferenceFront();
+      var referenceFront = hypervolume.getReferenceFront();
     assertEquals(2, referenceFront.length);
     assertEquals(2, referenceFront[0].length);
     assertEquals(1.0, hypervolume.getReferenceFront()[0][0], EPSILON);
@@ -31,13 +31,13 @@ public class PISAHypervolumeTest {
    */
   @Test
   public void shouldEvaluateWorkProperlyCase1() throws IOException {
-    double[][] referenceFront = new double[][] {{1.0, 0.1}, {0.0, 1.0}};
+      var referenceFront = new double[][] {{1.0, 0.1}, {0.0, 1.0}};
 
-    double[][] storedFront =
+      var storedFront =
         VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
 
     var hypervolume = new PISAHypervolume(referenceFront);
-    double result = hypervolume.compute(storedFront);
+      var result = hypervolume.compute(storedFront);
 
     Assert.assertEquals(0.6661, result, 0.0001);
   }
@@ -49,13 +49,13 @@ public class PISAHypervolumeTest {
      */
     @Test
     public void shouldEvaluateWorkProperlyCase2() throws IOException {
-        double[][] referenceFront = VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",") ;
+        var referenceFront = VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",") ;
 
-        double[][] storedFront =
+        var storedFront =
                 VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
 
         var hypervolume = new PISAHypervolume(referenceFront);
-        double result = hypervolume.compute(storedFront);
+        var result = hypervolume.compute(storedFront);
 
         Assert.assertEquals(0.6661, result, 0.0001);
     }
@@ -67,12 +67,12 @@ public class PISAHypervolumeTest {
      */
     @Test
     public void shouldEvaluateWorkProperlyCase3()  {
-        double[][] referenceFront = new double[][] {{1.0, 0.1}, {0.0, 1.0}};
+        var referenceFront = new double[][] {{1.0, 0.1}, {0.0, 1.0}};
 
-        double[][] front = new double[][] {{1.0, 0.0},{0.0, 1.0}} ;
+        var front = new double[][] {{1.0, 0.0},{0.0, 1.0}} ;
 
         var hypervolume = new PISAHypervolume(referenceFront);
-        double result = hypervolume.compute(front);
+        var result = hypervolume.compute(front);
 
         Assert.assertEquals(0, result, 0.0001);
     }

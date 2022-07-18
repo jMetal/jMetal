@@ -26,8 +26,8 @@ public class DifferentialEvolutionSelection
 
     while (matingPool.size() < matingPoolSize) {
       selectionOperator.setIndex(solutionIndexGenerator.getValue());
-      List<DoubleSolution> parents = selectionOperator.execute(solutionList) ;
-      for (DoubleSolution parent: parents)  {
+      var parents = selectionOperator.execute(solutionList) ;
+      for (var parent: parents)  {
         matingPool.add(parent);
         if (matingPool.size() == matingPoolSize) {
           break ;

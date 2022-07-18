@@ -158,9 +158,8 @@ public class CoralReefsOptimizationBuilder<S extends Solution<?>> implements
 
 	@Override
 	public CoralReefsOptimization<S> build() {
-		CoralReefsOptimization<S> algorithm = null;
 
-		algorithm = new CoralReefsOptimization<S>(problem, maxEvaluations,
+		var algorithm = new CoralReefsOptimization<S>(problem, maxEvaluations,
 				comparator, selectionOperator, crossoverOperator,
 				mutationOperator, N, M, rho, Fbs, Fa, Pd, attemptsToSettle);
 

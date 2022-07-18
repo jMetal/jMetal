@@ -34,12 +34,12 @@ public class C3_DTLZ1 extends DTLZ1 {
   }
 
   public void evaluateConstraints(@NotNull DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    var constraint = new double[this.getNumberOfConstraints()];
 
-    for (int j = 0; j < getNumberOfConstraints(); j++) {
+    for (var j = 0; j < getNumberOfConstraints(); j++) {
       double sum = 0 ;
       constraint[j] = 0.0 ;
-      for (int i = 0; i < solution.objectives().length; i++) {
+      for (var i = 0; i < solution.objectives().length; i++) {
         if (i != j) {
           sum += solution.objectives()[j] ;
         }
@@ -47,7 +47,7 @@ public class C3_DTLZ1 extends DTLZ1 {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

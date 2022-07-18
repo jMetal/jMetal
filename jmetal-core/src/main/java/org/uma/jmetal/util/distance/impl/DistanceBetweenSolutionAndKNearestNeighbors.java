@@ -34,10 +34,10 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
    */
   @Override
   public double compute(S solution, @NotNull List<S> solutionList) {
-    List<Double> listOfDistances = knnDistances(solution, solutionList) ;
+    var listOfDistances = knnDistances(solution, solutionList) ;
     listOfDistances.sort(Comparator.naturalOrder());
 
-    int limit = Math.min(k, listOfDistances.size()) ;
+    var limit = Math.min(k, listOfDistances.size()) ;
 
     double result ;
     if (limit == 0) {
@@ -56,8 +56,8 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
    */
   private @NotNull List<Double> knnDistances(S solution, List<S> solutionList) {
     List<Double> listOfDistances = new ArrayList<>();
-    for (S s : solutionList) {
-      double distanceBetweenSolutions = distance.compute(solution, s);
+    for (var s : solutionList) {
+      var distanceBetweenSolutions = distance.compute(solution, s);
       if (distanceBetweenSolutions != 0) {
         Double aDouble = distanceBetweenSolutions;
         listOfDistances.add(aDouble);

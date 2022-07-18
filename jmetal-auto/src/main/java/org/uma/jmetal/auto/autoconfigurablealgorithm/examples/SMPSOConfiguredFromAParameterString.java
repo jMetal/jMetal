@@ -18,9 +18,9 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class SMPSOConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "ZDT4.csv";
+    var referenceFrontFileName = "ZDT4.csv";
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
             + "--referenceFrontFileName "
             + referenceFrontFileName
@@ -61,10 +61,10 @@ public class SMPSOConfiguredFromAParameterString {
     AutoMOPSO.print(autoMOPSO.fixedParameterList);
     AutoMOPSO.print(autoMOPSO.autoConfigurableParameterList);
 
-    ParticleSwarmOptimizationAlgorithm smpso = autoMOPSO.create();
+    var smpso = autoMOPSO.create();
 
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>(
+    var runTimeChartObserver =
+        new RunTimeChartObserver<DoubleSolution>(
             "SMPSO", 80, 500, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 
     smpso.getObservable().register(runTimeChartObserver);

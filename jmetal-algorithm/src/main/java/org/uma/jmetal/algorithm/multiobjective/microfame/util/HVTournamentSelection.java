@@ -59,9 +59,9 @@ public class HVTournamentSelection<S extends Solution<?>> implements SelectionOp
       result = solutionList.get(0);
     } else {
       result = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
-      int count = 1; // at least 2 solutions are compared
+      var count = 1; // at least 2 solutions are compared
       do {
-        S candidate = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
+        var candidate = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
         result = SolutionUtils.getBestSolution(result, candidate, comparator);
       } while (++count < this.numberOfTournaments);
     }

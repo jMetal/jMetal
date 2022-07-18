@@ -134,7 +134,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
               y2 = valueX1;
             }
 
-            Bounds<Double> bounds = parent1.getBounds(i);
+            var bounds = parent1.getBounds(i);
             lowerBound = bounds.getLowerBound();
             upperBound = bounds.getUpperBound();
 

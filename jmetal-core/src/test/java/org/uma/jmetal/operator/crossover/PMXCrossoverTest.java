@@ -18,7 +18,7 @@ public class PMXCrossoverTest {
 	@Test
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
-		double crossoverProbability = 1.0;
+		var crossoverProbability = 1.0;
 		@SuppressWarnings("serial")
 		PermutationProblem<PermutationSolution<Integer>> problem = new AbstractIntegerPermutationProblem() {
 
@@ -44,21 +44,21 @@ public class PMXCrossoverTest {
 		parentSolutions.add(problem.createSolution());
 
 		// Check configuration leads to use default generator by default
-		final int[] defaultUses = { 0 };
-		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		final var defaultUses = new int[]{0};
+		var defaultGenerator = JMetalRandom.getInstance();
+		var auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
-		PMXCrossover crossover1 = new PMXCrossover(crossoverProbability);
+		var crossover1 = new PMXCrossover(crossoverProbability);
 		crossover1.execute(parentSolutions);
 		assertTrue("No use of the default generator", defaultUses[0] > 0);
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
-		final int[] custom1Uses = { 0 };
-		final int[] custom2Uses = { 0 };
-		PMXCrossover crossover2 = new PMXCrossover(crossoverProbability, () -> {
+		final var custom1Uses = new int[]{0};
+		final var custom2Uses = new int[]{0};
+		var crossover2 = new PMXCrossover(crossoverProbability, () -> {
 			custom1Uses[0]++;
 			return new Random().nextDouble();
 		}, (a, b) -> {

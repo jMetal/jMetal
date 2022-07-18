@@ -26,8 +26,8 @@ public class RandomSelection<S extends Solution<?>> implements Selection<S> {
     Check.notNull(solutionList);
 
     @NotNull List<S> matingPool = new ArrayList<>();
-      int bound = numberOfElementsToSelect;
-      for (int i = 0; i < bound; i++) {
+    var bound = numberOfElementsToSelect;
+      for (var i = 0; i < bound; i++) {
           matingPool.add(
                   solutionList.get(JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1)));
       }

@@ -36,35 +36,28 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
    *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIITSPRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
-    PermutationProblem<PermutationSolution<Integer>> problem;
-    Algorithm<List<PermutationSolution<Integer>>> algorithm;
-    CrossoverOperator<PermutationSolution<Integer>> crossover;
-    MutationOperator<PermutationSolution<Integer>> mutation;
-    SelectionOperator<List<PermutationSolution<Integer>>, PermutationSolution<Integer>> selection;
 
-    problem = new MultiobjectiveTSP("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
+      PermutationProblem<PermutationSolution<Integer>> problem = new MultiobjectiveTSP("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
 
-    crossover = new PMXCrossover(0.9);
+      CrossoverOperator<PermutationSolution<Integer>> crossover = new PMXCrossover(0.9);
 
-    double mutationProbability = 0.2;
-    mutation = new PermutationSwapMutation<Integer>(mutationProbability);
+    var mutationProbability = 0.2;
+      MutationOperator<PermutationSolution<Integer>> mutation = new PermutationSwapMutation<Integer>(mutationProbability);
 
-    selection =
-        new BinaryTournamentSelection<PermutationSolution<Integer>>(
-            new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
+      SelectionOperator<List<PermutationSolution<Integer>>, PermutationSolution<Integer>> selection = new BinaryTournamentSelection<PermutationSolution<Integer>>(
+              new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
 
-    int populationSize = 100;
-    algorithm =
-        new NSGAIIBuilder<PermutationSolution<Integer>>(
-                problem, crossover, mutation, populationSize)
-            .setSelectionOperator(selection)
-            .setMaxEvaluations(10000)
-            .build();
+    var populationSize = 100;
+      Algorithm<List<PermutationSolution<Integer>>> algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(
+              problem, crossover, mutation, populationSize)
+              .setSelectionOperator(selection)
+              .setMaxEvaluations(10000)
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<PermutationSolution<Integer>> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))

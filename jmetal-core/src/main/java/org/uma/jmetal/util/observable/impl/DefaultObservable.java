@@ -33,7 +33,7 @@ public class DefaultObservable<D> implements Observable<D> {
   @Override
   public synchronized void notifyObservers(D data) {
     if (dataHasChanged) {
-      for (Observer<D> observer : observers) {
+      for (var observer : observers) {
         observer.update(this, data);
       }
     }

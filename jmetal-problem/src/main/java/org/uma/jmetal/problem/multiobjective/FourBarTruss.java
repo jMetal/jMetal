@@ -30,7 +30,7 @@ public class FourBarTruss extends AbstractDoubleProblem {
    * Creates a default instance of the FourBarTruss problem
    */
   public FourBarTruss() {
-    int numberOfVariables = 4 ;
+    var numberOfVariables = 4 ;
     setNumberOfObjectives(2);
     setNumberOfConstraints(0);
     setName("FourBarTruss");
@@ -56,11 +56,11 @@ public class FourBarTruss extends AbstractDoubleProblem {
    */
   @Override
   public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
-    double [] fx = new double[2] ;
-      double[] x = new double[10];
-      int count = 0;
-      int bound = getNumberOfVariables();
-      for (int i = 0; i < bound; i++) {
+    var fx = new double[2] ;
+    var x = new double[10];
+    var count = 0;
+    var bound = getNumberOfVariables();
+      for (var i = 0; i < bound; i++) {
           double v = solution.variables().get(i);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;

@@ -22,7 +22,7 @@ public class RepairDoubleSolutionWithOppositeBoundValue implements RepairDoubleS
     Check.that(lowerBound < upperBound, "The lower bound (" + lowerBound + ") is greater than the "
             + "upper bound (" + upperBound+")");
 
-    double result = value ;
+    var result = value ;
     if (value < lowerBound) {
       result = upperBound ;
     }

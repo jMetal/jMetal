@@ -34,8 +34,8 @@ public class GenerateReferenceFrontFromFile {
       throw new JMetalException("Wrong number of arguments: two file names are required.");
     }
 
-    String inputFileName = args[0] ;
-    String outputFileName = args[1] ;
+    var inputFileName = args[0] ;
+    var outputFileName = args[1] ;
 
     @NotNull NonDominatedSolutionListArchive<PointSolution> archive = new NonDominatedSolutionListArchive<>();
     List<String> fileNameList = new ArrayList<>();
@@ -53,8 +53,8 @@ public class GenerateReferenceFrontFromFile {
       throw new JMetalException("Error opening file/directory") ;
     }
 
-    int numberOfObjectives = determineNumberOfObjectives(fileNameList.get(0));
-    for (String fileName: fileNameList) {
+    var numberOfObjectives = determineNumberOfObjectives(fileNameList.get(0));
+    for (var fileName: fileNameList) {
       System.out.println(fileName) ;
       archive.addAll(StoredSolutionsUtils.readSolutionsFromFile(fileName,numberOfObjectives)) ;
     }
@@ -72,7 +72,7 @@ public class GenerateReferenceFrontFromFile {
       throw new JMetalException(e) ;
     }
 
-    int numberOfObjectives = lines.findFirst().get().split(" ").length ;
+    var numberOfObjectives = lines.findFirst().get().split(" ").length ;
     lines.close();
     
     return numberOfObjectives;

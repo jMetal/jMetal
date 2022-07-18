@@ -54,9 +54,9 @@ public class InvertedGenerationalDistancePlus extends QualityIndicator {
    */
   public double invertedGenerationalDistancePlus(double[][] front, double[][] referenceFront) {
 
-      double sum = 0.0;
-      for (double[] doubles : referenceFront) {
-          double v = VectorUtils.distanceToClosestVector(doubles, front, new DominanceDistanceBetweenVectors());
+    var sum = 0.0;
+      for (var doubles : referenceFront) {
+        var v = VectorUtils.distanceToClosestVector(doubles, front, new DominanceDistanceBetweenVectors());
           sum += v;
       }
 

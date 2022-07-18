@@ -21,7 +21,7 @@ public class NormalizedHypervolumeTest {
 
   @BeforeAll
   public static void startup() throws IOException {
-    Properties jMetalProperties = new Properties();
+    var jMetalProperties = new Properties();
     jMetalProperties.load(new FileInputStream("../jmetal.properties"));
 
     resourcesDirectory = "../" + jMetalProperties.getProperty("resourcesDirectory");
@@ -42,7 +42,7 @@ public class NormalizedHypervolumeTest {
     var relativeHypervolume =
         new NormalizedHypervolume(
             VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ","));
-    double[][] front = VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
+    var front = VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
 
     Assertions.assertEquals(0.0, relativeHypervolume.compute(front), EPSILON);
   }

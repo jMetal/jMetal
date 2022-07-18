@@ -14,7 +14,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
   private static String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
 
   public void generateConfigurationFile() {
-    String[] parameters =
+    var parameters =
             ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                     + "--referenceFrontFileName ZDT1.csv "
                     + "--maximumNumberOfEvaluations 25000 "
@@ -35,10 +35,10 @@ public class AutoNSGAIIIraceParameterFileGenerator {
                     + "--polynomialMutationDistributionIndex 20.0 ")
                     .split("\\s+");
 
-    AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
+    var nsgaiiWithParameters = new AutoNSGAII();
     nsgaiiWithParameters.parseAndCheckParameters(parameters);
 
-    AutoNSGAIIIraceParameterFileGenerator nsgaiiiraceParameterFile = new AutoNSGAIIIraceParameterFileGenerator();
+    var nsgaiiiraceParameterFile = new AutoNSGAIIIraceParameterFileGenerator();
     nsgaiiiraceParameterFile.generateConfigurationFile(
             nsgaiiWithParameters.autoConfigurableParameterList);
   }
@@ -46,7 +46,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
   public void generateConfigurationFile(List<Parameter<?>> parameterList) {
     @NotNull StringBuilder stringBuilder = new StringBuilder();
 
-    for (Parameter<?> parameter : parameterList) {
+    for (var parameter : parameterList) {
       this.decodeParameter(parameter, stringBuilder);
       stringBuilder.append("#\n");
     }
@@ -64,7 +64,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
                     decodeValidValues(parameter),
                     ""));
 
-    for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
+    for (var globalParameter : parameter.getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
     }
 
@@ -78,7 +78,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
     if (parentParameter instanceof CategoricalParameter) {
       var validValues = ((CategoricalParameter) parentParameter).getValidValues();
       dependenceString = new StringBuilder();
-      for (String value : validValues) {
+      for (var value : validValues) {
         dependenceString.append("\"").append(value).append("\"").append(",");
       }
       dependenceString = new StringBuilder(dependenceString.substring(0, dependenceString.length() - 1));
@@ -118,13 +118,13 @@ public class AutoNSGAIIIraceParameterFileGenerator {
       decodeParameterGlobal(globalParameter, stringBuilder, pair.getValue());
     }
 
-    for (Pair<String, Parameter<?>> specificParameter : pair.getValue().getSpecificParameters()) {
+    for (var specificParameter : pair.getValue().getSpecificParameters()) {
       decodeParameterSpecific(specificParameter, stringBuilder, pair.getValue());
     }
   }
 
   private String decodeType(Parameter<?> parameter) {
-    String result = " ";
+    var result = " ";
     if (parameter instanceof CategoricalParameter) {
       result = "c";
     } else if (parameter instanceof OrdinalParameter) {
@@ -141,7 +141,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
   }
 
   private String decodeValidValues(Parameter<?> parameter) {
-    String result = " ";
+    var result = " ";
 
     if (parameter instanceof CategoricalParameter) {
       result = ((CategoricalParameter) parameter).getValidValues().toString();

@@ -27,34 +27,29 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 public class AGEMOEAIIRunner extends AbstractAlgorithmRunner {
 
   public static void main(String[] args) throws JMetalException, IOException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
 
-    problem = new DTLZ1();
+    Problem<DoubleSolution> problem = new DTLZ1();
     @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 30.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 30.0;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm =
-        new AGEMOEAIIBuilder<>(problem)
+    Algorithm<List<DoubleSolution>> algorithm = new AGEMOEAIIBuilder<>(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setMaxIterations(300)
             .setPopulationSize(200)
             .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

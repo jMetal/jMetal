@@ -21,11 +21,11 @@ public class DefaultVelocityInitialization implements VelocityInitialization {
     Check.notNull(swarm);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
-    int numberOfVariables = swarm.get(0).variables().size() ;
-    double[] @NotNull [] speed = new double[swarm.size()][numberOfVariables] ;
+    var numberOfVariables = swarm.get(0).variables().size() ;
+    var speed = new double[swarm.size()][numberOfVariables] ;
 
-    for (int i = 0 ; i < speed.length; i++) {
-      for (int j = 0; j < numberOfVariables; j++) {
+    for (var i = 0; i < speed.length; i++) {
+      for (var j = 0; j < numberOfVariables; j++) {
         speed[i][j] = 0.0 ;
       }
     }

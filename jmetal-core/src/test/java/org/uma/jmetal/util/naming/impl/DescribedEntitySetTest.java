@@ -12,9 +12,9 @@ public class DescribedEntitySetTest {
 
 	@Test
 	public void testAddingSameEntityModifiesNothing() {
-		SimpleDescribedEntity entity = new SimpleDescribedEntity("Entity");
+		var entity = new SimpleDescribedEntity("Entity");
 
-		DescribedEntitySet<DescribedEntity> set = new DescribedEntitySet<>();
+		var set = new DescribedEntitySet<DescribedEntity>();
 		assertTrue(set.add(entity));
 		assertFalse(set.add(entity));
 		assertFalse(set.add(entity));
@@ -24,7 +24,7 @@ public class DescribedEntitySetTest {
 
 	@Test
 	public void testAddingDifferentEntityWithDifferentNameProperlyAdds() {
-		DescribedEntitySet<DescribedEntity> set = new DescribedEntitySet<>();
+		var set = new DescribedEntitySet<DescribedEntity>();
 		assertTrue(set.add(new SimpleDescribedEntity("Entity 1")));
 		assertTrue(set.add(new SimpleDescribedEntity("Entity 2")));
 		assertTrue(set.add(new SimpleDescribedEntity("Entity 3")));
@@ -34,12 +34,12 @@ public class DescribedEntitySetTest {
 
 	@Test
 	public void testGetReturnsCorrectEntity() {
-		SimpleDescribedEntity e1 = new SimpleDescribedEntity("Entity 1");
-		SimpleDescribedEntity e2 = new SimpleDescribedEntity("Entity 2");
-		SimpleDescribedEntity e3 = new SimpleDescribedEntity("Entity 3");
-		SimpleDescribedEntity e4 = new SimpleDescribedEntity("Entity 4");
+		var e1 = new SimpleDescribedEntity("Entity 1");
+		var e2 = new SimpleDescribedEntity("Entity 2");
+		var e3 = new SimpleDescribedEntity("Entity 3");
+		var e4 = new SimpleDescribedEntity("Entity 4");
 
-		DescribedEntitySet<DescribedEntity> set = new DescribedEntitySet<>();
+		var set = new DescribedEntitySet<DescribedEntity>();
 		set.add(e1);
 		set.add(e2);
 		set.add(e3);
@@ -53,8 +53,8 @@ public class DescribedEntitySetTest {
 
 	@Test
 	public void testAddingDifferentEntityWithSameNameThrowsException() {
-		String name = "Entity";
-		DescribedEntitySet<DescribedEntity> set = new DescribedEntitySet<>();
+		var name = "Entity";
+		var set = new DescribedEntitySet<DescribedEntity>();
 		set.add(new SimpleDescribedEntity(name));
 
 		try {
@@ -66,7 +66,7 @@ public class DescribedEntitySetTest {
 
 	@Test
 	public void testToStringInCaseInsensitiveOrder() {
-		DescribedEntitySet<DescribedEntity> set = new DescribedEntitySet<>();
+		var set = new DescribedEntitySet<DescribedEntity>();
 		set.add(new SimpleDescribedEntity("b"));
 		set.add(new SimpleDescribedEntity("A"));
 		set.add(new SimpleDescribedEntity("a"));

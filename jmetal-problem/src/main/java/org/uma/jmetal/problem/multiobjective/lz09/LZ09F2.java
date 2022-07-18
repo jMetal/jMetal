@@ -29,7 +29,7 @@ public class LZ09F2 extends AbstractDoubleProblem {
   public LZ09F2(Integer ptype,
                 Integer dtype,
                 Integer ltype) throws JMetalException {
-    int numberOfVariables = 30;
+    var numberOfVariables = 30;
     setNumberOfObjectives(2);
     setNumberOfConstraints(0);
     setName("LZ09F2");
@@ -43,7 +43,7 @@ public class LZ09F2 extends AbstractDoubleProblem {
     @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -56,14 +56,14 @@ public class LZ09F2 extends AbstractDoubleProblem {
     List<Double> x = new ArrayList<Double>(getNumberOfVariables());
     List<Double> y = new ArrayList<Double>(solution.objectives().length);
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (var i = 0; i < getNumberOfVariables(); i++) {
       x.add(solution.variables().get(i));
       y.add(0.0);
     }
 
     lz09.objective(x, y);
 
-    for (int i = 0; i < solution.objectives().length; i++) {
+    for (var i = 0; i < solution.objectives().length; i++) {
       solution.objectives()[i] = y.get(i);
     }
     return solution ;

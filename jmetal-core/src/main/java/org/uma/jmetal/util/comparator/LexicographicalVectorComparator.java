@@ -24,7 +24,7 @@ public class LexicographicalVectorComparator implements Comparator<double[]> {
     Check.notNull(y);
 
     // Find the first i such as x[i] != y[i];
-    int index = 0;
+      var index = 0;
     while ((index < x.length)
         && (index < y.length)
         && x[index] == y[index]) {

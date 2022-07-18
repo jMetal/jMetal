@@ -47,18 +47,18 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
   }
 
   protected List<S> preferenceDistanceSelection(Ranking<S> ranking, int numberOfObjectives) {
-    int nInteresPoint = this.interestPoint.size() / numberOfObjectives;
+    var nInteresPoint = this.interestPoint.size() / numberOfObjectives;
 
     List<S> population = new ArrayList<>(solutionsToSelect);
 
     while (population.size() < solutionsToSelect) {
-      int indexPoint = 0;
-      for (int n = 0; (n < nInteresPoint) && (population.size() < solutionsToSelect); n++) {
+      var indexPoint = 0;
+      for (var n = 0; (n < nInteresPoint) && (population.size() < solutionsToSelect); n++) {
         List<S> auxPopulation = new ArrayList<>(solutionsToSelect / nInteresPoint);
-        List<Double> auxInterestPoint = nextInterestPoint(indexPoint, numberOfObjectives);
+        var auxInterestPoint = nextInterestPoint(indexPoint, numberOfObjectives);
         indexPoint += numberOfObjectives;
-        PreferenceDistance<S> preferenceDistance = new PreferenceDistance<>(auxInterestPoint, epsilon);
-        int rankingIndex = 0;
+        var preferenceDistance = new PreferenceDistance<S>(auxInterestPoint, epsilon);
+        var rankingIndex = 0;
         while ((auxPopulation.size() < (solutionsToSelect / nInteresPoint)) && (population.size() < solutionsToSelect)) {
           if (subfrontFillsIntoThePopulation(ranking, rankingIndex, auxPopulation)) {
             addRankedSolutionsToPopulation(ranking, rankingIndex, auxPopulation);
@@ -71,7 +71,7 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
         population.addAll(auxPopulation);
       }
     }
-    PreferenceDistance<S> preferenceDistance = new PreferenceDistance<>(interestPoint, epsilon);
+    var preferenceDistance = new PreferenceDistance<S>(interestPoint, epsilon);
     population = preferenceDistance.epsilonClean(population);
     return population;
   }
@@ -81,21 +81,20 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
   }
 
   protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, @NotNull List<S> population) {
-    List<S> front;
 
-    front = ranking.getSubFront(rank);
+    var front = ranking.getSubFront(rank);
 
-    for (int i = 0; i < front.size(); i++) {
+    for (var i = 0; i < front.size(); i++) {
       population.add(front.get(i));
     }
   }
 
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
-    List<S> currentRankedFront = ranking.getSubFront(rank);
+    var currentRankedFront = ranking.getSubFront(rank);
 
     currentRankedFront.sort(new CrowdingDistanceDensityEstimator<S>().getComparator());
 
-    int i = 0;
+    var i = 0;
     while (population.size() < solutionsToSelect) {
       population.add(currentRankedFront.get(i));
       i++;
@@ -106,7 +105,7 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
     List<Double> result = null;
     if (index < this.interestPoint.size()) {
       result = new ArrayList<>(size);
-      for (int i = 0; i < size; i++) {
+      for (var i = 0; i < size; i++) {
         result.add(this.interestPoint.get(index));
         index++;
       }

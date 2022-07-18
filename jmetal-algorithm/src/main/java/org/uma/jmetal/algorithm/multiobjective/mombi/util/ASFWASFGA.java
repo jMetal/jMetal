@@ -33,7 +33,7 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 	public ASFWASFGA(double [][] weights) {
 		super(weights);
 		this.interestPoint = new ArrayList<>(this.getVectorSize());
-		for (int i = 0; i < this.getVectorSize(); i++)
+		for (var i = 0; i < this.getVectorSize(); i++)
 			this.interestPoint.add(0.0);
 	}
 	
@@ -45,7 +45,7 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 	public ASFWASFGA(String file_path) {
 		super(file_path);
 		this.interestPoint = new ArrayList<>(this.getVectorSize());
-		for (int i = 0; i < this.getVectorSize(); i++)
+		for (var i = 0; i < this.getVectorSize(); i++)
 			this.interestPoint.add(0.0);
 	}
 
@@ -53,7 +53,7 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 		if (this.interestPoint.size()!=newInterestPoint.size())
 			throw new JMetalException("Wrong dimension of the interest point vector");
 
-		for (int i = 0; i < newInterestPoint.size(); i++) {
+		for (var i = 0; i < newInterestPoint.size(); i++) {
             this.interestPoint.set(i,newInterestPoint.get(i));
 		}
 	}
@@ -64,28 +64,27 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 		if ((vector < 0) || (vector >= this.getSize())) {
 			throw new JMetalException("Vector value " + vector + " invalid") ;
 		}
-		
 
-		
-		List<Double> weightVector 	 =  this.getWeightVector(vector);
+
+		var weightVector 	 =  this.getWeightVector(vector);
 		@NotNull List<Double> objectiveValues = new ArrayList<>(solution.objectives().length);
-		for (double v : solution.objectives()) {
+		for (var v : solution.objectives()) {
 			Double aDouble = v;
 			objectiveValues.add(aDouble);
 		}
 
-		double result = -1e10;
-		double secondSum = 0.0;
-		for (int i = 0; i < weightVector.size(); i++) {
-									
-			double temp = objectiveValues.get(i) - this.interestPoint.get(i);
+		var result = -1e10;
+		var secondSum = 0.0;
+		for (var i = 0; i < weightVector.size(); i++) {
+
+			var temp = objectiveValues.get(i) - this.interestPoint.get(i);
 						 
 			
 			if (nadir!=null && utopia!=null) {
 				temp = temp / (this.nadir.get(i) - this.utopia.get(i));				
 			}
-			
-			double temp_product = temp * weightVector.get(i);
+
+			var temp_product = temp * weightVector.get(i);
 			
 			if (temp_product > result)
 				result = temp_product;

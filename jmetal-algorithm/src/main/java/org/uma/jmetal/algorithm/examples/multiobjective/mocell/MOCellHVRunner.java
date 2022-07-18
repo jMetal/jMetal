@@ -38,12 +38,7 @@ public class MOCellHVRunner extends AbstractAlgorithmRunner {
     java org.uma.jmetal.runner.multiobjective.MOCellRunner problemName [referenceFront]
    */
   public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -56,33 +51,33 @@ public class MOCellHVRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv" ;
     }
 
-    problem = ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     BoundedArchive<DoubleSolution> archive =
         new HypervolumeArchive<DoubleSolution>(100, new PISAHypervolume<DoubleSolution>()) ;
 
-    algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(25000)
-        .setPopulationSize(100)
-        .setArchive(archive)
-        .build() ;
+    Algorithm<List<DoubleSolution>> algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
+            .setSelectionOperator(selection)
+            .setMaxEvaluations(25000)
+            .setPopulationSize(100)
+            .setArchive(archive)
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

@@ -35,7 +35,7 @@ public class UF2 extends AbstractDoubleProblem {
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    for (int i = 1; i < numberOfVariables; i++) {
+    for (var i = 1; i < numberOfVariables; i++) {
       lowerLimit.add(-1.0);
       upperLimit.add(1.0);
     }
@@ -46,8 +46,8 @@ public class UF2 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < solution.variables().size(); i++) {
+    var x = new double[getNumberOfVariables()];
+    for (var i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i) ;
     }
 
@@ -56,7 +56,7 @@ public class UF2 extends AbstractDoubleProblem {
     sum1   = sum2   = 0.0;
     count1 = count2 = 0;
 
-    for (int j = 2 ; j <= getNumberOfVariables(); j++) {
+    for (var j = 2; j <= getNumberOfVariables(); j++) {
       if(j % 2 == 0) {
         yj = x[j-1] -
             (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / getNumberOfVariables()) + 0.6 * x[0])*

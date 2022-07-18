@@ -36,17 +36,16 @@ public class mIBEA<S extends Solution<?>> extends IBEA<S> {
   /** Execute() method */
   @Override
   public void run() {
-    int evaluations;
-    List<S> solutionSet, offSpringSolutionSet;
+    List<S> offSpringSolutionSet;
 
     // Initialize the variables
-    solutionSet = new ArrayList<>(populationSize);
+    List<S> solutionSet = new ArrayList<>(populationSize);
     archive = new ArrayList<>(archiveSize);
-    evaluations = 0;
+    var evaluations = 0;
 
     // -> Create the initial solutionSet
     S newSolution;
-    for (int i = 0; i < populationSize; i++) {
+    for (var i = 0; i < populationSize; i++) {
       newSolution = problem.createSolution();
       problem.evaluate(newSolution);
       evaluations++;
@@ -69,12 +68,12 @@ public class mIBEA<S extends Solution<?>> extends IBEA<S> {
       S parent1;
       S parent2;
       while (offSpringSolutionSet.size() < populationSize) {
-        int j = 0;
+        var j = 0;
         do {
           j++;
           parent1 = selectionOperator.execute(archive);
         } while (j < IBEA.TOURNAMENTS_ROUNDS);
-        int k = 0;
+        var k = 0;
         do {
           k++;
           parent2 = selectionOperator.execute(archive);
@@ -85,7 +84,7 @@ public class mIBEA<S extends Solution<?>> extends IBEA<S> {
         parents.add(parent2);
 
         // make the crossover
-        List<S> offspring = crossoverOperator.execute(parents);
+        var offspring = crossoverOperator.execute(parents);
         mutationOperator.execute(offspring.get(0));
         problem.evaluate(offspring.get(0));
         // problem.evaluateConstraints(offSpring[0]);

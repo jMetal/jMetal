@@ -73,7 +73,7 @@ public class Gecco2019Experiment {
   public static void main(String[] args) throws IOException {
     Check.that(args.length == 1, "Missing argument: experimentBaseDirectory") ;
 
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.csv"));
@@ -93,10 +93,10 @@ public class Gecco2019Experiment {
     problemList.add(new ExperimentProblem<>(new DTLZ6_2D()).setReferenceFront("DTLZ6.2D.csv"));
     problemList.add(new ExperimentProblem<>(new DTLZ7_2D()).setReferenceFront("DTLZ7.2D.csv"));
 
-    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+    var algorithmList =
             configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    var experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("Gecco2019Study")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
@@ -132,8 +132,8 @@ public class Gecco2019Experiment {
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
+      for (var experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
                 experimentProblem.getProblem(),
                 new SBXCrossover(1.0, 20.0),
@@ -144,9 +144,9 @@ public class Gecco2019Experiment {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-        double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
+      for (var experimentProblem : problemList) {
+        var mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+        var mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                 (DoubleProblem) experimentProblem.getProblem(),
                 new CrowdingDistanceArchive<DoubleSolution>(100))
@@ -160,10 +160,10 @@ public class Gecco2019Experiment {
 
 
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      for (var experimentProblem : problemList) {
 
         /* AutoNSGAII */
-        String[] parameters =
+        var parameters =
                 ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 25000 "
@@ -190,16 +190,16 @@ public class Gecco2019Experiment {
                         + "--externalArchive crowdingDistanceArchive ")
                         .split("\\s+");
 
-        AutoNSGAII autoNSGAII = new AutoNSGAII();
+        var autoNSGAII = new AutoNSGAII();
         autoNSGAII.parseAndCheckParameters(parameters);
-        EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+        var nsgaII = autoNSGAII.create();
 
         algorithms.add(new ExperimentAlgorithm<>(nsgaII, "AutoNSGAII", experimentProblem, run));
 
 
 
         /* AutoMOPSO */
-        String[] parametersAutoMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+        var parametersAutoMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                 + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--swarmSize 72 "
@@ -228,14 +228,14 @@ public class Gecco2019Experiment {
                 + "--wMax 0.288 "
         )
                 .split("\\s+");
-        AutoMOPSO AutoMOPSO = new AutoMOPSO();
+        var AutoMOPSO = new AutoMOPSO();
         AutoMOPSO.parseAndCheckParameters(parametersAutoMOPSO);
-        ParticleSwarmOptimizationAlgorithm automopso = AutoMOPSO.create();
+        var automopso = AutoMOPSO.create();
 
         algorithms.add(new ExperimentAlgorithm<>(automopso, "AutoMOPSO", experimentProblem, run));
 
         /* OMOPSO */
-        String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+        var parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                 + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--swarmSize 100 "
@@ -266,7 +266,7 @@ public class Gecco2019Experiment {
                 .split("\\s+");
         @NotNull AutoMOPSO OMOPSO = new AutoMOPSO();
         OMOPSO.parseAndCheckParameters(parametersOMOPSO);
-        ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
+        var omopso = OMOPSO.create();
 
         algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
       }

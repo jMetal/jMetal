@@ -49,7 +49,7 @@ public class DMOPSOIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     /*
     Rationale: the default problem is ZDT1, and dMOPSO, configured with standard settings, should
@@ -85,7 +85,7 @@ public class DMOPSOIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
@@ -94,7 +94,7 @@ public class DMOPSOIT {
     // Rationale: the default problem is ZDT1, and AbYSS, configured with standard settings,
     // should return find a front with a hypervolume value higher than 0.22
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.64);
   }

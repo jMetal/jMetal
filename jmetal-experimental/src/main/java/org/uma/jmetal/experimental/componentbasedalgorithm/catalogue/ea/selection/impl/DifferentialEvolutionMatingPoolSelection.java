@@ -29,7 +29,7 @@ public class DifferentialEvolutionMatingPoolSelection
     while (matingPool.size() < matingPoolSize) {
       selectionOperator.setIndex(solutionIndexGenerator.getValue());
       @NotNull List<DoubleSolution> parents = selectionOperator.execute(solutionList) ;
-      for (DoubleSolution parent: parents)  {
+      for (var parent: parents)  {
         matingPool.add(parent);
         if (matingPool.size() == matingPoolSize) {
           break ;

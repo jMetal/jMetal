@@ -86,9 +86,9 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	@Override
 	protected List<S> selection(List<S> population) {
 		@NotNull List<S> matingPopulation = new ArrayList<>(population.size());
-		int bound = this.getMaxPopulationSize();
-		for (int i = 0; i < bound; i++) {
-			S execute = selectionOperator.execute(population);
+		var bound = this.getMaxPopulationSize();
+		for (var i = 0; i < bound; i++) {
+			var execute = selectionOperator.execute(population);
 			matingPopulation.add(execute);
 		}
 
@@ -98,16 +98,16 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	@Override
 	protected @NotNull List<S> reproduction(@NotNull List<S> population) {
 		List<S> offspringPopulation = new ArrayList<>(this.getMaxPopulationSize());
-		for (int i = 0; i < this.getMaxPopulationSize(); i += 2) {
+		for (var i = 0; i < this.getMaxPopulationSize(); i += 2) {
 			List<S> parents = new ArrayList<>(2);
-			int parent1Index = JMetalRandom.getInstance().nextInt(0, this.getMaxPopulationSize()-1);
-			int parent2Index = JMetalRandom.getInstance().nextInt(0, this.getMaxPopulationSize()-1);
+			var parent1Index = JMetalRandom.getInstance().nextInt(0, this.getMaxPopulationSize()-1);
+			var parent2Index = JMetalRandom.getInstance().nextInt(0, this.getMaxPopulationSize()-1);
 			while (parent1Index==parent2Index)
 				parent2Index = JMetalRandom.getInstance().nextInt(0, this.getMaxPopulationSize()-1);
 			parents.add(population.get(parent1Index));
 			parents.add(population.get(parent2Index));
 
-			List<S> offspring = crossoverOperator.execute(parents);
+			var offspring = crossoverOperator.execute(parents);
 
 			mutationOperator.execute(offspring.get(0));
 			mutationOperator.execute(offspring.get(1));
@@ -157,22 +157,22 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	}
 
 	private void initializeReferencePoint(int size) {
-		for (int i = 0; i < size; i++)
+		for (var i = 0; i < size; i++)
 			this.getReferencePoint().add(Double.POSITIVE_INFINITY);
 	}
 
 	private void initializeNadirPoint(int size) {
-		for (int i = 0; i < size; i++)
+		for (var i = 0; i < size; i++)
 			this.getNadirPoint().add(Double.NEGATIVE_INFINITY);
 	}
 
 	protected void updateReferencePoint(S s) {
-		for (int i = 0; i < s.objectives().length; i++)
+		for (var i = 0; i < s.objectives().length; i++)
 			this.getReferencePoint().set(i, Math.min(this.getReferencePoint().get(i),s.objectives()[i]));
 	}
 
 	protected void updateNadirPoint(@NotNull S s) {
-		for (int i = 0; i < s.objectives().length; i++)
+		for (var i = 0; i < s.objectives().length; i++)
 			this.getNadirPoint().set(i, Math.max(this.getNadirPoint().get(i),s.objectives()[i]));
 	}
 

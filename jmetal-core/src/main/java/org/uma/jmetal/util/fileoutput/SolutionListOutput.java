@@ -55,13 +55,13 @@ public class SolutionListOutput {
 
   public void printVariablesToFile(
       FileOutputContext context, List<? extends Solution<?>> solutionList) {
-    BufferedWriter bufferedWriter = context.getFileWriter();
+    var bufferedWriter = context.getFileWriter();
 
     try {
       if (solutionList.size() > 0) {
-        int numberOfVariables = solutionList.get(0).variables().size();
-        for (int i = 0; i < solutionList.size(); i++) {
-          for (int j = 0; j < numberOfVariables - 1; j++) {
+        var numberOfVariables = solutionList.get(0).variables().size();
+        for (var i = 0; i < solutionList.size(); i++) {
+          for (var j = 0; j < numberOfVariables - 1; j++) {
             bufferedWriter.write("" + solutionList.get(i).variables().get(j) + context.getSeparator());
           }
           bufferedWriter.write(
@@ -79,13 +79,13 @@ public class SolutionListOutput {
 
   public void printObjectivesToFile(
           FileOutputContext context, @NotNull List<? extends Solution<?>> solutionList) {
-    BufferedWriter bufferedWriter = context.getFileWriter();
+    var bufferedWriter = context.getFileWriter();
 
     try {
       if (solutionList.size() > 0) {
-        int numberOfObjectives = solutionList.get(0).objectives().length;
-        for (int i = 0; i < solutionList.size(); i++) {
-          for (int j = 0; j < numberOfObjectives - 1; j++) {
+        var numberOfObjectives = solutionList.get(0).objectives().length;
+        for (var i = 0; i < solutionList.size(); i++) {
+          for (var j = 0; j < numberOfObjectives - 1; j++) {
             bufferedWriter.write(solutionList.get(i).objectives()[j] + context.getSeparator());
           }
           bufferedWriter.write("" + solutionList.get(i).objectives()[numberOfObjectives - 1]);
@@ -104,17 +104,17 @@ public class SolutionListOutput {
           FileOutputContext context,
           List<? extends Solution<?>> solutionList,
           @NotNull List<Boolean> minimizeObjective) {
-    BufferedWriter bufferedWriter = context.getFileWriter();
+    var bufferedWriter = context.getFileWriter();
 
     try {
       if (solutionList.size() > 0) {
-        int numberOfObjectives = solutionList.get(0).objectives().length;
+        var numberOfObjectives = solutionList.get(0).objectives().length;
         if (numberOfObjectives != minimizeObjective.size()) {
           throw new JMetalException(
               "The size of list minimizeObjective is not correct: " + minimizeObjective.size());
         }
-        for (int i = 0; i < solutionList.size(); i++) {
-          for (int j = 0; j < numberOfObjectives - 1; j++) {
+        for (var i = 0; i < solutionList.size(); i++) {
+          for (var j = 0; j < numberOfObjectives - 1; j++) {
             if (minimizeObjective.get(j)) {
               bufferedWriter.write(solutionList.get(i).variables().get(j) + context.getSeparator());
             } else {

@@ -17,39 +17,39 @@ public class BoundedRandomGeneratorTest {
 	public void testUnboundedDoubleToIntegerFactoryMethodReturnsGeneratorWithCorrectValues() {
 		double[] doubleValue = { 0 };
 		RandomGenerator<Double> doubleGenerator = () -> doubleValue[0];
-		BoundedRandomGenerator<Integer> generator = BoundedRandomGenerator.fromDoubleToInteger(doubleGenerator);
+		var generator = BoundedRandomGenerator.fromDoubleToInteger(doubleGenerator);
 
 		for (double v = 0; v <= 1; v += 0.01) {
 			doubleValue[0] = v;
-			Integer value = generator.getRandomValue(1, 5);
+			var value = generator.getRandomValue(1, 5);
 			assertTrue("Out of bounds value (" + value + ") for double " + v, value >= 1 && value <= 5);
 		}
 	}
 
 	@Test
 	public void testUnboundedDoubleToIntegerFactoryMethodReturnsGeneratorWithCorrectDistribution() {
-		Random random = new Random();
-		BoundedRandomGenerator<Integer> generator = BoundedRandomGenerator
+		var random = new Random();
+		var generator = BoundedRandomGenerator
 				.fromDoubleToInteger((RandomGenerator<Double>) random::nextDouble);
 
-		int min = 1;
-		int max = 5;
+		var min = 1;
+		var max = 5;
 
 		// Generate random values
 		Map<Integer, Integer> counters = new HashMap<>();
-		for (int i1 = min; i1 <= max; i1++) {
+		for (var i1 = min; i1 <= max; i1++) {
 			Integer integer = i1;
 			counters.put(integer, 0);
 		}
-		for (int i = 0; i <= 10000; i++) {
-			Integer value = generator.getRandomValue(min, max);
+		for (var i = 0; i <= 10000; i++) {
+			var value = generator.getRandomValue(min, max);
 			counters.put(value, counters.get(value) + 1);
 		}
 
 		// Test the distribution is reasonably uniform
-		double epsilon = 0.1;
-		for (int i = min; i <= max; i++) {
-			Integer occurrences = counters.get(i);
+		var epsilon = 0.1;
+		for (var i = min; i <= max; i++) {
+			var occurrences = counters.get(i);
 			assertTrue("Not a reasonable amount of occurrences (" + occurrences + ") for value " + i,
 					occurrences >= 2000 * (1 - epsilon) && occurrences <= 2000 * (1 + epsilon));
 		}
@@ -59,39 +59,39 @@ public class BoundedRandomGeneratorTest {
 	public void testBoundedDoubleToIntegerFactoryMethodReturnsGeneratorWithCorrectValues() {
 		double[] doubleValue = { 0 };
 		BoundedRandomGenerator<Double> doubleGenerator = (min, max) -> doubleValue[0] * (max - min) + min;
-		BoundedRandomGenerator<Integer> generator = BoundedRandomGenerator.fromDoubleToInteger(doubleGenerator);
+		var generator = BoundedRandomGenerator.fromDoubleToInteger(doubleGenerator);
 
 		for (double v = 0; v <= 1; v += 0.01) {
 			doubleValue[0] = v;
-			Integer value = generator.getRandomValue(1, 5);
+			var value = generator.getRandomValue(1, 5);
 			assertTrue("Out of bounds value (" + value + ") for double " + v, value >= 1 && value <= 5);
 		}
 	}
 
 	@Test
 	public void testBoundedDoubleToIntegerFactoryMethodReturnsGeneratorWithCorrectDistribution() {
-		Random random = new Random();
-		BoundedRandomGenerator<Integer> generator = BoundedRandomGenerator.fromDoubleToInteger(
+		var random = new Random();
+		var generator = BoundedRandomGenerator.fromDoubleToInteger(
 				(BoundedRandomGenerator<Double>) (min, max) -> random.nextDouble() * (max - min) + min);
 
-		int min = 1;
-		int max = 5;
+		var min = 1;
+		var max = 5;
 
 		// Generate random values
 		Map<Integer, Integer> counters = new HashMap<>();
-		for (int i1 = min; i1 <= max; i1++) {
+		for (var i1 = min; i1 <= max; i1++) {
 			Integer integer = i1;
 			counters.put(integer, 0);
 		}
-		for (int i = 0; i <= 10000; i++) {
-			Integer value = generator.getRandomValue(min, max);
+		for (var i = 0; i <= 10000; i++) {
+			var value = generator.getRandomValue(min, max);
 			counters.put(value, counters.get(value) + 1);
 		}
 
 		// Test the distribution is reasonably uniform
-		double epsilon = 0.1;
-		for (int i = min; i <= max; i++) {
-			Integer occurrences = counters.get(i);
+		var epsilon = 0.1;
+		for (var i = min; i <= max; i++) {
+			var occurrences = counters.get(i);
 			assertTrue("Not a reasonable amount of occurrences (" + occurrences + ") for value " + i,
 					occurrences >= 2000 * (1 - epsilon) && occurrences <= 2000 * (1 + epsilon));
 		}
@@ -99,12 +99,12 @@ public class BoundedRandomGeneratorTest {
 
 	@Test
 	public void testBoundingFactoryMethodReturnsGeneratorWithCorrectValues() {
-		Random random = new Random();
-		BoundedRandomGenerator<Double> generator = BoundedRandomGenerator.bound(random::nextDouble);
+		var random = new Random();
+		var generator = BoundedRandomGenerator.bound(random::nextDouble);
 
 		double min = 1;
 		double max = 5;
-		for (int i = 0; i <= 10000; i++) {
+		for (var i = 0; i <= 10000; i++) {
 			double value = generator.getRandomValue(min, max);
 			assertTrue("Out of bounds value: " + value, value >= min && value <= max);
 		}

@@ -27,16 +27,16 @@ public class Plot2D implements PlotFront {
 
   @Override
   public void plot() {
-    int numberOfRows = matrix.length;
-    double[] f1 = new double[numberOfRows];
-    double @NotNull [] f2 = new double[numberOfRows];
+    var numberOfRows = matrix.length;
+    var f1 = new double[numberOfRows];
+    var f2 = new double[numberOfRows];
 
-    for (int i = 0; i < numberOfRows; i++) {
+    for (var i = 0; i < numberOfRows; i++) {
       f1[i] = matrix[i][0];
       f2[i] = matrix[i][1];
     }
 
-    Table table =
+    var table =
         Table.create("table")
             .addColumns(DoubleColumn.create("f1", f1), DoubleColumn.create("f2", f2));
 

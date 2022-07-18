@@ -37,8 +37,8 @@ public class HypervolumeContributionComparator<S extends Solution<?>> implements
     } else if (solution2 == null) {
       result = -1;
     } else {
-      double contribution1 = Double.MAX_VALUE ;
-      double contribution2 = Double.MAX_VALUE ;
+      var contribution1 = Double.MAX_VALUE ;
+      var contribution2 = Double.MAX_VALUE ;
 
       if (hvContribution.getAttribute(solution1) != null) {
         contribution1 = (double) hvContribution.getAttribute(solution1);

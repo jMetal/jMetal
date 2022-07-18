@@ -82,9 +82,9 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   @Override
   protected List<DoubleSolution> createInitialPopulation() {
       @NotNull List<DoubleSolution> population = new ArrayList<>(getMaxPopulationSize());
-      int bound = getMaxPopulationSize();
-      for (int i = 0; i < bound; i++) {
-          DoubleSolution solution = getProblem().createSolution();
+    var bound = getMaxPopulationSize();
+      for (var i = 0; i < bound; i++) {
+        var solution = getProblem().createSolution();
           population.add(solution);
       }
       return population;
@@ -104,11 +104,11 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   @Override
   protected List<DoubleSolution> selection(List<DoubleSolution> population) {
     List<DoubleSolution> matingPopulation = new LinkedList<>();
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
+    for (var i = 0; i < getMaxPopulationSize(); i++) {
       // Obtain parents. Two parameters are required: the population and the
       //                 index of the current individual
       selectionOperator.setIndex(i);
-      List<DoubleSolution> parents = selectionOperator.execute(population);
+      var parents = selectionOperator.execute(population);
 
       matingPopulation.addAll(parents);
     }
@@ -120,16 +120,16 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   protected List<DoubleSolution> reproduction(List<DoubleSolution> matingPopulation) {
     List<DoubleSolution> offspringPopulation = new ArrayList<>();
 
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
+    for (var i = 0; i < getMaxPopulationSize(); i++) {
       crossoverOperator.setCurrentSolution(getPopulation().get(i));
       List<DoubleSolution> parents = new ArrayList<>(3);
-      for (int j = 0; j < 3; j++) {
+      for (var j = 0; j < 3; j++) {
         parents.add(matingPopulation.get(0));
         matingPopulation.remove(0);
       }
 
       crossoverOperator.setCurrentSolution(getPopulation().get(i));
-      List<DoubleSolution> children = crossoverOperator.execute(parents);
+      var children = crossoverOperator.execute(parents);
 
       offspringPopulation.add(children.get(0));
     }
@@ -141,11 +141,10 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   protected List<DoubleSolution> replacement(
       List<DoubleSolution> population, List<DoubleSolution> offspringPopulation) {
     List<DoubleSolution> tmpList = new ArrayList<>();
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
+    for (var i = 0; i < getMaxPopulationSize(); i++) {
       // Dominance test
-      DoubleSolution child = offspringPopulation.get(i);
-      int result;
-      result = dominanceComparator.compare(population.get(i), child);
+      var child = offspringPopulation.get(i);
+      var result = dominanceComparator.compare(population.get(i), child);
       if (result == -1) {
         // Solution i dominates child
         tmpList.add(population.get(i));
@@ -161,8 +160,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     Ranking<DoubleSolution> ranking =  new FastNonDominatedSortRanking<>(dominanceComparator);
     ranking.compute(tmpList) ;
 
-    RankingAndCrowdingSelection<DoubleSolution> rankingAndCrowdingSelection ;
-    rankingAndCrowdingSelection = new RankingAndCrowdingSelection<>(getMaxPopulationSize(), dominanceComparator) ;
+    var rankingAndCrowdingSelection = new RankingAndCrowdingSelection<DoubleSolution>(getMaxPopulationSize(), dominanceComparator);
 
     return rankingAndCrowdingSelection.execute(tmpList) ;
   }

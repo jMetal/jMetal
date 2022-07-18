@@ -19,44 +19,44 @@ class MuCommaLambdaReplacementTest {
 
   @Test
   void ReplaceReturnsAPopulationOfTheRequiredSizeIfMuIs10AndLambdaIs12() {
-    int mu = 10;
-    int lambda = 12;
-    FakeDoubleProblem problem = new FakeDoubleProblem();
+      var mu = 10;
+      var lambda = 12;
+      var problem = new FakeDoubleProblem();
       List<DoubleSolution> population = new ArrayList<>();
-      for (int i1 = 0; i1 < mu; i1++) {
-          DoubleSolution problemSolution = problem.createSolution();
+      for (var i1 = 0; i1 < mu; i1++) {
+          var problemSolution = problem.createSolution();
           population.add(problemSolution);
       }
 
       List<DoubleSolution> offspringPopulation = new ArrayList<>();
-      for (int i = 0; i < lambda; i++) {
-          DoubleSolution solution = problem.createSolution();
+      for (var i = 0; i < lambda; i++) {
+          var solution = problem.createSolution();
           offspringPopulation.add(solution);
       }
 
-      MuCommaLambdaReplacement<DoubleSolution> replacement = new MuCommaLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
+      var replacement = new MuCommaLambdaReplacement<DoubleSolution>(new ObjectiveComparator<>(0)) ;
 
     assertEquals(mu, replacement.replace(population, offspringPopulation).size()) ;
   }
 
   @Test
   void ReplaceRaisesAnExceptionIfMuIsEqualToLambda() {
-    int mu = 10;
-    int lambda = 10;
-    FakeDoubleProblem problem = new FakeDoubleProblem();
+      var mu = 10;
+      var lambda = 10;
+      var problem = new FakeDoubleProblem();
       List<DoubleSolution> population = new ArrayList<>();
-      for (int i1 = 0; i1 < mu; i1++) {
-          DoubleSolution problemSolution = problem.createSolution();
+      for (var i1 = 0; i1 < mu; i1++) {
+          var problemSolution = problem.createSolution();
           population.add(problemSolution);
       }
 
       List<DoubleSolution> offspringPopulation = new ArrayList<>();
-      for (int i = 0; i < lambda; i++) {
-          DoubleSolution solution = problem.createSolution();
+      for (var i = 0; i < lambda; i++) {
+          var solution = problem.createSolution();
           offspringPopulation.add(solution);
       }
 
-      MuCommaLambdaReplacement<DoubleSolution> replacement = new MuCommaLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
+      var replacement = new MuCommaLambdaReplacement<DoubleSolution>(new ObjectiveComparator<>(0)) ;
 
 
     assertThrows(
@@ -65,22 +65,22 @@ class MuCommaLambdaReplacementTest {
 
   @Test
   void replaceRaisesAnExceptionIfMuIsLowerThanLambda() {
-    int mu = 10;
-    int lambda = 8;
-    FakeDoubleProblem problem = new FakeDoubleProblem();
+      var mu = 10;
+      var lambda = 8;
+      var problem = new FakeDoubleProblem();
       List<DoubleSolution> population = new ArrayList<>();
-      for (int i1 = 0; i1 < mu; i1++) {
-          DoubleSolution problemSolution = problem.createSolution();
+      for (var i1 = 0; i1 < mu; i1++) {
+          var problemSolution = problem.createSolution();
           population.add(problemSolution);
       }
 
       List<DoubleSolution> offspringPopulation = new ArrayList<>();
-      for (int i = 0; i < lambda; i++) {
-          DoubleSolution solution = problem.createSolution();
+      for (var i = 0; i < lambda; i++) {
+          var solution = problem.createSolution();
           offspringPopulation.add(solution);
       }
 
-      MuCommaLambdaReplacement<DoubleSolution> replacement = new MuCommaLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
+      var replacement = new MuCommaLambdaReplacement<DoubleSolution>(new ObjectiveComparator<>(0)) ;
 
 
     assertThrows(InvalidConditionException.class, () -> replacement.replace(population, offspringPopulation)) ;

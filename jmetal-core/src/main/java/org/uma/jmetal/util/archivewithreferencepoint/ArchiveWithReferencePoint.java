@@ -38,9 +38,9 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
 
     if (referencePointSolution == null) {
       @SuppressWarnings("unchecked")
-      S copy = (S) solution.copy();
+      var copy = (S) solution.copy();
       referencePointSolution = copy;
-      for (int i = 0; i < solution.objectives().length; i++) {
+      for (var i = 0; i < solution.objectives().length; i++) {
         referencePointSolution.objectives()[i] = this.referencePoint.get(i);
       }
     }
@@ -79,18 +79,18 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
 
       computeDensityEstimator();
 
-      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), comparator);
+      var worst = new SolutionListUtils().findWorstSolution(getSolutionList(), comparator);
       getSolutionList().remove(worst);
     }
   }
 
   public synchronized void changeReferencePoint(List<Double> newReferencePoint) {
     this.referencePoint = newReferencePoint ;
-    for (int i = 0; i < referencePoint.size(); i++) {
+    for (var i = 0; i < referencePoint.size(); i++) {
       referencePointSolution.objectives()[i] = this.referencePoint.get(i);
     }
 
-    int i = 0 ;
+    var i = 0 ;
     while (i < getSolutionList().size()) {
       if (dominanceTest(getSolutionList().get(i), referencePointSolution) == 0) {
         getSolutionList().remove(i) ;
@@ -103,12 +103,12 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
   }
 
   private int dominanceTest(@NotNull S solution1, S solution2) {
-    int bestIsOne = 0 ;
-    int bestIsTwo = 0 ;
+    var bestIsOne = 0 ;
+    var bestIsTwo = 0 ;
     int result ;
-    for (int i = 0; i < solution1.objectives().length; i++) {
-      double value1 = solution1.objectives()[i];
-      double value2 = solution2.objectives()[i];
+    for (var i = 0; i < solution1.objectives().length; i++) {
+      var value1 = solution1.objectives()[i];
+      var value2 = solution2.objectives()[i];
       if (value1 != value2) {
         if (value1 < value2) {
           bestIsOne = 1;

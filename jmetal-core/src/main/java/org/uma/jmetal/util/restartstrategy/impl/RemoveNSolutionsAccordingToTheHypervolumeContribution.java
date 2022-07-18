@@ -27,17 +27,17 @@ public class RemoveNSolutionsAccordingToTheHypervolumeContribution<S extends Sol
     } else if (problem == null) {
       throw new JMetalException("The problem is null") ;
     }
-    int numberOfSolutions = solutionList.size() - numberOfSolutionsToDelete;
+    var numberOfSolutions = solutionList.size() - numberOfSolutionsToDelete;
     if(numberOfSolutions < 0){
       numberOfSolutions = solutionList.size();
     }
-    HypervolumeArchive<S> archive = new HypervolumeArchive<>(numberOfSolutions,  new PISAHypervolume<>()) ;
-    for (S solution: solutionList) {
+    var archive = new HypervolumeArchive<S>(numberOfSolutions,  new PISAHypervolume<>()) ;
+    for (var solution: solutionList) {
       archive.add(solution) ;
     }
     solutionList.clear();
 
-    for (S solution: archive.getSolutionList()) {
+    for (var solution: archive.getSolutionList()) {
       solutionList.add(solution) ;
     }
 

@@ -36,12 +36,7 @@ public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner
    */
   public static void main(String[] args)
       throws JMetalException, InterruptedException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 2) {
@@ -52,47 +47,47 @@ public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
-    problem = ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    int maxEvaluations = 25000 ;
-    int populationSize = 100 ;
+    var maxEvaluations = 25000 ;
+    var populationSize = 100 ;
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(maxEvaluations)
-        .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
-        .build() ;
+      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
+              .setSelectionOperator(selection)
+              .setMaxEvaluations(maxEvaluations)
+              .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
+              .build();
 
     ((NSGAIIMeasures<DoubleSolution>)algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
 
     /* Measure management */
-    MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>)algorithm).getMeasureManager() ;
+    var measureManager = ((NSGAIIMeasures<DoubleSolution>)algorithm).getMeasureManager() ;
 
-    DurationMeasure currentComputingTime =
+    var currentComputingTime =
         (DurationMeasure) measureManager.<Long>getPullMeasure("currentExecutionTime");
 
-    BasicMeasure<Double> hypervolumeMeasure =
+    var hypervolumeMeasure =
             (BasicMeasure<Double>) measureManager.<Double>getPushMeasure("hypervolume");
 
     hypervolumeMeasure.register(new Listener());
     /* End of measure management */
 
-    Thread algorithmThread = new Thread(algorithm) ;
+    var algorithmThread = new Thread(algorithm) ;
     algorithmThread.start();
 
     algorithmThread.join();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    var population = algorithm.getResult() ;
     long computingTime = currentComputingTime.get() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

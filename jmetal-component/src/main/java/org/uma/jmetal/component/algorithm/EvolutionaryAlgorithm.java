@@ -85,8 +85,8 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     population = evaluation.evaluate(population);
     initProgress();
     while (!termination.isMet(attributes)) {
-      List<S> matingPopulation = selection.select(population);
-      List<S> offspringPopulation = variation.variate(population, matingPopulation);
+      var matingPopulation = selection.select(population);
+      var offspringPopulation = variation.variate(population, matingPopulation);
       offspringPopulation = evaluation.evaluate(offspringPopulation);
 
       population = replacement.replace(population, offspringPopulation);

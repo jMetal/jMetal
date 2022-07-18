@@ -167,7 +167,7 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> void unlink(PushMeasure<T> measure) {
-		MeasureListener<T> listener = (MeasureListener<T>) linkedMeasures
+		var listener = (MeasureListener<T>) linkedMeasures
 				.get(measure);
 		if (listener == null) {
 			// no registered listener

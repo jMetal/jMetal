@@ -61,11 +61,11 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    */
   @Override
   public void run() throws IOException {
-    String outputDirectoryName = experiment.getReferenceFrontDirectory();
+    var outputDirectoryName = experiment.getReferenceFrontDirectory();
     createOutputDirectory(outputDirectoryName);
 
     for (@NotNull ExperimentProblem<?> problem : experiment.getProblemList()) {
-      List<DummyDoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem);
+      var nonDominatedSolutions = getNonDominatedSolutions(problem);
 
       writeReferenceFrontFile(outputDirectoryName, problem, nonDominatedSolutions);
       writeReferenceSetFile(outputDirectoryName, problem, nonDominatedSolutions);
@@ -79,7 +79,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
           String outputDirectoryName,
           ExperimentProblem<?> problem,
           List<DummyDoubleSolution> nonDominatedSolutions) {
-    GenericSolutionAttribute<DoubleSolution, String> solutionAttribute =
+    var solutionAttribute =
             new GenericSolutionAttribute<DoubleSolution, String>();
 
     for (@NotNull ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
@@ -125,7 +125,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
           String outputDirectoryName,
           ExperimentProblem<?> problem,
           List<DummyDoubleSolution> nonDominatedSolutions) {
-    String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".ps";
+    var referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".ps";
     new SolutionListOutput(nonDominatedSolutions).printVariablesToFile(referenceSetFileName, ",");
   }
 
@@ -140,8 +140,8 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    */
   private List<DummyDoubleSolution> getNonDominatedSolutions(@NotNull ExperimentProblem<?> problem)
       throws IOException {
-    NonDominatedSolutionListArchive<DummyDoubleSolution> nonDominatedSolutionArchive =
-            new NonDominatedSolutionListArchive<>();
+    var nonDominatedSolutionArchive =
+            new NonDominatedSolutionListArchive<DummyDoubleSolution>();
 
       @NotNull ArrayList<ExperimentAlgorithm<?, ?>> experimentAlgorithms = new ArrayList<>();
       for (ExperimentAlgorithm<?, ?> s : experiment.getAlgorithmList()) {
@@ -149,9 +149,9 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
               experimentAlgorithms.add(s);
           }
       }
-      for (ExperimentAlgorithm<?, ?> algorithm :
+      for (var algorithm :
               experimentAlgorithms) {
-      String problemDirectory =
+        var problemDirectory =
               experiment.getExperimentBaseDirectory()
                       + "/data/"
                       + algorithm.getAlgorithmTag()
@@ -164,19 +164,19 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
                       + experiment.getOutputParetoFrontFileName()
                       + algorithm.getRunId()
                       + ".csv";
-      String paretoSetFileName =
+        var paretoSetFileName =
               problemDirectory
                       + "/"
                       + experiment.getOutputParetoSetFileName()
                       + algorithm.getRunId()
                       + ".csv";
 
-      double[][] frontWithObjectiveValues = readVectors(frontFileName, ",");
-      double[] @NotNull [] frontWithVariableValues = readVectors(paretoSetFileName, ",");
-      List<DummyDoubleSolution> solutionList =
+        var frontWithObjectiveValues = readVectors(frontFileName, ",");
+        var frontWithVariableValues = readVectors(paretoSetFileName, ",");
+        var solutionList =
               createSolutionListFrontFiles(
                       algorithm.getAlgorithmTag(), frontWithVariableValues, frontWithObjectiveValues);
-      for (DummyDoubleSolution solution : solutionList) {
+      for (var solution : solutionList) {
         nonDominatedSolutionArchive.add(solution);
       }
     }
@@ -191,10 +191,9 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    * @return
    */
   private @NotNull File createOutputDirectory(@NotNull String outputDirectoryName) {
-    File outputDirectory;
-    outputDirectory = new File(outputDirectoryName);
+    var outputDirectory = new File(outputDirectoryName);
     if (!outputDirectory.exists()) {
-      boolean result = new File(outputDirectoryName).mkdir();
+      var result = new File(outputDirectoryName).mkdir();
       JMetalLogger.logger.info("Creating " + outputDirectoryName + ". Status = " + result);
     }
 
@@ -217,19 +216,19 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
       throw new JMetalException("The front of solutions is empty");
     }
 
-    GenericSolutionAttribute<DummyDoubleSolution, String> solutionAttribute =
+    var solutionAttribute =
             new GenericSolutionAttribute<DummyDoubleSolution, String>();
 
-    int numberOfVariables = frontWithVariableValues[0].length;
-    int numberOfObjectives = frontWithObjectiveValues[0].length;
+    var numberOfVariables = frontWithVariableValues[0].length;
+    var numberOfObjectives = frontWithObjectiveValues[0].length;
 
     List<DummyDoubleSolution> solutionList = new ArrayList<>();
-    for (int i = 0; i < frontWithVariableValues.length; i++) {
+    for (var i = 0; i < frontWithVariableValues.length; i++) {
       @NotNull DummyDoubleSolution solution = new DummyDoubleSolution(numberOfVariables, numberOfObjectives);
-      for (int vars = 0; vars < numberOfVariables; vars++) {
+      for (var vars = 0; vars < numberOfVariables; vars++) {
         solution.variables().set(vars, frontWithVariableValues[i][vars]);
       }
-      for (int objs = 0; objs < numberOfObjectives; objs++) {
+      for (var objs = 0; objs < numberOfObjectives; objs++) {
         solution.objectives()[objs] = frontWithObjectiveValues[i][objs];
       }
 

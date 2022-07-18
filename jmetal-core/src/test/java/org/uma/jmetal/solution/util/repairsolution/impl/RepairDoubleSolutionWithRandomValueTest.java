@@ -30,8 +30,8 @@ public class RepairDoubleSolutionWithRandomValueTest {
 
   @Test
   public void shouldRepairAssignARandomValueIfValueIsLessThanTheLowerBound() {
-    double lowerBound = -1.0;
-    double upperBound = 1.0;
+      var lowerBound = -1.0;
+      var upperBound = 1.0;
     assertThat(repair.repairSolutionVariableValue(-3, lowerBound, upperBound),
         Matchers.lessThanOrEqualTo(upperBound));
 
@@ -41,8 +41,8 @@ public class RepairDoubleSolutionWithRandomValueTest {
 
   @Test
   public void shouldRepairAssignARandomValueIfValueIsGreaterThanTheUpperBound() {
-    double lowerBound = -1.0;
-    double upperBound = 1.0;
+      var lowerBound = -1.0;
+      var upperBound = 1.0;
     assertThat(repair.repairSolutionVariableValue(4, lowerBound, upperBound),
         Matchers.lessThanOrEqualTo(upperBound));
 
@@ -53,14 +53,14 @@ public class RepairDoubleSolutionWithRandomValueTest {
 	@Test
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
-		double lowerBound = -1.0;
-		double upperBound = 1.0;
-		int value = 4;
+        var lowerBound = -1.0;
+        var upperBound = 1.0;
+        var value = 4;
 
 		// Check configuration leads to use default generator by default
-		final int[] defaultUses = { 0 };
-		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		final var defaultUses = new int[]{0};
+        var defaultGenerator = JMetalRandom.getInstance();
+        var auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
@@ -69,7 +69,7 @@ public class RepairDoubleSolutionWithRandomValueTest {
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
-		final int[] customUses = { 0 };
+		final var customUses = new int[]{0};
 		new RepairDoubleSolutionWithRandomValue((a, b) -> {
 			customUses[0]++;
 			return new Random().nextDouble()*(b-a)+a;

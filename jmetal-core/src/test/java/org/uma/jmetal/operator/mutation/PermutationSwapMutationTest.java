@@ -17,27 +17,27 @@ public class PermutationSwapMutationTest {
 
 	@Test (expected = NullParameterException.class)
 	public void shouldExecuteWithNullParameterThrowAnException() {
-		PermutationSwapMutation<Integer> mutation = new PermutationSwapMutation<>(0.1) ;
+		var mutation = new PermutationSwapMutation<Integer>(0.1) ;
 
 		mutation.execute(null) ;
 	}
 
 	@Test (expected = InvalidProbabilityValueException.class)
 	public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
-		double mutationProbability = -0.1 ;
+		var mutationProbability = -0.1 ;
 		new PermutationSwapMutation<>(mutationProbability) ;
 	}
 
 	@Test (expected = InvalidProbabilityValueException.class)
 	public void shouldConstructorFailWhenPassedAValueHigherThanOne() {
-		double mutationProbability = 1.1 ;
+		var mutationProbability = 1.1 ;
 		new PermutationSwapMutation<>(mutationProbability) ;
 	}
 
 	@Test
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
-		double mutationProbability = 1.0;
+		var mutationProbability = 1.0;
 		@SuppressWarnings("serial")
 		PermutationProblem<PermutationSolution<Integer>> problem = new AbstractIntegerPermutationProblem() {
 
@@ -58,24 +58,24 @@ public class PermutationSwapMutationTest {
 			}
 			
 		};
-		PermutationSolution<Integer> solution = problem.createSolution();
+		var solution = problem.createSolution();
 
 		// Check configuration leads to use default generator by default
-		final int[] defaultUses = { 0 };
-		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		final var defaultUses = new int[]{0};
+		var defaultGenerator = JMetalRandom.getInstance();
+		var auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
-		PermutationSwapMutation<Integer> crossover1 = new PermutationSwapMutation<>(mutationProbability);
+		var crossover1 = new PermutationSwapMutation<Integer>(mutationProbability);
 		crossover1.execute(solution);
 		assertTrue("No use of the default generator", defaultUses[0] > 0);
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
-		final int[] custom1Uses = { 0 };
-		final int[] custom2Uses = { 0 };
-		PermutationSwapMutation<Integer> crossover2 = new PermutationSwapMutation<>(mutationProbability, () -> {
+		final var custom1Uses = new int[]{0};
+		final var custom2Uses = new int[]{0};
+		var crossover2 = new PermutationSwapMutation<Integer>(mutationProbability, () -> {
 			custom2Uses[0]++;
 			return new Random().nextDouble();
 		}, (a, b) -> {

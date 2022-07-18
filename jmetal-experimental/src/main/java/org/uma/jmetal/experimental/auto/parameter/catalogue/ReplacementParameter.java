@@ -20,12 +20,12 @@ public class ReplacementParameter extends CategoricalParameter {
   }
 
   public Replacement<?> getParameter(Comparator<DoubleSolution> comparator) {
-    String removalPolicy = (String) findGlobalParameter("removalPolicy").getValue();
+    var removalPolicy = (String) findGlobalParameter("removalPolicy").getValue();
     Replacement<?> result;
     switch (getValue()) {
       case "rankingAndDensityEstimatorReplacement":
-        String rankingName = (String) findSpecificParameter("rankingForReplacement").getValue();
-        String densityEstimatorName =
+        var rankingName = (String) findSpecificParameter("rankingForReplacement").getValue();
+        var densityEstimatorName =
             (String) findSpecificParameter("densityEstimatorForReplacement").getValue();
 
         Ranking<Solution<?>> ranking;

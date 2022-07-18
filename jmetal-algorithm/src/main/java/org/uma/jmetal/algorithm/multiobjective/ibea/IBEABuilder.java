@@ -36,12 +36,12 @@ public class IBEABuilder implements AlgorithmBuilder<IBEA<DoubleSolution>> {
     archiveSize = 100;
     maxEvaluations = 25000;
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     selection = new BinaryTournamentSelection<DoubleSolution>();

@@ -82,23 +82,22 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
    * @return A pseudo random point
    */
   public double[] randSphere(int dimension) {
-    int D = dimension;
-    double[] x;
+    var D = dimension;
 
     double length = 0;
-    double[] arr = new double[10];
-    int count = 0;
-    for (int i1 = 0; i1 < dimension; i1++) {
-      double v = 0.0;
+    var arr = new double[10];
+    var count = 0;
+    for (var i1 = 0; i1 < dimension; i1++) {
+      var v = 0.0;
       if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
       arr[count++] = v;
     }
     arr = Arrays.copyOfRange(arr, 0, count);
-    x = arr;
+    var x = arr;
 
     // --------- Step 1. Direction
 
-    for (int i = 0; i < D; i++) {
+    for (var i = 0; i < D; i++) {
       x[i] = this.randNormal(0, 1);
       length = length + x[i] * x[i];
     }
@@ -108,9 +107,9 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
     // --------- Step 2. Random radius
 
     if (length > 0) {
-      double r = randomGenerator.nextDouble(0, 1);
+      var r = randomGenerator.nextDouble(0, 1);
 
-      for (int i = 0; i < D; i++) {
+      for (var i = 0; i < D; i++) {
         x[i] = r * x[i] / length;
       }
     }
@@ -127,23 +126,22 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
    * @return A pseudo random number
    */
   public double[] randSphere(int dimension, double center, double radius) {
-    int d = dimension;
-    double[] x;
+    var d = dimension;
 
     double length = 0;
-    double[] arr = new double[10];
-    int count = 0;
-    for (int i1 = 0; i1 < dimension; i1++) {
-      double v = 0.0;
+    var arr = new double[10];
+    var count = 0;
+    for (var i1 = 0; i1 < dimension; i1++) {
+      var v = 0.0;
       if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
       arr[count++] = v;
     }
     arr = Arrays.copyOfRange(arr, 0, count);
-    x = arr;
+    var x = arr;
 
     // --------- Step 1. Direction
 
-    for (int i = 0; i < d; i++) {
+    for (var i = 0; i < d; i++) {
       x[i] = randNormal(0, 1);
       length += length + x[i] * x[i];
     }
@@ -152,9 +150,9 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
 
     // --------- Step 2. Random radius
 
-    double r = randomGenerator.nextDouble(0, 1);
+    var r = randomGenerator.nextDouble(0, 1);
 
-    for (int i = 0; i < d; i++) {
+    for (var i = 0; i < d; i++) {
       x[i] = center + radius * r * x[i] / length;
     }
 

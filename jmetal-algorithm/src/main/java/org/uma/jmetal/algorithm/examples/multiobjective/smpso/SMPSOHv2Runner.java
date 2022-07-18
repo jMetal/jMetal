@@ -43,11 +43,8 @@ public class SMPSOHv2Runner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.smpso.SMPSOHvRunner problemName [referenceFront]
    */
   public static void main(String @NotNull [] args) throws Exception {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
 
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -60,28 +57,28 @@ public class SMPSOHv2Runner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.csv" ;
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     BoundedArchive<DoubleSolution> archive =
         new HypervolumeArchive<DoubleSolution>(100, new WFGHypervolume<DoubleSolution>()) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new SMPSOBuilder(problem, archive)
-        .setMutation(mutation)
-        .setMaxIterations(250)
-        .setSwarmSize(100)
-        .setRandomGenerator(new MersenneTwisterGenerator())
-        .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
-        .build();
+    Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(problem, archive)
+            .setMutation(mutation)
+            .setMaxIterations(250)
+            .setSwarmSize(100)
+            .setRandomGenerator(new MersenneTwisterGenerator())
+            .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();
 
-    List<DoubleSolution> population = ((SMPSO)algorithm).getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = ((SMPSO)algorithm).getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

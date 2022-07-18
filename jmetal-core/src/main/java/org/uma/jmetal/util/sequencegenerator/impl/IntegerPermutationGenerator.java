@@ -33,19 +33,19 @@ public class IntegerPermutationGenerator implements SequenceGenerator<Integer> {
   }
 
   private int[] randomPermutation(int size) {
-    int[] permutation = new int[size] ;
+    var permutation = new int[size] ;
     @NotNull JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
-    int @NotNull [] index = new int[size];
-    boolean @NotNull [] flag = new boolean[size];
+    var index = new int[size];
+    var flag = new boolean[size];
 
-    for (int n = 0; n < size; n++) {
+    for (var n = 0; n < size; n++) {
       index[n] = n;
       flag[n] = true;
     }
 
-    int num = 0;
+    var num = 0;
     while (num < size) {
-      int start = randomGenerator.nextInt(0, size - 1);
+      var start = randomGenerator.nextInt(0, size - 1);
       while (true) {
         if (flag[start]) {
           permutation[num] = index[start];

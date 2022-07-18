@@ -50,7 +50,7 @@ public class SolutionUtils {
   public static <S extends Solution<?>> S getBestSolution(
           S solution1, S solution2, @NotNull Comparator<S> comparator, BinaryOperator<S> equalityPolicy) {
     S result;
-    int flag = comparator.compare(solution1, solution2);
+    var flag = comparator.compare(solution1, solution2);
     if (flag == -1) {
       result = solution1;
     } else if (flag == 1) {
@@ -67,10 +67,10 @@ public class SolutionUtils {
       S firstSolution, S secondSolution) {
 
     double diff;
-    double distance = 0.0;
+    var distance = 0.0;
 
     // euclidean distance
-    for (int nObj = 0; nObj < firstSolution.objectives().length; nObj++) {
+    for (var nObj = 0; nObj < firstSolution.objectives().length; nObj++) {
       diff = firstSolution.objectives()[nObj] - secondSolution.objectives()[nObj];
       distance += Math.pow(diff, 2.0);
     }
@@ -82,9 +82,9 @@ public class SolutionUtils {
       S firstSolution, S secondSolution, double[] maxs, double[] mins) {
 
     double diff;
-    double distance = 0.0;
+    var distance = 0.0;
     // euclidean distance
-    for (int nObj = 0; nObj < firstSolution.objectives().length; nObj++) {
+    for (var nObj = 0; nObj < firstSolution.objectives().length; nObj++) {
       diff =
           (firstSolution.objectives()[nObj] / (maxs[nObj] - mins[nObj]))
               - (secondSolution.objectives()[nObj] / (maxs[nObj] - mins[nObj]));
@@ -104,10 +104,10 @@ public class SolutionUtils {
    */
   public static double distanceToSolutionListInSolutionSpace(
           @NotNull DoubleSolution solution, List<DoubleSolution> solutionList) {
-    double distance = Double.MAX_VALUE;
+    var distance = Double.MAX_VALUE;
 
-    for (int i = 0; i < solutionList.size(); i++) {
-      double aux = distanceBetweenSolutionsInObjectiveSpace(solution, solutionList.get(i));
+    for (var i = 0; i < solutionList.size(); i++) {
+      var aux = distanceBetweenSolutionsInObjectiveSpace(solution, solutionList.get(i));
       if (aux < distance) distance = aux;
     }
 
@@ -123,10 +123,10 @@ public class SolutionUtils {
    */
   public static double distanceBetweenSolutionsInObjectiveSpace(
       DoubleSolution solutionI, DoubleSolution solutionJ) {
-    double distance = 0.0;
+    var distance = 0.0;
 
     double diff;
-    for (int i = 0; i < solutionI.variables().size(); i++) {
+    for (var i = 0; i < solutionI.variables().size(); i++) {
       diff = solutionI.variables().get(i) - solutionJ.variables().get(i);
       distance += Math.pow(diff, 2.0);
     }
@@ -138,9 +138,9 @@ public class SolutionUtils {
   public static <S extends Solution<?>> double averageDistanceToSolutionList(
       S solution, List<S> solutionList) {
 
-      double sumOfDistances = 0.0;
-      for (S sol : solutionList) {
-          double v = distanceBetweenObjectives(solution, sol);
+    var sumOfDistances = 0.0;
+      for (var sol : solutionList) {
+        var v = distanceBetweenObjectives(solution, sol);
           sumOfDistances += v;
       }
 
@@ -178,9 +178,9 @@ public class SolutionUtils {
           "The number of objectives should be the same to min and max length");
     }
 
-    S copy = (S) solution.copy();
+    var copy = (S) solution.copy();
 
-    for (int i = 0; i < copy.objectives().length; i++) {
+    for (var i = 0; i < copy.objectives().length; i++) {
       copy.objectives()[i] = NormalizeUtils.normalize(solution.objectives()[i], minValues[i], maxValues[i]);
     }
 

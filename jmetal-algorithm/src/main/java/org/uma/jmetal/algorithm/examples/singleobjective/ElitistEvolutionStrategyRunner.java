@@ -27,27 +27,26 @@ public class ElitistEvolutionStrategyRunner {
    * Usage: java org.uma.jmetal.runner.singleobjective.ElitistEvolutionStrategyRunner
    */
   public static void main(String[] args) throws Exception {
-    Algorithm<BinarySolution> algorithm;
     BinaryProblem problem = new OneMax(512) ;
 
     MutationOperator<BinarySolution> mutationOperator =
         new BitFlipMutation(1.0 / problem.getBitsFromVariable(0)) ;
 
-    algorithm = new EvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
-        EvolutionStrategyBuilder.EvolutionStrategyVariant.ELITIST)
-        .setMaxEvaluations(25000)
-        .setMu(1)
-        .setLambda(10)
-        .build() ;
+    var algorithm = new EvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
+            EvolutionStrategyBuilder.EvolutionStrategyVariant.ELITIST)
+            .setMaxEvaluations(25000)
+            .setMu(1)
+            .setLambda(10)
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    BinarySolution solution = algorithm.getResult() ;
+    var solution = algorithm.getResult() ;
     @NotNull List<BinarySolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))

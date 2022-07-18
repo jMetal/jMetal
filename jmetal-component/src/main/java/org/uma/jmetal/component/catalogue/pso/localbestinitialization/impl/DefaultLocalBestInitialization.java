@@ -24,10 +24,10 @@ public class DefaultLocalBestInitialization implements LocalBestInitialization {
 
     @NotNull List<DoubleSolution> list = new ArrayList<>();
     for (@NotNull DoubleSolution doubleSolution : swarm) {
-      DoubleSolution copy = (DoubleSolution) doubleSolution.copy();
+      var copy = (DoubleSolution) doubleSolution.copy();
       list.add(copy);
     }
-    DoubleSolution @NotNull [] localBest = list.toArray(new DoubleSolution[0]);
+    var localBest = list.toArray(new DoubleSolution[0]);
 
       return localBest ;
   }

@@ -25,8 +25,8 @@ public class SparkSolutionListEvaluator<S> implements SolutionListEvaluator<S> {
 
   @Override
   public List<S> evaluate(List<S> solutionList, @NotNull Problem<S> problem) {
-    JavaRDD<S> solutionsToEvaluate = sparkContext.parallelize(solutionList);
-    JavaRDD<S> evaluatedSolutions = solutionsToEvaluate.map(problem::evaluate);
+    var solutionsToEvaluate = sparkContext.parallelize(solutionList);
+    var evaluatedSolutions = solutionsToEvaluate.map(problem::evaluate);
 
     return evaluatedSolutions.collect() ;
   }

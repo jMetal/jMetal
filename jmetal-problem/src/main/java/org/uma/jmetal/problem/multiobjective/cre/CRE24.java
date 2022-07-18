@@ -33,7 +33,7 @@ public class CRE24 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
-    double x3 = Math.rint(solution.variables().get(2));
+    var x3 = Math.rint(solution.variables().get(2));
     double x4 = solution.variables().get(3);
     double x5 = solution.variables().get(4);
     double x6 = solution.variables().get(5);
@@ -44,7 +44,7 @@ public class CRE24 extends AbstractDoubleProblem {
             + 7.477 * (x6 * x6 * x6 + x7 * x7 * x7)
             + 0.7854 * (x4 * x6 * x6 + x5 * x7 * x7);
 
-    double tmpVar = Math.pow((745.0 * x4) / (x2 * x3), 2.0)  + 1.69 * 1e7;
+    var tmpVar = Math.pow((745.0 * x4) / (x2 * x3), 2.0)  + 1.69 * 1e7;
     solution.objectives()[1] = Math.sqrt(tmpVar) / (0.1 * x6 * x6 * x6);
 
     evaluateConstraints(solution);
@@ -54,11 +54,11 @@ public class CRE24 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    var constraint = new double[this.getNumberOfConstraints()];
 
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
-    double x3 = Math.rint(solution.variables().get(2));
+    var x3 = Math.rint(solution.variables().get(2));
     double x4 = solution.variables().get(3);
     double x5 = solution.variables().get(4);
     double x6 = solution.variables().get(5);
@@ -75,10 +75,10 @@ public class CRE24 extends AbstractDoubleProblem {
     constraint[8] = -1.9 + x5 - 1.1 * x7;
     constraint[9] = -solution.objectives()[1] + 1300.0 ;
 
-    double tmpVar = Math.pow((745.0 * x5) / (x2 * x3), 2.0) + 1.575 * 1e8;
+    var tmpVar = Math.pow((745.0 * x5) / (x2 * x3), 2.0) + 1.575 * 1e8;
     constraint[10] = -Math.sqrt(tmpVar) / (0.1 * x7 * x7 * x7) + 1100.0 ;
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i] < 0.0) {
         constraint[i] = -constraint[i];
       } else {
@@ -86,7 +86,7 @@ public class CRE24 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

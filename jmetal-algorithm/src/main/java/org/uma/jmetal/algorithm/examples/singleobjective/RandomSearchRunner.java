@@ -26,20 +26,18 @@ public class RandomSearchRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.RandomSearchRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<BinarySolution> problem;
-    Algorithm<List<BinarySolution>> algorithm;
 
-    problem = new OneMax(1024) ;
+      Problem<BinarySolution> problem = new OneMax(1024);
 
-    algorithm = new RandomSearchBuilder<>(problem)
-            .setMaxEvaluations(25000)
-            .build() ;
+      Algorithm<List<BinarySolution>> algorithm = new RandomSearchBuilder<>(problem)
+              .setMaxEvaluations(25000)
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<BinarySolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

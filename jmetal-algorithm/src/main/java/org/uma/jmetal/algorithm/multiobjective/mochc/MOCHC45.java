@@ -85,7 +85,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
 
   @Override
   public void run() {
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+    for (var i = 0; i < problem.getNumberOfVariables(); i++) {
       size += problem.getBitsFromVariable(i);
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
@@ -94,24 +94,24 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
 
     evaluations = 0 ;
     population = new ArrayList<>() ;
-    for (int i = 0; i < populationSize; i++) {
-      BinarySolution newIndividual = problem.createSolution();
+    for (var i = 0; i < populationSize; i++) {
+      var newIndividual = problem.createSolution();
       problem.evaluate(newIndividual);
       population.add(newIndividual);
       evaluations ++ ;
     }
 
-    boolean finishCondition = false ;
+    var finishCondition = false ;
 
     while (!finishCondition) {
       List<BinarySolution> offspringPopulation = new ArrayList<>(populationSize) ;
-      for (int i = 0; i < population.size()/2; i++) {
+      for (var i = 0; i < population.size()/2; i++) {
         List<BinarySolution> parents = new ArrayList<>(2) ;
         parents.add(parentSelection.execute(population)) ;
         parents.add(parentSelection.execute(population)) ;
 
         if (hammingDistance(parents.get(0), parents.get(1)) >= minimumDistance) {
-          List<BinarySolution> offspring = crossover.execute(parents);
+          var offspring = crossover.execute(parents);
           problem.evaluate(offspring.get(0));
           problem.evaluate(offspring.get(1));
           offspringPopulation.add(offspring.get(0));
@@ -125,7 +125,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
       union.addAll(population);
       union.addAll(offspringPopulation);
 
-      List<BinarySolution> newPopulation = newGenerationSelection.execute(union);
+      var newPopulation = newGenerationSelection.execute(union);
 
       if (SolutionListUtils.solutionListsAreEquals(population, newPopulation)) {
         minimumDistance--;
@@ -134,14 +134,14 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
       if (minimumDistance <= -convergenceValue) {
         minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
 
-        int preserve = (int) Math.floor(preservedPopulation * population.size());
+        var preserve = (int) Math.floor(preservedPopulation * population.size());
         newPopulation = new ArrayList<>(populationSize);
         Collections.sort(population, comparator);
-        for (int i = 0; i < preserve; i++) {
+        for (var i = 0; i < preserve; i++) {
           newPopulation.add((BinarySolution) population.get(i).copy());
         }
-        for (int i = preserve; i < populationSize; i++) {
-          BinarySolution solution = (BinarySolution) population.get(i).copy();
+        for (var i = preserve; i < populationSize; i++) {
+          var solution = (BinarySolution) population.get(i).copy();
           cataclysmicMutation.execute(solution);
           problem.evaluate(solution);
           //problem.evaluateConstraints(solution);
@@ -160,7 +160,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   @Override
   public List<BinarySolution> getResult() {
     @NotNull NonDominatedSolutionListArchive<BinarySolution> archive = new NonDominatedSolutionListArchive<>() ;
-    for (BinarySolution solution : population) {
+    for (var solution : population) {
       archive.add(solution) ;
     }
 
@@ -176,10 +176,10 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
    */
 
   private int hammingDistance(@NotNull BinarySolution solutionOne, @NotNull BinarySolution solutionTwo) {
-      int distance = 0;
-      int bound = problem.getNumberOfVariables();
-      for (int i = 0; i < bound; i++) {
-          int hammingDistance = hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i));
+    var distance = 0;
+    var bound = problem.getNumberOfVariables();
+      for (var i = 0; i < bound; i++) {
+        var hammingDistance = hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i));
           distance += hammingDistance;
       }
 
@@ -191,8 +191,8 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
       throw new JMetalException("The bitsets have different length: "
           + bitSet1.getBinarySetLength() +", " + bitSet2.getBinarySetLength()) ;
     }
-    int distance = 0;
-    int i = 0;
+    var distance = 0;
+    var i = 0;
     while (i < bitSet1.getBinarySetLength()) {
       if (bitSet1.get(i) != bitSet2.get(i)) {
         distance++;

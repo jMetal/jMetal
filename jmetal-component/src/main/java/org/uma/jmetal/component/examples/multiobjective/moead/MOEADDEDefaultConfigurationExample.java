@@ -33,26 +33,26 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 public class MOEADDEDefaultConfigurationExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
+    var problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
+    var referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
 
     @NotNull Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double cr = 1.0 ;
-    double f = 0.5 ;
+    var cr = 1.0 ;
+    var f = 0.5 ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 300;
+    var populationSize = 300;
 
     Termination termination = new TerminationByEvaluations(175000);
 
-    String weightVectorDirectory = "resources/weightVectorFiles/moead";
+    var weightVectorDirectory = "resources/weightVectorFiles/moead";
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
 
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADDEBuilder(
+    var moead = new MOEADDEBuilder(
         problem,
         populationSize,
         cr,
@@ -67,13 +67,13 @@ public class MOEADDEDefaultConfigurationExample {
         .setAggregativeFunction(new Tschebyscheff())
         .build() ;
 
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("MOEA/D-DE", 80, 1000, referenceParetoFront);
+    var runTimeChartObserver =
+        new RunTimeChartObserver<DoubleSolution>("MOEA/D-DE", 80, 1000, referenceParetoFront);
     moead.getObservable().register(runTimeChartObserver);
 
     moead.run();
 
-    List<DoubleSolution> population = moead.getResult();
+    var population = moead.getResult();
     JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
 

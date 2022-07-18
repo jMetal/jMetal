@@ -48,13 +48,13 @@ public class Html {
   }
 
   public void save() {
-    File file = createFileInDirectory();
+    var file = createFileInDirectory();
 
     writeToFile(file);
   }
 
   public void show() {
-    File file = createFileInDirectory();
+    var file = createFileInDirectory();
     writeToFile(file);
 
     try {
@@ -65,7 +65,7 @@ public class Html {
   }
 
   @NotNull File createFileInDirectory() {
-    Path path = Paths.get(PATH_FOLDER, title + ".html");
+    var path = Paths.get(PATH_FOLDER, title + ".html");
 
     try {
       Files.createDirectories(path.getParent());
@@ -96,7 +96,7 @@ public class Html {
   }
 
   private StringBuilder createHead() {
-    StringBuilder sb = new StringBuilder();
+    var sb = new StringBuilder();
 
     sb.append("<head>\n");
     sb.append("<meta charset=\"UTF-8\">\n");
@@ -119,7 +119,7 @@ public class Html {
 
     sb.append("<h1>").append(title).append("</h1>");
 
-    for (HtmlComponent component : components) {
+    for (var component : components) {
 
       sb.append("<div class='component'>\n").append(component.getHtml()).append("</div>\n");
     }
@@ -135,9 +135,9 @@ public class Html {
 
     sb.append(" h1 {text-align: center} \n");
 
-      StringJoiner joiner = new StringJoiner("", ".component { margin : 1em auto 2em auto; width : 90%}\n", "");
+    var joiner = new StringJoiner("", ".component { margin : 1em auto 2em auto; width : 90%}\n", "");
       for (@NotNull HtmlComponent component : components) {
-          String css = component.getCSS();
+        var css = component.getCSS();
           joiner.add(css);
       }
       sb.append(joiner.toString());

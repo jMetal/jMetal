@@ -54,8 +54,8 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
   }
 
   private List<Solution<T>> doCrossover(List<Solution<T>> s) {
-    Solution<T> mom = s.get(0);
-    Solution<T> dad = s.get(1);
+    var mom = s.get(0);
+    var dad = s.get(1);
 
     Check.that(
         mom.variables().size() == dad.variables().size(),
@@ -64,20 +64,20 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
         mom.variables().size() >= crossovers,
         "The number of crossovers is higher than the number of variables");
 
-      int @NotNull [] crossoverPoints = new int[10];
-      int count = 0;
-      int bound = crossovers;
-      for (int i1 = 0; i1 < bound; i1++) {
-          int nextInt = randomNumberGenerator.nextInt(0, mom.variables().size() - 1);
+    var crossoverPoints = new int[10];
+    var count = 0;
+    var bound = crossovers;
+      for (var i1 = 0; i1 < bound; i1++) {
+        var nextInt = randomNumberGenerator.nextInt(0, mom.variables().size() - 1);
           if (crossoverPoints.length == count) crossoverPoints = Arrays.copyOf(crossoverPoints, count * 2);
           crossoverPoints[count++] = nextInt;
       }
       crossoverPoints = Arrays.copyOfRange(crossoverPoints, 0, count);
-      Solution<T> girl = mom.copy();
-    Solution<T> boy = dad.copy();
-    boolean swap = false;
+    var girl = mom.copy();
+    var boy = dad.copy();
+    var swap = false;
 
-    for (int i = 0; i < mom.variables().size(); i++) {
+    for (var i = 0; i < mom.variables().size(); i++) {
       if (swap) {
         boy.variables().set(i, mom.variables().get(i));
         girl.variables().set(i, dad.variables().get(i));

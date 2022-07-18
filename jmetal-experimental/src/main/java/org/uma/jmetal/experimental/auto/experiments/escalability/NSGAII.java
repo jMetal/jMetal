@@ -42,26 +42,26 @@ import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 public class NSGAII {
   public static void main(String[] args) throws IOException {
     DoubleProblem problem = new ZDT1(1000);
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
+    var referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    int populationSize = 100;
-    int offspringPopulationSize = 100;
+    var populationSize = 100;
+    var offspringPopulationSize = 100;
 
     @NotNull RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue();
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     CrossoverOperator<DoubleSolution> crossover =
         new SBXCrossover(crossoverProbability, crossoverDistributionIndex, crossoverSolutionRepair);
 
     RepairDoubleSolution mutationSolutionRepair = new RepairDoubleSolutionWithRandomValue();
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation =
         new PolynomialMutation(
             mutationProbability, mutationDistributionIndex, mutationSolutionRepair);
 
-    CrossoverAndMutationVariation<DoubleSolution> variation =
-            new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation);
+    var variation =
+            new CrossoverAndMutationVariation<DoubleSolution>(offspringPopulationSize, crossover, mutation);
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
@@ -75,18 +75,18 @@ public class NSGAII {
     Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
     @NotNull DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
-    Preference<DoubleSolution> preferenceForReplacement = new Preference<>(ranking, densityEstimator) ;
+    var preferenceForReplacement = new Preference<DoubleSolution>(ranking, densityEstimator) ;
     Replacement<DoubleSolution> replacement =
         new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement, Replacement.RemovalPolicy.oneShot);
 
-    int tournamentSize = 2 ;
-    Preference<DoubleSolution> preferenceForSelection = new Preference<>(ranking, densityEstimator, preferenceForReplacement) ;
+    var tournamentSize = 2 ;
+    var preferenceForSelection = new Preference<DoubleSolution>(ranking, densityEstimator, preferenceForReplacement) ;
     MatingPoolSelection<DoubleSolution> selection =
         new NaryTournamentMatingPoolSelection<>(
             tournamentSize, variation.getMatingPoolSize(), preferenceForSelection);
 
-    EvolutionaryAlgorithm<DoubleSolution> algorithm =
-        new EvolutionaryAlgorithm<>(
+    var algorithm =
+        new EvolutionaryAlgorithm<DoubleSolution>(
             "NSGA-II",
             evaluation,
             createInitialPopulation,

@@ -31,12 +31,8 @@ public class GDE3BigDataRunner {
     -Dexec.args="[problemName]"
    */
   public static void main(String[] args) {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    DifferentialEvolutionSelection selection;
-    DifferentialEvolutionCrossover crossover;
 
-    String instanceName ;
+      String instanceName ;
 
     if (args.length == 1) {
       instanceName = args[0] ;
@@ -44,7 +40,7 @@ public class GDE3BigDataRunner {
       instanceName = "D12" ;
     }
 
-    problem = new BigOpt2015(instanceName) ;
+      DoubleProblem problem = new BigOpt2015(instanceName);
 
      /*
      * Alternatives:
@@ -52,24 +48,24 @@ public class GDE3BigDataRunner {
      * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem)
      */
 
-    double cr = 1.5 ;
-    double f = 0.5 ;
-    crossover = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN) ;
+    var cr = 1.5 ;
+    var f = 0.5 ;
+    var crossover = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    selection = new DifferentialEvolutionSelection() ;
+    var selection = new DifferentialEvolutionSelection();
 
-    algorithm = new GDE3Builder(problem)
-      .setCrossover(crossover)
-      .setSelection(selection)
-      .setMaxEvaluations(250000)
-      .setPopulationSize(100)
-      .build() ;
+      Algorithm<List<DoubleSolution>> algorithm = new GDE3Builder(problem)
+              .setCrossover(crossover)
+              .setSelection(selection)
+              .setMaxEvaluations(250000)
+              .setPopulationSize(100)
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;
 
-    List<DoubleSolution> population = ((GDE3)algorithm).getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = ((GDE3)algorithm).getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionListOutput(population)
       .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))

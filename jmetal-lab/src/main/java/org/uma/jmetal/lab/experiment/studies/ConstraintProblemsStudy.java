@@ -74,7 +74,7 @@ public class ConstraintProblemsStudy {
     if (args.length != 1) {
       throw new JMetalException("Needed arguments: experimentBaseDirectory");
     }
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new Binh2()));
@@ -84,10 +84,10 @@ public class ConstraintProblemsStudy {
     problemList.add(new ExperimentProblem<>(new Tanaka()));
     problemList.add(new ExperimentProblem<>(new Water()));
 
-    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+    var algorithmList =
             configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    var experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ConstrainedProblemsStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
@@ -122,9 +122,9 @@ public class ConstraintProblemsStudy {
   static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           @NotNull List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20),
@@ -135,7 +135,7 @@ public class ConstraintProblemsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 10.0),
@@ -144,9 +144,9 @@ public class ConstraintProblemsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
-        double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
+      for (var i = 0; i < problemList.size(); i++) {
+        var mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
+        var mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problemList.get(i).getProblem(),
                 new CrowdingDistanceArchive<DoubleSolution>(100))
                 .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
@@ -156,9 +156,9 @@ public class ConstraintProblemsStudy {
                 .build();
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
-      for (int i = 0; i < problemList.size(); i++) {
-        double cr = 0.5;
-        double f = 0.5;
+      for (var i = 0; i < problemList.size(); i++) {
+        var cr = 0.5;
+        var f = 0.5;
 
         Algorithm<List<DoubleSolution>> algorithm = new GDE3Builder((DoubleProblem) problemList.get(i).getProblem())
                 .setCrossover(new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
@@ -170,7 +170,7 @@ public class ConstraintProblemsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new MOCellBuilder<DoubleSolution>(
                 (DoubleProblem) problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20.0),

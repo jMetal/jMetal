@@ -63,7 +63,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   @Override protected List<S> evaluatePopulation(@NotNull List<S> population) {
-    for (S solution : population) {
+    for (var solution : population) {
       getProblem().evaluate(solution);
     }
     return population ;
@@ -71,8 +71,8 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   @Override protected List<S> selection(List<S> population) {
       List<S> matingPopulation = new ArrayList<>(2);
-      for (int i = 0; i < 2; i++) {
-          S execute = selectionOperator.execute(population);
+      for (var i = 0; i < 2; i++) {
+        var execute = selectionOperator.execute(population);
           matingPopulation.add(execute);
       }
 
@@ -86,7 +86,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     parents.add(population.get(0));
     parents.add(population.get(1));
 
-    List<S> offspring = crossoverOperator.execute(parents);
+    var offspring = crossoverOperator.execute(parents);
 
     mutationOperator.execute(offspring.get(0));
 
@@ -102,13 +102,13 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     @NotNull Ranking<S> ranking = new MergeNonDominatedSortRanking<>();
     ranking.compute(jointPopulation) ;
 
-    List<S> lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
+    var lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
 
     lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront, jointPopulation) ;
 
-    List<S> resultPopulation = IntStream.range(0, ranking.getNumberOfSubFronts() - 1).mapToObj(i -> ranking.getSubFront(i).stream()).flatMap(Function.identity()).collect(Collectors.toList());
+    var resultPopulation = IntStream.range(0, ranking.getNumberOfSubFronts() - 1).mapToObj(i -> ranking.getSubFront(i).stream()).flatMap(Function.identity()).collect(Collectors.toList());
 
-      for (int i = 0; i < lastSubfront.size()-1; i++) {
+      for (var i = 0; i < lastSubfront.size()-1; i++) {
       resultPopulation.add(lastSubfront.get(i)) ;
     }
 

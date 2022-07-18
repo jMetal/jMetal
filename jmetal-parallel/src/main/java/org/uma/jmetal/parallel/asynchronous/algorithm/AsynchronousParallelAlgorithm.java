@@ -28,12 +28,12 @@ public interface AsynchronousParallelAlgorithm<T extends ParallelTask<?>, R> {
   R getResult() ;
 
   default void run() {
-    List<T> initialTasks = createInitialTasks();
+    var initialTasks = createInitialTasks();
     submitInitialTasks(initialTasks);
 
     initProgress() ;
     while (stoppingConditionIsNotMet()) {
-      T computedTask = waitForComputedTask();
+      var computedTask = waitForComputedTask();
       processComputedTask(computedTask);
 
       if (thereAreInitialTasksPending(initialTasks)) {

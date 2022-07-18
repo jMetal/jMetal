@@ -93,30 +93,29 @@ public class GenericSinglePointCrossover<S extends BinarySolution> implements Cr
 
     if (crossoverRandomGenerator.getRandomValue() < probability) {
       // 1. Get the total number of bits
-      int totalNumberOfBits = parent1.getTotalNumberOfBits();
+      var totalNumberOfBits = parent1.getTotalNumberOfBits();
 
       // 2. Calculate the point to make the crossover
       int crossoverPoint = pointRandomGenerator.getRandomValue(0, totalNumberOfBits - 1);
 
       // 3. Compute the variable containing the crossover bit
-      int variable = 0;
-      int bitsAccount = parent1.variables().get(variable).getBinarySetLength();
+      var variable = 0;
+      var bitsAccount = parent1.variables().get(variable).getBinarySetLength();
       while (bitsAccount < (crossoverPoint + 1)) {
         variable++;
         bitsAccount += parent1.variables().get(variable).getBinarySetLength();
       }
 
       // 4. Compute the bit into the selected variable
-      int diff = bitsAccount - crossoverPoint;
-      int intoVariableCrossoverPoint = parent1.variables().get(variable).getBinarySetLength() - diff;
+      var diff = bitsAccount - crossoverPoint;
+      var intoVariableCrossoverPoint = parent1.variables().get(variable).getBinarySetLength() - diff;
 
       // 5. Apply the crossover to the variable;
-      BinarySet offspring1, offspring2;
-      offspring1 = (BinarySet) parent1.variables().get(variable).clone();
-      offspring2 = (BinarySet) parent2.variables().get(variable).clone();
+      var offspring1 = (BinarySet) parent1.variables().get(variable).clone();
+      var offspring2 = (BinarySet) parent2.variables().get(variable).clone();
 
-      for (int i = intoVariableCrossoverPoint; i < offspring1.getBinarySetLength(); i++) {
-        boolean swap = offspring1.get(i);
+      for (var i = intoVariableCrossoverPoint; i < offspring1.getBinarySetLength(); i++) {
+        var swap = offspring1.get(i);
         offspring1.set(i, offspring2.get(i));
         offspring2.set(i, swap);
       }
@@ -125,7 +124,7 @@ public class GenericSinglePointCrossover<S extends BinarySolution> implements Cr
       offspring.get(1).variables().set(variable, offspring2);
 
       // 6. Apply the crossover to the other variables
-      for (int i = variable + 1; i < parent1.variables().size(); i++) {
+      for (var i = variable + 1; i < parent1.variables().size(); i++) {
         offspring.get(0).variables().set(i, (BinarySet) parent2.variables().get(i).clone());
         offspring.get(1).variables().set(i, (BinarySet) parent1.variables().get(i).clone());
       }

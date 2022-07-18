@@ -73,9 +73,9 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
 
   @Override protected List<DoubleSolution> createInitialPopulation() {
     @NotNull List<DoubleSolution> population = new ArrayList<>(populationSize);
-    int bound = populationSize;
-    for (int i = 0; i < bound; i++) {
-      DoubleSolution solution = getProblem().createSolution();
+    var bound = populationSize;
+    for (var i = 0; i < bound; i++) {
+      var solution = getProblem().createSolution();
       population.add(solution);
     }
     return population;
@@ -92,12 +92,12 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
   @Override protected List<DoubleSolution> reproduction(List<DoubleSolution> matingPopulation) {
     List<DoubleSolution> offspringPopulation = new ArrayList<>();
 
-    for (int i = 0; i < populationSize; i++) {
+    for (var i = 0; i < populationSize; i++) {
       selectionOperator.setIndex(i);
-      List<DoubleSolution> parents = selectionOperator.execute(matingPopulation);
+      var parents = selectionOperator.execute(matingPopulation);
 
       crossoverOperator.setCurrentSolution(matingPopulation.get(i));
-      List<DoubleSolution> children = crossoverOperator.execute(parents);
+      var children = crossoverOperator.execute(parents);
 
       offspringPopulation.add(children.get(0));
     }
@@ -109,7 +109,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
                                                                 List<DoubleSolution> offspringPopulation) {
     @NotNull List<DoubleSolution> pop = new ArrayList<>();
 
-    for (int i = 0; i < populationSize; i++) {
+    for (var i = 0; i < populationSize; i++) {
       if (comparator.compare(population.get(i), offspringPopulation.get(i)) < 0) {
         pop.add(population.get(i));
       } else {

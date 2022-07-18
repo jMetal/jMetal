@@ -68,7 +68,7 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   }
 
   private void createWorkers(int numberOfCores, Problem<S> problem) {
-    for (int i = 0; i < numberOfCores; i++) {
+    for (var i = 0; i < numberOfCores; i++) {
       new Worker<>(
               (task) -> {
                 problem.evaluate(task.getContents());
@@ -108,12 +108,12 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   public @NotNull List<ParallelTask<S>> createInitialTasks() {
     List<S> initialPopulation = new ArrayList<>();
     @NotNull List<ParallelTask<S>> initialTaskList = new ArrayList<>() ;
-    int bound = populationSize;
-    for (int i = 0; i < bound; i++) {
+    var bound = populationSize;
+    for (var i = 0; i < bound; i++) {
       initialPopulation.add(problem.createSolution());
     }
-    for (S solution : initialPopulation) {
-      int taskId = JMetalRandom.getInstance().nextInt(0, 1000);
+    for (var solution : initialPopulation) {
+      var taskId = JMetalRandom.getInstance().nextInt(0, 1000);
       initialTaskList.add(ParallelTask.create(taskId, solution));
     }
 
@@ -123,12 +123,12 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   @Override
   public void submitInitialTasks(List<ParallelTask<S>> initialTaskList) {
     if (initialTaskList.size() >= numberOfCores) {
-      for (ParallelTask<S> sParallelTask : initialTaskList) {
+      for (var sParallelTask : initialTaskList) {
         submitTask(sParallelTask);
       }
     } else {
-      int idleWorkers = numberOfCores - initialTaskList.size();
-      for (ParallelTask<S> sParallelTask : initialTaskList) {
+      var idleWorkers = numberOfCores - initialTaskList.size();
+      for (var sParallelTask : initialTaskList) {
         submitTask(sParallelTask);
       }
       while (idleWorkers > 0) {
@@ -164,7 +164,7 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
       parents.add(selection.execute(population));
       parents.add(selection.execute(population));
 
-      List<S> offspring = crossover.execute(parents);
+      var offspring = crossover.execute(parents);
 
       mutation.execute(offspring.get(0));
 

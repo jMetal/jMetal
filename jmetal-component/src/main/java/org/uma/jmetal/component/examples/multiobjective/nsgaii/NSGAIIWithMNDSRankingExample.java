@@ -33,25 +33,25 @@ import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 public class NSGAIIWithMNDSRankingExample {
   public static void main(String[] args) throws JMetalException, IOException {
     @NotNull String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv";
+    var referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    var populationSize = 100;
+    var offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(25000);
     Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>() ;
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+    var nsgaii = new NSGAIIBuilder<>(
                     problem,
                     populationSize,
                     offspringPopulationSize,
@@ -63,7 +63,7 @@ public class NSGAIIWithMNDSRankingExample {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = nsgaii.getResult();
+    var population = nsgaii.getResult();
     JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 

@@ -31,7 +31,7 @@ public class SMPSOIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     /*
     Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
@@ -47,7 +47,7 @@ public class SMPSOIT {
     algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<>(100)).build();
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
@@ -56,7 +56,7 @@ public class SMPSOIT {
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.64);
   }
@@ -64,28 +64,28 @@ public class SMPSOIT {
   @Test
   public void shouldTheAlgorithmReturnAGoodQualityFrontWhenSolvingAConstrainedProblem()
       throws Exception {
-    ConstrEx problem = new ConstrEx();
+    var problem = new ConstrEx();
 
     algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build();
 
     algorithm.run();
-    List<DoubleSolution> population = algorithm.getResult() ;
+    var population = algorithm.getResult() ;
 
-    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
+    var referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
     // Rationale: the default problem is ConstrEx, and PESA-II, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.7
 
-    double[][] normalizedFront =
+    var normalizedFront =
             NormalizeUtils.normalize(
                     SolutionListUtils.getMatrixWithObjectiveValues(population),
                     NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
                     NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertTrue(population.size() >= 98);
     assertTrue(hv > 0.77);

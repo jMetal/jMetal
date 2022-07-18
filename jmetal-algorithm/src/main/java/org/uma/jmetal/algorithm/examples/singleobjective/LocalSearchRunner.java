@@ -27,7 +27,7 @@ public class LocalSearchRunner {
     MutationOperator<BinarySolution> mutationOperator =
         new BitFlipMutation(1.0 / problem.getBitsFromVariable(0)) ;
 
-    int improvementRounds = 10000 ;
+    var improvementRounds = 10000 ;
 
     Comparator<BinarySolution> comparator = new DominanceWithConstraintsComparator<>() ;
 
@@ -39,7 +39,7 @@ public class LocalSearchRunner {
 
     localSearch.run();
 
-    BinarySolution newSolution = localSearch.getResult() ;
+    var newSolution = localSearch.getResult() ;
 
     JMetalLogger.logger.info("Fitness: " + newSolution.objectives()[0]) ;
     JMetalLogger.logger.info("Solution: " + newSolution.variables().get(0)) ;

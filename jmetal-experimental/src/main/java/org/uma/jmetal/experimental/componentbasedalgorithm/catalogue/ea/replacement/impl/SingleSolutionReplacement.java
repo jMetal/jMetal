@@ -29,7 +29,7 @@ public class SingleSolutionReplacement<S extends Solution<?>> implements Replace
   @Override
   public List<S> replace(
           @NotNull List<S> population, List<S> offspringPopulation) {
-    S newSolution = offspringPopulation.get(0);
+    var newSolution = offspringPopulation.get(0);
 
     if (comparator.compare(population.get(sequenceGenerator.getValue()), newSolution) > 0) {
       population.set(sequenceGenerator.getValue(), newSolution) ;

@@ -134,7 +134,7 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
     var solutionList = evaluation.evaluate(population) ;
     if (null != archive) {
       @NotNull Archive<S> sArchive = archive;
-      for (S s : solutionList) {
+      for (var s : solutionList) {
         sArchive.add(s);
       }
     }

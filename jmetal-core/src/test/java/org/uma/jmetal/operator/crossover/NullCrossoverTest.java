@@ -35,10 +35,9 @@ public class NullCrossoverTest {
     parents.add(problem.createSolution()) ;
     parents.add(problem.createSolution()) ;
 
-    CrossoverOperator<DoubleSolution> crossover;
-    crossover = new NullCrossover<>() ;
+      CrossoverOperator<DoubleSolution> crossover = new NullCrossover<>();
 
-    List<DoubleSolution> offspring = crossover.execute(parents);
+    var offspring = crossover.execute(parents);
     assertNotSame(parents.get(0), offspring.get(0)) ;
     assertNotSame(parents.get(1), offspring.get(1)) ;
 

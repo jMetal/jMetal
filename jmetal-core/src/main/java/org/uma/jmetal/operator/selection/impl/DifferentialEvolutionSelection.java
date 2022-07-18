@@ -74,7 +74,7 @@ public class DifferentialEvolutionSelection
 
     @NotNull List<Integer> indexList = new ArrayList<>();
 
-    int solutionsToSelect =
+    var solutionsToSelect =
         selectCurrentSolution ? numberOfSolutionsToSelect - 1 : numberOfSolutionsToSelect;
 
     do {
@@ -89,8 +89,8 @@ public class DifferentialEvolutionSelection
     }
 
     List<DoubleSolution> list = new ArrayList<>();
-    for (Integer integer : indexList) {
-      DoubleSolution doubleSolution = solutionList.get(integer);
+    for (var integer : indexList) {
+      var doubleSolution = solutionList.get(integer);
       list.add(doubleSolution);
     }
     return list;

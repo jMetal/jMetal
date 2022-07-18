@@ -22,8 +22,8 @@ public class CRE25 extends AbstractDoubleProblem {
     setNumberOfConstraints(1);
     setName("CRE25");
 
-    List<Double> lowerLimit = List.of(12.0, 12.0, 12.0, 12.0);
-    List<Double> upperLimit = List.of(60.0, 60.0, 60.0, 60.0);
+    var lowerLimit = List.of(12.0, 12.0, 12.0, 12.0);
+    var upperLimit = List.of(60.0, 60.0, 60.0, 60.0);
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -31,14 +31,14 @@ public class CRE25 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = Math.rint(solution.variables().get(0));
-    double x2 = Math.rint(solution.variables().get(1));
-    double x3 = Math.rint(solution.variables().get(2));
-    double x4 = Math.rint(solution.variables().get(3));
+    var x1 = Math.rint(solution.variables().get(0));
+    var x2 = Math.rint(solution.variables().get(1));
+    var x3 = Math.rint(solution.variables().get(2));
+    var x4 = Math.rint(solution.variables().get(3));
 
     solution.objectives()[0] = Math.abs(6.931 - ((x3 / x1) * (x4 / x2)));
 
-    double maxValue = x1;
+    var maxValue = x1;
     if (x2 > maxValue) maxValue = x2;
     if (x3 > maxValue) maxValue = x3;
     if (x4 > maxValue) maxValue = x4;
@@ -51,7 +51,7 @@ public class CRE25 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(@NotNull DoubleSolution solution) {
-    double constraint = 0.5 - solution.objectives()[1] / 6.931;
+    var constraint = 0.5 - solution.objectives()[1] / 6.931;
 
     if (constraint < 0.0) {
       constraint = -constraint;

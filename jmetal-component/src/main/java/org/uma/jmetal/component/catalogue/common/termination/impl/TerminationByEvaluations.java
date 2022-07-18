@@ -18,7 +18,7 @@ public class TerminationByEvaluations implements Termination {
 
   @Override
   public boolean isMet(Map<String, Object> algorithmStatusData) {
-    int currentNumberOfEvaluations = (int) algorithmStatusData.get("EVALUATIONS") ;
+    var currentNumberOfEvaluations = (int) algorithmStatusData.get("EVALUATIONS") ;
 
     return (currentNumberOfEvaluations >= maximumNumberOfEvaluations) ;
   }

@@ -30,7 +30,6 @@ public class SteadyStateGeneticAlgorithmRunner {
    * Usage: java org.uma.jmetal.runner.singleobjective.SteadyStateGeneticAlgorithmRunner
    */
   public static void main(String[] args) throws Exception {
-    Algorithm<DoubleSolution> algorithm;
     @NotNull DoubleProblem problem = new Sphere(20) ;
 
     CrossoverOperator<DoubleSolution> crossoverOperator =
@@ -39,19 +38,19 @@ public class SteadyStateGeneticAlgorithmRunner {
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
     @NotNull SelectionOperator<List<DoubleSolution>, DoubleSolution> selectionOperator = new BinaryTournamentSelection<DoubleSolution>() ;
 
-    algorithm = new GeneticAlgorithmBuilder<DoubleSolution>(problem, crossoverOperator, mutationOperator)
-        .setPopulationSize(100)
-        .setMaxEvaluations(25000)
-        .setSelectionOperator(selectionOperator)
-        .setVariant(GeneticAlgorithmBuilder.GeneticAlgorithmVariant.STEADY_STATE)
-        .build() ;
+    var algorithm = new GeneticAlgorithmBuilder<DoubleSolution>(problem, crossoverOperator, mutationOperator)
+            .setPopulationSize(100)
+            .setMaxEvaluations(25000)
+            .setSelectionOperator(selectionOperator)
+            .setVariant(GeneticAlgorithmBuilder.GeneticAlgorithmVariant.STEADY_STATE)
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
-    DoubleSolution solution = algorithm.getResult() ;
+    var solution = algorithm.getResult() ;
     List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 

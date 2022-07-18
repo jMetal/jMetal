@@ -33,13 +33,9 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.MOEADIEpsilon problemName [referenceFront]
    */
   public static void main(String @NotNull [] args) throws FileNotFoundException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
-    DifferentialEvolutionCrossover crossover;
 
     String problemName ;
-    String referenceParetoFront = "";
+    var referenceParetoFront = "";
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
@@ -50,17 +46,17 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/LIRCMOP2.csv";
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double cr = 1.0 ;
-    double f = 0.5 ;
-    crossover = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+    var cr = 1.0 ;
+    var f = 0.5 ;
+    var crossover = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, Variant.MOEADIEPSILON)
+    Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(problem, Variant.MOEADIEPSILON)
             .setCrossover(crossover)
             .setMutation(mutation)
             .setMaxEvaluations(300000)
@@ -70,13 +66,13 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
             .setNeighborSize(30)
             .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
             .setDataDirectory("MOEAD_Weights")
-            .build() ;
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

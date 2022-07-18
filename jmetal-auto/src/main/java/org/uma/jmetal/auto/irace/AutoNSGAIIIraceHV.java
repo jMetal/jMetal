@@ -14,20 +14,20 @@ import org.uma.jmetal.util.VectorUtils;
 
 public class AutoNSGAIIIraceHV {
   public static void main(String[] args) throws IOException {
-    AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
+    var nsgaiiWithParameters = new AutoNSGAII();
     nsgaiiWithParameters.parseAndCheckParameters(args);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
+    var nsgaII = nsgaiiWithParameters.create();
     nsgaII.run();
 
     @NotNull String referenceFrontFile =
         "resources/referenceFrontsCSV/" + nsgaiiWithParameters.referenceFrontFilename.getValue();
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
-    double[] @NotNull [] front = getMatrixWithObjectiveValues(nsgaII.getResult()) ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
+    var front = getMatrixWithObjectiveValues(nsgaII.getResult()) ;
 
-    double[] @NotNull [] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
-    double[][] normalizedFront =
+    var normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    var normalizedFront =
             NormalizeUtils.normalize(
                     front,
                     NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),

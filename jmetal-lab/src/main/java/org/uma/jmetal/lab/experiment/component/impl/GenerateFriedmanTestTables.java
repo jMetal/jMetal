@@ -62,26 +62,26 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
   public void run() throws IOException {
     latexDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_LATEX_DIRECTORY;
 
-    for (QualityIndicator indicator : experiment.getIndicatorList()) {
-      Vector<Vector<Double>> data = readData(indicator);
-      double @NotNull []averageRanking = computeAverageRanking(data) ;
+    for (var indicator : experiment.getIndicatorList()) {
+      var data = readData(indicator);
+      var averageRanking = computeAverageRanking(data) ;
       @NotNull String fileContents = prepareFileOutputContents(averageRanking) ;
       writeLatexFile(indicator, fileContents);
     }
   }
 
   private @NotNull Vector<Vector<Double>> readData(QualityIndicator indicator) {
-    Vector<Vector<Double>> data = new Vector<Vector<Double>>() ;
+    var data = new Vector<Vector<Double>>() ;
 
-    for (int algorithm = 0; algorithm < experiment.getAlgorithmList().size(); algorithm++) {
-      String algorithmName = experiment.getAlgorithmList().get(algorithm).getAlgorithmTag();
+    for (var algorithm = 0; algorithm < experiment.getAlgorithmList().size(); algorithm++) {
+      var algorithmName = experiment.getAlgorithmList().get(algorithm).getAlgorithmTag();
 
       data.add(new Vector<Double>());
       @NotNull String algorithmPath = experiment.getExperimentBaseDirectory() + "/data/"
           + algorithmName + "/";
 
-      for (int problem = 0; problem < experiment.getProblemList().size(); problem++) {
-        String path = algorithmPath + experiment.getProblemList().get(problem).getTag() +
+      for (var problem = 0; problem < experiment.getProblemList().size(); problem++) {
+        var path = algorithmPath + experiment.getProblemList().get(problem).getTag() +
             "/" + indicator.getName();
 
         readDataFromFile(path, data, algorithm) ;
@@ -92,13 +92,13 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
   }
 
   private void readDataFromFile(String path, @NotNull Vector<Vector<Double>> data, int algorithmIndex) {
-    String string = "";
+    var string = "";
 
     try(@NotNull FileInputStream fis = new FileInputStream(path)) {
-      
 
-      byte @NotNull [] bytes = new byte[4096];
-      int readBytes = 0;
+
+      var bytes = new byte[4096];
+      var readBytes = 0;
 
       while (readBytes != -1) {
         readBytes = fis.read(bytes);
@@ -112,10 +112,10 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
       throw new JMetalException("Error reading data ", e) ;
     }
 
-    StringTokenizer lines = new StringTokenizer(string, "\n\r");
+    var lines = new StringTokenizer(string, "\n\r");
 
-    double valor = 0.0;
-    int n = 0;
+    var valor = 0.0;
+    var n = 0;
 
     while (lines.hasMoreTokens()) {
       valor = valor + Double.parseDouble(lines.nextToken());
@@ -130,10 +130,10 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
 
   private double[] computeAverageRanking(Vector<Vector<Double>> data) {
     /*Compute the average performance per algorithm for each data set*/
-    double[][] mean = new double[numberOfProblems][numberOfAlgorithms];
+    var mean = new double[numberOfProblems][numberOfAlgorithms];
 
-    for (int j = 0; j < numberOfAlgorithms; j++) {
-      for (int i = 0; i < numberOfProblems; i++) {
+    for (var j = 0; j < numberOfAlgorithms; j++) {
+      for (var i = 0; i < numberOfProblems; i++) {
         mean[i][j] = data.elementAt(j).elementAt(i);
       }
     }
@@ -141,9 +141,9 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
     /*We use the Pair class to compute and order rankings*/
     @NotNull List<List<Pair<Integer, Double>>> order = new ArrayList<List<Pair<Integer, Double>>>(numberOfProblems);
 
-    for (int i=0; i<numberOfProblems; i++) {
+    for (var i = 0; i<numberOfProblems; i++) {
       order.add(new ArrayList<>(numberOfAlgorithms)) ;
-      for (int j=0; j<numberOfAlgorithms; j++){
+      for (var j = 0; j<numberOfAlgorithms; j++){
         order.get(i).add(new ImmutablePair<>(j, mean[i][j]));
       }
       order.get(i).sort(Comparator.comparingDouble(pair -> Math.abs(pair.getValue())));
@@ -152,12 +152,12 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
     /*building of the rankings table per algorithms and data sets*/
     @NotNull List<List<MutablePair<Double, Double>>> rank = new ArrayList<List<MutablePair<Double, Double>>>(numberOfProblems);
 
-    int position = 0;
-    for (int i=0; i<numberOfProblems; i++) {
+    var position = 0;
+    for (var i = 0; i<numberOfProblems; i++) {
       rank.add(new ArrayList<MutablePair<Double, Double>>(numberOfAlgorithms)) ;
-      for (int j=0; j<numberOfAlgorithms; j++){
-        boolean found  = false;
-        for (int k=0; k<numberOfAlgorithms && !found; k++) {
+      for (var j = 0; j<numberOfAlgorithms; j++){
+        var found  = false;
+        for (var k = 0; k<numberOfAlgorithms && !found; k++) {
           if (order.get(i).get(k).getKey() == j) {
             found = true;
             position = k+1;
@@ -168,17 +168,17 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
     }
 
     /*In the case of having the same performance, the rankings are equal*/
-    for (int i=0; i<numberOfProblems; i++) {
-      boolean[] hasBeenVisited = new boolean[numberOfAlgorithms];
-      Vector<Integer> pendingToVisit= new Vector<Integer>();
+    for (var i = 0; i<numberOfProblems; i++) {
+      var hasBeenVisited = new boolean[numberOfAlgorithms];
+      var pendingToVisit= new Vector<Integer>();
 
       Arrays.fill(hasBeenVisited,false);
-      for (int j=0; j<numberOfAlgorithms; j++) {
+      for (var j = 0; j<numberOfAlgorithms; j++) {
         pendingToVisit.removeAllElements();
         double sum = rank.get(i).get(j).getKey();
         hasBeenVisited[j] = true;
-        int ig = 1;
-        for (int k=j+1;k<numberOfAlgorithms;k++) {
+        var ig = 1;
+        for (var k = j+1; k<numberOfAlgorithms; k++) {
           if (rank.get(i).get(j).getValue().equals(rank.get(i).get(k).getValue()) && !hasBeenVisited[k]) {
             sum += rank.get(i).get(k).getKey();
             ig++;
@@ -188,17 +188,17 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
         }
         sum /= (double)ig;
         rank.get(i).get(j).setLeft(sum);
-        for (int k=0; k<pendingToVisit.size(); k++) {
+        for (var k = 0; k<pendingToVisit.size(); k++) {
           rank.get(i).get(pendingToVisit.elementAt(k)).setLeft(sum) ;
         }
       }
     }
 
     /*compute the average ranking for each algorithm*/
-    double @NotNull []averageRanking = new double[numberOfAlgorithms];
-    for (int i=0; i<numberOfAlgorithms; i++){
+    var averageRanking = new double[numberOfAlgorithms];
+    for (var i = 0; i<numberOfAlgorithms; i++){
       averageRanking[i] = 0;
-      for (int j=0; j<numberOfProblems; j++) {
+      for (var j = 0; j<numberOfProblems; j++) {
         averageRanking[i] += rank.get(j).get(i).getKey() / ((double)numberOfProblems);
       }
     }
@@ -207,7 +207,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
   }
 
   public String prepareFileOutputContents(double[] averageRanking) {
-    String fileContents = writeLatexHeader();
+    var fileContents = writeLatexHeader();
     fileContents = printTableHeader(fileContents) ;
     fileContents = printTableLines(fileContents, averageRanking) ;
     fileContents = printTableTail(fileContents) ;
@@ -222,15 +222,14 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
    * @param fileContents
    */
   private void writeLatexFile(QualityIndicator indicator, @NotNull String fileContents) {
-    String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
+    var outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
 
-    File latexOutput;
-    latexOutput = new File(latexDirectoryName);
+    var latexOutput = new File(latexDirectoryName);
     if(!latexOutput.exists()){
       latexOutput.mkdirs();
     }
     
-    try(DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(outputFile))) {
+    try(var dataOutputStream = new DataOutputStream(new FileOutputStream(outputFile))) {
       dataOutputStream.writeBytes(fileContents);
     } catch (IOException e) {
       throw new JMetalException("Error writing data ", e) ;
@@ -252,8 +251,8 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
   }
 
   private String printTableLines(String fileContents, double[] averageRanking) {
-    String output = fileContents ;
-    for (int i = 0; i< experiment.getAlgorithmList().size(); i++) {
+    var output = fileContents ;
+    for (var i = 0; i< experiment.getAlgorithmList().size(); i++) {
       output += "\n" + experiment.getAlgorithmList().get(i).getAlgorithmTag()+"&"+averageRanking[i]+"\\\\";
     }
 
@@ -275,17 +274,17 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
   }
 
   private String printDocumentFooter(String fileContents, double[] averageRanking) {
-    double term1 = (12*(double)numberOfProblems)/(numberOfAlgorithms*(numberOfAlgorithms+1));
-    double term2 = numberOfAlgorithms*(numberOfAlgorithms+1)*(numberOfAlgorithms+1)/(4.0);
-      double sum = 0.0;
-      int bound = numberOfAlgorithms;
-      for (int i = 0; i < bound; i++) {
-          double v = averageRanking[i] * averageRanking[i];
+    var term1 = (12*(double)numberOfProblems)/(numberOfAlgorithms*(numberOfAlgorithms+1));
+    var term2 = numberOfAlgorithms*(numberOfAlgorithms+1)*(numberOfAlgorithms+1)/(4.0);
+    var sum = 0.0;
+    var bound = numberOfAlgorithms;
+      for (var i = 0; i < bound; i++) {
+        var v = averageRanking[i] * averageRanking[i];
           sum += v;
       }
-      double friedman = (sum - term2) * term1;
+    var friedman = (sum - term2) * term1;
 
-    String output = fileContents + "\n" + "\n\nFriedman statistic considering reduction performance (distributed according to " +
+    var output = fileContents + "\n" + "\n\nFriedman statistic considering reduction performance (distributed according to " +
         "chi-square with "+(numberOfAlgorithms-1)+" degrees of freedom: "+friedman+").\n\n";
     output = output + "\n" + "\\end{document}";
 

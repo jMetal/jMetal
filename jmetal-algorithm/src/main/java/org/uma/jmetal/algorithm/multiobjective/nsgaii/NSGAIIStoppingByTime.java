@@ -35,7 +35,7 @@ public class NSGAIIStoppingByTime<S extends Solution<?>> extends NSGAII<S> {
   }
 
   @Override protected boolean isStoppingConditionReached() {
-    long currentComputingTime = System.currentTimeMillis() - initComputingTime ;
+    var currentComputingTime = System.currentTimeMillis() - initComputingTime ;
     return currentComputingTime > thresholdComputingTime ;
   }
 }

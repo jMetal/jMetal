@@ -38,27 +38,21 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
 
   /** Evaluate() method */
   public @NotNull PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution){
-    double fitness1   ;
-    double fitness2   ;
 
-    fitness1 = 0.0 ;
-    fitness2 = 0.0 ;
+    var fitness1 = 0.0;
+    var fitness2 = 0.0;
 
-    for (int i = 0; i < (numberOfCities - 1); i++) {
-      int x ;
-      int y ;
+    for (var i = 0; i < (numberOfCities - 1); i++) {
 
-      x = solution.variables().get(i) ;
-      y = solution.variables().get(i+1) ;
+      int x = solution.variables().get(i);
+      int y = solution.variables().get(i + 1);
 
       fitness1 += distanceMatrix[x][y] ;
       fitness2 += costMatrix[x][y];
     }
-    int firstCity ;
-    int lastCity  ;
 
-    firstCity = solution.variables().get(0) ;
-    lastCity = solution.variables().get(numberOfCities - 1) ;
+    int firstCity = solution.variables().get(0);
+    int lastCity = solution.variables().get(numberOfCities - 1);
 
     fitness1 += distanceMatrix[firstCity][lastCity] ;
     fitness2 += costMatrix[firstCity][lastCity];
@@ -73,17 +67,16 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
   private double [][] readProblem(String file) throws IOException {
     double [] @Nullable [] matrix = null;
 
-    InputStream in = getClass().getResourceAsStream(file);
+    var in = getClass().getResourceAsStream(file);
     if (in == null) {
       in = new FileInputStream(file) ;
     }
-    InputStreamReader isr = new InputStreamReader(in);
+    var isr = new InputStreamReader(in);
     @NotNull BufferedReader br = new BufferedReader(isr);
 
-    StreamTokenizer token = new StreamTokenizer(br);
+    var token = new StreamTokenizer(br);
     try {
-      boolean found ;
-      found = false ;
+      var found = false;
 
       token.nextToken();
       while(!found) {
@@ -111,11 +104,11 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
           token.nextToken() ;
       }
 
-      double @NotNull [] c = new double[2*numberOfCities] ;
+      var c = new double[2*numberOfCities] ;
 
-      for (int i = 0; i < numberOfCities; i++) {
+      for (var i = 0; i < numberOfCities; i++) {
         token.nextToken() ;
-        int j = (int)token.nval ;
+        var j = (int)token.nval ;
 
         token.nextToken() ;
         c[2*(j-1)] = token.nval ;
@@ -124,9 +117,9 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
       } // for
 
       double dist ;
-      for (int k = 0; k < numberOfCities; k++) {
+      for (var k = 0; k < numberOfCities; k++) {
         matrix[k][k] = 0;
-        for (int j = k + 1; j < numberOfCities; j++) {
+        for (var j = k + 1; j < numberOfCities; j++) {
           dist = Math.sqrt(Math.pow((c[k*2]-c[j*2]),2.0) +
               Math.pow((c[k*2+1]-c[j*2+1]), 2));
           dist = (int)(dist + .5);

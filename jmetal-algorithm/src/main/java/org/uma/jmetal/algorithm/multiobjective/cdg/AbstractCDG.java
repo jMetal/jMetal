@@ -13,9 +13,6 @@
 
 package org.uma.jmetal.algorithm.multiobjective.cdg;
 
-import java.util.*;
-import java.util.stream.IntStream;
-
 import org.jetbrains.annotations.NotNull;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -24,6 +21,8 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
+
+import java.util.*;
 
 /**
  * Abstract class for implementing versions of the CDG algorithm.
@@ -140,16 +139,16 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
     subproblem = new ArrayList<>(subproblemNum_);
 
-    for (int i = 0; i < subproblemNum_; i++) {
+    for (var i = 0; i < subproblemNum_; i++) {
       List<S> list = new ArrayList<>(populationSize);
       subproblem.add(list);
     }
 
-    int subPLength = (int) Math.pow(3, problem.getNumberOfObjectives());
+    var subPLength = (int) Math.pow(3, problem.getNumberOfObjectives());
     subP = new int[childGridNum_][subPLength];
     subPNum = new int[childGridNum_];
     team = new ArrayList<>(childGridNum_);
-    for (int i = 0; i < childGridNum_; i++) {
+    for (var i = 0; i < childGridNum_; i++) {
       @NotNull List<Integer> list = new ArrayList<>(populationSize);
       team.add(list);
     }
@@ -162,24 +161,24 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
     tempBorder = new ArrayList<>(problem.getNumberOfObjectives());
     border = new ArrayList<>(problem.getNumberOfObjectives());
     borderLength = 2 * populationSize * (problem.getNumberOfObjectives() - 1);
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
       @NotNull List<S> list = new ArrayList<>(borderLength);
       tempBorder.add(list);
     }
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
       List<S> list = new ArrayList<>(borderLength);
       border.add(list);
     }
   }
 
   protected void initialCDGAttributes(@NotNull S individual) {
-    int[] g_ = new int[problem.getNumberOfObjectives()];
-    int[] rank_ = new int[problem.getNumberOfObjectives()];
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    var g_ = new int[problem.getNumberOfObjectives()];
+    var rank_ = new int[problem.getNumberOfObjectives()];
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
       g_[i] = 0;
       rank_[i] = 0;
     }
-    int order_ = 0;
+    var order_ = 0;
 
     individual.attributes().put("g_", g_);
     individual.attributes().put("rank_", rank_);
@@ -187,34 +186,34 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected int getG(S individual, int index) {
-    int[] g_ = (int[]) individual.attributes().get("g_");
+    var g_ = (int[]) individual.attributes().get("g_");
     return g_[index];
   }
 
   protected int getRank(S individual, int index) {
-    int[] rank_ = (int[]) individual.attributes().get("rank_");
+    var rank_ = (int[]) individual.attributes().get("rank_");
     return rank_[index];
   }
 
   protected int getOrder(S individual) {
-    int order_ = (int) individual.attributes().get("order_");
+    var order_ = (int) individual.attributes().get("order_");
     return order_;
   }
 
   protected void setG(S individual, int index, int value) {
-    int[] g_ = (int[]) individual.attributes().get("g_");
+    var g_ = (int[]) individual.attributes().get("g_");
     g_[index] = value;
     individual.attributes().put("g_", g_);
   }
 
   protected void setRank(S individual, int index, int value) {
-    int[] rank_ = (int[]) individual.attributes().get("rank_");
+    var rank_ = (int[]) individual.attributes().get("rank_");
     rank_[index] = value;
     individual.attributes().put("rank_", rank_);
   }
 
   protected void setOrder(S individual, int value) {
-    int order_ = (int) individual.attributes().get("order_");
+    var //order_ = (int) individual.attributes().get("order_");
     order_ = value;
     individual.attributes().put("order_", order_);
   }
@@ -236,18 +235,18 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   /** Initialize cdg neighborhoods */
   protected void initializeNeighborhood() {
 
-    for (int i = 0; i < populationSize; i++) {
+    for (var i = 0; i < populationSize; i++) {
       neighborhoodNum[i] = 0;
     }
 
-    for (int i = 0; i < populationSize; i++)
-      for (int j = 0; j < populationSize; j++) {
-        int gridDistance = 0;
-        for (int k = 0; k < problem.getNumberOfObjectives(); k++) {
-          int g1 = getG(population.get(i), k);
-          int g2 = getG(population.get(j), k);
+    for (var i = 0; i < populationSize; i++)
+      for (var j = 0; j < populationSize; j++) {
+        var gridDistance = 0;
+        for (var k = 0; k < problem.getNumberOfObjectives(); k++) {
+          var g1 = getG(population.get(i), k);
+          var g2 = getG(population.get(j), k);
 
-          int tempGridDistance = Math.abs(g1 - g2);
+          var tempGridDistance = Math.abs(g1 - g2);
           if (tempGridDistance > gridDistance) gridDistance = tempGridDistance;
         }
         if (gridDistance < t_) {
@@ -258,15 +257,15 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void initializeSubP2() {
-    int @NotNull [] left = new int[problem.getNumberOfObjectives()];
-    int @NotNull [] right = new int[problem.getNumberOfObjectives()];
-    int s = 0;
-    int ns = 0;
+    var left = new int[problem.getNumberOfObjectives()];
+    var right = new int[problem.getNumberOfObjectives()];
+    var s = 0;
+    var ns = 0;
 
-    for (int i = 1; i < childGridNum_; i++) subPNum[i] = 0;
+    for (var i = 1; i < childGridNum_; i++) subPNum[i] = 0;
 
-    for (int i = 1; i <= childGrid_; i++)
-      for (int j = 1; j <= childGrid_; j++) {
+    for (var i = 1; i <= childGrid_; i++)
+      for (var j = 1; j <= childGrid_; j++) {
 
         s = getPos(i, j, 1);
 
@@ -275,7 +274,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
         left[1] = j - t_;
         right[1] = j + t_;
 
-        for (int d = 0; d < problem.getNumberOfObjectives(); d++) {
+        for (var d = 0; d < problem.getNumberOfObjectives(); d++) {
           if (left[d] < 1) {
             left[d] = 1;
             right[d] = 2 * t_ + 1;
@@ -285,8 +284,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
             left[d] = childGrid_ - 2 * t_;
           }
         }
-        for (int ni = left[0]; ni <= right[0]; ni++)
-          for (int nj = left[1]; nj <= right[1]; nj++) {
+        for (var ni = left[0]; ni <= right[0]; ni++)
+          for (var nj = left[1]; nj <= right[1]; nj++) {
 
             ns = getPos(ni, nj, 1);
 
@@ -297,16 +296,16 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void initializeSubP3() {
-    int @NotNull [] left = new int[problem.getNumberOfObjectives()];
-    int @NotNull [] right = new int[problem.getNumberOfObjectives()];
-    int s = 0;
-    int ns = 0;
+    var left = new int[problem.getNumberOfObjectives()];
+    var right = new int[problem.getNumberOfObjectives()];
+    var s = 0;
+    var ns = 0;
 
-    for (int i = 1; i < childGridNum_; i++) subPNum[i] = 0;
+    for (var i = 1; i < childGridNum_; i++) subPNum[i] = 0;
 
-    for (int i = 1; i <= childGrid_; i++)
-      for (int j = 1; j <= childGrid_; j++) {
-        for (int k = 1; k <= childGrid_; k++) {
+    for (var i = 1; i <= childGrid_; i++)
+      for (var j = 1; j <= childGrid_; j++) {
+        for (var k = 1; k <= childGrid_; k++) {
 
           s = getPos(i, j, k);
 
@@ -317,7 +316,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
           left[2] = k - t_;
           right[2] = k + t_;
 
-          for (int d = 0; d < problem.getNumberOfObjectives(); d++) {
+          for (var d = 0; d < problem.getNumberOfObjectives(); d++) {
             if (left[d] < 1) {
               left[d] = 1;
               right[d] = 2 * t_ + 1;
@@ -327,9 +326,9 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
               left[d] = childGrid_ - 2 * t_;
             }
           }
-          for (int ni = left[0]; ni <= right[0]; ni++)
-            for (int nj = left[1]; nj <= right[1]; nj++)
-              for (int nk = left[2]; nk <= right[2]; nk++) {
+          for (var ni = left[0]; ni <= right[0]; ni++)
+            for (var nj = left[1]; nj <= right[1]; nj++)
+              for (var nk = left[2]; nk <= right[2]; nk++) {
                 ns = getPos(ni, nj, nk);
                 subP[s][subPNum[s]] = ns;
                 subPNum[s]++;
@@ -339,8 +338,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected int getPos(int i, int j, int k) {
-    int s = 0;
-    int l = (int) Math.pow(childGrid_, 2);
+    var s = 0;
+    var l = (int) Math.pow(childGrid_, 2);
     l = l * (k - 1);
     if (i >= j) {
       s = (i - 1) * (i - 1) + j;
@@ -352,48 +351,47 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void group2() {
-    double[] childDelta;
-    double @NotNull [] maxFunValue = new double[10];
-    int count1 = 0;
-    int bound1 = problem.getNumberOfObjectives();
-    for (int i2 = 0; i2 < bound1; i2++) {
+    var maxFunValue = new double[10];
+    var count1 = 0;
+    var bound1 = problem.getNumberOfObjectives();
+    for (var i2 = 0; i2 < bound1; i2++) {
       double v1 = 0;
       if (maxFunValue.length == count1) maxFunValue = Arrays.copyOf(maxFunValue, count1 * 2);
       maxFunValue[count1++] = v1;
     }
     maxFunValue = Arrays.copyOfRange(maxFunValue, 0, count1);
 
-    for (int i = 0; i < population.size(); i++) {
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
+    for (var i = 0; i < population.size(); i++) {
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
         if (population.get(i).objectives()[j] > maxFunValue[j])
           maxFunValue[j] = population.get(i).objectives()[j];
       }
     }
 
-    double @NotNull [] arr = new double[10];
-    int count = 0;
-    int bound = problem.getNumberOfObjectives();
-    for (int i1 = 0; i1 < bound; i1++) {
-      double v = (maxFunValue[i1] - idealPoint[i1]) / childGrid_;
+    var arr = new double[10];
+    var count = 0;
+    var bound = problem.getNumberOfObjectives();
+    for (var i1 = 0; i1 < bound; i1++) {
+      var v = (maxFunValue[i1] - idealPoint[i1]) / childGrid_;
       if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
       arr[count++] = v;
     }
     arr = Arrays.copyOfRange(arr, 0, count);
-    childDelta = arr;
+    var childDelta = arr;
 
-    for (int i = 1; i < childGridNum_; i++) team.get(i).clear();
+    for (var i = 1; i < childGridNum_; i++) team.get(i).clear();
 
     int grid;
-    double childSigma = 1e-10;
-    int @NotNull [] pos = new int[problem.getNumberOfObjectives()];
+    var childSigma = 1e-10;
+    var pos = new int[problem.getNumberOfObjectives()];
 
-    for (int i = 0; i < populationSize; i++) {
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
-        double nornalObj = population.get(i).objectives()[j] - idealPoint[j];
+    for (var i = 0; i < populationSize; i++) {
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
+        var nornalObj = population.get(i).objectives()[j] - idealPoint[j];
         pos[j] = (int) Math.ceil(nornalObj / childDelta[j] - childSigma);
       }
       grid = 0;
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) if (pos[j] < 1) pos[j] = 1;
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) if (pos[j] < 1) pos[j] = 1;
 
       grid = getPos(pos[0], pos[1], 1);
 
@@ -404,48 +402,47 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void group3() {
-    double[] childDelta;
-    double @NotNull [] maxFunValue = new double[10];
-    int count1 = 0;
-    int bound1 = problem.getNumberOfObjectives();
-    for (int i2 = 0; i2 < bound1; i2++) {
+    var maxFunValue = new double[10];
+    var count1 = 0;
+    var bound1 = problem.getNumberOfObjectives();
+    for (var i2 = 0; i2 < bound1; i2++) {
       double v1 = 0;
       if (maxFunValue.length == count1) maxFunValue = Arrays.copyOf(maxFunValue, count1 * 2);
       maxFunValue[count1++] = v1;
     }
     maxFunValue = Arrays.copyOfRange(maxFunValue, 0, count1);
 
-    for (int i = 0; i < population.size(); i++) {
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
+    for (var i = 0; i < population.size(); i++) {
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
         if (population.get(i).objectives()[j] > maxFunValue[j])
           maxFunValue[j] = population.get(i).objectives()[j];
       }
     }
 
-    double[] arr = new double[10];
-    int count = 0;
-    int bound = problem.getNumberOfObjectives();
-    for (int i1 = 0; i1 < bound; i1++) {
-      double v = (maxFunValue[i1] - idealPoint[i1]) / childGrid_;
+    var arr = new double[10];
+    var count = 0;
+    var bound = problem.getNumberOfObjectives();
+    for (var i1 = 0; i1 < bound; i1++) {
+      var v = (maxFunValue[i1] - idealPoint[i1]) / childGrid_;
       if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
       arr[count++] = v;
     }
     arr = Arrays.copyOfRange(arr, 0, count);
-    childDelta = arr;
+    var childDelta = arr;
 
-    for (int i = 1; i < childGridNum_; i++) team.get(i).clear();
+    for (var i = 1; i < childGridNum_; i++) team.get(i).clear();
 
     int grid;
-    double childSigma = 1e-10;
-    int @NotNull [] pos = new int[problem.getNumberOfObjectives()];
+    var childSigma = 1e-10;
+    var pos = new int[problem.getNumberOfObjectives()];
 
-    for (int i = 0; i < populationSize; i++) {
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
-        double nornalObj = population.get(i).objectives()[j] - idealPoint[j];
+    for (var i = 0; i < populationSize; i++) {
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
+        var nornalObj = population.get(i).objectives()[j] - idealPoint[j];
         pos[j] = (int) Math.ceil(nornalObj / childDelta[j] - childSigma);
       }
       grid = 0;
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) if (pos[j] < 1) pos[j] = 1;
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) if (pos[j] < 1) pos[j] = 1;
 
       grid = getPos(pos[0], pos[1], pos[2]);
 
@@ -457,18 +454,18 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
   protected void initializeNeighborhoodGrid() {
 
-    for (int i = 0; i < populationSize; i++) {
+    for (var i = 0; i < populationSize; i++) {
       neighborhoodNum[i] = 0;
     }
 
-    for (int i = 1; i < childGridNum_; i++) {
-      for (int j = 0; j < team.get(i).size(); j++) {
+    for (var i = 1; i < childGridNum_; i++) {
+      for (var j = 0; j < team.get(i).size(); j++) {
         int parentIndex = team.get(i).get(j);
         if (subP.length < i || subPNum[i] == 0) {
           neighborhoodNum[parentIndex] = 0;
         } else {
-          for (int ni = 0; ni < subPNum[i]; ni++) {
-            for (int nj = 0; nj < team.get(subP[i][ni]).size(); nj++) {
+          for (var ni = 0; ni < subPNum[i]; ni++) {
+            for (var nj = 0; nj < team.get(subP[i][ni]).size(); nj++) {
               neighborhood[parentIndex][neighborhoodNum[parentIndex]] =
                   team.get(subP[i][ni]).get(nj);
               neighborhoodNum[parentIndex]++;
@@ -484,44 +481,44 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
     paretoFilter();
 
-    double coefficient = 1 + (1 - evaluations / maxEvaluations) * 0.15;
-    double borderCoef = 1 + (coefficient - 1) / 4;
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++)
-      for (int j = 0; j < border.get(i).size(); j++)
-        for (int k = 0; k < problem.getNumberOfObjectives(); k++)
+    var coefficient = 1 + (1 - evaluations / maxEvaluations) * 0.15;
+    var borderCoef = 1 + (coefficient - 1) / 4;
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++)
+      for (var j = 0; j < border.get(i).size(); j++)
+        for (var k = 0; k < problem.getNumberOfObjectives(); k++)
           if (i != k) {
-            double funValue = border.get(i).get(j).objectives()[k];
+            var funValue = border.get(i).get(j).objectives()[k];
             border.get(i).get(j).objectives()[k] = funValue * borderCoef;
           }
   }
 
   protected void getBorder() {
-    int[] flag = new int[problem.getNumberOfObjectives()];
-    double @NotNull [] minFunValue = new double[problem.getNumberOfObjectives()];
+    var flag = new int[problem.getNumberOfObjectives()];
+    var minFunValue = new double[problem.getNumberOfObjectives()];
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
       tempBorder.get(i).clear();
       minFunValue[i] = 1.0e+30;
     }
 
-    for (int i = 0; i < population.size(); i++)
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++)
+    for (var i = 0; i < population.size(); i++)
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++)
         if (population.get(i).objectives()[j] < minFunValue[j])
           minFunValue[j] = population.get(i).objectives()[j];
 
     int sum;
     int od;
-    for (int i = 0; i < population.size(); i++) {
+    for (var i = 0; i < population.size(); i++) {
       sum = 0;
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
         if (population.get(i).objectives()[j] < minFunValue[j] + nadirPoint[j] / 100) flag[j] = 1;
         else flag[j] = 0;
         sum = sum + flag[j];
       }
       if (sum == 1) {
-        int found = 0;
-        int bound = problem.getNumberOfObjectives();
-        for (int j = 0; j < bound; j++) {
+        var found = 0;
+        var bound = problem.getNumberOfObjectives();
+        for (var j = 0; j < bound; j++) {
           if (flag[j] == 1) {
             found = j;
             break;
@@ -534,19 +531,19 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void paretoFilter() {
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) border.get(i).clear();
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) border.get(i).clear();
 
     boolean tag;
-    int nmbOfObjs = problem.getNumberOfObjectives() - 1;
+    var nmbOfObjs = problem.getNumberOfObjectives() - 1;
     int sum1, sum2;
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++)
-      for (int p = 0; p < tempBorder.get(i).size(); p++) {
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++)
+      for (var p = 0; p < tempBorder.get(i).size(); p++) {
         tag = false;
-        for (int q = 0; q < tempBorder.get(i).size(); q++) {
+        for (var q = 0; q < tempBorder.get(i).size(); q++) {
           sum1 = 0;
           sum2 = 0;
-          for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
+          for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
             if (i != j) {
               if (tempBorder.get(i).get(p).objectives()[j]
                   <= tempBorder.get(i).get(q).objectives()[j]) sum1++;
@@ -566,18 +563,18 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void initializeIdealPoint() {
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
       idealPoint[i] = 1.0e+30;
     }
 
-    for (int i = 0; i < populationSize; i++) {
+    for (var i = 0; i < populationSize; i++) {
       updateIdealPoint(population.get(i));
     }
   }
 
   // initialize the nadir point
   protected void initializeNadirPoint() {
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) nadirPoint[i] = -1.0e+30;
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) nadirPoint[i] = -1.0e+30;
     updateNadirPoint();
   }
 
@@ -585,11 +582,11 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   void updateNadirPoint() {
     Ranking<S> ranking = new FastNonDominatedSortRanking<S>();
     ranking.compute(population);
-    List<S> nondominatedPopulation = ranking.getSubFront(0);
+    var nondominatedPopulation = ranking.getSubFront(0);
 
-    for (int i = 0; i < nondominatedPopulation.size(); i++) {
-      S individual = nondominatedPopulation.get(i);
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
+    for (var i = 0; i < nondominatedPopulation.size(); i++) {
+      var individual = nondominatedPopulation.get(i);
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
         if (individual.objectives()[j] > nadirPoint[j]) {
           nadirPoint[j] = individual.objectives()[j];
         }
@@ -598,7 +595,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void updateIdealPoint(S individual) {
-    for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
+    for (var n = 0; n < problem.getNumberOfObjectives(); n++) {
       if (individual.objectives()[n] < idealPoint[n]) {
         idealPoint[n] = individual.objectives()[n];
       }
@@ -606,13 +603,13 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void gridSystemSetup() {
-    double coefficient = 1 + (1 - evaluations / maxEvaluations) * 0.15;
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    var coefficient = 1 + (1 - evaluations / maxEvaluations) * 0.15;
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
       d_[i] = (nadirPoint[i] - idealPoint[i]) * coefficient / k_;
     }
-    for (int i = 0; i < population.size(); i++) {
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
-        int g = (int) Math.ceil((population.get(i).objectives()[j] - idealPoint[j]) / d_[j]);
+    for (var i = 0; i < population.size(); i++) {
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
+        var g = (int) Math.ceil((population.get(i).objectives()[j] - idealPoint[j]) / d_[j]);
         if (g < 0) g = 0;
         if (g >= k_) g = k_ - 1;
         setG(population.get(i), j, g);
@@ -622,53 +619,53 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
   protected void gridSystemSetup3() {
     initialGridDetal();
-    for (int i = 0; i < population.size(); i++) {
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
-        int g = getGridPos(j, population.get(i).objectives()[j]);
+    for (var i = 0; i < population.size(); i++) {
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
+        var g = getGridPos(j, population.get(i).objectives()[j]);
         setG(population.get(i), j, g);
       }
     }
   }
 
   protected void initialGridDetal() {
-    int detalSum = 0;
+    var detalSum = 0;
     gridDetal_[0] = -1;
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++)
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++)
       gridDetalSum_[i][0] = (double) gridDetal_[0];
 
-    for (int i = 1; i < slimDetal_; i++) {
+    for (var i = 1; i < slimDetal_; i++) {
       gridDetal_[i] = 2;
       detalSum = detalSum + gridDetal_[i];
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++)
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++)
         gridDetalSum_[j][i] = (double) detalSum;
     }
 
-    for (int i = slimDetal_; i < k_; i++) {
+    for (var i = slimDetal_; i < k_; i++) {
       gridDetal_[i] = 1;
       detalSum = detalSum + gridDetal_[i];
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++)
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++)
         gridDetalSum_[j][i] = (double) detalSum;
     }
 
-    double coefficient = 1 + (1 - evaluations / maxEvaluations) * 0.15;
+    var coefficient = 1 + (1 - evaluations / maxEvaluations) * 0.15;
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++)
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++)
       d_[i] = (nadirPoint[i] - idealPoint[i]) * coefficient / k_;
 
-    for (int i = 0; i < k_; i++)
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++)
+    for (var i = 0; i < k_; i++)
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++)
         gridDetalSum_[j][i] = gridDetalSum_[j][i] / detalSum * (d_[j] * k_);
   }
 
   protected int getGridPos(int j, double funValue) {
-    long count = 0L;
-    int bound = k_;
-    for (int i = 0; i < bound; i++) {
+    var count = 0L;
+    var bound = k_;
+    for (var i = 0; i < bound; i++) {
       if (funValue > gridDetalSum_[j][i]) {
         count++;
       }
     }
-    int g = (int) count;
+    var g = (int) count;
       if (g == k_) g = k_ - 1;
     return g;
   }
@@ -679,8 +676,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
     Map<Integer, S> specialSolution = new HashMap<Integer, S>();
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      for (int j = 0; j < population.size(); j++) {
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
+      for (var j = 0; j < population.size(); j++) {
         if (population.get(j).objectives()[i] == idealPoint[i]) {
           if (!specialSolution.containsKey(j)) {
             specialSolution.put(j, population.get(j));
@@ -689,8 +686,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
       }
     }
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      for (int j = 0; j < population.size(); j++) {
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
+      for (var j = 0; j < population.size(); j++) {
         if (population.get(j).objectives()[i] == nadirPoint[i]) {
           if (!specialSolution.containsKey(j)) {
             specialSolution.put(j, population.get(j));
@@ -699,15 +696,15 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
       }
     }
 
-    for (Integer j : specialSolution.keySet()) {
+    for (var j : specialSolution.keySet()) {
       specialPopulation.add(specialSolution.get(j));
       spPopulationOrder.add(j);
     }
 
     if (specialPopulation.size() > 2 * problem.getNumberOfObjectives()) {
-      for (int i = specialPopulation.size() - 1;
-          i > (2 * problem.getNumberOfObjectives() - 1);
-          i--) {
+      for (var i = specialPopulation.size() - 1;
+           i > (2 * problem.getNumberOfObjectives() - 1);
+           i--) {
         specialPopulation.remove(i);
         spPopulationOrder.remove(i);
       }
@@ -716,10 +713,10 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
   protected void excludeBadSolution() {
     badPopulation.clear();
-    int length = population.size();
-    for (int i = length - 1; i >= 0; i--) {
-      S individual = population.get(i);
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
+    var length = population.size();
+    for (var i = length - 1; i >= 0; i--) {
+      var individual = population.get(i);
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
         if (individual.objectives()[j] > nadirPoint[j]) {
           badPopulation.add(individual);
           population.remove(i);
@@ -731,8 +728,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
   protected void excludeBadSolution3() {
     badSolutionNum = 0;
-    for (int i = 0; i < population.size(); i++) {
-      S individual = population.get(i);
+    for (var i = 0; i < population.size(); i++) {
+      var individual = population.get(i);
       if (individual.objectives()[0] > nadirPoint[0]
           || individual.objectives()[1] > nadirPoint[1]
           || individual.objectives()[2] > nadirPoint[2]
@@ -745,15 +742,15 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
     if (population.size() - badSolutionNum < populationSize) {
       excludeBadSolution();
     } else {
-      for (int i = badSolutionNum - 1; i >= 0; i--) {
+      for (var i = badSolutionNum - 1; i >= 0; i--) {
         population.remove(badSolution[i]);
       }
     }
   }
 
   protected boolean isInner(@NotNull S individual) {
-    boolean flag = true;
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    var flag = true;
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
       if (border.get(i).size() == 0) {
         flag = false;
         break;
@@ -767,13 +764,13 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected boolean paretoDom(S individual, int i) {
-    boolean flag = false;
-    int m = problem.getNumberOfObjectives() - 1;
+    var flag = false;
+    var m = problem.getNumberOfObjectives() - 1;
     int sum1, sum2;
-    for (int j = 0; j < border.get(i).size(); j++) {
+    for (var j = 0; j < border.get(i).size(); j++) {
       sum1 = 0;
       sum2 = 0;
-      for (int k = 0; k < problem.getNumberOfObjectives(); k++)
+      for (var k = 0; k < problem.getNumberOfObjectives(); k++)
         if (k != i) {
           if (border.get(i).get(j).objectives()[k] <= individual.objectives()[k]) sum1++;
           if (border.get(i).get(j).objectives()[k] < individual.objectives()[k]) sum2++;
@@ -789,13 +786,13 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   protected void supplyBadSolution() {
     @NotNull Random rand = new Random();
     do {
-      int i = rand.nextInt(badPopulation.size());
+      var i = rand.nextInt(badPopulation.size());
       population.add(badPopulation.get(i));
     } while (population.size() < populationSize);
   }
 
   protected void rankBasedSelection() {
-    for (int i = 0; i < subproblemNum_; i++) subproblem.get(i).clear();
+    for (var i = 0; i < subproblemNum_; i++) subproblem.get(i).clear();
 
     allocateSolution();
 
@@ -813,19 +810,19 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void allocateSolution() {
-    for (int i = 0; i < population.size(); i++) {
+    for (var i = 0; i < population.size(); i++) {
       setOrder(population.get(i), i);
 
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
-        int objBasedAddress = (int) Math.pow(k_, problem.getNumberOfObjectives() - 1);
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
+        var objBasedAddress = (int) Math.pow(k_, problem.getNumberOfObjectives() - 1);
         objBasedAddress = j * objBasedAddress;
-        int objOffset = 0;
-        int bitIndex = 0;
-        int bitWeight = 0;
-        for (int k = problem.getNumberOfObjectives() - 1; k >= 0; k--) {
+        var objOffset = 0;
+        var bitIndex = 0;
+        var bitWeight = 0;
+        for (var k = problem.getNumberOfObjectives() - 1; k >= 0; k--) {
           if (j != k) {
             bitWeight = (int) Math.pow(k_, bitIndex);
-            int g = getG(population.get(i), k);
+            var g = getG(population.get(i), k);
             objOffset = objOffset + g * bitWeight;
             bitIndex++;
           }
@@ -837,52 +834,52 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void subproblemSortl() {
-    for (int i = 0; i < subproblemNum_; i++) {
-      int perObjSubproblemNum = (int) Math.pow(k_, problem.getNumberOfObjectives() - 1);
-      int objD = (int) (i / perObjSubproblemNum);
+    for (var i = 0; i < subproblemNum_; i++) {
+      var perObjSubproblemNum = (int) Math.pow(k_, problem.getNumberOfObjectives() - 1);
+      var objD = (int) (i / perObjSubproblemNum);
 
       Collections.sort(
           subproblem.get(i),
               (o1, o2) -> {
-                double x = o1.objectives()[objD];
-                double y = o2.objectives()[objD];
+                var x = o1.objectives()[objD];
+                var y = o2.objectives()[objD];
                 return (x == y) ? 0 : (y < x) ? 1 : (-1);
               });
     }
   }
 
   protected void setIndividualObjRank() {
-    for (int i = 0; i < subproblemNum_; i++) {
+    for (var i = 0; i < subproblemNum_; i++) {
 
-      int perObjSubproblemNum = (int) Math.pow(k_, problem.getNumberOfObjectives() - 1);
-      int objD = (int) (i / perObjSubproblemNum);
+      var perObjSubproblemNum = (int) Math.pow(k_, problem.getNumberOfObjectives() - 1);
+      var objD = (int) (i / perObjSubproblemNum);
 
-      for (int j = 0; j < subproblem.get(i).size(); j++) {
-        int order = getOrder(subproblem.get(i).get(j));
+      for (var j = 0; j < subproblem.get(i).size(); j++) {
+        var order = getOrder(subproblem.get(i).get(j));
 
-        double objValue = subproblem.get(i).get(j).objectives()[objD];
-        double firstValue = subproblem.get(i).get(0).objectives()[objD];
+        var objValue = subproblem.get(i).get(j).objectives()[objD];
+        var firstValue = subproblem.get(i).get(0).objectives()[objD];
 
-        int gridRank = (int) Math.ceil((objValue - firstValue) / d_[objD]);
-        int objRank = Math.max(gridRank + 1, j + 1);
+        var gridRank = (int) Math.ceil((objValue - firstValue) / d_[objD]);
+        var objRank = Math.max(gridRank + 1, j + 1);
         setRank(population.get(order), objD, objRank);
       }
     }
   }
 
   protected void setSpIndividualRank() {
-    for (int i = 0; i < spPopulationOrder.size(); i++) {
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
+    for (var i = 0; i < spPopulationOrder.size(); i++) {
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
         setRank(population.get(spPopulationOrder.get(i)), j, 1000);
       }
     }
   }
 
   protected void individualObjRankSort() {
-    for (int i = 0; i < population.size(); i++) {
+    for (var i = 0; i < population.size(); i++) {
       List<Integer> list = new ArrayList<Integer>();
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
-        int rank = getRank(population.get(i), j);
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
+        var rank = getRank(population.get(i), j);
         list.add(rank);
       }
 
@@ -890,7 +887,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
           list,
               (x, y) -> (x == y) ? 0 : (y < x) ? 1 : (-1));
 
-      for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
+      for (var j = 0; j < problem.getNumberOfObjectives(); j++) {
         setRank(population.get(i), j, list.get(j));
       }
     }
@@ -900,9 +897,9 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
     Collections.sort(
         population,
             (o1, o2) -> {
-              for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-                int x = getRank(o1, i);
-                int y = getRank(o2, i);
+              for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
+                var x = getRank(o1, i);
+                var y = getRank(o2, i);
                 if (y < x) return 1;
                 if (x < y) return -1;
               }
@@ -914,16 +911,16 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
     if (population.size() < populationSize) {
       supplyBadSolution();
     } else {
-      int length = population.size();
-      for (int i = length - 1; i >= populationSize - specialPopulation.size(); i--) {
+      var length = population.size();
+      for (var i = length - 1; i >= populationSize - specialPopulation.size(); i--) {
         population.remove(i);
       }
-      for (int i = 0; i < specialPopulation.size(); i++) population.add(specialPopulation.get(i));
+      for (var i = 0; i < specialPopulation.size(); i++) population.add(specialPopulation.get(i));
     }
   }
 
   protected NeighborType chooseNeighborType(int i) {
-    double rnd = randomGenerator.nextDouble();
+    var rnd = randomGenerator.nextDouble();
     NeighborType neighborType;
 
     if (rnd < neighborhoodSelectionProbability && neighborhoodNum[i] > 2) {
@@ -935,7 +932,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected List<S> parentSelection(int subProblemId, NeighborType neighborType) {
-    List<Integer> matingPool = matingSelection(subProblemId, 2, neighborType);
+    var matingPool = matingSelection(subProblemId, 2, neighborType);
 
     @NotNull List<S> parents = new ArrayList<>(3);
 
@@ -952,12 +949,11 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
    */
   protected List<Integer> matingSelection(
       int subproblemId, int numberOfSolutionsToSelect, NeighborType neighbourType) {
-    int neighbourSize;
     int selectedSolution;
 
     @NotNull List<Integer> listOfSolutions = new ArrayList<>(numberOfSolutionsToSelect);
 
-    neighbourSize = neighborhood[subproblemId].length;
+    var neighbourSize = neighborhood[subproblemId].length;
     while (listOfSolutions.size() < numberOfSolutionsToSelect) {
       int random;
       if (neighbourType == NeighborType.NEIGHBOR) {
@@ -967,8 +963,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
       } else {
         selectedSolution = randomGenerator.nextInt(0, populationSize - 1);
       }
-      boolean flag = true;
-      for (Integer individualId : listOfSolutions) {
+      var flag = true;
+      for (var individualId : listOfSolutions) {
         if (individualId == selectedSolution) {
           flag = false;
           break;

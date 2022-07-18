@@ -44,7 +44,7 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
    */
   @Override
   public void compute(List<S> solutionList) {
-    int size = solutionList.size();
+    var size = solutionList.size();
 
     Check.that(size > 0, "The solution list size must be greater than zero");
     if (size <= k) {
@@ -57,7 +57,7 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
     double[][] solutionMatrix = null;
     if (normalize) {
       try {
-        double[][] m = SolutionListUtils.getMatrixWithObjectiveValues(solutionList);
+        var m = SolutionListUtils.getMatrixWithObjectiveValues(solutionList);
         solutionMatrix = NormalizeUtils.normalize(m);
       } catch (JMetalException e) {
         e.printStackTrace();
@@ -66,17 +66,17 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
       solutionMatrix = SolutionListUtils.getMatrixWithObjectiveValues(solutionList);
     }
 
-    for (int i = 0; i < solutionList.size(); i++) {
-      for (int j = i + 1; j < solutionList.size(); j++) {
+    for (var i = 0; i < solutionList.size(); i++) {
+      for (var j = i + 1; j < solutionList.size(); j++) {
         distanceMatrix[i][j] = distance.compute(solutionMatrix[i], solutionMatrix[j]);
         distanceMatrix[j][i] = distanceMatrix[i][j];
       }
     }
 
     /* Get the k-nearest distance of all the solutions */
-    for (int i = 0; i < solutionList.size(); i++) {
+    for (var i = 0; i < solutionList.size(); i++) {
       @NotNull List<Double> distances = new ArrayList<>();
-      for (int j = 0; j < solutionList.size(); j++) {
+      for (var j = 0; j < solutionList.size(); j++) {
         distances.add(distanceMatrix[i][j]);
       }
       distances.sort(Comparator.naturalOrder());
@@ -85,9 +85,9 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
   }
 
   private boolean checkMatrixRowsAreEqual(double[][] matrix) {
-    int numberOfColumns = matrix[0].length;
+    var numberOfColumns = matrix[0].length;
 
-      for (int i = 1; i < numberOfColumns; i++) {
+      for (var i = 1; i < numberOfColumns; i++) {
           if (!checkColumnValuesAreEqual(matrix, i)) {
               return false;
           }
@@ -96,9 +96,9 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
   }
 
   private boolean checkColumnValuesAreEqual(double[] @NotNull [] matrix, int column) {
-    double columnValue = matrix[0][column];
+    var columnValue = matrix[0][column];
 
-      for (int i = 1; i < matrix.length; i++) {
+      for (var i = 1; i < matrix.length; i++) {
           if (matrix[i][column] != columnValue) {
               return false;
           }

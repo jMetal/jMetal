@@ -37,21 +37,21 @@ public class NSGAIIWithMixedSolutionEncodingExample {
     @NotNull Problem<CompositeSolution> problem =
         new MixedIntegerDoubleProblem(10, 10, 100, -100, -1000, +1000);
 
-    CompositeCrossover crossover =
+    var crossover =
         new CompositeCrossover(
             Arrays.asList(new IntegerSBXCrossover(1.0, 20.0), new SBXCrossover(1.0, 20.0)));
 
-    CompositeMutation mutation =
+    var mutation =
         new CompositeMutation(
             Arrays.asList(
                 new IntegerPolynomialMutation(0.1, 2.0), new PolynomialMutation(0.1, 20.0)));
 
-    int populationSize = 100;
-    int offspringPopulationSize = 100;
+    var populationSize = 100;
+    var offspringPopulationSize = 100;
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    EvolutionaryAlgorithm<CompositeSolution> nsgaii = new NSGAIIBuilder<>(
+    var nsgaii = new NSGAIIBuilder<>(
         problem,
         populationSize,
         offspringPopulationSize,
@@ -60,9 +60,9 @@ public class NSGAIIWithMixedSolutionEncodingExample {
         .setTermination(termination)
         .build();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, 100, null);
+    var evaluationObserver = new EvaluationObserver(1000);
+    var runTimeChartObserver =
+        new RunTimeChartObserver<DoubleSolution>("NSGA-II", 80, 100, null);
 
     nsgaii.getObservable().register(evaluationObserver);
     nsgaii.getObservable().register(runTimeChartObserver);

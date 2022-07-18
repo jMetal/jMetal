@@ -51,7 +51,7 @@ public class IntegerParameter extends Parameter<Integer> {
                     + lowerBound
                     + ". Upper bound: "
                     + upperBound);
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (var parameter : getGlobalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
     for (@NotNull Pair<String, Parameter<?>> parameter : getSpecificParameters()) {

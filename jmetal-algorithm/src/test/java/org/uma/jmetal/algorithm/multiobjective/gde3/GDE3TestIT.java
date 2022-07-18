@@ -27,7 +27,7 @@ public class GDE3TestIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     /*
     Rationale: the default problem is ZDT4, and GDE3, configured with standard settings, should
@@ -45,7 +45,7 @@ public class GDE3TestIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
@@ -54,7 +54,7 @@ public class GDE3TestIT {
     // Rationale: the default problem is ZDT1, and AbYSS, configured with standard settings,
     // should return find a front with a hypervolume value higher than 0.22
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.65);
   }

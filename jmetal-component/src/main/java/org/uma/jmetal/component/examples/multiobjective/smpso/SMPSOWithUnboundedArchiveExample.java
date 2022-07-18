@@ -31,16 +31,16 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class SMPSOWithUnboundedArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {
     @NotNull String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
+    var referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
 
     @NotNull Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    int swarmSize = 100 ;
+    var swarmSize = 100 ;
     @NotNull Termination termination = new TerminationByEvaluations(50000);
 
     @NotNull Archive<DoubleSolution> externalUnboundedArchive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), swarmSize) ;
 
-    ParticleSwarmOptimizationAlgorithm smpso = new SMPSOBuilder(
+    var smpso = new SMPSOBuilder(
         (DoubleProblem) problem,
         swarmSize)
         .setTermination(termination)
@@ -49,7 +49,7 @@ public class SMPSOWithUnboundedArchiveExample {
 
     smpso.run();
 
-    List<DoubleSolution> population = externalUnboundedArchive.getSolutionList();
+    var population = externalUnboundedArchive.getSolutionList();
     JMetalLogger.logger.info("Total execution time : " + smpso.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + smpso.getEvaluation());
 

@@ -13,14 +13,14 @@ public class Schaffer extends AbstractDoubleProblem {
 
   /** Constructor. Creates a default instance of problem Schaffer */
   public Schaffer() {
-    int numberOfVariables = 1;
+    var numberOfVariables = 1;
     setNumberOfObjectives(2);
     setName("Schaffer");
 
     @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-100000.0);
       upperLimit.add(100000.0);
     }
@@ -30,7 +30,7 @@ public class Schaffer extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
+    var f = new double[solution.objectives().length];
     double value = solution.variables().get(0);
 
     f[0] = value * value;

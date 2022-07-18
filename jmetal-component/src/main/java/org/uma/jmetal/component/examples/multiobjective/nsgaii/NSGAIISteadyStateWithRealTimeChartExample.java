@@ -35,22 +35,22 @@ public class NSGAIISteadyStateWithRealTimeChartExample {
     @NotNull String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     @NotNull var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
-    int offspringPopulationSize = 1;
+    var populationSize = 100;
+    var offspringPopulationSize = 1;
 
     Termination termination = new TerminationByEvaluations(15000);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+    var nsgaii = new NSGAIIBuilder<>(
                     problem,
                     populationSize,
                     offspringPopulationSize,
@@ -60,15 +60,15 @@ public class NSGAIISteadyStateWithRealTimeChartExample {
         .build();
 
     @NotNull EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, 500, referenceParetoFront);
+    var runTimeChartObserver =
+        new RunTimeChartObserver<DoubleSolution>("NSGA-II", 80, 500, referenceParetoFront);
 
     nsgaii.getObservable().register(evaluationObserver);
     nsgaii.getObservable().register(runTimeChartObserver);
 
     nsgaii.run();
 
-    List<DoubleSolution> population = nsgaii.getResult();
+    var population = nsgaii.getResult();
     JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 

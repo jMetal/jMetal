@@ -25,7 +25,7 @@ public class CRE22 extends AbstractDoubleProblem {
     setNumberOfConstraints(4);
     setName("CRE22");
 
-    List<Double> lowerLimit = List.of(0.125, 0.1, 0.1, 0.125);
+    var lowerLimit = List.of(0.125, 0.1, 0.1, 0.125);
     @NotNull List<Double> upperLimit = List.of(5.0, 10.0, 10.0, 5.0);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -49,39 +49,38 @@ public class CRE22 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
-    double x1, x2, x3, x4;
+    var constraint = new double[this.getNumberOfConstraints()];
 
-    x1 = solution.variables().get(0);
-    x2 = solution.variables().get(1);
-    x3 = solution.variables().get(2);
-    x4 = solution.variables().get(3);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = solution.variables().get(2);
+    double x4 = solution.variables().get(3);
 
-    double G = 12 * 1e6;
+    var G = 12 * 1e6;
     double tauMax = 13600;
     double sigmaMax = 30000;
 
-    double M = P * (L + (x2 / 2));
-    double tmpVar = ((x2 * x2) / 4.0) + Math.pow((x1 + x3) / 2.0, 2);
-    double R = Math.sqrt(tmpVar);
+    var M = P * (L + (x2 / 2));
+    var tmpVar = ((x2 * x2) / 4.0) + Math.pow((x1 + x3) / 2.0, 2);
+    var R = Math.sqrt(tmpVar);
     tmpVar = ((x2 * x2) / 12.0) + Math.pow((x1 + x3) / 2.0, 2);
-    double J = 2 * Math.sqrt(2) * x1 * x2 * tmpVar;
+    var J = 2 * Math.sqrt(2) * x1 * x2 * tmpVar;
 
-    double tauDashDash = (M * R) / J;
-    double tauDash = P / (Math.sqrt(2) * x1 * x2);
+    var tauDashDash = (M * R) / J;
+    var tauDash = P / (Math.sqrt(2) * x1 * x2);
     tmpVar = tauDash * tauDash + ((2 * tauDash * tauDashDash * x2) / (2 * R)) + (tauDashDash * tauDashDash);
-    double tau = Math.sqrt(tmpVar);
-    double sigma = (6 * P * L) / (x4 * x3 * x3);
+    var tau = Math.sqrt(tmpVar);
+    var sigma = (6 * P * L) / (x4 * x3 * x3);
     tmpVar = 4.013 * E * Math.sqrt((x3 * x3 * x4 * x4 * x4 * x4 * x4 * x4) / 36.0) / (L * L);
-    double tmpVar2 = (x3 / (2 * L)) * Math.sqrt(E / (4 * G));
-    double PC = tmpVar * (1 - tmpVar2);
+    var tmpVar2 = (x3 / (2 * L)) * Math.sqrt(E / (4 * G));
+    var PC = tmpVar * (1 - tmpVar2);
 
     constraint[0] = tauMax - tau;
     constraint[1] = sigmaMax - sigma;
     constraint[2] = x4 - x1;
     constraint[3] = PC - P;
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i] < 0.0) {
         constraint[i] = -constraint[i];
       } else {
@@ -89,7 +88,7 @@ public class CRE22 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

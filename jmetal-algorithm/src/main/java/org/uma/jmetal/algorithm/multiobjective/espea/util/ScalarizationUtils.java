@@ -52,9 +52,9 @@ public class ScalarizationUtils {
    * @return Array of doubles.
    */
   private static double[] toArray(List<Double> list) {
-      double[] values = new double[10];
-      int count = 0;
-      for (Double aDouble : list) {
+    var values = new double[10];
+    var count = 0;
+      for (var aDouble : list) {
           double v = aDouble;
           if (values.length == count) values = Arrays.copyOf(values, count * 2);
           values[count++] = v;
@@ -70,7 +70,7 @@ public class ScalarizationUtils {
    * @return The ideal point
    */
   private static <S extends Solution<?>> double[] getIdealValues(List<S> solutionsList) {
-    ArrayFront front = new ArrayFront(solutionsList);
+    var front = new ArrayFront(solutionsList);
     @NotNull FrontExtremeValues extremeValues = new FrontExtremeValues();
     @NotNull List<Double> list = extremeValues.findLowestValues(front);
     return toArray(list);
@@ -85,7 +85,7 @@ public class ScalarizationUtils {
   private static <S extends Solution<?>> double[] getNadirValues(List<S> solutionsList) {
     @NotNull ArrayFront front = new ArrayFront(solutionsList);
     @NotNull FrontExtremeValues extremeValues = new FrontExtremeValues();
-    List<Double> list = extremeValues.findHighestValues(front);
+    var list = extremeValues.findHighestValues(front);
     return toArray(list);
   }
 
@@ -97,12 +97,12 @@ public class ScalarizationUtils {
    */
   private static <S extends Solution<?>> double[][] getExtremePoints(List<S> solutionsList) {
     // One extreme point for each objective
-    double[][] extremePoints = new double[solutionsList.get(0).objectives().length][];
+    var extremePoints = new double[solutionsList.get(0).objectives().length][];
 
-    for (int i = 0; i < extremePoints.length; i++) {
-      S extreme = Collections.min(solutionsList, new AchievementScalarizationComparator<S>(i));
+    for (var i = 0; i < extremePoints.length; i++) {
+      var extreme = Collections.min(solutionsList, new AchievementScalarizationComparator<S>(i));
       extremePoints[i] = new double[extreme.objectives().length];
-      for (int j = 0; j < extremePoints.length; j++) {
+      for (var j = 0; j < extremePoints.length; j++) {
         extremePoints[i][j] = extreme.objectives()[j];
       }
     }
@@ -117,12 +117,12 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void sumOfObjectives(List<S> solutionsList) {
     for (@NotNull S solution : solutionsList) {
-      double sum = solution.objectives()[0];
-        double result = 0.0;
-        double[] array = solution.objectives();
-        int bound = solution.objectives().length;
-        for (int i = 1; i < bound; i++) {
-            double v = array[i];
+      var sum = solution.objectives()[0];
+      var result = 0.0;
+      var array = solution.objectives();
+      var bound = solution.objectives().length;
+        for (var i = 1; i < bound; i++) {
+          var v = array[i];
             result += v;
         }
         sum += result;
@@ -139,11 +139,11 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void weightedSum(@NotNull List<S> solutionsList, double[] weights) {
     for (@NotNull S solution : solutionsList) {
-      double sum = weights[0] * solution.objectives()[0];
-        double result = 0.0;
-        int bound = solution.objectives().length;
-        for (int i = 1; i < bound; i++) {
-            double v = weights[i] * solution.objectives()[i];
+      var sum = weights[0] * solution.objectives()[0];
+      var result = 0.0;
+      var bound = solution.objectives().length;
+        for (var i = 1; i < bound; i++) {
+          var v = weights[i] * solution.objectives()[i];
             result += v;
         }
         sum += result;
@@ -159,12 +159,12 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void productOfObjectives(List<S> solutionsList) {
     for (@NotNull S solution : solutionsList) {
-      double product = solution.objectives()[0];
+      var product = solution.objectives()[0];
         double acc = 1;
-        double[] array = solution.objectives();
-        int bound = solution.objectives().length;
-        for (int i = 1; i < bound; i++) {
-            double v = array[i];
+      var array = solution.objectives();
+      var bound = solution.objectives().length;
+        for (var i = 1; i < bound; i++) {
+          var v = array[i];
             acc = acc * v;
         }
         product *= acc;
@@ -180,12 +180,12 @@ public class ScalarizationUtils {
    * @param weights       Weights by objectives are exponentiated
    */
   public static <S extends Solution<?>> void weightedProduct(List<S> solutionsList, double[] weights) {
-    for (S solution : solutionsList) {
-      double product = Math.pow(solution.objectives()[0], weights[0]);
+    for (var solution : solutionsList) {
+      var product = Math.pow(solution.objectives()[0], weights[0]);
         double acc = 1;
-        int bound = solution.objectives().length;
-        for (int i = 1; i < bound; i++) {
-            double pow = Math.pow(solution.objectives()[i], weights[i]);
+      var bound = solution.objectives().length;
+        for (var i = 1; i < bound; i++) {
+          var pow = Math.pow(solution.objectives()[i], weights[i]);
             acc = acc * pow;
         }
         product *= acc;
@@ -221,9 +221,9 @@ public class ScalarizationUtils {
    * @param idealValues   The ideal point
    */
   public static <S extends Solution<?>> void chebyshev(List<S> solutionsList, double[] idealValues) {
-    for (S solution : solutionsList) {
-      double max = solution.objectives()[0] - idealValues[0];
-      for (int i = 1; i < solution.objectives().length; i++) {
+    for (var solution : solutionsList) {
+      var max = solution.objectives()[0] - idealValues[0];
+      for (var i = 1; i < solution.objectives().length; i++) {
         max = Math.max(max, solution.objectives()[i] - idealValues[i]);
       }
       setScalarizationValue(solution, max);
@@ -240,8 +240,8 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void weightedChebyshev(@NotNull List<S> solutionsList, double[] idealValues, double[] weights) {
     for (@NotNull S solution : solutionsList) {
-      double max = weights[0] * (solution.objectives()[0] - idealValues[0]);
-      for (int i = 1; i < solution.objectives().length; i++) {
+      var max = weights[0] * (solution.objectives()[0] - idealValues[0]);
+      for (var i = 1; i < solution.objectives().length; i++) {
         max = Math.max(max, weights[i] * (solution.objectives()[i] - idealValues[i]));
       }
       setScalarizationValue(solution, max);
@@ -266,10 +266,10 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void nash(@NotNull List<S> solutionsList, double @NotNull [] nadirValues) {
     for (@NotNull S solution : solutionsList) {
-      double nash = nadirValues[0] - solution.objectives()[0];
+      var nash = nadirValues[0] - solution.objectives()[0];
         double acc = 1;
-        for (int i = 1; i < nadirValues.length; i++) {
-            double v = (nadirValues[i] - solution.objectives()[i]);
+        for (var i = 1; i < nadirValues.length; i++) {
+          var v = (nadirValues[i] - solution.objectives()[i]);
             acc = acc * v;
         }
         nash *= acc;
@@ -298,12 +298,12 @@ public class ScalarizationUtils {
    * @param extremePoints used for angle computation.
    */
   public static <S extends Solution<?>> void angleUtility(@NotNull List<S> solutionsList, double[][] extremePoints) {
-    for (S solution : solutionsList) {
-      double fraction = 0.0;
-      for (int i = 0; i < extremePoints.length; i++) {
-        double numerator = 0.0;
-        double denominator = 0.0;
-        for (int j = 0; j < extremePoints.length; j++) {
+    for (var solution : solutionsList) {
+      var fraction = 0.0;
+      for (var i = 0; i < extremePoints.length; i++) {
+        var numerator = 0.0;
+        var denominator = 0.0;
+        for (var j = 0; j < extremePoints.length; j++) {
           if (i == j) {
             denominator = Math.abs(extremePoints[i][j] - solution.objectives()[j]);
           } else {
@@ -329,17 +329,17 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void tradeoffUtility(List<S> solutionsList) {
     // Reset scalarization values from previous iterations
-    for (S solution : solutionsList) {
+    for (var solution : solutionsList) {
       setScalarizationValue(solution, 0.0);
     }
 
-    for (int cur = 0; cur < solutionsList.size() - 1; cur++) {
-      S current = solutionsList.get(cur);
-      for (int oth = cur + 1; oth < solutionsList.size(); oth++) {
-        S other = solutionsList.get(oth);
-        double numerator = 0.0;
-        double denominator = 0.0;
-        for (int i = 0; i < current.objectives().length; i++) {
+    for (var cur = 0; cur < solutionsList.size() - 1; cur++) {
+      var current = solutionsList.get(cur);
+      for (var oth = cur + 1; oth < solutionsList.size(); oth++) {
+        var other = solutionsList.get(oth);
+        var numerator = 0.0;
+        var denominator = 0.0;
+        for (var i = 0; i < current.objectives().length; i++) {
           if (current.objectives()[i] > other.objectives()[i]) {
             numerator = Math.max(numerator, current.objectives()[i] - other.objectives()[i]);
           } else if (current.objectives()[i] < other.objectives()[i]) {

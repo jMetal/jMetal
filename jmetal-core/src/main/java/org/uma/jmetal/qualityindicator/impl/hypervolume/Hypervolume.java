@@ -19,12 +19,12 @@ public abstract class Hypervolume extends QualityIndicator {
   }
 
   public Hypervolume(double[] referencePoint) {
-    double[] @NotNull [] referenceFront = new double[referencePoint.length][referencePoint.length];
-    for (int i = 0; i < referencePoint.length; i++) {
-      double[] point = new double[referencePoint.length] ;
-      for (int j = 0; j < referencePoint.length; j++) {
+    var referenceFront = new double[referencePoint.length][referencePoint.length];
+    for (var i = 0; i < referencePoint.length; i++) {
+      var point = new double[referencePoint.length] ;
+      for (var j = 0; j < referencePoint.length; j++) {
         if (j == i) {
-          double v = referencePoint[i] ;
+          var v = referencePoint[i] ;
           point[j] = v ;
         } else {
           point[j] = 0.0 ;

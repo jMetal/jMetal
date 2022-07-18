@@ -38,12 +38,7 @@ public class GMOCellRunner extends AbstractAlgorithmRunner {
    *     org.uma.jmetal.runner.multiobjective.MOCellRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "";
+    var referenceParetoFront = "";
 
     String problemName;
     if (args.length == 1) {
@@ -56,37 +51,35 @@ public class GMOCellRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
     }
 
-    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection =
-        new BinaryTournamentSelection<>(
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
             new RankingAndCrowdingDistanceComparator<>());
 
-    List<Double> referencePoint = Arrays.asList(0.3, 0.8);
+    var referencePoint = Arrays.asList(0.3, 0.8);
 
     @NotNull ArchiveWithReferencePoint<DoubleSolution> archive =
         new CrowdingDistanceArchiveWithReferencePoint<>(100, referencePoint);
 
-    algorithm =
-        new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
+    Algorithm<List<DoubleSolution>> algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
             .setSelectionOperator(selection)
             .setMaxEvaluations(25000)
             .setPopulationSize(100)
             .setArchive(archive)
             .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

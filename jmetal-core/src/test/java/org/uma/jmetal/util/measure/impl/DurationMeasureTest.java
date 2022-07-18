@@ -11,7 +11,7 @@ public class DurationMeasureTest {
 
 	@Test
 	public void testNoRunningRemainsAtZero() throws InterruptedException {
-		DurationMeasure measure = new DurationMeasure();
+		var measure = new DurationMeasure();
 		assertEquals(0, (long) measure.get());
 		Thread.sleep(DEFAULT_LIMIT);
 		assertEquals(0, (long) measure.get());
@@ -19,15 +19,13 @@ public class DurationMeasureTest {
 
 	@Test
 	public void testIncreasesBetweenStartAndStop() throws InterruptedException {
-		DurationMeasure measure = new DurationMeasure();
-		long oldDuration;
-		long newDuration;
+		var measure = new DurationMeasure();
 
-		oldDuration = measure.get();
+        long oldDuration = measure.get();
 		measure.start();
 		Thread.sleep(DEFAULT_LIMIT);
 		measure.stop();
-		newDuration = measure.get();
+        long newDuration = measure.get();
 		assertTrue(oldDuration < newDuration);
 
 		oldDuration = measure.get();
@@ -41,7 +39,7 @@ public class DurationMeasureTest {
 	@Test
 	public void testDoNotEvolveBetweenStopAndRestart()
 			throws InterruptedException {
-		DurationMeasure measure = new DurationMeasure();
+		var measure = new DurationMeasure();
 
 		measure.start();
 		Thread.sleep(DEFAULT_LIMIT);
@@ -55,7 +53,7 @@ public class DurationMeasureTest {
 
 	@Test
 	public void testResetGoBackToZeroWhenStopped() throws InterruptedException {
-		DurationMeasure measure = new DurationMeasure();
+		var measure = new DurationMeasure();
 
 		measure.start();
 		Thread.sleep(DEFAULT_LIMIT);
@@ -69,9 +67,9 @@ public class DurationMeasureTest {
 	@Test
 	public void testResetRestartFromZeroWhenRunning()
 			throws InterruptedException {
-		DurationMeasure measure = new DurationMeasure();
+		var measure = new DurationMeasure();
 
-		long expected = DEFAULT_LIMIT;
+		var expected = DEFAULT_LIMIT;
 		measure.start();
 		Thread.sleep(5 * expected);
 		measure.reset();
@@ -79,9 +77,9 @@ public class DurationMeasureTest {
 		measure.stop();
 		long duration = measure.get();
 
-		double errorRatioAccepted = 0.2;
-		double lowerExpected = expected * (1 - errorRatioAccepted);
-		double higherExpected = expected * (1 + errorRatioAccepted);
+		var errorRatioAccepted = 0.2;
+		var lowerExpected = expected * (1 - errorRatioAccepted);
+		var higherExpected = expected * (1 + errorRatioAccepted);
 		assertTrue(duration > lowerExpected);
 		assertTrue(duration < higherExpected);
 	}

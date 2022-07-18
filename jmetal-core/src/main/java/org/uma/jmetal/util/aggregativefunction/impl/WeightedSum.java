@@ -8,9 +8,9 @@ public class WeightedSum implements AggregativeFunction {
 
   @Override
   public double compute(double[] vector, double[] weightVector) {
-      double sum = 0.0;
-      for (int n = 0; n < vector.length; n++) {
-          double v = weightVector[n] * vector[n];
+      var sum = 0.0;
+      for (var n = 0; n < vector.length; n++) {
+          var v = weightVector[n] * vector[n];
           sum += v;
       }
 

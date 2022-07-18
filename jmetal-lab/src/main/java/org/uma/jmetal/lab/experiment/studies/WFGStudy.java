@@ -72,7 +72,7 @@ public class WFGStudy {
     if (args.length != 1) {
       throw new JMetalException("Missing argument: experimentBaseDirectory");
     }
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.csv"));
@@ -85,10 +85,10 @@ public class WFGStudy {
     problemList.add(new ExperimentProblem<>(new WFG8()).setReferenceFront("WFG8.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG9()).setReferenceFront("WFG9.2D.csv"));
 
-    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+    var algorithmList =
             configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    var experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("WFGStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
@@ -123,11 +123,11 @@ public class WFGStudy {
   static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
 
-      for (int i = 0; i < problemList.size(); i++) {
-        double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
+      for (var i = 0; i < problemList.size(); i++) {
+        var mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
+        var mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                 (DoubleProblem) problemList.get(i).getProblem(),
                 new CrowdingDistanceArchive<DoubleSolution>(100))
@@ -139,7 +139,7 @@ public class WFGStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20.0),
@@ -150,7 +150,7 @@ public class WFGStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
 
         Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
                 problemList.get(i).getProblem(),

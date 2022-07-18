@@ -30,16 +30,16 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase1() {
-    int rows = 1 ;
-    int columns = 1 ;
-    L13<IntegerSolution> neighborhood = new L13<IntegerSolution>(rows, columns) ;
+    var rows = 1 ;
+    var columns = 1 ;
+    var neighborhood = new L13<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
 
-    IntegerSolution solution = mock(IntegerSolution.class) ;
+    var solution = mock(IntegerSolution.class) ;
     list.add(solution) ;
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+    var result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(12, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
   }
@@ -54,18 +54,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase2() {
-    int rows = 1 ;
-    int columns = 2 ;
-    L13<IntegerSolution> neighborhood = new L13<IntegerSolution>(rows, columns) ;
+    var rows = 1 ;
+    var columns = 2 ;
+    var neighborhood = new L13<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+    var result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(12, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1))) ;
   }
@@ -80,18 +80,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase3() {
-    int rows = 1 ;
-    int columns = 2 ;
-    L13<IntegerSolution> neighborhood = new L13<IntegerSolution>(rows, columns) ;
+    var rows = 1 ;
+    var columns = 2 ;
+    var neighborhood = new L13<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
+    var result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(12, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1))) ;
   }
@@ -107,18 +107,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase4() {
-    int rows = 2 ;
-    int columns = 2 ;
-    L13<IntegerSolution> neighborhood = new L13<IntegerSolution>(rows, columns) ;
+    var rows = 2 ;
+    var columns = 2 ;
+    var neighborhood = new L13<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+    var result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(12, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(2), list.get(3))) ;
   }
@@ -134,18 +134,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase5() {
-    int rows = 2 ;
-    int columns = 2 ;
-    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
+    var rows = 2 ;
+    var columns = 2 ;
+    var neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
+    var result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(3))) ;
     assertThat(result, not(hasItems(list.get(1), list.get(2)))) ;
@@ -162,18 +162,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase6() {
-    int rows = 2 ;
-    int columns = 2 ;
-    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
+    var rows = 2 ;
+    var columns = 2 ;
+    var neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
+    var result = neighborhood.getNeighbors(list, 2) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(3))) ;
     assertThat(result, not(hasItems(list.get(1), list.get(2)))) ;
@@ -190,18 +190,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase7() {
-    int rows = 2 ;
-    int columns = 2 ;
-    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
+    var rows = 2 ;
+    var columns = 2 ;
+    var neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 3) ;
+    var result = neighborhood.getNeighbors(list, 3) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(2))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(3)))) ;
@@ -218,18 +218,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase8() {
-    int rows = 2 ;
-    int columns = 4 ;
-    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
+    var rows = 2 ;
+    var columns = 4 ;
+    var neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
+    var result = neighborhood.getNeighbors(list, 5) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(4), list.get(6))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(2), list.get(3), list.get(7), list.get(5)))) ;
@@ -248,18 +248,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase9() {
-    int rows = 4 ;
-    int columns = 2 ;
-    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
+    var rows = 4 ;
+    var columns = 2 ;
+    var neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
+    var result = neighborhood.getNeighbors(list, 5) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(3), list.get(4), list.get(7))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(2), list.get(5), list.get(6)))) ;
@@ -278,18 +278,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase10() {
-    int rows = 4 ;
-    int columns = 2 ;
-    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
+    var rows = 4 ;
+    var columns = 2 ;
+    var neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+    var result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(2), list.get(6))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(3), list.get(4), list.get(5), list.get(7)))) ;
@@ -307,18 +307,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase11() {
-    int rows = 3 ;
-    int columns = 3 ;
-    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
+    var rows = 3 ;
+    var columns = 3 ;
+    var neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 4) ;
+    var result = neighborhood.getNeighbors(list, 4) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(3), list.get(5), list.get(7))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(2), list.get(4), list.get(6)))) ;
@@ -336,18 +336,18 @@ public class L13Test {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase12() {
-    int rows = 3 ;
-    int columns = 3 ;
-    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
+    var rows = 3 ;
+    var columns = 3 ;
+    var neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 8) ;
+    var result = neighborhood.getNeighbors(list, 8) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(2), list.get(5), list.get(6), list.get(7))) ;
     assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(3), list.get(4), list.get(8)))) ;

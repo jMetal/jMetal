@@ -22,8 +22,7 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldConstructorCreateAnEmptyArchive() {
-    NonDominatedSolutionListArchive<IntegerSolution> archive ;
-    archive = new NonDominatedSolutionListArchive<>() ;
+    var archive = new NonDominatedSolutionListArchive<IntegerSolution>();
 
     assertEquals(0, archive.getSolutionList().size()) ;
   }
@@ -33,16 +32,14 @@ public class NonDominatedSolutionListArchiveTest {
     DominanceWithConstraintsComparator<IntegerSolution> comparator = mock(
         DominanceWithConstraintsComparator.class) ;
 
-    NonDominatedSolutionListArchive<IntegerSolution> archive ;
-    archive = new NonDominatedSolutionListArchive<IntegerSolution>(comparator) ;
+    var archive = new NonDominatedSolutionListArchive<IntegerSolution>(comparator);
 
     assertSame(comparator, ReflectionTestUtils.getField(archive, "dominanceComparator")) ;
   }
 
   @Test
   public void shouldAddOnAnEmptyListHaveSizeOne() {
-    NonDominatedSolutionListArchive<IntegerSolution> archive ;
-    archive = new NonDominatedSolutionListArchive<>() ;
+    var archive = new NonDominatedSolutionListArchive<IntegerSolution>();
 
     archive.add(mock(IntegerSolution.class)) ;
 
@@ -51,10 +48,9 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldAddOnAnEmptyListInsertTheElement() {
-    NonDominatedSolutionListArchive<IntegerSolution> archive ;
-    archive = new NonDominatedSolutionListArchive<>() ;
+    var archive = new NonDominatedSolutionListArchive<IntegerSolution>();
 
-    IntegerSolution solution = mock(IntegerSolution.class) ;
+    var solution = mock(IntegerSolution.class) ;
     archive.add(solution) ;
 
     assertSame(solution, archive.getSolutionList().get(0)) ;
@@ -62,16 +58,15 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldAddADominatedSolutionInAnArchiveOfSize1DiscardTheNewSolution() {
-    NonDominatedSolutionListArchive<DoubleSolution> archive ;
-    archive = new NonDominatedSolutionListArchive<>() ;
+    var archive = new NonDominatedSolutionListArchive<DoubleSolution>();
 
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
     archive.add(solution1) ;
 
-    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 2.0 ;
     solution2.objectives()[1] = 2.0 ;
 
@@ -83,20 +78,19 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldAddADominantSolutionInAnArchiveOfSize1DiscardTheExistingSolution() {
-    NonDominatedSolutionListArchive<DoubleSolution> archive ;
-    archive = new NonDominatedSolutionListArchive<>() ;
+    var archive = new NonDominatedSolutionListArchive<DoubleSolution>();
 
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
     archive.add(solution1) ;
 
-    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 0.0 ;
     solution2.objectives()[1] = 0.0 ;
 
-    boolean result = archive.add(solution2) ;
+    var result = archive.add(solution2) ;
 
     assertEquals(1, archive.size()) ;
     assertTrue(result) ;
@@ -105,34 +99,33 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldAddADominantSolutionInAnArchiveOfSize3DiscardTheRestOfSolutions() {
-    NonDominatedSolutionListArchive<DoubleSolution> archive ;
-    archive = new NonDominatedSolutionListArchive<>() ;
+    var archive = new NonDominatedSolutionListArchive<DoubleSolution>();
 
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
     archive.add(solution1) ;
 
-    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 0.0 ;
     solution2.objectives()[1] = 2.0 ;
 
     archive.add(solution2) ;
 
-    DoubleSolution solution3 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution3 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution3.objectives()[0] = 0.5 ;
     solution3.objectives()[1] = 1.5 ;
 
     archive.add(solution3) ;
 
-    DoubleSolution solution4 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution4 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution4.objectives()[0] = 0.0 ;
     solution4.objectives()[1] = 0.0 ;
 
     archive.add(solution3) ;
 
-    boolean result = archive.add(solution4) ;
+    var result = archive.add(solution4) ;
 
     assertEquals(1, archive.size()) ;
     assertTrue(result) ;
@@ -141,16 +134,15 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldAddANonDominantSolutionInAnArchiveOfSize1IncorporateTheNewSolution() {
-    NonDominatedSolutionListArchive<DoubleSolution> archive ;
-    archive = new NonDominatedSolutionListArchive<>() ;
+    var archive = new NonDominatedSolutionListArchive<DoubleSolution>();
 
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
     archive.add(solution1) ;
 
-    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 2.0 ;
     solution2.objectives()[1] = 0.0 ;
 
@@ -161,26 +153,25 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldAddASolutionEqualsToOneAlreadyInTheArchiveDoNothing() {
-    NonDominatedSolutionListArchive<DoubleSolution> archive ;
-    archive = new NonDominatedSolutionListArchive<>() ;
+    var archive = new NonDominatedSolutionListArchive<DoubleSolution>();
 
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
     archive.add(solution1) ;
 
-    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 2.0 ;
     solution2.objectives()[1] = 0.0 ;
 
     archive.add(solution2) ;
 
-    DoubleSolution equalSolution = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var equalSolution = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     equalSolution.objectives()[0] = 1.0 ;
     equalSolution.objectives()[1] = 1.0 ;
 
-    boolean result = archive.add(equalSolution) ;
+    var result = archive.add(equalSolution) ;
 
     assertEquals(2, archive.size()) ;
     assertFalse(result) ;
@@ -190,11 +181,9 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldJoinTwoEmptyArchivesReturnAnEmptyArchive() {
-    NonDominatedSolutionListArchive<IntegerSolution> archive1 ;
-    archive1 = new NonDominatedSolutionListArchive<>() ;
+    var archive1 = new NonDominatedSolutionListArchive<IntegerSolution>();
 
-    NonDominatedSolutionListArchive<IntegerSolution> archive2 ;
-    archive2 = new NonDominatedSolutionListArchive<>() ;
+    var archive2 = new NonDominatedSolutionListArchive<IntegerSolution>();
 
     archive1.join(archive2) ;
 
@@ -203,17 +192,15 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldJoinWithAnEmptyArchivesRemainTheArchiveWithTheSameNumberOfSolutions() {
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
-    NonDominatedSolutionListArchive<DoubleSolution> archive1 ;
-    archive1 = new NonDominatedSolutionListArchive<>() ;
+    var archive1 = new NonDominatedSolutionListArchive<DoubleSolution>();
 
     archive1.add(solution1) ;
 
-    NonDominatedSolutionListArchive<DoubleSolution> archive2 ;
-    archive2 = new NonDominatedSolutionListArchive<>() ;
+    var archive2 = new NonDominatedSolutionListArchive<DoubleSolution>();
 
     archive1.join(archive2) ;
 
@@ -222,17 +209,15 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldJoinAnEAnEmptyArchiveProduceAnArchiveWithTheSameSolutions() {
-    NonDominatedSolutionListArchive<DoubleSolution> archive1 ;
-    archive1 = new NonDominatedSolutionListArchive<>() ;
+    var archive1 = new NonDominatedSolutionListArchive<DoubleSolution>();
 
-    NonDominatedSolutionListArchive<DoubleSolution> archive2 ;
-    archive2 = new NonDominatedSolutionListArchive<>() ;
+    var archive2 = new NonDominatedSolutionListArchive<DoubleSolution>();
 
-    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 2.0 ;
 
-    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
+    var solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 2.0 ;
     solution2.objectives()[1] = 1.0 ;
 

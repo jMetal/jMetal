@@ -23,22 +23,22 @@ public class DirScore<S extends Solution<?>>  extends GenericSolutionAttribute<S
 
     @Override
     public void computeDensityEstimator(List<S> solutionSet) {
-        int @NotNull [] dirVector = computeDirVector(solutionSet) ;
-        for(int i = 0;i < dirVector.length; i++){
-            S solution = solutionSet.get(i) ;
+        var dirVector = computeDirVector(solutionSet) ;
+        for(var i = 0; i < dirVector.length; i++){
+            var solution = solutionSet.get(i) ;
             solution.attributes().put("dir-score", 1.0 / (double) dirVector[i]);
         }
     }
 
     private int[] computeDirVector(@NotNull List<S> solutionSet) {
-        int @NotNull [] dirVector = new int[solutionSet.size()] ;
+        var dirVector = new int[solutionSet.size()] ;
 
-        for(double @NotNull [] vector : referenceVectors){
-            int minIndex = 0;
-            double minDistance = Double.MAX_VALUE;
-            for(int i = 0; i < solutionSet.size(); i++){
-                S solution = solutionSet.get(i) ;
-                double distance = computeAngleDistance(vector, solution.objectives()) ;
+        for(var vector : referenceVectors){
+            var minIndex = 0;
+            var minDistance = Double.MAX_VALUE;
+            for(var i = 0; i < solutionSet.size(); i++){
+                var solution = solutionSet.get(i) ;
+                var distance = computeAngleDistance(vector, solution.objectives()) ;
                 if(distance < minDistance){
                     minDistance = distance ;
                     minIndex = i ;

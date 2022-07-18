@@ -35,15 +35,15 @@ public class NSGAIITSPExample {
 
     @NotNull CrossoverOperator<PermutationSolution<Integer>> crossover = new PMXCrossover(0.9);
 
-    double mutationProbability = 0.2;
+    var mutationProbability = 0.2;
     MutationOperator<PermutationSolution<Integer>> mutation = new PermutationSwapMutation<>(mutationProbability);
 
-    int populationSize = 100;
-    int offspringPopulationSize = 100;
+    var populationSize = 100;
+    var offspringPopulationSize = 100;
 
     @NotNull Termination termination = new TerminationByEvaluations(125000);
 
-    EvolutionaryAlgorithm<PermutationSolution<Integer>> nsgaii = new NSGAIIBuilder<>(
+    var nsgaii = new NSGAIIBuilder<>(
                     problem,
                     populationSize,
                     offspringPopulationSize,
@@ -54,7 +54,7 @@ public class NSGAIITSPExample {
 
     nsgaii.run();
 
-    List<PermutationSolution<Integer>> population = nsgaii.getResult();
+    var population = nsgaii.getResult();
     JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 

@@ -17,11 +17,11 @@ public class PerturbationParameter extends CategoricalParameter {
 
     switch (getValue()) {
       case "frequencySelectionMutationBasedPerturbation":
-        MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
-        MutationOperator<DoubleSolution> mutationOperator =
+        var mutationParameter = (MutationParameter) findSpecificParameter("mutation");
+        var mutationOperator =
             mutationParameter.getParameter();
 
-        int frequencyOfApplication = (int)findSpecificParameter("frequencyOfApplicationOfMutationOperator").getValue() ;
+        var frequencyOfApplication = (int)findSpecificParameter("frequencyOfApplicationOfMutationOperator").getValue() ;
 
         result =
             new FrequencySelectionMutationBasedPerturbation(mutationOperator, frequencyOfApplication) ;

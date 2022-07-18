@@ -19,7 +19,7 @@ public class FakeIntegerProblem extends AbstractIntegerProblem {
     List<Integer> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Integer> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0);
       upperLimit.add(10);
     }

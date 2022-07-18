@@ -103,7 +103,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     this.typicalX = builder.typicalX;
     this.sigma = builder.sigma;
 
-    long seed = System.currentTimeMillis();
+    var seed = System.currentTimeMillis();
     rand = new Random(seed);
     comparator = new ObjectiveComparator<DoubleSolution>(0);
 
@@ -181,16 +181,16 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   @Override protected List<DoubleSolution> createInitialPopulation() {
     List<DoubleSolution> population = new ArrayList<>(lambda);
-    int bound = lambda;
-    for (int i = 0; i < bound; i++) {
-      DoubleSolution solution = getProblem().createSolution();
+    var bound = lambda;
+    for (var i = 0; i < bound; i++) {
+      var solution = getProblem().createSolution();
       population.add(solution);
     }
     return population;
   }
 
   @Override protected @NotNull List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
-    for (DoubleSolution solution : population) {
+    for (var solution : population) {
       getProblem().evaluate(solution);
     }
     return population;
@@ -203,9 +203,9 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   @Override protected @NotNull List<DoubleSolution> reproduction(List<DoubleSolution> population) {
 
     List<DoubleSolution> offspringPopulation = new ArrayList<>(lambda);
-    int bound = lambda;
-    for (int iNk = 0; iNk < bound; iNk++) {
-      DoubleSolution doubleSolution = sampleSolution();
+    var bound = lambda;
+    for (var iNk = 0; iNk < bound; iNk++) {
+      var doubleSolution = sampleSolution();
       offspringPopulation.add(doubleSolution);
     }
 
@@ -224,7 +224,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   private void initializeInternalParameters() {
 
     // number of objective variables/problem dimension
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    var numberOfVariables = getProblem().getNumberOfVariables();
 
     // objective variables initial point
     // TODO: Initialize the mean in a better way
@@ -233,7 +233,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       distributionMean = typicalX;
     } else {
       distributionMean = new double[numberOfVariables];
-      for (int i = 0; i < numberOfVariables; i++) {
+      for (var i = 0; i < numberOfVariables; i++) {
         distributionMean[i] = rand.nextDouble();
       }
     }
@@ -246,19 +246,19 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     // muXone array for weighted recombination
     weights = new double[mu];
     double sum = 0;
-    for (int i = 0; i < mu; i++) {
+    for (var i = 0; i < mu; i++) {
       weights[i] = (Math.log(mu + 0.5) - Math.log(i + 1));
       sum += weights[i];
     }
     // normalize recombination weights array
-    for (int i = 0; i < mu; i++) {
+    for (var i = 0; i < mu; i++) {
       weights[i] = weights[i] / sum;
     }
 
     // variance-effectiveness of sum w_i x_i
     double sum1 = 0;
     double sum2 = 0;
-    for (int i = 0; i < mu; i++) {
+    for (var i = 0; i < mu; i++) {
       sum1 += weights[i];
       sum2 += weights[i] * weights[i];
     }
@@ -301,15 +301,15 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     // C^-1/2
     invSqrtC = new double[numberOfVariables][numberOfVariables];
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       pathsC[i] = 0;
       pathsSigma[i] = 0;
       diagD[i] = 1;
-      for (int j = 0; j < numberOfVariables; j++) {
+      for (var j = 0; j < numberOfVariables; j++) {
         b[i][j] = 0;
         invSqrtC[i][j] = 0;
       }
-      for (int j = 0; j < i; j++) {
+      for (var j = 0; j < i; j++) {
         c[i][j] = 0;
       }
       b[i][i] = 1;
@@ -327,9 +327,9 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private void updateInternalParameters() {
 
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    var numberOfVariables = getProblem().getNumberOfVariables();
 
-    double[] oldDistributionMean = new double[numberOfVariables];
+    var oldDistributionMean = new double[numberOfVariables];
     System.arraycopy( distributionMean, 0, oldDistributionMean, 0, numberOfVariables );
 
     // Sort by fitness and compute weighted mean into distributionMean
@@ -341,13 +341,13 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     updateDistributionMean();
 
     // Cumulation: Update evolution paths
-    int hsig = updateEvolutionPaths(oldDistributionMean);
+    var hsig = updateEvolutionPaths(oldDistributionMean);
 
     // Adapt covariance matrix C
     adaptCovarianceMatrix(oldDistributionMean, hsig);
 
     // Adapt step size sigma
-    double psxps = CMAESUtils.norm(pathsSigma);
+    var psxps = CMAESUtils.norm(pathsSigma);
     sigma *= Math.exp((cumulationSigma / dampingSigma) * (Math.sqrt(psxps) / chiN - 1));
 
     // Decomposition of C into b*diag(D.^2)*b' (diagonalization)
@@ -357,12 +357,12 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private void updateDistributionMean() {
 
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    var numberOfVariables = getProblem().getNumberOfVariables();
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       distributionMean[i] = 0.;
-      for (int iNk = 0; iNk < mu; iNk++) {
-        double variableValue = (double) getPopulation().get(iNk).variables().get(i);
+      for (var iNk = 0; iNk < mu; iNk++) {
+        var variableValue = (double) getPopulation().get(iNk).variables().get(i);
         distributionMean[i] += weights[iNk] * variableValue;
       }
     }
@@ -371,32 +371,32 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private int updateEvolutionPaths(double[] oldDistributionMean) {
 
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    var numberOfVariables = getProblem().getNumberOfVariables();
 
-    double @NotNull [] artmp = new double[numberOfVariables];
-    for (int i = 0; i < numberOfVariables; i++) {
+    var artmp = new double[numberOfVariables];
+    for (var i = 0; i < numberOfVariables; i++) {
       artmp[i] = 0;
-      for (int j = 0; j < numberOfVariables; j++) {
+      for (var j = 0; j < numberOfVariables; j++) {
         artmp[i] += invSqrtC[i][j] * (distributionMean[j] - oldDistributionMean[j]) / sigma;
       }
     }
     // cumulation for sigma (pathsSigma)
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       pathsSigma[i] = (1. - cumulationSigma) * pathsSigma[i]
           + Math.sqrt(cumulationSigma * (2. - cumulationSigma) * muEff) * artmp[i];
     }
 
     // calculate norm(pathsSigma)^2
-    double psxps = CMAESUtils.norm(pathsSigma);
+    var psxps = CMAESUtils.norm(pathsSigma);
 
     // cumulation for covariance matrix (pathsC)
-    int hsig = 0;
+    var hsig = 0;
     if ((Math.sqrt(psxps) / Math
         .sqrt(1. - Math.pow(1. - cumulationSigma, 2. * evaluations / lambda)) / chiN) < (1.4
         + 2. / (numberOfVariables + 1.))) {
       hsig = 1;
     }
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       pathsC[i] = (1. - cumulationC) * pathsC[i]
             + hsig * Math.sqrt(cumulationC * (2. - cumulationC) * muEff)
             * (distributionMean[i] - oldDistributionMean[i])
@@ -409,15 +409,15 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private void adaptCovarianceMatrix(double[] oldDistributionMean, int hsig) {
 
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    var numberOfVariables = getProblem().getNumberOfVariables();
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      for (int j = 0; j <= i; j++) {
+    for (var i = 0; i < numberOfVariables; i++) {
+      for (var j = 0; j <= i; j++) {
         c[i][j] = (1 - c1 - cmu) * c[i][j]
               + c1
               * (pathsC[i] * pathsC[j] + (1 - hsig) * cumulationC
               * (2. - cumulationC) * c[i][j]);
-        for (int k = 0; k < mu; k++) {
+        for (var k = 0; k < mu; k++) {
           /*
            * additional rank mu
            * update
@@ -436,39 +436,39 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   private void decomposeCovarianceMatrix() {
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    var numberOfVariables = getProblem().getNumberOfVariables();
 
     if (evaluations - eigenEval > lambda / (c1 + cmu) / numberOfVariables / 10) {
 
       eigenEval = evaluations;
 
       // enforce symmetry
-      for (int i = 0; i < numberOfVariables; i++) {
-        for (int j = 0; j <= i; j++) {
+      for (var i = 0; i < numberOfVariables; i++) {
+        for (var j = 0; j <= i; j++) {
           b[i][j] = b[j][i] = c[i][j];
         }
       }
 
       // eigen decomposition, b==normalized eigenvectors
-      double @NotNull [] offdiag = new double[numberOfVariables];
+      var offdiag = new double[numberOfVariables];
       CMAESUtils.tred2(numberOfVariables, b, diagD, offdiag);
       CMAESUtils.tql2(numberOfVariables, diagD, offdiag, b);
 
       checkEigenCorrectness();
 
-      double[] @NotNull [] artmp2 = new double[numberOfVariables][numberOfVariables];
-      for (int i = 0; i < numberOfVariables; i++) {
+      var artmp2 = new double[numberOfVariables][numberOfVariables];
+      for (var i = 0; i < numberOfVariables; i++) {
         if (diagD[i] > 0) {
           diagD[i] = Math.sqrt(diagD[i]);
         }
-        for (int j = 0; j < numberOfVariables; j++) {
+        for (var j = 0; j < numberOfVariables; j++) {
           artmp2[i][j] = b[i][j] * (1 / diagD[j]);
         }
       }
-      for (int i = 0; i < numberOfVariables; i++) {
-        for (int j = 0; j < numberOfVariables; j++) {
+      for (var i = 0; i < numberOfVariables; i++) {
+        for (var j = 0; j < numberOfVariables; j++) {
           invSqrtC[i][j] = 0.0;
-          for (int k = 0; k < numberOfVariables; k++) {
+          for (var k = 0; k < numberOfVariables; k++) {
             invSqrtC[i][j] += artmp2[i][k] * b[j][k];
           }
         }
@@ -479,13 +479,13 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   private void checkEigenCorrectness() {
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    var numberOfVariables = getProblem().getNumberOfVariables();
 
     if (CMAESUtils.checkEigenSystem(numberOfVariables, c, diagD, b) > 0) {
       evaluations = maxEvaluations;
     }
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       // Numerical problem?
       if (diagD[i] < 0) {
         JMetalLogger.logger.severe(
@@ -499,30 +499,29 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private DoubleSolution sampleSolution() {
 
-    DoubleSolution solution = getProblem().createSolution();
+    var solution = getProblem().createSolution();
 
-    int numberOfVariables = getProblem().getNumberOfVariables();
-    double[] artmp;
+    var numberOfVariables = getProblem().getNumberOfVariables();
     double sum;
 
     //TODO: Check the correctness of this random (http://en.wikipedia.org/wiki/CMA-ES)
-    double[] arr = new double[10];
-    int count = 0;
-    for (int i1 = 0; i1 < numberOfVariables; i1++) {
-      double v = diagD[i1] * rand.nextGaussian();
+    var arr = new double[10];
+    var count = 0;
+    for (var i1 = 0; i1 < numberOfVariables; i1++) {
+      var v = diagD[i1] * rand.nextGaussian();
       if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
       arr[count++] = v;
     }
     arr = Arrays.copyOfRange(arr, 0, count);
-    artmp = arr;
-    for (int i = 0; i < numberOfVariables; i++) {
+    var artmp = arr;
+    for (var i = 0; i < numberOfVariables; i++) {
       sum = 0.0;
-      for (int j = 0; j < numberOfVariables; j++) {
+      for (var j = 0; j < numberOfVariables; j++) {
         sum += b[i][j] * artmp[j];
       }
 
-      double value = distributionMean[i] + sigma * sum;
-      Bounds<Double> bounds = ((DoubleProblem)getProblem()).getVariableBounds().get(i) ;
+      var value = distributionMean[i] + sigma * sum;
+      var bounds = ((DoubleProblem)getProblem()).getVariableBounds().get(i) ;
       value = bounds.restrict(value);
 
       solution.variables().set(i, value);

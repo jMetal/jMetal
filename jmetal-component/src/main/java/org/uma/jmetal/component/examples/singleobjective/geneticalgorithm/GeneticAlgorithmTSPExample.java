@@ -26,21 +26,20 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class GeneticAlgorithmTSPExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {
-    PermutationProblem<PermutationSolution<Integer>> problem;
 
-    problem = new TSP("resources/tspInstances/kroA100.tsp");
+      PermutationProblem<PermutationSolution<Integer>> problem = new TSP("resources/tspInstances/kroA100.tsp");
 
-    int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    var populationSize = 100;
+    var offspringPopulationSize = populationSize;
 
     var crossover = new PMXCrossover(0.9) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     var mutation = new PermutationSwapMutation<Integer>(mutationProbability) ;
 
     Termination termination = new TerminationByEvaluations(1500000);
 
-    EvolutionaryAlgorithm<PermutationSolution<Integer>> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
+    var geneticAlgorithm = new GeneticAlgorithmBuilder<>(
         "GGA",
         problem,
         populationSize,
@@ -54,7 +53,7 @@ public class GeneticAlgorithmTSPExample extends AbstractAlgorithmRunner {
 
     geneticAlgorithm.run();
 
-    List<PermutationSolution<Integer>> population = geneticAlgorithm.getResult();
+    var population = geneticAlgorithm.getResult();
     JMetalLogger.logger.info("Total execution time : " + geneticAlgorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + geneticAlgorithm.getNumberOfEvaluations());
     JMetalLogger.logger.info("Best found solution: " + population.get(0).objectives()[0]) ;

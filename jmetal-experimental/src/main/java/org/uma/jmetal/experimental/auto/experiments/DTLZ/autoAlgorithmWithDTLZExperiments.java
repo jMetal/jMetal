@@ -59,7 +59,7 @@ public class autoAlgorithmWithDTLZExperiments {
   public static void main(String @NotNull [] args) throws IOException {
     Check.that(args.length == 1, "Missing argument: experimentBaseDirectory");
 
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new DTLZ1_2D()).setReferenceFront("DTLZ1.2D.csv"));
@@ -110,8 +110,8 @@ public class autoAlgorithmWithDTLZExperiments {
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           @NotNull List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
+      for (var experimentProblem : problemList) {
         @Nullable Algorithm<List<DoubleSolution>> algorithm =
             new NSGAIIBuilder<DoubleSolution>(
                     experimentProblem.getProblem(),
@@ -123,9 +123,9 @@ public class autoAlgorithmWithDTLZExperiments {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-        double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
+      for (var experimentProblem : problemList) {
+        var mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+        var mutationDistributionIndex = 20.0;
         @NotNull Algorithm<List<DoubleSolution>> algorithm =
             new SMPSOBuilder(
                     (DoubleProblem) experimentProblem.getProblem(),
@@ -138,11 +138,11 @@ public class autoAlgorithmWithDTLZExperiments {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      for (var experimentProblem : problemList) {
 
 
         /* OMOPSO */
-        String @NotNull [] parametersOMOPSO =
+        var parametersOMOPSO =
             ("--problemName "
                     + experimentProblem.getProblem().getClass().getName()
                     + " "
@@ -178,7 +178,7 @@ public class autoAlgorithmWithDTLZExperiments {
                     + "--velocityChangeWhenLowerLimitIsReached -1.0 "
                     + "--velocityChangeWhenUpperLimitIsReached -1.0 ")
                 .split("\\s+");
-        AutoMOPSO OMOPSO = new AutoMOPSO();
+        var OMOPSO = new AutoMOPSO();
         OMOPSO.parseAndCheckParameters(parametersOMOPSO);
         @NotNull ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
 
@@ -186,7 +186,7 @@ public class autoAlgorithmWithDTLZExperiments {
 
 
           /* AutoMOPSO with config*/
-          String[] parametersAutoMOPSOWithConfig =
+        var parametersAutoMOPSOWithConfig =
                   ("--problemName "
                           + experimentProblem.getProblem().getClass().getName()
                           + " "

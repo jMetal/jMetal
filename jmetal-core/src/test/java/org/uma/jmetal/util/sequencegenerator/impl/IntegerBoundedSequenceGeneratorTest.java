@@ -59,9 +59,9 @@ public class IntegerBoundedSequenceGeneratorTest {
   @Test
   public void shouldGenerateNextWorkProperlyWhenInvokedSixTimesAndTheSequenceLengthIsFour() {
     SequenceGenerator<Integer> sequenceGenerator = new IntegerBoundedSequenceGenerator(4);
-    int sequenceLength = 6 ;
-    int[] values = new int[sequenceLength] ;
-      for (int i = 0; i < sequenceLength; i++) {
+    var sequenceLength = 6 ;
+    var values = new int[sequenceLength] ;
+      for (var i = 0; i < sequenceLength; i++) {
           values[i] = sequenceGenerator.getValue();
           sequenceGenerator.generateNext();
       }

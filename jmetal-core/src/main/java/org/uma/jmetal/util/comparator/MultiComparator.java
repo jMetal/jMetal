@@ -55,7 +55,7 @@ public class MultiComparator<T> implements Comparator<T> {
    */
   public int compare(T o1, T o2) {
       for (@NotNull Comparator<T> comparator : comparatorList) {
-          int flag = comparator.compare(o1, o2);
+          var flag = comparator.compare(o1, o2);
           if (flag != 0) {
               return flag;
           }

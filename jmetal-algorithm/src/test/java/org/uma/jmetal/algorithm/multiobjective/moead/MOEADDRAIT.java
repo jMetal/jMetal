@@ -21,15 +21,15 @@ public class MOEADDRAIT {
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() {
-    LZ09F3 problem = new LZ09F3();
+    var problem = new LZ09F3();
 
-    double cr = 1.0;
-    double f = 0.5;
+    var cr = 1.0;
+    var f = 0.5;
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
             DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
         mutationDistributionIndex);
 
@@ -47,7 +47,7 @@ public class MOEADDRAIT {
         .build();
 
     algorithm.run() ;
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     assertTrue(population.size() == 100);
   }
@@ -55,15 +55,15 @@ public class MOEADDRAIT {
   @Ignore("fail when making a deployment")
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
-    LZ09F3 problem = new LZ09F3();
+    var problem = new LZ09F3();
 
-    double cr = 1.0;
-    double f = 0.5;
+    var cr = 1.0;
+    var f = 0.5;
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
             DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
         mutationDistributionIndex);
 
@@ -83,7 +83,7 @@ public class MOEADDRAIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
         new PISAHypervolume<>("../resources/referenceFrontsCSV/LZ09_F3.csv");

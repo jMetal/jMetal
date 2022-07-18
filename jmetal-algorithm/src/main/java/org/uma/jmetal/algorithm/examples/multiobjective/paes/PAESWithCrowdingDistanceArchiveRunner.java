@@ -27,7 +27,7 @@ public class PAESWithCrowdingDistanceArchiveRunner extends AbstractAlgorithmRunn
    *     org.uma.jmetal.runner.multiobjective.PAESRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    String referenceParetoFront = "";
+    var referenceParetoFront = "";
 
     String problemName;
     if (args.length == 1) {
@@ -45,17 +45,17 @@ public class PAESWithCrowdingDistanceArchiveRunner extends AbstractAlgorithmRunn
     MutationOperator<DoubleSolution> mutation =
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
 
-    PAES<DoubleSolution> algorithm =
-        new PAES<>(
+    var algorithm =
+        new PAES<DoubleSolution>(
             problem,
             25000,
             new GenericBoundedArchive<>(100, new CrowdingDistanceDensityEstimator<>()),
             mutation);
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

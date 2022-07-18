@@ -29,37 +29,37 @@ public class SinglePointCrossoverTest {
 
   @Test
   public void shouldConstructorAssignTheCorrectProbabilityValue() {
-    double crossoverProbability = 0.1 ;
-    SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossoverProbability = 0.1 ;
+    var crossover = new SinglePointCrossover(crossoverProbability) ;
     assertEquals(crossoverProbability, (Double) ReflectionTestUtils
         .getField(crossover, "crossoverProbability"), EPSILON) ;
   }
 
   @Test (expected = JMetalException.class)
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
-    double crossoverProbability = -0.1 ;
+    var crossoverProbability = -0.1 ;
     new SinglePointCrossover(crossoverProbability) ;
   }
 
   @Test
   public void shouldGetMutationProbabilityReturnTheRightValue() {
-    double crossoverProbability = 0.1 ;
-    SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossoverProbability = 0.1 ;
+    var crossover = new SinglePointCrossover(crossoverProbability) ;
     assertEquals(crossoverProbability, crossover.getCrossoverProbability(), EPSILON) ;
   }
 
   @Test (expected = NullParameterException.class)
   public void shouldExecuteWithNullParameterThrowAnException() {
-    SinglePointCrossover crossover = new SinglePointCrossover(0.1) ;
+    var crossover = new SinglePointCrossover(0.1) ;
 
     crossover.execute(null) ;
   }
 
   @Test (expected = InvalidConditionException.class)
   public void shouldExecuteFailIfTheListContainsOnlyOneSolution() {
-    MockBinaryProblem problem = new MockBinaryProblem(1) ;
-    SinglePointCrossover crossover = new SinglePointCrossover(0.1) ;
-    ArrayList<BinarySolution> solutions = new ArrayList<>(1) ;
+    var problem = new MockBinaryProblem(1) ;
+    var crossover = new SinglePointCrossover(0.1) ;
+    var solutions = new ArrayList<BinarySolution>(1) ;
     solutions.add(problem.createSolution()) ;
 
     crossover.execute(solutions) ;
@@ -67,9 +67,9 @@ public class SinglePointCrossoverTest {
 
   @Test (expected = InvalidConditionException.class)
   public void shouldExecuteFailIfTheListContainsMoreThanTwoSolutions() {
-    MockBinaryProblem problem = new MockBinaryProblem(1) ;
-    SinglePointCrossover crossover = new SinglePointCrossover(0.1) ;
-    ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
+    var problem = new MockBinaryProblem(1) ;
+    var crossover = new SinglePointCrossover(0.1) ;
+    var solutions = new ArrayList<BinarySolution>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
@@ -79,23 +79,23 @@ public class SinglePointCrossoverTest {
 
   @Test
   public void shouldCrossingTwoVariableSolutionsReturnTheSameSolutionsIfNoBitsAreMutated() {
-    int numberOfVariables = 1;
+    var numberOfVariables = 1;
 
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
-    double crossoverProbability = 0.01;
+    var crossoverProbability = 0.01;
 
     Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.02) ;
 
-    SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossover = new SinglePointCrossover(crossoverProbability) ;
     BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
-    ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
+    var solutions = new ArrayList<BinarySolution>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
     ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
 
-    List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
+    var resultSolutions = crossover.execute(solutions) ;
 
     assertEquals(solutions.get(0), resultSolutions.get(0)) ;
     assertEquals(solutions.get(1), resultSolutions.get(1)) ;
@@ -104,28 +104,28 @@ public class SinglePointCrossoverTest {
 
   @Test
   public void shouldCrossingTheFistBitOfTwoSingleVariableSolutionsReturnTheCorrectCrossedSolutions() {
-    int numberOfVariables = 1 ;
-    int cuttingBit = 0 ;
+    var numberOfVariables = 1 ;
+    var cuttingBit = 0 ;
 
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
     @SuppressWarnings("unchecked")
 	BoundedRandomGenerator<Integer> pointRandomGenerator = mock(BoundedRandomGenerator.class) ;
-    double crossoverProbability = 0.9;
+    var crossoverProbability = 0.9;
 
     Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.5) ;
     Mockito.when(pointRandomGenerator.getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1)).thenReturn(cuttingBit) ;
 
-    SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossover = new SinglePointCrossover(crossoverProbability) ;
     BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
-    ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
+    var solutions = new ArrayList<BinarySolution>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
     ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
     ReflectionTestUtils.setField(crossover, "pointRandomGenerator", pointRandomGenerator);
 
-    List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
+    var resultSolutions = crossover.execute(solutions) ;
 
     assertEquals(solutions.get(0).variables().get(0).get(0),
         resultSolutions.get(1).variables().get(0).get(0)) ;
@@ -137,29 +137,29 @@ public class SinglePointCrossoverTest {
 
   @Test
   public void shouldCrossingTheLastBitOfTwoSingleVariableSolutionsReturnTheCorrectCrossedSolutions() {
-    int numberOfVariables = 1 ;
-    int cuttingBit = BITS_OF_MOCKED_BINARY_PROBLEM - 1 ;
+    var numberOfVariables = 1 ;
+    var cuttingBit = BITS_OF_MOCKED_BINARY_PROBLEM - 1 ;
 
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
     @SuppressWarnings("unchecked")
 	BoundedRandomGenerator<Integer> pointRandomGenerator = mock(BoundedRandomGenerator.class) ;
-    double crossoverProbability = 0.9;
+    var crossoverProbability = 0.9;
 
     Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.5) ;
     Mockito.when(pointRandomGenerator.getRandomValue(0,
         BITS_OF_MOCKED_BINARY_PROBLEM - 1)).thenReturn(cuttingBit) ;
 
-    SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossover = new SinglePointCrossover(crossoverProbability) ;
     BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
-    ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
+    var solutions = new ArrayList<BinarySolution>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
     ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
     ReflectionTestUtils.setField(crossover, "pointRandomGenerator", pointRandomGenerator);
 
-    List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
+    var resultSolutions = crossover.execute(solutions) ;
 
     assertEquals(solutions.get(0).variables().get(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1),
         resultSolutions.get(1).variables().get(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1)) ;
@@ -171,29 +171,29 @@ public class SinglePointCrossoverTest {
 
   @Test
   public void shouldCrossingTheBitInTheMiddleOfTwoSingleVariableSolutionsReturnTheCorrectCrossedSolutions() {
-    int numberOfVariables = 1 ;
-    int cuttingBit = (BITS_OF_MOCKED_BINARY_PROBLEM - 1) / 2 ;
+    var numberOfVariables = 1 ;
+    var cuttingBit = (BITS_OF_MOCKED_BINARY_PROBLEM - 1) / 2 ;
 
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
     @SuppressWarnings("unchecked")
 	BoundedRandomGenerator<Integer> pointRandomGenerator = mock(BoundedRandomGenerator.class) ;
-    double crossoverProbability = 0.9;
+    var crossoverProbability = 0.9;
 
     Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.5) ;
     Mockito.when(pointRandomGenerator.getRandomValue(0,
         BITS_OF_MOCKED_BINARY_PROBLEM - 1)).thenReturn(cuttingBit) ;
 
-    SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossover = new SinglePointCrossover(crossoverProbability) ;
     BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
-    ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
+    var solutions = new ArrayList<BinarySolution>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
     ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
     ReflectionTestUtils.setField(crossover, "pointRandomGenerator", pointRandomGenerator);
 
-    List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
+    var resultSolutions = crossover.execute(solutions) ;
 
     //System.out.println("solution 0: " + solutions.get(0).getVariableValueString(0)) ;
     //System.out.println("solution 1: " + solutions.get(1).getVariableValueString(0)) ;
@@ -210,29 +210,29 @@ public class SinglePointCrossoverTest {
 
   @Test
   public void shouldCrossingTheFistBitOfSecondVariableReturnTheCorrectCrossedSolutions() {
-    int numberOfVariables = 3 ;
-    int cuttingBit = BITS_OF_MOCKED_BINARY_PROBLEM ;
+    var numberOfVariables = 3 ;
+    var cuttingBit = BITS_OF_MOCKED_BINARY_PROBLEM ;
 
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
     @SuppressWarnings("unchecked")
 	BoundedRandomGenerator<Integer> pointRandomGenerator = mock(BoundedRandomGenerator.class) ;
-    double crossoverProbability = 0.9;
+    var crossoverProbability = 0.9;
 
     Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.5) ;
     Mockito.when(pointRandomGenerator.
         getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM * numberOfVariables - 1)).thenReturn(cuttingBit) ;
 
-    SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossover = new SinglePointCrossover(crossoverProbability) ;
     BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
-    ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
+    var solutions = new ArrayList<BinarySolution>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
     ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
     ReflectionTestUtils.setField(crossover, "pointRandomGenerator", pointRandomGenerator);
 
-    List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
+    var resultSolutions = crossover.execute(solutions) ;
 
     assertEquals(solutions.get(0).variables().get(0), resultSolutions.get(0).variables().get(0)) ;
     assertEquals(solutions.get(1).variables().get(0), resultSolutions.get(1).variables().get(0)) ;
@@ -247,35 +247,35 @@ public class SinglePointCrossoverTest {
 
   @Test
   public void shouldCrossingTheBitInTheMiddleOfSecondVariableReturnTheCorrectCrossedSolutions() {
-    int numberOfVariables = 3 ;
-    int cuttingBit = (int) (BITS_OF_MOCKED_BINARY_PROBLEM*1.5);
+    var numberOfVariables = 3 ;
+    var cuttingBit = (int) (BITS_OF_MOCKED_BINARY_PROBLEM*1.5);
 
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
     @SuppressWarnings("unchecked")
 	BoundedRandomGenerator<Integer> pointRandomGenerator = mock(BoundedRandomGenerator.class) ;
-    double crossoverProbability = 0.9;
+    var crossoverProbability = 0.9;
 
     Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.5) ;
     Mockito.when(pointRandomGenerator.
         getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM * numberOfVariables - 1))
         .thenReturn(cuttingBit) ;
 
-    SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossover = new SinglePointCrossover(crossoverProbability) ;
     BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
-    ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
+    var solutions = new ArrayList<BinarySolution>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
     ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
     ReflectionTestUtils.setField(crossover, "pointRandomGenerator", pointRandomGenerator);
 
-    List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
+    var resultSolutions = crossover.execute(solutions) ;
 
     assertEquals(solutions.get(0).variables().get(0), resultSolutions.get(0).variables().get(0)) ;
     assertEquals(solutions.get(1).variables().get(0), resultSolutions.get(1).variables().get(0)) ;
 
-    int cuttingBitInSecondVariable = cuttingBit - BITS_OF_MOCKED_BINARY_PROBLEM ;
+    var cuttingBitInSecondVariable = cuttingBit - BITS_OF_MOCKED_BINARY_PROBLEM ;
     assertEquals(solutions.get(0).variables().get(1).get(0, cuttingBitInSecondVariable),
         resultSolutions.get(0).variables().get(1).get(0, cuttingBitInSecondVariable)) ;
     assertEquals(solutions.get(1).variables().get(1).get(0, cuttingBitInSecondVariable),
@@ -306,7 +306,7 @@ public class SinglePointCrossoverTest {
 
       bitsPerVariable = new int[numberOfVariables] ;
 
-      for (int var = 0; var < numberOfVariables; var++) {
+      for (var var = 0; var < numberOfVariables; var++) {
         bitsPerVariable[var] = BITS_OF_MOCKED_BINARY_PROBLEM;
       }
     }
@@ -319,7 +319,7 @@ public class SinglePointCrossoverTest {
     @Override
     public List<Integer> getListOfBitsPerVariable() {
         List<Integer> list = new ArrayList<>();
-        for (int i : bitsPerVariable) {
+        for (var i : bitsPerVariable) {
             Integer integer = i;
             list.add(integer);
         }

@@ -35,7 +35,7 @@ public class DTLZ1 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -45,46 +45,45 @@ public class DTLZ1 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables();
-    int numberOfObjectives = solution.objectives().length ;
+    var numberOfVariables = getNumberOfVariables();
+    var numberOfObjectives = solution.objectives().length ;
 
-    double[] f = new double[numberOfObjectives];
-    double[] x;
+    var f = new double[numberOfObjectives];
 
-    int k = getNumberOfVariables() - solution.objectives().length + 1;
+    var k = getNumberOfVariables() - solution.objectives().length + 1;
 
-    double[] arr = new double[10];
-    int count = 0;
-    for (int i2 = 0; i2 < numberOfVariables; i2++) {
+    var arr = new double[10];
+    var count = 0;
+    for (var i2 = 0; i2 < numberOfVariables; i2++) {
       double v1 = solution.variables().get(i2);
       if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
       arr[count++] = v1;
     }
     arr = Arrays.copyOfRange(arr, 0, count);
-    x = arr;
+    var x = arr;
 
-    double g = 0.0;
-    for (int i1 = numberOfVariables - k; i1 < numberOfVariables; i1++) {
-      double v = (x[i1] - 0.5) * (x[i1] - 0.5) - Math.cos(20.0 * Math.PI * (x[i1] - 0.5));
+    var g = 0.0;
+    for (var i1 = numberOfVariables - k; i1 < numberOfVariables; i1++) {
+      var v = (x[i1] - 0.5) * (x[i1] - 0.5) - Math.cos(20.0 * Math.PI * (x[i1] - 0.5));
       g += v;
     }
 
     g = 100 * (k + g);
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       f[i] = (1.0 + g) * 0.5;
     }
 
-    for (int i = 0; i < numberOfObjectives; i++) {
-      for (int j = 0; j < numberOfObjectives - (i + 1); j++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
+      for (var j = 0; j < numberOfObjectives - (i + 1); j++) {
         f[i] *= x[j];
       }
       if (i != 0) {
-        int aux = numberOfObjectives - (i + 1);
+        var aux = numberOfObjectives - (i + 1);
         f[i] *= 1 - x[aux];
       }
     }
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       solution.objectives()[i] = f[i];
     }
 

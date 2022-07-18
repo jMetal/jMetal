@@ -38,19 +38,19 @@ public class AsynchronousCellularGeneticAlgorithmUsingAPermutationSequenceGenera
   public static void main(String[] args) throws JMetalException {
     Problem<DoubleSolution> problem = new Sphere(20) ;
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     @NotNull var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
-    int offspringPopulationSize = 1;
+    var populationSize = 100;
+    var offspringPopulationSize = 1;
 
-    int rows = 10 ;
-    int columns = 10 ;
+    var rows = 10 ;
+    var columns = 10 ;
     @NotNull Neighborhood<DoubleSolution> neighborhood = new C9<>(rows, columns) ;
 
     SequenceGenerator<Integer> solutionIndexGenerator = new IntegerPermutationGenerator(populationSize);
@@ -67,7 +67,7 @@ public class AsynchronousCellularGeneticAlgorithmUsingAPermutationSequenceGenera
 
     Termination termination = new TerminationByEvaluations(500000);
 
-    EvolutionaryAlgorithm<DoubleSolution> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
+    var geneticAlgorithm = new GeneticAlgorithmBuilder<>(
         "acGA",
                     problem,
                     populationSize,
@@ -83,7 +83,7 @@ public class AsynchronousCellularGeneticAlgorithmUsingAPermutationSequenceGenera
 
     geneticAlgorithm.run();
 
-    List<DoubleSolution> population = geneticAlgorithm.getResult();
+    var population = geneticAlgorithm.getResult();
     JMetalLogger.logger.info("Total execution time : " + geneticAlgorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + geneticAlgorithm.getNumberOfEvaluations());
     JMetalLogger.logger.info("Best fitness: " + geneticAlgorithm.getResult().get(0).objectives()[0]);

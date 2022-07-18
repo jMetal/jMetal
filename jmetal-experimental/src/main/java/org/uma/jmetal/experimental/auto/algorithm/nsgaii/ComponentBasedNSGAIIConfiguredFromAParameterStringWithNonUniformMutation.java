@@ -18,7 +18,7 @@ public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithNonUniformMut
   public static void main(String[] args) {
     @NotNull String referenceFrontFileName = "ZDT1.csv" ;
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName "+ referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 25000 "
@@ -47,11 +47,11 @@ public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithNonUniformMut
     AutoNSGAII.print(NSGAII.fixedParameterList);
     AutoNSGAII.print(NSGAII.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = NSGAII.create();
+    var nsgaII = NSGAII.create();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>(
+    var evaluationObserver = new EvaluationObserver(1000);
+    var runTimeChartObserver =
+        new RunTimeChartObserver<DoubleSolution>(
             "NSGA-II", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
     //WriteSolutionsToFilesObserver writeSolutionsToFilesObserver = new WriteSolutionsToFilesObserver() ;
 

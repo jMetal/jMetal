@@ -81,7 +81,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     fixedParameterList.add(referenceFrontFilename);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
 
-    for (Parameter<?> parameter : fixedParameterList) {
+    for (var parameter : fixedParameterList) {
       parameter.parse().check();
     }
     populationSizeParameter = new PositiveIntegerValue("populationSize", args);
@@ -103,12 +103,12 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   }
 
   private void variation(String[] args) {
-    CrossoverParameter crossoverParameter = new CrossoverParameter(args,
+    var crossoverParameter = new CrossoverParameter(args,
         List.of("SBX", "BLX_ALPHA"));
-    ProbabilityParameter crossoverProbability =
+    var crossoverProbability =
         new ProbabilityParameter("crossoverProbability", args);
     crossoverParameter.addGlobalParameter(crossoverProbability);
-    RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
+    var crossoverRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
             "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     crossoverParameter.addGlobalParameter(crossoverRepairStrategy);
@@ -116,22 +116,22 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     @NotNull RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
     crossoverParameter.addSpecificParameter("SBX", distributionIndex);
 
-    RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
+    var alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
     crossoverParameter.addSpecificParameter("BLX_ALPHA", alpha);
 
-    MutationParameter mutationParameter =
+    var mutationParameter =
         new MutationParameter(args,
             Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
 
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args,
+    var mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args,
         0.0, 2.0);
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
-    RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
+    var mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutationParameter.addGlobalParameter(mutationRepairStrategy);
 
-    RealParameter distributionIndexForPolynomialMutation =
+    var distributionIndexForPolynomialMutation =
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
     mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
@@ -152,7 +152,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
         problem.getNumberOfVariables());
 
-    IntegerParameter offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1,
+    var offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1,
             400);
 
     variationParameter =
@@ -214,20 +214,20 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
                 Comparator.comparing(ranking::getRank),
                 Comparator.comparing(densityEstimator::getValue).reversed()));
 
-    SolutionsCreation<DoubleSolution> initialSolutionsCreation =
+    var initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter((DoubleProblem) problem,
             populationSizeParameter.getValue());
 
-    MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter(
+    var mutationParameter = (MutationParameter) variationParameter.findSpecificParameter(
         "mutation");
     if (mutationParameter.getValue().equals("nonUniform")) {
       mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
       mutationParameter.addNonConfigurableParameter("maxIterations",
           maximumNumberOfEvaluationsParameter.getValue() / populationSizeParameter.getValue());
     }
-    Variation<DoubleSolution> variation = variationParameter.getDoubleSolutionParameter();
+    var variation = variationParameter.getDoubleSolutionParameter();
 
-    Selection<DoubleSolution> selection =
+    var selection =
         selectionParameter.getParameter(
             variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 
@@ -300,7 +300,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   }
 
   public static void print(List<Parameter<?>> parameterList) {
-    for (Parameter<?> parameter : parameterList) {
+    for (var parameter : parameterList) {
       System.out.println(parameter);
     }
   }

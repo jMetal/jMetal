@@ -43,7 +43,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
    */
   @Override
   public void compute(List<S> solutionList) {
-    int size = solutionList.size();
+    var size = solutionList.size();
 
     if (size == 0) {
       return;
@@ -53,10 +53,10 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       solutionList.get(0).attributes().put(attributeId, 0.0);
     }
 
-    int numberOfObjectives = solutionList.get(0).objectives().length;
+    var numberOfObjectives = solutionList.get(0).objectives().length;
 
     if (size == numberOfObjectives) {
-      for (S solution : solutionList) {
+      for (var solution : solutionList) {
         solution.attributes().put(attributeId, 0.0);
       }
 
@@ -67,7 +67,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       referencePoint.update(solution.objectives());
     }
 
-    double[] @NotNull [] distanceMatrix = new double[solutionList.size()][solutionList.size()];
+    var distanceMatrix = new double[solutionList.size()][solutionList.size()];
     double[][] solutionMatrix = null;
     if (normalize) {
       try {
@@ -79,20 +79,20 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       solutionMatrix = SolutionListUtils.getMatrixWithObjectiveValues(solutionList);
     }
 
-    for (int i = 0; i < solutionList.size(); i++) {
-      for (int j = i + 1; j < solutionList.size(); j++) {
+    for (var i = 0; i < solutionList.size(); i++) {
+      for (var j = i + 1; j < solutionList.size(); j++) {
         distanceMatrix[i][j] = distance.compute(solutionMatrix[i], solutionMatrix[j]);
         distanceMatrix[j][i] = distanceMatrix[i][j];
       }
     }
 
-    for (int i = 0; i < solutionList.size(); i++) {
-      double currentMaximumDistance = 0.0;
-      double secondCurrentMaximumDistance = 0.0;
+    for (var i = 0; i < solutionList.size(); i++) {
+      var currentMaximumDistance = 0.0;
+      var secondCurrentMaximumDistance = 0.0;
 
-      for (int j = 0; j < solutionList.size(); j++) {
+      for (var j = 0; j < solutionList.size(); j++) {
         if (i != j) {
-          double d = distanceMatrix[i][j];
+          var d = distanceMatrix[i][j];
 
           if (d >= currentMaximumDistance) {
             secondCurrentMaximumDistance = currentMaximumDistance;
@@ -111,7 +111,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
           .attributes().put("DIFF", Math.abs(currentMaximumDistance - secondCurrentMaximumDistance));
     }
 
-    for (int i = 0; i < solutionList.get(0).objectives().length; i++) {
+    for (var i = 0; i < solutionList.get(0).objectives().length; i++) {
       solutionList.sort(new ObjectiveComparator<S>(i));
       solutionList.get(solutionList.size() - 1).attributes().put(attributeId, 0.0);
     }

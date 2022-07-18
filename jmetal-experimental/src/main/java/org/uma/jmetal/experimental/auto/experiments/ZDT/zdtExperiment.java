@@ -56,7 +56,7 @@ public class zdtExperiment {
     public static void main(String[] args) throws IOException {
         Check.that(args.length == 1, "Missing argument: experimentBaseDirectory");
 
-        String experimentBaseDirectory = args[0];
+        var experimentBaseDirectory = args[0];
 
         @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
         problemList.add(new ExperimentProblem<>(new ZDT1()).setReferenceFront("ZDT1.csv"));
@@ -66,7 +66,7 @@ public class zdtExperiment {
         problemList.add(new ExperimentProblem<>(new ZDT6()).setReferenceFront("ZDT6.csv"));
 
 
-        List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+        var algorithmList =
                 configureAlgorithmList(problemList);
 
         @NotNull Experiment<DoubleSolution, List<DoubleSolution>> experiment =
@@ -105,8 +105,8 @@ public class zdtExperiment {
     static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
             List<ExperimentProblem<DoubleSolution>> problemList) {
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-        for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-            for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+        for (var run = 0; run < INDEPENDENT_RUNS; run++) {
+            for (var experimentProblem : problemList) {
                 Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
                         experimentProblem.getProblem(),
                         new SBXCrossover(1.0, 20.0),
@@ -118,8 +118,8 @@ public class zdtExperiment {
             }
 
             for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-                double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
-                double mutationDistributionIndex = 20.0;
+                var mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+                var mutationDistributionIndex = 20.0;
                 @NotNull Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                         (DoubleProblem) experimentProblem.getProblem(),
                         new CrowdingDistanceArchive<DoubleSolution>(100))
@@ -132,10 +132,10 @@ public class zdtExperiment {
             }
 
 
-            for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+            for (var experimentProblem : problemList) {
 
                 /* OMOPSO */
-                String @NotNull [] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
+                var parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
                         .getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 25000 "
@@ -175,7 +175,7 @@ public class zdtExperiment {
                 algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
 
                 /* AutoMOPSO With config.txt */
-                String @NotNull [] parametersAutoMOPSOWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                var parametersAutoMOPSOWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 25000 "
                         + "--swarmSize 22 " +
@@ -207,9 +207,9 @@ public class zdtExperiment {
                         "--velocityChangeWhenUpperLimitIsReached -0.3183"
                 )
                         .split("\\s+");
-                AutoMOPSO AutoMOPSOWithConfig = new AutoMOPSO();
+                var AutoMOPSOWithConfig = new AutoMOPSO();
                 AutoMOPSOWithConfig.parseAndCheckParameters(parametersAutoMOPSOWithtConfig);
-                ParticleSwarmOptimizationAlgorithm automopsoWithConfig = AutoMOPSOWithConfig.create();
+                var automopsoWithConfig = AutoMOPSOWithConfig.create();
 
                 algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfig, "AutoMOPSO", experimentProblem, run));
 

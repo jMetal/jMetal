@@ -64,7 +64,7 @@ public abstract class Parameter<T> {
   }
 
   private String retrieve(String[] args, String key) {
-    int index = Arrays.asList(args).indexOf(key);
+    var index = Arrays.asList(args).indexOf(key);
     Check.that(index != -1 && index != args.length - 1, "Missing parameter: " + key);
     return args[index + 1];
   }
@@ -86,7 +86,7 @@ public abstract class Parameter<T> {
       parameter.parse().check();
     }
 
-      for (Pair<String, Parameter<?>> pair : getSpecificParameters()) {
+      for (var pair : getSpecificParameters()) {
           if (pair.getKey().equals(getValue())) {
               pair.getValue().parse().check();
           }
@@ -140,7 +140,7 @@ public abstract class Parameter<T> {
   }
 
   public Parameter<?> findGlobalParameter(String parameterName) {
-      for (Parameter<?> parameter : getGlobalParameters()) {
+      for (var parameter : getGlobalParameters()) {
           if (parameter.getName().equals(parameterName)) {
               return parameter;
           }
@@ -149,7 +149,7 @@ public abstract class Parameter<T> {
   }
 
   public Parameter<?> findSpecificParameter(String parameterName) {
-      for (Pair<String, Parameter<?>> pair : getSpecificParameters()) {
+      for (var pair : getSpecificParameters()) {
           if (pair.getRight().getName().equals(parameterName)) {
               return Objects.requireNonNull(pair).getValue();
           }
@@ -159,17 +159,17 @@ public abstract class Parameter<T> {
 
   @Override
   public String toString() {
-    StringBuilder result = new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue());
+    var result = new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue());
     if (!globalParameters.isEmpty()) {
       result.append("\n\t");
-      for (Parameter<?> parameter : globalParameters) {
+      for (var parameter : globalParameters) {
         result.append(" \n -> ").append(parameter.toString());
       }
     }
     if (!specificParameters.isEmpty()) {
       result.append("\n\t");
 
-      for (Pair<String, Parameter<?>> parameter : specificParameters) {
+      for (var parameter : specificParameters) {
         result.append(" \n -> ").append(parameter.toString());
       }
     }

@@ -64,8 +64,8 @@ public class JMetalLogger implements Serializable {
 	 */
 	public static void configureLoggers(@Nullable File propertyFile) throws IOException {
 		// Prepare default configuration
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		PrintStream printer = new PrintStream(stream);
+		var stream = new ByteArrayOutputStream();
+		var printer = new PrintStream(stream);
 		printer.println(".level = INFO");
 		printer.println("handlers = java.util.logging.FileHandler, java.util.logging.ConsoleHandler");
 		printer.println("formatters = java.util.logging.SimpleFormatter");
@@ -88,7 +88,7 @@ public class JMetalLogger implements Serializable {
 		printer.close();
 
 		// Apply configuration
-		LogManager manager = LogManager.getLogManager();
+		var manager = LogManager.getLogManager();
 		manager.readConfiguration(IOUtils.toInputStream(new String(stream
 				.toByteArray(), Charset.forName("UTF-8"))));
 		logger.info("Loggers configured with " + propertyFile);

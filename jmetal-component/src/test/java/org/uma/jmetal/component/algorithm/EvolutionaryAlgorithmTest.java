@@ -17,14 +17,14 @@ class EvolutionaryAlgorithmTest {
 
   @Test
   void TheConstructorInitializesTheComponents() throws Exception {
-    Termination termination = mock(Termination.class) ;
+    var termination = mock(Termination.class) ;
     SolutionsCreation<DoubleSolution> solutionsCreation = mock(SolutionsCreation.class) ;
     Evaluation<DoubleSolution> evaluation = mock(Evaluation.class) ;
     Selection<DoubleSolution> selection = mock(Selection.class) ;
     Variation<DoubleSolution> variation = mock(Variation.class) ;
     Replacement<DoubleSolution> replacement = mock(Replacement.class) ;
 
-    EvolutionaryAlgorithm<DoubleSolution> evolutionaryAlgorithm = new EvolutionaryAlgorithm<>(
+    var evolutionaryAlgorithm = new EvolutionaryAlgorithm<DoubleSolution>(
         "EA", solutionsCreation, evaluation, termination, selection, variation, replacement) ;
 
     assertThat(evolutionaryAlgorithm.getResult()).isNullOrEmpty();

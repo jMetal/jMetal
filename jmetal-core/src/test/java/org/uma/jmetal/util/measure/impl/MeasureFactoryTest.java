@@ -17,9 +17,9 @@ public class MeasureFactoryTest {
 
 	@Test
 	public void testCreatePullFromPush() {
-		MeasureFactory factory = new MeasureFactory();
-		SimplePushMeasure<Integer> push = new SimplePushMeasure<>();
-		PullMeasure<Integer> pull = factory.createPullFromPush(push, null);
+		var factory = new MeasureFactory();
+		var push = new SimplePushMeasure<Integer>();
+		var pull = factory.createPullFromPush(push, null);
 
 		assertEquals(null, (Object) pull.get());
 		push.push(3);
@@ -46,14 +46,14 @@ public class MeasureFactoryTest {
 		 * computations are managed well. The different result after each call
 		 * ensure that it leads to a proper notification, so it is not ignored.
 		 */
-		final int maxExecutionTime = 5;
+		final var maxExecutionTime = 5;
 		PullMeasure<Integer> pull = new SimplePullMeasure<Integer>() {
 			private final Random rand = new Random();
 			private int count = 0;
 
 			@Override
 			public Integer get() {
-				int executionTime = rand.nextInt(maxExecutionTime) + 1;
+				var executionTime = rand.nextInt(maxExecutionTime) + 1;
 				try {
 					Thread.sleep(executionTime);
 				} catch (InterruptedException e) {
@@ -69,15 +69,15 @@ public class MeasureFactoryTest {
 		 * extreme cases, but not too much to save as much time as possible in
 		 * running the test.
 		 */
-		final int period = 2 * maxExecutionTime;
+		final var period = 2 * maxExecutionTime;
 
 		// create the push measure
-		MeasureFactory factory = new MeasureFactory();
-		PushMeasure<Integer> push = factory.createPushFromPull(pull, period);
+	  var factory = new MeasureFactory();
+	  var push = factory.createPushFromPull(pull, period);
 
 		// register for notifications from now
-		final long start = System.currentTimeMillis();
-		final LinkedList<Long> timestamps = new LinkedList<>();
+		final var start = System.currentTimeMillis();
+		final var timestamps = new LinkedList<Long>();
 		push.register(value -> {
 			// store the time spent since the registration
 			timestamps.add(System.currentTimeMillis() - start);
@@ -90,7 +90,7 @@ public class MeasureFactoryTest {
 		 * due to the inexact time management of the JVM, which is by itself
 		 * dependent on the ability of the CPU, which does its best.
 		 */
-		int iterations = 100;
+	  var iterations = 100;
 
 		// wait for notifications to come
 		Thread.sleep(iterations * period);
@@ -100,7 +100,7 @@ public class MeasureFactoryTest {
 		 * It gives the difference ratio accepted as reasonable. Closer to zero
 		 * means more strict, while closer to one means more flexible.
 		 */
-		double sensibility = 0.05;
+	  var sensibility = 0.05;
 
 		// check we have a reasonable number of notifications
 		/*
@@ -110,17 +110,17 @@ public class MeasureFactoryTest {
 		 * passes), but we will miss the notification stop. Thus, we check that
 		 * the number of notifications in average is also reasonable.
 		 */
-		int minIterations = (int) Math.floor(iterations * (1 - sensibility));
-		int maxIterations = (int) Math.ceil(iterations * (1 + sensibility));
+	  var minIterations = (int) Math.floor(iterations * (1 - sensibility));
+	  var maxIterations = (int) Math.ceil(iterations * (1 + sensibility));
 		assertTrue(timestamps.size() + " notifications, it should be between "
 				+ minIterations + " and " + maxIterations,
 				timestamps.size() >= minIterations
 						&& timestamps.size() <= maxIterations);
 
 		// check the average period is reasonable
-		long average = timestamps.getLast() / timestamps.size();
-		long minPeriod = (long) Math.floor(period * (1 - sensibility));
-		long maxPeriod = (long) Math.ceil(period * (1 + sensibility));
+	  var average = timestamps.getLast() / timestamps.size();
+	  var minPeriod = (long) Math.floor(period * (1 - sensibility));
+	  var maxPeriod = (long) Math.ceil(period * (1 + sensibility));
 		assertTrue(average + "ms, it should be between " + minPeriod + " and "
 				+ maxPeriod, average >= minPeriod && average <= maxPeriod);
 	}
@@ -143,9 +143,9 @@ public class MeasureFactoryTest {
 		};
 
 		// create the push measure
-		MeasureFactory factory = new MeasureFactory();
-		final int period = 10;
-		PushMeasure<Integer> push = factory.createPushFromPull(pull, period);
+		var factory = new MeasureFactory();
+		final var period = 10;
+		var push = factory.createPushFromPull(pull, period);
 
 		// destroy the pull measure
 		pull = null;
@@ -153,7 +153,7 @@ public class MeasureFactoryTest {
 		System.gc();
 
 		// register for notifications only from now
-		final LinkedList<Integer> timestamps = new LinkedList<>();
+		final var timestamps = new LinkedList<Integer>();
 		push.register(value -> timestamps.add(value));
 
 		// check no notifications are coming anymore
@@ -167,7 +167,7 @@ public class MeasureFactoryTest {
 			throws InterruptedException {
 		// create a pull measure which is always different, thus leading to
 		// generate a notification at every check
-		final boolean[] isCalled = { false };
+		final var isCalled = new boolean[]{false};
 		PullMeasure<Integer> pull = new SimplePullMeasure<Integer>() {
 
 			int count = 0;
@@ -181,8 +181,8 @@ public class MeasureFactoryTest {
 		};
 
 		// create the push measure
-		MeasureFactory factory = new MeasureFactory();
-		final int period = 10;
+		var factory = new MeasureFactory();
+		final var period = 10;
 		factory.createPushFromPull(pull, period);
 		
 		// destroy the push measure
@@ -209,12 +209,12 @@ public class MeasureFactoryTest {
 		};
 
 		// create the push measure
-		MeasureFactory factory = new MeasureFactory();
-		final int period = 10;
-		PushMeasure<Integer> push = factory.createPushFromPull(pull, period);
+		var factory = new MeasureFactory();
+		final var period = 10;
+		var push = factory.createPushFromPull(pull, period);
 
 		// register for notifications from now
-		final LinkedList<Integer> notified = new LinkedList<>();
+		final var notified = new LinkedList<Integer>();
 		push.register(value1 -> notified.add(value1));
 
 		// check no change provide no notifications
@@ -252,16 +252,16 @@ public class MeasureFactoryTest {
 
 	@Test
 	public void testCreatePullsFromGettersRetrieveNothingFromEmptyObject() {
-		MeasureFactory factory = new MeasureFactory();
-		Map<String, PullMeasure<?>> measures = factory
+		var factory = new MeasureFactory();
+		var measures = factory
 				.createPullsFromGetters(new Object());
 		assertTrue(measures.toString(), measures.isEmpty());
 	}
 
 	@Test
 	public void testCreatePullsFromFieldsRetrieveNothingFromEmptyObject() {
-		MeasureFactory factory = new MeasureFactory();
-		Map<String, PullMeasure<?>> measures = factory
+		var factory = new MeasureFactory();
+		var measures = factory
 				.createPullsFromFields(new Object());
 		assertTrue(measures.toString(), measures.isEmpty());
 	}
@@ -306,8 +306,8 @@ public class MeasureFactoryTest {
 
 	@Test
 	public void testCreatePullsFromGettersRetrieveAllInstantiatedPublicGetters() {
-		MeasureFactory factory = new MeasureFactory();
-		Map<String, PullMeasure<?>> measures = factory
+		var factory = new MeasureFactory();
+		var measures = factory
 				.createPullsFromGetters(new Child());
 		assertTrue(measures.toString(), measures.containsKey("ChildPublic"));
 		assertEquals("child-test", measures.get("ChildPublic").get());
@@ -315,8 +315,8 @@ public class MeasureFactoryTest {
 
 	@Test
 	public void testCreatePullsFromFieldsRetrieveAllInstantiatedPublicFields() {
-		MeasureFactory factory = new MeasureFactory();
-		Map<String, PullMeasure<?>> measures = factory
+		var factory = new MeasureFactory();
+		var measures = factory
 				.createPullsFromFields(new Child());
 		assertTrue(measures.toString(), measures.containsKey("childPublic"));
 		assertEquals(false, measures.get("childPublic").get());
@@ -324,8 +324,8 @@ public class MeasureFactoryTest {
 
 	@Test
 	public void testCreatePullsFromGettersRetrieveAllInheritedPublicGetters() {
-		MeasureFactory factory = new MeasureFactory();
-		Map<String, PullMeasure<?>> measures = factory
+		var factory = new MeasureFactory();
+		var measures = factory
 				.createPullsFromGetters(new Child());
 		assertTrue(measures.toString(), measures.containsKey("ParentPublic"));
 		assertEquals("parent-test", measures.get("ParentPublic").get());
@@ -333,8 +333,8 @@ public class MeasureFactoryTest {
 
 	@Test
 	public void testCreatePullsFromFieldsRetrieveAllInheritedPublicFields() {
-		MeasureFactory factory = new MeasureFactory();
-		Map<String, PullMeasure<?>> measures = factory
+		var factory = new MeasureFactory();
+		var measures = factory
 				.createPullsFromFields(new Child());
 		assertTrue(measures.toString(), measures.containsKey("parentPublic"));
 		assertEquals(true, measures.get("parentPublic").get());
@@ -342,8 +342,8 @@ public class MeasureFactoryTest {
 
 	@Test
 	public void testCreatePullsFromGettersRetrieveNoInstantiatedProtectedNorPrivateGetter() {
-		MeasureFactory factory = new MeasureFactory();
-		Map<String, PullMeasure<?>> measures = factory
+		var factory = new MeasureFactory();
+		var measures = factory
 				.createPullsFromGetters(new Child());
 		assertFalse(measures.toString(), measures.containsKey("ChildProtected"));
 		assertFalse(measures.toString(), measures.containsKey("ChildPrivate"));
@@ -351,8 +351,8 @@ public class MeasureFactoryTest {
 
 	@Test
 	public void testCreatePullsFromFieldsRetrieveNoInstantiatedProtectedNorPrivateField() {
-		MeasureFactory factory = new MeasureFactory();
-		Map<String, PullMeasure<?>> measures = factory
+		var factory = new MeasureFactory();
+		var measures = factory
 				.createPullsFromFields(new Child());
 		assertFalse(measures.toString(), measures.containsKey("childProtected"));
 		assertFalse(measures.toString(), measures.containsKey("childPrivate"));
@@ -360,8 +360,8 @@ public class MeasureFactoryTest {
 
 	@Test
 	public void testCreatePullsFromGettersRetrieveNoInheritedProtectedNorPrivateGetter() {
-		MeasureFactory factory = new MeasureFactory();
-		Map<String, PullMeasure<?>> measures = factory
+		var factory = new MeasureFactory();
+		var measures = factory
 				.createPullsFromGetters(new Child());
 		assertFalse(measures.toString(),
 				measures.containsKey("ParentProtected"));
@@ -370,8 +370,8 @@ public class MeasureFactoryTest {
 
 	@Test
 	public void testCreatePullsFromFieldsRetrieveNoInheritedProtectedNorPrivateField() {
-		MeasureFactory factory = new MeasureFactory();
-		Map<String, PullMeasure<?>> measures = factory
+		var factory = new MeasureFactory();
+		var measures = factory
 				.createPullsFromFields(new Child());
 		assertFalse(measures.toString(),
 				measures.containsKey("parentProtected"));

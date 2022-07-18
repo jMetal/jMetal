@@ -65,10 +65,10 @@ public class CDG extends AbstractCDG<DoubleSolution> {
     
     evaluations = populationSize;
 
-    int maxGen = (int) (maxEvaluations / populationSize);
-    int gen = 0;
-    
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var maxGen = (int) (maxEvaluations / populationSize);
+    var gen = 0;
+
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
     
     double delta;
 
@@ -77,22 +77,22 @@ public class CDG extends AbstractCDG<DoubleSolution> {
       updateNeighborhood();
 
       delta = Math.pow((1 - evaluations / maxEvaluations), 0.7);
-      
-      int @NotNull [] permutation = new int[populationSize];
+
+      var permutation = new int[populationSize];
       MOEADUtils.randomPermutation(permutation, populationSize);
 
       @NotNull MutationOperator<DoubleSolution> mutation = new CDGMutation(mutationProbability, delta);
       
-      for (int i = 0; i < populationSize; i++) {
-        int subProblemId = permutation[i];
+      for (var i = 0; i < populationSize; i++) {
+        var subProblemId = permutation[i];
 
-        NeighborType neighborType = chooseNeighborType(subProblemId) ;
-        List<DoubleSolution> parents = parentSelection(subProblemId, neighborType) ;
+        var neighborType = chooseNeighborType(subProblemId) ;
+        var parents = parentSelection(subProblemId, neighborType) ;
         
         differentialEvolutionCrossover.setCurrentSolution(population.get(subProblemId));
-        List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
+        var children = differentialEvolutionCrossover.execute(parents);
 
-        DoubleSolution child = children.get(0) ;
+        var child = children.get(0) ;
         mutation.execute(child);
         
         problem.evaluate(child);
@@ -106,7 +106,7 @@ public class CDG extends AbstractCDG<DoubleSolution> {
       
       gen++;
      
-      for(int i = 0;i < population.size();i++)
+      for(var i = 0; i < population.size(); i++)
     	  updateIdealPoint(population.get(i));
       
       if(gen % 20 == 0)
@@ -133,8 +133,8 @@ public class CDG extends AbstractCDG<DoubleSolution> {
   }
 
   protected void initializePopulation() {
-    for (int i = 0; i < populationSize; i++) {
-      DoubleSolution newSolution = (DoubleSolution)problem.createSolution();
+    for (var i = 0; i < populationSize; i++) {
+      var newSolution = (DoubleSolution)problem.createSolution();
 
       problem.evaluate(newSolution);
       initialCDGAttributes(newSolution);

@@ -11,22 +11,22 @@ import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 public class DefaultBinarySolutionTest {
 
   @Test public void shouldTheSumOfGetNumberOfBitsBeEqualToTheSumOfBitsPerVariable() {
-    DefaultBinarySolution solution = new DefaultBinarySolution(Arrays.asList(2, 2, 2),2);
+    var solution = new DefaultBinarySolution(Arrays.asList(2, 2, 2),2);
 
     assertEquals(6, solution.getTotalNumberOfBits());
   }
 
   @Test public void shouldGetNumberOfBitsBeEqualToTheNumberOfOfBitsPerVariable() {
-    DefaultBinarySolution solution = new DefaultBinarySolution(Arrays.asList(2, 2, 2), 3);
+    var solution = new DefaultBinarySolution(Arrays.asList(2, 2, 2), 3);
 
-    for (int i = 0; i < solution.variables().size(); i++) {
+    for (var i = 0; i < solution.variables().size(); i++) {
       assertEquals(solution.getNumberOfBits(i), solution.getNumberOfBits(i));
     }
   }
 
   @Test public void shouldCopyReturnAnIdenticalVariable() {
     BinarySolution expectedSolution = new DefaultBinarySolution(Arrays.asList(2, 2, 2), 3);
-    BinarySolution newSolution = (BinarySolution) expectedSolution.copy();
+    var newSolution = (BinarySolution) expectedSolution.copy();
 
     assertEquals(expectedSolution, newSolution);
   }

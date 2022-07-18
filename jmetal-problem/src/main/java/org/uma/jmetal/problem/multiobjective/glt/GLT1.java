@@ -40,7 +40,7 @@ public class GLT1 extends AbstractDoubleProblem {
 
     lowerLimit.add(0.0) ;
     upperLimit.add(1.0) ;
-    for (int i = 1; i < numberOfVariables; i++) {
+    for (var i = 1; i < numberOfVariables; i++) {
       lowerLimit.add(-1.0);
       upperLimit.add(1.0);
     }
@@ -57,12 +57,12 @@ public class GLT1 extends AbstractDoubleProblem {
   }
 
   private double g(DoubleSolution solution) {
-      double result = 0.0;
-      int bound = solution.variables().size();
-      for (int i = 1; i < bound; i++) {
-          double value = solution.variables().get(i)
+      var result = 0.0;
+      var bound = solution.variables().size();
+      for (var i = 1; i < bound; i++) {
+          var value = solution.variables().get(i)
                   - Math.sin(2 * Math.PI * solution.variables().get(0) + i * Math.PI / solution.variables().size());
-          double v = value * value;
+          var v = value * value;
           result += v;
       }
 

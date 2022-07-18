@@ -73,11 +73,11 @@ public class GenericHUXCrossover<S extends BinarySolution> implements CrossoverO
     offspring.add((S) parent2.copy());
 
     if (randomGenerator.getRandomValue() < probability) {
-      for (int var = 0; var < parent1.variables().size(); var++) {
-        BinarySet p1 = parent1.variables().get(var);
-        BinarySet p2 = parent2.variables().get(var);
+      for (var var = 0; var < parent1.variables().size(); var++) {
+        var p1 = parent1.variables().get(var);
+        var p2 = parent2.variables().get(var);
 
-        for (int bit = 0; bit < p1.size(); bit++) {
+        for (var bit = 0; bit < p1.size(); bit++) {
           if (p1.get(bit) != p2.get(bit)) {
             if (randomGenerator.getRandomValue() < 0.5) {
               offspring.get(0).variables().get(var).set(bit, p2.get(bit));

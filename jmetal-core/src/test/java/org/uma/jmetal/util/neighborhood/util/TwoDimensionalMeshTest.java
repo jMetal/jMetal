@@ -31,14 +31,14 @@ public class TwoDimensionalMeshTest {
 
   @Test
   public void shouldGetNeighborsWithANullListOfSolutionsThrowAnException() {
-    TwoDimensionalMesh<Solution<?>> neighborhood = new TwoDimensionalMesh<Solution<?>>(3, 3, new int[][]{north, south, east, west}) ;
+    var neighborhood = new TwoDimensionalMesh<Solution<?>>(3, 3, new int[][]{north, south, east, west}) ;
 
     assertThrows(NullParameterException.class, () -> neighborhood.getNeighbors(null, 0)) ;
   }
 
   @Test
   public void shouldGetNeighborsWithAnEmptyListOfSolutionsThrowAnException() {
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(3, 3, new int[][]{north, south, east, west}) ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(3, 3, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>() ;
 
@@ -47,7 +47,7 @@ public class TwoDimensionalMeshTest {
 
   @Test
   public void shouldGetNeighborsWithANegativeSolutionIndexThrowAnException() {
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(3, 3, new int[][]{north, south, east, west}) ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(3, 3, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>() ;
     list.add(mock(IntegerSolution.class));
@@ -60,7 +60,7 @@ public class TwoDimensionalMeshTest {
 
   @Test
   public void shouldGetNeighborsWithASolutionIndexValueEqualToTheListSizeThrowAnException() {
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(1, 1, new int[][]{north, south, east, west}) ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(1, 1, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>() ;
     list.add(mock(IntegerSolution.class));
@@ -70,7 +70,7 @@ public class TwoDimensionalMeshTest {
 
   @Test
   public void shouldGetNeighborsWithASolutionIndexValueGreaterThanTheListSizeThrowAnException() {
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(2, 2, new int[][]{north, south, east, west}) ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(2, 2, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>() ;
     list.add(mock(IntegerSolution.class));
@@ -93,18 +93,18 @@ public class TwoDimensionalMeshTest {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase1() {
-    int rows = 3 ;
-    int columns = 3 ;
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
+    var rows = 3 ;
+    var columns = 3 ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 4) ;
+    var result = neighborhood.getNeighbors(list, 4) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(1))) ;
     assertThat(result, hasItem(list.get(3))) ;
@@ -124,18 +124,18 @@ public class TwoDimensionalMeshTest {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase2() {
-    int rows = 3 ;
-    int columns = 3 ;
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
+    var rows = 3 ;
+    var columns = 3 ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
+    var result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
     assertThat(result, hasItem(list.get(7))) ;
@@ -155,18 +155,18 @@ public class TwoDimensionalMeshTest {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase3() {
-    int rows = 3 ;
-    int columns = 3 ;
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
+    var rows = 3 ;
+    var columns = 3 ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+    var result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(1))) ;
     assertThat(result, hasItem(list.get(2))) ;
@@ -186,18 +186,18 @@ public class TwoDimensionalMeshTest {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase4() {
-    int rows = 3 ;
-    int columns = 3 ;
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
+    var rows = 3 ;
+    var columns = 3 ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
+    var result = neighborhood.getNeighbors(list, 2) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(1))) ;
     assertThat(result, hasItem(list.get(0))) ;
@@ -217,18 +217,18 @@ public class TwoDimensionalMeshTest {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase5() {
-    int rows = 3 ;
-    int columns = 3 ;
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
+    var rows = 3 ;
+    var columns = 3 ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 8) ;
+    var result = neighborhood.getNeighbors(list, 8) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(2))) ;
     assertThat(result, hasItem(list.get(6))) ;
@@ -247,18 +247,18 @@ public class TwoDimensionalMeshTest {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase6() {
-    int rows = 2 ;
-    int columns = 3 ;
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
+    var rows = 2 ;
+    var columns = 3 ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0);
+    var result = neighborhood.getNeighbors(list, 0);
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(1))) ;
     assertThat(result, hasItem(list.get(3))) ;
@@ -276,18 +276,18 @@ public class TwoDimensionalMeshTest {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase7() {
-    int rows = 2 ;
-    int columns = 3 ;
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
+    var rows = 2 ;
+    var columns = 3 ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 3) ;
+    var result = neighborhood.getNeighbors(list, 3) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
     assertThat(result, hasItem(list.get(4))) ;
@@ -305,18 +305,18 @@ public class TwoDimensionalMeshTest {
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase8() {
-    int rows = 2 ;
-    int columns = 2 ;
-    TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
+    var rows = 2 ;
+    var columns = 2 ;
+    var neighborhood = new TwoDimensionalMesh<IntegerSolution>(rows, columns, new int[][]{north, south, east, west}) ;
 
       List<IntegerSolution> list = new ArrayList<>(rows * columns);
-      int bound = rows * columns;
-      for (int i = 0; i < bound; i++) {
-          IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = rows * columns;
+      for (var i = 0; i < bound; i++) {
+        var mock = mock(IntegerSolution.class);
           list.add(mock);
       }
 
-      List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+    var result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(2))) ;
     assertThat(result, hasItem(list.get(1))) ;

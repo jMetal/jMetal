@@ -28,34 +28,29 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
    * Usage: java org.uma.jmetal.runner.singleobjective.SteadyStateGeneticAlgorithmBinaryEncodingRunner
    */
   public static void main(String[] args) throws Exception {
-    BinaryProblem problem;
-    Algorithm<BinarySolution> algorithm;
-    CrossoverOperator<BinarySolution> crossover;
-    MutationOperator<BinarySolution> mutation;
-    SelectionOperator<List<BinarySolution>, BinarySolution> selection;
 
-    problem = new OneMax(1024) ;
+      BinaryProblem problem = new OneMax(1024);
 
-    crossover = new SinglePointCrossover(0.9) ;
+      CrossoverOperator<BinarySolution> crossover = new SinglePointCrossover(0.9);
 
-    double mutationProbability = 1.0 / problem.getBitsFromVariable(0) ;
-    mutation = new BitFlipMutation(mutationProbability) ;
+    var mutationProbability = 1.0 / problem.getBitsFromVariable(0) ;
+      MutationOperator<BinarySolution> mutation = new BitFlipMutation(mutationProbability);
 
-    selection = new BinaryTournamentSelection<BinarySolution>();
+      SelectionOperator<List<BinarySolution>, BinarySolution> selection = new BinaryTournamentSelection<BinarySolution>();
 
-    algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
-        .setPopulationSize(50)
-        .setMaxEvaluations(25000)
-        .setSelectionOperator(selection)
-        .setVariant(GeneticAlgorithmBuilder.GeneticAlgorithmVariant.STEADY_STATE)
-        .build() ;
+    var algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
+              .setPopulationSize(50)
+              .setMaxEvaluations(25000)
+              .setSelectionOperator(selection)
+              .setVariant(GeneticAlgorithmBuilder.GeneticAlgorithmVariant.STEADY_STATE)
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
-    BinarySolution solution = algorithm.getResult() ;
+    var solution = algorithm.getResult() ;
     List<BinarySolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 

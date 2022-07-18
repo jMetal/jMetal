@@ -37,27 +37,27 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 public class MOEADSolvingProblemDTLZ1Example {
 
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    var problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
     @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     @NotNull var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 91;
+    var populationSize = 91;
 
     Termination termination = new TerminationByEvaluations(30000);
 
-    String weightVectorDirectory = "resources/weightVectorFiles/moead";
+    var weightVectorDirectory = "resources/weightVectorFiles/moead";
 
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
+    var moead = new MOEADBuilder<>(
         problem,
         populationSize,
         crossover,
@@ -71,13 +71,13 @@ public class MOEADSolvingProblemDTLZ1Example {
         .setAggregativeFunction(new PenaltyBoundaryIntersection())
         .build();
 
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("MOEA/D", 80, 100, referenceParetoFront);
+    var runTimeChartObserver =
+        new RunTimeChartObserver<DoubleSolution>("MOEA/D", 80, 100, referenceParetoFront);
 
     moead.getObservable().register(runTimeChartObserver);
     moead.run();
 
-    List<DoubleSolution> population = moead.getResult();
+    var population = moead.getResult();
     JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
 

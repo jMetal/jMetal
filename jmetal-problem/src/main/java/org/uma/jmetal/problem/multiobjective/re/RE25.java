@@ -32,7 +32,7 @@ public class RE25 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("RE25");
 
-    List<Double> lowerLimit = List.of(1.0, 0.6, 0.09);
+    var lowerLimit = List.of(1.0, 0.6, 0.09);
     @NotNull List<Double> upperLimit = List.of(70.0, 3.0, 0.5);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -41,23 +41,23 @@ public class RE25 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = Math.rint(solution.variables().get(0));
+    var x1 = Math.rint(solution.variables().get(0));
     double x2 = solution.variables().get(1);
-    double x3 = getClosestValue(diameterFeasibleIntergers, solution.variables().get(2));
+    var x3 = getClosestValue(diameterFeasibleIntergers, solution.variables().get(2));
 
-    double @NotNull [] g = new double[numberOfOriginalConstraints];
+    var g = new double[numberOfOriginalConstraints];
 
-    double cf = ((4.0 * (x2 / x3) - 1) / (4.0 * (x2 / x3) - 4)) + (0.615 * x3 / x2);
-    double fMax = 1000.0;
-    double S = 189000.0;
-    double G = 11.5 * 1e+6;
-    double K = (G * x3 * x3 * x3 * x3) / (8 * x1 * x2 * x2 * x2);
-    double lMax = 14.0;
-    double lf = (fMax / K) + 1.05 * (x1 + 2) * x3;
-    double Fp = 300.0;
-    double sigmaP = Fp / K;
+    var cf = ((4.0 * (x2 / x3) - 1) / (4.0 * (x2 / x3) - 4)) + (0.615 * x3 / x2);
+    var fMax = 1000.0;
+    var S = 189000.0;
+    var G = 11.5 * 1e+6;
+    var K = (G * x3 * x3 * x3 * x3) / (8 * x1 * x2 * x2 * x2);
+    var lMax = 14.0;
+    var lf = (fMax / K) + 1.05 * (x1 + 2) * x3;
+    var Fp = 300.0;
+    var sigmaP = Fp / K;
     double sigmaPM = 6;
-    double sigmaW = 1.25;
+    var sigmaW = 1.25;
 
     g[0] = -((8 * cf * fMax * x2) / (Math.PI * x3 * x3 * x3)) + S;
     g[1] = -lf + lMax;
@@ -66,15 +66,15 @@ public class RE25 extends AbstractDoubleProblem {
     g[4] = -sigmaP - ((fMax - Fp) / K) - 1.05 * (x1 + 2) * x3 + lf;
     g[5] = sigmaW - ((fMax - Fp) / K);
 
-    for (int i = 0; i < numberOfOriginalConstraints; i++) {
+    for (var i = 0; i < numberOfOriginalConstraints; i++) {
       if (g[i] < 0.0) g[i] = -g[i];
       else g[i] = 0;
     }
 
     solution.objectives()[0] = (Math.PI * Math.PI * x2 * x3 * x3 * (x1 + 2)) / 4.0;
-      double sum = 0.0;
-      for (int i : new int[]{0, 1, 2, 3, 4, 5}) {
-          double v = g[i];
+    var sum = 0.0;
+      for (var i : new int[]{0, 1, 2, 3, 4, 5}) {
+        var v = g[i];
           sum += v;
       }
       solution.objectives()[1] = sum;

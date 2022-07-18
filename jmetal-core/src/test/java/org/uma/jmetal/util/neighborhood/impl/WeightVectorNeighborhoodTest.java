@@ -41,9 +41,9 @@ public class WeightVectorNeighborhoodTest {
 
   @Test
   public void shouldConstructorRaiseAnExceptionIfTheWeightFileDoesNotExist() {
-    final int populationSize = 100;
-    final int neighborSize = 20;
-    final int weightVectorSize = 2;
+    final var populationSize = 100;
+    final var neighborSize = 20;
+    final var weightVectorSize = 2;
     try {
       new WeightVectorNeighborhood<>(
           populationSize, weightVectorSize, neighborSize, "NonExistingFileVector");
@@ -54,20 +54,19 @@ public class WeightVectorNeighborhoodTest {
 
   @Test
   public void shouldGetNeighborsWorksProperlyWithTwoObjectives() {
-    final int populationSize = 100;
-    final int neighborSize = 20;
-    WeightVectorNeighborhood<DoubleSolution> weightVectorNeighborhood =
-        new WeightVectorNeighborhood<>(populationSize, neighborSize);
+    final var populationSize = 100;
+    final var neighborSize = 20;
+    var weightVectorNeighborhood =
+        new WeightVectorNeighborhood<DoubleSolution>(populationSize, neighborSize);
 
     List<DoubleSolution> solutionList = new ArrayList<>(populationSize);
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
-      int bound = populationSize;
-      for (int i = 0; i < bound; i++) {
+    var bound = populationSize;
+      for (var i = 0; i < bound; i++) {
           solutionList.add(problem.createSolution());
       }
 
-      List<DoubleSolution> neighbors;
-    neighbors = weightVectorNeighborhood.getNeighbors(solutionList, 0);
+    var neighbors = weightVectorNeighborhood.getNeighbors(solutionList, 0);
 
     assertEquals(neighborSize, neighbors.size());
     assertSame(solutionList.get(0), neighbors.get(0));

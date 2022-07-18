@@ -75,29 +75,28 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
     initializePopulation();
     idealPoint.update(population);
 
-      double[] constraints = new double[10];
-      int count = 0;
-      int bound = populationSize;
-      for (int i1 = 0; i1 < bound; i1++) {
-          double v = ConstraintHandling.overallConstraintViolationDegree(population.get(i1));
+    var constraints = new double[10];
+    var count = 0;
+    var bound = populationSize;
+      for (var i1 = 0; i1 < bound; i1++) {
+        var v = ConstraintHandling.overallConstraintViolationDegree(population.get(i1));
           if (constraints.length == count) constraints = Arrays.copyOf(constraints, count * 2);
           constraints[count++] = v;
       }
       constraints = Arrays.copyOfRange(constraints, 0, count);
       Arrays.sort(constraints);
-    double epsilonZero = Math.abs(constraints[(int) Math.ceil(0.05 * populationSize)]);
+    var epsilonZero = Math.abs(constraints[(int) Math.ceil(0.05 * populationSize)]);
 
     if (phiMax < Math.abs(constraints[0])) {
       phiMax = Math.abs(constraints[0]);
     }
 
-    int tc = (int) (0.8 * maxEvaluations / populationSize);
-    tc = 800 ;
-    double tao = 0.1;
-    double rk = feasibilityRatio(population);
+    var tc = 800;
+    var tao = 0.1;
+    var rk = feasibilityRatio(population);
 
     evaluations = populationSize;
-    int generationCounter = 0 ;
+    var generationCounter = 0 ;
     epsilonK = epsilonZero;
     do {
       // Update the epsilon level
@@ -111,19 +110,19 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         }
       }
 
-      int[] permutation = new int[populationSize];
+      var permutation = new int[populationSize];
       MOEADUtils.randomPermutation(permutation, populationSize);
 
-      for (int i = 0; i < populationSize; i++) {
-        int subProblemId = permutation[i];
+      for (var i = 0; i < populationSize; i++) {
+        var subProblemId = permutation[i];
 
-        NeighborType neighborType = chooseNeighborType();
-        List<DoubleSolution> parents = parentSelection(subProblemId, neighborType);
+        var neighborType = chooseNeighborType();
+        var parents = parentSelection(subProblemId, neighborType);
 
         differentialEvolutionCrossover.setCurrentSolution(population.get(subProblemId));
         @NotNull List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
 
-        DoubleSolution child = children.get(0);
+        var child = children.get(0);
         mutationOperator.execute(child);
         problem.evaluate(child);
 
@@ -145,8 +144,8 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
   }
 
   public void initializePopulation() {
-    for (int i = 0; i < populationSize; i++) {
-      DoubleSolution newSolution = problem.createSolution();
+    for (var i = 0; i < populationSize; i++) {
+      var newSolution = problem.createSolution();
 
       problem.evaluate(newSolution);
       population.add(newSolution);
@@ -157,20 +156,19 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
   protected void updateNeighborhood(
       DoubleSolution individual, int subproblemId, NeighborType neighborType) {
     int size;
-    int numberOfReplaceSolutions;
 
-    numberOfReplaceSolutions = 0;
+    var numberOfReplaceSolutions = 0;
 
     if (neighborType == NeighborType.NEIGHBOR) {
       size = neighborhood[subproblemId].length;
     } else {
       size = population.size();
     }
-    int[] perm = new int[size];
+    var perm = new int[size];
 
     MOEADUtils.randomPermutation(perm, size);
 
-    for (int i = 0; i < size; i++) {
+    for (var i = 0; i < size; i++) {
       int k;
       if (neighborType == NeighborType.NEIGHBOR) {
         k = neighborhood[subproblemId][perm[i]];
@@ -178,13 +176,12 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         k = perm[i];
       }
 
-      double f1, f2;
-      f1 = fitnessFunction(population.get(k), lambda[k]);
-      f2 = fitnessFunction(individual, lambda[k]);
+      var f1 = fitnessFunction(population.get(k), lambda[k]);
+      var f2 = fitnessFunction(individual, lambda[k]);
 
-      double cons1 =
+      var cons1 =
           Math.abs(ConstraintHandling.overallConstraintViolationDegree(population.get(k))) ;
-      double cons2 =
+      var cons2 =
           Math.abs(ConstraintHandling.overallConstraintViolationDegree(individual));
 
       if (cons1 < epsilonK && cons2 <= epsilonK) {
@@ -226,7 +223,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
 
   private void updateExternalArchive() {
       List<DoubleSolution> feasibleSolutions = new ArrayList<>();
-      for (DoubleSolution doubleSolution : population) {
+      for (var doubleSolution : population) {
           if (isFeasible(doubleSolution)) {
               @Nullable DoubleSolution copy = (DoubleSolution) doubleSolution.copy();
               feasibleSolutions.add(copy);
@@ -238,15 +235,15 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
       Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>() ;
       ranking.compute(feasibleSolutions) ;
 
-      List<DoubleSolution> firstRankSolutions = ranking.getSubFront(0) ;
+        var firstRankSolutions = ranking.getSubFront(0) ;
 
       if (firstRankSolutions.size() <= populationSize) {
         archive.clear();
-        for (DoubleSolution solution: firstRankSolutions) {
+        for (var solution: firstRankSolutions) {
           archive.add((DoubleSolution)solution.copy()) ;
         }
       } else {
-        CrowdingDistanceDensityEstimator<DoubleSolution> crowdingDistance = new CrowdingDistanceDensityEstimator<>() ;
+        var crowdingDistance = new CrowdingDistanceDensityEstimator<DoubleSolution>() ;
         while (firstRankSolutions.size() > populationSize) {
           crowdingDistance.compute(firstRankSolutions);
           firstRankSolutions.sort(crowdingDistance.getComparator());
@@ -254,7 +251,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         }
 
         archive.clear();
-        for (int i = 0 ; i < populationSize; i++) {
+        for (var i = 0; i < populationSize; i++) {
           archive.add((DoubleSolution)firstRankSolutions.get(i).copy()) ;
         }
       }

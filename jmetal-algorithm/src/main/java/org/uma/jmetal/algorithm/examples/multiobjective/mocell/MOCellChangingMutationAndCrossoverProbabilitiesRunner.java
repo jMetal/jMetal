@@ -41,12 +41,7 @@ public class MOCellChangingMutationAndCrossoverProbabilitiesRunner extends Abstr
     java org.uma.jmetal.runner.multiobjective.MOCellRunner problemName [referenceFront]
    */
   public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -59,17 +54,17 @@ public class MOCellChangingMutationAndCrossoverProbabilitiesRunner extends Abstr
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv" ;
     }
 
-    problem = ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     @SuppressWarnings("serial")
     class MOCellWithChangesInVariationOperator  extends MOCell<DoubleSolution> {
@@ -108,22 +103,22 @@ public class MOCellChangingMutationAndCrossoverProbabilitiesRunner extends Abstr
       }
     }
 
-    algorithm = new MOCellWithChangesInVariationOperator(
+    Algorithm<List<DoubleSolution>> algorithm = new MOCellWithChangesInVariationOperator(
             problem,
             25000,
             100,
             new CrowdingDistanceArchive<>(100),
-            new C9<DoubleSolution>((int)Math.sqrt(100), (int)Math.sqrt(100)),
+            new C9<DoubleSolution>((int) Math.sqrt(100), (int) Math.sqrt(100)),
             crossover,
             mutation,
             selection,
-            new SequentialSolutionListEvaluator<DoubleSolution>()) ;
+            new SequentialSolutionListEvaluator<DoubleSolution>());
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

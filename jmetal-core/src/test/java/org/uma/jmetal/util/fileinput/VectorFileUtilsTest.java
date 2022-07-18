@@ -11,7 +11,7 @@ import org.junit.Test;
 public class VectorFileUtilsTest {
   @Test
   public void shouldReadVectorsWorkwithAWeightVectorFileLocatedInTheResourceFolder() {
-    double[][] referenceVectors =
+    var referenceVectors =
         VectorFileUtils.readVectors("../resources/weightVectorFiles/moead/W3D_300.dat");
     Assert.assertNotNull(referenceVectors);
     Assert.assertEquals(300, referenceVectors.length);

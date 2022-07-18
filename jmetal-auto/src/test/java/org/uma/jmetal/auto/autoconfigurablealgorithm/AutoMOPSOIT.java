@@ -16,9 +16,9 @@ import org.uma.jmetal.util.VectorUtils;
 class AutoMOPSOIT {
   @Test
   void AutoMOPSOWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT4() throws IOException {
-    String referenceFrontFileName = "ZDT4.csv";
+    var referenceFrontFileName = "ZDT4.csv";
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
             + "--referenceFrontFileName "
             + referenceFrontFileName
@@ -53,27 +53,27 @@ class AutoMOPSOIT {
             + "--weightMax 0.5 ")
             .split("\\s+");
 
-    AutoMOPSO autoMOPSO = new AutoMOPSO();
+    var autoMOPSO = new AutoMOPSO();
     autoMOPSO.parseAndCheckParameters(parameters);
 
-    ParticleSwarmOptimizationAlgorithm smpso = autoMOPSO.create() ;
+    var smpso = autoMOPSO.create() ;
 
     smpso.run();
 
-    List<DoubleSolution> population  = smpso.getResult() ;
+    var population  = smpso.getResult() ;
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    var referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertTrue(population.size() >= 95) ;
     assertTrue(hv > 0.65) ;

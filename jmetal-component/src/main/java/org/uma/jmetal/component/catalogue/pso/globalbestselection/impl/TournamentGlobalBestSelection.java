@@ -33,12 +33,11 @@ public class TournamentGlobalBestSelection implements GlobalBestSelection {
     return result ;
 */
 
-    DoubleSolution one, two;
-    DoubleSolution bestGlobal;
-    int pos1 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
-    int pos2 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
-    one = globalBestList.get(pos1);
-    two = globalBestList.get(pos2);
+      DoubleSolution bestGlobal;
+    var pos1 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
+    var pos2 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
+    var one = globalBestList.get(pos1);
+    var two = globalBestList.get(pos2);
 
     if (comparator.compare(one, two) < 1) {
       bestGlobal = (DoubleSolution) one.copy();

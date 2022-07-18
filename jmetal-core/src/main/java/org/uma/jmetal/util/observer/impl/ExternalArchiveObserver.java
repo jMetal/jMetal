@@ -25,8 +25,8 @@ public class ExternalArchiveObserver<S extends Solution<?>> implements Observer<
 
   @Override
   public void update(Observable<Map<String, Object>> observable, @NotNull Map<String, Object> data) {
-    List<S> population = (List<S>) data.get("POPULATION");
-    for (S solution : population) {
+    var population = (List<S>) data.get("POPULATION");
+    for (var solution : population) {
       archive.add((S) solution.copy());
     }
   }

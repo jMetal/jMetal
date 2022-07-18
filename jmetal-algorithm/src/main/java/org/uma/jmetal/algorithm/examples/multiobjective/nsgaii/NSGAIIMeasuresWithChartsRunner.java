@@ -37,12 +37,7 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
    *                           problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, InterruptedException, IOException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "";
+    var referenceParetoFront = "";
 
     String problemName;
     if (args.length == 2) {
@@ -53,40 +48,40 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
     }
 
-    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(
-            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(
+              new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    int maxEvaluations = 25000;
-    int populationSize = 100;
+    var maxEvaluations = 25000;
+    var populationSize = 100;
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
-            .setSelectionOperator(selection)
-            .setMaxEvaluations(maxEvaluations)
-            .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
-            .build();
+      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
+              .setSelectionOperator(selection)
+              .setMaxEvaluations(maxEvaluations)
+              .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
+              .build();
 
     ((NSGAIIMeasures<DoubleSolution>) algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
 
-    MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>) algorithm).getMeasureManager();
+    var measureManager = ((NSGAIIMeasures<DoubleSolution>) algorithm).getMeasureManager();
 
         /* Measure management */
-    BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
+    var solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
-    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
-    BasicMeasure<Double> hypervolumeMeasure = (BasicMeasure<Double>) measureManager
+    var iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
+    var hypervolumeMeasure = (BasicMeasure<Double>) measureManager
             .<Double>getPushMeasure("hypervolume");
 
-    ChartContainer chart = new ChartContainer(algorithm.getName(), 100);
+    var chart = new ChartContainer(algorithm.getName(), 100);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.addIndicatorChart("Hypervolume");
     chart.initChart();
@@ -96,11 +91,11 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     hypervolumeMeasure.register(new IndicatorListener("Hypervolume", chart));
     /* End of measure management */
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
     chart.saveChart("./chart", BitmapFormat.PNG);
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

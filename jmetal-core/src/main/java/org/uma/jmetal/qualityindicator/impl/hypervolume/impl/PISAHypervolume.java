@@ -69,9 +69,8 @@ public class PISAHypervolume extends Hypervolume {
   */
   private boolean dominates(double[] point1, double[] point2, int noObjectives) {
     int i;
-    int betterInAnyObjective;
 
-    betterInAnyObjective = 0;
+    var betterInAnyObjective = 0;
     for (i = 0; i < noObjectives && point1[i] >= point2[i]; i++) {
       if (point1[i] > point2[i]) {
         betterInAnyObjective = 1;
@@ -82,9 +81,8 @@ public class PISAHypervolume extends Hypervolume {
   }
 
   private void swap(double[][] front, int i, int j) {
-    double[] temp;
 
-    temp = front[i];
+    var temp = front[i];
     front[i] = front[j];
     front[j] = temp;
   }
@@ -94,11 +92,10 @@ public class PISAHypervolume extends Hypervolume {
   considered; 'front' is resorted, such that 'front[0..n-1]' contains
   the nondominated points; n is returned */
   private int filterNondominatedSet(double[] @NotNull [] front, int noPoints, int noObjectives) {
-    int i, j;
-    int n;
+    int j;
 
-    n = noPoints;
-    i = 0;
+    var n = noPoints;
+    var i = 0;
     while (i < n) {
       j = i + 1;
       while (j < n) {
@@ -126,11 +123,11 @@ public class PISAHypervolume extends Hypervolume {
   points referenced in 'front[0..noPoints-1]' */
   private double surfaceUnchangedTo(double[] @NotNull [] front, int noPoints, int objective) {
     int i;
-    double minValue, value;
+    double value;
 
     Check.that(noPoints >= 1, "The number of points is lower than 1");
 
-    minValue = front[0][objective];
+    var minValue = front[0][objective];
     for (i = 1; i < noPoints; i++) {
       value = front[i][objective];
       if (value < minValue) {
@@ -146,10 +143,9 @@ public class PISAHypervolume extends Hypervolume {
   'front[0..n-1]' contains the remaining points; 'n' is returned */
   private int reduceNondominatedSet(
           double[][] front, int noPoints, int objective, double threshold) {
-    int n;
     int i;
 
-    n = noPoints;
+    var n = noPoints;
     for (i = 0; i < n; i++) {
       if (front[i][objective] <= threshold) {
         n--;
@@ -161,17 +157,14 @@ public class PISAHypervolume extends Hypervolume {
   }
 
   public double calculateHypervolume(double[][] front, int noPoints, int noObjectives) {
-    int n;
-    double volume, distance;
 
-    volume = 0;
-    distance = 0;
-    n = noPoints;
+    double volume = 0;
+    double distance = 0;
+    var n = noPoints;
     while (n > 0) {
-      int nonDominatedPoints;
-      double tempVolume, tempDistance;
+      double tempVolume;
 
-      nonDominatedPoints = filterNondominatedSet(front, n, noObjectives - 1);
+      var nonDominatedPoints = filterNondominatedSet(front, n, noObjectives - 1);
       if (noObjectives < 3) {
         Check.that(nonDominatedPoints >= 1, "The number of non-dominated points is lower than 1") ;
 
@@ -180,7 +173,7 @@ public class PISAHypervolume extends Hypervolume {
         tempVolume = calculateHypervolume(front, nonDominatedPoints, noObjectives - 1);
       }
 
-      tempDistance = surfaceUnchangedTo(front, n, noObjectives - 1);
+      var tempDistance = surfaceUnchangedTo(front, n, noObjectives - 1);
       volume += tempVolume * (tempDistance - distance);
       distance = tempDistance;
       n = reduceNondominatedSet(front, n, noObjectives - 1, distance);
@@ -195,10 +188,9 @@ public class PISAHypervolume extends Hypervolume {
    * @param referenceFront The true pareto front
    */
   private double hypervolume(double[][] front, double[][] referenceFront) {
-    double[][] invertedFront;
-    invertedFront = VectorUtils.getInvertedFront(front);
+    var invertedFront = VectorUtils.getInvertedFront(front);
 
-    int numberOfObjectives = referenceFront[0].length;
+    var numberOfObjectives = referenceFront[0].length;
 
     // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
     return this.calculateHypervolume(invertedFront, invertedFront.length, numberOfObjectives);

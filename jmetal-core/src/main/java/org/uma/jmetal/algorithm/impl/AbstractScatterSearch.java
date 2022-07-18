@@ -56,14 +56,14 @@ public abstract class AbstractScatterSearch<S, R>  implements Algorithm<R>{
     initializationPhase() ;
     referenceSetUpdate();
     while (!isStoppingConditionReached()) {
-      List<List<S>> subset = subsetGeneration();
-      List<S> combinedSolutions = solutionCombination(subset) ;
+      var subset = subsetGeneration();
+      var combinedSolutions = solutionCombination(subset) ;
       if (restartConditionIsFulfilled(combinedSolutions)) {
         restart();
         referenceSetUpdate();
       } else {
-        for (S solution : combinedSolutions) {
-          S improvedSolution = improvement(solution);
+        for (var solution : combinedSolutions) {
+          var improvedSolution = improvement(solution);
           referenceSetUpdate(improvedSolution);
         }
       }
@@ -78,8 +78,8 @@ public abstract class AbstractScatterSearch<S, R>  implements Algorithm<R>{
   public void initializationPhase() {
     population = new ArrayList<>(populationSize) ;
     while (population.size() < populationSize) {
-      S newSolution = diversificationGeneration() ;
-      S improvedSolution = improvement(newSolution) ;
+      var newSolution = diversificationGeneration() ;
+      var improvedSolution = improvement(newSolution) ;
       population.add(improvedSolution) ;
     }
   }

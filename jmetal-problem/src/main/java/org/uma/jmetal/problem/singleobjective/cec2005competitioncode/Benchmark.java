@@ -135,7 +135,7 @@ public class Benchmark {
 
     loadRowVectorFromFile(file_bias, NUM_TEST_FUNC, m_biases);
 
-    for (int i = 0; i < MAX_SUPPORT_DIM; i++) {
+    for (var i = 0; i < MAX_SUPPORT_DIM; i++) {
       m_iSqrt[i] = Math.sqrt(((double) i) + 1.0);
     }
   }
@@ -151,9 +151,9 @@ public class Benchmark {
   // Sphere function
   static public double sphere(double[] x) {
 
-    double sum = 0.0;
-    for (double v : x) {
-      double v1 = v * v;
+    var sum = 0.0;
+    for (var v : x) {
+      var v1 = v * v;
       sum += v1;
     }
 
@@ -163,9 +163,9 @@ public class Benchmark {
   // Sphere function with noise
   static public double sphere_noise(double[] x) {
 
-    double sum = 0.0;
-    for (double v : x) {
-      double v1 = v * v;
+    var sum = 0.0;
+    for (var v : x) {
+      var v1 = v * v;
       sum += v1;
     }
 
@@ -179,12 +179,12 @@ public class Benchmark {
   // Schwefel's problem 1.2
   static public double schwefel_102(double[] x) {
 
-    double prev_sum, curr_sum, outer_sum;
+    double prev_sum;
 
-    curr_sum = x[0];
-    outer_sum = (curr_sum * curr_sum);
+    var curr_sum = x[0];
+    var outer_sum = (curr_sum * curr_sum);
 
-    for (int i = 1; i < x.length; i++) {
+    for (var i = 1; i < x.length; i++) {
       prev_sum = curr_sum;
       curr_sum = prev_sum + x[i];
       outer_sum += (curr_sum * curr_sum);
@@ -200,11 +200,11 @@ public class Benchmark {
   // Rosenbrock's function
   static public double rosenbrock(double @NotNull [] x) {
 
-    double sum = 0.0;
+    var sum = 0.0;
 
-    for (int i = 0; i < (x.length - 1); i++) {
-      double temp1 = (x[i] * x[i]) - x[i + 1];
-      double temp2 = x[i] - 1.0;
+    for (var i = 0; i < (x.length - 1); i++) {
+      var temp1 = (x[i] * x[i]) - x[i + 1];
+      var temp2 = x[i] - 1.0;
       sum += (100.0 * temp1 * temp1) + (temp2 * temp2);
     }
 
@@ -213,18 +213,18 @@ public class Benchmark {
 
   // F2: Rosenbrock's Function -- 2D version
   static public double F2(double x, double y) {
-    double temp1 = (x * x) - y;
-    double temp2 = x - 1.0;
+    var temp1 = (x * x) - y;
+    var temp2 = x - 1.0;
     return ((100.0 * temp1 * temp1) + (temp2 * temp2));
   }
 
   // Griewank's function
   static public double griewank(double[] x) {
 
-    double sum = 0.0;
-    double product = 1.0;
+    var sum = 0.0;
+    var product = 1.0;
 
-    for (int i = 0; i < x.length; i++) {
+    for (var i = 0; i < x.length; i++) {
       sum += ((x[i] * x[i]) / 4000.0);
       product *= Math.cos(x[i] / m_iSqrt[i]);
     }
@@ -240,10 +240,10 @@ public class Benchmark {
   // Ackley's function
   static public double ackley(double[] x) {
 
-    double sum1 = 0.0;
-    double sum2 = 0.0;
+    var sum1 = 0.0;
+    var sum2 = 0.0;
 
-    for (int i = 0; i < x.length; i++) {
+    for (var i = 0; i < x.length; i++) {
       sum1 += (x[i] * x[i]);
       sum2 += (Math.cos(PIx2 * x[i]));
     }
@@ -271,9 +271,9 @@ public class Benchmark {
   // Rastrigin's function
   static public double rastrigin(double[] x) {
 
-    double sum = 0.0;
-    for (double v : x) {
-      double v1 = (v * v) - (10.0 * Math.cos(PIx2 * v)) + 10.0;
+    var sum = 0.0;
+    for (var v : x) {
+      var v1 = (v * v) - (10.0 * Math.cos(PIx2 * v)) + 10.0;
       sum += v1;
     }
 
@@ -283,10 +283,10 @@ public class Benchmark {
   // Non-Continuous Rastrigin's function
   static public double rastriginNonCont(double[] x) {
 
-    double sum = 0.0;
+    var sum = 0.0;
     double currX;
 
-    for (int i = 0; i < x.length; i++) {
+    for (var i = 0; i < x.length; i++) {
       currX = myXRound(x[i]);
       sum += (currX * currX) - (10.0 * Math.cos(PIx2 * currX)) + 10.0;
     }
@@ -301,16 +301,16 @@ public class Benchmark {
 
   static public double weierstrass(double[] x, double a, double b, int Kmax) {
 
-    double sum1 = 0.0;
-    for (int i = 0; i < x.length; i++) {
-      for (int k = 0; k <= Kmax; k++) {
+    var sum1 = 0.0;
+    for (var i = 0; i < x.length; i++) {
+      for (var k = 0; k <= Kmax; k++) {
         sum1 += Math.pow(a, k) * Math.cos(PIx2 * Math.pow(b, k) * (x[i] + 0.5));
       }
     }
 
-    double sum2 = 0.0;
-    for (int k = 0; k <= Kmax; k++) {
-      double v = Math.pow(a, k) * Math.cos(PIx2 * Math.pow(b, k) * (0.5));
+    var sum2 = 0.0;
+    for (var k = 0; k <= Kmax; k++) {
+      var v = Math.pow(a, k) * Math.cos(PIx2 * Math.pow(b, k) * (0.5));
       sum2 += v;
     }
 
@@ -320,9 +320,9 @@ public class Benchmark {
   // F8F2
   static public double F8F2(double @NotNull [] x) {
 
-    double sum = 0.0;
-    for (int i = 1; i < x.length; i++) {
-      double v = F8(F2(x[i - 1], x[i]));
+    var sum = 0.0;
+    for (var i = 1; i < x.length; i++) {
+      var v = F8(F2(x[i - 1], x[i]));
       sum += v;
     }
 
@@ -333,18 +333,18 @@ public class Benchmark {
 
   // Scaffer's F6 function
   static public double ScafferF6(double x, double y) {
-    double temp1 = x * x + y * y;
-    double temp2 = Math.sin(Math.sqrt(temp1));
-    double temp3 = 1.0 + 0.001 * temp1;
+    var temp1 = x * x + y * y;
+    var temp2 = Math.sin(Math.sqrt(temp1));
+    var temp3 = 1.0 + 0.001 * temp1;
     return (0.5 + ((temp2 * temp2 - 0.5) / (temp3 * temp3)));
   }
 
   // Expanded Scaffer's F6 function
   static public double EScafferF6(double @NotNull [] x) {
 
-    double sum = 0.0;
-    for (int i = 1; i < x.length; i++) {
-      double v = ScafferF6(x[i - 1], x[i]);
+    var sum = 0.0;
+    for (var i = 1; i < x.length; i++) {
+      var v = ScafferF6(x[i - 1], x[i]);
       sum += v;
     }
 
@@ -356,11 +356,11 @@ public class Benchmark {
   // Non-Continuous Expanded Scaffer's F6 function
   static public double EScafferF6NonCont(double[] x) {
 
-    double sum = 0.0;
-    double prevX, currX;
+    var sum = 0.0;
+    double prevX;
 
-    currX = myXRound(x[0]);
-    for (int i = 1; i < x.length; i++) {
+    var currX = myXRound(x[0]);
+    for (var i = 1; i < x.length; i++) {
       prevX = currX;
       currX = myXRound(x[i]);
       sum += ScafferF6(prevX, currX);
@@ -375,15 +375,14 @@ public class Benchmark {
   // Elliptic
   static public double elliptic(double[] x) {
 
-    double sum;
-    double a = 1e6;
+    var a = 1e6;
 
-    double result = 0.0;
-    for (int i = 0; i < x.length; i++) {
-      double v = Math.pow(a, (((double) i) / ((double) (x.length - 1)))) * x[i] * x[i];
+    var result = 0.0;
+    for (var i = 0; i < x.length; i++) {
+      var v = Math.pow(a, (((double) i) / ((double) (x.length - 1)))) * x[i] * x[i];
       result += v;
     }
-    sum = result;
+    var sum = result;
 
     return (sum);
   }
@@ -391,15 +390,15 @@ public class Benchmark {
   // Hybrid composition
   static public double hybrid_composition(double[] x, HCJob job) throws JMetalException {
 
-    int num_func = job.numberOfBasicFunctions;
-    int num_dim = job.numberOfDimensions;
+    var num_func = job.numberOfBasicFunctions;
+    var num_dim = job.numberOfDimensions;
 
     // Get the raw weights
-    double wMax = Double.NEGATIVE_INFINITY;
-    for (int i = 0; i < num_func; i++) {
-      double sumSqr = 0.0;
+    var wMax = Double.NEGATIVE_INFINITY;
+    for (var i = 0; i < num_func; i++) {
+      var sumSqr = 0.0;
       shift(job.z[i], x, job.shiftGlobalOptimum[i]);
-      for (int j = 0; j < num_dim; j++) {
+      for (var j = 0; j < num_dim; j++) {
         sumSqr += (job.z[i][j] * job.z[i][j]);
       }
       job.w[i] = Math.exp(-1.0 * sumSqr / (2.0 * num_dim * job.sigma[i] * job.sigma[i]));
@@ -409,9 +408,9 @@ public class Benchmark {
     }
 
     // Modify the weights
-    double wSum = 0.0;
-    double w1mMaxPow = 1.0 - Math.pow(wMax, 10.0);
-    for (int i = 0; i < num_func; i++) {
+    var wSum = 0.0;
+    var w1mMaxPow = 1.0 - Math.pow(wMax, 10.0);
+    for (var i = 0; i < num_func; i++) {
       if (job.w[i] != wMax) {
         job.w[i] *= w1mMaxPow;
       }
@@ -419,13 +418,13 @@ public class Benchmark {
     }
 
     // Normalize the weights
-    for (int i = 0; i < num_func; i++) {
+    for (var i = 0; i < num_func; i++) {
       job.w[i] /= wSum;
     }
 
-    double sumF = 0.0;
-    for (int i = 0; i < num_func; i++) {
-      for (int j = 0; j < num_dim; j++) {
+    var sumF = 0.0;
+    for (var i = 0; i < num_func; i++) {
+      for (var j = 0; j < num_dim; j++) {
         job.z[i][j] /= job.lambda[i];
       }
       rotate(job.zM[i], job.z[i], job.linearTransformationMatrix[i]);
@@ -441,7 +440,7 @@ public class Benchmark {
 
   // Shift
   static public void shift(double[] results, double[] x, double[] o) {
-    for (int i = 0; i < x.length; i++) {
+    for (var i = 0; i < x.length; i++) {
       results[i] = x[i] - o[i];
     }
   }
@@ -453,9 +452,9 @@ public class Benchmark {
 
   // (1xD) row vector * (Dx1) column vector = (1) scalar
   static public double xy(double @NotNull [] x, double[] y) {
-    double result = 0.0;
-    for (int i = 0; i < x.length; i++) {
-      double v = (x[i] * y[i]);
+    var result = 0.0;
+    for (var i = 0; i < x.length; i++) {
+      var v = (x[i] * y[i]);
       result += v;
     }
 
@@ -468,9 +467,9 @@ public class Benchmark {
 
   // (1xD) row vector * (DxD) matrix = (1xD) row vector
   static public void xA(double @NotNull [] result, double[] x, double[][] A) {
-    for (int i = 0; i < result.length; i++) {
+    for (var i = 0; i < result.length; i++) {
       result[i] = 0.0;
-      for (int j = 0; j < result.length; j++) {
+      for (var j = 0; j < result.length; j++) {
         result[i] += (x[j] * A[j][i]);
       }
     }
@@ -478,9 +477,9 @@ public class Benchmark {
 
   // (DxD) matrix * (Dx1) column vector = (Dx1) column vector
   static public void Ax(double[] result, double[][] A, double[] x) {
-    for (int i = 0; i < result.length; i++) {
+    for (var i = 0; i < result.length; i++) {
       result[i] = 0.0;
-      for (int j = 0; j < result.length; j++) {
+      for (var j = 0; j < result.length; j++) {
         result[i] += (A[i][j] * x[j]);
       }
     }
@@ -527,7 +526,7 @@ public class Benchmark {
     throws Exception {
     String stToken;
     @NotNull StringTokenizer stTokenizer = new StringTokenizer(brSrc.readLine());
-    for (int i = 0; i < columns; i++) {
+    for (var i = 0; i < columns; i++) {
       stToken = stTokenizer.nextToken();
       row[i] = Double.parseDouble(stToken);
     }
@@ -536,7 +535,7 @@ public class Benchmark {
   static public void loadColumnVectorFromFile(String file, int rows, double[] column)
     throws JMetalException {
     try {
-      BufferedReader brSrc =
+      var brSrc =
               new BufferedReader(
                       new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource(file).getPath()))) ;
       //BufferedReader brSrc = new BufferedReader(new FileReader(file));
@@ -551,8 +550,8 @@ public class Benchmark {
   static public void loadColumnVector(BufferedReader brSrc, int rows, double[] column)
     throws Exception {
     String stToken;
-    for (int i = 0; i < rows; i++) {
-      StringTokenizer stTokenizer = new StringTokenizer(brSrc.readLine());
+    for (var i = 0; i < rows; i++) {
+      var stTokenizer = new StringTokenizer(brSrc.readLine());
       stToken = stTokenizer.nextToken();
       column[i] = Double.parseDouble(stToken);
     }
@@ -561,11 +560,11 @@ public class Benchmark {
   static public void loadNMatrixFromFile(String file, int N, int rows, int columns,
     double[][][] matrix) throws JMetalException {
     try {
-      BufferedReader brSrc =
+      var brSrc =
               new BufferedReader(
                       new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource(file).getPath()))) ;
       //BufferedReader brSrc = new BufferedReader(new FileReader(file));
-      for (int i = 0; i < N; i++) {
+      for (var i = 0; i < N; i++) {
         loadMatrix(brSrc, rows, columns, matrix[i]);
       }
       brSrc.close();
@@ -577,7 +576,7 @@ public class Benchmark {
   static public void loadMatrixFromFile(String file, int rows, int columns, double[][] matrix)
     throws JMetalException {
     try {
-      BufferedReader brSrc =
+      var brSrc =
               new BufferedReader(
                       new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource(file).getPath()))) ;
       //BufferedReader brSrc = new BufferedReader(new FileReader(file));
@@ -590,7 +589,7 @@ public class Benchmark {
 
   static public void loadMatrix(@NotNull BufferedReader brSrc, int rows, int columns, double[][] matrix)
     throws Exception {
-    for (int i = 0; i < rows; i++) {
+    for (var i = 0; i < rows; i++) {
       loadRowVector(brSrc, columns, matrix[i]);
     }
   }
@@ -626,23 +625,23 @@ public class Benchmark {
 
   public void runTest(int func_num) throws JMetalException {
     if (func_num == 0) {
-      for (int i = 1; i <= NUM_TEST_FUNC; i++) {
+      for (var i = 1; i <= NUM_TEST_FUNC; i++) {
         runTest(i);
       }
     } else if ((func_num < 0) || (func_num > NUM_TEST_FUNC)) {
       throw new JMetalException("The specified func_num is out of range.");
     } else {
       // Run the org.uma.test function against the check points
-      int num_test_points = 10;
-      int test_dimension = 50;
+      var num_test_points = 10;
+      var test_dimension = 50;
 
-      double[] test_f = new double[num_test_points];
-      double[][] test_x = new double[num_test_points][test_dimension];
+      var test_f = new double[num_test_points];
+      var test_x = new double[num_test_points][test_dimension];
 
-      String file_test = "testData/test_data_func" + func_num + ".txt";
+      var file_test = "testData/test_data_func" + func_num + ".txt";
 
       // Create the org.uma.test function object
-      TestFunc aFunc = testFunctionFactory(func_num, test_dimension);
+      var aFunc = testFunctionFactory(func_num, test_dimension);
 
       JMetalLogger.logger.info("Run tests on function " + func_num +
         " (" + aFunc.name() + "):");
@@ -652,12 +651,12 @@ public class Benchmark {
 
       loadTestDataFromFile(file_test, num_test_points, test_dimension, test_x, test_f);
 
-      for (int i = 0; i < num_test_points; i++) {
+      for (var i = 0; i < num_test_points; i++) {
         // Execute the org.uma.test function
         // Collect and compare the results
-        double result = aFunc.f(test_x[i]);
-        double diff = result - test_f[i];
-        double ratio = Math.abs(diff / test_f[i]);
+        var result = aFunc.f(test_x[i]);
+        var diff = result - test_f[i];
+        var ratio = Math.abs(diff / test_f[i]);
         JMetalLogger.logger.info("    " +
           numberFormatter.format(result) +
           " - " +

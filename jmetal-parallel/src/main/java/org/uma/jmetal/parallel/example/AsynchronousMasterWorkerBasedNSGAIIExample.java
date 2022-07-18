@@ -21,12 +21,10 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 public class AsynchronousMasterWorkerBasedNSGAIIExample {
   public static void main(String[] args) {
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
 
-    int populationSize = 100;
-    int maxEvaluations = 25000;
-    int numberOfCores = 32;
+    var populationSize = 100;
+    var maxEvaluations = 25000;
+    var numberOfCores = 32;
 
     @NotNull DoubleProblem problem = new ZDT1() {
       @Override
@@ -40,28 +38,28 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
       private void computingDelay() {
         for (long i = 0; i < 1000; i++)
           for (long j = 0; j < 10000; j++) {
-            double a = sin(i) * Math.cos(j);
+            var a = sin(i) * Math.cos(j);
           }
       }
     };
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    long initTime = System.currentTimeMillis();
+    var initTime = System.currentTimeMillis();
 
     @NotNull AsynchronousMultiThreadedNSGAII<DoubleSolution> nsgaii =
             new AsynchronousMultiThreadedNSGAII<DoubleSolution>(
                     numberOfCores, problem, populationSize, crossover, mutation, new TerminationByEvaluations(maxEvaluations));
 
 
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-            new RunTimeChartObserver<>(
+    var runTimeChartObserver =
+            new RunTimeChartObserver<DoubleSolution>(
                     "NSGA-II",
                     80, 10, "resources/referenceFrontsCSV/ZDT1.csv");
 
@@ -69,9 +67,9 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
 
     nsgaii.run();
 
-    long endTime = System.currentTimeMillis();
+    var endTime = System.currentTimeMillis();
 
-    List<DoubleSolution> resultList = nsgaii.getResult();
+    var resultList = nsgaii.getResult();
 
     JMetalLogger.logger.info("Computing time: " + (endTime - initTime));
     new SolutionListOutput(resultList)

@@ -29,7 +29,7 @@ public class DTLZ2Minus extends DTLZ2 {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     super.evaluate(solution);
-    for (int i = 0; i < solution.objectives().length; i++) {
+    for (var i = 0; i < solution.objectives().length; i++) {
       solution.objectives()[i] = -1.0 * solution.objectives()[i];
     }
     return solution ;

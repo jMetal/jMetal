@@ -25,7 +25,7 @@ public class FDA2 extends FDA implements Serializable {
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    for (int i = 1; i < numberOfVariables; i++) {
+    for (var i = 1; i < numberOfVariables; i++) {
       lowerLimit.add(-1.0);
       upperLimit.add(1.0);
     }
@@ -35,10 +35,10 @@ public class FDA2 extends FDA implements Serializable {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
+      var f = new double[solution.objectives().length];
     f[0] = solution.variables().get(0);
-    double g = this.evalG(solution, 1, (solution.variables().size() / 2) + 1);
-    double h = this.evalH(f[0], g);
+      var g = this.evalG(solution, 1, (solution.variables().size() / 2) + 1);
+      var h = this.evalH(f[0], g);
     f[1] = g * h; // 1-Math.sqrt(f[0]);
     solution.objectives()[0] = f[0];
     solution.objectives()[1] = f[1];
@@ -52,15 +52,15 @@ public class FDA2 extends FDA implements Serializable {
    */
   private double evalG(DoubleSolution solution, int limitInf, int limitSup) {
 
-      double g = 0.0;
-      for (int i1 = limitInf; i1 < limitSup; i1++) {
-          double v = Math.pow(solution.variables().get(i1), 2.0);
+      var g = 0.0;
+      for (var i1 = limitInf; i1 < limitSup; i1++) {
+          var v = Math.pow(solution.variables().get(i1), 2.0);
           g += v;
       }
-      double sum = 0.0;
-      int bound = solution.variables().size();
-      for (int i = limitSup; i < bound; i++) {
-          double pow = Math.pow((solution.variables().get(i) + 1.0), 2.0);
+      var sum = 0.0;
+      var bound = solution.variables().size();
+      for (var i = limitSup; i < bound; i++) {
+          var pow = Math.pow((solution.variables().get(i) + 1.0), 2.0);
           sum += pow;
       }
       g += sum;
@@ -75,8 +75,8 @@ public class FDA2 extends FDA implements Serializable {
    * @param g Second argument of the function H.
    */
   private double evalH(double f, double g) {
-    double HT = 0.2 + 4.8 * Math.pow(time, 2.0);
-    double h = 1.0 - Math.pow((f / g), HT);
+      var HT = 0.2 + 4.8 * Math.pow(time, 2.0);
+      var h = 1.0 - Math.pow((f / g), HT);
     return h;
   }
 }

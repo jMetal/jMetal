@@ -28,15 +28,15 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class SMPSOWithPlotliyChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws Exception {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    var problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    var referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    int swarmSize = 100 ;
+    var swarmSize = 100 ;
     Termination termination = new TerminationByEvaluations(25000);
 
-    ParticleSwarmOptimizationAlgorithm smpso = new SMPSOBuilder(
+    var smpso = new SMPSOBuilder(
         (DoubleProblem) problem,
         swarmSize)
         .setTermination(termination)
@@ -44,7 +44,7 @@ public class SMPSOWithPlotliyChartExample extends AbstractAlgorithmRunner {
 
     smpso.run();
 
-    List<DoubleSolution> population = smpso.getResult();
+    var population = smpso.getResult();
     JMetalLogger.logger.info("Total execution time : " + smpso.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + smpso.getEvaluation());
 

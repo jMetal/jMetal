@@ -32,7 +32,7 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
     @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -43,10 +43,10 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-      double[] x = new double[10];
-      int count = 0;
-      int bound = getNumberOfVariables();
-      for (int i = 0; i < bound; i++) {
+      var x = new double[10];
+      var count = 0;
+      var bound = getNumberOfVariables();
+      for (var i = 0; i < bound; i++) {
           double v = solution.variables().get(i);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
@@ -63,11 +63,11 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(@NotNull DoubleSolution solution) {
-    double[] constraint = new double[getNumberOfConstraints()];
+      var constraint = new double[getNumberOfConstraints()];
 
-      double f = 0.0;
-      for (double v : solution.objectives()) {
-          double pow = Math.pow(v, 2);
+      var f = 0.0;
+      for (var v : solution.objectives()) {
+          var pow = Math.pow(v, 2);
           f += pow;
       }
       constraint[0] = (f - 9) * (f - 4);
@@ -78,7 +78,7 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
   }
 
   protected double g1(double[] x) {
-    double result = IntStream.iterate(2, i -> i < getNumberOfVariables(), i -> i + 2).mapToDouble(i -> 10 * Math.pow(x[i] - 0.5, 2.0)).sum();
+      var result = IntStream.iterate(2, i -> i < getNumberOfVariables(), i -> i + 2).mapToDouble(i -> 10 * Math.pow(x[i] - 0.5, 2.0)).sum();
       return result;
   }
 }

@@ -70,7 +70,7 @@ public class DTLZStudy {
     if (args.length != 1) {
       throw new JMetalException("Missing argument: experimentBaseDirectory");
     }
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new DTLZ1()).setReferenceFront("DTLZ1.3D.csv"));
@@ -81,10 +81,10 @@ public class DTLZStudy {
     problemList.add(new ExperimentProblem<>(new DTLZ6()).setReferenceFront("DTLZ1.3D.csv"));
     problemList.add(new ExperimentProblem<>(new DTLZ7()).setReferenceFront("DTLZ1.3D.csv"));
 
-    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+    var algorithmList =
             configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    var experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("DTLZStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
@@ -119,11 +119,11 @@ public class DTLZStudy {
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           @NotNull List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
 
-      for (int i = 0; i < problemList.size(); i++) {
-        double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
+      for (var i = 0; i < problemList.size(); i++) {
+        var mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
+        var mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                 (DoubleProblem) problemList.get(i).getProblem(),
                 new CrowdingDistanceArchive<>(100))
@@ -135,7 +135,7 @@ public class DTLZStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20.0),
@@ -146,7 +146,7 @@ public class DTLZStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 10.0),

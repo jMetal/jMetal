@@ -65,14 +65,14 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 			throw new IllegalArgumentException("No listener provided");
 		} else {
 			@SuppressWarnings("unchecked")
-			MeasureListener<Value> wrapper = (MeasureListener<Value>) listenerCache
+			var wrapper = (MeasureListener<Value>) listenerCache
 					.get(wrapped);
 
 			if (wrapper == null) {
 				wrapper = value -> {
-                    long start = System.currentTimeMillis();
+					var start = System.currentTimeMillis();
                     wrapped.measureGenerated(value);
-                    long stop = System.currentTimeMillis();
+					var stop = System.currentTimeMillis();
                     time += stop - Math.max(start, lastReset);
                 };
 				listenerCache.put(wrapped, wrapper);
@@ -108,7 +108,7 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 			throw new IllegalArgumentException("No measure provided");
 		} else {
 			@SuppressWarnings("unchecked")
-			PushMeasure<Value> wrapper = (PushMeasure<Value>) measureCache
+			var wrapper = (PushMeasure<Value>) measureCache
 					.get(wrapped);
 
 			if (wrapper == null) {

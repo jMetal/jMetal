@@ -21,7 +21,7 @@ public class TerminationByComputingTime implements Termination {
 
   @Override
   public boolean isMet(@NotNull Map<String, Object> algorithmStatusData) {
-    long currentComputingTime = (long) algorithmStatusData.get("COMPUTING_TIME") ;
+    var currentComputingTime = (long) algorithmStatusData.get("COMPUTING_TIME") ;
     evaluations = (int) algorithmStatusData.get("EVALUATIONS") ;
 
 

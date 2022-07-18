@@ -27,13 +27,13 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
 
   private double computeNorm(S solution) {
     List<Double> values = new ArrayList<Double>(solution.objectives().length);
-    for (int i = 0; i < solution.objectives().length; i++)
+    for (var i = 0; i < solution.objectives().length; i++)
       if (normalizer == null) values.add(solution.objectives()[i]);
       else values.add(this.normalizer.normalize(solution.objectives()[i], i));
 
-      double result = 0.0;
-      for (Double d : values) {
-          double pow = Math.pow(d, 2.0);
+    var result = 0.0;
+      for (var d : values) {
+        var pow = Math.pow(d, 2.0);
           result += pow;
       }
 
@@ -41,33 +41,33 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
   }
 
   public R2RankingNormalized<S> computeRanking(List<S> population) {
-    for (S solution : population) {
-      R2SolutionData data = new R2SolutionData();
+    for (var solution : population) {
+      var data = new R2SolutionData();
       data.utility = this.computeNorm(solution);
       solution.attributes().put(getAttributeIdentifier(), data);
     }
 
-    for (int i = 0; i < this.getUtilityFunctions().getSize(); i++) {
+    for (var i = 0; i < this.getUtilityFunctions().getSize(); i++) {
       for (@NotNull S solution : population) {
-        R2SolutionData solutionData = this.getAttribute(solution);
+        var solutionData = this.getAttribute(solution);
         solutionData.alpha = this.getUtilityFunctions().evaluate(solution, i);
       }
 
       Collections.sort(
           population,
               (o1, o2) -> {
-                R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
-                R2SolutionData data1 = (R2SolutionData) attribute.getAttribute(o1);
-                R2SolutionData data2 = (R2SolutionData) attribute.getAttribute(o2);
+                var attribute = new R2RankingAttribute<S>();
+                var data1 = (R2SolutionData) attribute.getAttribute(o1);
+                var data2 = (R2SolutionData) attribute.getAttribute(o2);
 
                 if (data1.alpha < data2.alpha) return -1;
                 else if (data1.alpha > data2.alpha) return 1;
                 else return 0;
               });
 
-      int rank = 1;
-      for (S p : population) {
-        R2SolutionData r2Data = this.getAttribute(p);
+      var rank = 1;
+      for (var p : population) {
+        var r2Data = this.getAttribute(p);
         if (rank < r2Data.rank) {
           r2Data.rank = rank;
           numberOfRanks = Math.max(numberOfRanks, rank);
@@ -78,14 +78,14 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
 
     @NotNull Map<Integer, List<S>> fronts = new TreeMap<>(); // sorted on key
     for (@NotNull S solution : population) {
-      R2SolutionData r2Data = this.getAttribute(solution);
+      var r2Data = this.getAttribute(solution);
       if (fronts.get(r2Data.rank) == null) fronts.put(r2Data.rank, new LinkedList<S>());
 
       fronts.get(r2Data.rank).add(solution);
     }
 
     this.rankedSubpopulations = new ArrayList<>(fronts.size());
-    Iterator<Integer> iterator = fronts.keySet().iterator();
+    var iterator = fronts.keySet().iterator();
     while (iterator.hasNext()) this.rankedSubpopulations.add(fronts.get(iterator.next()));
 
     return this;

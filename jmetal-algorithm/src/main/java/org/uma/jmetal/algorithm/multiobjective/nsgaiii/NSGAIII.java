@@ -50,7 +50,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
     (new ReferencePoint<S>()).generateReferencePoints(referencePoints,getProblem().getNumberOfObjectives() , numberOfDivisions);
 
-    int populationSize = referencePoints.size();
+    var populationSize = referencePoints.size();
     while (populationSize%4>0) {
       populationSize++;
     }
@@ -85,9 +85,9 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   @Override
   protected @NotNull List<S> selection(List<S> population) {
       @NotNull List<S> matingPopulation = new ArrayList<>(population.size());
-      int bound = getMaxPopulationSize();
-      for (int i = 0; i < bound; i++) {
-          S execute = selectionOperator.execute(population);
+    var bound = getMaxPopulationSize();
+      for (var i = 0; i < bound; i++) {
+        var execute = selectionOperator.execute(population);
           matingPopulation.add(execute);
       }
 
@@ -97,12 +97,12 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   @Override
   protected List<S> reproduction(List<S> population) {
     List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i+=2) {
+    for (var i = 0; i < getMaxPopulationSize(); i+=2) {
       @NotNull List<S> parents = new ArrayList<>(2);
       parents.add(population.get(i));
       parents.add(population.get(Math.min(i + 1, getMaxPopulationSize()-1)));
 
-      List<S> offspring = crossoverOperator.execute(parents);
+      var offspring = crossoverOperator.execute(parents);
 
       mutationOperator.execute(offspring.get(0));
       mutationOperator.execute(offspring.get(1));
@@ -116,8 +116,8 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   
   private @NotNull List<ReferencePoint<S>> getReferencePointsCopy() {
       List<ReferencePoint<S>> copy = new ArrayList<>();
-      for (ReferencePoint<S> referencePoint : this.referencePoints) {
-          ReferencePoint<S> sReferencePoint = new ReferencePoint<>(referencePoint);
+      for (var referencePoint : this.referencePoints) {
+        var sReferencePoint = new ReferencePoint<S>(referencePoint);
           copy.add(sReferencePoint);
       }
       return copy;
@@ -130,14 +130,14 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     jointPopulation.addAll(population) ;
     jointPopulation.addAll(offspringPopulation) ;
 
-    Ranking<S> ranking = computeRanking(jointPopulation);
+    var ranking = computeRanking(jointPopulation);
     
     //List<Solution> pop = crowdingDistanceSelection(ranking);
     List<S> last = new ArrayList<>();
     List<S> pop = new ArrayList<>();
     List<List<S>> fronts = new ArrayList<>();
-    int rankingIndex = 0;
-    int candidateSolutions = 0;
+    var rankingIndex = 0;
+    var candidateSolutions = 0;
     while (candidateSolutions < getMaxPopulationSize()) {
       last = ranking.getSubFront(rankingIndex);
       fronts.add(last);
@@ -151,8 +151,8 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
       return pop;
     
     // A copy of the reference list should be used as parameter of the environmental selection
-    EnvironmentalSelection<S> selection =
-            new EnvironmentalSelection<>(fronts,getMaxPopulationSize() - pop.size(),getReferencePointsCopy(),
+    var selection =
+            new EnvironmentalSelection<S>(fronts,getMaxPopulationSize() - pop.size(),getReferencePointsCopy(),
                     getProblem().getNumberOfObjectives());
     
     @NotNull var choosen = selection.execute(last);

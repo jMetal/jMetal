@@ -26,9 +26,8 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
    */
   @Override
   public int compare(S solution1, S solution2) {
-    double overall1, overall2;
-    overall1 = ConstraintHandling.numberOfViolatedConstraints(solution1) * ConstraintHandling.overallConstraintViolationDegree(solution1);
-    overall2 = ConstraintHandling.numberOfViolatedConstraints(solution2) * ConstraintHandling.overallConstraintViolationDegree(solution2);
+      var overall1 = ConstraintHandling.numberOfViolatedConstraints(solution1) * ConstraintHandling.overallConstraintViolationDegree(solution1);
+      var overall2 = ConstraintHandling.numberOfViolatedConstraints(solution2) * ConstraintHandling.overallConstraintViolationDegree(solution2);
 
     if ((overall1 < 0) && (overall2 < 0)) {
       return Double.compare(overall2, overall1);
@@ -46,12 +45,10 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
    * violation with value less than 0
    */
   public boolean needToCompare(S solution1, S solution2) {
-    boolean needToCompare;
-    double overall1, overall2;
-    overall1 = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution1) * ConstraintHandling.overallConstraintViolationDegree(solution1));
-    overall2 = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution2) * ConstraintHandling.overallConstraintViolationDegree(solution2));
+      var overall1 = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution1) * ConstraintHandling.overallConstraintViolationDegree(solution1));
+      var overall2 = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution2) * ConstraintHandling.overallConstraintViolationDegree(solution2));
 
-    needToCompare = (overall1 > this.threshold) || (overall2 > this.threshold);
+      var needToCompare = (overall1 > this.threshold) || (overall2 > this.threshold);
 
     return needToCompare;
   }
@@ -61,10 +58,10 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
    * Return the ratio of feasible solutions
    */
   public double feasibilityRatio(@NotNull List<S> solutionSet) {
-      double aux = 0.0;
+      var aux = 0.0;
       for (@NotNull S solution : solutionSet) {
           if (ConstraintHandling.numberOfViolatedConstraints(solution) < 0) {
-              double v = 1.0;
+              var v = 1.0;
               aux += v;
           }
       }
@@ -76,9 +73,9 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
    * Return the ratio of feasible solutions
    */
   public double meanOverallViolation(List<S> solutionSet) {
-      double aux = 0.0;
-      for (S solution : solutionSet) {
-          double abs = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution) *
+      var aux = 0.0;
+      for (var solution : solutionSet) {
+          var abs = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution) *
                   ConstraintHandling.overallConstraintViolationDegree(solution));
           aux += abs;
       }

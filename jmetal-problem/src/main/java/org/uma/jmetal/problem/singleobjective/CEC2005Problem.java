@@ -25,7 +25,7 @@ public class CEC2005Problem extends AbstractDoubleProblem {
     setNumberOfConstraints(0) ;
     setName("CEC2005");
 
-    Benchmark cec2005ProblemFactory = new Benchmark();
+    var cec2005ProblemFactory = new Benchmark();
     testFunction = cec2005ProblemFactory.testFunctionFactory(problemID, numberOfVariables);
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
@@ -85,7 +85,7 @@ public class CEC2005Problem extends AbstractDoubleProblem {
         throw new JMetalException("Invalid problem value");
     }
 
-    for (int i = 0; i < this.getNumberOfVariables(); i++) {
+    for (var i = 0; i < this.getNumberOfVariables(); i++) {
       lowerLimit.add(llimit);
       upperLimit.add(ulimit);
     }
@@ -96,19 +96,18 @@ public class CEC2005Problem extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables() ;
+    var numberOfVariables = getNumberOfVariables() ;
 
-    double @NotNull [] x = new double[10];
-    int count = 0;
-    for (int i = 0; i < numberOfVariables; i++) {
+    var x = new double[10];
+    var count = 0;
+    for (var i = 0; i < numberOfVariables; i++) {
       double v = solution.variables().get(i);
       if (x.length == count) x = Arrays.copyOf(x, count * 2);
       x[count++] = v;
     }
     x = Arrays.copyOfRange(x, 0, count);
 
-    double result;
-    result = testFunction.f(x);
+    var result = testFunction.f(x);
 
     solution.objectives()[0] = result;
 

@@ -61,11 +61,11 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
    */
   @Override
   public void run() throws IOException {
-    String outputDirectoryName = experiment.getReferenceFrontDirectory();
+    var outputDirectoryName = experiment.getReferenceFrontDirectory();
     createOutputDirectory(outputDirectoryName);
 
     for (ExperimentProblem<?> problem : experiment.getProblemList()) {
-      List<DummyIntegerSolution> nonDominatedSolutions = getNonDominatedSolutions(problem);
+      var nonDominatedSolutions = getNonDominatedSolutions(problem);
 
       writeReferenceFrontFile(outputDirectoryName, problem, nonDominatedSolutions);
       writeReferenceSetFile(outputDirectoryName, problem, nonDominatedSolutions);
@@ -79,8 +79,8 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
           String outputDirectoryName,
           ExperimentProblem<?> problem,
           List<DummyIntegerSolution> nonDominatedSolutions) {
-    GenericSolutionAttribute<IntegerSolution, String> solutionAttribute =
-            new GenericSolutionAttribute<>();
+    var solutionAttribute =
+            new GenericSolutionAttribute<IntegerSolution, String>();
 
     for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
         List<IntegerSolution> solutionsPerAlgorithm = new ArrayList<>();
@@ -115,7 +115,7 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
           String outputDirectoryName,
           @NotNull ExperimentProblem<?> problem,
           List<DummyIntegerSolution> nonDominatedSolutions) {
-    String referenceFrontFileName = outputDirectoryName + "/" + problem.getReferenceFront();
+    var referenceFrontFileName = outputDirectoryName + "/" + problem.getReferenceFront();
 
     new SolutionListOutput(nonDominatedSolutions)
             .printObjectivesToFile(referenceFrontFileName, ",");
@@ -125,7 +125,7 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
           String outputDirectoryName,
           ExperimentProblem<?> problem,
           List<DummyIntegerSolution> nonDominatedSolutions) {
-    String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".ps";
+    var referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".ps";
     new SolutionListOutput(nonDominatedSolutions).printVariablesToFile(referenceSetFileName, ",");
   }
 
@@ -151,7 +151,7 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
       }
       for (@NotNull ExperimentAlgorithm<?, ?> algorithm :
               experimentAlgorithms) {
-      String problemDirectory =
+        var problemDirectory =
               experiment.getExperimentBaseDirectory()
                       + "/data/"
                       + algorithm.getAlgorithmTag()
@@ -164,19 +164,19 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
                       + experiment.getOutputParetoFrontFileName()
                       + algorithm.getRunId()
                       + ".csv";
-      String paretoSetFileName =
+        var paretoSetFileName =
               problemDirectory
                       + "/"
                       + experiment.getOutputParetoSetFileName()
                       + algorithm.getRunId()
                       + ".csv";
 
-      double[][] frontWithObjectiveValues = readVectors(frontFileName, ",");
-      double[][] frontWithVariableValues = readVectors(paretoSetFileName, ",");
-      List<DummyIntegerSolution> solutionList =
+        var frontWithObjectiveValues = readVectors(frontFileName, ",");
+        var frontWithVariableValues = readVectors(paretoSetFileName, ",");
+        var solutionList =
               createSolutionListFrontFiles(
                       algorithm.getAlgorithmTag(), frontWithVariableValues, frontWithObjectiveValues);
-      for (DummyIntegerSolution solution : solutionList) {
+      for (var solution : solutionList) {
         nonDominatedSolutionArchive.add(solution);
       }
     }
@@ -191,10 +191,9 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
    * @return
    */
   private File createOutputDirectory(String outputDirectoryName) {
-    File outputDirectory;
-    outputDirectory = new File(outputDirectoryName);
+    var outputDirectory = new File(outputDirectoryName);
     if (!outputDirectory.exists()) {
-      boolean result = new File(outputDirectoryName).mkdir();
+      var result = new File(outputDirectoryName).mkdir();
       JMetalLogger.logger.info("Creating " + outputDirectoryName + ". Status = " + result);
     }
 
@@ -217,19 +216,19 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
       throw new JMetalException("The front of solutions is empty");
     }
 
-    GenericSolutionAttribute<DummyIntegerSolution, String> solutionAttribute =
-            new GenericSolutionAttribute<>();
+    var solutionAttribute =
+            new GenericSolutionAttribute<DummyIntegerSolution, String>();
 
-    int numberOfVariables = frontWithVariableValues[0].length;
-    int numberOfObjectives = frontWithObjectiveValues[0].length;
+    var numberOfVariables = frontWithVariableValues[0].length;
+    var numberOfObjectives = frontWithObjectiveValues[0].length;
 
     @NotNull List<DummyIntegerSolution> solutionList = new ArrayList<>();
-    for (int i = 0; i < frontWithVariableValues.length; i++) {
+    for (var i = 0; i < frontWithVariableValues.length; i++) {
       @NotNull DummyIntegerSolution solution = new DummyIntegerSolution(numberOfVariables, numberOfObjectives);
-      for (int vars = 0; vars < numberOfVariables; vars++) {
+      for (var vars = 0; vars < numberOfVariables; vars++) {
         solution.variables().set(vars, (int)frontWithVariableValues[i][vars]);
       }
-      for (int objs = 0; objs < numberOfObjectives; objs++) {
+      for (var objs = 0; objs < numberOfObjectives; objs++) {
         solution.objectives()[objs] = frontWithObjectiveValues[i][objs];
       }
 

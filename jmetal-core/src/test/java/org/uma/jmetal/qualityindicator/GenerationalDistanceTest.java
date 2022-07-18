@@ -19,7 +19,7 @@ public class GenerationalDistanceTest {
 
   @Test
   public void shouldComputeRaiseAnExceptionIfTheFrontIsNull() {
-    double[][] referenceFront = new double[0][0];
+    var referenceFront = new double[0][0];
     double[][] front = null;
     Assertions.assertThrows(NullParameterException.class, () -> new GenerationalDistance(referenceFront).compute(front));
   }

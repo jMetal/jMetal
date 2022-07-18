@@ -54,7 +54,7 @@ public class lsmop1With200variablesExperiment {
   public static void main(String[] args) throws IOException {
     Check.that(args.length == 1, "Missing argument: experimentBaseDirectory");
 
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new LSMOP1()).setReferenceFront("LSMOP1.2D.csv"));
@@ -62,7 +62,7 @@ public class lsmop1With200variablesExperiment {
     @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
         configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    var experiment =
         new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>(
             "LSMOP1With200VariablesAutoAlgorithmExperiments")
             .setAlgorithmList(algorithmList)
@@ -99,7 +99,7 @@ public class lsmop1With200variablesExperiment {
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           @NotNull List<ExperimentProblem<DoubleSolution>> problemList) {
     @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
       for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
             experimentProblem.getProblem(),
@@ -112,8 +112,8 @@ public class lsmop1With200variablesExperiment {
       }
 
       for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-        double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
+        var mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+        var mutationDistributionIndex = 20.0;
         @NotNull Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
             (DoubleProblem) experimentProblem.getProblem(),
             new CrowdingDistanceArchive<DoubleSolution>(100))
@@ -125,10 +125,10 @@ public class lsmop1With200variablesExperiment {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      for (var experimentProblem : problemList) {
 
         /* AutoNSGAII */
-        String[] parameters =
+        var parameters =
             ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                 + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                 + "--maximumNumberOfEvaluations 200000 "
@@ -155,14 +155,14 @@ public class lsmop1With200variablesExperiment {
                 + "--externalArchive crowdingDistanceArchive ")
                 .split("\\s+");
 
-        AutoNSGAII autoNSGAII = new AutoNSGAII();
+        var autoNSGAII = new AutoNSGAII();
         autoNSGAII.parseAndCheckParameters(parameters);
         @NotNull EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
         algorithms.add(new ExperimentAlgorithm<>(nsgaII, "AutoNSGAII", experimentProblem, run));
 
         /* AutoMOPSO */
-        String @NotNull [] parametersAutoMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
+        var parametersAutoMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
             .getName() + " "
             + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
             + "--maximumNumberOfEvaluations 200000 "
@@ -192,14 +192,14 @@ public class lsmop1With200variablesExperiment {
             + "--wMax 0.1337 "
         )
             .split("\\s+");
-        AutoMOPSO AutoMOPSO = new AutoMOPSO();
+        var AutoMOPSO = new AutoMOPSO();
         AutoMOPSO.parseAndCheckParameters(parametersAutoMOPSO);
-        ParticleSwarmOptimizationAlgorithm automopso = AutoMOPSO.create();
+        var automopso = AutoMOPSO.create();
 
         algorithms.add(new ExperimentAlgorithm<>(automopso, "AutoMOPSO", experimentProblem, run));
 
         /* OMOPSO */
-        String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
+        var parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
             .getName() + " "
             + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
             + "--maximumNumberOfEvaluations 200000 "
@@ -231,7 +231,7 @@ public class lsmop1With200variablesExperiment {
             .split("\\s+");
         @NotNull AutoMOPSO OMOPSO = new AutoMOPSO();
         OMOPSO.parseAndCheckParameters(parametersOMOPSO);
-        ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
+        var omopso = OMOPSO.create();
 
         algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
       }

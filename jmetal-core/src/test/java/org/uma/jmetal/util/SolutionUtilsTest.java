@@ -20,8 +20,8 @@ public class SolutionUtilsTest {
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithOneObjectiveCaseA() {
     DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[0] =  0.1;
     solution2.objectives()[0] =  0.1;
@@ -33,8 +33,8 @@ public class SolutionUtilsTest {
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithOneObjectiveCaseB() {
     DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[0] =  0.1;
     solution2.objectives()[0] =  0.3;
@@ -46,8 +46,8 @@ public class SolutionUtilsTest {
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithTwoObjectivesCaseA() {
     DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[0] =  0.1;
     solution1.objectives()[1] =  0.2;
@@ -61,8 +61,8 @@ public class SolutionUtilsTest {
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithTwoObjectivesCaseB() {
     DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[0] =  0.1;
     solution1.objectives()[1] =  0.1;
@@ -76,8 +76,8 @@ public class SolutionUtilsTest {
   @Test
   public void shouldAverageDistanceToSolutionListWorkProperlyCaseA() {
     DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[0] =  1.0;
     solution2.objectives()[0] =  1.0;
@@ -92,8 +92,8 @@ public class SolutionUtilsTest {
   @Test
   public void shouldAverageDistanceToSolutionListWorkProperlyCaseB() {
     DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[0] =  1.0;
     solution2.objectives()[0] =  2.0;
@@ -107,9 +107,9 @@ public class SolutionUtilsTest {
   @Test
   public void shouldAverageDistanceToSolutionListWorkProperlyCaseC() {
     DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
-    DoubleSolution solution3 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
+    var solution3 = problem.createSolution();
 
     solution1.objectives()[0] =  1.0;
     solution2.objectives()[0] =  1.0;
@@ -131,7 +131,7 @@ public class SolutionUtilsTest {
   public void shouldNormalizeThrowsAnExceptionWhenTheMinValueIsNull() {
 
     DoubleProblem problem = new FakeDoubleProblem(0, 2, 0);
-    DoubleSolution solution = problem.createSolution();
+    var solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, null, new double[] {0.2});
   }
@@ -140,7 +140,7 @@ public class SolutionUtilsTest {
   public void shouldNormalizeThrowsAnExceptionWhenTheMaxValueIsNull() {
 
     DoubleProblem problem = new FakeDoubleProblem(0, 2, 0);
-    DoubleSolution solution = problem.createSolution();
+    var solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {0.2}, null);
   }
@@ -149,7 +149,7 @@ public class SolutionUtilsTest {
   public void shouldNormalizeThrowsAnExceptionWhenMinAndMaxValuesHaveDifferentLength() {
 
     DoubleProblem problem = new FakeDoubleProblem(0, 2, 0);
-    DoubleSolution solution = problem.createSolution();
+    var solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {0.2, 0.2}, new double[] {0.3});
   }
@@ -158,7 +158,7 @@ public class SolutionUtilsTest {
   public void shouldNormalizeThrowsAnExceptionWhenMinIsEmpty() {
 
     DoubleProblem problem = new FakeDoubleProblem(0, 0, 0);
-    DoubleSolution solution = problem.createSolution();
+    var solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {}, new double[] {0.2});
   }
@@ -167,7 +167,7 @@ public class SolutionUtilsTest {
   public void shouldNormalizeThrowsAnExceptionWhenMaxIsEmpty() {
 
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
-    DoubleSolution solution = problem.createSolution();
+    var solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {0.2}, new double[] {});
   }
@@ -176,7 +176,7 @@ public class SolutionUtilsTest {
   public void shouldNormalizeThrowsAnExceptionWhenMinAndMaxValuesHaveDifferentNumberOfObjective() {
 
     DoubleProblem problem = new FakeDoubleProblem(3, 1, 0);
-    DoubleSolution solution = problem.createSolution();
+    var solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {0.2, 0.2}, new double[] {0.3, 0.3});
   }
@@ -189,10 +189,10 @@ public class SolutionUtilsTest {
     solution.objectives()[0] = 10;
     solution.objectives()[1] = 20;
 
-    double[] minValue = new double[] {10, 10};
-    double[] maxValue = new double[] {20, 20};
+    var minValue = new double[] {10, 10};
+    var maxValue = new double[] {20, 20};
 
-    DoubleSolution normalized =
+    var normalized =
         (DoubleSolution) SolutionUtils.normalize(solution, minValue, maxValue);
 
     assertNotSame(normalized, solution);

@@ -33,7 +33,7 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -44,10 +44,10 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-      double[] x = new double[10];
-      int count = 0;
-      int bound = getNumberOfVariables();
-      for (int i = 0; i < bound; i++) {
+    var x = new double[10];
+    var count = 0;
+    var bound = getNumberOfVariables();
+      for (var i = 0; i < bound; i++) {
           double v = solution.variables().get(i);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
@@ -64,14 +64,14 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
     double r = 0.1, theta = -0.25 * Math.PI;
-    double[] a_array = new double[] {2.0, 2.0};
-    double @NotNull [] b_array = new double[] {4.0, 8.0};
-    double[] xOffset = new double[] {1.6, 2.5};
-    double @NotNull [] yOffset = new double[] {1.6, 2.5};
-    double f1 = solution.objectives()[0];
-    double f2 = solution.objectives()[1];
-    double[] constraint = new double[getNumberOfConstraints()];
-    for (int i = 0; i < xOffset.length; i++) {
+    var a_array = new double[] {2.0, 2.0};
+    var b_array = new double[] {4.0, 8.0};
+    var xOffset = new double[] {1.6, 2.5};
+    var yOffset = new double[] {1.6, 2.5};
+    var f1 = solution.objectives()[0];
+    var f2 = solution.objectives()[1];
+    var constraint = new double[getNumberOfConstraints()];
+    for (var i = 0; i < xOffset.length; i++) {
       constraint[i] =
           Math.pow(
                   ((f1 - xOffset[i]) * Math.cos(theta) - (f2 - yOffset[i]) * Math.sin(theta))
@@ -89,12 +89,12 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
   }
 
   protected double g1(double[] x) {
-    double result = IntStream.iterate(2, i -> i < x.length, i -> i + 2).mapToDouble(i -> Math.pow(x[i] - Math.sin(0.5 * i / x.length * Math.PI * x[0]), 2.0)).sum();
+    var result = IntStream.iterate(2, i -> i < x.length, i -> i + 2).mapToDouble(i -> Math.pow(x[i] - Math.sin(0.5 * i / x.length * Math.PI * x[0]), 2.0)).sum();
       return result;
   }
 
   protected double g2(double[] x) {
-    double result = IntStream.iterate(1, i -> i < x.length, i -> i + 2).mapToDouble(i -> Math.pow(x[i] - Math.cos(0.5 * i / x.length * Math.PI * x[0]), 2.0)).sum();
+    var result = IntStream.iterate(1, i -> i < x.length, i -> i + 2).mapToDouble(i -> Math.pow(x[i] - Math.cos(0.5 * i / x.length * Math.PI * x[0]), 2.0)).sum();
 
       return result;
   }

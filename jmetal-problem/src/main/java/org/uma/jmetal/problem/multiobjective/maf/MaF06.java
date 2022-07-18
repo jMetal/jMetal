@@ -37,7 +37,7 @@ public class MaF06 extends AbstractDoubleProblem {
     @NotNull List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-      for (int i = 0; i < numberOfVariables; i++) {
+      for (var i = 0; i < numberOfVariables; i++) {
           lower.add(0.0);
           upper.add(1.0);
       }
@@ -53,49 +53,47 @@ public class MaF06 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
 
-    int numberOfVariables_ = solution.variables().size();
-    int numberOfObjectives_ = solution.objectives().length;
+    var numberOfVariables_ = solution.variables().size();
+    var numberOfObjectives_ = solution.objectives().length;
 
-    double[] x;
-    double[] f = new double[numberOfObjectives_];
+    var f = new double[numberOfObjectives_];
 
-      double[] arr = new double[10];
-      int count = 0;
-      for (int i2 = 0; i2 < numberOfVariables_; i2++) {
+    var arr = new double[10];
+    var count = 0;
+      for (var i2 = 0; i2 < numberOfVariables_; i2++) {
           double v = solution.variables().get(i2);
           if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
           arr[count++] = v;
       }
       arr = Arrays.copyOfRange(arr, 0, count);
-      x = arr;
-    double @NotNull [] thet = new double[numberOfObjectives_ - 1];
-    double g, sub1, sub2;
+    var x = arr;
+    var thet = new double[numberOfObjectives_ - 1];
     // evaluate g,thet
-      double sum = 0.0;
-      for (int i1 = numberOfObjectives_ - 1; i1 < numberOfVariables_; i1++) {
-          double pow = Math.pow(x[i1] - 0.5, 2);
+    var sum = 0.0;
+      for (var i1 = numberOfObjectives_ - 1; i1 < numberOfVariables_; i1++) {
+        var pow = Math.pow(x[i1] - 0.5, 2);
           sum += pow;
       }
-      g = sum;
-    sub1 = 100 * g + 1;
-    sub2 = 1 + g;
-    for (int i = 0; i < 1; i++) {
+    var g = sum;
+    var sub1 = 100 * g + 1;
+    var sub2 = 1 + g;
+    for (var i = 0; i < 1; i++) {
       thet[i] = Math.PI * x[i] / 2;
     }
-    for (int i = 1; i < numberOfObjectives_ - 1; i++) {
+    for (var i = 1; i < numberOfObjectives_ - 1; i++) {
       thet[i] = Math.PI * (1 + 2 * g * x[i]) / (4 * sub2);
     }
     // evaluate fm,fm-1,...,2,f1
     f[numberOfObjectives_ - 1] = Math.sin(thet[0]) * sub1;
     double subf1 = 1;
     // fi=cos(thet1)cos(thet2)...cos(thet[m-i])*sin(thet(m-i+1))*(1+g[i]),fi=subf1*subf2*subf3
-    for (int i = numberOfObjectives_ - 2; i > 0; i--) {
+    for (var i = numberOfObjectives_ - 2; i > 0; i--) {
       subf1 *= Math.cos(thet[numberOfObjectives_ - i - 2]);
       f[i] = subf1 * Math.sin(thet[numberOfObjectives_ - i - 1]) * sub1;
     }
     f[0] = subf1 * Math.cos(thet[numberOfObjectives_ - 2]) * sub1;
 
-    for (int i = 0; i < numberOfObjectives_; i++) {
+    for (var i = 0; i < numberOfObjectives_; i++) {
       solution.objectives()[i] = f[i];
     }
     return solution ;

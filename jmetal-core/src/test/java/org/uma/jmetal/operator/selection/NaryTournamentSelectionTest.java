@@ -35,23 +35,22 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldDefaultConstructorSetTheNumberOfSolutionsToBeReturnedEqualsToTwo() {
-    NaryTournamentSelection<IntegerSolution> selection = new NaryTournamentSelection<>() ;
+    var selection = new NaryTournamentSelection<IntegerSolution>() ;
 
     assertEquals(2, selection.getTournamentSize());
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
-    NaryTournamentSelection<IntegerSolution> selection = new NaryTournamentSelection<>() ;
-    List<IntegerSolution> population ;
-    population = null ;
+    var selection = new NaryTournamentSelection<IntegerSolution>() ;
+      List<IntegerSolution> population = null;
 
     assertThrows(NullParameterException.class, () -> selection.execute(population)) ;
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
-    NaryTournamentSelection<IntegerSolution> selection = new NaryTournamentSelection<>() ;
+    var selection = new NaryTournamentSelection<IntegerSolution>() ;
 
     List<IntegerSolution> population = new ArrayList<>(0) ;
 
@@ -63,12 +62,12 @@ public class NaryTournamentSelectionTest {
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
       List<DoubleSolution> population = new ArrayList<>(POPULATION_SIZE);
-      int bound = POPULATION_SIZE;
-      for (int i = 0; i < bound; i++) {
-          DoubleSolution solution = problem.createSolution();
+    var bound = POPULATION_SIZE;
+      for (var i = 0; i < bound; i++) {
+        var solution = problem.createSolution();
           population.add(solution);
       }
-      NaryTournamentSelection<DoubleSolution> selection = new NaryTournamentSelection<>() ;
+    var selection = new NaryTournamentSelection<DoubleSolution>() ;
 
     assertNotNull(selection.execute(population));
   }
@@ -76,9 +75,9 @@ public class NaryTournamentSelectionTest {
   @Test
   public void shouldExecuteReturnTheSameSolutionIfTheListContainsOneSolution() {
     @SuppressWarnings("unchecked")
-    NaryTournamentSelection<DoubleSolution>selection =
+    var selection =
         new NaryTournamentSelection<DoubleSolution>(1, mock(Comparator.class)) ;
-    DoubleSolution solution = mock(DoubleSolution.class) ;
+    var solution = mock(DoubleSolution.class) ;
 
     List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
@@ -94,8 +93,8 @@ public class NaryTournamentSelectionTest {
     list.add(mock(IntegerSolution.class)) ;
 
     Executable executable = () -> selection.execute(list);
-    
-    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable) ;
+
+    var cause = assertThrows(InvalidConditionException.class, executable) ;
     assertThat(cause.getMessage(), containsString("The solution list size (1) is less than " +
         "the number of requested solutions (4)"));
   }

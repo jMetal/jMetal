@@ -61,9 +61,9 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
   }
 
   protected @NotNull List<S> crowdingDistanceSelection(Ranking<S> ranking) {
-    CrowdingDistanceDensityEstimator<S> crowdingDistance = new CrowdingDistanceDensityEstimator<>() ;
+    var crowdingDistance = new CrowdingDistanceDensityEstimator<S>() ;
     List<S> population = new ArrayList<>(solutionsToSelect) ;
-    int rankingIndex = 0;
+    var rankingIndex = 0;
     while (population.size() < solutionsToSelect) {
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
         crowdingDistance.compute(ranking.getSubFront(rankingIndex));
@@ -83,21 +83,20 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
   }
 
   protected void addRankedSolutionsToPopulation(@NotNull Ranking<S> ranking, int rank, List<S> population) {
-    List<S> front ;
 
-    front = ranking.getSubFront(rank);
+    var front = ranking.getSubFront(rank);
 
-      for (S s : front) {
+      for (var s : front) {
           population.add(s);
       }
   }
 
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, @NotNull List<S>population) {
-    List<S> currentRankedFront = ranking.getSubFront(rank) ;
+    var currentRankedFront = ranking.getSubFront(rank) ;
 
     currentRankedFront.sort(new CrowdingDistanceDensityEstimator<>().getComparator());
 
-    int i = 0 ;
+    var i = 0 ;
     while (population.size() < solutionsToSelect) {
       population.add(currentRankedFront.get(i)) ;
       i++ ;

@@ -76,22 +76,22 @@ public class GenericChartContainer<S extends Solution<?>> {
       displayReferenceFront();
     }
 
-    double @NotNull [] xData = new double[] {0};
-    double[] yData = new double[] {0};
-    XYSeries frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
+    var xData = new double[] {0};
+    var yData = new double[] {0};
+    var frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
     frontChartSeries.setMarkerColor(Color.RED);
 
     this.charts.put("Front", this.frontChart);
   }
 
   public synchronized void setReferencePoint(List<List<Double>> referencePoint) {
-    for (int i = 0; i < referencePoint.size(); i++) {
+    for (var i = 0; i < referencePoint.size(); i++) {
       double rp1 = referencePoint.get(i).get(this.objective1);
       double rp2 = referencePoint.get(i).get(this.objective2);
 
       referencePointName.add("Reference Point [" + rp1 + ", " + rp2 + "]");
 
-      XYSeries referencePointSeries =
+      var referencePointSeries =
           this.frontChart.addSeries(
               referencePointName.get(i), new double[] {rp1}, new double[] {rp2});
       referencePointSeries.setMarkerColor(java.awt.Color.green);
@@ -99,7 +99,7 @@ public class GenericChartContainer<S extends Solution<?>> {
   }
 
   public synchronized void updateReferencePoint(List<List<Double>> referencePoint) {
-    for (int i = 0; i < referencePoint.size(); i++) {
+    for (var i = 0; i < referencePoint.size(); i++) {
       double rp1 = referencePoint.get(i).get(this.objective1);
       double rp2 = referencePoint.get(i).get(this.objective2);
 
@@ -107,7 +107,7 @@ public class GenericChartContainer<S extends Solution<?>> {
 
       referencePointName.set(i, "Reference Point [" + rp1 + ", " + rp2 + "]");
 
-      XYSeries referencePointSeries =
+      var referencePointSeries =
           this.frontChart.addSeries(
               referencePointName.get(i), new double[] {rp1}, new double[] {rp2});
       referencePointSeries.setMarkerColor(Color.green);
@@ -127,10 +127,10 @@ public class GenericChartContainer<S extends Solution<?>> {
         .setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter)
         .setMarkerSize(5);
 
-    double @NotNull [] xData = new double[] {0};
-    double @NotNull [] yData = new double[] {0};
+    var xData = new double[] {0};
+    var yData = new double[] {0};
 
-    XYSeries varChartSeries = this.varChart.addSeries(this.name, xData, yData);
+    var varChartSeries = this.varChart.addSeries(this.name, xData, yData);
     varChartSeries.setMarkerColor(Color.blue);
 
     this.charts.put("VAR", this.varChart);
@@ -177,7 +177,7 @@ public class GenericChartContainer<S extends Solution<?>> {
   }
 
   public void addIndicatorChart(String indicator) {
-    XYChart indicatorChart = new XYChartBuilder().xAxisTitle("n").yAxisTitle(indicator).build();
+    var indicatorChart = new XYChartBuilder().xAxisTitle("n").yAxisTitle(indicator).build();
     indicatorChart
         .getStyler()
         .setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter)
@@ -188,7 +188,7 @@ public class GenericChartContainer<S extends Solution<?>> {
     List<Double> indicatorValues = new ArrayList<Double>();
     indicatorValues.add(0.0);
 
-    XYSeries indicatorSeries =
+    var indicatorSeries =
         indicatorChart.addSeries(this.name, indicatorIterations, indicatorValues);
     indicatorSeries.setMarkerColor(Color.blue);
 
@@ -215,7 +215,7 @@ public class GenericChartContainer<S extends Solution<?>> {
 
   public void repaint() {
     try {
-      for (int i = 0; i < this.charts.values().size(); i++) {
+      for (var i = 0; i < this.charts.values().size(); i++) {
         this.swingWrapper.repaintChart(i);
       }
     } catch (IndexOutOfBoundsException e) {
@@ -226,21 +226,21 @@ public class GenericChartContainer<S extends Solution<?>> {
 
   private void getReferenceFrontData(@NotNull String fileName) throws FileNotFoundException {
     @NotNull ArrayFront front = new ArrayFront(fileName);
-    double[] @NotNull [] data = FrontUtils.convertFrontToArray(front);
+    var data = FrontUtils.convertFrontToArray(front);
     xReferenceFrontData = getObjectiveValues(data, objective1) ;
     yReferenceFrontData = getObjectiveValues(data, objective2) ;
   }
 
   private void displayReferenceFront() {
-    XYSeries referenceFront = this.frontChart.addSeries("Reference Front", xReferenceFrontData, yReferenceFrontData);
+    var referenceFront = this.frontChart.addSeries("Reference Front", xReferenceFrontData, yReferenceFrontData);
     referenceFront.setMarkerColor(Color.blue);
   }
 
   private double[] getObjectiveValues(double[][] data, int obj) {
-      double[] values = new double[10];
-      int count = 0;
-      for (double[] datum : data) {
-          double v = datum[obj];
+    var values = new double[10];
+    var count = 0;
+      for (var datum : data) {
+        var v = datum[obj];
           if (values.length == count) values = Arrays.copyOf(values, count * 2);
           values[count++] = v;
       }
@@ -249,10 +249,10 @@ public class GenericChartContainer<S extends Solution<?>> {
   }
 
   private double[] getSolutionsForObjective(List<S> solutionList, int objective) {
-      double[] result = new double[10];
-      int count = 0;
-      for (S s : solutionList) {
-          double v = s.objectives()[objective];
+    var result = new double[10];
+    var count = 0;
+      for (var s : solutionList) {
+        var v = s.objectives()[objective];
           if (result.length == count) result = Arrays.copyOf(result, count * 2);
           result[count++] = v;
       }
@@ -261,9 +261,9 @@ public class GenericChartContainer<S extends Solution<?>> {
   }
 
   private double[] getVariableValues(@NotNull List<DoubleSolution> solutionList, int variable) {
-      double @NotNull [] result = new double[10];
-      int count = 0;
-      for (DoubleSolution doubleSolution : solutionList) {
+    var result = new double[10];
+    var count = 0;
+      for (var doubleSolution : solutionList) {
           double v = doubleSolution.variables().get(variable);
           if (result.length == count) result = Arrays.copyOf(result, count * 2);
           result[count++] = v;
@@ -273,7 +273,7 @@ public class GenericChartContainer<S extends Solution<?>> {
   }
 
   public void saveChart(String fileName, BitmapEncoder.BitmapFormat format) throws IOException {
-    for (String chart : this.charts.keySet()) {
+    for (var chart : this.charts.keySet()) {
       BitmapEncoder.saveBitmap(this.charts.get(chart), fileName + "_" + chart, format);
     }
   }

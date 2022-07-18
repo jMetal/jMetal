@@ -32,11 +32,10 @@ public class KNearestNeighborhood<S extends Solution<?>> implements Neighborhood
 
   @Override
   public List<S> getNeighbors(List<S> solutionList, int solutionIndex) {
-    List<S> neighbourSolutions;
-    double[] distances = new double[solutionList.size()];
-    int[] indexes = new int[solutionList.size()];
+    var distances = new double[solutionList.size()];
+    var indexes = new int[solutionList.size()];
 
-    for (int i = 0; i < solutionList.size(); i++) {
+    for (var i = 0; i < solutionList.size(); i++) {
       distances[i] = this.distance.compute(solutionList.get(i), solutionList.get(solutionIndex));
       indexes[i] = i;
     }
@@ -45,24 +44,24 @@ public class KNearestNeighborhood<S extends Solution<?>> implements Neighborhood
 
 
       List<S> list = new ArrayList<>();
-      int bound = neighborSize;
-      for (int i = 1; i <= bound; i++) {
-          S s = solutionList.get(indexes[i]);
+    var bound = neighborSize;
+      for (var i = 1; i <= bound; i++) {
+        var s = solutionList.get(indexes[i]);
           list.add(s);
       }
-      neighbourSolutions = list;
+    var neighbourSolutions = list;
 
     return neighbourSolutions;
   }
 
   private void minFastSort(double x[], int idx[], int n, int m) {
-    for (int i = 0; i < m; i++) {
-      for (int j = i + 1; j < n; j++) {
+    for (var i = 0; i < m; i++) {
+      for (var j = i + 1; j < n; j++) {
         if (x[i] > x[j]) {
-          double temp = x[i];
+          var temp = x[i];
           x[i] = x[j];
           x[j] = temp;
-          int id = idx[i];
+          var id = idx[i];
           idx[i] = idx[j];
           idx[j] = id;
         }

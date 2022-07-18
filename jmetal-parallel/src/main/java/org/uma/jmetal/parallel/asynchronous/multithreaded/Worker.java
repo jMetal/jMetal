@@ -30,7 +30,7 @@ public class Worker<T extends ParallelTask<?>> extends Thread {
         e.printStackTrace();
       }
 
-      T computedTask = computeFunction.apply(taskToCompute);
+      var computedTask = computeFunction.apply(taskToCompute);
 
       completedTaskQueue.add(computedTask);
     }

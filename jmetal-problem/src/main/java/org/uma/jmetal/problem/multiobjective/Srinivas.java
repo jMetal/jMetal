@@ -14,7 +14,7 @@ public class Srinivas extends AbstractDoubleProblem {
 
   /** Constructor */
   public Srinivas() {
-    int numberOfVariables = 2 ;
+    var numberOfVariables = 2 ;
     setNumberOfObjectives(2);
     setNumberOfConstraints(2);
     setName("Srinivas");
@@ -22,7 +22,7 @@ public class Srinivas extends AbstractDoubleProblem {
     @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-20.0);
       upperLimit.add(20.0);
     }
@@ -33,7 +33,7 @@ public class Srinivas extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.variables().size()];
+    var f = new double[solution.variables().size()];
 
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
@@ -49,7 +49,7 @@ public class Srinivas extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    var constraint = new double[this.getNumberOfConstraints()];
 
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
@@ -57,8 +57,8 @@ public class Srinivas extends AbstractDoubleProblem {
     constraint[0] = 1.0 - (x1 * x1 + x2 * x2) / 225.0;
     constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;
 
-      int bound = getNumberOfConstraints();
-      for (int i = 0; i < bound; i++) {
+    var bound = getNumberOfConstraints();
+      for (var i = 0; i < bound; i++) {
           solution.constraints()[i] = constraint[i];
       }
   }

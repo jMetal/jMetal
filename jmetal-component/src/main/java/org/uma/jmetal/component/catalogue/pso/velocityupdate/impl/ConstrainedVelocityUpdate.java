@@ -72,8 +72,8 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
 
     deltaMax = new double[problem.getNumberOfVariables()];
     deltaMin = new double[problem.getNumberOfVariables()];
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      Bounds<Double> bounds = problem.getVariableBounds().get(i);
+    for (var i = 0; i < problem.getNumberOfVariables(); i++) {
+      var bounds = problem.getVariableBounds().get(i);
       deltaMax[i] = (bounds.getUpperBound() - bounds.getLowerBound()) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
@@ -102,9 +102,9 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
     double r1, r2, c1, c2;
     DoubleSolution bestGlobal;
 
-    for (int i = 0; i < swarm.size(); i++) {
+    for (var i = 0; i < swarm.size(); i++) {
       @Nullable DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-      DoubleSolution bestParticle = (DoubleSolution) localBest[i].copy();
+      var bestParticle = (DoubleSolution) localBest[i].copy();
 
       bestGlobal = globalBestSelection.select(leaders.getSolutionList()) ;
       //bestGlobal = selectGlobalBest(leaders);
@@ -114,9 +114,9 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
 
-      double inertiaWeight = inertiaWeightComputingStrategy.compute() ;
+      var inertiaWeight = inertiaWeightComputingStrategy.compute() ;
 
-      for (int var = 0; var < particle.variables().size(); var++) {
+      for (var var = 0; var < particle.variables().size(); var++) {
         speed[i][var] =
             velocityConstriction(
                 constrictionCoefficient(c1, c2)
@@ -143,12 +143,11 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
    */
   private double velocityConstriction(
           double v, double[] deltaMax, double @NotNull [] deltaMin, int variableIndex) {
-    double result;
 
-    double dmax = deltaMax[variableIndex];
-    double dmin = deltaMin[variableIndex];
+    var dmax = deltaMax[variableIndex];
+    var dmin = deltaMin[variableIndex];
 
-    result = v;
+    var result = v;
 
     if (v > dmax) {
       result = dmax;
@@ -169,7 +168,7 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
    * @return Coefficient constriction
    */
   protected double constrictionCoefficient(double c1, double c2) {
-    double rho = c1 + c2;
+    var rho = c1 + c2;
     if (rho <= 4) {
       return 1.0;
     } else {

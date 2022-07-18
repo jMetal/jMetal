@@ -25,7 +25,7 @@ class SequentialEvaluationTest {
 
   @Test
   void TheConstructorInitializesTheNumberOfComputedEvaluations() {
-    DoubleProblem problem = mock(DoubleProblem.class) ;
+    var problem = mock(DoubleProblem.class) ;
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
 
     assertThat(evaluation.getComputedEvaluations()).isZero() ;
@@ -33,7 +33,7 @@ class SequentialEvaluationTest {
 
   @Test
   void evaluateANullListRaisesAnException() {
-    DoubleProblem problem = mock(DoubleProblem.class) ;
+    var problem = mock(DoubleProblem.class) ;
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
 
     assertThatThrownBy(() -> evaluation.evaluate(null)).isInstanceOf(NullParameterException.class) ;
@@ -41,7 +41,7 @@ class SequentialEvaluationTest {
 
   @Test
   void evaluateAnEmptyListDoesNotIncrementTheNumberOfComputedEvaluations() {
-    DoubleProblem problem = mock(DoubleProblem.class) ;
+    var problem = mock(DoubleProblem.class) ;
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
 
     evaluation.evaluate(new ArrayList<>()) ;
@@ -51,7 +51,7 @@ class SequentialEvaluationTest {
 
   @Test
   void evaluateAnEmptyListWithASolutionWorksProperly() {
-    DoubleProblem problem = mock(DoubleProblem.class) ;
+    var problem = mock(DoubleProblem.class) ;
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
 
     evaluation.evaluate(List.of(mock(DoubleSolution.class))) ;
@@ -62,12 +62,12 @@ class SequentialEvaluationTest {
 
   @Test
   void evaluateAnListWithNSolutionsWorksProperly() {
-    DoubleProblem problem = mock(DoubleProblem.class) ;
+    var problem = mock(DoubleProblem.class) ;
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
 
-    int numberOfSolutions = 10 ;
+    var numberOfSolutions = 10 ;
     List<DoubleSolution> solutions = new ArrayList<>(numberOfSolutions) ;
-      for (int i = 0; i < numberOfSolutions; i++) {
+      for (var i = 0; i < numberOfSolutions; i++) {
           solutions.add(mock(DoubleSolution.class));
       }
 

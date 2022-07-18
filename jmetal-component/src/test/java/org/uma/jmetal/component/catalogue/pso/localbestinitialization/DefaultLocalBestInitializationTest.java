@@ -29,7 +29,7 @@ class DefaultLocalBestInitializationTest {
     swarm.add(problem.createSolution());
     swarm.add(problem.createSolution());
 
-    DoubleSolution[] localBests = new DefaultLocalBestInitialization().initialize(swarm) ;
+    var localBests = new DefaultLocalBestInitialization().initialize(swarm) ;
 
     assertEquals(4, localBests.length);
   }
@@ -44,7 +44,7 @@ class DefaultLocalBestInitializationTest {
     swarm.add(problem.createSolution());
     swarm.add(problem.createSolution());
 
-    DoubleSolution[] localBests = new DefaultLocalBestInitialization().initialize(swarm) ;
+    var localBests = new DefaultLocalBestInitialization().initialize(swarm) ;
 
     assertEquals(swarm.get(0), localBests[0]);
     assertEquals(swarm.get(1), localBests[1]);

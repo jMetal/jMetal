@@ -58,7 +58,7 @@ public class WriteSolutionsToFilesObserver implements Observer<Map<String, Objec
    */
   @Override
   public void update(Observable<Map<String, Object>> observable, Map<String, Object> data) {
-    List<?> population = (List<?>) data.get("POPULATION");
+    var population = (List<?>) data.get("POPULATION");
 
     if (population!=null) {
       if (counter % frequency == 0) {

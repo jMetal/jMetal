@@ -16,10 +16,10 @@ public class Shapes {
    * Calculate a linear shape
    */
   public float linear(float @NotNull [] x, int m) {
-    float result = (float) 1.0;
-    int M = x.length;
+      var result = (float) 1.0;
+      var M = x.length;
 
-    for (int i = 1; i <= M - m; i++) {
+    for (var i = 1; i <= M - m; i++) {
       result *= x[i - 1];
     }
 
@@ -34,10 +34,10 @@ public class Shapes {
    * Calculate a convex shape
    */
   public float convex(float[] x, int m) {
-    float result = (float) 1.0;
-    int M = x.length;
+      var result = (float) 1.0;
+      var M = x.length;
 
-    for (int i = 1; i <= M - m; i++) {
+    for (var i = 1; i <= M - m; i++) {
       result *= (1 - Math.cos(x[i - 1] * Math.PI * 0.5));
     }
 
@@ -52,10 +52,10 @@ public class Shapes {
    * Calculate a concave shape
    */
   public float concave(float @NotNull [] x, int m) {
-    float result = (float) 1.0;
-    int M = x.length;
+      var result = (float) 1.0;
+      var M = x.length;
 
-    for (int i = 1; i <= M - m; i++) {
+    for (var i = 1; i <= M - m; i++) {
       result *= Math.sin(x[i - 1] * Math.PI * 0.5);
     }
 
@@ -82,8 +82,7 @@ public class Shapes {
    * Calculate a disc shape
    */
   public float disc(float[] x, int A, float alpha, float beta) {
-    float tmp;
-    tmp = (float) Math.cos((float) A * Math.pow(x[0], beta) * Math.PI);
+      var tmp = (float) Math.cos((float) A * Math.pow(x[0], beta) * Math.PI);
 
     return (float) 1.0 - (float) Math.pow(x[0], alpha) * (float) Math.pow(tmp, 2.0);
   }

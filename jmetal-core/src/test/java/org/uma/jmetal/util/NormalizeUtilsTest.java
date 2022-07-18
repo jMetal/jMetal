@@ -23,7 +23,7 @@ public class NormalizeUtilsTest {
 
     final Class<?> cls = NormalizeUtils.class;
 
-    final Constructor<?> c = cls.getDeclaredConstructors()[0];
+    final var c = cls.getDeclaredConstructors()[0];
 
     c.setAccessible(true);
 
@@ -51,8 +51,8 @@ public class NormalizeUtilsTest {
 
   @Test
   public void shouldGetNormalizedVectorGiveTheRightValue() {
-    double[] vector = {1.0, 2.0, 3.0, 4.0};
-    double[] normalizedVector = NormalizeUtils.getNormalizedVector(vector, 1.0, 4.0);
+    var vector = new double[]{1.0, 2.0, 3.0, 4.0};
+    var normalizedVector = NormalizeUtils.getNormalizedVector(vector, 1.0, 4.0);
 
     assertArrayEquals(
         new double[] {(1.0 - 1.0) / 3.0, (2.0 - 1.0) / 3.0, (3.0 - 1.0) / 3.0, (4.0 - 1.0) / 3.0},
@@ -62,7 +62,7 @@ public class NormalizeUtilsTest {
 
   @Test
   public void shouldGetMinValuesOfTheColumnsOfAMatrixReturnTheRightValuesWhenTheMatrixHasOneRow() {
-    double[][] matrix = new double[1][];
+    var matrix = new double[1][];
     matrix[0] = new double[] {1, 2, 3, 4};
 
     assertArrayEquals(
@@ -73,7 +73,7 @@ public class NormalizeUtilsTest {
 
   @Test
   public void shouldGetMinValuesOfTheColumnsOfAMatrixReturnTheRightValuesWhenTheMatrixHasTwoRows() {
-    double[][] matrix = new double[2][];
+    var matrix = new double[2][];
     matrix[0] = new double[] {1, 2, 3, 4};
     matrix[1] = new double[] {0, 2, 4, 2};
 
@@ -86,7 +86,7 @@ public class NormalizeUtilsTest {
   @Test
   public void
       shouldGetMinValuesOfTheColumnsOfAMatrixReturnTheRightValuesWhenTheMatrixHasThreeRows() {
-    double[][] matrix = new double[3][];
+    var matrix = new double[3][];
     matrix[0] = new double[] {1, 2, 3, 4};
     matrix[1] = new double[] {0, 2, 4, 2};
     matrix[2] = new double[] {-1, 1, 6, 1};
@@ -99,7 +99,7 @@ public class NormalizeUtilsTest {
 
   @Test
   public void shouldGetMaxValuesOfTheColumnsOfAMatrixReturnTheRightValuesWhenTheMatrixHasOneRow() {
-    double[][] matrix = new double[1][];
+    var matrix = new double[1][];
     matrix[0] = new double[] {1, 2, 3, 4};
 
     assertArrayEquals(
@@ -110,7 +110,7 @@ public class NormalizeUtilsTest {
 
   @Test
   public void shouldGetMaxValuesOfTheColumnsOfAMatrixReturnTheRightValuesWhenTheMatrixHasTwoRows() {
-    double[][] matrix = new double[2][];
+    var matrix = new double[2][];
     matrix[0] = new double[] {1, 2, 3, 4};
     matrix[1] = new double[] {0, 2, 4, 2};
 
@@ -123,7 +123,7 @@ public class NormalizeUtilsTest {
   @Test
   public void
       shouldGetMaxValuesOfTheColumnsOfAMatrixReturnTheRightValuesWhenTheMatrixHasThreeRows() {
-    double[][] matrix = new double[3][];
+    var matrix = new double[3][];
     matrix[0] = new double[] {1, 2, 3, 4};
     matrix[1] = new double[] {0, 2, 4, 2};
     matrix[2] = new double[] {-1, 1, 6, 1};

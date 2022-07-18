@@ -20,70 +20,68 @@ public class ConstraintMOEADIT {
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() {
-    Algorithm<List<DoubleSolution>> algorithm;
-    DoubleProblem problem = new Srinivas();
+      DoubleProblem problem = new Srinivas();
 
-    double cr = 1.0;
-    double f = 0.5;
+    var cr = 1.0;
+    var f = 0.5;
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
             DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
         mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.ConstraintMOEAD)
-        .setCrossover(crossover)
-        .setMutation(mutation)
-        .setMaxEvaluations(50000)
-        .setPopulationSize(300)
-        .setResultPopulationSize(100)
-        .setNeighborhoodSelectionProbability(0.9)
-        .setMaximumNumberOfReplacedSolutions(2)
-        .setNeighborSize(20)
-        .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-        .setDataDirectory("../../resources/weightVectorFiles/moead")
-        .build();
+      Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.ConstraintMOEAD)
+              .setCrossover(crossover)
+              .setMutation(mutation)
+              .setMaxEvaluations(50000)
+              .setPopulationSize(300)
+              .setResultPopulationSize(100)
+              .setNeighborhoodSelectionProbability(0.9)
+              .setMaximumNumberOfReplacedSolutions(2)
+              .setNeighborSize(20)
+              .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
+              .setDataDirectory("../../resources/weightVectorFiles/moead")
+              .build();
 
     algorithm.run() ;
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     assertTrue(population.size() == 100);
   }
 
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
-    Algorithm<List<DoubleSolution>> algorithm;
-    DoubleProblem problem = new Tanaka();
+      DoubleProblem problem = new Tanaka();
 
-    double cr = 1.0;
-    double f = 0.5;
+    var cr = 1.0;
+    var f = 0.5;
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
             DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
         mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.ConstraintMOEAD)
-        .setCrossover(crossover)
-        .setMutation(mutation)
-        .setMaxEvaluations(50000)
-        .setPopulationSize(300)
-        .setResultPopulationSize(100)
-        .setNeighborhoodSelectionProbability(0.9)
-        .setMaximumNumberOfReplacedSolutions(2)
-        .setNeighborSize(20)
-        .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-        .setDataDirectory(
-            "../resources/weightVectorFiles/moead")
-        .build();
+      Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.ConstraintMOEAD)
+              .setCrossover(crossover)
+              .setMutation(mutation)
+              .setMaxEvaluations(50000)
+              .setPopulationSize(300)
+              .setResultPopulationSize(100)
+              .setNeighborhoodSelectionProbability(0.9)
+              .setMaximumNumberOfReplacedSolutions(2)
+              .setNeighborSize(20)
+              .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
+              .setDataDirectory(
+                      "../resources/weightVectorFiles/moead")
+              .build();
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
         new PISAHypervolume<>("../resources/referenceFrontsCSV/Tanaka.csv");

@@ -29,8 +29,8 @@ public class SparkEvaluation<S extends Solution<?>> implements Evaluation<S>, Se
 
   @Override
   public List<S> evaluate(List<S> solutionList) {
-    JavaRDD<S> solutionsToEvaluate = sparkContext.parallelize(solutionList);
-    JavaRDD<S> evaluatedSolutions = solutionsToEvaluate.map(problem::evaluate);
+    var solutionsToEvaluate = sparkContext.parallelize(solutionList);
+    var evaluatedSolutions = solutionsToEvaluate.map(problem::evaluate);
 
     return evaluatedSolutions.collect() ;
   }

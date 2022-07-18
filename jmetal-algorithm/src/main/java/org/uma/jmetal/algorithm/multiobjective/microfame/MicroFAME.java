@@ -67,7 +67,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     operators_use = new double[operators_num];
     window_size = (int) Math.ceil(3.33333 * operators_num);
     //System.out.println("Window size: " + window_size);
-    for (int x = 0; x < operators_num; x++) {
+    for (var x = 0; x < operators_num; x++) {
       operators_desirability[x] = (1.0);
       operators_use[x] = 0.0;
     }
@@ -81,39 +81,39 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     Probability = new Output("Probabiliadad", new Tuple(0, 1.0));
     @NotNull T1MF_Gauangle lowStagnationUMF =
         new T1MF_Gauangle("Upper MF for low Stagnation", -0.4, 0.0, 0.4);
-    T1MF_Gauangle midStagnationUMF =
+    var midStagnationUMF =
         new T1MF_Gauangle("Upper MF for mid Stagnation", 0.1, 0.5, 0.9);
-    T1MF_Gauangle highStagnationUMF =
+    var highStagnationUMF =
         new T1MF_Gauangle("Upper MF for high Stagnation", 0.6, 1.0, 1.4);
 
-    T1MF_Gauangle lowOperatoruseUMF =
+    var lowOperatoruseUMF =
         new T1MF_Gauangle("Upper MF for low Operatoruse", -0.4, 0.0, 0.4);
     @NotNull T1MF_Gauangle midOperatoruseUMF =
         new T1MF_Gauangle("Upper MF for mid Operatoruse", 0.1, 0.5, 0.9);
-    T1MF_Gauangle highOperatoruseUMF =
+    var highOperatoruseUMF =
         new T1MF_Gauangle("Upper MF for highOperatoruse", 0.6, 1.0, 1.4);
 
     @NotNull T1MF_Gauangle lowProbabilityUMF =
         new T1MF_Gauangle("Upper MF for low Probability", -0.4, 0.0, 0.4);
-    T1MF_Gauangle midProbabilityUMF =
+    var midProbabilityUMF =
         new T1MF_Gauangle("Upper MF for mid Probability", 0.1, 0.5, 0.9);
-    T1MF_Gauangle highProbabilityUMF =
+    var highProbabilityUMF =
         new T1MF_Gauangle("Upper MF for high Probability", 0.6, 1.0, 1.4);
 
     // SETUP ANTECEDENTS AND CONSECUENTS
-    T1_Antecedent lowStagnation = new T1_Antecedent("LowStagnation", lowStagnationUMF, Stagnation);
-    T1_Antecedent midStagnation = new T1_Antecedent("MidStagnation", midStagnationUMF, Stagnation);
+    var lowStagnation = new T1_Antecedent("LowStagnation", lowStagnationUMF, Stagnation);
+    var midStagnation = new T1_Antecedent("MidStagnation", midStagnationUMF, Stagnation);
     @NotNull T1_Antecedent highStagnation =
         new T1_Antecedent("HighStagnation", highStagnationUMF, Stagnation);
 
-    T1_Antecedent lowOperatoruse =
+    var lowOperatoruse =
         new T1_Antecedent("LowStagnation", lowOperatoruseUMF, Stagnation);
     @NotNull T1_Antecedent midOperatoruse =
         new T1_Antecedent("MidStagnation", midOperatoruseUMF, Stagnation);
-    T1_Antecedent highOperatoruse =
+    var highOperatoruse =
         new T1_Antecedent("HighStagnation", highOperatoruseUMF, Stagnation);
 
-    T1_Consequent lowProbability =
+    var lowProbability =
         new T1_Consequent("lowProbability", lowProbabilityUMF, Probability);
     @NotNull T1_Consequent midProbability =
         new T1_Consequent("MidProbability", midProbabilityUMF, Probability);
@@ -147,7 +147,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
   protected void updateProgress() {
     evaluations++;
     if (contador_ventana == window_size) {
-      for (int x = 0; x < operators_num; x++) {
+      for (var x = 0; x < operators_num; x++) {
         Stagnation.setInput(estancamiento);
         Operatoruse.setInput(operators_use[x]);
         operators_desirability[x] = rulebase.evaluate(0).get(Probability);
@@ -166,8 +166,8 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
   @Override
   protected List<S> selection(List<S> population) {
       List<S> matingPopulation = new ArrayList<>(3);
-      for (int x = 0; x < 3; x++) {
-          S execute = (S) selectionOperator.execute(archive_hv.getSolutionList());
+      for (var x = 0; x < 3; x++) {
+        var execute = (S) selectionOperator.execute(archive_hv.getSolutionList());
           matingPopulation.add(execute);
       }
 
@@ -179,38 +179,34 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     List<S> offspringPopulation = new ArrayList<>(1);
     List<S> parents = null;
 
-    double probabilityPolynomial, DristributionIndex;
-    probabilityPolynomial = 0.25;
-    DristributionIndex = 20;
+    var probabilityPolynomial = 0.25;
+    double DristributionIndex = 20;
     Operator mutationPolynomial = new PolynomialMutation(probabilityPolynomial, DristributionIndex);
 
-    double probabilityUniform, perturbation;
-    probabilityUniform = 0.25;
-    perturbation = 0.1;
+    var probabilityUniform = 0.25;
+    var perturbation = 0.1;
     Operator mutationUniform = new UniformMutation(probabilityUniform, perturbation);
 
-    double CR, F;
-    CR = 1.0;
-    F = 0.5;
+    var CR = 1.0;
+    var F = 0.5;
     @NotNull DifferentialEvolutionCrossover crossoverOperator_DE =
         new DifferentialEvolutionCrossover(
             CR, F, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double crossoverProbability, crossoverDistributionIndex;
-    crossoverProbability = 1.0;
-    crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 1.0;
+    var crossoverDistributionIndex = 20.0;
     Operator crossoverOperator_SBX =
         new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     @NotNull Random rnd = new Random();
-    int operator = rnd.nextInt(operators_num);
+    var operator = rnd.nextInt(operators_num);
     List<S> offspring = new ArrayList<>(1);
     // RULETTA
-      double counter = 0.0;
-      double[] array = operators_desirability;
-      int bound = operators_num;
-      for (int i = 0; i < bound; i++) {
-          double v = array[i];
+    var counter = 0.0;
+    var array = operators_desirability;
+    var bound = operators_num;
+      for (var i = 0; i < bound; i++) {
+        var v = array[i];
           counter += v;
       }
       while (counter > 0) {
@@ -231,7 +227,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
         parents.add(population.get(0));
         parents.add(population.get(1));
         parents.add(population.get(2));
-        DoubleSolution solution = (DoubleSolution) population.get(2).copy();
+        var solution = (DoubleSolution) population.get(2).copy();
         crossoverOperator_DE.setCurrentSolution(solution);
         offspring = (List<S>) crossoverOperator_DE.execute((List<DoubleSolution>) parents);
         evaluator.evaluate(offspring, getProblem());
@@ -304,13 +300,13 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
   @Override
   protected List<S> createInitialPopulation() {
       List<S> population = new ArrayList<>(archive_hv.getMaxSize());
-      int bound = archive_hv.getMaxSize();
-      for (int i1 = 0; i1 < bound; i1++) {
-          S solution = getProblem().createSolution();
+    var bound = archive_hv.getMaxSize();
+      for (var i1 = 0; i1 < bound; i1++) {
+        var solution = getProblem().createSolution();
           population.add(solution);
       }
       evaluator.evaluate(population, getProblem());
-    for (int i = 0; i < archive_hv.getMaxSize(); i++) {
+    for (var i = 0; i < archive_hv.getMaxSize(); i++) {
       archive_hv.add(population.get(i));
     }
     return null;

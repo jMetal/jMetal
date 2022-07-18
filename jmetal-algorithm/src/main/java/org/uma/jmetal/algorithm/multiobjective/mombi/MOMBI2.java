@@ -63,8 +63,8 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 
   protected void updateMax(List<S> population) {
 
-    for (S solution : population)
-      for (int i = 0; i < this.maxs.size(); i++)
+    for (var solution : population)
+      for (var i = 0; i < this.maxs.size(); i++)
         this.maxs.set(i, Math.max(this.maxs.get(i), solution.objectives()[i]));
 
     this.history.add(maxs);
@@ -82,7 +82,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
         new ArrayList<>(
             Collections.nCopies(getProblem().getNumberOfObjectives(), Double.NEGATIVE_INFINITY));
     this.normalizer = new Normalizer(this.getReferencePoint(), maxs);
-    ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(pathWeights);
+    var aux = new ASFUtilityFunctionSet<S>(pathWeights);
     aux.setNormalizer(this.normalizer);
     return aux;
   }
@@ -91,15 +91,15 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
   @Override
   public void updateReferencePoint(List<S> population) {
       List<Double> iterationMaxs = new ArrayList<>(maxs.size());
-      int bound = this.getProblem().getNumberOfObjectives();
-      for (int i1 = 0; i1 < bound; i1++) {
+    var bound = this.getProblem().getNumberOfObjectives();
+      for (var i1 = 0; i1 < bound; i1++) {
           Double negativeInfinity = Double.NEGATIVE_INFINITY;
           iterationMaxs.add(negativeInfinity);
       }
 
-      for (S solution : population) {
+      for (var solution : population) {
       updateReferencePoint(solution);
-      for (int i = 0; i < solution.objectives().length; i++) {
+      for (var i = 0; i < solution.objectives().length; i++) {
         iterationMaxs.set(i, Math.max(iterationMaxs.get(i), solution.objectives()[i]));
       }
     }
@@ -107,18 +107,18 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
     history.add(iterationMaxs);
 
     @NotNull List<Double> mean = history.mean();
-    List<Double> var = history.variance(mean);
+    var var = history.variance(mean);
 
-    Double maxVariance = this.getMax(var);
+    var maxVariance = this.getMax(var);
 
     if (maxVariance > alpha) {
-      Double maxInNadir = this.getMax(this.maxs);
-      for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++)
+      var maxInNadir = this.getMax(this.maxs);
+      for (var i = 0; i < this.getProblem().getNumberOfObjectives(); i++)
         this.maxs.set(i, maxInNadir);
     } else {
-      for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {
+      for (var i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {
         if (Math.abs(maxs.get(i) - this.getReferencePoint().get(i)) < this.epsilon) {
-          Double maxInMaxs = this.getMax(this.maxs);
+          var maxInMaxs = this.getMax(this.maxs);
           this.maxs.set(i, maxInMaxs);
           history.mark(i);
         } else if (iterationMaxs.get(i) > this.maxs.get(i)) {
@@ -144,7 +144,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 
   public Double getMax(List<Double> list) {
     Double result = Double.NEGATIVE_INFINITY;
-    for (Double d : list) result = Math.max(result, d);
+    for (var d : list) result = Math.max(result, d);
 
     return result;
   }

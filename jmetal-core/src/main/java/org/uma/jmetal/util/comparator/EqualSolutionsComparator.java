@@ -34,16 +34,16 @@ public class EqualSolutionsComparator<S extends Solution<?>> implements Comparat
       return -1;
     }
 
-    int dominate1; // dominate1 indicates if some objective of solution1
     // dominates the same objective in solution2. dominate2
-    int dominate2; // is the complementary of dominate1.
 
-    dominate1 = 0;
-    dominate2 = 0;
+    // dominate1 indicates if some objective of solution1
+    var dominate1 = 0;
+    // is the complementary of dominate1.
+    var dominate2 = 0;
 
     int flag;
     double value1, value2;
-    for (int i = 0; i < solution1.objectives().length; i++) {
+    for (var i = 0; i < solution1.objectives().length; i++) {
       value1 = solution1.objectives()[i];
       value2 = solution2.objectives()[i];
 

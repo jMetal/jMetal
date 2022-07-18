@@ -30,8 +30,8 @@ public class DifferentialEvolutionSelectionTest {
     selection = new DifferentialEvolutionSelection();
     
     Executable executable = () -> selection.execute(null);
-    
-    NullParameterException cause = assertThrows(NullParameterException.class, executable);
+
+    var cause = assertThrows(NullParameterException.class, executable);
     assertThat(cause.getMessage(), containsString("The parameter is null"));
   }
 
@@ -43,8 +43,8 @@ public class DifferentialEvolutionSelectionTest {
     population = Arrays.asList(mock(DoubleSolution.class));
 
     Executable executable = () -> selection.execute(population);
-    
-    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+
+    var cause = assertThrows(InvalidConditionException.class, executable);
     assertThat(cause.getMessage(), containsString("The population has less than 3 solutions: " + 1));
   }
 
@@ -56,8 +56,8 @@ public class DifferentialEvolutionSelectionTest {
     population = Arrays.asList(mock(DoubleSolution.class),mock(DoubleSolution.class));
 
     Executable executable = () -> selection.execute(population);
-    
-    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+
+    var cause = assertThrows(InvalidConditionException.class, executable);
     assertThat(cause.getMessage(), containsString("The population has less than 3 solutions: " + 2));
   }
 
@@ -69,8 +69,8 @@ public class DifferentialEvolutionSelectionTest {
     population = Collections.emptyList();
 
     Executable executable = () -> selection.execute(population);
-    
-    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+
+    var cause = assertThrows(InvalidConditionException.class, executable);
     assertThat(cause.getMessage(), containsString("The population has less than 3 solutions: " + 0));
   }
 
@@ -84,8 +84,8 @@ public class DifferentialEvolutionSelectionTest {
             mock(DoubleSolution.class), mock(DoubleSolution.class), mock(DoubleSolution.class));
 
     Executable executable = () -> selection.execute(population);
-    
-    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+
+    var cause = assertThrows(InvalidConditionException.class, executable);
     assertThat(cause.getMessage(), containsString("Index value invalid: " + -1));
   }
 
@@ -98,8 +98,8 @@ public class DifferentialEvolutionSelectionTest {
             mock(DoubleSolution.class), mock(DoubleSolution.class), mock(DoubleSolution.class));
 
     Executable executable = () -> selection.execute(population);
-    
-    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+
+    var cause = assertThrows(InvalidConditionException.class, executable);
     assertThat(cause.getMessage(), containsString("Index value invalid: " + Integer.MIN_VALUE));
   }
 
@@ -113,8 +113,8 @@ public class DifferentialEvolutionSelectionTest {
             mock(DoubleSolution.class), mock(DoubleSolution.class), mock(DoubleSolution.class));
 
     Executable executable = () -> selection.execute(population);
-    
-    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+
+    var cause = assertThrows(InvalidConditionException.class, executable);
     assertThat(cause.getMessage(), containsString("Index value invalid: " + 5));
   }
 
@@ -130,7 +130,7 @@ public class DifferentialEvolutionSelectionTest {
             mock(DoubleSolution.class),
             mock(DoubleSolution.class));
 
-    List<DoubleSolution> parents = selection.execute(population);
+    var parents = selection.execute(population);
     assertEquals(3, parents.size());
 
     // The index solution must not be in the result
@@ -158,7 +158,7 @@ public class DifferentialEvolutionSelectionTest {
                     mock(DoubleSolution.class),
                     mock(DoubleSolution.class));
 
-    List<DoubleSolution> parents = selection.execute(population);
+    var parents = selection.execute(population);
     assertEquals(5, parents.size());
 
     // The index solution must not be in the result
@@ -186,7 +186,7 @@ public class DifferentialEvolutionSelectionTest {
                     mock(DoubleSolution.class),
                     mock(DoubleSolution.class));
 
-    List<DoubleSolution> parents = selection.execute(population);
+    var parents = selection.execute(population);
     assertEquals(3, parents.size());
 
     // The index solution must not be in the result

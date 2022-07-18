@@ -79,11 +79,11 @@ public class F05SchwefelGlobalOptBound extends TestFunc {
     m_B = new double[mDimension];
     m_z = new double[mDimension];
 
-    double[][] m_data = new double[mDimension + 1][mDimension];
+    var m_data = new double[mDimension + 1][mDimension];
 
     // Load the shifted global optimum
     Benchmark.loadMatrixFromFile(file_data, mDimension + 1, mDimension, m_data);
-    for (int i = 0; i < mDimension; i++) {
+    for (var i = 0; i < mDimension; i++) {
       if ((i + 1) <= Math.ceil(mDimension / 4.0)) {
         m_o[i] = -100.0;
       } else if ((i + 1) >= Math.floor((3.0 * mDimension) / 4.0)) {
@@ -92,7 +92,7 @@ public class F05SchwefelGlobalOptBound extends TestFunc {
         m_o[i] = m_data[0][i];
       }
     }
-    for (int i = 0; i < mDimension; i++) {
+    for (var i = 0; i < mDimension; i++) {
       System.arraycopy(m_data[i + 1], 0, m_A[i], 0, mDimension);
     }
     Benchmark.Ax(m_B, m_A, m_o);
@@ -101,12 +101,12 @@ public class F05SchwefelGlobalOptBound extends TestFunc {
   // Function body
   public double f(double[] x) {
 
-    double max = Double.NEGATIVE_INFINITY;
+    var max = Double.NEGATIVE_INFINITY;
 
     Benchmark.Ax(m_z, m_A, x);
 
-    for (int i = 0; i < mDimension; i++) {
-      double temp = Math.abs(m_z[i] - m_B[i]);
+    for (var i = 0; i < mDimension; i++) {
+      var temp = Math.abs(m_z[i] - m_B[i]);
       if (max < temp) {
         max = temp;
       }

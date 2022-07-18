@@ -29,25 +29,25 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class NSGAIIStoppingByKeyboardExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    var problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    var referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     @NotNull Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    var populationSize = 100;
+    var offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByKeyboard() ;
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+    var nsgaii = new NSGAIIBuilder<>(
         problem,
         populationSize,
         offspringPopulationSize,
@@ -58,7 +58,7 @@ public class NSGAIIStoppingByKeyboardExample {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = nsgaii.getResult();
+    var population = nsgaii.getResult();
     JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations() + "\n");
 

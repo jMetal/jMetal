@@ -49,11 +49,11 @@ public class CompositeCrossover implements CrossoverOperator<CompositeSolution> 
 
     @NotNull List<Solution<?>> offspring1 = new ArrayList<>();
     @NotNull List<Solution<?>> offspring2 = new ArrayList<>();
-    int numberOfSolutionsInCompositeSolution = solutions.get(0).variables().size();
-    for (int i = 0; i < numberOfSolutionsInCompositeSolution; i++) {
-      List<Solution<?>> parents =
+    var numberOfSolutionsInCompositeSolution = solutions.get(0).variables().size();
+    for (var i = 0; i < numberOfSolutionsInCompositeSolution; i++) {
+      var parents =
           Arrays.asList(solutions.get(0).variables().get(i), solutions.get(1).variables().get(i));
-      List<Solution<?>> children = operators.get(i).execute(parents);
+      var children = operators.get(i).execute(parents);
       offspring1.add(children.get(0));
       offspring2.add(children.get(1));
     }

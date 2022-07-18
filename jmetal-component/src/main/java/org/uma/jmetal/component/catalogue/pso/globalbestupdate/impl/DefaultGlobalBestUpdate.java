@@ -28,7 +28,7 @@ public class DefaultGlobalBestUpdate implements GlobalBestUpdate {
     Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());
 
     for (@NotNull DoubleSolution particle : swarm) {
-      DoubleSolution copy = (DoubleSolution) particle.copy();
+      var copy = (DoubleSolution) particle.copy();
       globalBest.add(copy);
     }
     return globalBest;

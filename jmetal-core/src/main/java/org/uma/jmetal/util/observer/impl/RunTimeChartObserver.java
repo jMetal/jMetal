@@ -74,7 +74,7 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
   @Override
   public void update(Observable<Map<String, Object>> observable, Map<String, Object> data) {
     evaluations = (Integer)data.get("EVALUATIONS") ;
-    List<S> population = (List<S>) data.get("POPULATION");
+    var population = (List<S>) data.get("POPULATION");
 
     if (evaluations!=null && population!=null) {
       if ((this.chart != null) && (evaluations%plotUpdateFrequency == 0)){

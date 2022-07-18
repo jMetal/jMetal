@@ -105,7 +105,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 			}
 			//For more than two objectives, weights are read from the resources file of jMetal
 			else {
-				String dataFileName = "W" + problem.getNumberOfObjectives() + "D_" + getMaxPopulationSize() + ".dat";
+				var dataFileName = "W" + problem.getNumberOfObjectives() + "D_" + getMaxPopulationSize() + ".dat";
 				weights = VectorFileUtils.readVectors(dataFileName);
 			}
 		} else { //If a file with weight vectors is given as parameter, weights are read from that file
@@ -153,7 +153,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 		List<S> jointPopulation = new ArrayList<>();
 		jointPopulation.addAll(population);
 		jointPopulation.addAll(offspringPopulation);
-		Ranking<S> ranking = computeRanking(jointPopulation);
+		var ranking = computeRanking(jointPopulation);
 		return selectBest(ranking);
 	}
 	
@@ -168,14 +168,14 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 	}
 
     protected void addLastRankedSolutionsToPopulation(@NotNull Ranking<S> ranking, int index, @NotNull List<S> population) {
-		List<S> front 	= ranking.getSubFront(index);
-		int remain 		= this.getPopulationSize() - population.size();
+		var front 	= ranking.getSubFront(index);
+		var remain 		= this.getPopulationSize() - population.size();
 		population.addAll(front.subList(0, remain));
 	}
 
     protected List<S> selectBest(Ranking<S> ranking) {
 		List<S> population = new ArrayList<>(this.getPopulationSize());
-		int rankingIndex = 0;
+		var rankingIndex = 0;
 
 		while (populationIsNotFull(population)) {
 			if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {

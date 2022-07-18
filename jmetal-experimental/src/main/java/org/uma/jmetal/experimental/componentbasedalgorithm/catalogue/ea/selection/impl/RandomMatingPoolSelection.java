@@ -19,8 +19,8 @@ public class RandomMatingPoolSelection<S extends Solution<?>> implements MatingP
     Check.notNull(solutionList);
 
     List<S> matingPool = new ArrayList<>();
-      int bound = matingPoolSize;
-      for (int i = 0; i < bound; i++) {
+    var bound = matingPoolSize;
+      for (var i = 0; i < bound; i++) {
           matingPool.add(
                   solutionList.get(JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1)));
       }

@@ -34,8 +34,8 @@ public class BinarySet extends BitSet {
 
   @Override
   public @NotNull String toString() {
-    StringBuilder result = new StringBuilder();
-    for (int i = 0; i < numberOfBits; i++) {
+    var result = new StringBuilder();
+    for (var i = 0; i < numberOfBits; i++) {
       if (get(i)) {
         result.append("1");
       } else {

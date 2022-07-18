@@ -45,12 +45,12 @@ public class CharSequenceRandomMutation implements MutationOperator<CharSequence
 
   /** Performs the operation */
   public void doMutation(@NotNull CharSequenceSolution solution) {
-    int sequenceLength = solution.variables().size();
+    var sequenceLength = solution.variables().size();
 
-    for (int i = 0; i < sequenceLength; i++) {
+    for (var i = 0; i < sequenceLength; i++) {
       if (JMetalRandom.getInstance().nextDouble() < mutationProbability) {
-        int positionToChange = JMetalRandom.getInstance().nextInt(0, sequenceLength - 1);
-        char newCharValue = alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length - 1)];
+        var positionToChange = JMetalRandom.getInstance().nextInt(0, sequenceLength - 1);
+        var newCharValue = alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length - 1)];
         solution.variables().set(positionToChange, newCharValue);
       }
     }

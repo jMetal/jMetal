@@ -23,11 +23,11 @@ public class DefaultLocalBestInitialization implements LocalBestInitialization {
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
     List<DoubleSolution> list = new ArrayList<>();
-    for (DoubleSolution doubleSolution : swarm) {
-      DoubleSolution copy = (DoubleSolution) doubleSolution.copy();
+    for (var doubleSolution : swarm) {
+      var copy = (DoubleSolution) doubleSolution.copy();
       list.add(copy);
     }
-    DoubleSolution @NotNull [] localBest = list.toArray(new DoubleSolution[0]);
+    var localBest = list.toArray(new DoubleSolution[0]);
 
       return localBest ;
   }

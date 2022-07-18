@@ -61,7 +61,7 @@ public class autoAlgorithmWithWFGExperiments {
   public static void main(String[] args) throws IOException {
     Check.that(args.length == 1, "Missing argument: experimentBaseDirectory");
 
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.csv"));
@@ -77,7 +77,7 @@ public class autoAlgorithmWithWFGExperiments {
     @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
         configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    var experiment =
         new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("WFGAutoAlgorithmExperiments")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
@@ -114,8 +114,8 @@ public class autoAlgorithmWithWFGExperiments {
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           @NotNull List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
+      for (var experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm =
             new NSGAIIBuilder<DoubleSolution>(
                     experimentProblem.getProblem(),
@@ -127,9 +127,9 @@ public class autoAlgorithmWithWFGExperiments {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-        double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
+      for (var experimentProblem : problemList) {
+        var mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+        var mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm =
             new SMPSOBuilder(
                     (DoubleProblem) experimentProblem.getProblem(),
@@ -145,7 +145,7 @@ public class autoAlgorithmWithWFGExperiments {
       for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
 
         /* OMOPSO */
-        String[] parametersOMOPSO =
+        var parametersOMOPSO =
             ("--problemName "
                     + experimentProblem.getProblem().getClass().getName()
                     + " "
@@ -181,14 +181,14 @@ public class autoAlgorithmWithWFGExperiments {
                     + "--velocityChangeWhenLowerLimitIsReached -1.0 "
                     + "--velocityChangeWhenUpperLimitIsReached -1.0 ")
                 .split("\\s+");
-        AutoMOPSO OMOPSO = new AutoMOPSO();
+        var OMOPSO = new AutoMOPSO();
         OMOPSO.parseAndCheckParameters(parametersOMOPSO);
-        ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
+        var omopso = OMOPSO.create();
 
         algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
 
         /* AutoMOPSO With config.txt */
-        String[] parametersAutoMOPSOWithtConfig =
+        var parametersAutoMOPSOWithtConfig =
             ("--problemName "
                     + experimentProblem.getProblem().getClass().getName()
                     + " "
@@ -223,7 +223,7 @@ public class autoAlgorithmWithWFGExperiments {
                     + "--velocityChangeWhenLowerLimitIsReached -0.8592 "
                     + "--velocityChangeWhenUpperLimitIsReached -0.6444")
                 .split("\\s+");
-        AutoMOPSO AutoMOPSOWithConfig = new AutoMOPSO();
+        var AutoMOPSOWithConfig = new AutoMOPSO();
         AutoMOPSOWithConfig.parseAndCheckParameters(parametersAutoMOPSOWithtConfig);
         @NotNull ParticleSwarmOptimizationAlgorithm automopsoWithConfig = AutoMOPSOWithConfig.create();
 

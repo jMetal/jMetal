@@ -39,8 +39,8 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
     this.neighborhood = new int[numberOfWeightVectors][neighborhoodSize];
     this.weightVector = new double[numberOfWeightVectors][weightVectorSize];
 
-    for (int n = 0; n < numberOfWeightVectors; n++) {
-      double a = 1.0 * n / (numberOfWeightVectors - 1);
+    for (var n = 0; n < numberOfWeightVectors; n++) {
+      var a = 1.0 * n / (numberOfWeightVectors - 1);
       weightVector[n][0] = a;
       weightVector[n][1] = 1 - a;
     }
@@ -60,26 +60,25 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
     this.neighborhood = new int[numberOfWeightVectors][neighborhoodSize];
     this.weightVector = new double[numberOfWeightVectors][weightVectorSize];
 
-    String weightVectorFileName = vectorDirectoryName + "/W"+weightVectorSize+"D_" + numberOfWeightVectors +".dat" ;
+    var weightVectorFileName = vectorDirectoryName + "/W"+weightVectorSize+"D_" + numberOfWeightVectors +".dat" ;
     readWeightsFromFile(weightVectorFileName) ;
 
     initializeNeighborhood();
   }
 
   private void readWeightsFromFile(String vectorFileName) throws FileNotFoundException {
-    InputStream inputStream;
-    inputStream = getClass().getResourceAsStream(vectorFileName);
+    var inputStream = getClass().getResourceAsStream(vectorFileName);
     if (null == inputStream) {
       inputStream = new FileInputStream(vectorFileName);
     }
-    InputStreamReader isr = new InputStreamReader(inputStream);
+    var isr = new InputStreamReader(inputStream);
 
-    try (BufferedReader br = new BufferedReader(isr)) {
-      int i = 0;
+    try (var br = new BufferedReader(isr)) {
+      var i = 0;
       int j;
-      String aux = br.readLine();
+      var aux = br.readLine();
       while (aux != null) {
-        StringTokenizer st = new StringTokenizer(aux);
+        var st = new StringTokenizer(aux);
         j = 0;
         while (st.hasMoreTokens()) {
           double value = Double.valueOf(st.nextToken());
@@ -96,13 +95,13 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
   }
 
   private void initializeNeighborhood() {
-    EuclideanDistance euclideanDistance = new EuclideanDistance();
-    double[] x = new double[numberOfWeightVectors];
-    int @NotNull [] idx = new int[numberOfWeightVectors];
+    var euclideanDistance = new EuclideanDistance();
+    var x = new double[numberOfWeightVectors];
+    var idx = new int[numberOfWeightVectors];
 
-    for (int i = 0; i < numberOfWeightVectors; i++) {
+    for (var i = 0; i < numberOfWeightVectors; i++) {
       // calculate the distances based on weight vectors
-      for (int j = 0; j < numberOfWeightVectors; j++) {
+      for (var j = 0; j < numberOfWeightVectors; j++) {
         x[j] = euclideanDistance.compute(weightVector[i], weightVector[j]);
         idx[j] = j;
       }
@@ -115,13 +114,13 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
   }
 
   private void minFastSort(double x[], int idx[], int n, int m) {
-    for (int i = 0; i < m; i++) {
-      for (int j = i + 1; j < n; j++) {
+    for (var i = 0; i < m; i++) {
+      for (var j = i + 1; j < n; j++) {
         if (x[i] > x[j]) {
-          double temp = x[i];
+          var temp = x[i];
           x[i] = x[j];
           x[j] = temp;
-          int id = idx[i];
+          var id = idx[i];
           idx[i] = idx[j];
           idx[j] = id;
         }
@@ -132,8 +131,8 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
   @Override
   public List<S> getNeighbors(List<S> solutionList, int solutionIndex) {
       List<S> neighbourSolutions = new ArrayList<>();
-      for (int i : neighborhood[solutionIndex]) {
-          S s = solutionList.get(i);
+      for (var i : neighborhood[solutionIndex]) {
+        var s = solutionList.get(i);
           neighbourSolutions.add(s);
       }
 

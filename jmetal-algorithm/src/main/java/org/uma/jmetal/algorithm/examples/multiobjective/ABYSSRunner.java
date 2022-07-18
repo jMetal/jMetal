@@ -34,11 +34,9 @@ public class ABYSSRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName [referenceFront]
    */
   public static void main(String @NotNull [] args) throws Exception {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
     String problemName ;
 
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
@@ -49,19 +47,19 @@ public class ABYSSRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv" ;
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     Archive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
-    algorithm = new ABYSSBuilder(problem, archive)
-        .setMaxEvaluations(25000)
-        .build();
+    Algorithm<List<DoubleSolution>> algorithm = new ABYSSBuilder(problem, archive)
+            .setMaxEvaluations(25000)
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

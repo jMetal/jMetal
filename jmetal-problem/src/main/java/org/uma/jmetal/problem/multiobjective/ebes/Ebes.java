@@ -658,7 +658,7 @@ public class Ebes extends AbstractDoubleProblem {
 
   public Ebes() throws FileNotFoundException {
     overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>();
-    String file = EBEsReadProblems() + ".ebe";
+    var file = EBEsReadProblems() + ".ebe";
 
     EBEsInitialize(file);
   }
@@ -696,7 +696,7 @@ public class Ebes extends AbstractDoubleProblem {
     // y la cantidad inicial de restricciones
 
     // numberOfVariables_=0;
-    int numberOfConstraints_ = 0;
+    var numberOfConstraints_ = 0;
     /*
     for(int gr=0;gr<numberOfGroupElements_;gr++){
       numberOfVariables_+= Groups_[gr][VARIABLES];
@@ -704,7 +704,7 @@ public class Ebes extends AbstractDoubleProblem {
     }
     */
     // variable position, amount variables and geometric constraints
-    int numberOfVariables = Variable_Position();
+    var numberOfVariables = Variable_Position();
     // geomtric constraints for shape
     numberOfConstraints_ = numberOfConstraintsGeometric_;
 
@@ -726,8 +726,8 @@ public class Ebes extends AbstractDoubleProblem {
     System.out.println("  Number of Groups: " + numberOfGroupElements_);
     System.out.println("Optimization multi-objective: ");
     System.out.println("  Number of objective function: " + getNumberOfObjectives());
-    String txt = "";
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    var txt = "";
+    for (var i = 0; i < getNumberOfObjectives(); i++) {
       txt = txt + OF_[i] + " ";
     }
     System.out.println("  " + txt);
@@ -744,10 +744,10 @@ public class Ebes extends AbstractDoubleProblem {
     System.out.println("Algorithm configuration: ");
 
     // Fill lower and upper limits
-    Double[] lowerLimit_ = new Double[numberOfVariables];
-    Double @NotNull [] upperLimit_ = new Double[numberOfVariables];
-    int var = 0;
-    for (int gr = 0; gr < numberOfGroupElements_; gr++) {
+    var lowerLimit_ = new Double[numberOfVariables];
+    var upperLimit_ = new Double[numberOfVariables];
+    var var = 0;
+    for (var gr = 0; gr < numberOfGroupElements_; gr++) {
       var += Groups_[gr][VARIABLES];
 
       if (Groups_[gr][SHAPE] == CIRCLE) {
@@ -876,9 +876,9 @@ public class Ebes extends AbstractDoubleProblem {
 
     // greates difference between nodes
     elementsBetweenDiffGreat_ = 0;
-    for (int ba = 0; ba < numberOfElements_; ba++) {
-      int i = (int) Element_[ba][i_];
-      int j = (int) Element_[ba][j_];
+    for (var ba = 0; ba < numberOfElements_; ba++) {
+      var i = (int) Element_[ba][i_];
+      var j = (int) Element_[ba][j_];
       if (Math.abs(j - i) > elementsBetweenDiffGreat_) {
         elementsBetweenDiffGreat_ = Math.abs(j - i);
       }
@@ -898,21 +898,21 @@ public class Ebes extends AbstractDoubleProblem {
    */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int hi = 0;
-    double @NotNull [] fx = new double[solution.objectives().length]; // functions
+    var hi = 0;
+    var fx = new double[solution.objectives().length]; // functions
 
     EBEsElementsTopology(solution); // transforma geometria a caracterÃƒÂ­sticas mecÃƒÂ¡nicas
 
     EBEsCalculus(); //  metodo matricial de la rigidez para estructuras espaciales (3D)
 
     // START OBJETIVES FUNCTION
-    for (int j = 0; j < solution.objectives().length; j++) {
+    for (var j = 0; j < solution.objectives().length; j++) {
       // total weight
       if (OF_[j].equals("W")) {
         // START structure total weight ---------------------
         fx[j] = 0.0;
-        for (int ba = 0; ba < numberOfElements_; ba++) {
-          int idx = (int) Element_[ba][INDEX_];
+        for (var ba = 0; ba < numberOfElements_; ba++) {
+          var idx = (int) Element_[ba][INDEX_];
           fx[j] += Groups_[idx][AREA] * Element_[ba][L_] * Groups_[idx][SPECIFIC_WEIGHT];
         }
         solution.objectives()[j] = fx[j];
@@ -922,13 +922,13 @@ public class Ebes extends AbstractDoubleProblem {
       else if (OF_[j].equals("D")) {
         // START maximize displacement nodes ---------------------------------------------
         fx[j] = 0.0;
-        for (int i = 0; i < nodeCheck_.length; i++) {
-          double xn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aX_][hi];
-          double yn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aY_][hi];
-          double zn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aZ_][hi];
-          double sum = 0.0;
-          for (double v : new double[]{xn, yn, zn}) {
-            double pow = Math.pow(v, 2.0);
+        for (var i = 0; i < nodeCheck_.length; i++) {
+          var xn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aX_][hi];
+          var yn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aY_][hi];
+          var zn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aZ_][hi];
+          var sum = 0.0;
+          for (var v : new double[]{xn, yn, zn}) {
+            var pow = Math.pow(v, 2.0);
             sum += pow;
           }
           fx[j] += Math.sqrt(sum);
@@ -997,11 +997,11 @@ public class Ebes extends AbstractDoubleProblem {
    * @throws JMetalException
    */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
-    double[] x = new double[10];
-    int count = 0;
-    int bound = getNumberOfVariables();
-    for (int i1 = 0; i1 < bound; i1++) {
+    var constraint = new double[this.getNumberOfConstraints()];
+    var x = new double[10];
+    var count = 0;
+    var bound = getNumberOfVariables();
+    for (var i1 = 0; i1 < bound; i1++) {
       double v1 = solution.variables().get(i1);
       if (x.length == count) x = Arrays.copyOf(x, count * 2);
       x[count++] = v1;
@@ -1009,11 +1009,11 @@ public class Ebes extends AbstractDoubleProblem {
     x = Arrays.copyOfRange(x, 0, count);
 
     double x1, x2, x3, x4;
-    int var = 0;
-    int con = 0;
+    var var = 0;
+    var con = 0;
 
     // restricciones de relaciÃƒÂ³n de forma en las paredes b/t
-    for (int gr = 0; gr < numberOfGroupElements_; gr++) {
+    for (var gr = 0; gr < numberOfGroupElements_; gr++) {
 
       var += Groups_[gr][VARIABLES];
       con += Groups_[gr][CONSTRAINT];
@@ -1024,14 +1024,14 @@ public class Ebes extends AbstractDoubleProblem {
         x1 = x[var - 2]; // diameter
         x2 = x[var - 1]; // tickness plate
 
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         if (ratio < x2 / x1) ratio = x2 / x1;
         constraint[con - 1] = -ratio + Groups_[gr][RATIO_YZ]; // relaciÃƒÂ³n entre altura y base
       } else if (Groups_[gr][SHAPE] == RECTANGLE) {
         x1 = x[var - 2]; // higth (y axis)
         x2 = x[var - 1]; // witdth (z axis)
 
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         constraint[con - 2] =
             +ratio - Groups_[gr][RATIO_YZ] * 0.75; // relaciÃƒÂ³n entre altura y base maxima
         constraint[con - 1] =
@@ -1043,16 +1043,16 @@ public class Ebes extends AbstractDoubleProblem {
         x3 = x[var - 2]; // tickness along Y axis => tickness of width  plate
         x4 = x[var - 1]; // tickness along Z axis => tickness of heigth plate
 
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         constraint[con - 4] =
             +ratio - Groups_[gr][RATIO_YZ] * 0.75; // relaciÃƒÂ³n entre altura y base maxima
         constraint[con - 3] =
             -ratio + Groups_[gr][RATIO_YZ] * 1.25; // relaciÃƒÂ³n entre altura y base minima
 
-        double tb1 = -x3 * 15 + x1;
-        double tb2 = +x3 * 30 - x1;
-        double ta1 = -x4 * 10 + x2;
-        double ta2 = +x4 * 20 - x2;
+        var tb1 = -x3 * 15 + x1;
+        var tb2 = +x3 * 30 - x1;
+        var ta1 = -x4 * 10 + x2;
+        var ta2 = +x4 * 20 - x2;
         // double ta2=-x2/x4+27;//0.3*Math.sqrt(Groups_[gr][E_]/(Groups_[gr][STRESS])); //
         // relaciÃƒÂ³n entre espesor de la placa y altura de lados
         constraint[con - 2] =
@@ -1070,16 +1070,16 @@ public class Ebes extends AbstractDoubleProblem {
         x3 = x[var - 2]; // tickness along Y axis => tickness of width  plate
         x4 = x[var - 1]; // tickness along Z axis => tickness of heigth plate
 
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         constraint[con - 4] =
             +ratio - Groups_[gr][RATIO_YZ] * 0.75; // relaciÃƒÂ³n entre altura y base maxima
         constraint[con - 3] =
             -ratio + Groups_[gr][RATIO_YZ] * 1.25; // relaciÃƒÂ³n entre altura y base minima
 
-        double tb1 = -x3 * 15 + x1;
-        double tb2 = +x3 * 30 - x1;
-        double ta1 = -x4 * 10 + x2;
-        double ta2 = +x4 * 20 - x2;
+        var tb1 = -x3 * 15 + x1;
+        var tb2 = +x3 * 30 - x1;
+        var ta1 = -x4 * 10 + x2;
+        var ta2 = +x4 * 20 - x2;
 
         // double tb1=-x3*20+x1;
         // double tb2=-x1/x3+35;//0.6*Math.sqrt(Groups_[gr][E_]/(Groups_[gr][STRESS])); //
@@ -1101,7 +1101,7 @@ public class Ebes extends AbstractDoubleProblem {
         x2 = x[var - 3]; // width (Z axis)
         x3 = x[var - 2]; // tickness along Y axis => tickness of width  plate
         x4 = x[var - 1]; // tickness along Z axis => tickness of heigth plate
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         constraint[con - 4] =
             -ratio + Groups_[gr][RATIO_YZ]; // relaciÃƒÂ³n entre altura y base maxima
         constraint[con - 3] =
@@ -1126,7 +1126,7 @@ public class Ebes extends AbstractDoubleProblem {
         x2 = x[var - 3]; // width (Z axis)
         x3 = x[var - 2]; // tickness along Y axis => tickness of width  plate
         x4 = x[var - 1]; // tickness along Z axis => tickness of heigth plate
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         constraint[con - 4] =
             -ratio + Groups_[gr][RATIO_YZ] * 0.85; // /2.0 relaciÃƒÂ³n entre altura y base maxima
         constraint[con - 3] =
@@ -1150,7 +1150,7 @@ public class Ebes extends AbstractDoubleProblem {
         x2 = x[var - 3]; // width (Z axis)
         x3 = x[var - 2]; // thickness along Y axis => thickness of width  plate
         x4 = x[var - 1]; // thickness along Z axis => thickness of heigth plate
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         constraint[con - 4] =
             -ratio + Groups_[gr][RATIO_YZ] * 0.1; // 2.0 relaciÃƒÂ³n entre altura y base maxima
         constraint[con - 3] =
@@ -1174,7 +1174,7 @@ public class Ebes extends AbstractDoubleProblem {
         x2 = x[var - 3]; // width (Z axis)
         x3 = x[var - 2]; // thickness along Y axis => thickness of width  plate
         x4 = x[var - 1]; // thickness along Z axis => thickness heigth plate
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         constraint[con - 4] = -ratio + Groups_[gr][RATIO_YZ]; // ratio between height and base
         constraint[con - 3] =
             +ratio - Groups_[gr][RATIO_YZ]; // relaciÃƒÂ³n entre altura y base minima
@@ -1197,7 +1197,7 @@ public class Ebes extends AbstractDoubleProblem {
         x2 = x[var - 3]; // width (Z axis)
         x3 = x[var - 2]; // tickness along Y axis => tickness of width  plate
         x4 = x[var - 1]; // tickness along Z axis => tickness of heigth plate
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         constraint[con - 4] =
             -ratio + Groups_[gr][RATIO_YZ]; // relaciÃƒÂ³n entre altura y base maxima
         constraint[con - 3] =
@@ -1221,7 +1221,7 @@ public class Ebes extends AbstractDoubleProblem {
         x2 = x[var - 3]; // width (Z axis)
         x3 = x[var - 2]; // tickness along Y axis => tickness of width  plate
         x4 = x[var - 1]; // tickness along Z axis => tickness of heigth plate
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         constraint[con - 4] =
             -ratio + Groups_[gr][RATIO_YZ]; // relaciÃƒÂ³n entre altura y base maxima
         constraint[con - 3] =
@@ -1245,7 +1245,7 @@ public class Ebes extends AbstractDoubleProblem {
         x2 = x[var - 3]; // width (Z axis)
         x3 = x[var - 2]; // tickness along Y axis => tickness of width  plate
         x4 = x[var - 1]; // tickness along Z axis => tickness of heigth plate
-        double ratio = x1 / x2;
+        var ratio = x1 / x2;
         constraint[con - 4] =
             -ratio + Groups_[gr][RATIO_YZ]; // relaciÃƒÂ³n entre altura y base maxima
         constraint[con - 3] =
@@ -1279,8 +1279,8 @@ public class Ebes extends AbstractDoubleProblem {
     */
 
     // RESTRICCIONES POR TENSIÃ“N
-    for (int hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
-      for (int gr = 0; gr < numberOfGroupElements_; gr++) {
+    for (var hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
+      for (var gr = 0; gr < numberOfGroupElements_; gr++) {
 
         // RESTRICCIONES DEBIDO A LA TENSIÃƒÂ³N DE TRACCIÃƒÂ³N
         constraint[con] =
@@ -1310,16 +1310,16 @@ public class Ebes extends AbstractDoubleProblem {
       }
     }
 
-    for (int hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
+    for (var hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
       // constraint of node displacement structure
       double deltaN = 0;
-      for (int i = 0; i < nodeCheck_.length; i++) {
-        double xn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aX_][hi];
-        double yn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aY_][hi];
-        double zn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aZ_][hi];
-        double sum = 0.0;
-        for (double v : new double[]{xn, yn, zn}) {
-          double pow = Math.pow(v, 2);
+      for (var i = 0; i < nodeCheck_.length; i++) {
+        var xn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aX_][hi];
+        var yn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aY_][hi];
+        var zn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aZ_][hi];
+        var sum = 0.0;
+        for (var v : new double[]{xn, yn, zn}) {
+          var pow = Math.pow(v, 2);
           sum += pow;
         }
         deltaN = Math.sqrt(sum);
@@ -1328,7 +1328,7 @@ public class Ebes extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }
@@ -1337,9 +1337,9 @@ public class Ebes extends AbstractDoubleProblem {
     // asignaciÃƒÂ³n de las variables para cada grupo
     // y determinaciÃƒÂ³n de las caracterÃƒÂ­sticas mecÃƒÂ¡nicas
 
-    double[] x = new double[10];
-    int count = 0;
-    for (Double aDouble : solution.variables()) {
+    var x = new double[10];
+    var count = 0;
+    for (var aDouble : solution.variables()) {
       double v = aDouble;
       if (x.length == count) x = Arrays.copyOf(x, count * 2);
       x[count++] = v;
@@ -1348,8 +1348,8 @@ public class Ebes extends AbstractDoubleProblem {
 
     double x1, x2, x3, x4;
 
-    int var = 0;
-    for (int gr = 0; gr < numberOfGroupElements_; gr++) {
+    var var = 0;
+    for (var gr = 0; gr < numberOfGroupElements_; gr++) {
 
       var += Groups_[gr][VARIABLES];
 
@@ -1431,8 +1431,8 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsWeigthElement() throws JMetalException {
 
     // load by weight of the element
-    for (int el = 0; el < numberOfElements_; el++) {
-      int idx = (int) Element_[el][INDEX_];
+    for (var el = 0; el < numberOfElements_; el++) {
+      var idx = (int) Element_[el][INDEX_];
       if (GravitationalAxis_ == "Z") {
         // gravitational in Z-AXIS
         WeightElement_[el][QH_] = 0;
@@ -1462,9 +1462,9 @@ public class Ebes extends AbstractDoubleProblem {
 
       EBEsWeightDistributedUniformly(el, WeightElement_[el]);
 
-      int hi = 0;
-      int ni = (int) Element_[el][i_];
-      int nj = (int) Element_[el][j_];
+      var hi = 0;
+      var ni = (int) Element_[el][i_];
+      var nj = (int) Element_[el][j_];
 
       // nudi i
       PQ[numberOfLibertyDegree_ * ni + aX_][hi] += Qi[aX_];
@@ -1556,13 +1556,13 @@ public class Ebes extends AbstractDoubleProblem {
     EBEsOverloadWeightElement();
 
     // checked if geometric second orden calculus
-    int NumIter = 0;
+    var NumIter = 0;
     if (lSecondOrderGeometric) NumIter = 1;
 
     // load hypotesis
-    for (int hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
+    for (var hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
 
-      for (int countIter = 0; countIter <= NumIter; countIter++) {
+      for (var countIter = 0; countIter <= NumIter; countIter++) {
 
         EBEsMatrixWeight(hi);
 
@@ -1630,7 +1630,7 @@ public class Ebes extends AbstractDoubleProblem {
     AxialForcei_ = new double[numberOfElements_];
     AxialForcej_ = new double[numberOfElements_];
 
-    for (int el = 0; el < numberOfElements_; el++) {
+    for (var el = 0; el < numberOfElements_; el++) {
       AxialForcei_[el] = Efforti_[aX_][el][hi];
       AxialForcej_[el] = Effortj_[aX_][el][hi];
     }
@@ -1639,22 +1639,22 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsSteelingResults(int hi) {
 
     // stiffness matrix steeling
-    for (int m = 0;
-        m
+    for (var m = 0;
+         m
             < numberOfLibertyDegree_
                 * numberOfLibertyDegree_
                 * numberOfNodes
                 * (elementsBetweenDiffGreat_ + 1);
-        m++) {
+         m++) {
       MatrixStiffness_[m] = 0.0;
     }
 
     // corrimientos y rotaciones de los nudos por hipÃƒÂ³tesis de cargas
-    for (int no = 0; no < numberOfLibertyDegree_ * numberOfNodes; no++) {
+    for (var no = 0; no < numberOfLibertyDegree_ * numberOfNodes; no++) {
       DisplacementNodes_[no][hi] = 0.0;
     }
 
-    for (int el = 0; el < Element_.length; el++) {
+    for (var el = 0; el < Element_.length; el++) {
       // esfuerzos en extremo i de la barra para el sistema principal de la secciÃƒÂ³n
       Efforti_[aX_][el][hi] = 0.0;
       Efforti_[aY_][el][hi] = 0.0;
@@ -1676,7 +1676,7 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsMatrixWeight(int hi) {
 
     // formaciÃƒÂ³n del vector de fuerzas
-    for (int j = 0; j < Node_.length; j++) {
+    for (var j = 0; j < Node_.length; j++) {
       DisplacementNodes_[numberOfLibertyDegree_ * j + aX_][hi] =
           PQ[numberOfLibertyDegree_ * j + aX_][hi];
       DisplacementNodes_[numberOfLibertyDegree_ * j + aY_][hi] =
@@ -1695,7 +1695,7 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsMatrixGlobalFactory(int countIter) throws JMetalException {
 
     // select link between elements
-    for (int el = 0; el < numberOfElements_; el++) {
+    for (var el = 0; el < numberOfElements_; el++) {
       // int ni=(int)Element_[el][i_];
       // int nj=(int)Element_[el][j_];
       // the global coordinates
@@ -1744,18 +1744,18 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsMatrixGlobalPenalization() {
 
     // penalizaciÃƒÂ³n de la matriz asignando coacciones de nudos (apoyos)
-    for (int i = 0; i < numberOfNodesRestricts_; i++) {
-      int no = (int) NodeRestrict_[i][0];
+    for (var i = 0; i < numberOfNodesRestricts_; i++) {
+      var no = (int) NodeRestrict_[i][0];
       // trasforma el nÃƒÆ’Ã‚Âºmero en cÃƒÂ³digo texto caracterizando las coacciones;
-      String strCxyz = String.valueOf((int) NodeRestrict_[i][1]);
-      String str = "";
-      for (int j = numberOfLibertyDegree_; j > strCxyz.length(); j--) {
+      var strCxyz = String.valueOf((int) NodeRestrict_[i][1]);
+      var str = "";
+      for (var j = numberOfLibertyDegree_; j > strCxyz.length(); j--) {
         str += "0";
       }
       strCxyz = str + strCxyz;
       // penalizaciÃƒÂ³n de la matriz de rigidez
 
-      char w0 = strCxyz.charAt(aX_); // sentido en X
+      var w0 = strCxyz.charAt(aX_); // sentido en X
       if (w0 == '1') {
         MatrixStiffness_[matrixWidthBand_ * (numberOfLibertyDegree_ * no + aX_)] =
             1.0E+35; // coacciÃƒÂ³n rÃƒÂ­gida en X
@@ -1798,7 +1798,7 @@ public class Ebes extends AbstractDoubleProblem {
     // ESFUERZOS EN EXTREMOS DE BARRA 3D EN COORDENADAS LOCALES
     // i: rigido
     // j: rigido
-    for (int el = 0; el < Element_.length; el++) {
+    for (var el = 0; el < Element_.length; el++) {
       // esfuerzos en extremo i de la barra para el sistema principal de la secciÃƒÂ³n
       Efforti_[aX_][el][hi] += -cbi[aX_][el][hi];
       Efforti_[aY_][el][hi] += -cbi[aY_][el][hi];
@@ -1819,9 +1819,9 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsWeightNodes() {
 
-    for (int j = 0; j < numberOfWeigthsNodes_; j++) {
-      int hi = (int) WeightNode_[j][0];
-      int no = (int) WeightNode_[j][1];
+    for (var j = 0; j < numberOfWeigthsNodes_; j++) {
+      var hi = (int) WeightNode_[j][0];
+      var no = (int) WeightNode_[j][1];
       // variables displacement
       DisplacementNodes_[numberOfLibertyDegree_ * no + aX_][hi] = WeightNode_[j][2];
       DisplacementNodes_[numberOfLibertyDegree_ * no + aY_][hi] = WeightNode_[j][3];
@@ -1843,7 +1843,7 @@ public class Ebes extends AbstractDoubleProblem {
     // transfiere las cargas de las barras hacia los nudos
 
     // bucle para todas las barras cargadas
-    for (int i = 0; i < numberOfWeigthsElements_; i++) {
+    for (var i = 0; i < numberOfWeigthsElements_; i++) {
 
       Qi = new double[numberOfLibertyDegree_];
       Qj = new double[numberOfLibertyDegree_];
@@ -1851,7 +1851,7 @@ public class Ebes extends AbstractDoubleProblem {
       pj = new double[numberOfLibertyDegree_];
       // int hi = (int)OverloadInElement_[nQ][QH_];
       // load element
-      int el = (int) OverloadInElement_[i][QE_];
+      var el = (int) OverloadInElement_[i][QE_];
       // nodes element
 
       // determinacion del tipo de cargas
@@ -1867,10 +1867,10 @@ public class Ebes extends AbstractDoubleProblem {
 
       // acumula cargas equivalentes en nudos en coordenadas GLOBALES la MISMA BARRA E HIPÃƒÂ³TESIS
       // hipotesis asignada
-      int hi = (int) OverloadInElement_[i][QH_];
+      var hi = (int) OverloadInElement_[i][QH_];
       // identificaciÃƒÂ³n de las barras cargadas
-      int ni = (int) Element_[el][i_];
-      int nj = (int) Element_[el][j_];
+      var ni = (int) Element_[el][i_];
+      var nj = (int) Element_[el][j_];
 
       // nudi i
       PQ[numberOfLibertyDegree_ * ni + aX_][hi] += Qi[aX_];
@@ -1920,8 +1920,6 @@ public class Ebes extends AbstractDoubleProblem {
     // LOCAL de cada barra
 
     int vi, vj;
-    double xi, xj, yi, yj, zi, zj;
-    double[][] R = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
 
     // longitud de la barra en coordenadas locales
     // double lij = Math.sqrt(Math.pow((xj - xi), 2.0) + Math.pow((yj - yi), 2.0) + Math.pow((zj -
@@ -1958,22 +1956,22 @@ public class Ebes extends AbstractDoubleProblem {
         return;
     } // end switch
 
-    int ni = (int) Element_[el][i_];
-    int nj = (int) Element_[el][j_];
+    var ni = (int) Element_[el][i_];
+    var nj = (int) Element_[el][j_];
     // coordenadas de los extremso de la barra
-    xi = Node_[ni][aX_];
-    yi = Node_[ni][aY_];
-    zi = Node_[ni][aZ_];
-    xj = Node_[nj][aX_];
-    yj = Node_[nj][aY_];
-    zj = Node_[nj][aZ_];
+    var xi = Node_[ni][aX_];
+    var yi = Node_[ni][aY_];
+    var zi = Node_[ni][aZ_];
+    var xj = Node_[nj][aX_];
+    var yj = Node_[nj][aY_];
+    var zj = Node_[nj][aZ_];
 
-    double A1 = Math.asin((xi - xj) / Element_[el][L_]);
-    double lx = Element_[el][L_] * Math.cos(A1);
-    double B1 = Math.asin((yi - yj) / Element_[el][L_]);
-    double ly = Element_[el][L_] * Math.cos(B1);
-    double G1 = Math.asin((zi - zj) / Element_[el][L_]);
-    double lz = Element_[el][L_] * Math.cos(G1);
+    var A1 = Math.asin((xi - xj) / Element_[el][L_]);
+    var lx = Element_[el][L_] * Math.cos(A1);
+    var B1 = Math.asin((yi - yj) / Element_[el][L_]);
+    var ly = Element_[el][L_] * Math.cos(B1);
+    var G1 = Math.asin((zi - zj) / Element_[el][L_]);
+    var lz = Element_[el][L_] * Math.cos(G1);
 
     if (vi == 0 && vj == 0) {
       // EMP-EMP, debe multiplicarse por la matriz de rotaciÃƒÂ³n para
@@ -2225,7 +2223,7 @@ public class Ebes extends AbstractDoubleProblem {
 
     // para el extremo ii
     // pi = (Rpij * Rij) * Qi
-    R = EBEsMatrizMultiplicar(Rpij, Rij);
+    var R = EBEsMatrizMultiplicar(Rpij, Rij);
     pi = EBEsMatrizVectorMultiplicar(R, Qi);
 
     // para el extremo jj
@@ -2242,41 +2240,41 @@ public class Ebes extends AbstractDoubleProblem {
 
     int i, j;
     // cosenos directores de x local respecto al sistema global
-    double lx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
     // eje X Global
-    double mx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
     // eje Y Global
-    double nx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
     // eje Z Global
     // cosenos directores de y local respecto al sistema global
-    double ly; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
     // eje X Global
-    double my; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
     // eje Y Global
-    double ny; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
     // eje Z Global
     // cosenos directores de z local respecto al sistema global
-    double lz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
     // eje X Global
-    double mz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
     // eje Y Global
-    double nz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
     // eje Z Global
 
-    int idx = (int) Element_[e][INDEX_];
-    double beta = Groups_[idx][BETA];
+    var idx = (int) Element_[e][INDEX_];
+    var beta = Groups_[idx][BETA];
     // cosenos directores de x local respecto al sistema global XYZ
-    lx = 1.0;
-    mx = 0.0;
-    nx = 0.0;
+    // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    var lx = 1.0;
+    // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    var mx = 0.0;
+    // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    var nx = 0.0;
     // cosenos directores de y local respecto al sistema global XYZ
-    ly = 0.0;
-    my = Math.cos(beta * Math.PI / 180.0);
-    ny = Math.sin(beta * Math.PI / 180.0);
+    // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
+    var ly = 0.0;
+    // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
+    var my = Math.cos(beta * Math.PI / 180.0);
+    // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
+    var ny = Math.sin(beta * Math.PI / 180.0);
     // cosenos directores de z local respecto al sistema global XYZ
-    lz = 0.0;
-    mz = -Math.sin(beta * Math.PI / 180.0);
-    nz = Math.cos(beta * Math.PI / 180.0);
+    // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
+    var lz = 0.0;
+    // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
+    var mz = -Math.sin(beta * Math.PI / 180.0);
+    // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
+    var nz = Math.cos(beta * Math.PI / 180.0);
 
     // matriz de rotaciÃƒÂ³n de desplazamientos locales a ejes globales XYZ si los ejes principales
     // de la
@@ -2362,13 +2360,13 @@ public class Ebes extends AbstractDoubleProblem {
 
   public double[][] EBEsMatrizTraspuesta(@NotNull double m[][]) {
 
-    int row = m.length;
-    int col = m[0].length;
-    double[][] mt = new double[row][col];
+    var row = m.length;
+    var col = m[0].length;
+    var mt = new double[row][col];
 
-    for (int i = 0; i < row; i++) {
+    for (var i = 0; i < row; i++) {
       // cantidad de elementos de la 1ra dimensiÃƒÂ³n
-      for (int j = 0; j < col; j++) {
+      for (var j = 0; j < col; j++) {
         // cantidad de elementos de la 2ra dimensiÃƒÂ³n
         mt[j][i] = m[i][j];
       }
@@ -2386,12 +2384,12 @@ public class Ebes extends AbstractDoubleProblem {
     // RamÃƒÂ³n Arguellez Ãƒï¿½lvarez
 
     int i, j;
-    int s1 = 1;
+    var s1 = 1;
     int s2, l5, l6, ln, r;
-    double det = 1.0;
+    var det = 1.0;
     double ff = 0.0, t;
 
-    int n2 = numberOfLibertyDegree_ * numberOfNodes;
+    var n2 = numberOfLibertyDegree_ * numberOfNodes;
 
     for (i = 1; i < n2; i++) {
       if (MatrixStiffness_[s1 - 1] >= 1.0E+25) {
@@ -2430,7 +2428,7 @@ public class Ebes extends AbstractDoubleProblem {
 
     // ResoluciÃƒÂ³n del sistema
     i = n2 + 1;
-    for (int s3 = 1; s3 < n2 + 1; s3++) {
+    for (var s3 = 1; s3 < n2 + 1; s3++) {
       i = i - 1;
       ff = 0.0;
 
@@ -2467,20 +2465,20 @@ public class Ebes extends AbstractDoubleProblem {
     // double [][]Kii = new double [5][5];
     // Elements
     // the Element long
-    double Lij = Element_[e][L_];
+    var Lij = Element_[e][L_];
     // Secction
-    int idx = (int) Element_[e][INDEX_];
-    double S = Groups_[idx][AREA];
+    var idx = (int) Element_[e][INDEX_];
+    var S = Groups_[idx][AREA];
     // inertia in axis local z
-    double Iz = Groups_[idx][Iz_];
+    var Iz = Groups_[idx][Iz_];
     // inertia in axis local y
-    double Iy = Groups_[idx][Iy_];
+    var Iy = Groups_[idx][Iy_];
     // inertia torsion
-    double Ip = Groups_[idx][It_];
+    var Ip = Groups_[idx][It_];
     // elastic modulus (Young)
-    double E = Groups_[idx][E_];
+    var E = Groups_[idx][E_];
     //  elastic transversal modulus
-    double G = Groups_[idx][G_];
+    var G = Groups_[idx][G_];
     // esfuerzos en nudo j por reacciÃƒÂ³n de desplazamientos en i + esfuerzo en i
     Kii[0][0] = E * S / Lij;
     Kii[0][1] = 0;
@@ -2645,17 +2643,17 @@ public class Ebes extends AbstractDoubleProblem {
     // double [][]Kii = new double [5][5];
     // Elements
     // the Element long
-    double Lij = Element_[e][L_];
+    var Lij = Element_[e][L_];
     // index gropus
-    int idx = (int) Element_[e][INDEX_];
+    var idx = (int) Element_[e][INDEX_];
     // Secction
-    double S = Groups_[idx][AREA];
+    var S = Groups_[idx][AREA];
     // inertia in axis local z
-    double Iz = Groups_[idx][Iz_];
+    var Iz = Groups_[idx][Iz_];
     // inertia in axis local y
-    double Iy = Groups_[idx][Iy_];
+    var Iy = Groups_[idx][Iy_];
     // elastic modulus (Young)
-    double E = Groups_[idx][E_];
+    var E = Groups_[idx][E_];
     //  elastic transversal modulus
 
     // esfuerzos en nudo j por reacciÃƒÂ³n de desplazamientos en i + esfuerzo en i
@@ -2822,18 +2820,18 @@ public class Ebes extends AbstractDoubleProblem {
     // double [][]Kii = new double [5][5];
     // Elements
     // the Element long
-    double Lij = Element_[e][L_];
+    var Lij = Element_[e][L_];
     // index gropus
-    int idx = (int) Element_[e][INDEX_];
+    var idx = (int) Element_[e][INDEX_];
     // angle beta
-    double S = Groups_[idx][AREA];
+    var S = Groups_[idx][AREA];
     // inertia in axis local z
-    double Iz = Groups_[idx][Iz_];
+    var Iz = Groups_[idx][Iz_];
     // inertia in axis local y
-    double Iy = Groups_[idx][Iy_];
+    var Iy = Groups_[idx][Iy_];
     // inertia torsion
     // elastic modulus (Young)
-    double E = Groups_[idx][E_];
+    var E = Groups_[idx][E_];
     //  elastic transversal modulus
 
     // esfuerzos en nudo j por reacciÃƒÂ³n de desplazamientos en i + esfuerzo en i
@@ -3000,14 +2998,14 @@ public class Ebes extends AbstractDoubleProblem {
     // Elements
     // the Element long
     // the Element long
-    double Lij = Element_[e][L_];
+    var Lij = Element_[e][L_];
     // index gropus
-    int idx = (int) Element_[e][INDEX_];
+    var idx = (int) Element_[e][INDEX_];
     // Secction
-    double S = Groups_[idx][AREA];
+    var S = Groups_[idx][AREA];
     // inertia in axis local z
     // elastic modulus (Young)
-    double E = Groups_[idx][E_];
+    var E = Groups_[idx][E_];
     //  elastic transversal modulus
 
     // esfuerzos en nudo j por reacciÃƒÂ³n de desplazamientos en i + esfuerzo en i
@@ -3172,9 +3170,9 @@ public class Ebes extends AbstractDoubleProblem {
     // double [][]KiiSOG = new double [5][5];
     // Elements
     // the Element long
-    double l = Element_[e][L_];
-    double Ni = AxialForcei_[e];
-    double Nj = AxialForcej_[e];
+    var l = Element_[e][L_];
+    var Ni = AxialForcei_[e];
+    var Nj = AxialForcej_[e];
 
     KiiSOG[0][0] = 0.0;
     KiiSOG[0][1] = 0.0;
@@ -3332,14 +3330,10 @@ public class Ebes extends AbstractDoubleProblem {
     // matriz de rotaciÃƒÂ³n 3D de desplazamientos de ejes Locales a Generales
     int i, j;
     // cosenos directores de x local respecto al sistema global
-    double lx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
     // eje X Global
-    double mx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
     // eje Y Global
-    double nx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
     // eje Z Global
     // cosenos directores de y local respecto al sistema global
-    double D;
     double ly; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
     // eje X Global
     double
@@ -3357,12 +3351,15 @@ public class Ebes extends AbstractDoubleProblem {
     int sgn;
 
     // cosenos directores de x local respecto al sistema global XYZ
-    int ni = (int) Element_[e][i_];
-    int nj = (int) Element_[e][j_];
-    lx = (Node_[ni][aX_] - Node_[nj][aX_]) / Element_[e][L_];
-    mx = (Node_[ni][aY_] - Node_[nj][aY_]) / Element_[e][L_];
-    nx = (Node_[ni][aZ_] - Node_[nj][aZ_]) / Element_[e][L_];
-    D = Math.sqrt(Math.pow(lx, 2.0) + Math.pow(mx, 2.0));
+    var ni = (int) Element_[e][i_];
+    var nj = (int) Element_[e][j_];
+    // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    var lx = (Node_[ni][aX_] - Node_[nj][aX_]) / Element_[e][L_];
+    // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    var mx = (Node_[ni][aY_] - Node_[nj][aY_]) / Element_[e][L_];
+    // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    var nx = (Node_[ni][aZ_] - Node_[nj][aZ_]) / Element_[e][L_];
+    var D = Math.sqrt(Math.pow(lx, 2.0) + Math.pow(mx, 2.0));
     if (lx == 0 && mx == 0) {
       // indeterminaciÃƒÂ³n por ser la barra con eje local x // al eje global z
       // cosenos directores de x local respecto al sistema global XYZ
@@ -3467,15 +3464,11 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsMat3DGij() throws JMetalException {
     // CONSTRUYE LA MATRIZ DE RIGIDEZ DE UNA BARRA EN COORDENADAS GLOBALES
 
-    double[][] r = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
-    double[][] s = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
-    double[][] t = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
-
     // para el extremo ii
     // KGii = RTij * RpTij * KjjSOGSOGSOG * Rpij * Rij
-    r = EBEsMatrizMultiplicar(Rpij, Rij);
-    s = EBEsMatrizMultiplicar(Kii, r);
-    t = EBEsMatrizMultiplicar(RpTij, s);
+    var r = EBEsMatrizMultiplicar(Rpij, Rij);
+    var s = EBEsMatrizMultiplicar(Kii, r);
+    var t = EBEsMatrizMultiplicar(RpTij, s);
     KGii = EBEsMatrizMultiplicar(RTij, t);
 
     // para el extremo ij
@@ -3505,40 +3498,25 @@ public class Ebes extends AbstractDoubleProblem {
     // ELEMENTO DE BARRA 3D QUE FORMA LA MATRIZ DE RIGIDEZ EN COORDENADAS GLOBALES
     // i: rÃƒÂ­gido
     // j: rÃƒÂ­gido
-    int ni, nj;
-    int p;
-    int p1;
-    int p2;
-    int p3;
-    int p4;
-    int p5;
-    int p6;
-    int r;
-    int r1;
-    int r2;
-    int r3;
-    int r4;
-    int r5;
-    int r6;
 
     // ELEMENTOS DE LA MATRIZ QUE CORRESPONDEN AL ELEMENTO i
-    ni = (int) Element_[e][i_];
-    nj = (int) Element_[e][j_];
-    p = numberOfLibertyDegree_ * ni;
-    r = numberOfLibertyDegree_ * nj;
-    p1 = matrixWidthBand_ * p;
-    p2 = matrixWidthBand_ * (p + 1);
-    p3 = matrixWidthBand_ * (p + 2);
-    p4 = matrixWidthBand_ * (p + 3);
-    p5 = matrixWidthBand_ * (p + 4);
-    p6 = matrixWidthBand_ * (p + 5);
+    var ni = (int) Element_[e][i_];
+    var nj = (int) Element_[e][j_];
+    var p = numberOfLibertyDegree_ * ni;
+    var r = numberOfLibertyDegree_ * nj;
+    var p1 = matrixWidthBand_ * p;
+    var p2 = matrixWidthBand_ * (p + 1);
+    var p3 = matrixWidthBand_ * (p + 2);
+    var p4 = matrixWidthBand_ * (p + 3);
+    var p5 = matrixWidthBand_ * (p + 4);
+    var p6 = matrixWidthBand_ * (p + 5);
     // ELEMENTOS DE LA MATRIZ QUE QUE CORRESPONDEN AL ELEMENTO j
-    r1 = matrixWidthBand_ * r;
-    r2 = matrixWidthBand_ * (r + 1);
-    r3 = matrixWidthBand_ * (r + 2);
-    r4 = matrixWidthBand_ * (r + 3);
-    r5 = matrixWidthBand_ * (r + 4);
-    r6 = matrixWidthBand_ * (r + 5);
+    var r1 = matrixWidthBand_ * r;
+    var r2 = matrixWidthBand_ * (r + 1);
+    var r3 = matrixWidthBand_ * (r + 2);
+    var r4 = matrixWidthBand_ * (r + 3);
+    var r5 = matrixWidthBand_ * (r + 4);
+    var r6 = matrixWidthBand_ * (r + 5);
 
     // ELEMENTOS DE LA MATRIZ QUE CORRESPONDEN AL EXTREMO j
     // 0Ã‚Â° fila
@@ -3637,7 +3615,7 @@ public class Ebes extends AbstractDoubleProblem {
   public double[] EBEsMatrizVectorMultiplicar(double[] @NotNull [] s, double @NotNull [] t) throws JMetalException {
 
     int f, c;
-    double @NotNull [] r = new double[t.length];
+    var r = new double[t.length];
 
     for (f = 0; f < s.length; f++) { // cantidad de elementos de la 1ra dimensiÃƒÂ³n
       r[f] = 0;
@@ -3652,7 +3630,7 @@ public class Ebes extends AbstractDoubleProblem {
   public double[][] EBEsMatrizMultiplicar(double[][] s, double[][] t) throws JMetalException {
 
     int f, c, q;
-    double[][] r = new double[s.length][t[0].length];
+    var r = new double[s.length][t[0].length];
 
     for (f = 0; f < s.length; f++) { // cantidad de elementos de la 1ra dimensiÃƒÂ³n
       for (c = 0; c < s[f].length; c++) { // cantidad de elementos de la 2ra dimensiÃƒÂ³n
@@ -3668,10 +3646,10 @@ public class Ebes extends AbstractDoubleProblem {
 
   public double[][] EBEsMatrixAdd(double[][] s, double[][] t) throws JMetalException {
 
-    double[][] r = new double[s.length][t[0].length];
+    var r = new double[s.length][t[0].length];
 
-    for (int f = 0; f < s.length; f++) { // cantidad de elementos de la 1ra dimensiÃƒÂ³n
-      for (int c = 0; c < t.length; c++) { // cantidad de elementos de la 2ra dimensiÃƒÂ³n
+    for (var f = 0; f < s.length; f++) { // cantidad de elementos de la 1ra dimensiÃƒÂ³n
+      for (var c = 0; c < t.length; c++) { // cantidad de elementos de la 2ra dimensiÃƒÂ³n
         r[f][c] = s[f][c] + t[f][c];
       } // Next c
     } // Next f
@@ -3681,10 +3659,10 @@ public class Ebes extends AbstractDoubleProblem {
 
   public double[][] EBEsMatrixSubtractions(double[] @NotNull [] s, double[] @NotNull [] t) throws JMetalException {
 
-    double[] @NotNull [] r = new double[s.length][t[0].length];
+    var r = new double[s.length][t[0].length];
 
-    for (int f = 0; f < s.length; f++) { // cantidad de elementos de la 1ra dimensiÃƒÂ³n
-      for (int c = 0; c < t.length; c++) { // cantidad de elementos de la 2ra dimensiÃƒÂ³n
+    for (var f = 0; f < s.length; f++) { // cantidad de elementos de la 1ra dimensiÃƒÂ³n
+      for (var c = 0; c < t.length; c++) { // cantidad de elementos de la 2ra dimensiÃƒÂ³n
         r[f][c] = s[f][c] - t[f][c];
       } // Next c
     } // Next f
@@ -3694,14 +3672,10 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsNodesEquilibrium3D(int hi) throws JMetalException {
 
-    for (int ba = 0; ba < Element_.length; ba++) {
+    for (var ba = 0; ba < Element_.length; ba++) {
 
-      double[][] ri = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
-      double[][] rj = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
-      double[] ei = new double[numberOfLibertyDegree_];
-      double[] ej = new double[numberOfLibertyDegree_];
-      double[] egi = new double[numberOfLibertyDegree_];
-      double[] egj = new double[numberOfLibertyDegree_];
+      var ei = new double[numberOfLibertyDegree_];
+      var ej = new double[numberOfLibertyDegree_];
 
       // carga en barra
       // i inode
@@ -3721,16 +3695,16 @@ public class Ebes extends AbstractDoubleProblem {
 
       // ProyecciÃƒÂ³n de los esfuerzos de barras sobre los ejes generales
       // en el nudo i
-      ri = EBEsMatrizMultiplicar(RTij, RpTij);
-      egi = EBEsMatrizVectorMultiplicar(ri, ei);
+      var ri = EBEsMatrizMultiplicar(RTij, RpTij);
+      var egi = EBEsMatrizVectorMultiplicar(ri, ei);
 
       // ProyecciÃƒÂ³n de los esfuerzos de barras sobre los ejes generales
       // en el nudo j
-      rj = EBEsMatrizMultiplicar(RTji, RpTji);
-      egj = EBEsMatrizVectorMultiplicar(rj, ej);
+      var rj = EBEsMatrizMultiplicar(RTji, RpTji);
+      var egj = EBEsMatrizVectorMultiplicar(rj, ej);
 
       // sumatoria de esfuerzos concurrentes al nudo
-      int ni = (int) Element_[ba][i_];
+      var ni = (int) Element_[ba][i_];
       Reaction_[numberOfLibertyDegree_ * ni + aX_][hi] += egi[aX_];
       Reaction_[numberOfLibertyDegree_ * ni + aY_][hi] += egi[aY_];
       Reaction_[numberOfLibertyDegree_ * ni + aZ_][hi] += egi[aZ_];
@@ -3739,7 +3713,7 @@ public class Ebes extends AbstractDoubleProblem {
       Reaction_[numberOfLibertyDegree_ * ni + gZ_][hi] += egi[gZ_];
 
       // sumatoria de esfuerzos concurrentes al nudo
-      int nj = (int) Element_[ba][j_];
+      var nj = (int) Element_[ba][j_];
       Reaction_[numberOfLibertyDegree_ * nj + aX_][hi] += egj[aX_];
       Reaction_[numberOfLibertyDegree_ * nj + aY_][hi] += egj[aY_];
       Reaction_[numberOfLibertyDegree_ * nj + aZ_][hi] += egj[aZ_];
@@ -3755,7 +3729,7 @@ public class Ebes extends AbstractDoubleProblem {
     // j: rÃƒÂ­gido
     int i, ni, nj;
 
-    for (int ba = 0; ba < numberOfElements_; ba++) {
+    for (var ba = 0; ba < numberOfElements_; ba++) {
 
       switch ((int) Element_[ba][Vij_]) {
         case 00:
@@ -3783,14 +3757,8 @@ public class Ebes extends AbstractDoubleProblem {
         Kjj = EBEsMatrixAdd(Kjj, KjjSOG);
       }
 
-      double[][] r = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
-      double[][] s = new double[numberOfLibertyDegree_][numberOfLibertyDegree_];
-      double[] di = new double[numberOfLibertyDegree_];
-      double[] dj = new double[numberOfLibertyDegree_];
-      double[] eii = new double[numberOfLibertyDegree_];
-      double[] eij = new double[numberOfLibertyDegree_];
-      double[] eji = new double[numberOfLibertyDegree_];
-      double[] ejj = new double[numberOfLibertyDegree_];
+      var di = new double[numberOfLibertyDegree_];
+      var dj = new double[numberOfLibertyDegree_];
 
       // matriz de rotaciÃƒÂ³n de la barra del sistema principal al local
       EBEsMatRot3DLpSaL(ba);
@@ -3807,27 +3775,27 @@ public class Ebes extends AbstractDoubleProblem {
 
       // para el extremo ii
       // eii = (Kii * Rpij * Rij) * Di
-      r = EBEsMatrizMultiplicar(Rpij, Rij);
-      s = EBEsMatrizMultiplicar(Kii, r);
-      eii = EBEsMatrizVectorMultiplicar(s, di);
+      var r = EBEsMatrizMultiplicar(Rpij, Rij);
+      var s = EBEsMatrizMultiplicar(Kii, r);
+      var eii = EBEsMatrizVectorMultiplicar(s, di);
 
       // para el extremo ij
       // eij = (Kij * Rpji * Rji) * Dj
       r = EBEsMatrizMultiplicar(Rpji, Rji);
       s = EBEsMatrizMultiplicar(Kij, r);
-      eij = EBEsMatrizVectorMultiplicar(s, dj);
+      var eij = EBEsMatrizVectorMultiplicar(s, dj);
 
       // para el extremo ji
       // eji =(Kji * Rpij * Rij) * Di
       r = EBEsMatrizMultiplicar(Rpij, Rij);
       s = EBEsMatrizMultiplicar(Kji, r);
-      eji = EBEsMatrizVectorMultiplicar(s, di);
+      var eji = EBEsMatrizVectorMultiplicar(s, di);
 
       // para el extremo jj
       // ejj= (Kjj * Rpji * Rji) * Dj
       r = EBEsMatrizMultiplicar(Rpji, Rji);
       s = EBEsMatrizMultiplicar(Kjj, r);
-      ejj = EBEsMatrizVectorMultiplicar(s, dj);
+      var ejj = EBEsMatrizVectorMultiplicar(s, dj);
 
       for (i = 0; i < numberOfLibertyDegree_; i++) {
         Efforti_[i][ba][hi] = eii[i] + eij[i];
@@ -3838,21 +3806,21 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsReactions3D(int hi) {
 
-    for (int i = 0; i < numberOfNodesRestricts_; i++) {
+    for (var i = 0; i < numberOfNodesRestricts_; i++) {
 
-      int no = (int) NodeRestrict_[i][0];
+      var no = (int) NodeRestrict_[i][0];
 
       // trasforma el nÃƒÂºmero en cÃƒÂ³digo texto caracterizando las coacciones;
-      String strCxyz = String.valueOf((int) NodeRestrict_[i][1]);
+      var strCxyz = String.valueOf((int) NodeRestrict_[i][1]);
       // if(strCxyz != "000000"){
-      String str = "";
-      for (int j = numberOfLibertyDegree_; j > strCxyz.length(); j--) {
+      var str = "";
+      for (var j = numberOfLibertyDegree_; j > strCxyz.length(); j--) {
         str += "0";
       }
       strCxyz = str + strCxyz;
       // penalizaciÃƒÂ³n de la matriz de rigidez
 
-      char w0 = strCxyz.charAt(aX_); // sentido en X
+      var w0 = strCxyz.charAt(aX_); // sentido en X
       if (w0 == '1') {
         // fuerza aplicada en nudo en X
         Reaction_[numberOfLibertyDegree_ * no + aX_][hi] +=
@@ -3902,7 +3870,7 @@ public class Ebes extends AbstractDoubleProblem {
     // [0]: TensiÃƒÂ³n normal de compresiÃƒÂ³n
     // [1]: TensiÃƒÂ³n normal de tracciÃƒÂ³n
     // [2]: TensiÃƒÂ³n tangencial
-    double[][][] Strain = new double[3][numberOfElements_][numberOfWeigthHypothesis_];
+    var Strain = new double[3][numberOfElements_][numberOfWeigthHypothesis_];
     double z, y;
     // double ez, ey;
     double A, Iz, Iy, It;
@@ -3930,11 +3898,11 @@ public class Ebes extends AbstractDoubleProblem {
     StrainMxyMax_ = new double[numberOfGroupElements_][numberOfWeigthHypothesis_];
 
     // ver CÃƒÂ¡lculo de estructuras VIII.35
-    for (int hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
-      for (int ba = 0; ba < numberOfElements_; ba++) {
+    for (var hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
+      for (var ba = 0; ba < numberOfElements_; ba++) {
 
         // index gropus
-        int idx = (int) Element_[ba][INDEX_];
+        var idx = (int) Element_[ba][INDEX_];
 
         y = Groups_[idx][Y_];
         z = Groups_[idx][Z_];
@@ -3966,7 +3934,7 @@ public class Ebes extends AbstractDoubleProblem {
         // TensiÃƒÂ³n normal en x debido a esf. axial x
         // Buckling coeficient omega
         // coeficiente de mayoraciÃ³n de Pandeo
-        double omega = BucklingOmega(Nxx, Groups_[idx], Element_[ba]);
+        var omega = BucklingOmega(Nxx, Groups_[idx], Element_[ba]);
         Sxx = omega * Nxx / A;
         omegaMax_[idx][hi] = Math.max(omega, omegaMax_[idx][hi]);
 
@@ -4080,18 +4048,18 @@ public class Ebes extends AbstractDoubleProblem {
 
   public double BucklingOmega(double Nxx, double[] G, double[] B) throws JMetalException {
 
-    double w = 1.0; // coeficiente de Pandeo
+    var w = 1.0; // coeficiente de Pandeo
 
     if (Nxx < 0.0 && G[AREA] > 0.0 && lBuckling) {
       if (G[BLijY_] <= 0.0) G[BLijY_] = 1.0;
       if (G[BLijZ_] <= 0.0) G[BLijZ_] = 1.0;
 
       // radio de inercia respecto al eje y
-      double iy = G[Iy_] / G[AREA];
+      var iy = G[Iy_] / G[AREA];
       // radio de inercia respecto al eje z
-      double iz = G[Iz_] / G[AREA];
+      var iz = G[Iz_] / G[AREA];
       // esbeltez respecto al eje y
-      double lambdao = B[L_] * G[BLijY_] / iy;
+      var lambdao = B[L_] * G[BLijY_] / iy;
       // esbeltez maxima entre para los ejes y, z
       lambdao = Math.min(lambdao, B[L_] * G[BLijZ_] / iz);
 
@@ -4119,7 +4087,7 @@ public class Ebes extends AbstractDoubleProblem {
         // w = Math.pow(ratio, 2.0);
 
         // Buckling coefficient, Table: Lamda-Omega
-        double lambda = lambdao;
+        var lambda = lambdao;
         if (lambda <= 150) {
           w =
               1.113
@@ -4155,7 +4123,7 @@ public class Ebes extends AbstractDoubleProblem {
       } else if (G[TypeMaterial_] == 20) // Wood hard an halt-hard
       {
         // Buckling coefficient, Table: Lamda-Omega
-        double lambda = lambdao;
+        var lambda = lambdao;
         if (lambda <= 150) {
           w =
               1.048
@@ -4172,9 +4140,6 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsTransversalSectionCircular(int gr, double d) throws JMetalException {
     // calculus of Estatic Momentum
     // distancia Y en ejes locales principales
-    double r; // radius circle
-    double Am; // 1/2 area of circle
-    double y; // distance to the centroid of the circle
     Groups_[gr][Y_] = d;
     // distancia Z en ejes locales principales
     Groups_[gr][Z_] = d;
@@ -4183,14 +4148,17 @@ public class Ebes extends AbstractDoubleProblem {
     // coeficint thickness of the axis Z ->  Az
     Groups_[gr][eZ_] = 0.0;
 
-    r = d / 2.0;
+    // radius circle
+    var r = d / 2.0;
     Groups_[gr][uY_] = r;
     Groups_[gr][dY_] = r;
     Groups_[gr][lZ_] = r;
     Groups_[gr][rZ_] = r;
 
-    y = 4.0 * r / (3.0 * Math.PI);
-    Am = Math.PI * Math.pow(r, 2.0) / 2.0;
+    // distance to the centroid of the circle
+    var y = 4.0 * r / (3.0 * Math.PI);
+    // 1/2 area of circle
+    var Am = Math.PI * Math.pow(r, 2.0) / 2.0;
     // momento estÃƒÂ¡tico respecto de Z ->  Az
     Groups_[gr][Az_] = Am * Math.pow(y, 2.0);
     // momento estÃƒÂ¡tico respecto de Y ->  Ay
@@ -4210,7 +4178,6 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsTransversalSectionHoleCircular(int gr, double D, double e)
       throws JMetalException {
     // calculus of Estatic Momentum
-    double d, R, r, Y, y, Am, am;
     // distancia Y en ejes locales principales
     Groups_[gr][Y_] = D;
     // distancia Z en ejes locales principales
@@ -4228,13 +4195,13 @@ public class Ebes extends AbstractDoubleProblem {
     Groups_[gr][rZ_] = D / 2.0;
 
     // diÃƒÂ¡metro interno
-    R = D / 2.0;
-    d = D - 2.0 * e;
-    r = d / 2.0;
-    Y = 4.0 * R / (3.0 * Math.PI);
-    y = 4.0 * r / (3.0 * Math.PI);
-    Am = Math.PI * Math.pow(R, 2.0) / 2.0;
-    am = Math.PI * Math.pow(r, 2.0) / 2.0;
+    var R = D / 2.0;
+    var d = D - 2.0 * e;
+    var r = d / 2.0;
+    var Y = 4.0 * R / (3.0 * Math.PI);
+    var y = 4.0 * r / (3.0 * Math.PI);
+    var Am = Math.PI * Math.pow(R, 2.0) / 2.0;
+    var am = Math.PI * Math.pow(r, 2.0) / 2.0;
     // momento estÃƒÂ¡tico respecto de Z ->  Az
     Groups_[gr][Az_] = Am * Math.pow(Y, 2.0) - am * Math.pow(y, 2.0);
     // momento estÃƒÂ¡tico respecto de Y ->  Ay
@@ -4253,7 +4220,6 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsTransversalSectionRectangle(int gr, double y, double z) throws JMetalException {
     // calculus of Estatic Momentum
-    double y1, z1;
     // distancia Y en ejes locales principales
     Groups_[gr][Y_] = y;
     // distancia Z en ejes locales principales
@@ -4263,9 +4229,9 @@ public class Ebes extends AbstractDoubleProblem {
     // coeficint thickness of the axis Z ->  Az
     Groups_[gr][eZ_] = 0.0;
     // media distancia Z en ejes locales principales
-    z1 = z / 2.0;
+    var z1 = z / 2.0;
     // media distancia Y en ejes locales principales
-    y1 = y / 2.0;
+    var y1 = y / 2.0;
 
     // distancias a las fibras mas alejadas
     Groups_[gr][uY_] = y1;
@@ -4306,10 +4272,6 @@ public class Ebes extends AbstractDoubleProblem {
 
     // calculus of Estatic Momentum
 
-    double yi, zi;
-    double as, ys, es, al, yl, el;
-    double zl, ae, ze, ee;
-
     // distancia Y en ejes locales principales
     Groups_[gr][Y_] = y;
     // distancia Z en ejes locales principales
@@ -4326,64 +4288,64 @@ public class Ebes extends AbstractDoubleProblem {
     Groups_[gr][rZ_] = z / 2.0;
 
     // lados de la secciÃƒÂ³n hueca
-    yi = y - 2 * ey;
-    zi = z - 2 * ez;
+    var yi = y - 2 * ey;
+    var zi = z - 2 * ez;
 
     // momento estÃƒÂ¡tico respecto a y
     // espesores de las paredes
     // se desprecia el cordÃƒÂ³n lateral
 
     // area cordÃƒÂ³n lateral
-    al = y * ez;
+    var al = y * ez;
     // distancia del baricentro al centro
-    zl = zi / 2.0 + ez / 2.0;
+    var zl = zi / 2.0 + ez / 2.0;
     // momento estÃƒÂ¡tico del cordÃƒÂ³n lateral
-    el = al * Math.pow(zl, 2.0);
+    var el = al * Math.pow(zl, 2.0);
     // area del cordon extremo sup e inferior
-    ae = ey * zi / 2.0;
+    var ae = ey * zi / 2.0;
     // distancia del baricentro al centro
-    ze = zi / 4.0;
+    var ze = zi / 4.0;
     // momento estÃƒÂ¡tico de 2 cordones extremos
-    ee = 2.0 * ae * Math.pow(ze, 2.0);
+    var ee = 2.0 * ae * Math.pow(ze, 2.0);
 
     // momento estÃƒÂ¡tico respecto de Y ->  Ay
     Groups_[gr][Ay_] = el + ee;
 
     // area cordÃƒÂ³n superior
-    as = z * ey;
+    var as = z * ey;
     // distancia del baricentro al centro
-    ys = yi / 2.0 + ey / 2.0;
+    var ys = yi / 2.0 + ey / 2.0;
     // momento estÃƒÂ¡tico al cordÃƒÂ³n superior
-    es = as * Math.pow(ys, 2.0);
+    var es = as * Math.pow(ys, 2.0);
     // area cordÃƒÂ³n lateral
     al = ez * (yi / 2.0);
     // distancia del baricentro al centro
-    yl = yi / 4.0;
+    var yl = yi / 4.0;
     // momento estÃƒÂ¡tico de 2 cordoneslaterales
     el = 2.0 * al * Math.pow(yl, 2.0);
     // momento estÃƒÂ¡tico respecto de Z ->  Az
     Groups_[gr][Az_] = es + el;
 
     // area de la secciÃƒÂ³n hueca
-    double Ai = zi * yi;
+    var Ai = zi * yi;
     // area total
-    double At = z * y;
+    var At = z * y;
     // thw solid area A
     Groups_[gr][AREA] = At - Ai;
     // momento de inercia respecto al eje z Iz
-    double Iez = z * Math.pow(y, 3.0) / 12.0;
-    double Iiz = zi * Math.pow(yi, 3.0) / 12.0;
+    var Iez = z * Math.pow(y, 3.0) / 12.0;
+    var Iiz = zi * Math.pow(yi, 3.0) / 12.0;
     Groups_[gr][Iz_] = Iez - Iiz;
 
     // momento de inercia respecto al eje y Iy
-    double Iey = y * Math.pow(z, 3) / 12;
-    double Iiy = yi * Math.pow(zi, 3) / 12;
+    var Iey = y * Math.pow(z, 3) / 12;
+    var Iiy = yi * Math.pow(zi, 3) / 12;
     Groups_[gr][Iy_] = Iey - Iiy;
 
     // inercia torsional
     // perÃƒÂ­metro medio
-    double It1 = 1.3 * 1 / 3 * (2 * z * Math.pow(ey, 3) + 2 * yi * Math.pow(ez, 3));
-    double It2 = Groups_[gr][Iz_] + Groups_[gr][Iy_];
+    var It1 = 1.3 * 1 / 3 * (2 * z * Math.pow(ey, 3) + 2 * yi * Math.pow(ez, 3));
+    var It2 = Groups_[gr][Iz_] + Groups_[gr][Iy_];
     Groups_[gr][It_] = (It1 + It2) / 2;
     Groups_[gr][Iw_] = Groups_[gr][It_];
   }
@@ -4399,10 +4361,6 @@ public class Ebes extends AbstractDoubleProblem {
     // ez: espesor en sentido Z, es decir coincidente con el espesor del alma
 
     // calculus of Estatic Momentum
-
-    double yi, zi;
-    double as, ys, es, al, yl, el;
-    double zl, ae, ze, ee;
 
     // distancia Y en ejes locales principales
     Groups_[gr][Y_] = y;
@@ -4420,53 +4378,53 @@ public class Ebes extends AbstractDoubleProblem {
     Groups_[gr][rZ_] = ez / 2.0;
 
     // lados de la secciÃƒÂ³n hueca virtual
-    yi = y - 2 * ey;
-    zi = z - ez;
+    var yi = y - 2 * ey;
+    var zi = z - ez;
 
     // MOMENTO ESTÃƒï¿½TICO RESPECTO EJE y
     // desprecio el espesor del ala
     // area del alma
-    al = yi * ez;
+    var al = yi * ez;
     // distancia del baricentro del alma al baricentro de la secciÃƒÂ³n completa
-    zl = ez / 2;
+    var zl = ez / 2;
     // momento estÃƒÂ¡tico del alma
-    el = al * Math.pow(zl, 2.0);
+    var el = al * Math.pow(zl, 2.0);
 
     // area media de los dos cordon extremo sup e inferior
-    ae = ey * z; // 2 medias areas de alas
+    var ae = ey * z; // 2 medias areas de alas
     // distancia del baricentro al centro
-    ze = z / 4.0;
+    var ze = z / 4.0;
     // momento estÃƒÂ¡tico de los 2 cordones extremos
-    ee = ae * Math.pow(ze, 2.0);
+    var ee = ae * Math.pow(ze, 2.0);
 
     // momento estÃƒÂ¡tico total respecto de Y ->  Ay
     Groups_[gr][Ay_] = el + ee;
 
     // MOMENTO ESTÃƒï¿½TICO  RESPECTO AL EJE Z
     // area cordÃƒÂ³n superior
-    as = z * ey;
+    var as = z * ey;
     // distancia del baricentro al centro
-    ys = yi / 2.0 + ey / 2.0;
+    var ys = yi / 2.0 + ey / 2.0;
     // momento estÃƒÂ¡tico al cordÃƒÂ³n superior
-    es = as * Math.pow(ys, 2.0);
+    var es = as * Math.pow(ys, 2.0);
     // area alma
     al = ez * (yi / 2.0);
     // distancia del baricentro al centro
-    yl = yi / 4.0;
+    var yl = yi / 4.0;
     // momento estÃƒÂ¡tico del alma
     el = al * Math.pow(yl, 2.0);
     // momento estÃƒÂ¡tico respecto de Z ->  Az
     Groups_[gr][Az_] = es + el;
 
     // area de la secciÃƒÂ³n hueca
-    double Ai = zi * yi;
+    var Ai = zi * yi;
     // area total
-    double At = z * y;
+    var At = z * y;
     // two solid area A
     Groups_[gr][AREA] = At - Ai;
     // momento de inercia respecto al eje z Iz
-    double Iez = z * Math.pow(y, 3.0) / 12.0;
-    double Iiz = zi * Math.pow(yi, 3.0) / 12.0;
+    var Iez = z * Math.pow(y, 3.0) / 12.0;
+    var Iiz = zi * Math.pow(yi, 3.0) / 12.0;
     Groups_[gr][Iz_] = Iez - Iiz;
 
     // momento de inercia respecto al eje y Iy
@@ -4507,7 +4465,6 @@ public class Ebes extends AbstractDoubleProblem {
     // double y1, z1, yi, zi;
     // double as, ys, es, al, yl, el;
     // double zl, ae, ze, ee;
-    double yi, zi;
 
     // distancia Y en ejes locales principales
     Groups_[gr][Y_] = y;
@@ -4519,12 +4476,12 @@ public class Ebes extends AbstractDoubleProblem {
     Groups_[gr][eZ_] = ez;
 
     // lados de la secciÃƒÂ³n hueca
-    yi = y - ey;
-    zi = z - 2 * ez;
+    var yi = y - ey;
+    var zi = z - 2 * ez;
     // area de la secciÃƒÂ³n hueca
-    double Ai = zi * yi;
+    var Ai = zi * yi;
     // area total
-    double At = z * y;
+    var At = z * y;
     // thw solid area A
     Groups_[gr][AREA] = At - Ai;
 
@@ -4703,12 +4660,12 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsStrainMaxWhitElement() throws JMetalException {
     // determinaciÃƒÂ³n de las tensiones mÃƒÂ¡ximas entre los extremos
-    for (int hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
+    for (var hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
 
       StrainMax_[0][hi] = Straini_[0][0][hi]; // strain compress i
       StrainCutMax_[0][hi] = Math.abs(Straini_[2][0][hi]); // strain corte i
 
-      for (int ba = 0; ba < numberOfElements_; ba++) {
+      for (var ba = 0; ba < numberOfElements_; ba++) {
 
         // TENSIONES NORMALES
         // en nudo menor numeraciÃƒÂ³n i
@@ -4744,13 +4701,13 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsStrainMinWhitElement() throws JMetalException {
     // determinaciÃƒÂ³n de las tensiones minimas entre los extremos
     // de las barras para cada agrupaciÃƒÂ³n
-    for (int hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
+    for (var hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
 
       // tensiones normales mÃƒÂ­nimas
       // en nudo menor numeraciÃƒÂ³n i
       StrainMin_[0][hi] = Straini_[0][0][hi]; // strain compress i
 
-      for (int ba = 0; ba < numberOfElements_; ba++) {
+      for (var ba = 0; ba < numberOfElements_; ba++) {
 
         // TENSIONES NORMALES
         // en nudo menor numeraciÃƒÂ³n i
@@ -4776,15 +4733,15 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsStrainMaxWhitGroup() throws JMetalException {
     // determinaciÃƒÂ³n de las tensiones mÃƒÂ¡ximas entre los extremos
     // de las barras para cada agrupaciÃƒÂ³n
-    for (int hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
+    for (var hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
 
       StrainMax_[0][hi] = Straini_[0][0][hi]; // strain compress i
       StrainCutMax_[0][hi] = Straini_[2][0][hi]; // strain corte i
 
-      for (int ba = 0; ba < numberOfElements_; ba++) {
+      for (var ba = 0; ba < numberOfElements_; ba++) {
 
         // index gropus
-        int idx = (int) Element_[ba][INDEX_];
+        var idx = (int) Element_[ba][INDEX_];
 
         // TENSIONES NORMALES
         // en nudo menor numeraciÃƒÂ³n i
@@ -4820,16 +4777,16 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsStrainMinWhitGroup() throws JMetalException {
     // determinaciÃƒÂ³n de las tensiones minimas entre los extremos
-    for (int hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
+    for (var hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
 
       // tensiones normales mÃƒÂ­nimas
       // en nudo menor numeraciÃƒÂ³n i
       StrainMin_[0][hi] = Straini_[0][0][hi]; // strain compress i
 
-      for (int ba = 0; ba < numberOfElements_; ba++) {
+      for (var ba = 0; ba < numberOfElements_; ba++) {
 
         // index gropus
-        int idx = (int) Element_[ba][INDEX_];
+        var idx = (int) Element_[ba][INDEX_];
 
         // TENSIONES NORMALES
         // en nudo menor numeraciÃƒÂ³n i
@@ -4857,10 +4814,10 @@ public class Ebes extends AbstractDoubleProblem {
     // [0][hi] residual strain axial
     // [1][hi] residual strain transversal
 
-    for (int hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
+    for (var hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
 
       // for(int ba=0; ba<numberOfElements_; ba++){
-      for (int gr = 0; gr < numberOfGroupElements_; gr++) {
+      for (var gr = 0; gr < numberOfGroupElements_; gr++) {
         // residuo de tensiones normales
         if (StrainMax_[gr][hi] != 0.0)
           StrainResidualMax_[hi] +=
@@ -4886,14 +4843,14 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsPrintArchTxtElements() throws JMetalException {
     try {
-      PrintStream ps = new PrintStream("EBEs - Groups Elements.txt");
+      var ps = new PrintStream("EBEs - Groups Elements.txt");
       // impresion de la las caracterÃƒÂ­sticas de las barras
       ps.printf(
           "Groups    Y      Z      eY_     eZ_    uY    dY   lZ    rZ    A      Az    Ay    Iz      Iy      Ip");
       ps.println();
       ps.printf("-----------------------------------------------------------------------------");
       ps.println();
-      for (int gr = 0; gr < Groups_.length; gr++) {
+      for (var gr = 0; gr < Groups_.length; gr++) {
         ps.printf(
             "%4d %6.3f %6.3f %7.4f %7.4f %6.3f %6.3f %6.3f %6.3f %9.6f %9.6f %9.6f %9.6f %9.6f",
             gr,
@@ -4925,8 +4882,8 @@ public class Ebes extends AbstractDoubleProblem {
       // impresion de la matriz de rigidez penalizada
       // extremo ii
       ps.print("kii" + e + "=[");
-      for (int o = 0; o < 6; o++) {
-        for (int p = 0; p < 6; p++) {
+      for (var o = 0; o < 6; o++) {
+        for (var p = 0; p < 6; p++) {
           ps.printf("%12.3f", Kii[o][p]);
           if (o != 5 && p == 5) {
             ps.print(";");
@@ -4939,8 +4896,8 @@ public class Ebes extends AbstractDoubleProblem {
       } // Next o
       ps.println();
       ps.print("kij" + e + "=[");
-      for (int o = 0; o < 6; o++) {
-        for (int p = 0; p < 6; p++) {
+      for (var o = 0; o < 6; o++) {
+        for (var p = 0; p < 6; p++) {
           ps.printf("%12.3f", Kij[o][p]);
           if (o != 5 && p == 5) {
             ps.print(";");
@@ -4953,8 +4910,8 @@ public class Ebes extends AbstractDoubleProblem {
       } // Next o
       ps.println();
       ps.print("kji" + e + "=[");
-      for (int o = 0; o < 6; o++) {
-        for (int p = 0; p < 6; p++) {
+      for (var o = 0; o < 6; o++) {
+        for (var p = 0; p < 6; p++) {
           ps.printf("%12.3f", Kji[o][p]);
           if (o != 5 && p == 5) {
             ps.print(";");
@@ -4967,8 +4924,8 @@ public class Ebes extends AbstractDoubleProblem {
       } // Next o
       ps.println();
       ps.print("kjj" + e + "=[");
-      for (int o = 0; o < 6; o++) {
-        for (int p = 0; p < 6; p++) {
+      for (var o = 0; o < 6; o++) {
+        for (var p = 0; p < 6; p++) {
           ps.printf("%12.3f", Kjj[o][p]);
           if (o != 5 && p == 5) {
             ps.print(";");
@@ -4988,10 +4945,10 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsPrintArchTxtMKG(String s, int hi) throws JMetalException {
     try {
-      PrintStream ps = new PrintStream("EBEs-M" + s + "-H(" + hi + ").txt");
+      var ps = new PrintStream("EBEs-M" + s + "-H(" + hi + ").txt");
       // impresion de la matriz de rigidez penalizada
       // extremo ii
-      for (int o = 0; o < MatrixStiffness_.length; o++) {
+      for (var o = 0; o < MatrixStiffness_.length; o++) {
         ps.printf("(%5d) - %15.4f", o, MatrixStiffness_[o]);
         ps.println();
       } // Next o
@@ -5003,10 +4960,10 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsPrintArchTxtDesp(int hi) throws JMetalException {
     try {
-      PrintStream ps = new PrintStream("EBEs-Desp-H(" + hi + ").txt");
+      var ps = new PrintStream("EBEs-Desp-H(" + hi + ").txt");
       // impresion de la matriz de rigidez penalizada
       // extremo ii
-      for (int o = 0; o < DisplacementNodes_.length; o++) {
+      for (var o = 0; o < DisplacementNodes_.length; o++) {
         ps.printf("(%5d, %2d) = %20.16f", o, hi, DisplacementNodes_[o][hi]);
         ps.println();
       } // Next o
@@ -5018,12 +4975,12 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsPrintArchTxtEfforts(int hi) throws JMetalException {
     try {
-      PrintStream ps = new PrintStream("EBEs-Efforts-H(" + hi + ").txt");
+      var ps = new PrintStream("EBEs-Efforts-H(" + hi + ").txt");
       // impresion de la matriz de rigidez penalizada
       // extremo ii
-      for (int ba = 0; ba < Element_.length; ba++) {
-        int ni = (int) Element_[ba][i_];
-        int nj = (int) Element_[ba][j_];
+      for (var ba = 0; ba < Element_.length; ba++) {
+        var ni = (int) Element_[ba][i_];
+        var nj = (int) Element_[ba][j_];
         ps.printf(
             "Ei(%3d,%3d)=%10.3f  %10.3f  %10.3f  %10.3f  %10.3f  %10.3f",
             ba,
@@ -5057,17 +5014,17 @@ public class Ebes extends AbstractDoubleProblem {
   public void EBEsPrintArchTxtStrain() throws JMetalException {
     try {
 
-      for (int hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
-        PrintStream ps = new PrintStream("EBEs-Strain-H(" + hi + ").txt");
+      for (var hi = 0; hi < numberOfWeigthHypothesis_; hi++) {
+        var ps = new PrintStream("EBEs-Strain-H(" + hi + ").txt");
         // impresion de la matriz de rigidez penalizada
         // extremo ii
         ps.printf("Elements  Nodo   Stracc    Scomp     Scut");
         ps.println();
         ps.printf("--------------------------------------------");
         ps.println();
-        for (int ba = 0; ba < Element_.length; ba++) {
-          int ni = (int) Element_[ba][i_];
-          int nj = (int) Element_[ba][j_];
+        for (var ba = 0; ba < Element_.length; ba++) {
+          var ni = (int) Element_[ba][i_];
+          var nj = (int) Element_[ba][j_];
           ps.printf(
               "%4d  %4d  %10.3f  %10.3f  %10.3f",
               ba,
@@ -5095,22 +5052,22 @@ public class Ebes extends AbstractDoubleProblem {
 
   public void EBEsPrintArchTxtReaction(int hi) throws JMetalException {
     try {
-      PrintStream ps = new PrintStream("EBEs-Reaction-H(" + hi + ").txt");
+      var ps = new PrintStream("EBEs-Reaction-H(" + hi + ").txt");
       ps.printf("Nodo   Restriction   X    Y   Z   MX    MY    MZ");
       ps.println();
       ps.printf("--------------------------------------------");
       ps.println();
       // impresion de la matriz de rigidez penalizada
       // extremo ii
-      for (int o = 0; o < NodeRestrict_.length; o++) {
-        int no = (int) NodeRestrict_[o][0];
-        int ap = (int) NodeRestrict_[o][1];
-        double x = Reaction_[6 * no + aX_][hi];
-        double y = Reaction_[6 * no + aY_][hi];
-        double z = Reaction_[6 * no + aZ_][hi];
-        double mx = Reaction_[6 * no + gX_][hi];
-        double my = Reaction_[6 * no + gY_][hi];
-        double mz = Reaction_[6 * no + gZ_][hi];
+      for (var o = 0; o < NodeRestrict_.length; o++) {
+        var no = (int) NodeRestrict_[o][0];
+        var ap = (int) NodeRestrict_[o][1];
+        var x = Reaction_[6 * no + aX_][hi];
+        var y = Reaction_[6 * no + aY_][hi];
+        var z = Reaction_[6 * no + aZ_][hi];
+        var mx = Reaction_[6 * no + gX_][hi];
+        var my = Reaction_[6 * no + gY_][hi];
+        var mz = Reaction_[6 * no + gZ_][hi];
         ps.printf("%5d  %6d  %8.3f %8.3f %8.3f %8.3f %8.3f %8.3f", no, ap, x, y, z, mx, my, mz);
         ps.println();
       } // Next o
@@ -5126,8 +5083,8 @@ public class Ebes extends AbstractDoubleProblem {
     // iteraciones = total evaluaciones / tamaÃ±o poblaciÃ³n
 
     char ch;
-    String line = "";
-    String var1 = "";
+    var line = "";
+    var var1 = "";
     @NotNull String txt = "";
     int i = 0, j = 0;
 
@@ -5139,7 +5096,7 @@ public class Ebes extends AbstractDoubleProblem {
     // InputStream inputStream = getClass().getResourceAsStream("/" + "Ebes.txt");
     // InputStream inputStream = getClass().getResourceAsStream("/" + "Ebes.txt");
 
-    InputStream inputStream = getClass().getResourceAsStream("/" + "Ebes.txt");
+    var inputStream = getClass().getResourceAsStream("/" + "Ebes.txt");
 
     if (inputStream == null) {
       inputStream = new FileInputStream("Ebes.txt");
@@ -5148,7 +5105,7 @@ public class Ebes extends AbstractDoubleProblem {
     @NotNull InputStreamReader isr = new InputStreamReader(inputStream);
     @NotNull BufferedReader br = new BufferedReader(isr);
 
-    try (Scanner input = new Scanner(br)) {
+    try (var input = new Scanner(br)) {
 
       // java.util.Scanner input = new java.util.Scanner(file);
       // Read name problems EBEs
@@ -5163,7 +5120,7 @@ public class Ebes extends AbstractDoubleProblem {
         }
       }
       OF_ = new String[j];
-      int indOF = j - 1;
+      var indOF = j - 1;
 
       j = 0;
       for (i = line.length() - 1; i >= 0; i--) {
@@ -5175,7 +5132,7 @@ public class Ebes extends AbstractDoubleProblem {
       }
       OF_[indOF] = line.substring(j);
       indOF--;
-      int m = 0;
+      var m = 0;
       if (indOF >= 0) {
         for (i = j - 2; i >= 0; i--) {
           ch = line.charAt(i);
@@ -5187,7 +5144,7 @@ public class Ebes extends AbstractDoubleProblem {
         OF_[indOF] = line.substring(m, j - 1);
         indOF--;
       }
-      int n = 0;
+      var n = 0;
       if (indOF >= 0) {
         for (i = m - 2; i >= 0; i--) {
           ch = line.charAt(i);
@@ -5200,7 +5157,7 @@ public class Ebes extends AbstractDoubleProblem {
         indOF--;
       }
 
-      int o = 0;
+      var o = 0;
       if (indOF >= 0) {
         for (i = n - 2; i >= 0; i--) {
           ch = line.charAt(i);
@@ -5213,7 +5170,7 @@ public class Ebes extends AbstractDoubleProblem {
         indOF--;
       }
 
-      int p = 0;
+      var p = 0;
       if (indOF >= 0) {
         for (i = o - 2; i >= 0; i--) {
           ch = line.charAt(i);
@@ -5251,17 +5208,17 @@ public class Ebes extends AbstractDoubleProblem {
 
     int i, j = 0;
     char ch;
-    String txt = "";
+    var txt = "";
 
     try {
       // create a File instance
-      InputStream inputStream = getClass().getResourceAsStream("/" + fileName);
+      var inputStream = getClass().getResourceAsStream("/" + fileName);
 
       if (inputStream == null) {
         inputStream = new FileInputStream(fileName);
       }
       // create a Scanner for the file
-      Scanner input = new Scanner(inputStream);
+      var input = new Scanner(inputStream);
       // Read data from file
       while (input.hasNext()) {
         for (i = 0; i < 5; i++) {
@@ -5475,10 +5432,8 @@ public class Ebes extends AbstractDoubleProblem {
           Element_[i][Ei_] = Double.valueOf(input.next());
           Element_[i][Ej_] = Double.valueOf(input.next());
           // correction
-          int ni = (int) Element_[i][i_];
-          int nj = (int) Element_[i][j_];
-          double xi, yi, zi;
-          double xj, yj, zj;
+          var ni = (int) Element_[i][i_];
+          var nj = (int) Element_[i][j_];
           // coordenadas de los extremso de la barra
           /*
           if(Math.abs(Node_[ni][aX_])<= 0.000001)
@@ -5505,12 +5460,12 @@ public class Ebes extends AbstractDoubleProblem {
           	zj = 0.0;
           else
           */
-          xi = Node_[ni][aX_];
-          yi = Node_[ni][aY_];
-          zi = Node_[ni][aZ_];
-          xj = Node_[nj][aX_];
-          yj = Node_[nj][aY_];
-          zj = Node_[nj][aZ_];
+          var xi = Node_[ni][aX_];
+          var yi = Node_[ni][aY_];
+          var zi = Node_[ni][aZ_];
+          var xj = Node_[nj][aX_];
+          var yj = Node_[nj][aY_];
+          var zj = Node_[nj][aZ_];
           Element_[i][L_] =
               Math.sqrt(
                   Math.pow((xj - xi), 2.0) + Math.pow((yj - yi), 2.0) + Math.pow((zj - zi), 2.0));
@@ -5564,7 +5519,7 @@ public class Ebes extends AbstractDoubleProblem {
             txt = input.nextLine();
             geometryCheck_[i] = new int[(txt.length() + 1) / 2];
             @NotNull String aTxt[] = txt.split(" ");
-            int k = 0;
+            var k = 0;
             for (j = 0; j < aTxt.length; j++) {
               if (aTxt[j] != " ") {
                 geometryCheck_[i][k] = Integer.parseInt(aTxt[j]);
@@ -5588,10 +5543,10 @@ public class Ebes extends AbstractDoubleProblem {
   }
 
   public int Variable_Position() {
-    int numberOfVariables_ = 0;
+    var numberOfVariables_ = 0;
     try {
       numberOfConstraintsGeometric_ = 0;
-      for (int gr = 0; gr < numberOfGroupElements_; gr++) {
+      for (var gr = 0; gr < numberOfGroupElements_; gr++) {
         if (Groups_[gr][SHAPE] == CIRCLE) {
           // variables
           numberOfVariables_ += 1;
@@ -5718,23 +5673,23 @@ public class Ebes extends AbstractDoubleProblem {
     // function Efficiency Nash-Sutcliffe
     // O[k] : k-th data value of matirial stress (observed)
     // E[k] : k-th estimated value of the stress
-    double SSRes = 0.0;
-    double SSTot = 0.0;
-    double ENS = 0.0;
-    double mOmax = 0.0;
-    double mOmin = 0.0;
+    var SSRes = 0.0;
+    var SSTot = 0.0;
+    var ENS = 0.0;
+    var mOmax = 0.0;
+    var mOmin = 0.0;
 
     // [0][hi] residual strain axial
     // [1][hi] residual strain transversal
 
-    for (int i = 0; i < geometryCheck_.length; i++) {
-      double[] Omax = new double[geometryCheck_[i].length];
-      double @NotNull [] Omin = new double[geometryCheck_[i].length];
-      double[] Emax = new double[geometryCheck_[i].length];
-      double[] Emin = new double[geometryCheck_[i].length];
+    for (var i = 0; i < geometryCheck_.length; i++) {
+      var Omax = new double[geometryCheck_[i].length];
+      var Omin = new double[geometryCheck_[i].length];
+      var Emax = new double[geometryCheck_[i].length];
+      var Emin = new double[geometryCheck_[i].length];
 
-      for (int j = 0; j < geometryCheck_[i].length; j++) {
-        int gr = geometryCheck_[i][j];
+      for (var j = 0; j < geometryCheck_[i].length; j++) {
+        var gr = geometryCheck_[i][j];
 
         Emin[j] = StrainMin_[gr][hi];
         Omin[j] = Groups_[(int) Element_[gr][INDEX_]][COMPRESSION];
@@ -5750,7 +5705,7 @@ public class Ebes extends AbstractDoubleProblem {
       mOmax = 2 * mOmax / Omax.length;
       mOmin = 2 * mOmin / Omin.length;
 
-      for (int k = 0; k < Omax.length; k++) {
+      for (var k = 0; k < Omax.length; k++) {
         // Sum of Squares of Residuals, also called the residual sum of squares
         SSRes += Math.pow((Omin[k] - Emin[k]), 2.0) + Math.pow((Omax[k] - Emax[k]), 2.0);
         // Total Sum of Squares (proportional to the sample variance)
@@ -5766,28 +5721,24 @@ public class Ebes extends AbstractDoubleProblem {
   public double FunctionsMahalanobis_Distance_With_Variance(int hi) {
     // Mahalanobis Distance With Variance for estimated value respect to estimated data
 
-    double MD; // mahalanobis distance
-    double @NotNull [] MDi = new double[geometryCheck_.length]; // mahalanobis distance
+    var MDi = new double[geometryCheck_.length]; // mahalanobis distance
 
-    for (int i = 0; i < geometryCheck_.length; i++) {
-      int N = geometryCheck_[i].length;
-      double[] distY = new double[N];
-      double[] distZ = new double[N];
-      double sumY = 0.0; //
-      double sumZ = 0.0; //
-      double sumYxY = 0.0; //
-      double sumZxZ = 0.0; //
-      double sumYxZ = 0.0; //
-      double meanY = 0.0; // means Y distance
-      double meanZ = 0.0; // means Z distance
-      double S2Y = 0.0; // variance Y distance
-      double S2Z = 0.0; // variance Z distance
-      double SY = 0.0; // variance Y distance
-      double SZ = 0.0; // variance Z distance
+    for (var i = 0; i < geometryCheck_.length; i++) {
+      var N = geometryCheck_[i].length;
+      var distY = new double[N];
+      var distZ = new double[N];
+      var sumY = 0.0; //
+      var sumZ = 0.0; //
+      var sumYxY = 0.0; //
+      var sumZxZ = 0.0; //
+      var sumYxZ = 0.0; //
+      var meanY = 0.0; // means Y distance
+      var meanZ = 0.0; // means Z distance
+      var S2Y = 0.0; // variance Y distance
+      var S2Z = 0.0; // variance Z distance
       // double CS2 = 0.0; // covariance
-      double r = 0.0; // Pearson correlation
 
-      for (int j = 0; j < geometryCheck_[i].length; j++) {
+      for (var j = 0; j < geometryCheck_[i].length; j++) {
 
         distY[j] = Groups_[geometryCheck_[i][j]][Y_];
         distZ[j] = Groups_[geometryCheck_[i][j]][Z_];
@@ -5806,25 +5757,27 @@ public class Ebes extends AbstractDoubleProblem {
       meanZ /= N;
 
       // Pearson’s correlation coefficient
-      r =
-          (N * sumYxZ - sumY * sumZ)
+      // Pearson correlation
+      var r = (N * sumYxZ - sumY * sumZ)
               / (Math.sqrt(
-                  (N * sumYxY - Math.pow(sumY, 2.0)) * (N * sumZxZ - Math.pow(sumZ, 2.0))));
+              (N * sumYxY - Math.pow(sumY, 2.0)) * (N * sumZxZ - Math.pow(sumZ, 2.0))));
 
       // variance
-      for (int k = 0; k < N; k++) {
+      for (var k = 0; k < N; k++) {
         S2Y += Math.pow((distY[k] - meanY), 2.0);
         S2Z += Math.pow((distZ[k] - meanZ), 2.0);
       }
 
       S2Y /= (N - 1);
       S2Z /= (N - 1);
-      SY = Math.sqrt(S2Y);
-      SZ = Math.sqrt(S2Z);
+      // variance Y distance
+      var SY = Math.sqrt(S2Y);
+      // variance Z distance
+      var SZ = Math.sqrt(S2Z);
       // CS2 /= (N-1);
 
       // Mahalanobis distance
-      for (int k = 1; k < N; k++) {
+      for (var k = 1; k < N; k++) {
         MDi[i] +=
             Math.pow((0 - distY[k]), 2.0) / S2Y
                 + Math.pow((0 - distZ[k]), 2.0) / S2Z
@@ -5834,13 +5787,14 @@ public class Ebes extends AbstractDoubleProblem {
       MDi[i] = Math.sqrt(1 / (1 - Math.pow(r, 2.0)) * MDi[i]);
     }
 
-    double sum = 0.0;
-    int bound = geometryCheck_.length;
-    for (int i = 0; i < bound; i++) {
-      double v = MDi[i];
+    var sum = 0.0;
+    var bound = geometryCheck_.length;
+    for (var i = 0; i < bound; i++) {
+      var v = MDi[i];
       sum += v;
     }
-    MD = sum;
+    // mahalanobis distance
+    var MD = sum;
 
     return MD;
   }

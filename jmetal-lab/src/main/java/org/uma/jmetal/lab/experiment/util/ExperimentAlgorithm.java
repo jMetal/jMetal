@@ -37,12 +37,12 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
   }
 
   public void runAlgorithm(Experiment<?, ?> experimentData) {
-    String outputDirectoryName =
+    var outputDirectoryName =
         experimentData.getExperimentBaseDirectory() + "/data/" + algorithmTag + "/" + problemTag;
 
-    File outputDirectory = new File(outputDirectoryName);
+    var outputDirectory = new File(outputDirectoryName);
     if (!outputDirectory.exists()) {
-      boolean result = new File(outputDirectoryName).mkdirs();
+      var result = new File(outputDirectoryName).mkdirs();
       if (result) {
         JMetalLogger.logger.info("Creating " + outputDirectoryName);
       } else {
@@ -66,7 +66,7 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
 
     try {
       algorithm.run();
-      Result population = algorithm.getResult();
+      var population = algorithm.getResult();
 
       new SolutionListOutput(population)
           .setVarFileOutputContext(new DefaultFileOutputContext(varFile, ","))

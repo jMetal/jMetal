@@ -47,7 +47,7 @@ class ParameterTest {
 
   @Test
   void addAGlobalParameterWorksProperly() {
-    FakeParameter globalParameter = new FakeParameter("globalParameter", new String[]{"--globalParameter", "-234.5"}) ;
+    var globalParameter = new FakeParameter("globalParameter", new String[]{"--globalParameter", "-234.5"}) ;
     parameter.addGlobalParameter(globalParameter);
 
     assertThat(parameter.getGlobalParameters()).hasSize(1) ;
@@ -56,7 +56,7 @@ class ParameterTest {
 
   @Test
   void addSpecificParameterWorksProperly() {
-    FakeParameter specificParameter = new FakeParameter("specificParameter", new String[]{"--specificParameter", "-234.5"}) ;
+    var specificParameter = new FakeParameter("specificParameter", new String[]{"--specificParameter", "-234.5"}) ;
     parameter.addSpecificParameter(""+parameterValue, specificParameter);
 
     assertThat(parameter.getSpecificParameters()).hasSize(1) ;

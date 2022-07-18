@@ -22,21 +22,21 @@ class PermutationFactoryTest {
 
   @Test
   void createIntegerPermutationReturnsAnEmptyListWhenTheLengthIsZero() {
-    PseudoRandomGenerator randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
+    var randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
     assertThat(PermutationFactory.createIntegerPermutation(0, randomGenerator)).hasSize(0);
   }
 
   @Test
   void createIntegerPermutationWithLengthOneReturnAListWithTheElementZero() {
-    PseudoRandomGenerator randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
-    List<Integer> permutation = PermutationFactory.createIntegerPermutation(1, randomGenerator) ;
+    var randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
+    var permutation = PermutationFactory.createIntegerPermutation(1, randomGenerator) ;
     assertThat(permutation).hasSize(1) ;
   }
 
   @Test
   void createIntegerPermutationWithLengthTwoReturnAListWithZeroAndOne() {
-    PseudoRandomGenerator randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
-    List<Integer> permutation = PermutationFactory.createIntegerPermutation(2, randomGenerator) ;
+    var randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
+    var permutation = PermutationFactory.createIntegerPermutation(2, randomGenerator) ;
 
     assertThat(permutation)
         .hasSize(2)
@@ -45,8 +45,8 @@ class PermutationFactoryTest {
 
   @Test
   void createIntegerPermutationWithLengthFiveReturnAListWithFiveElements() {
-    PseudoRandomGenerator randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
-    List<Integer> permutation = PermutationFactory.createIntegerPermutation(5, randomGenerator) ;
+    var randomGenerator = JMetalRandom.getInstance().getRandomGenerator();
+    var permutation = PermutationFactory.createIntegerPermutation(5, randomGenerator) ;
 
     assertThat(permutation)
         .hasSize(5)

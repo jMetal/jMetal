@@ -79,17 +79,16 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S>
   protected boolean isStoppingConditionReached() {
     if (evaluations >= maxEvaluations) {
 
-      boolean coverage = false;
+      var coverage = false;
       if (lastReceivedFront != null) {
         coverageFront.updateFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
-        List<PointSolution> pointSolutionList;
-        List<S> list = getPopulation();
+        var list = getPopulation();
         List<PointSolution> result = new ArrayList<>();
-        for (S s : list) {
-          PointSolution pointSolution = new PointSolution(s);
+        for (var s : list) {
+          var pointSolution = new PointSolution(s);
           result.add(pointSolution);
         }
-        pointSolutionList = result;
+        var pointSolutionList = result;
         coverage = coverageFront.isCoverageWithLast(pointSolutionList);
       }
 

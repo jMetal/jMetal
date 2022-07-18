@@ -97,7 +97,7 @@ public class SMPSOWithArchive extends SMPSO {
   @Override
   protected void initializeLeader(List<DoubleSolution> swarm) {
     super.initializeLeader(swarm);
-    for (DoubleSolution particle : swarm) {
+    for (var particle : swarm) {
       archive.add(particle);
     }
   }

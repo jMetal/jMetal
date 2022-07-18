@@ -28,14 +28,14 @@ class SMPSOBuilderIT {
 
   @Test
   void SMPSOWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT4() {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    var problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    int swarmSize = 100;
+    var swarmSize = 100;
     Termination termination = new TerminationByEvaluations(25000);
 
-    ParticleSwarmOptimizationAlgorithm smpso = new SMPSOBuilder(
+    var smpso = new SMPSOBuilder(
         (DoubleProblem) problem,
         swarmSize)
         .setTermination(termination)
@@ -43,16 +43,16 @@ class SMPSOBuilderIT {
 
     smpso.run();
 
-    double[][] referenceFront = new double[][]{{0.0, 1.0}, {1.0, 0.0}};
+    var referenceFront = new double[][]{{0.0, 1.0}, {1.0, 0.0}};
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(smpso.getResult()),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertThat(smpso.getResult()).hasSizeGreaterThan(95);
     assertThat(hv).isGreaterThan(0.65);
@@ -61,16 +61,16 @@ class SMPSOBuilderIT {
   @Test
   void SMPSOWithExternalUnboundedArchiveReturnsAFrontWithHVHigherThanZeroPointThirtyFiveOnProblemDTLZ2()
       throws IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceFrontFileName = "DTLZ2.3D.csv";
+    var problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    var referenceFrontFileName = "DTLZ2.3D.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int swarmSize = 100;
+    var swarmSize = 100;
 
     Termination termination = new TerminationByEvaluations(50000);
 
@@ -78,7 +78,7 @@ class SMPSOBuilderIT {
         new NonDominatedSolutionListArchive<>(), swarmSize);
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluationWithArchive<>(problem, archive);
 
-    ParticleSwarmOptimizationAlgorithm smpso = new SMPSOBuilder(
+    var smpso = new SMPSOBuilder(
         (DoubleProblem) problem,
         swarmSize)
         .setTermination(termination)
@@ -87,20 +87,20 @@ class SMPSOBuilderIT {
 
     smpso.run();
 
-    List<DoubleSolution> obtainedSolutions = archive.getSolutionList();
+    var obtainedSolutions = archive.getSolutionList();
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/" + referenceFrontFileName;
+    var referenceFrontFile = "../resources/referenceFrontsCSV/" + referenceFrontFileName;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(obtainedSolutions),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertThat(obtainedSolutions).hasSizeGreaterThan(95);
     assertThat(hv).isGreaterThan(0.35);

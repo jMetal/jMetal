@@ -58,8 +58,8 @@ public class DNSGAII<S extends Solution<?>> extends NSGAII<S> {
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
-    RankingAndDirScoreSelection<S> rankingAndDirScoreSelection =
-        new RankingAndDirScoreSelection<>(
+    var rankingAndDirScoreSelection =
+        new RankingAndDirScoreSelection<S>(
             getMaxPopulationSize(), dominanceComparator, referenceVectors);
     return rankingAndDirScoreSelection.execute(jointPopulation);
   }

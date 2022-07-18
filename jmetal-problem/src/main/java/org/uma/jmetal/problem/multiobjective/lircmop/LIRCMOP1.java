@@ -29,7 +29,7 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
     @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -40,10 +40,10 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-      double @NotNull [] x = new double[10];
-      int count = 0;
-      int bound = getNumberOfVariables();
-      for (int i = 0; i < bound; i++) {
+      var x = new double[10];
+      var count = 0;
+      var bound = getNumberOfVariables();
+      for (var i = 0; i < bound; i++) {
           double v = solution.variables().get(i);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
@@ -59,30 +59,30 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-      double @NotNull [] x = new double[10];
-      int count = 0;
-      int bound = getNumberOfVariables();
-      for (int i = 0; i < bound; i++) {
+      var x = new double[10];
+      var count = 0;
+      var bound = getNumberOfVariables();
+      for (var i = 0; i < bound; i++) {
           double v = solution.variables().get(i);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
       }
       x = Arrays.copyOfRange(x, 0, count);
 
-      final double a = 0.51;
-    final double b = 0.5;
+      final var a = 0.51;
+    final var b = 0.5;
 
     solution.constraints()[0] = (a - g1(x)) * (g1(x) - b);
     solution.constraints()[1] = (a - g2(x)) * (g2(x) - b);
   }
 
   protected double g1(double[] x) {
-    double result = IntStream.iterate(2, i -> i < getNumberOfVariables(), i -> i + 2).mapToDouble(i -> Math.pow(x[i] - Math.sin(0.5 * Math.PI * x[0]), 2.0)).sum();
+      var result = IntStream.iterate(2, i -> i < getNumberOfVariables(), i -> i + 2).mapToDouble(i -> Math.pow(x[i] - Math.sin(0.5 * Math.PI * x[0]), 2.0)).sum();
       return result;
   }
 
   protected double g2(double[] x) {
-    double result = IntStream.iterate(1, i -> i < getNumberOfVariables(), i -> i + 2).mapToDouble(i -> Math.pow(x[i] - Math.cos(0.5 * Math.PI * x[0]), 2.0)).sum();
+      var result = IntStream.iterate(1, i -> i < getNumberOfVariables(), i -> i + 2).mapToDouble(i -> Math.pow(x[i] - Math.cos(0.5 * Math.PI * x[0]), 2.0)).sum();
 
       return result;
   }

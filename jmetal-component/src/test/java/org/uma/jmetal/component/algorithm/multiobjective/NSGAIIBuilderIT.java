@@ -29,24 +29,24 @@ class NSGAIIBuilderIT {
   @Test
   void NSGAIIWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT1()
       throws IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    var problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    var populationSize = 100;
+    var offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+    var nsgaii = new NSGAIIBuilder<>(
         problem,
         populationSize,
         offspringPopulationSize,
@@ -57,18 +57,18 @@ class NSGAIIBuilderIT {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = nsgaii.getResult();
+    var population = nsgaii.getResult();
 
-    double[][] referenceFront = new double[][]{{0.0, 1.0}, {1.0, 0.0}} ;
+    var referenceFront = new double[][]{{0.0, 1.0}, {1.0, 0.0}} ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertThat(populationSize).isGreaterThan(95) ;
     assertThat(hv).isGreaterThan(0.65) ;
@@ -77,27 +77,27 @@ class NSGAIIBuilderIT {
   @Test
   void NSGAIIWithExternalCrowdingArchiveReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT4()
       throws IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    var problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    var populationSize = 100;
+    var offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(25000);
 
     Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(populationSize) ;
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluationWithArchive<>(problem, archive) ;
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+    var nsgaii = new NSGAIIBuilder<>(
         problem,
         populationSize,
         offspringPopulationSize,
@@ -109,18 +109,18 @@ class NSGAIIBuilderIT {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = nsgaii.getResult();
+    var population = nsgaii.getResult();
 
-    double[][] referenceFront = new double[][]{{0.0, 1.0}, {1.0, 0.0}} ;
+    var referenceFront = new double[][]{{0.0, 1.0}, {1.0, 0.0}} ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     System.out.println(hv);
 
@@ -131,28 +131,28 @@ class NSGAIIBuilderIT {
   @Test
   void NSGAIIWithExternalUnboundedArchiveReturnsAFrontWithHVHigherThanZeroPointFourOnProblemDTLZ2()
       throws IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceFrontFileName = "DTLZ2.3D.csv";
+    var problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    var referenceFrontFileName = "DTLZ2.3D.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    var populationSize = 100;
+    var offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(50000);
 
     Archive<DoubleSolution> archive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), populationSize) ;
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluationWithArchive<>(problem, archive) ;
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+    var nsgaii = new NSGAIIBuilder<>(
         problem,
         populationSize,
         offspringPopulationSize,
@@ -164,20 +164,20 @@ class NSGAIIBuilderIT {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = archive.getSolutionList();
+    var population = archive.getSolutionList();
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    var referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertThat(populationSize).isGreaterThan(95) ;
     assertThat(hv).isGreaterThan(0.40) ;

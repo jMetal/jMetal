@@ -49,14 +49,14 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         }
 
         // Apply the proximity score for the remaining front
-        int rankingIndex = 1;
+        var rankingIndex = 1;
         while (population.size() < solutionsToSelect) {
             this.assignConvergenceScore(ranking.getSubFront(rankingIndex));
             if ((population.size() + ranking.getSubFront(rankingIndex).size()) <= solutionsToSelect) {
                 population.addAll(ranking.getSubFront(rankingIndex));
             } else {
                 ranking.getSubFront(rankingIndex).sort(new SurvivalScoreComparator());
-                int nSolutions = solutionsToSelect - population.size();
+                var nSolutions = solutionsToSelect - population.size();
                 population.addAll(ranking.getSubFront(rankingIndex).subList(0, nSolutions));
             }
             rankingIndex++;
@@ -74,21 +74,21 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         @NotNull List<Integer> selected = new ArrayList<>();
 
         // compute ideal point
-        List<Double> ideal_point = computeIdealPoint(front);
+        var ideal_point = computeIdealPoint(front);
 
         // find extreme points
-        List<S> extreme_points = this.findExtremes(front);
+        var extreme_points = this.findExtremes(front);
 
         if (extreme_points.size() == 0) {
-            for (S s : front){
+            for (var s : front){
                 s.attributes().put(attributeId, 0.0);
             }
             return;
         }
 
         // set crowding distance for extreme points
-        for (S extreme : extreme_points){
-            for (int index = 0; index<front.size(); index++){
+        for (var extreme : extreme_points){
+            for (var index = 0; index<front.size(); index++){
                 if (extreme == front.get(index)){
                     selected.add(index);
                     extreme.attributes().put(attributeId, Double.POSITIVE_INFINITY);
@@ -99,8 +99,8 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         // compute intercepts for small fronts
         if (front.size() <= this.numberOfObjectives){
             intercepts = new ArrayList<>();
-            for(int i=0; i<this.numberOfObjectives; i++){
-                double value = 0.0;
+            for(var i = 0; i<this.numberOfObjectives; i++){
+                var value = 0.0;
                 for (@NotNull S s : front){
                     if (s.objectives()[i] > value)
                         value = s.objectives()[i];
@@ -115,9 +115,9 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         List<double[]> normalizedFront = new ArrayList<>();
         intercepts = constructHyperplane(front, extreme_points);
 
-        for (int i=0; i<front.size(); i++){
-            double[] objectives = front.get(i).objectives().clone();
-            for (int j=0; j<numberOfObjectives; j++){
+        for (var i = 0; i<front.size(); i++){
+            var objectives = front.get(i).objectives().clone();
+            for (var j = 0; j<numberOfObjectives; j++){
                 objectives[j] = (objectives[j] - ideal_point.get(j)) / (intercepts.get(j) - ideal_point.get(j));
             }
             normalizedFront.add(i, objectives);
@@ -127,38 +127,37 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         this.P = computeGeometry(normalizedFront, selected);
 
         // Proximity Score
-        double[] nn;
-        double[] utopia = new double[numberOfObjectives];
-        double[] arr = new double[10];
-        int count = 0;
-        for (double @NotNull [] doubles : normalizedFront) {
-            double v = minkowskiDistance(doubles, utopia, P);
+        var utopia = new double[numberOfObjectives];
+        var arr = new double[10];
+        var count = 0;
+        for (var doubles : normalizedFront) {
+            var v = minkowskiDistance(doubles, utopia, P);
             if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
             arr[count++] = v;
         }
         arr = Arrays.copyOfRange(arr, 0, count);
-        nn = arr;
+        var nn = arr;
 
         // Diversity Score
-        double[][] distances = pairwiseDistances(normalizedFront, P);
+        var distances = pairwiseDistances(normalizedFront, P);
 
-        for (int i=0; i<normalizedFront.size(); i++) {
-            for (int j = 0; j < normalizedFront.size(); j++) {
+        for (var i = 0; i<normalizedFront.size(); i++) {
+            for (var j = 0; j < normalizedFront.size(); j++) {
                 distances[i][j] /= nn[i];
             }
         }
 
         // Survival Score
         List<Integer> remaining = new ArrayList<>();
-        int bound = front.size();
-        for (int i = 0; i < bound; i++) {
+        var bound = front.size();
+        for (var i = 0; i < bound; i++) {
             Integer integer = i;
             remaining.add(integer);
         }
         remaining.removeAll(selected);
         while (remaining.size() > 0){
-            double[] values = this.findMoreDiverseSolution(distances, selected, remaining);
-            int index = (int) values[0];
+            var values = this.findMoreDiverseSolution(distances, selected, remaining);
+            var index = (int) values[0];
             remaining.remove((Integer) index);
             selected.add(index);
             front.get(index).attributes().put(attributeId, values[1]);
@@ -166,9 +165,9 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     }
 
     protected double[][] pairwiseDistances(@NotNull List<double[]> normalizedFront, double P) {
-        double[] @NotNull [] distances = new double[normalizedFront.size()][normalizedFront.size()];
-        for (int i = 0; i< normalizedFront.size()-1; i++){
-            for (int j = i+1; j< normalizedFront.size(); j++){
+        var distances = new double[normalizedFront.size()][normalizedFront.size()];
+        for (var i = 0; i< normalizedFront.size()-1; i++){
+            for (var j = i+1; j< normalizedFront.size(); j++){
                 distances[i][j] = this.minkowskiDistance(normalizedFront.get(i), normalizedFront.get(j), P);
                 distances[j][i] = distances[i][j];
             }
@@ -184,23 +183,22 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      */
     protected double computeGeometry(List<double[]> normalizedFront, List<Integer> extremePoints) {
         // nadir point
-        double[] nadir;
-        double[] utopia = new double[this.numberOfObjectives];
+        var utopia = new double[this.numberOfObjectives];
 
-        double[] arr = new double[10];
-        int count = 0;
-        int bound = this.numberOfObjectives;
-        for (int i1 = 0; i1 < bound; i1++) {
+        var arr = new double[10];
+        var count = 0;
+        var bound = this.numberOfObjectives;
+        for (var i1 = 0; i1 < bound; i1++) {
             double v1 = 1;
             if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
             arr[count++] = v1;
         }
         arr = Arrays.copyOfRange(arr, 0, count);
-        nadir = arr;
+        var nadir = arr;
 
         // find central point
-        double[] d = new double[normalizedFront.size()] ;
-        for (int i=0; i<d.length; i++){
+        var d = new double[normalizedFront.size()] ;
+        for (var i = 0; i<d.length; i++){
             if (extremePoints.contains(i)) {
                 d[i] = Double.POSITIVE_INFINITY;
             } else {
@@ -209,8 +207,8 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         }
 
         double[] centralPoint = null;
-        double minDistance = Double.POSITIVE_INFINITY;
-        for (int i=0; i<d.length; i++){
+        var minDistance = Double.POSITIVE_INFINITY;
+        for (var i = 0; i<d.length; i++){
             if (d[i] < minDistance){
                 minDistance = d[i];
                 centralPoint = normalizedFront.get(i);
@@ -219,15 +217,15 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         assert(centralPoint != null);
         double average = 0;
         try {
-            double sum = 0.0;
-            for (double v : centralPoint) {
+            var sum = 0.0;
+            for (var v : centralPoint) {
                 sum += v;
             }
             average = sum / numberOfObjectives;
         } catch(Exception e){
             return 1; // in case of errors, we assume the front to be flat
         }
-        double p = Math.log(this.numberOfObjectives) / Math.log(1.0 / average) ;
+        var p = Math.log(this.numberOfObjectives) / Math.log(1.0 / average) ;
 
         if (Double.isNaN(p) || p <0.10 || Double.isInfinite(p))
             p = 1;
@@ -241,14 +239,14 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      * @param front
      */
     protected void assignConvergenceScore(List<S> front){
-        double[] idealPoint = new double[this.numberOfObjectives];
-        for (S solution : front){
-            double[] normalizedObjective = solution.objectives().clone();
-            for(int i=0; i<this.numberOfObjectives; i++){
+        var idealPoint = new double[this.numberOfObjectives];
+        for (var solution : front){
+            var normalizedObjective = solution.objectives().clone();
+            for(var i = 0; i<this.numberOfObjectives; i++){
                 if (intercepts != null && intercepts.size() == 0)
                     normalizedObjective[i] = normalizedObjective[i] / intercepts.get(i);
             }
-            double value =  this.minkowskiDistance(normalizedObjective, idealPoint, P);
+            var value =  this.minkowskiDistance(normalizedObjective, idealPoint, P);
             solution.attributes().put(attributeId, value);
         }
     }
@@ -260,14 +258,14 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      */
     protected List<S> findExtremes(List<S> front) {
         List<S> extremePoints = new ArrayList<>();
-        for (int i=0; i<this.numberOfObjectives; i++){
-            double @NotNull [] axes = new double[this.numberOfObjectives];
+        for (var i = 0; i<this.numberOfObjectives; i++){
+            var axes = new double[this.numberOfObjectives];
             axes[i] = 1;
 
-            double minDistance = Double.POSITIVE_INFINITY;
-            int minIndex = -1;
-            for (int j=0; j<front.size(); j++){
-                double dist = this.point2LineDistance(front.get(j).objectives(), new double[this.numberOfObjectives], axes);
+            var minDistance = Double.POSITIVE_INFINITY;
+            var minIndex = -1;
+            for (var j = 0; j<front.size(); j++){
+                var dist = this.point2LineDistance(front.get(j).objectives(), new double[this.numberOfObjectives], axes);
                 if (dist < minDistance){
                     minDistance = dist;
                     minIndex = j;
@@ -281,11 +279,11 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
 
     protected double[] findMoreDiverseSolution(double[][] distances, @NotNull List<Integer> selected, List<Integer> remaining) {
         double bestValue = 0;
-        int bestIndex = -1;
+        var bestIndex = -1;
 
         for (int index1 : remaining){
-            double minValue1 = Double.POSITIVE_INFINITY;
-            double minValue2 = Double.POSITIVE_INFINITY;
+            var minValue1 = Double.POSITIVE_INFINITY;
+            var minValue2 = Double.POSITIVE_INFINITY;
 
             for (int index2 : selected){
                 if (distances[index1][index2] < minValue1){
@@ -304,9 +302,9 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     }
 
     public double minkowskiDistance(double[] a, double[] b, double p){
-        double value = 0.0;
-        for (int i = 0; i < a.length; i++) {
-            double pow = Math.pow(Math.abs(a[i] - b[i]), p);
+        var value = 0.0;
+        for (var i = 0; i < a.length; i++) {
+            var pow = Math.pow(Math.abs(a[i] - b[i]), p);
             value += pow;
         }
 
@@ -322,18 +320,18 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      * @return the perpendicular distance between P and the line AB
      */
     public double point2LineDistance(double @NotNull [] P, double[] A, double[] B) {
-        double[] pa = new double[P.length];
-        double[] ba = new double[P.length];
-        for (int i = 0; i < P.length; i++) {
+        var pa = new double[P.length];
+        var ba = new double[P.length];
+        for (var i = 0; i < P.length; i++) {
             pa[i] = P[i] - A[i];
             ba[i] = B[i] - A[i];
         }
 
-        double t = dotProduct(pa, ba) / dotProduct(ba, ba);
+        var t = dotProduct(pa, ba) / dotProduct(ba, ba);
 
-        double d = 0.0;
-        for (int i = 0; i < P.length; i++) {
-            double pow = Math.pow(pa[i] - t * ba[i], 2.0);
+        var d = 0.0;
+        for (var i = 0; i < P.length; i++) {
+            var pow = Math.pow(pa[i] - t * ba[i], 2.0);
             d += pow;
         }
 
@@ -347,9 +345,9 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      * @return the doc product
      */
     protected double dotProduct(double @NotNull [] array1, double[] array2){
-        double sum = 0.0;
-        for (int i = 0; i < array1.length; i++) {
-            double v = array1[i] * array2[i];
+        var sum = 0.0;
+        for (var i = 0; i < array1.length; i++) {
+            var v = array1[i] * array2[i];
             sum += v;
         }
         return sum;
@@ -360,12 +358,11 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     }
 
     public @NotNull List<Double> computeIdealPoint(List<S> population) {
-        List<Double> ideal_point;
-        ideal_point = new ArrayList<>(numberOfObjectives);
+        List<Double> ideal_point = new ArrayList<>(numberOfObjectives);
 
-        for (int f = 0; f < numberOfObjectives; f += 1) {
-            double minf = Double.MAX_VALUE;
-            for (int i = 0; i < population.size(); i += 1) // min values must appear in the first front
+        for (var f = 0; f < numberOfObjectives; f += 1) {
+            var minf = Double.MAX_VALUE;
+            for (var i = 0; i < population.size(); i += 1) // min values must appear in the first front
             {
                 minf = Math.min(minf, population.get(i).objectives()[f]);
             }
@@ -378,9 +375,9 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     public List<Double> constructHyperplane(List<S> population, @NotNull List<S> extreme_points) {
         // Check whether there are duplicate extreme points.
         // This might happen but the original paper does not mention how to deal with it.
-        boolean duplicate = false;
-        for (int i = 0; !duplicate && i < extreme_points.size(); i += 1) {
-            for (int j = i + 1; !duplicate && j < extreme_points.size(); j += 1) {
+        var duplicate = false;
+        for (var i = 0; !duplicate && i < extreme_points.size(); i += 1) {
+            for (var j = i + 1; !duplicate && j < extreme_points.size(); j += 1) {
                 duplicate = extreme_points.get(i).equals(extreme_points.get(j));
             }
         }
@@ -392,8 +389,8 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         {
             // extreme_points[f] stands for the individual with the largest value of objective f
             List<Double> list = new ArrayList<>();
-            int bound = numberOfObjectives;
-            for (int f = 0; f < bound; f++) {
+            var bound = numberOfObjectives;
+            for (var f = 0; f < bound; f++) {
                 @NotNull Double objective = extreme_points.get(f).objectives()[f];
                 list.add(objective);
             }
@@ -402,29 +399,29 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             // Find the equation of the hyperplane
             // (pop[0].objs().size(), 1.0);
             List<Double> b = new ArrayList<>();
-            int bound1 = numberOfObjectives;
-            for (int i1 = 0; i1 < bound1; i1++) {
+            var bound1 = numberOfObjectives;
+            for (var i1 = 0; i1 < bound1; i1++) {
                 @NotNull Double aDouble1 = 1.0;
                 b.add(aDouble1);
             }
 
             @NotNull List<List<Double>> A = extreme_points.stream().<List<Double>>map(s -> {
                 List<Double> list = new ArrayList<>();
-                double[] array = s.objectives();
-                int bound = numberOfObjectives;
-                for (int i = 0; i < bound; i++) {
-                    double v = array[i];
+                var array = s.objectives();
+                var bound = numberOfObjectives;
+                for (var i = 0; i < bound; i++) {
+                    var v = array[i];
                     @NotNull Double aDouble = v;
                     list.add(aDouble);
                 }
                 return list;
             }).collect(Collectors.toList());
-            List<Double> x = guassianElimination(A, b);
+            var x = guassianElimination(A, b);
 
             // Find intercepts
             @NotNull List<Double> list = new ArrayList<>();
-            int bound = numberOfObjectives;
-            for (int f = 0; f < bound; f++) {
+            var bound = numberOfObjectives;
+            for (var f = 0; f < bound; f++) {
                 @NotNull Double aDouble = 1.0 / x.get(f);
                 list.add(aDouble);
             }
@@ -434,31 +431,30 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     }
 
     public List<Double> guassianElimination(List<List<Double>> A, @NotNull List<Double> b) {
-        List<Double> x;
 
-        int N = A.size();
-        for (int i = 0; i < N; i += 1) {
+        var N = A.size();
+        for (var i = 0; i < N; i += 1) {
             A.get(i).add(b.get(i));
         }
 
-        for (int base = 0; base < N - 1; base += 1) {
-            for (int target = base + 1; target < N; target += 1) {
-                double ratio = A.get(target).get(base) / A.get(base).get(base);
-                for (int term = 0; term < A.get(base).size(); term += 1) {
+        for (var base = 0; base < N - 1; base += 1) {
+            for (var target = base + 1; target < N; target += 1) {
+                var ratio = A.get(target).get(base) / A.get(base).get(base);
+                for (var term = 0; term < A.get(base).size(); term += 1) {
                     A.get(target).set(term, A.get(target).get(term) - A.get(base).get(term) * ratio);
                 }
             }
         }
 
         List<Double> list = new ArrayList<>();
-        for (int i1 = 0; i1 < N; i1++) {
+        for (var i1 = 0; i1 < N; i1++) {
             Double aDouble = 0.0;
             list.add(aDouble);
         }
-        x = list;
+        var x = list;
 
-        for (int i = N - 1; i >= 0; i -= 1) {
-            for (int known = i + 1; known < N; known += 1) {
+        for (var i = N - 1; i >= 0; i -= 1) {
+            for (var known = i + 1; known < N; known += 1) {
                 A.get(i).set(N, A.get(i).get(N) - A.get(i).get(known) * x.get(known));
             }
             x.set(i, A.get(i).get(N) / A.get(i).get(i));

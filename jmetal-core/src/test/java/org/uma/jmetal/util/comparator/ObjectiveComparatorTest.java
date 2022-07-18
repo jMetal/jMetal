@@ -45,8 +45,8 @@ public class ObjectiveComparatorTest {
 
     DoubleProblem problem = new FakeDoubleProblem(2, 1, 0);
 
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[0] = -4.0;
     solution2.objectives()[0] = 5.0;
@@ -60,8 +60,8 @@ public class ObjectiveComparatorTest {
 
     DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[2] = 7.0;
     solution2.objectives()[2] = 5.0;
@@ -75,8 +75,8 @@ public class ObjectiveComparatorTest {
 
     DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[2] = 7.0;
     solution2.objectives()[2] = 7.0;
@@ -90,8 +90,8 @@ public class ObjectiveComparatorTest {
 
     DoubleProblem problem = new FakeDoubleProblem(2, 1, 0);
 
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[0] = 25.0;
     solution2.objectives()[0] = 5.0;
@@ -105,8 +105,8 @@ public class ObjectiveComparatorTest {
 
     DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[2] = 7.0;
     solution2.objectives()[2] = 25.0;
@@ -122,8 +122,8 @@ public class ObjectiveComparatorTest {
     DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
     DoubleProblem problem2 = new FakeDoubleProblem(2, 6, 0);
 
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem2.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem2.createSolution();
 
     assertThrows(InvalidConditionException.class, () -> comparator.compare(solution1, solution2));
   }
@@ -138,8 +138,8 @@ public class ObjectiveComparatorTest {
 
     DoubleProblem problem = new FakeDoubleProblem(2, 1, 0);
 
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
 
     solution1.objectives()[0] = 7.0;
     solution2.objectives()[0] = 5.0;

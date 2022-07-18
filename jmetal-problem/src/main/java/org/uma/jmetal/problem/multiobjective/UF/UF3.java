@@ -33,7 +33,7 @@ public class UF3 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -44,8 +44,8 @@ public class UF3 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < solution.variables().size(); i++) {
+      var x = new double[getNumberOfVariables()];
+    for (var i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i) ;
     }
 
@@ -57,7 +57,7 @@ public class UF3 extends AbstractDoubleProblem {
  		prod1  = prod2  = 1.0;
 
     
-    for (int j = 2 ; j <= getNumberOfVariables(); j++) {
+    for (var j = 2; j <= getNumberOfVariables(); j++) {
 			yj = x[j-1]-Math.pow(x[0],0.5*(1.0+3.0*(j-2.0)/(getNumberOfVariables()-2.0)));
 			pj = Math.cos(20.0*yj*Math.PI/Math.sqrt(j));
 			if (j % 2 == 0) {

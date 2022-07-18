@@ -22,7 +22,7 @@ public class BoxPlot {
     };
     double[] y = {1, 4, 9, 16, 3, 6, 8, 8, 2, 4, 7, 11};
 
-    BoxTrace trace = BoxTrace.builder(x, y).build();
+    var trace = BoxTrace.builder(x, y).build();
     Plot.show(new Figure(trace));
   }
 }

@@ -69,7 +69,7 @@ public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implemen
     initTime = System.currentTimeMillis();
     initProgress() ;
     while (!termination.isMet(attributes)) {
-      List<S> solutions = solutionsCreation.create();
+      var solutions = solutionsCreation.create();
       evaluation.evaluate(solutions);
       evaluatedSolutions = solutions.size() ;
       updateBestFoundSolutions(solutions) ;
@@ -102,7 +102,7 @@ public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implemen
   }
 
   protected void updateBestFoundSolutions(List<S> solutions) {
-    for (S solution : solutions) {
+    for (var solution : solutions) {
       archive.add(solution);
     }
   }

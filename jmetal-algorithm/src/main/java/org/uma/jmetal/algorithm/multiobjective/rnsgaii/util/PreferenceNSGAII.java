@@ -26,14 +26,14 @@ public class PreferenceNSGAII<S extends Solution<?>> {
   public @NotNull Double evaluate(S solution) {
 
       @NotNull List<Double> objectiveValues = new ArrayList<>(solution.objectives().length);
-      for (double v : solution.objectives()) {
+      for (var v : solution.objectives()) {
           Double aDouble = v;
           objectiveValues.add(aDouble);
       }
 
-      double normalizeDiff = 0.0D;
-    double distance = 0.0D;
-    for (int i = 0; i < solution.objectives().length; i++) {
+    var normalizeDiff = 0.0D;
+    var distance = 0.0D;
+    for (var i = 0; i < solution.objectives().length; i++) {
       if (this.upperBounds != null && this.lowerBounds != null) {
         normalizeDiff =
             (solution.objectives()[i] - this.interestPoint.get(i))

@@ -63,14 +63,13 @@ public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> i
   @Override
   public void run() throws IOException {
     @NotNull String rDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_R_DIRECTORY;
-    File rOutput;
-    rOutput = new File(rDirectoryName);
+      var rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
       new File(rDirectoryName).mkdirs();
       System.out.println("Creating " + rDirectoryName + " directory");
     }
-    for (QualityIndicator indicator : experiment.getIndicatorList()) {
-     String rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
+    for (var indicator : experiment.getIndicatorList()) {
+        var rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
 
      try(@NotNull FileWriter os = new FileWriter(rFileName, false)){
       os.write("postscript(\"" +
@@ -82,8 +81,8 @@ public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> i
       os.write("qIndicator <- function(indicator, problem)" + "\n");
       os.write("{" + "\n");
 
-      for (int i = 0; i <  experiment.getAlgorithmList().size(); i++) {
-        String algorithmName = experiment.getAlgorithmList().get(i).getAlgorithmTag();
+      for (var i = 0; i <  experiment.getAlgorithmList().size(); i++) {
+          var algorithmName = experiment.getAlgorithmList().get(i).getAlgorithmTag();
         os.write("file" +  algorithmName + "<-paste(resultDirectory, \"" + algorithmName + "\", sep=\"/\")" + "\n");
         os.write("file" +  algorithmName + "<-paste(file" +  algorithmName + ", " +  "problem, sep=\"/\")" + "\n");
         os.write("file" +  algorithmName + "<-paste(file" +  algorithmName + ", " + "indicator, sep=\"/\")" + "\n");
@@ -92,13 +91,13 @@ public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> i
       }
 
       os.write("algs<-c(");
-      for (int i = 0; i <  experiment.getAlgorithmList().size() - 1; i++) {
+      for (var i = 0; i <  experiment.getAlgorithmList().size() - 1; i++) {
         os.write("\"" +  experiment.getAlgorithmList().get(i).getAlgorithmTag() + "\",");
       } // for
       os.write("\"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + "\")" + "\n");
 
       os.write("boxplot(");
-      for (int i = 0; i <  experiment.getAlgorithmList().size(); i++) {
+      for (var i = 0; i <  experiment.getAlgorithmList().size(); i++) {
         os.write(experiment.getAlgorithmList().get(i).getAlgorithmTag() + ",");
       } // for
       if (displayNotch) {

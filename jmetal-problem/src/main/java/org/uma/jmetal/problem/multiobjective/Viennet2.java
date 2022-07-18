@@ -15,7 +15,7 @@ public class Viennet2 extends AbstractDoubleProblem {
 
   /** Constructor. Creates a default instance of the Viennet2 problem */
   public Viennet2() {
-    int numberOfVariables = 2 ;
+    var numberOfVariables = 2 ;
     setNumberOfObjectives(3);
     setNumberOfConstraints(0);
     setName("Viennet2");
@@ -23,7 +23,7 @@ public class Viennet2 extends AbstractDoubleProblem {
     @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-4.0);
       upperLimit.add(4.0);
     }
@@ -34,12 +34,12 @@ public class Viennet2 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables();
+    var numberOfVariables = getNumberOfVariables();
 
-    double[] f = new double[solution.objectives().length];
-      double @NotNull [] x = new double[10];
-      int count = 0;
-      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+    var f = new double[solution.objectives().length];
+    var x = new double[10];
+    var count = 0;
+      for (var i1 = 0; i1 < numberOfVariables; i1++) {
           double v = solution.variables().get(i1);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
@@ -61,7 +61,7 @@ public class Viennet2 extends AbstractDoubleProblem {
             + (2 * x[1] - x[0]) * (2 * x[1] - x[0]) / 17.0
             - 13.0;
 
-    for (int i = 0; i < solution.objectives().length; i++) solution.objectives()[i] = f[i];
+    for (var i = 0; i < solution.objectives().length; i++) solution.objectives()[i] = f[i];
 
     return solution;
   }

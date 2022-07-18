@@ -37,9 +37,8 @@ public class ABYSSTest {
 
   @Test
   public void shouldIsStoppingConditionReachedReturnTrueIfTheConditionFulfills() {
-    ABYSS abyss;
-    int maxEvaluations = 100;
-    abyss = new ABYSS(problem, maxEvaluations, 0, 0, 0, 0, null, null, null, 0);
+    var maxEvaluations = 100;
+    var abyss = new ABYSS(problem, maxEvaluations, 0, 0, 0, 0, null, null, null, 0);
 
     ReflectionTestUtils.setField(abyss, "evaluations", 101);
 
@@ -48,8 +47,8 @@ public class ABYSSTest {
 
   @Test
   public void shouldIsStoppingConditionReachedReturnFalseIfTheConditionDoesNotFulfill() {
-    int maxEvaluations = 100;
-    ABYSS abyss = new ABYSS(problem, maxEvaluations, 0, 0, 0, 0, null, null, null, 0);
+    var maxEvaluations = 100;
+    var abyss = new ABYSS(problem, maxEvaluations, 0, 0, 0, 0, null, null, null, 0);
 
     ReflectionTestUtils.setField(abyss, "evaluations", 1);
 
@@ -58,11 +57,11 @@ public class ABYSSTest {
 
   @Test
   public void shouldInitializationPhaseLeadToAPopulationFilledWithEvaluatedSolutions() {
-    int populationSize = 20;
-    int numberOfSubRanges = 4;
+    var populationSize = 20;
+    var numberOfSubRanges = 4;
     DoubleProblem problem = new FakeDoubleProblem();
 
-    ABYSS abyss =
+    var abyss =
         new ABYSS(problem, 0, populationSize, 0, 0, 0, null, localSearch, null, numberOfSubRanges);
 
     abyss.initializationPhase();
@@ -71,14 +70,14 @@ public class ABYSSTest {
 
   @Test
   public void shouldReferenceSetUpdateCreateTheTwoRefSetsAfterBeingInvokedTheFirstTime() {
-    int populationSize = 20;
-    int numberOfSubRanges = 4;
-    int referenceSet1Size = 6;
-    int referenceSet2Size = 4;
+    var populationSize = 20;
+    var numberOfSubRanges = 4;
+    var referenceSet1Size = 6;
+    var referenceSet2Size = 4;
 
     DoubleProblem problem = new FakeDoubleProblem();
 
-    ABYSS abyss =
+    var abyss =
         new ABYSS(
             problem,
             0,
@@ -103,14 +102,14 @@ public class ABYSSTest {
   @Test
   public void
       shouldReferenceSetUpdateCreateAReducedSizeReferenceSet2IfThePopulationIsNotBigEnough() {
-    int populationSize = 10;
-    int numberOfSubRanges = 4;
-    int referenceSet1Size = 8;
-    int referenceSet2Size = 4;
+    var populationSize = 10;
+    var numberOfSubRanges = 4;
+    var referenceSet1Size = 8;
+    var referenceSet2Size = 4;
 
     DoubleProblem problem = new FakeDoubleProblem();
 
-    ABYSS abyss =
+    var abyss =
         new ABYSS(
             problem,
             0,
@@ -163,14 +162,14 @@ public class ABYSSTest {
   */
   @Test
   public void shouldSubsetGenerationProduceAnEmptyListIfAllTheSolutionsAreMarked() {
-    int populationSize = 10;
-    int numberOfSubRanges = 4;
-    int referenceSet1Size = 4;
-    int referenceSet2Size = 4;
+    var populationSize = 10;
+    var numberOfSubRanges = 4;
+    var referenceSet1Size = 4;
+    var referenceSet2Size = 4;
 
     DoubleProblem problem = new FakeDoubleProblem();
 
-    ABYSS abyss =
+    var abyss =
         new ABYSS(
             problem,
             0,
@@ -186,28 +185,28 @@ public class ABYSSTest {
     abyss.initializationPhase();
     abyss.referenceSetUpdate();
 
-    for (DoubleSolution solution : abyss.referenceSet1) {
+    for (var solution : abyss.referenceSet1) {
       solution.attributes().put(ABYSS.SOLUTION_IS_MARKED, true);
     }
 
-    for (DoubleSolution solution : abyss.referenceSet2) {
+    for (var solution : abyss.referenceSet2) {
       solution.attributes().put(ABYSS.SOLUTION_IS_MARKED, true);
     }
-    List<List<DoubleSolution>> list = abyss.subsetGeneration();
+    var list = abyss.subsetGeneration();
 
     assertEquals(0, list.size());
   }
 
   @Test
   public void shouldSolutionCombinationProduceTheRightNumberOfSolutions() {
-    int populationSize = 10;
-    int numberOfSubRanges = 4;
-    int referenceSet1Size = 4;
-    int referenceSet2Size = 4;
+    var populationSize = 10;
+    var numberOfSubRanges = 4;
+    var referenceSet1Size = 4;
+    var referenceSet2Size = 4;
 
     DoubleProblem problem = new FakeDoubleProblem();
 
-    ABYSS abyss =
+    var abyss =
         new ABYSS(
             problem,
             0,
@@ -222,24 +221,24 @@ public class ABYSSTest {
 
     abyss.initializationPhase();
     abyss.referenceSetUpdate();
-    List<List<DoubleSolution>> list = abyss.subsetGeneration();
-    List<DoubleSolution> combinedSolutions = abyss.solutionCombination(list);
+    var list = abyss.subsetGeneration();
+    var combinedSolutions = abyss.solutionCombination(list);
 
-    int expectedValue = combinedSolutions.size() / 2;
+    var expectedValue = combinedSolutions.size() / 2;
 
     assertEquals(expectedValue, list.size());
   }
 
   @Test
   public void shouldRestartCreateANewPopulationWithTheRefSet1Solutions() {
-    int populationSize = 10;
-    int numberOfSubRanges = 4;
-    int referenceSet1Size = 4;
-    int referenceSet2Size = 4;
+    var populationSize = 10;
+    var numberOfSubRanges = 4;
+    var referenceSet1Size = 4;
+    var referenceSet2Size = 4;
 
     DoubleProblem problem = new FakeDoubleProblem();
 
-    ABYSS abyss =
+    var abyss =
         new ABYSS(
             problem,
             0,
@@ -254,10 +253,10 @@ public class ABYSSTest {
 
     abyss.initializationPhase();
     abyss.referenceSetUpdate();
-    List<List<DoubleSolution>> list = abyss.subsetGeneration();
-    List<DoubleSolution> combinedSolutions = abyss.solutionCombination(list);
-    for (DoubleSolution solution : combinedSolutions) {
-      DoubleSolution improvedSolution = abyss.improvement(solution);
+    var list = abyss.subsetGeneration();
+    var combinedSolutions = abyss.solutionCombination(list);
+    for (var solution : combinedSolutions) {
+      var improvedSolution = abyss.improvement(solution);
       abyss.referenceSetUpdate(improvedSolution);
     }
 

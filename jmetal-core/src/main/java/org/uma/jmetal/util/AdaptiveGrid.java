@@ -47,7 +47,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     divisionSize = new double[numberOfObjectives];
     hypercubes = new int[(int) Math.pow(2.0, this.bisections * numberOfObjectives)];
 
-    for (int i = 0; i < hypercubes.length; i++) {
+    for (var i = 0; i < hypercubes.length; i++) {
       hypercubes[i] = 0;
     }
   }
@@ -59,15 +59,15 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @param solutionList The <code>solutionList</code> considered.
    */
   private void updateLimits(List<S> solutionList) {
-    for (int obj = 0; obj < numberOfObjectives; obj++) {
+    for (var obj = 0; obj < numberOfObjectives; obj++) {
       gridLowerLimits[obj] = Double.MAX_VALUE;
       gridUpperLimits[obj] = Double.MIN_VALUE;
     }
 
     //Find the max and min limits of objetives into the population
-    for (int ind = 0; ind < solutionList.size(); ind++) {
+    for (var ind = 0; ind < solutionList.size(); ind++) {
       Solution<?> tmpIndividual = solutionList.get(ind);
-      for (int obj = 0; obj < numberOfObjectives; obj++) {
+      for (var obj = 0; obj < numberOfObjectives; obj++) {
         if (tmpIndividual.objectives()[obj] < gridLowerLimits[obj]) {
           gridLowerLimits[obj] = tmpIndividual.objectives()[obj];
         }
@@ -90,7 +90,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     mostPopulatedHypercube = 0;
     int location;
 
-    for (int ind = 0; ind < solutionList.size(); ind++) {
+    for (var ind = 0; ind < solutionList.size(); ind++) {
       location = location(solutionList.get(ind));
       hypercubes[location]++;
       if (hypercubes[location] > hypercubes[mostPopulatedHypercube]) {
@@ -114,12 +114,12 @@ public class AdaptiveGrid<S extends Solution<?>> {
     updateLimits(solutionList);
 
     //Calculate the division size
-    for (int obj = 0; obj < numberOfObjectives; obj++) {
+    for (var obj = 0; obj < numberOfObjectives; obj++) {
       divisionSize[obj] = gridUpperLimits[obj] - gridLowerLimits[obj];
     }
 
     //Clean the hypercubes
-    for (int i = 0; i < hypercubes.length; i++) {
+    for (var i = 0; i < hypercubes.length; i++) {
       hypercubes[i] = 0;
     }
 
@@ -139,14 +139,14 @@ public class AdaptiveGrid<S extends Solution<?>> {
    */
   public void updateGrid(@NotNull S solution, List<S> solutionSet) {
 
-    int location = location(solution);
+    var location = location(solution);
     if (location == -1) {
       //Re-build the Adaptative-Grid
       //Update lower and upper limits
       updateLimits(solutionSet);
 
       //Actualize the lower and upper limits whit the individual      
-      for (int obj = 0; obj < numberOfObjectives; obj++) {
+      for (var obj = 0; obj < numberOfObjectives; obj++) {
         if (solution.objectives()[obj] < gridLowerLimits[obj]) {
           gridLowerLimits[obj] = solution.objectives()[obj];
         }
@@ -156,12 +156,12 @@ public class AdaptiveGrid<S extends Solution<?>> {
       }
 
       //Calculate the division size
-      for (int obj = 0; obj < numberOfObjectives; obj++) {
+      for (var obj = 0; obj < numberOfObjectives; obj++) {
         divisionSize[obj] = gridUpperLimits[obj] - gridLowerLimits[obj];
       }
 
       //Clean the hypercube
-      for (int i = 0; i < hypercubes.length; i++) {
+      for (var i = 0; i < hypercubes.length; i++) {
         hypercubes[i] = 0;
       }
 
@@ -177,10 +177,10 @@ public class AdaptiveGrid<S extends Solution<?>> {
    */
   public int location(@NotNull S solution) {
     //Create a int [] to store the range of each objective
-    int[] position = new int[numberOfObjectives];
+    var position = new int[numberOfObjectives];
 
     //Calculate the position for each objective
-    for (int obj = 0; obj < numberOfObjectives; obj++) {
+    for (var obj = 0; obj < numberOfObjectives; obj++) {
       if ((solution.objectives()[obj] > gridUpperLimits[obj])
               || (solution.objectives()[obj] < gridLowerLimits[obj])) {
         return -1;
@@ -189,11 +189,11 @@ public class AdaptiveGrid<S extends Solution<?>> {
       } else if (solution.objectives()[obj] == gridUpperLimits[obj]) {
         position[obj] = ((int) Math.pow(2.0, bisections)) - 1;
       } else {
-        double tmpSize = divisionSize[obj];
-        double value = solution.objectives()[obj];
-        double account = gridLowerLimits[obj];
-        int ranges = (int) Math.pow(2.0, bisections);
-        for (int b = 0; b < bisections; b++) {
+        var tmpSize = divisionSize[obj];
+        var value = solution.objectives()[obj];
+        var account = gridLowerLimits[obj];
+        var ranges = (int) Math.pow(2.0, bisections);
+        for (var b = 0; b < bisections; b++) {
           tmpSize /= 2.0;
           ranges /= 2;
           if (value > (account + tmpSize)) {
@@ -205,10 +205,10 @@ public class AdaptiveGrid<S extends Solution<?>> {
     }
 
     //Calculate the location into the hypercubes
-    int location = 0;
-    int bound = numberOfObjectives;
-    for (int obj = 0; obj < bound; obj++) {
-      int i = (int) (position[obj] * Math.pow(2.0, obj * bisections));
+    var location = 0;
+    var bound = numberOfObjectives;
+    for (var obj = 0; obj < bound; obj++) {
+      var i = (int) (position[obj] * Math.pow(2.0, obj * bisections));
       location += i;
     }
     return location;
@@ -244,7 +244,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
 
     //Update the most populated hypercube
     if (location == mostPopulatedHypercube) {
-      for (int i = 0; i < hypercubes.length; i++) {
+      for (var i = 0; i < hypercubes.length; i++) {
         if (hypercubes[i] > hypercubes[mostPopulatedHypercube]) {
           mostPopulatedHypercube = i;
         }
@@ -293,8 +293,8 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @return The String.
    */
   public String toString() {
-    String result = "Grid\n";
-    for (int obj = 0; obj < numberOfObjectives; obj++) {
+    var result = "Grid\n";
+    for (var obj = 0; obj < numberOfObjectives; obj++) {
       result += "Objective " + obj + " " + gridLowerLimits[obj] + " "
               + gridUpperLimits[obj] + "\n";
     }
@@ -319,18 +319,18 @@ public class AdaptiveGrid<S extends Solution<?>> {
    */
   public int rouletteWheel(@NotNull BoundedRandomGenerator<Double> randomGenerator) {
     //Calculate the inverse sum
-    double inverseSum = 0.0;
-    for (int i : hypercubes) {
+    var inverseSum = 0.0;
+    for (var i : hypercubes) {
       if (i > 0) {
-        double v = 1.0 / (double) i;
+        var v = 1.0 / (double) i;
         inverseSum += v;
       }
     }
 
     //Calculate a random value between 0 and sumaInversa
     double random = randomGenerator.getRandomValue(0.0, inverseSum);
-    int hypercube = 0;
-    double accumulatedSum = 0.0;
+    var hypercube = 0;
+    var accumulatedSum = 0.0;
     while (hypercube < hypercubes.length) {
       if (hypercubes[hypercube] > 0) {
         accumulatedSum += 1.0 / (double) hypercubes[hypercube];
@@ -351,17 +351,17 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * return the number of hypercubes with more than zero solutions.
    */
   public void calculateOccupied() {
-    long count = 0L;
-    for (int hypercube : hypercubes) {
+    var count = 0L;
+    for (var hypercube : hypercubes) {
       if (hypercube > 0) {
         count++;
       }
     }
-    int total = (int) count;
+    var total = (int) count;
 
       occupied = new int[total];
-    int base = 0;
-    for (int i = 0; i < hypercubes.length; i++) {
+    var base = 0;
+    for (var i = 0; i < hypercubes.length; i++) {
       if (hypercubes[i] > 0) {
         occupied[base] = i;
         base++;
@@ -410,8 +410,8 @@ public class AdaptiveGrid<S extends Solution<?>> {
     if (occupiedHypercubes() == 0) {
       result = 0.0;
     } else {
-      double sum = 0.0;
-      for (int value : occupied) {
+      var sum = 0.0;
+      for (var value : occupied) {
         double hypercube = hypercubes[value];
         sum += hypercube;
       }

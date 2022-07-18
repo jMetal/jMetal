@@ -31,7 +31,7 @@ public class TournamentSelectionTest {
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsNull() {
     exception.expect(NullParameterException.class);
 
-    TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(4) ;
+    var selection = new TournamentSelection<Solution<?>>(4) ;
     selection.execute(null) ;
   }
 
@@ -39,7 +39,7 @@ public class TournamentSelectionTest {
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsEmpty() {
     exception.expect(EmptyCollectionException.class);
 
-    TournamentSelection<DoubleSolution> selection = new TournamentSelection<DoubleSolution>(4) ;
+    var selection = new TournamentSelection<DoubleSolution>(4) ;
     List<DoubleSolution> list = new ArrayList<>() ;
 
     selection.execute(list) ;
@@ -47,10 +47,10 @@ public class TournamentSelectionTest {
 
   @Test
   public void shouldConstructorAssignTheCorrectValueToTheNumberOfTournaments() {
-    TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(5) ;
+    var selection = new TournamentSelection<Solution<?>>(5) ;
 
-    int result = (int) ReflectionTestUtils.getField(selection, "n_arity");
-    int expectedResult = 5 ;
+    var result = (int) ReflectionTestUtils.getField(selection, "n_arity");
+    var expectedResult = 5 ;
     assertEquals(expectedResult, result) ;
   }
 
@@ -58,12 +58,12 @@ public class TournamentSelectionTest {
   public void shouldConstructorAssignTheCorrectValueSToTheNumberOfTournamentsAndTheComparator() {
     @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class) ;
-    TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(comparator, 7) ;
+    var selection = new TournamentSelection<Solution<?>>(comparator, 7) ;
 
-    int result = (int) ReflectionTestUtils.getField(selection, "n_arity");
-    Object comp = ReflectionTestUtils.getField(selection, "comparator");
+    var result = (int) ReflectionTestUtils.getField(selection, "n_arity");
+    var comp = ReflectionTestUtils.getField(selection, "comparator");
 
-    int expectedResult = 7 ;
+    var expectedResult = 7 ;
     assertEquals(expectedResult, result) ;
     assertSame(comp, comparator) ;
   }
@@ -74,9 +74,9 @@ public class TournamentSelectionTest {
 
     @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class) ;
-    TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(comparator, 2) ;
+    var selection = new TournamentSelection<Solution<?>>(comparator, 2) ;
 
-    BinarySolution solution = mock(BinarySolution.class) ;
+    var solution = mock(BinarySolution.class) ;
     population.add(solution) ;
 
     assertSame(solution, selection.execute(population)) ;

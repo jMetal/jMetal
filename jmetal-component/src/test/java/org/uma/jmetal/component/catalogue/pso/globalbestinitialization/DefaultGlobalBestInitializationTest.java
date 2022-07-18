@@ -38,14 +38,14 @@ class DefaultGlobalBestInitializationTest {
     List<DoubleSolution> swarm = new ArrayList<>();
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    DoubleSolution particle = problem.createSolution() ;
+    var particle = problem.createSolution() ;
     swarm.add(particle);
 
     BoundedArchive<DoubleSolution> archive = Mockito.mock(BoundedArchive.class) ;
-    List<DoubleSolution> archiveList = List.of(particle) ;
+    var archiveList = List.of(particle) ;
     Mockito.when(archive.getSolutionList()).thenReturn(archiveList) ;
 
-    BoundedArchive<DoubleSolution> globalBest = new DefaultGlobalBestInitialization().initialize(swarm, archive) ;
+    var globalBest = new DefaultGlobalBestInitialization().initialize(swarm, archive) ;
 
     assertEquals(1, globalBest.getSolutionList().size());
     assertSame(particle, globalBest.getSolutionList().get(0));

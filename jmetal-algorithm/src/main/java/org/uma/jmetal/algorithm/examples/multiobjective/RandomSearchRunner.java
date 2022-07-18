@@ -28,10 +28,8 @@ public class RandomSearchRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.RandomSearchRunner problemName [referenceFront]
    */
   public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
 
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -44,17 +42,17 @@ public class RandomSearchRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
-    problem = ProblemFactory.loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
-    algorithm = new RandomSearchBuilder<DoubleSolution>(problem)
+    Algorithm<List<DoubleSolution>> algorithm = new RandomSearchBuilder<DoubleSolution>(problem)
             .setMaxEvaluations(2500000)
-            .build() ;
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

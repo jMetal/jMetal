@@ -32,7 +32,7 @@ public class RE22 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("RE22");
 
-    List<Double> lowerLimit = List.of(0.2, 0.0, 0.0);
+    var lowerLimit = List.of(0.2, 0.0, 0.0);
     @NotNull List<Double> upperLimit = List.of(15.0, 20.0, 40.0);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -41,15 +41,15 @@ public class RE22 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = getClosestValue(asFeasibleIntegers, solution.variables().get(0));
+    var x1 = getClosestValue(asFeasibleIntegers, solution.variables().get(0));
     double x2 = solution.variables().get(1);
     double x3 = solution.variables().get(2);
 
-    double[] g = new double[numberOfOriginalConstraints];
+    var g = new double[numberOfOriginalConstraints];
     g[0] = (x1 * x3) - 7.735 * ((x1 * x1) / x2) - 180.0;
     g[1] = 4.0 - (x3 / x2);
 
-    for (int i = 0; i < numberOfOriginalConstraints; i++) {
+    for (var i = 0; i < numberOfOriginalConstraints; i++) {
       if (g[i] < 0.0) g[i] = -g[i];
       else g[i] = 0;
     }

@@ -32,7 +32,7 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
     this.matingPoolSize = offspringPopulationSize *
         crossover.getNumberOfRequiredParents() / crossover.getNumberOfGeneratedChildren();
 
-    int remainder = matingPoolSize % crossover.getNumberOfRequiredParents();
+    var remainder = matingPoolSize % crossover.getNumberOfRequiredParents();
     if (remainder != 0) {
       matingPoolSize += remainder;
     }
@@ -40,20 +40,20 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
 
   @Override
   public @NotNull List<S> variate(List<S> population, List<S> matingPopulation) {
-    int numberOfParents = crossover.getNumberOfRequiredParents();
+    var numberOfParents = crossover.getNumberOfRequiredParents();
 
     checkNumberOfParents(matingPopulation, numberOfParents);
 
     List<S> offspringPopulation = new ArrayList<>(offspringPopulationSize);
-    for (int i = 0; i < matingPoolSize; i += numberOfParents) {
+    for (var i = 0; i < matingPoolSize; i += numberOfParents) {
       List<S> parents = new ArrayList<>(numberOfParents);
-      for (int j = 0; j < numberOfParents; j++) {
+      for (var j = 0; j < numberOfParents; j++) {
         parents.add(matingPopulation.get(i + j));
       }
 
-      List<S> offspring = crossover.execute(parents);
+      var offspring = crossover.execute(parents);
 
-      for (S s : offspring) {
+      for (var s : offspring) {
         mutation.execute(s);
         offspringPopulation.add(s);
         if (offspringPopulation.size() == offspringPopulationSize) {

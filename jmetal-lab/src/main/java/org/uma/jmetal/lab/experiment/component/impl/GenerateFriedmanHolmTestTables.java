@@ -62,22 +62,22 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
   public void run() throws IOException {
     latexDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_LATEX_DIRECTORY;
 
-    String path = experiment.getExperimentBaseDirectory();
-    Table table = Table.read().csv(path + "/" + INDICATOR_SUMMARY_CSV);
-    boolean minimizar = true;
+    var path = experiment.getExperimentBaseDirectory();
+    var table = Table.read().csv(path + "/" + INDICATOR_SUMMARY_CSV);
+    var minimizar = true;
 
     for (@NotNull QualityIndicator indicator : experiment.getIndicatorList()) {
-      Table tableFilteredByIndicator = filterTableByIndicator(table, indicator.getName());
+      var tableFilteredByIndicator = filterTableByIndicator(table, indicator.getName());
       if (indicator.getName().equals("HV")) minimizar = false;
-      Table results = computeFriedmanAndHolmTests(tableFilteredByIndicator, minimizar);
+      var results = computeFriedmanAndHolmTests(tableFilteredByIndicator, minimizar);
       createLatexFile(results, indicator);
     }
   }
 
   private Table computeFriedmanAndHolmTests(Table table, boolean minimizar) {
-    StringColumn algorithms = getUniquesValuesOfStringColumn(table, ALGORITHM);
-    StringColumn problems = getUniquesValuesOfStringColumn(table, PROBLEM);
-    FriedmanTest test = new FriedmanTest(minimizar, table, algorithms, problems, "IndicatorValue");
+    var algorithms = getUniquesValuesOfStringColumn(table, ALGORITHM);
+    var problems = getUniquesValuesOfStringColumn(table, PROBLEM);
+    var test = new FriedmanTest(minimizar, table, algorithms, problems, "IndicatorValue");
     test.computeHolmTest();
     return test.getResults();
   }
@@ -85,15 +85,14 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
   private void createLatexFile(@NotNull Table results, @NotNull QualityIndicator indicator) {
     @NotNull String outputFile = latexDirectoryName + "/FriedmanTestWithHolm" + indicator.getName() + ".tex";
 
-    File latexOutput;
-    latexOutput = new File(latexDirectoryName);
+    var latexOutput = new File(latexDirectoryName);
     if (!latexOutput.exists()) {
       latexOutput.mkdirs();
     }
 
-    String fileContents = prepareFileOutputContents(results);
+    var fileContents = prepareFileOutputContents(results);
 
-    try (DataOutputStream dataOutputStream =
+    try (var dataOutputStream =
         new DataOutputStream(new FileOutputStream(outputFile))) {
       dataOutputStream.writeBytes(fileContents);
     } catch (IOException e) {
@@ -135,19 +134,19 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
   }
 
   private @NotNull String printTableLines(String fileContents, Table results) {
-    StringBuilder sb = new StringBuilder(fileContents);
-    for (int i = 0; i < results.rowCount(); i++) {
+    var sb = new StringBuilder(fileContents);
+    for (var i = 0; i < results.rowCount(); i++) {
       sb.append("\n");
-      for (int j = 0; j < results.columnCount(); j++) {
+      for (var j = 0; j < results.columnCount(); j++) {
         if (j == results.columnIndex("Algorithm")) {
           sb.append(results.stringColumn(0).get(i));
         } else if (j == results.columnIndex("Hypothesis")) {
           sb.append(results.stringColumn(j).get(i));
         } else if (j == results.columnIndex("p-value")) {
-          DecimalFormat format = new DecimalFormat("0.###E0");
+          var format = new DecimalFormat("0.###E0");
           sb.append(format.format(results.doubleColumn(j).get(i)));
         } else {
-          DecimalFormat format = new DecimalFormat("##.###");
+          var format = new DecimalFormat("##.###");
           sb.append(format.format(results.doubleColumn(j).get(i)));
         }
         if (j < results.columnCount() - 1) {
@@ -168,16 +167,16 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
   }
 
   private String printDocumentFooter(String fileContents, double[] averageRanking) {
-    double term1 =
+    var term1 =
         (12 * (double) numberOfProblems) / (numberOfAlgorithms * (numberOfAlgorithms + 1));
-    double term2 = numberOfAlgorithms * (numberOfAlgorithms + 1) * (numberOfAlgorithms + 1) / (4.0);
-      double sum = 0.0;
-      int bound = numberOfAlgorithms;
-      for (int i = 0; i < bound; i++) {
-          double v = averageRanking[i] * averageRanking[i];
+    var term2 = numberOfAlgorithms * (numberOfAlgorithms + 1) * (numberOfAlgorithms + 1) / (4.0);
+    var sum = 0.0;
+    var bound = numberOfAlgorithms;
+      for (var i = 0; i < bound; i++) {
+        var v = averageRanking[i] * averageRanking[i];
           sum += v;
       }
-      double friedman = (sum - term2) * term1;
+    var friedman = (sum - term2) * term1;
 
     @NotNull String output =
         fileContents
@@ -198,8 +197,8 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
   }
 
   public StringColumn dropDuplicateRowsInColumn(@NotNull StringColumn column) {
-    LinkedList<String> result = new LinkedList<String>();
-    for (int row = 0; row < column.size(); row++) {
+    var result = new LinkedList<String>();
+    for (var row = 0; row < column.size(); row++) {
       if (!result.contains(column.get(row))) {
         result.add(column.get(row));
       }

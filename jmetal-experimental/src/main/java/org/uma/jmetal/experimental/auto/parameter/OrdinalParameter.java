@@ -30,12 +30,12 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
 
   @Override
   public String toString() {
-    StringBuilder result =
+    var result =
             new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues);
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (var parameter : getGlobalParameters()) {
       result.append(" -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (var parameter : getSpecificParameters()) {
       result.append("\n  -> ").append(parameter.getRight().toString());
     }
     return result.toString();

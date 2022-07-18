@@ -28,7 +28,7 @@ public class GridDensityEstimator<S extends Solution<?>> implements DensityEstim
    */
   @Override
   public void compute(List<S> solutionList) {
-    int size = solutionList.size();
+    var size = solutionList.size();
 
     if (size == 0) {
       return;
@@ -40,7 +40,7 @@ public class GridDensityEstimator<S extends Solution<?>> implements DensityEstim
 
     grid.updateGrid(solutionList);
 
-    for (S solution : solutionList) {
+    for (var solution : solutionList) {
       solution.attributes().put(attributeId, grid.getLocationDensity(grid.location(solution)));
     }
   }
@@ -49,7 +49,7 @@ public class GridDensityEstimator<S extends Solution<?>> implements DensityEstim
   public Double getValue(S solution) {
     Check.notNull(solution);
 
-    int result = 0 ;
+    var result = 0 ;
     if (solution.attributes().get(attributeId) != null) {
       result = (Integer) solution.attributes().get(attributeId) ;
     }

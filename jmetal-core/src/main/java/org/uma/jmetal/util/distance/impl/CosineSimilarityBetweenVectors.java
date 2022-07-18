@@ -19,9 +19,9 @@ public class CosineSimilarityBetweenVectors implements Distance<double[], double
 
   @Override
   public double compute(double[] vector1, double[] vector2) {
-    double sum = 0.0;
-    for (int i = 0; i < vector1.length; i++) {
-      double v = (vector1[i] - referencePoint[i]) * (vector2[i] - referencePoint[i]);
+    var sum = 0.0;
+    for (var i = 0; i < vector1.length; i++) {
+      var v = (vector1[i] - referencePoint[i]) * (vector2[i] - referencePoint[i]);
       sum += v;
     }
 
@@ -29,9 +29,9 @@ public class CosineSimilarityBetweenVectors implements Distance<double[], double
   }
 
   private double sumOfDistancesToIdealPoint(double[] vector) {
-    double sum = 0.0;
-    for (int i = 0; i < vector.length; i++) {
-      double pow = Math.pow(vector[i] - referencePoint[i], 2.0);
+    var sum = 0.0;
+    for (var i = 0; i < vector.length; i++) {
+      var pow = Math.pow(vector[i] - referencePoint[i], 2.0);
       sum += pow;
     }
 

@@ -38,17 +38,17 @@ public class AsynchronousCellularGeneticAlgorithmBinaryExample {
   public static void main(String[] args) throws JMetalException {
     @NotNull BinaryProblem problem = new OneMax(1024) ;
 
-    double crossoverProbability = 0.9;
+    var crossoverProbability = 0.9;
     var crossover = new SinglePointCrossover(crossoverProbability);
 
-    double mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
+    var mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
     var mutation = new BitFlipMutation(mutationProbability);
 
-    int populationSize = 100;
-    int offspringPopulationSize = 1;
+    var populationSize = 100;
+    var offspringPopulationSize = 1;
 
-    int rows = 10 ;
-    int columns = 10 ;
+    var rows = 10 ;
+    var columns = 10 ;
     Neighborhood<BinarySolution> neighborhood = new C25<>(rows, columns) ;
 
     SequenceGenerator<Integer> solutionIndexGenerator = new IntegerBoundedSequenceGenerator(populationSize);
@@ -65,7 +65,7 @@ public class AsynchronousCellularGeneticAlgorithmBinaryExample {
 
     Termination termination = new TerminationByEvaluations(40000);
 
-    EvolutionaryAlgorithm<BinarySolution> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
+    var geneticAlgorithm = new GeneticAlgorithmBuilder<>(
         "acGA",
                     problem,
                     populationSize,
@@ -81,7 +81,7 @@ public class AsynchronousCellularGeneticAlgorithmBinaryExample {
 
     geneticAlgorithm.run();
 
-    List<BinarySolution> population = geneticAlgorithm.getResult();
+    var population = geneticAlgorithm.getResult();
     JMetalLogger.logger.info("Total execution time : " + geneticAlgorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + geneticAlgorithm.getNumberOfEvaluations());
     JMetalLogger.logger.info("Best fitness: " + geneticAlgorithm.getResult().get(0).objectives()[0]);

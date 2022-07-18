@@ -22,10 +22,10 @@ public class CoverageFront<S extends Solution<?>> {
   }
 
   public boolean isCoverageWithLast(@NotNull List<S> front) {
-    double coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(front));
-    double aux = Math.abs(coverage - lastCoverageValue);
+    var coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(front));
+    var aux = Math.abs(coverage - lastCoverageValue);
     lastCoverageValue = coverage;
-    boolean result = aux > coverageValue;
+    var result = aux > coverageValue;
     if (result) {
       lastFront = front;
     } else if (lastFront != null) {
@@ -40,8 +40,8 @@ public class CoverageFront<S extends Solution<?>> {
   }
 
   public boolean isCoverage(List<S> front) {
-    double coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(front));
-    boolean result = coverage > coverageValue;
+    var coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(front));
+    var result = coverage > coverageValue;
     if (result) {
       lastFront = front;
     } else if (lastFront != null) {

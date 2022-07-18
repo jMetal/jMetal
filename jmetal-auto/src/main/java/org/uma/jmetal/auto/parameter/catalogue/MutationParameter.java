@@ -20,15 +20,15 @@ public class MutationParameter extends CategoricalParameter {
 
   public MutationOperator<DoubleSolution> getDoubleSolutionParameter() {
     MutationOperator<DoubleSolution> result;
-    int numberOfProblemVariables = (int) getNonConfigurableParameter("numberOfProblemVariables");
-    double mutationProbability = (double) findGlobalParameter(
+    var numberOfProblemVariables = (int) getNonConfigurableParameter("numberOfProblemVariables");
+    var mutationProbability = (double) findGlobalParameter(
         "mutationProbabilityFactor").getValue() / numberOfProblemVariables;
-    RepairDoubleSolutionStrategyParameter repairDoubleSolution =
+    var repairDoubleSolution =
         (RepairDoubleSolutionStrategyParameter) findGlobalParameter("mutationRepairStrategy");
 
     switch (getValue()) {
       case "polynomial":
-        Double distributionIndex =
+        var distributionIndex =
             (Double) findSpecificParameter("polynomialMutationDistributionIndex").getValue();
         result =
             new PolynomialMutation(
@@ -42,7 +42,7 @@ public class MutationParameter extends CategoricalParameter {
                 mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
         break;
       case "uniform":
-        Double perturbation = (Double) findSpecificParameter(
+        var perturbation = (Double) findSpecificParameter(
             "uniformMutationPerturbation").getValue();
         result =
             new UniformMutation(mutationProbability, perturbation,
@@ -63,8 +63,8 @@ public class MutationParameter extends CategoricalParameter {
 
   public MutationOperator<BinarySolution> getBinarySolutionParameter() {
     MutationOperator<BinarySolution> result;
-    int numberOfBitsInASolution = (int) getNonConfigurableParameter("numberOfBitsInASolution");
-    double mutationProbability = (double) findGlobalParameter(
+    var numberOfBitsInASolution = (int) getNonConfigurableParameter("numberOfBitsInASolution");
+    var mutationProbability = (double) findGlobalParameter(
         "mutationProbabilityFactor").getValue() / numberOfBitsInASolution;
 
     switch (getValue()) {

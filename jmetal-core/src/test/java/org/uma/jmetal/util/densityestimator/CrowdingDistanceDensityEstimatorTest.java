@@ -42,9 +42,9 @@ public class CrowdingDistanceDensityEstimatorTest {
   public void shouldTheCrowdingDistanceOfThreeSolutionsCorrectlyAssigned() {
     DensityEstimator<PointSolution> crowdingDistance = new CrowdingDistanceDensityEstimator<>();
 
-    PointSolution solution1 = new PointSolution(2);
-    PointSolution solution2 = new PointSolution(2);
-    PointSolution solution3 = new PointSolution(2);
+    var solution1 = new PointSolution(2);
+    var solution2 = new PointSolution(2);
+    var solution3 = new PointSolution(2);
 
     solution1.objectives()[0] = 0.0;
     solution1.objectives()[1] = 1.0;

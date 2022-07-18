@@ -65,8 +65,8 @@ public class SetCoverage extends QualityIndicator {
         result = 1.0 ;
       }
     } else {
-        long count = 0L;
-        for (double @NotNull [] vector : referenceFront) {
+      var count = 0L;
+        for (var vector : referenceFront) {
             if (VectorUtils.isVectorDominatedByAFront(vector, front)) {
                 count++;
             }

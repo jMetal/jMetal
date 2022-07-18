@@ -54,7 +54,7 @@ public class RankingAndSSDComparator<S extends Solution<?>> implements Comparato
    */
   @Override
   public int compare(S solution1, S solution2) {
-    int result = rankComparator.compare(solution1, solution2) ;
+    var result = rankComparator.compare(solution1, solution2) ;
     if (result == 0) {
       result = crowdingDistanceComparator.compare(solution1, solution2);
     }

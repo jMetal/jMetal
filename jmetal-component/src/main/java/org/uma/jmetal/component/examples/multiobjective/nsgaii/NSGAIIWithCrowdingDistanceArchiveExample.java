@@ -33,27 +33,27 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class NSGAIIWithCrowdingDistanceArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    var problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     @NotNull var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    var populationSize = 100;
+    var offspringPopulationSize = populationSize;
 
     @NotNull Termination termination = new TerminationByEvaluations(25000);
 
     @NotNull Archive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(populationSize) ;
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+    var nsgaii = new NSGAIIBuilder<>(
         problem,
         populationSize,
         offspringPopulationSize,
@@ -65,7 +65,7 @@ public class NSGAIIWithCrowdingDistanceArchiveExample {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = externalArchive.getSolutionList();
+    var population = externalArchive.getSolutionList();
     JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 

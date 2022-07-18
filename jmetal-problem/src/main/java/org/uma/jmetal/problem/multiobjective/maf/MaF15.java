@@ -34,19 +34,19 @@ public class MaF15 extends AbstractDoubleProblem {
       Integer numberOfObjectives) {
 
     nk15 = 2;
-    double @NotNull [] c = new double[numberOfObjectives];
+    var c = new double[numberOfObjectives];
     c[0] = 3.8 * 0.1 * (1 - 0.1);
     double sumc = 0;
     sumc += c[0];
-    for (int i = 1; i < numberOfObjectives; i++) {
+    for (var i = 1; i < numberOfObjectives; i++) {
       c[i] = 3.8 * c[i - 1] * (1 - c[i - 1]);
       sumc += c[i];
     }
 
-    int[] sublen = new int[numberOfObjectives];
-    int @NotNull [] len = new int[numberOfObjectives + 1];
+    var sublen = new int[numberOfObjectives];
+    var len = new int[numberOfObjectives + 1];
     len[0] = 0;
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       sublen[i] = (int) Math.ceil(Math.round(c[i] / sumc * numberOfVariables) / (double) nk15);
       len[i + 1] = len[i] + (nk15 * sublen[i]);
     }
@@ -62,11 +62,11 @@ public class MaF15 extends AbstractDoubleProblem {
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-    for (int i = 0; i < numberOfObjectives - 1; i++) {
+    for (var i = 0; i < numberOfObjectives - 1; i++) {
         lower.add(0.0);
         upper.add(1.0);
     }
-    for (int i = numberOfObjectives - 1; i < numberOfVariables; i++) {
+    for (var i = numberOfObjectives - 1; i < numberOfVariables; i++) {
         lower.add(0.0);
         upper.add(10.0);
     }
@@ -82,33 +82,32 @@ public class MaF15 extends AbstractDoubleProblem {
   @Override
   public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
 
-    int numberOfVariables = solution.variables().size();
-    int numberOfObjectives = solution.objectives().length;
+    var numberOfVariables = solution.variables().size();
+    var numberOfObjectives = solution.objectives().length;
 
-    double[] x;
-    double[] f = new double[numberOfObjectives];
+    var f = new double[numberOfObjectives];
 
-      double[] arr = new double[10];
-      int count = 0;
-      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+    var arr = new double[10];
+    var count = 0;
+      for (var i1 = 0; i1 < numberOfVariables; i1++) {
           double v = solution.variables().get(i1);
           if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
           arr[count++] = v;
       }
       arr = Arrays.copyOfRange(arr, 0, count);
-      x = arr;
+    var x = arr;
 
     // change x
-    for (int i = numberOfObjectives - 1; i < numberOfVariables; i++) {
+    for (var i = numberOfObjectives - 1; i < numberOfVariables; i++) {
       x[i] = (1 + Math.cos((i + 1) / (double) numberOfVariables * Math.PI / 2)) * x[i] - 10 * x[0];
     }
     // evaluate eta,g
-    double[] g = new double[numberOfObjectives];
+    var g = new double[numberOfObjectives];
     double sub1;
-    for (int i = 0; i < numberOfObjectives; i = i + 2) {
-      double[] tx = new double[sublen15[i]];
+    for (var i = 0; i < numberOfObjectives; i = i + 2) {
+      var tx = new double[sublen15[i]];
       sub1 = 0;
-      for (int j = 0; j < nk15; j++) {
+      for (var j = 0; j < nk15; j++) {
         System
             .arraycopy(x, len15[i] + numberOfObjectives - 1 + j * sublen15[i], tx, 0, sublen15[i]);
         sub1 += Griewank(tx);
@@ -116,10 +115,10 @@ public class MaF15 extends AbstractDoubleProblem {
       g[i] = sub1 / (nk15 * sublen15[i]);
     }
 
-    for (int i = 1; i < numberOfObjectives; i = i + 2) {
-      double[] tx = new double[sublen15[i]];
+    for (var i = 1; i < numberOfObjectives; i = i + 2) {
+      var tx = new double[sublen15[i]];
       sub1 = 0;
-      for (int j = 0; j < nk15; j++) {
+      for (var j = 0; j < nk15; j++) {
         System
             .arraycopy(x, len15[i] + numberOfObjectives - 1 + j * sublen15[i], tx, 0, sublen15[i]);
         sub1 += Sphere(tx);
@@ -131,14 +130,14 @@ public class MaF15 extends AbstractDoubleProblem {
     double subf1 = 1;
     f[numberOfObjectives - 1] =
         (1 - Math.sin(Math.PI * x[0] / 2)) * (1 + g[numberOfObjectives - 1]);
-    for (int i = numberOfObjectives - 2; i > 0; i--) {
+    for (var i = numberOfObjectives - 2; i > 0; i--) {
       subf1 *= Math.cos(Math.PI * x[numberOfObjectives - i - 2] / 2);
       f[i] = (1 - subf1 * Math.sin(Math.PI * x[numberOfObjectives - i - 1] / 2)) * (1 + g[i] + g[i
           + 1]);
     }
     f[0] = (1 - subf1 * Math.cos(Math.PI * x[numberOfObjectives - 2] / 2)) * (1 + g[0] + g[1]);
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       solution.objectives()[i] = f[i];
     }
 
@@ -147,7 +146,7 @@ public class MaF15 extends AbstractDoubleProblem {
 
   public static double Griewank(double[] x) {
     double eta = 0, sub1 = 0, sub2 = 1;
-    for (int i = 0; i < x.length; i++) {
+    for (var i = 0; i < x.length; i++) {
       sub1 += (Math.pow(x[i], 2) / 4000);
       sub2 *= (Math.cos(x[i] / Math.sqrt(i + 1)));
     }
@@ -156,9 +155,9 @@ public class MaF15 extends AbstractDoubleProblem {
   }
 
   public static double Sphere(double[] x) {
-      double eta = 0.0;
-      for (double v : x) {
-          double pow = Math.pow(v, 2);
+    var eta = 0.0;
+      for (var v : x) {
+        var pow = Math.pow(v, 2);
           eta += pow;
       }
       return eta;

@@ -26,7 +26,7 @@ public class Sphere extends AbstractDoubleProblem {
     @NotNull List<Double> lowerLimit = new ArrayList<>() ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-      for (int i = 0; i < numberOfVariables; i++) {
+      for (var i = 0; i < numberOfVariables; i++) {
           lowerLimit.add(-5.12);
           upperLimit.add(5.12);
       }
@@ -37,10 +37,10 @@ public class Sphere extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-      double sum = 0.0;
-      for (Double v : solution.variables()) {
+      var sum = 0.0;
+      for (var v : solution.variables()) {
           double v1 = v;
-          double v2 = v1 * v1;
+          var v2 = v1 * v1;
           sum += v2;
       }
 

@@ -63,12 +63,7 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
     java org.uma.jmetal.runner.multiobjective.nsgaii.RNSGAIIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
+    var referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -81,18 +76,18 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    Problem<DoubleSolution> problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(
-        new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(
+            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     List<Double> referencePoint = new ArrayList<>() ;
 
@@ -112,20 +107,20 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
     referencePoint.add(0.9) ;
     referencePoint.add(0.0) ;
 
-    double epsilon= 0.0045;
+    var epsilon= 0.0045;
 
-    algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint, epsilon)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(25000)
-        .setPopulationSize(100)
-        .build() ;
+    Algorithm<List<DoubleSolution>> algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint, epsilon)
+            .setSelectionOperator(selection)
+            .setMaxEvaluations(25000)
+            .setPopulationSize(100)
+            .build();
 
     /* Measure management */
-    MeasureManager measureManager = ((RNSGAII<DoubleSolution>) algorithm).getMeasureManager();
+    var measureManager = ((RNSGAII<DoubleSolution>) algorithm).getMeasureManager();
 
-    BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
+    var solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
-    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
+    var iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
 
     @NotNull ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
@@ -136,12 +131,12 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
     iterationMeasure.register(new IterationListener(chart));
     /* End of measure management */
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
     chart.saveChart("RNSGAII", BitmapEncoder.BitmapFormat.PNG);
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
@@ -154,14 +149,13 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
   }
 
   private static List<List<Double>> convertReferencePointListToListOfLists(List<Double> referencePoints, int numberOfObjectives) {
-    List<List<Double>> referencePointList;
-    referencePointList = new ArrayList<>();
+    List<List<Double>> referencePointList = new ArrayList<>();
 
-    for (int i = 0; i <= (referencePoints.size() - numberOfObjectives); i+=numberOfObjectives) {
+    for (var i = 0; i <= (referencePoints.size() - numberOfObjectives); i+=numberOfObjectives) {
         @NotNull List<Double> newReferencePoint = new ArrayList<>(numberOfObjectives);
-        int bound = (i + numberOfObjectives);
-        for (int i1 = i; i1 < bound; i1++) {
-            Double aDouble = referencePoints.get(i1);
+      var bound = (i + numberOfObjectives);
+        for (var i1 = i; i1 < bound; i1++) {
+          var aDouble = referencePoints.get(i1);
             newReferencePoint.add(aDouble);
         }
 

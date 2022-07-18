@@ -24,14 +24,14 @@ public class PenaltyBoundaryIntersection implements AggregativeFunction {
 
     d1 = d2 = nl = 0.0;
 
-    for (int i = 0; i < vector.length; i++) {
+    for (var i = 0; i < vector.length; i++) {
       d1 += (vector[i] - idealPoint.getValue(i)) * weightVector[i];
       nl += Math.pow(weightVector[i], 2.0);
     }
     nl = Math.sqrt(nl);
     d1 = Math.abs(d1) / nl;
 
-    for (int i = 0; i < vector.length; i++) {
+    for (var i = 0; i < vector.length; i++) {
       d2 += Math.pow((vector[i] - idealPoint.getValue(i)) -
           d1 * (weightVector[i] / nl), 2.0);
     }

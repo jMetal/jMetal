@@ -10,14 +10,14 @@ class ConstantValueStrategyTest {
 
   @Test
   void constructorCreatesANotNullObject() {
-    ConstantValueStrategy constantValueStrategy = new ConstantValueStrategy(0.1);
+    var constantValueStrategy = new ConstantValueStrategy(0.1);
     assertNotNull(constantValueStrategy);
   }
 
   @Test
   void constructorCreatesAValidInstance() {
-    double weight = 0.1 ;
-    ConstantValueStrategy constantValueStrategy = new ConstantValueStrategy(weight);
+    var weight = 0.1 ;
+    var constantValueStrategy = new ConstantValueStrategy(weight);
     assertEquals(weight, constantValueStrategy.getInertiaWeightValue());
   }
 }

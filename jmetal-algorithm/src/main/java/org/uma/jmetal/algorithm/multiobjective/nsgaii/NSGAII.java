@@ -101,15 +101,15 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   @Override
   protected List<S> selection(List<S> population) {
       List<S> matingPopulation = new ArrayList<>(population.size());
-      int bound = matingPoolSize;
-      for (int i = 0; i < bound; i++) {
-          S execute = selectionOperator.execute(population);
+    var bound = matingPoolSize;
+      for (var i = 0; i < bound; i++) {
+        var execute = selectionOperator.execute(population);
           matingPopulation.add(execute);
       }
 
       List<S> newList = new ArrayList<>();
-      for (S solution : population) {
-          S copy = (S) solution.copy();
+      for (var solution : population) {
+        var copy = (S) solution.copy();
           newList.add(copy);
       }
 
@@ -130,20 +130,20 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
    */
   @Override
   protected List<S> reproduction(List<S> matingPool) {
-    int numberOfParents = crossoverOperator.getNumberOfRequiredParents();
+    var numberOfParents = crossoverOperator.getNumberOfRequiredParents();
 
     checkNumberOfParents(matingPool, numberOfParents);
 
     List<S> offspringPopulation = new ArrayList<>(offspringPopulationSize);
-    for (int i = 0; i < matingPool.size(); i += numberOfParents) {
+    for (var i = 0; i < matingPool.size(); i += numberOfParents) {
       List<S> parents = new ArrayList<>(numberOfParents);
-      for (int j = 0; j < numberOfParents; j++) {
+      for (var j = 0; j < numberOfParents; j++) {
         parents.add(matingPool.get(i + j));
       }
 
-      List<S> offspring = crossoverOperator.execute(parents);
+      var offspring = crossoverOperator.execute(parents);
 
-      for (S s : offspring) {
+      for (var s : offspring) {
         mutationOperator.execute(s);
         offspringPopulation.add(s);
         if (offspringPopulation.size() >= offspringPopulationSize) {
@@ -160,9 +160,8 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
 
-    RankingAndCrowdingSelection<S> rankingAndCrowdingSelection;
-    rankingAndCrowdingSelection = new RankingAndCrowdingSelection<S>(getMaxPopulationSize(),
-        dominanceComparator);
+    var rankingAndCrowdingSelection = new RankingAndCrowdingSelection<S>(getMaxPopulationSize(),
+              dominanceComparator);
 
     return rankingAndCrowdingSelection.execute(jointPopulation);
   }

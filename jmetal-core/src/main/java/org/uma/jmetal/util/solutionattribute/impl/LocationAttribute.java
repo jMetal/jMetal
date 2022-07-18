@@ -19,7 +19,7 @@ public class LocationAttribute <S extends Solution<?>>
 		extends GenericSolutionAttribute<S, Integer> {
 
 	public LocationAttribute(List<S> solutionList) {
-		int location = 0;
+		var location = 0;
 		for (@NotNull S solution : solutionList)
 			solution.attributes().put(getAttributeIdentifier(), location++);
 	}

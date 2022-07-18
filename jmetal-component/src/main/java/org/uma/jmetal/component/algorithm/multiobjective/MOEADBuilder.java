@@ -52,7 +52,7 @@ public class MOEADBuilder<S extends Solution<?>> {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    int offspringPopulationSize = 1;
+    var offspringPopulationSize = 1;
     this.variation =
         new CrossoverAndMutationVariation<>(
             offspringPopulationSize, crossover, mutation);

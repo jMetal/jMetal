@@ -259,9 +259,7 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
   }
 
   public @NotNull DMOPSO build() {
-    @Nullable DMOPSO algorithm = null;
-    algorithm =
-        new DMOPSO(
+    @Nullable DMOPSO algorithm = new DMOPSO(
             problem,
             swarmSize,
             maxIterations,

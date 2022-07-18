@@ -40,7 +40,7 @@ public class UF6 extends AbstractDoubleProblem {
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    for (int i = 1; i < numberOfVariables; i++) {
+    for (var i = 1; i < numberOfVariables; i++) {
       lowerLimit.add(-1.0);
       upperLimit.add(1.0);
     }
@@ -51,19 +51,19 @@ public class UF6 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < solution.variables().size(); i++) {
+      var x = new double[getNumberOfVariables()];
+    for (var i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i) ;
     }
 
   	int count1, count2 ;
     double prod1, prod2 ;
-    double sum1, sum2, yj, hj, pj ;
+    double sum1, sum2, yj, pj ;
 		sum1   = sum2   = 0.0;
 		count1 = count2 = 0;
  		prod1  = prod2  = 1.0;
     
-    for (int j = 2 ; j <= getNumberOfVariables(); j++) {
+    for (var j = 2; j <= getNumberOfVariables(); j++) {
 			yj = x[j-1]-Math.sin(6.0*Math.PI*x[0]+j*Math.PI/ getNumberOfVariables());
 			pj = Math.cos(20.0*yj*Math.PI/Math.sqrt(j));
 			if (j % 2 == 0) {
@@ -76,7 +76,7 @@ public class UF6 extends AbstractDoubleProblem {
 				count1++;
 			}
     }
-		hj = 2.0*(0.5/n + epsilon)*Math.sin(2.0*n*Math.PI*x[0]);
+      var hj = 2.0 * (0.5 / n + epsilon) * Math.sin(2.0 * n * Math.PI * x[0]);
 		if (hj < 0.0) 
       hj = 0.0;
     

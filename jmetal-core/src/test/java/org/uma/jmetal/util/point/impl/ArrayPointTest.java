@@ -24,18 +24,18 @@ public class ArrayPointTest {
 
   @Test
   public void shouldConstructAPointOfAGivenDimension() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
-    double[] pointDimensions = (double[])ReflectionTestUtils.getField(point, "point");
+    var pointDimensions = (double[])ReflectionTestUtils.getField(point, "point");
 
-    double[] expectedArray = {0.0, 0.0, 0.0, 0.0, 0.0} ;
+    var expectedArray = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
     assertArrayEquals(expectedArray, pointDimensions, EPSILON); ;
   }
 
   @Test
   public void shouldConstructAPointFromOtherPointReturnAnIdenticalPoint() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
     point.setValue(0, 1.0);
     point.setValue(1, -2.0);
@@ -45,8 +45,8 @@ public class ArrayPointTest {
 
     Point newPoint = new ArrayPoint(point) ;
 
-    double[] expectedArray = {1.0, -2.0, 45.5, -323.234, 2344234.23424} ;
-    double[] newPointDimensions = (double[])ReflectionTestUtils.getField(newPoint, "point");
+    var expectedArray = new double[]{1.0, -2.0, 45.5, -323.234, 2344234.23424};
+    var newPointDimensions = (double[])ReflectionTestUtils.getField(newPoint, "point");
 
     assertArrayEquals(expectedArray, newPointDimensions, EPSILON);
 
@@ -63,15 +63,15 @@ public class ArrayPointTest {
   @Test
   public void shouldConstructFromASolutionReturnTheCorrectPoint() {
     DoubleProblem problem = new FakeDoubleProblem(3, 3, 0) ;
-    DoubleSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
     solution.objectives()[0] = 0.2 ;
     solution.objectives()[1] = 234.23 ;
     solution.objectives()[2] = -234.2356 ;
 
     Point point = new ArrayPoint(solution.objectives()) ;
 
-    double[] expectedArray = {0.2, 234.23, -234.2356} ;
-    double[] pointDimensions = (double[])ReflectionTestUtils.getField(point, "point");
+    var expectedArray = new double[]{0.2, 234.23, -234.2356};
+    var pointDimensions = (double[])ReflectionTestUtils.getField(point, "point");
 
     assertArrayEquals(expectedArray, pointDimensions, EPSILON);
 
@@ -81,10 +81,10 @@ public class ArrayPointTest {
 
   @Test
   public void shouldConstructFromArrayReturnTheCorrectPoint() {
-    double[] array = {0.2, 234.23, -234.2356} ;
+    var array = new double[]{0.2, 234.23, -234.2356};
     Point point = new ArrayPoint(array) ;
 
-    double[] storedValues = (double[])ReflectionTestUtils.getField(point, "point");
+    var storedValues = (double[])ReflectionTestUtils.getField(point, "point");
 
     assertArrayEquals(array, storedValues, EPSILON);
   }
@@ -98,7 +98,7 @@ public class ArrayPointTest {
 
   @Test
   public void shouldGetNumberOfDimensionsReturnTheCorrectValue() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
     assertEquals(dimension, point.getDimension());
@@ -106,8 +106,8 @@ public class ArrayPointTest {
 
   @Test
   public void shouldGetValuesReturnTheCorrectValues() {
-    int dimension = 5 ;
-    double[] array = {1.0, -2.0, 45.5, -323.234, 2344234.23424} ;
+    var dimension = 5 ;
+    var array = new double[]{1.0, -2.0, 45.5, -323.234, 2344234.23424};
 
     Point point = new ArrayPoint(dimension) ;
     ReflectionTestUtils.setField(point, "point", array);
@@ -117,8 +117,8 @@ public class ArrayPointTest {
 
   @Test
   public void shouldGetDimensionValueReturnTheCorrectValue() {
-    int dimension = 5 ;
-    double[] array = {1.0, -2.0, 45.5, -323.234, Double.MAX_VALUE} ;
+    var dimension = 5 ;
+    var array = new double[]{1.0, -2.0, 45.5, -323.234, Double.MAX_VALUE};
 
     Point point = new ArrayPoint(dimension) ;
     ReflectionTestUtils.setField(point, "point", array);
@@ -132,7 +132,7 @@ public class ArrayPointTest {
 
   @Test (expected = InvalidConditionException.class)
   public void shouldGetDimensionValueWithInvalidIndexesRaiseAnException() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
     point.getValue(-1) ;
@@ -141,7 +141,7 @@ public class ArrayPointTest {
 
   @Test
   public void shouldSetDimensionValueAssignTheCorrectValue() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
     point.setValue(0, 1.0);
     point.setValue(1, -2.0);
@@ -149,14 +149,14 @@ public class ArrayPointTest {
     point.setValue(3, -323.234);
     point.setValue(4, Double.MAX_VALUE);
 
-    double[] array = {1.0, -2.0, 45.5, -323.234, Double.MAX_VALUE} ;
+    var array = new double[]{1.0, -2.0, 45.5, -323.234, Double.MAX_VALUE};
 
     assertArrayEquals(array, (double[])ReflectionTestUtils.getField(point, "point"), EPSILON);
   }
 
   @Test (expected = InvalidConditionException.class)
   public void shouldSetDimensionValueWithInvalidIndexesRaiseAnException() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
     point.setValue(-1, 2.2) ;
@@ -165,7 +165,7 @@ public class ArrayPointTest {
 
   @Test
   public void shouldEqualsReturnTrueIfThePointsAreIdentical() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
     point.setValue(0, 1.0);
     point.setValue(1, -2.0);
@@ -180,7 +180,7 @@ public class ArrayPointTest {
 
   @Test
   public void shouldEqualsReturnTrueIfTheTwoPointsAreTheSame() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
     assertTrue(point.equals(point));
@@ -189,7 +189,7 @@ public class ArrayPointTest {
 
   @Test
   public void shouldEqualsReturnFalseIfThePointsAreNotIdentical() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
     point.setValue(0, 1.0);
     point.setValue(1, -2.0);
@@ -215,7 +215,7 @@ public class ArrayPointTest {
 
   @Test
   public void shouldEqualsReturnFalseIfThePointIsNull() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
     assertFalse(point.equals(null));
@@ -223,7 +223,7 @@ public class ArrayPointTest {
 
   @Test
   public void shouldEqualsReturnFalseIfTheClassIsNotAPoint() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
     assertFalse(point.equals(new String("")));
@@ -231,7 +231,7 @@ public class ArrayPointTest {
 
   @Test
   public void shouldHashCodeReturnTheCorrectValue() {
-    int dimension = 5 ;
+    var dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
     point.setValue(0, 1.0);
@@ -240,7 +240,7 @@ public class ArrayPointTest {
     point.setValue(3, -323.234);
     point.setValue(4, Double.MAX_VALUE);
 
-    double[] array = {1.0, -2.0, 45.5, -323.234, Double.MAX_VALUE} ;
+    var array = new double[]{1.0, -2.0, 45.5, -323.234, Double.MAX_VALUE};
 
     assertEquals(Arrays.hashCode(array), point.hashCode());
   }

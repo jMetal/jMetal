@@ -42,12 +42,12 @@ public class WFG1 extends WFG {
     setName("WFG1");
 
     s = new int[m];
-    for (int i = 0; i < m; i++) {
+    for (var i = 0; i < m; i++) {
       s[i] = 2 * (i + 1);
     }
 
     a = new int[m - 1];
-    for (int i = 0; i < m - 1; i++) {
+    for (var i = 0; i < m - 1; i++) {
       a[i] = 1;
     }
   }
@@ -67,9 +67,9 @@ public class WFG1 extends WFG {
     y = t4(y, k, m);
 
 
-    float[] result = new float[m];
-    float[] x = calculateX(y);
-    for (int m = 1; m <= this.m - 1; m++) {
+    var result = new float[m];
+    var x = calculateX(y);
+    for (var m = 1; m <= this.m - 1; m++) {
       result[m - 1] = d * x[this.m - 1] + s[m - 1] * (new Shapes()).convex(x, m);
     }
 
@@ -82,11 +82,11 @@ public class WFG1 extends WFG {
    * WFG1 t1 transformation
    */
   public float[] t1(float[] z, int k) {
-    float @NotNull [] result = new float[z.length];
+    var result = new float[z.length];
 
     System.arraycopy(z, 0, result, 0, k);
 
-    for (int i = k; i < z.length; i++) {
+    for (var i = k; i < z.length; i++) {
       result[i] = (new Transformations()).sLinear(z[i], (float) 0.35);
     }
 
@@ -97,11 +97,11 @@ public class WFG1 extends WFG {
    * WFG1 t2 transformation
    */
   public float[] t2(float @NotNull [] z, int k) {
-    float[] result = new float[z.length];
+    var result = new float[z.length];
 
     System.arraycopy(z, 0, result, 0, k);
 
-    for (int i = k; i < z.length; i++) {
+    for (var i = k; i < z.length; i++) {
       result[i] = (new Transformations()).bFlat(z[i], (float) 0.8, (float) 0.75, (float) 0.85);
     }
 
@@ -114,9 +114,9 @@ public class WFG1 extends WFG {
    * @throws JMetalException
    */
   public float[] t3(float @NotNull [] z) throws JMetalException {
-    float @NotNull [] result = new float[z.length];
+    var result = new float[z.length];
 
-    for (int i = 0; i < z.length; i++) {
+    for (var i = 0; i < z.length; i++) {
       result[i] = (new Transformations()).bPoly(z[i], (float) 0.02);
     }
 
@@ -127,26 +127,26 @@ public class WFG1 extends WFG {
    * WFG1 t4 transformation
    */
   public float[] t4(float[] z, int k, int M) {
-    float[] result = new float[M];
-    float @NotNull [] w = new float[z.length];
+    var result = new float[M];
+    var w = new float[z.length];
 
-    for (int i = 0; i < z.length; i++) {
+    for (var i = 0; i < z.length; i++) {
       w[i] = (float) 2.0 * (i + 1);
     }
 
-    for (int i = 1; i <= M - 1; i++) {
-      int head = (i - 1) * k / (M - 1) + 1;
-      int tail = i * k / (M - 1);
-      float[] subZ = subVector(z, head - 1, tail - 1);
-      float[] subW = subVector(w, head - 1, tail - 1);
+    for (var i = 1; i <= M - 1; i++) {
+      var head = (i - 1) * k / (M - 1) + 1;
+      var tail = i * k / (M - 1);
+      var subZ = subVector(z, head - 1, tail - 1);
+      var subW = subVector(w, head - 1, tail - 1);
 
       result[i - 1] = (new Transformations()).rSum(subZ, subW);
     }
 
-    int head = k + 1 - 1;
-    int tail = z.length - 1;
-    float[] subZ = subVector(z, head, tail);
-    float[] subW = subVector(w, head, tail);
+    var head = k + 1 - 1;
+    var tail = z.length - 1;
+    var subZ = subVector(z, head, tail);
+    var subW = subVector(w, head, tail);
     result[M - 1] = (new Transformations()).rSum(subZ, subW);
 
     return result;
@@ -159,24 +159,24 @@ public class WFG1 extends WFG {
    * @throws JMetalException
    */
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    float @NotNull [] variables = new float[getNumberOfVariables()];
-      double[] x = new double[10];
-      int count = 0;
-      int bound = getNumberOfVariables();
-      for (int i1 = 0; i1 < bound; i1++) {
+    var variables = new float[getNumberOfVariables()];
+    var x = new double[10];
+    var count = 0;
+    var bound = getNumberOfVariables();
+      for (var i1 = 0; i1 < bound; i1++) {
           double v = solution.variables().get(i1);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
       }
       x = Arrays.copyOfRange(x, 0, count);
 
-      for (int i = 0; i < getNumberOfVariables(); i++) {
+      for (var i = 0; i < getNumberOfVariables(); i++) {
       variables[i] = (float) x[i] ;
     }
 
-    float[] f = evaluate(variables);
+    var f = evaluate(variables);
 
-    for (int i = 0; i < f.length; i++) {
+    for (var i = 0; i < f.length; i++) {
       solution.objectives()[i] = f[i];
     }
     return solution ;

@@ -25,7 +25,7 @@ public class CRE51 extends AbstractDoubleProblem {
     setName("CRE51");
 
     @NotNull List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);
-    List<Double> upperLimit = List.of(0.45, 0.10, 0.10);
+    var upperLimit = List.of(0.45, 0.10, 0.10);
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -33,10 +33,10 @@ public class CRE51 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double @NotNull [] x = new double[10];
-    int count = 0;
-    int bound = getNumberOfVariables();
-    for (int i = 0; i < bound; i++) {
+    var x = new double[10];
+    var count = 0;
+    var bound = getNumberOfVariables();
+    for (var i = 0; i < bound; i++) {
       double v = solution.variables().get(i);
       if (x.length == count) x = Arrays.copyOf(x, count * 2);
       x[count++] = v;
@@ -56,7 +56,7 @@ public class CRE51 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(@NotNull DoubleSolution solution, double[] x) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    var constraint = new double[this.getNumberOfConstraints()];
 
     constraint[0] = 1 - (0.00139 / (x[0] * x[1]) + 4.94 * x[2] - 0.08);
     constraint[1] = 1 - (0.000306 / (x[0] * x[1]) + 1.082 * x[2] - 0.0986);
@@ -66,7 +66,7 @@ public class CRE51 extends AbstractDoubleProblem {
     constraint[5] = 2000 - (0.417 * x[0] * x[1] + 1721.26 * x[2] - 136.54);
     constraint[6] = 550 - (0.164 / (x[0] * x[1]) + 631.13 * x[2] - 54.48);
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i] < 0.0) {
         constraint[i] = -constraint[i];
       } else {
@@ -74,7 +74,7 @@ public class CRE51 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

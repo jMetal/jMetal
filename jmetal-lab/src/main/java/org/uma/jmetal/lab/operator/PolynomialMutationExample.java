@@ -55,17 +55,15 @@ public class PolynomialMutationExample {
       distributionIndex = Double.parseDouble(args[2]);
     }
 
-    DoubleProblem problem ;
-
-    problem = new Sphere(1) ;
+    DoubleProblem problem = new Sphere(1);
     @NotNull MutationOperator<DoubleSolution> mutation = new PolynomialMutation(1.0, distributionIndex) ;
 
-    DoubleSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
     solution.variables().set(0, 0.0);
 
     @NotNull List<DoubleSolution> population = new ArrayList<>(numberOfPoints) ;
-    for (int i = 0 ; i < numberOfPoints ; i++) {
-      DoubleSolution newSolution = (DoubleSolution) solution.copy();
+    for (var i = 0; i < numberOfPoints ; i++) {
+      var newSolution = (DoubleSolution) solution.copy();
       mutation.execute(newSolution) ;
       population.add(newSolution) ;
     }
@@ -73,25 +71,25 @@ public class PolynomialMutationExample {
     population.sort(Comparator.comparingDouble(sol -> sol.objectives()[0])) ;
 
 
-    double[] @NotNull [] classifier = classify(population, problem, granularity);
+    var classifier = classify(population, problem, granularity);
 
     PlotFront plot = new PlotSmile(classifier, "") ;
     plot.plot();
   }
 
   private static double[][] classify(@NotNull List<DoubleSolution> solutions, @NotNull DoubleProblem problem, int granularity) {
-    Bounds<Double> bounds = problem.getVariableBounds().get(0);
-    double grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity ;
-    double[][] classifier = new double[granularity][] ;
-    for (int i = 0 ; i < granularity; i++) {
+    var bounds = problem.getVariableBounds().get(0);
+    var grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity ;
+    var classifier = new double[granularity][] ;
+    for (var i = 0; i < granularity; i++) {
       classifier[i] = new double[2] ;
       classifier[i][0] = bounds.getLowerBound() + i * grain ;
       classifier[i][1] = 0 ;
     }
 
     for (@NotNull DoubleSolution solution : solutions) {
-      boolean found = false ;
-      int index = 0 ;
+      var found = false ;
+      var index = 0 ;
       while (!found) {
         if (solution.variables().get(0) <= classifier[index][0]) {
           classifier[index][1] ++ ;

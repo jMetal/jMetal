@@ -68,26 +68,26 @@ public class SMPSOBuilder {
     archive = new CrowdingDistanceArchive<>(swarmSize);
     globalBestSelection = new BinaryTournamentGlobalBestSelection(archive.getComparator()) ;
 
-    double r1Min = 0.0;
-    double r1Max = 1.0;
-    double r2Min = 0.0;
-    double r2Max = 1.0;
-    double c1Min = 1.5;
-    double c1Max = 2.5;
-    double c2Min = 1.5;
-    double c2Max = 2.5;
-    double weight = 0.1;
+    var r1Min = 0.0;
+    var r1Max = 1.0;
+    var r2Min = 0.0;
+    var r2Max = 1.0;
+    var c1Min = 1.5;
+    var c1Max = 2.5;
+    var c2Min = 1.5;
+    var c2Max = 2.5;
+    var weight = 0.1;
     inertiaWeightComputingStrategy = new ConstantValueStrategy(weight) ;
 
     velocityUpdate = new ConstrainedVelocityUpdate(r1Min, r1Max, r2Min, r2Max, c1Min, c1Max,
         c2Min, c2Max, problem);
 
-    double velocityChangeWhenLowerLimitIsReached = -1.0;
-    double velocityChangeWhenUpperLimitIsReached = -1.0;
+    var velocityChangeWhenLowerLimitIsReached = -1.0;
+    var velocityChangeWhenUpperLimitIsReached = -1.0;
     positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
         velocityChangeWhenUpperLimitIsReached, problem.getVariableBounds());
 
-    int frequencyOfMutation = 6;
+    var frequencyOfMutation = 6;
     MutationOperator<DoubleSolution> mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
     perturbation = new FrequencySelectionMutationBasedPerturbation(mutationOperator, frequencyOfMutation);
     globalBestUpdate = new DefaultGlobalBestUpdate();

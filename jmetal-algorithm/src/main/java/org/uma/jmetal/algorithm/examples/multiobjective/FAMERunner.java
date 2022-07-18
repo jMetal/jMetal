@@ -46,9 +46,6 @@ public class FAMERunner extends AbstractAlgorithmRunner {
    *     org.uma.jmetal.runner.multiobjective.FAMERunner problemName
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     @Nullable String problemName = null;
     if (args.length == 0) {
@@ -57,16 +54,15 @@ public class FAMERunner extends AbstractAlgorithmRunner {
       problemName = args[0];
     }
 
-    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    selection = new SpatialSpreadDeviationSelection<>(5);
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new SpatialSpreadDeviationSelection<>(5);
 
-    int populationSize = 25;
-    int archiveSize = 200;
-    int maxEvaluations = 45000;
+    var populationSize = 25;
+    var archiveSize = 200;
+    var maxEvaluations = 45000;
 
-    algorithm =
-        new FAME<>(
+    Algorithm<List<DoubleSolution>> algorithm = new FAME<>(
             problem,
             populationSize,
             archiveSize,
@@ -74,10 +70,10 @@ public class FAMERunner extends AbstractAlgorithmRunner {
             selection,
             new SequentialSolutionListEvaluator<>());
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

@@ -21,25 +21,21 @@ public class FAMEIT {
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    problem = new ZDT1();
-    selection = new SpatialSpreadDeviationSelection<DoubleSolution>(5);
+      Problem<DoubleSolution> problem = new ZDT1();
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new SpatialSpreadDeviationSelection<DoubleSolution>(5);
 
-    int populationSize = 25;
-    int archiveSize = 100;
-    int maxEvaluations = 25000;
+    var populationSize = 25;
+    var archiveSize = 100;
+    var maxEvaluations = 25000;
 
-    algorithm =
-        new FAME<>(
-            problem,
-            populationSize,
-            archiveSize,
-            maxEvaluations,
-            selection,
-            new SequentialSolutionListEvaluator<>());
+      Algorithm<List<DoubleSolution>> algorithm = new FAME<>(
+              problem,
+              populationSize,
+              archiveSize,
+              maxEvaluations,
+              selection,
+              new SequentialSolutionListEvaluator<>());
 
     algorithm.run();
 
@@ -53,25 +49,21 @@ public class FAMEIT {
 
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    problem = new ZDT1();
-    selection = new SpatialSpreadDeviationSelection<DoubleSolution>(5);
+      Problem<DoubleSolution> problem = new ZDT1();
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new SpatialSpreadDeviationSelection<DoubleSolution>(5);
 
-    int populationSize = 25;
-    int archiveSize = 100;
-    int maxEvaluations = 25000;
+    var populationSize = 25;
+    var archiveSize = 100;
+    var maxEvaluations = 25000;
 
-    algorithm =
-        new FAME<>(
-            problem,
-            populationSize,
-            archiveSize,
-            maxEvaluations,
-            selection,
-            new SequentialSolutionListEvaluator<>());
+      Algorithm<List<DoubleSolution>> algorithm = new FAME<>(
+              problem,
+              populationSize,
+              archiveSize,
+              maxEvaluations,
+              selection,
+              new SequentialSolutionListEvaluator<>());
 
     algorithm.run();
 
@@ -82,7 +74,7 @@ public class FAMEIT {
     // Rationale: the default problem is ZDT1, and AbYSS, configured with standard settings,
     // should return find a front with a hypervolume value higher than 0.22
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(algorithm.getResult()));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(algorithm.getResult()));
 
     assertTrue(hv > 0.65);
 

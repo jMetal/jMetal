@@ -12,9 +12,9 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class ComponentBasedAutoMOPSOConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "ZDT1.csv";
+    var referenceFrontFileName = "ZDT1.csv";
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--referenceFrontFileName "
             + referenceFrontFileName
@@ -49,7 +49,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterString {
             + "--weightMax 0.5 ")
             .split("\\s+");
 
-    AutoMOPSO autoMOPSO = new AutoMOPSO();
+    var autoMOPSO = new AutoMOPSO();
     autoMOPSO.parseAndCheckParameters(parameters);
 
     AutoMOPSO.print(autoMOPSO.fixedParameterList);
@@ -57,7 +57,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterString {
 
     @NotNull ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    var evaluationObserver = new EvaluationObserver(1000);
     @NotNull RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "irace.MOPSO", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);

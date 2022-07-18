@@ -50,23 +50,22 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
     experiment.removeDuplicatedAlgorithms();
     resetIndicatorFiles();
 
-    for (QualityIndicator indicator : experiment.getIndicatorList()) {
+    for (var indicator : experiment.getIndicatorList()) {
       JMetalLogger.logger.info("Computing indicator: " + indicator.getName());
 
       for (@NotNull ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
-        String algorithmDirectory;
-        algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag();
+        var algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag();
         for (@NotNull ExperimentProblem<?> problem : experiment.getProblemList()) {
-          String problemDirectory = algorithmDirectory + "/" + problem.getTag();
+          var problemDirectory = algorithmDirectory + "/" + problem.getTag();
 
-          String referenceFrontDirectory = experiment.getReferenceFrontDirectory();
+          var referenceFrontDirectory = experiment.getReferenceFrontDirectory();
 
-          String referenceFrontName = referenceFrontDirectory + "/" + problem.getReferenceFront();
+          var referenceFrontName = referenceFrontDirectory + "/" + problem.getReferenceFront();
 
           JMetalLogger.logger.info("RF: " + referenceFrontName);
 
-          double[][] referenceFront = VectorUtils.readVectors(referenceFrontName, ",");
-          double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+          var referenceFront = VectorUtils.readVectors(referenceFrontName, ",");
+          var normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
 
           indicator.setReferenceFront(normalizedReferenceFront);
 
@@ -76,23 +75,23 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
           //FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
           //Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
 
-          String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
+          var qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
 
           //indicator.setReferenceParetoFront(normalizedReferenceFront);
 
-          double @NotNull [] indicatorValues = new double[experiment.getIndependentRuns()];
-          int bound = experiment.getIndependentRuns();
-          for (int run = 0; run < bound; run++) {
-            String frontFileName = problemDirectory + "/" +
+          var indicatorValues = new double[experiment.getIndependentRuns()];
+          var bound = experiment.getIndependentRuns();
+          for (var run = 0; run < bound; run++) {
+            var frontFileName = problemDirectory + "/" +
                     experiment.getOutputParetoFrontFileName() + run + ".csv";
-            double[][] front = new double[0][];
+            var front = new double[0][];
             try {
               front = VectorUtils.readVectors(frontFileName, ",");
             } catch (IOException e) {
               e.printStackTrace();
             }
 
-            double[] @NotNull [] normalizedFront =
+            var normalizedFront =
                     NormalizeUtils.normalize(
                             front,
                             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
@@ -102,7 +101,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
             indicatorValues[run] = indicatorValue;
           }
 
-          for (double indicatorValue : indicatorValues) {
+          for (var indicatorValue : indicatorValues) {
             writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile);
           }
 
@@ -137,43 +136,36 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
   }
 
   public void findBestIndicatorFronts(@NotNull Experiment<?, Result> experiment) throws IOException {
-    for (QualityIndicator indicator : experiment.getIndicatorList()) {
+    for (var indicator : experiment.getIndicatorList()) {
       for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
-        String algorithmDirectory;
-        algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
+        var algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
                 algorithm.getAlgorithmTag();
 
         for (ExperimentProblem<?> problem : experiment.getProblemList()) {
-          String indicatorFileName =
+          var indicatorFileName =
                   algorithmDirectory + "/" + problem.getTag() + "/" + indicator.getName();
-          Path indicatorFile = Paths.get(indicatorFileName);
+          var indicatorFile = Paths.get(indicatorFileName);
 
-          List<String> fileArray;
-          fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
+          var fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
 
           List<Pair<Double, Integer>> list = new ArrayList<>();
-          int bound = fileArray.size();
-          for (int i = 0; i < bound; i++) {
-            ImmutablePair<Double, Integer> doubleIntegerImmutablePair = new ImmutablePair<>(Double.parseDouble(fileArray.get(i)), i);
+          var bound = fileArray.size();
+          for (var i = 0; i < bound; i++) {
+            var doubleIntegerImmutablePair = new ImmutablePair<Double, Integer>(Double.parseDouble(fileArray.get(i)), i);
             list.add(doubleIntegerImmutablePair);
           }
           list.sort(Comparator.comparingDouble(pair -> Math.abs(pair.getLeft())));
 
-          String bestFunFileName;
-          String bestVarFileName;
-          String medianFunFileName;
-          String medianVarFileName;
+          var outputDirectory = algorithmDirectory + "/" + problem.getTag();
 
-          String outputDirectory = algorithmDirectory + "/" + problem.getTag();
-
-          bestFunFileName = outputDirectory + "/BEST_" + indicator.getName() + "_FUN.csv";
-          bestVarFileName = outputDirectory + "/BEST_" + indicator.getName() + "_VAR.csv";
-          medianFunFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_FUN.csv";
-          medianVarFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_VAR.csv";
+          var bestFunFileName = outputDirectory + "/BEST_" + indicator.getName() + "_FUN.csv";
+          var bestVarFileName = outputDirectory + "/BEST_" + indicator.getName() + "_VAR.csv";
+          var medianFunFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_FUN.csv";
+          var medianVarFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_VAR.csv";
           if (indicator.isTheLowerTheIndicatorValueTheBetter()) {
-            String bestFunFile = outputDirectory + "/" +
+            var bestFunFile = outputDirectory + "/" +
                     experiment.getOutputParetoFrontFileName() + list.get(0).getRight() + ".csv";
-            String bestVarFile = outputDirectory + "/" +
+            var bestVarFile = outputDirectory + "/" +
                     experiment.getOutputParetoSetFileName() + list.get(0).getRight() + ".csv";
 
             Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING);
@@ -181,17 +173,17 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
           } else {
             @NotNull String bestFunFile = outputDirectory + "/" +
                     experiment.getOutputParetoFrontFileName() + list.get(list.size() - 1).getRight() + ".csv";
-            String bestVarFile = outputDirectory + "/" +
+            var bestVarFile = outputDirectory + "/" +
                     experiment.getOutputParetoSetFileName() + list.get(list.size() - 1).getRight() + ".csv";
 
             Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING);
             Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING);
           }
 
-          int medianIndex = list.size() / 2;
-          String medianFunFile = outputDirectory + "/" +
+          var medianIndex = list.size() / 2;
+          var medianFunFile = outputDirectory + "/" +
                   experiment.getOutputParetoFrontFileName() + list.get(medianIndex).getRight() + ".csv";
-          String medianVarFile = outputDirectory + "/" +
+          var medianVarFile = outputDirectory + "/" +
                   experiment.getOutputParetoSetFileName() + list.get(medianIndex).getRight() + ".csv";
 
           Files.copy(Paths.get(medianFunFile), Paths.get(medianFunFileName), REPLACE_EXISTING);
@@ -208,10 +200,9 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
     for (@NotNull QualityIndicator indicator : experiment.getIndicatorList()) {
       for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
         for (ExperimentProblem<?> problem : experiment.getProblemList()) {
-          String algorithmDirectory;
-          algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag();
-          String problemDirectory = algorithmDirectory + "/" + problem.getTag();
-          String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
+          var algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag();
+          var problemDirectory = algorithmDirectory + "/" + problem.getTag();
+          var qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
 
           resetFile(qualityIndicatorFile);
         }
@@ -225,7 +216,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
    * @param file
    */
   private void resetFile(String file) {
-    File f = new File(file);
+    var f = new File(file);
     if (f.exists()) {
       JMetalLogger.logger.info("Already existing file " + file);
 
@@ -251,17 +242,16 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
 
   private void writeSummaryFile(Experiment<S, Result> experiment) {
     JMetalLogger.logger.info("Writing org.uma.jmetal.experiment summary file");
-    String headerOfCSVFile = "Algorithm,Problem,IndicatorName,ExecutionId,IndicatorValue";
-    String csvFileName = this.experiment.getExperimentBaseDirectory() + "/QualityIndicatorSummary.csv";
+    var headerOfCSVFile = "Algorithm,Problem,IndicatorName,ExecutionId,IndicatorValue";
+    var csvFileName = this.experiment.getExperimentBaseDirectory() + "/QualityIndicatorSummary.csv";
     resetFile(csvFileName);
 
-    try (FileWriter os = new FileWriter(csvFileName, true)) {
+    try (var os = new FileWriter(csvFileName, true)) {
       os.write("" + headerOfCSVFile + "\n");
 
       for (@NotNull QualityIndicator indicator : experiment.getIndicatorList()) {
         for (@NotNull ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
-          String algorithmDirectory;
-          algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
+          var algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
                   algorithm.getAlgorithmTag();
 
           for (ExperimentProblem<?> problem : experiment.getProblemList()) {
@@ -274,12 +264,11 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
             System.out.println("-----");
             System.out.println(indicatorFileName);
 
-            List<String> fileArray;
-            fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
+            var fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
             System.out.println(fileArray);
             System.out.println("++++++");
 
-            for (int i = 0; i < fileArray.size(); i++) {
+            for (var i = 0; i < fileArray.size(); i++) {
               @NotNull String row = algorithm.getAlgorithmTag() + "," + problem.getTag() + "," + indicator.getName() + "," + i + "," + fileArray.get(i);
               os.write("" + row + "\n");
             }

@@ -37,7 +37,7 @@ public class MOP3 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -47,9 +47,9 @@ public class MOP3 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double @NotNull [] f = new double[solution.objectives().length];
+      var f = new double[solution.objectives().length];
 
-    double g = this.evalG(solution);
+      var g = this.evalG(solution);
     f[0] = (1 + g) * Math.cos(solution.variables().get(0) * Math.PI * 0.5);
     f[1] = (1 + g) * Math.sin(solution.variables().get(0) * Math.PI * 0.5);
 
@@ -64,11 +64,11 @@ public class MOP3 extends AbstractDoubleProblem {
    * @param solution Solution
    */
   private double evalG(DoubleSolution solution) {
-      double g = 0.0;
-      int bound = solution.variables().size();
-      for (int i = 1; i < bound; i++) {
-          double t = solution.variables().get(i) - Math.sin(0.5 * Math.PI * solution.variables().get(0));
-          double v = Math.abs(t) / (1 + Math.exp(5 * Math.abs(t)));
+      var g = 0.0;
+      var bound = solution.variables().size();
+      for (var i = 1; i < bound; i++) {
+          var t = solution.variables().get(i) - Math.sin(0.5 * Math.PI * solution.variables().get(0));
+          var v = Math.abs(t) / (1 + Math.exp(5 * Math.abs(t)));
           g += v;
       }
       g = 10 * Math.sin(0.5 * Math.PI * solution.variables().get(0)) * g;

@@ -189,9 +189,7 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
   }
 
   public AbstractCDG<DoubleSolution> build() {
-    @Nullable AbstractCDG<DoubleSolution> algorithm = null;
-    algorithm =
-        new CDG(
+    @Nullable AbstractCDG<DoubleSolution> algorithm = new CDG(
             problem,
             populationSize,
             resultPopulationSize,

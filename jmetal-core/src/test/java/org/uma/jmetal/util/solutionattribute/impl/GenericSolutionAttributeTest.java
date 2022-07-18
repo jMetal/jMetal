@@ -16,10 +16,9 @@ public class GenericSolutionAttributeTest {
   @Test
   public void
       shouldDefaultConstructorCreateASolutionAttributedWithAnIdentifierEqualToTheClassObject() {
-    GenericSolutionAttribute<?, ?> genericSolutionAttribute;
-    genericSolutionAttribute = new GenericSolutionAttribute<>();
+      GenericSolutionAttribute<?, ?> genericSolutionAttribute = new GenericSolutionAttribute<>();
 
-    Object solutionAttributeId =
+    var solutionAttributeId =
         ReflectionTestUtils.getField(genericSolutionAttribute, "identifier");
 
     assertEquals(genericSolutionAttribute.getClass(), solutionAttributeId);
@@ -27,11 +26,10 @@ public class GenericSolutionAttributeTest {
 
   @Test
   public void shouldConstructorCreateASolutionAttributedWithThePassedIdentifier() {
-    GenericSolutionAttribute<?, ?> genericSolutionAttribute;
-    Object attributeIdentifier = Double.valueOf(4);
-    genericSolutionAttribute = new GenericSolutionAttribute<>(attributeIdentifier);
+      Object attributeIdentifier = Double.valueOf(4);
+      GenericSolutionAttribute<?, ?> genericSolutionAttribute = new GenericSolutionAttribute<>(attributeIdentifier);
 
-    Object solutionAttributeId =
+    var solutionAttributeId =
         ReflectionTestUtils.getField(genericSolutionAttribute, "identifier");
 
     assertEquals(attributeIdentifier, solutionAttributeId);
@@ -39,8 +37,7 @@ public class GenericSolutionAttributeTest {
 
   @Test
   public void shouldGetAttributeIdentifierReturnTheRightIdentifier() {
-    GenericSolutionAttribute<?, ?> genericSolutionAttribute;
-    genericSolutionAttribute = new GenericSolutionAttribute<>();
+      GenericSolutionAttribute<?, ?> genericSolutionAttribute = new GenericSolutionAttribute<>();
 
     assertEquals(
         genericSolutionAttribute.getClass(), genericSolutionAttribute.getAttributeIdentifier());
@@ -48,20 +45,18 @@ public class GenericSolutionAttributeTest {
 
   @Test
   public void shouldGetAttributeReturnNullIfTheSolutionHasNoAttribute() {
-    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
+    var solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
 
-    GenericSolutionAttribute<DoubleSolution, ?> genericSolutionAttribute;
-    genericSolutionAttribute = new GenericSolutionAttribute<>();
+      GenericSolutionAttribute<DoubleSolution, ?> genericSolutionAttribute = new GenericSolutionAttribute<>();
 
     assertNull(genericSolutionAttribute.getAttribute(solution));
   }
 
   @Test
   public void shouldGetAttributeReturnTheAttributeValue() {
-    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
+    var solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
 
-    GenericSolutionAttribute<DoubleSolution, Double> genericSolutionAttribute;
-    genericSolutionAttribute = new GenericSolutionAttribute<>();
+    var genericSolutionAttribute = new GenericSolutionAttribute<DoubleSolution, Double>();
 
     Double value = 5.0 ;
     genericSolutionAttribute.setAttribute(solution, value);
@@ -71,10 +66,9 @@ public class GenericSolutionAttributeTest {
 
   @Test
   public void shouldSetAttributeAssignTheAttributeValueToTheSolution() {
-    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
+    var solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
 
-    GenericSolutionAttribute<DoubleSolution, Double> genericSolutionAttribute;
-    genericSolutionAttribute = new GenericSolutionAttribute<>();
+    var genericSolutionAttribute = new GenericSolutionAttribute<DoubleSolution, Double>();
 
     Double value = 5.0;
 
@@ -86,14 +80,14 @@ public class GenericSolutionAttributeTest {
   @Test
   public void shouldGetAttributesReturnAnNoAttributesWhenInitiateAnPointSolution() {
 
-    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
+    var solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
 
     assertTrue(solution.attributes().isEmpty());
   }
 
   @Test
   public void shouldReturnTheCorrectAttributesWhenGetAllAttributes() {
-    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
+    var solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
 
     solution.attributes().put("fake-atribute-1", 1);
     solution.attributes().put("fake-atribute-2", 2);

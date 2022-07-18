@@ -11,10 +11,10 @@ class RealParameterTest {
 
   @Test
   void theConstructorMustInitializeTheFieldsCorrectly() {
-    String[] parameterString = new String[]{"--realParameter", "5"};
-    double lowerBound = 1.0;
-    double upperBound = 10.0;
-    RealParameter realParameter = new RealParameter("realParameter", parameterString, lowerBound,
+    var parameterString = new String[]{"--realParameter", "5"};
+    var lowerBound = 1.0;
+    var upperBound = 10.0;
+    var realParameter = new RealParameter("realParameter", parameterString, lowerBound,
         upperBound);
 
     assertThat(realParameter.getName()).isEqualTo("realParameter", "5");
@@ -23,9 +23,9 @@ class RealParameterTest {
 
   @Test
   void theConstructorMustRaiseAnExceptionInTheLowerBoundIsNotLowerThanTheUpperBound() {
-    String[] parameterString = new String[]{"--realParameter", "5"};
-    double lowerBound = 10.0;
-    double upperBound = 10.0;
+    var parameterString = new String[]{"--realParameter", "5"};
+    var lowerBound = 10.0;
+    var upperBound = 10.0;
 
     assertThatThrownBy(() -> new RealParameter("realParameter", parameterString, lowerBound,
         upperBound)).isInstanceOf(InvalidConditionException.class);
@@ -33,11 +33,11 @@ class RealParameterTest {
 
   @Test
   void parseRaisesAnExceptionIfTheValueIsNotADouble() {
-    String[] parameterString = new String[]{"--realParameter", "hello"};
-    double lowerBound = 10.0;
-    double upperBound = 20.0;
+    var parameterString = new String[]{"--realParameter", "hello"};
+    var lowerBound = 10.0;
+    var upperBound = 20.0;
 
-    RealParameter realParameter = new RealParameter("realParameter", parameterString, lowerBound,
+    var realParameter = new RealParameter("realParameter", parameterString, lowerBound,
         upperBound);
 
     assertThatThrownBy(realParameter::parse).isInstanceOf(NumberFormatException.class);
@@ -45,11 +45,11 @@ class RealParameterTest {
 
   @Test
   void parseGetsTheRightValue() {
-    String[] parameterString = new String[]{"--realParameter", "15"};
-    double lowerBound = 10.0;
-    double upperBound = 20.0;
+    var parameterString = new String[]{"--realParameter", "15"};
+    var lowerBound = 10.0;
+    var upperBound = 20.0;
 
-    RealParameter realParameter = new RealParameter("realParameter", parameterString, lowerBound,
+    var realParameter = new RealParameter("realParameter", parameterString, lowerBound,
         upperBound);
 
     assertThat(realParameter.parse().getValue()).isEqualTo(15) ;
@@ -57,11 +57,11 @@ class RealParameterTest {
 
   @Test
   void checkRaisesAnExceptionIfTheValueIsLowerThanTheLowerBound() {
-    String[] parameterString = new String[]{"--realParameter", "5"};
-    double lowerBound = 10.0;
-    double upperBound = 20.0;
+    var parameterString = new String[]{"--realParameter", "5"};
+    var lowerBound = 10.0;
+    var upperBound = 20.0;
 
-    RealParameter realParameter = new RealParameter("realParameter", parameterString, lowerBound,
+    var realParameter = new RealParameter("realParameter", parameterString, lowerBound,
         upperBound);
 
     realParameter.parse();

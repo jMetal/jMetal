@@ -28,13 +28,13 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
 
   public R2Ranking<S> computeRanking(List<S> population) {
 
-    for (S solution : population) {
+    for (var solution : population) {
       solution.attributes().put(getAttributeIdentifier(), new R2SolutionData());
     }
 
-    for (int i = 0; i < this.utilityFunctions.getSize(); i++) {
-      for (S solution : population) {
-        R2SolutionData solutionData = this.getAttribute(solution);
+    for (var i = 0; i < this.utilityFunctions.getSize(); i++) {
+      for (var solution : population) {
+        var solutionData = this.getAttribute(solution);
         solutionData.alpha = this.utilityFunctions.evaluate(solution, i);
 
         if (solutionData.alpha < solutionData.utility)
@@ -43,8 +43,8 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
 
       Collections.sort(population, (o1, o2) -> {
         @NotNull R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
-        R2SolutionData data1 = (R2SolutionData) attribute.getAttribute(o1);
-        R2SolutionData data2 = (R2SolutionData) attribute.getAttribute(o2);
+        var data1 = (R2SolutionData) attribute.getAttribute(o1);
+        var data2 = (R2SolutionData) attribute.getAttribute(o2);
 
         if (data1.alpha < data2.alpha)
           return -1;
@@ -54,9 +54,9 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
           return 0;
       });
 
-      int rank = 1;
-      for (S p : population) {
-        R2SolutionData r2Data = this.getAttribute(p);
+      var rank = 1;
+      for (var p : population) {
+        var r2Data = this.getAttribute(p);
         if (rank < r2Data.rank) {
           r2Data.rank = rank;
           numberOfRanks = Math.max(numberOfRanks, rank);
@@ -66,8 +66,8 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
     }
 
     Map<Integer, List<S>> fronts = new TreeMap<>(); // sorted on key
-    for (S solution : population) {
-      R2SolutionData r2Data = this.getAttribute(solution);
+    for (var solution : population) {
+      var r2Data = this.getAttribute(solution);
       if (fronts.get(r2Data.rank) == null)
         fronts.put(r2Data.rank, new LinkedList<S>());
 
@@ -75,7 +75,7 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
     }
 
     this.rankedSubpopulations = new ArrayList<>(fronts.size());
-    Iterator<Integer> iterator = fronts.keySet().iterator();
+    var iterator = fronts.keySet().iterator();
     while (iterator.hasNext())
       this.rankedSubpopulations.add(fronts.get(iterator.next()));
 

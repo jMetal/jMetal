@@ -42,7 +42,7 @@ public class MaF02 extends AbstractDoubleProblem {
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-      for (int i = 0; i < numberOfVariables; i++) {
+      for (var i = 0; i < numberOfVariables; i++) {
           lower.add(0.0);
           upper.add(1.0);
       }
@@ -58,51 +58,50 @@ public class MaF02 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
 
-    int numberOfVariables = solution.variables().size();
-    int numberOfObjectives = solution.objectives().length;
+    var numberOfVariables = solution.variables().size();
+    var numberOfObjectives = solution.objectives().length;
 
-    double[] x;
-    double @NotNull [] f = new double[numberOfObjectives];
+    var f = new double[numberOfObjectives];
 
-      double[] arr = new double[10];
-      int count = 0;
-      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+    var arr = new double[10];
+    var count = 0;
+      for (var i1 = 0; i1 < numberOfVariables; i1++) {
           double v = solution.variables().get(i1);
           if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
           arr[count++] = v;
       }
       arr = Arrays.copyOfRange(arr, 0, count);
-      x = arr;
+    var x = arr;
 
-    double[] g = new double[numberOfObjectives];
-    double @NotNull [] thet = new double[numberOfObjectives - 1];
+    var g = new double[numberOfObjectives];
+    var thet = new double[numberOfObjectives - 1];
     int lb, ub;
     // evaluate g, thet
-    for (int i = 0; i < numberOfObjectives - 1; i++) {
+    for (var i = 0; i < numberOfObjectives - 1; i++) {
       g[i] = 0;
       lb = numberOfObjectives + i * const2;
       ub = numberOfObjectives + (i + 1) * const2 - 1;
-      for (int j = lb - 1; j < ub; j++) {
+      for (var j = lb - 1; j < ub; j++) {
         g[i] += Math.pow(x[j] / 2 - 0.25, 2);
       }
       thet[i] = Math.PI / 2 * (x[i] / 2 + 0.25);
     }
     lb = numberOfObjectives + (numberOfObjectives - 1) * const2;
     ub = numberOfVariables;
-    for (int j = lb - 1; j < ub; j++) {
+    for (var j = lb - 1; j < ub; j++) {
       g[numberOfObjectives - 1] += Math.pow(x[j] / 2 - 0.25, 2);
     }
     // evaluate fm,fm-1,...,2,f1
     f[numberOfObjectives - 1] = Math.sin(thet[0]) * (1 + g[numberOfObjectives - 1]);
     double subf1 = 1;
     // fi=cos(thet1)cos(thet2)...cos(thet[m-i])*sin(thet(m-i+1))*(1+g[i]),fi=subf1*subf2*subf3
-    for (int i = numberOfObjectives - 2; i > 0; i--) {
+    for (var i = numberOfObjectives - 2; i > 0; i--) {
       subf1 *= Math.cos(thet[numberOfObjectives - i - 2]);
       f[i] = subf1 * Math.sin(thet[numberOfObjectives - i - 1]) * (1 + g[i]);
     }
     f[0] = subf1 * Math.cos(thet[numberOfObjectives - 2]) * (1 + g[0]);
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       solution.objectives()[i] = f[i];
     }
     return solution ;

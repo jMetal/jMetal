@@ -67,7 +67,7 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
     if (args.length != 1) {
       throw new JMetalException("Needed arguments: experimentBaseDirectory");
     }
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new ZDT1()));
@@ -76,10 +76,10 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
     problemList.add(new ExperimentProblem<>(new ZDT4()));
     problemList.add(new ExperimentProblem<>(new ZDT6()));
 
-    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+    var algorithmList =
             configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    var experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIComputingReferenceParetoFrontsStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
@@ -118,7 +118,7 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
   static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
       for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 experimentProblem.getProblem(),
@@ -131,7 +131,7 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      for (var experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 experimentProblem.getProblem(),
                 new SBXCrossover(1.0, 20.0),
@@ -143,7 +143,7 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      for (var experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 experimentProblem.getProblem(), new SBXCrossover(1.0, 40.0),
                 new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
@@ -154,7 +154,7 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      for (var experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 experimentProblem.getProblem(), new SBXCrossover(1.0, 80.0),
                 new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),

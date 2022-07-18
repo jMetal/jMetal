@@ -26,12 +26,11 @@ public class VectorUtils {
    *     dominates vector 1
    */
   public static int dominanceTest(double @NotNull [] vector1, double[] vector2) {
-    int bestIsOne = 0;
-    int bestIsTwo = 0;
-    int result;
-    for (int i = 0; i < vector1.length; i++) {
-      double value1 = vector1[i];
-      double value2 = vector2[i];
+    var bestIsOne = 0;
+    var bestIsTwo = 0;
+    for (var i = 0; i < vector1.length; i++) {
+      var value1 = vector1[i];
+      var value2 = vector2[i];
       if (value1 != value2) {
         if (value1 < value2) {
           bestIsOne = 1;
@@ -41,7 +40,7 @@ public class VectorUtils {
         }
       }
     }
-    result = Integer.compare(bestIsTwo, bestIsOne);
+    var result = Integer.compare(bestIsTwo, bestIsOne);
     return result;
   }
 
@@ -51,8 +50,7 @@ public class VectorUtils {
    * @throws JMetalException if error while read file
    */
   public static double[][] readVectors(String filePath, String separator) throws IOException {
-    double[][] referenceVectors;
-    String path = filePath;
+    var path = filePath;
 
     @Nullable URL url = VectorUtils.class.getClassLoader().getResource(filePath);
     if (url != null) {
@@ -63,14 +61,14 @@ public class VectorUtils {
       }
     }
 
-    List<String> vectorStrList = Files.readAllLines(Paths.get(path));
+    var vectorStrList = Files.readAllLines(Paths.get(path));
 
-    referenceVectors = new double[vectorStrList.size()][];
-    for (int i = 0; i < vectorStrList.size(); i++) {
-      String vectorStr = vectorStrList.get(i);
-      String @NotNull [] objectArray = vectorStr.split(separator);
+    var referenceVectors = new double[vectorStrList.size()][];
+    for (var i = 0; i < vectorStrList.size(); i++) {
+      var vectorStr = vectorStrList.get(i);
+      var objectArray = vectorStr.split(separator);
       referenceVectors[i] = new double[objectArray.length];
-      for (int j = 0; j < objectArray.length; j++) {
+      for (var j = 0; j < objectArray.length; j++) {
         referenceVectors[i][j] = Double.parseDouble(objectArray[j]);
       }
     }
@@ -90,9 +88,9 @@ public class VectorUtils {
    * @return
    */
   public static boolean isVectorDominatedByAFront(double[] vector, double[][] front) {
-    boolean result = false;
+    var result = false;
 
-    int i = 0;
+    var i = 0;
     while (!result && (i < front.length)) {
       if (VectorUtils.dominanceTest(vector, front[i]) == 1) {
         result = true;
@@ -113,10 +111,10 @@ public class VectorUtils {
     Check.notNull(front);
     Check.that(front.length > 0, "The front is empty");
 
-    double minDistance = distance.compute(vector, front[0]);
+    var minDistance = distance.compute(vector, front[0]);
 
-    for (int i = 1; i < front.length; i++) {
-      double aux = distance.compute(vector, front[i]);
+    for (var i = 1; i < front.length; i++) {
+      var aux = distance.compute(vector, front[i]);
       if (aux < minDistance) {
         minDistance = aux;
       }
@@ -135,10 +133,10 @@ public class VectorUtils {
     Check.notNull(front);
     Check.that(front.length > 0, "The front is empty");
 
-    double minDistance = Double.MAX_VALUE;
+    var minDistance = Double.MAX_VALUE;
 
-    for (int i = 0; i < front.length; i++) {
-      double aux = distance.compute(vector, front[i]);
+    for (var i = 0; i < front.length; i++) {
+      var aux = distance.compute(vector, front[i]);
       if ((aux < minDistance) && (aux > 0.0)) {
         minDistance = aux;
       }
@@ -158,11 +156,11 @@ public class VectorUtils {
     Check.notNull(front);
     Check.that(front.length > 0, "The front is empty");
 
-    int numberOfDimensions = front[0].length;
-    double[][] invertedFront = new double[front.length][numberOfDimensions] ;
+    var numberOfDimensions = front[0].length;
+    var invertedFront = new double[front.length][numberOfDimensions] ;
 
-    for (int i = 0; i < front.length; i++) {
-      for (int j = 0; j < numberOfDimensions; j++) {
+    for (var i = 0; i < front.length; i++) {
+      for (var j = 0; j < numberOfDimensions; j++) {
         if (front[i][j] <= 1.0 && front[i][j] >= 0.0) {
           invertedFront[i][j] =  1.0 - front[i][j];
         } else if (front[i][j] > 1.0) {
@@ -182,9 +180,9 @@ public class VectorUtils {
    * @return
    */
   public static double[] toArray(@NotNull List<Double> list) {
-      double[] arr = new double[10];
-      int count = 0;
-      for (Double v : list) {
+    var arr = new double[10];
+    var count = 0;
+      for (var v : list) {
           double v1 = v;
           if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
           arr[count++] = v1;

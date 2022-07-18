@@ -13,10 +13,10 @@ public class Tschebyscheff implements AggregativeFunction {
 
   @Override
   public double compute(double @NotNull [] vector, double[] weightVector) {
-    double maxFun = -1.0e+30;
+    var maxFun = -1.0e+30;
 
-    for (int n = 0; n < vector.length; n++) {
-      double diff = Math.abs(vector[n] - idealPoint.getValue(n));
+    for (var n = 0; n < vector.length; n++) {
+      var diff = Math.abs(vector[n] - idealPoint.getValue(n));
 
       double feval;
       if (weightVector[n] == 0) {

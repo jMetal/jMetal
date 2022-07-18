@@ -37,8 +37,8 @@ public class MNDSBitsetManager {
 	}
 
 	public boolean updateSolutionDominance(int solutionId) {
-		int fw = bsRanges[solutionId][FIRST_WORD_RANGE];
-		int lw = bsRanges[solutionId][LAST_WORD_RANGE];
+		var fw = bsRanges[solutionId][FIRST_WORD_RANGE];
+		var lw = bsRanges[solutionId][LAST_WORD_RANGE];
 		if (lw > incBsLstWord)
 			lw = incBsLstWord;
 		if (fw < incBsFstWord)
@@ -58,8 +58,8 @@ public class MNDSBitsetManager {
 	}
 
 	public void computeSolutionRanking(int solutionId, int initSolId) {
-		int fw = bsRanges[solutionId][FIRST_WORD_RANGE];
-		int lw = bsRanges[solutionId][LAST_WORD_RANGE];
+		var fw = bsRanges[solutionId][FIRST_WORD_RANGE];
+		var lw = bsRanges[solutionId][LAST_WORD_RANGE];
 		if (lw > incBsLstWord)
 			lw = incBsLstWord;
 		if (fw < incBsFstWord)
@@ -93,7 +93,7 @@ public class MNDSBitsetManager {
 	}
 
 	public void updateIncrementalBitset(int solutionId) {
-		int wordIndex = solutionId >> N_BIT_ADDR;
+		var wordIndex = solutionId >> N_BIT_ADDR;
 		incrementalBitset[wordIndex] |= (1L << solutionId);
 		if (incBsLstWord < wordIndex)
 			incBsLstWord = wordIndex;
@@ -102,13 +102,13 @@ public class MNDSBitsetManager {
 	}
 
 	public boolean initializeSolutionBitset(int solutionId) {
-		int wordIndex = solutionId >> N_BIT_ADDR;
+		var wordIndex = solutionId >> N_BIT_ADDR;
 		if (wordIndex < incBsFstWord || 0 == solutionId) {
 			bsRanges[solutionId][FIRST_WORD_RANGE] = Integer.MAX_VALUE;
 			return false;
 		} else if (wordIndex == incBsFstWord) { //only 1 word in common
 			bitsets[solutionId] = new long[wordIndex + 1];
-			long intersection = incrementalBitset[incBsFstWord] & ~(WORD_MASK << solutionId);
+			var intersection = incrementalBitset[incBsFstWord] & ~(WORD_MASK << solutionId);
 			if (intersection != 0) {
 				bsRanges[solutionId][FIRST_WORD_RANGE] = wordIndex;
 				bsRanges[solutionId][LAST_WORD_RANGE] = wordIndex;
@@ -117,7 +117,7 @@ public class MNDSBitsetManager {
 			return intersection != 0;
 		}
 		//more than one word in common
-		int lw = incBsLstWord < wordIndex ? incBsLstWord : wordIndex;
+		var lw = incBsLstWord < wordIndex ? incBsLstWord : wordIndex;
 		bsRanges[solutionId][FIRST_WORD_RANGE] = incBsFstWord;
 		bsRanges[solutionId][LAST_WORD_RANGE] = lw;
 		bitsets[solutionId] = new long[lw + 1];
@@ -138,8 +138,8 @@ public class MNDSBitsetManager {
 	}
 
 	public MNDSBitsetManager(int nSolutions) {
-		int n = nSolutions - 1;
-		int wordIndex = n >> N_BIT_ADDR;
+		var n = nSolutions - 1;
+		var wordIndex = n >> N_BIT_ADDR;
 		ranking = new int[nSolutions];
 		ranking0 = new int[nSolutions];
 		wordRanking = new int[nSolutions];

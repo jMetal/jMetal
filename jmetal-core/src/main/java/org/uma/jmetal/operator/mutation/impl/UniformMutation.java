@@ -79,14 +79,14 @@ public class UniformMutation implements MutationOperator<DoubleSolution> {
    * @param solution The solution to mutate
    */
   public void doMutation(double probability, DoubleSolution solution) {
-    for (int i = 0; i < solution.variables().size(); i++) {
+    for (var i = 0; i < solution.variables().size(); i++) {
       if (randomGenerator.getRandomValue() < probability) {
         double rand = randomGenerator.getRandomValue();
-        double tmp = (rand - 0.5) * perturbation;
+        var tmp = (rand - 0.5) * perturbation;
 
         tmp += solution.variables().get(i);
 
-        Bounds<Double> bounds = solution.getBounds(i);
+        var bounds = solution.getBounds(i);
         tmp =
             solutionRepair.repairSolutionVariableValue(
                 tmp, bounds.getLowerBound(), bounds.getUpperBound());

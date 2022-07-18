@@ -32,13 +32,7 @@ public class WASFGABinaryRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.WASFGA.WASFGARunner problemName [referenceFront]
    */
   public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
-    BinaryProblem problem;
-    Algorithm<List<BinarySolution>> algorithm;
-    CrossoverOperator<BinarySolution> crossover;
-    MutationOperator<BinarySolution> mutation;
-    SelectionOperator<List<BinarySolution>, BinarySolution> selection;
-    String referenceParetoFront = "" ;
-    @Nullable List<Double> referencePoint = null;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -50,29 +44,29 @@ public class WASFGABinaryRunner extends AbstractAlgorithmRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
     }
 
-    problem = (BinaryProblem) ProblemFactory.<BinarySolution> loadProblem(problemName);
-    
-    referencePoint = new ArrayList<>();
+    var problem = (BinaryProblem) ProblemFactory.<BinarySolution>loadProblem(problemName);
+
+    @Nullable List<Double> referencePoint = new ArrayList<>();
     referencePoint.add(10.0);
     referencePoint.add(4.0);
 
-    double crossoverProbability = 0.9 ;
-    crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossoverProbability = 0.9 ;
+    CrossoverOperator<BinarySolution> crossover = new SinglePointCrossover(crossoverProbability);
 
-    double mutationProbability = 1.0 / problem.getBitsFromVariable(0) ;
-    mutation = new BitFlipMutation(mutationProbability) ;
+    var mutationProbability = 1.0 / problem.getBitsFromVariable(0) ;
+    MutationOperator<BinarySolution> mutation = new BitFlipMutation(mutationProbability);
 
-    selection = new BinaryTournamentSelection<BinarySolution>() ;
+    SelectionOperator<List<BinarySolution>, BinarySolution> selection = new BinaryTournamentSelection<BinarySolution>();
 
-    double epsilon = 0.01 ;
-    algorithm = new WASFGA<BinarySolution>(problem, 100, 250, crossover, mutation, selection,
-            new SequentialSolutionListEvaluator<BinarySolution>(),epsilon, referencePoint) ;
+    var epsilon = 0.01 ;
+    Algorithm<List<BinarySolution>> algorithm = new WASFGA<BinarySolution>(problem, 100, 250, crossover, mutation, selection,
+            new SequentialSolutionListEvaluator<BinarySolution>(), epsilon, referencePoint);
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<BinarySolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

@@ -62,9 +62,9 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
     double r1, r2, c1, c2;
     DoubleSolution bestGlobal;
 
-    for (int i = 0; i < swarm.size(); i++) {
+    for (var i = 0; i < swarm.size(); i++) {
       @Nullable DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-      DoubleSolution bestParticle = (DoubleSolution) localBest[i].copy();
+      var bestParticle = (DoubleSolution) localBest[i].copy();
 
       bestGlobal = globalBestSelection.select(leaders.getSolutionList()) ;
 
@@ -73,9 +73,9 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
 
-      double inertiaWeight = inertiaWeightComputingStrategy.compute() ;
+      var inertiaWeight = inertiaWeightComputingStrategy.compute() ;
 
-      for (int var = 0; var < particle.variables().size(); var++) {
+      for (var var = 0; var < particle.variables().size(); var++) {
         speed[i][var] = inertiaWeight * speed[i][var]
             + c1 * r1 * (bestParticle.variables().get(var) - particle.variables().get(var))
             + c2 * r2 * (bestGlobal.variables().get(var) - particle.variables().get(var));

@@ -29,21 +29,21 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
     this.headersRow = algorithms.asObjectArray();
     this.data = new Difference[algorithms.size() - 1][algorithms.size() - 1][problems.size()];
 
-    for (int row = 0; row < algorithms.size() - 1; row++) {
-      Table tableAlgorithmA = filterTableBy(table, algorithms.name(), algorithms.get(row));
-      for (int column = 1; column < algorithms.size(); column++) {
-        Table tableAlgorithmB = filterTableBy(table, algorithms.name(), algorithms.get(column));
-        for (int index = 0; index < problems.size(); index++) {
+    for (var row = 0; row < algorithms.size() - 1; row++) {
+      var tableAlgorithmA = filterTableBy(table, algorithms.name(), algorithms.get(row));
+      for (var column = 1; column < algorithms.size(); column++) {
+        var tableAlgorithmB = filterTableBy(table, algorithms.name(), algorithms.get(column));
+        for (var index = 0; index < problems.size(); index++) {
           if (row == column) {
             this.data[row][column][index] = null;
           } else {
-            Table tableAlgorithmAByProblem =
+            var tableAlgorithmAByProblem =
                 filterTableBy(tableAlgorithmA, problems.name(), problems.get(index));
-            Table tableAlgorithmBByProblem =
+            var tableAlgorithmBByProblem =
                 filterTableBy(tableAlgorithmB, problems.name(), problems.get(index));
-            DoubleColumn resultsAlgorithmA =
+            var resultsAlgorithmA =
                 tableAlgorithmAByProblem.doubleColumn(indicatorValueColumnName);
-            DoubleColumn resultsAlgorithmB =
+            var resultsAlgorithmB =
                 tableAlgorithmBByProblem.doubleColumn(indicatorValueColumnName);
             if (Arrays.asList(INDICATORS_TO_MAXIMIZE).contains(indicator)) {
               this.data[row][column - 1][index] = compare(resultsAlgorithmA, resultsAlgorithmB);
@@ -57,9 +57,9 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
   }
 
   public static double[] convertDoubleArray(Double[] array) {
-      double @NotNull [] result = new double[10];
-      int count = 0;
-      for (Double aDouble : array) {
+    var result = new double[10];
+    var count = 0;
+      for (var aDouble : array) {
           double v = aDouble;
           if (result.length == count) result = Arrays.copyOf(result, count * 2);
           result[count++] = v;
@@ -73,9 +73,9 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
   }
 
   public Difference compare(DoubleColumn columnA, DoubleColumn columnB) {
-    double[] a = convertDoubleArray(columnA.asObjectArray());
-    double[] b = convertDoubleArray(columnB.asObjectArray());
-    WilcoxonSignedRankTest wilcoxon = new WilcoxonSignedRankTest();
+    var a = convertDoubleArray(columnA.asObjectArray());
+    var b = convertDoubleArray(columnB.asObjectArray());
+    var wilcoxon = new WilcoxonSignedRankTest();
     if (wilcoxon.wilcoxonSignedRankTest(a, b, false) < 0.05) {
       if (columnA.median() >= columnB.median()) {
         return Difference.BETTER;
@@ -89,10 +89,10 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
 
   protected StringBuilder createRowOfData(int index) {
     @NotNull StringBuilder html = new StringBuilder();
-    for (Difference @NotNull [] differences : data[index]) {
+    for (var differences : data[index]) {
       html.append("<td>");
       html.append("<div class='horizontal'>");
-      for (Difference difference : differences) {
+      for (var difference : differences) {
         if (difference == Difference.BETTER) {
           html.append("<a> + </a>");
         }
@@ -109,7 +109,7 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
   }
 
   public String getCSS() {
-    StringBuilder css = new StringBuilder(super.getCSS());
+    var css = new StringBuilder(super.getCSS());
 
     css.append(".horizontal { display: flex; justify-content: space-evenly; align-items: center;}");
     css.append(".fas { flex-shrink: 0; margin: 1px; color: #6b6b6b} ");

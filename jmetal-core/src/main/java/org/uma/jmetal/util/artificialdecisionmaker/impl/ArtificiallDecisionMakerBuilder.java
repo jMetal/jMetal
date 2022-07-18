@@ -85,9 +85,8 @@ public class ArtificiallDecisionMakerBuilder<S extends Solution<?>> implements A
 
 
   public ArtificialDecisionMakerDecisionTree<S> build() {
-    @Nullable ArtificialDecisionMakerDecisionTree<S> algorithmRun = null ;
-    algorithmRun = new ArtificialDecisionMakerDecisionTree<S>(problem,algorithm,considerationProbability,tolerance, maxEvaluations,
-          rankingCoeficient,asp);
+    @Nullable ArtificialDecisionMakerDecisionTree<S> algorithmRun = new ArtificialDecisionMakerDecisionTree<S>(problem, algorithm, considerationProbability, tolerance, maxEvaluations,
+            rankingCoeficient, asp);
 
     return algorithmRun ;
   }

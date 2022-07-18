@@ -37,7 +37,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
 
     scaling = false;
 
-    int numberOfVariables = dTypeG * 256;
+    var numberOfVariables = dTypeG * 256;
     setNumberOfObjectives(2);
     setNumberOfConstraints(0);
     setName("BigOpt2015");
@@ -45,7 +45,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-8.0);
       upperLimit.add(8.0);
     }
@@ -56,31 +56,30 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    List<List<Double>> s1;
     List<Double> s1Temp;
 
-    s1 = new ArrayList<>();
+    List<List<Double>> s1 = new ArrayList<>();
 
-    for (int i = 0; i < dTypeG; i++) {
+    for (var i = 0; i < dTypeG; i++) {
       s1Temp = new ArrayList<>();
-      for (int j = 0; j < icaComponent.get(0).size(); j++) {
+      for (var j = 0; j < icaComponent.get(0).size(); j++) {
         s1Temp.add(solution.variables().get(i * (icaComponent.get(0).size()) + j));
       }
       s1.add(s1Temp);
     }
 
-    List<List<Double>> x1 = multiplyWithOutAMP(matrixA, s1);
-    List<List<Double>> cor1 = correlation(x1, mixed);
+    var x1 = multiplyWithOutAMP(matrixA, s1);
+    var cor1 = correlation(x1, mixed);
 
-    double sum = 0.0;
-    for (int i = 0; i < icaComponent.size(); i++) {
-      for (int j = 0; j < icaComponent.get(i).size(); j++) {
+    var sum = 0.0;
+    for (var i = 0; i < icaComponent.size(); i++) {
+      for (var j = 0; j < icaComponent.get(i).size(); j++) {
         sum += Math.pow(icaComponent.get(i).get(j) - s1.get(i).get(j), 2);
       }
     }
 
-    double obj1 = diagonal1(cor1) + diagonal2(cor1);
-    double obj2 = sum / (icaComponent.size() * icaComponent.get(0).size());
+    var obj1 = diagonal1(cor1) + diagonal2(cor1);
+    var obj2 = sum / (icaComponent.size() * icaComponent.get(0).size());
 
     if (obj1 > f1max) {
       f1max = obj1;
@@ -106,15 +105,14 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   }
 
   private void loadData(String problemId, @NotNull String fName, int dType, int dLength) {
-    List<List<Double>> list;
     @NotNull String fileName = "/cec2015Comp/" + problemId + fName;
 
-    InputStream inputStream = createInputStream(fileName);
+    var inputStream = createInputStream(fileName);
 
-    InputStreamReader isr = new InputStreamReader(inputStream);
+    var isr = new InputStreamReader(inputStream);
     @NotNull BufferedReader br = new BufferedReader(isr);
 
-    list = new ArrayList<>();
+    List<List<Double>> list = new ArrayList<>();
     String aux;
     try {
       aux = br.readLine();
@@ -123,7 +121,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
         @NotNull StringTokenizer tokenizer = new StringTokenizer(aux);
         List<Double> doubleList = new ArrayList<>();
         while (tokenizer.hasMoreTokens()) {
-          double value = parseDouble(tokenizer.nextToken());
+          var value = parseDouble(tokenizer.nextToken());
           doubleList.add(value);
         }
         list.add(doubleList);
@@ -148,7 +146,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   }
 
   private void loadData(String problemId) {
-    int dType = 4;
+    var dType = 4;
 
     if (problemId.equals("D4")) {
       dType = 4;
@@ -179,22 +177,22 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   List<Double> newMeanStandardDeviation(List<Double> list) {
     @NotNull List<Double> result = new ArrayList<>();
 
-    double sum = 0.0;
-    for (Double aDouble : list) {
+    var sum = 0.0;
+    for (var aDouble : list) {
       double value1 = aDouble;
       sum += value1;
     }
 
-    double mean = sum / list.size();
+    var mean = sum / list.size();
 
-    double accum = 0.0;
-    for (Double value : list) {
+    var accum = 0.0;
+    for (var value : list) {
       double v = value;
-      double v1 = (v - mean) * (v - mean);
+      var v1 = (v - mean) * (v - mean);
       accum += v1;
     }
 
-    double stdev = Math.sqrt(accum / (list.size() - 1));
+    var stdev = Math.sqrt(accum / (list.size() - 1));
     result.add(mean);
     result.add(stdev);
 
@@ -202,15 +200,15 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   }
 
   double vectorCorrelation(@NotNull List<Double> list1, List<Double> list2) {
-    List<Double> a1 = newMeanStandardDeviation(list1);
-    List<Double> b1 = newMeanStandardDeviation(list2);
+    var a1 = newMeanStandardDeviation(list1);
+    var b1 = newMeanStandardDeviation(list2);
 
     double c1 = 0;
     double temp1, temp2;
 
-    double a = a1.get(1) * b1.get(1);
+    var a = a1.get(1) * b1.get(1);
     if (Math.abs(a) > 0.00001) {
-      for (int i = 0; i < list1.size(); i++) {
+      for (var i = 0; i < list1.size(); i++) {
         temp1 = ((list1.get(i) - list1.get(0)));
         temp2 = ((list2.get(i) - list2.get(0)));
 
@@ -222,14 +220,13 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   }
 
   List<List<Double>> correlation(@NotNull List<List<Double>> list1, List<List<Double>> list2) {
-    List<List<Double>> m;
     List<Double> temp;
 
-    m = new ArrayList<>();
+    List<List<Double>> m = new ArrayList<>();
 
     for (@NotNull List<Double> i : list1) {
       temp = new ArrayList<>();
-      for (List<Double> j : list2) {
+      for (var j : list2) {
         temp.add(vectorCorrelation(i, j));
       }
 
@@ -242,8 +239,8 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   double diagonal1(@NotNull List<List<Double>> list) {
     double sum = 0;
 
-    for (int i = 0; i < list.size(); i++) {
-      for (int j = 0; j < list.size(); j++) {
+    for (var i = 0; i < list.size(); i++) {
+      for (var j = 0; j < list.size(); j++) {
         if (i == j) {
           sum += Math.pow(1 - list.get(i).get(j), 2);
         }
@@ -255,8 +252,8 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   double diagonal2(List<List<Double>> list) {
     double sum = 0;
 
-    for (int i = 0; i < list.size(); i++) {
-      for (int j = 0; j < list.size(); j++) {
+    for (var i = 0; i < list.size(); i++) {
+      for (var j = 0; j < list.size(); j++) {
         if (i == j) {
 
         } else {
@@ -268,21 +265,20 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   }
 
   List<List<Double>> multiplyWithOutAMP(List<List<Double>> list1, @NotNull List<List<Double>> list2) {
-    List<List<Double>> c;
     List<Double> cTemp;
 
-    c = new ArrayList<>();
-    for (int row = 0; row < list1.size(); row++) {
+    List<List<Double>> c = new ArrayList<>();
+    for (var row = 0; row < list1.size(); row++) {
       cTemp = new ArrayList<>();
-      for (int col = 0; col < list2.get(0).size(); col++) {
+      for (var col = 0; col < list2.get(0).size(); col++) {
         cTemp.add(0.0);
       }
       c.add(cTemp);
     }
 
-    for (int row = 0; row < list1.size(); row++) {
-      for (int col = 0; col < list2.get(row).size(); col++) {
-        for (int inner = 0; inner < list1.get(0).size(); inner++) {
+    for (var row = 0; row < list1.size(); row++) {
+      for (var col = 0; col < list2.get(row).size(); col++) {
+        for (var inner = 0; inner < list1.get(0).size(); inner++) {
           double val = c.get(row).get(col);
           c.get(row).set(col, val + list1.get(row).get(inner) * list2.get(inner).get(col));
         }

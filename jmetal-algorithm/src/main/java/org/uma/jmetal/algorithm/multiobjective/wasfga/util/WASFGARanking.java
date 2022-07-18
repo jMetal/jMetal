@@ -51,9 +51,9 @@ public class WASFGARanking<S extends Solution<?>> extends GenericSolutionAttribu
 
 	@Override
 	public Ranking<S> compute(List<S> population) {
-		int numberOfRanksForFeasibleSolutions, numberOfRanksForUnfeasibleSolutions, rank, indexOfBestSolution;
+		int numberOfRanksForFeasibleSolutions, rank, indexOfBestSolution;
 		int index, indexOfWeight;
-		int numberOfWeights = this.utilityFunctions.getSize();
+		var numberOfWeights = this.utilityFunctions.getSize();
 		int[] rankForUnfeasibleSolutions;
 		double value, minimumValue;
 		List<S> feasibleSolutions = new LinkedList<>();
@@ -61,7 +61,7 @@ public class WASFGARanking<S extends Solution<?>> extends GenericSolutionAttribu
 		S solutionToInsert;
 
 		//Split the population in feasible and unfeasible solutions
-		for (S solution:population) {
+		for (var solution:population) {
 			if((numberOfViolatedConstraints.getAttribute(solution)!= null
 					&&
 					numberOfViolatedConstraints.getAttribute(solution)>0)) {
@@ -86,12 +86,12 @@ public class WASFGARanking<S extends Solution<?>> extends GenericSolutionAttribu
 		}
 
 		//Each unfeasible solution goes to a different front
-		numberOfRanksForUnfeasibleSolutions = unfeasibleSolutions.size();
+		var numberOfRanksForUnfeasibleSolutions = unfeasibleSolutions.size();
 
 		//Initialization of properties
 		this.numberOfRanks = numberOfRanksForFeasibleSolutions + numberOfRanksForUnfeasibleSolutions;
 		this.rankedSubpopulations = new ArrayList<>(this.numberOfRanks);
-		for (int i = 0; i < this.numberOfRanks; i++) {
+		for (var i = 0; i < this.numberOfRanks; i++) {
 			this.rankedSubpopulations.add(new ArrayList<S>());
 		}
 
@@ -104,7 +104,7 @@ public class WASFGARanking<S extends Solution<?>> extends GenericSolutionAttribu
 					if (!feasibleSolutions.isEmpty()) {
 						indexOfBestSolution = 0;
 						minimumValue = this.utilityFunctions.evaluate(feasibleSolutions.get(0), indexOfWeight);
-						for (int solutionIdx = 1; solutionIdx < feasibleSolutions.size(); solutionIdx++) {
+						for (var solutionIdx = 1; solutionIdx < feasibleSolutions.size(); solutionIdx++) {
 							value = this.utilityFunctions.evaluate(feasibleSolutions.get(solutionIdx), indexOfWeight);
 
 							if (value < minimumValue) {
@@ -164,7 +164,7 @@ public class WASFGARanking<S extends Solution<?>> extends GenericSolutionAttribu
 		int indexOfFirstSolution, indexOfSecondSolution, indexOfWeight;
 		double overallConstraintViolationSolution1, overallConstraintViolationSolution2;
 		double minimumValueFirstSolution, minimumValueSecondSolution, value;
-		int @NotNull [] rank = new int[population.size()];
+		var rank = new int[population.size()];
 		Arrays.fill(rank, 0);
 
 		//Iteration for each solution

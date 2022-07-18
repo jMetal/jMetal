@@ -60,7 +60,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
         new CrossoverAndMutationVariation<>(
             offspringPopulationSize, crossover, mutation);
 
-    int tournamentSize = 2 ;
+    var tournamentSize = 2 ;
     this.selection =
         new NaryTournamentSelection<>(
             tournamentSize,

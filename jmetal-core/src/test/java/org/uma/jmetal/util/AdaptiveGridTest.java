@@ -19,11 +19,10 @@ public class AdaptiveGridTest {
 
   @Test
   public void shouldConstructorCreateAValidInstance() {
-    AdaptiveGrid<DoubleSolution> adaptiveGrid ;
 
-    int bisections = 5 ;
-    int objectives = 2 ;
-    adaptiveGrid = new AdaptiveGrid<>(bisections, objectives) ;
+      var bisections = 5 ;
+      var objectives = 2 ;
+      var adaptiveGrid = new AdaptiveGrid<DoubleSolution>(bisections, objectives);
     adaptiveGrid.calculateOccupied(); ;
 
     assertEquals(bisections, adaptiveGrid.getBisections()) ;
@@ -33,14 +32,13 @@ public class AdaptiveGridTest {
 
   @Test
   public void shouldOccupiedHypercubesReturnZeroIfThereAreNotOccupiedHypercubes() {
-    AdaptiveGrid<DoubleSolution> adaptiveGrid ;
 
-    int bisections = 5 ;
-    int objectives = 2 ;
-    adaptiveGrid = new AdaptiveGrid<>(bisections, objectives) ;
+      var bisections = 5 ;
+      var objectives = 2 ;
+      var adaptiveGrid = new AdaptiveGrid<DoubleSolution>(bisections, objectives);
 
-    int[] hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
-    for (int i: hypercubes) {
+      var hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
+    for (var i: hypercubes) {
       hypercubes[i] = 0 ;
     }
 
@@ -52,14 +50,13 @@ public class AdaptiveGridTest {
 
   @Test
   public void shouldOccupiedHypercubesReturnTheNumberOfOccupiedHypercubes() {
-    AdaptiveGrid<DoubleSolution> adaptiveGrid ;
 
-    int bisections = 5 ;
-    int objectives = 2 ;
-    adaptiveGrid = new AdaptiveGrid<>(bisections, objectives) ;
+      var bisections = 5 ;
+      var objectives = 2 ;
+      var adaptiveGrid = new AdaptiveGrid<DoubleSolution>(bisections, objectives);
 
-    int[] hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
-    for (int i: hypercubes) {
+      var hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
+    for (var i: hypercubes) {
       hypercubes[i] = 0 ;
     }
 
@@ -75,14 +72,13 @@ public class AdaptiveGridTest {
 
   @Test
   public void shouldGetAverageOccupationReturnZeroIfThereAreNoOccupiedHypercubes() {
-    AdaptiveGrid<DoubleSolution> adaptiveGrid ;
 
-    int bisections = 5 ;
-    int objectives = 2 ;
-    adaptiveGrid = new AdaptiveGrid<>(bisections, objectives) ;
+      var bisections = 5 ;
+      var objectives = 2 ;
+      var adaptiveGrid = new AdaptiveGrid<DoubleSolution>(bisections, objectives);
 
-    int[] hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
-    for (int i: hypercubes) {
+      var hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
+    for (var i: hypercubes) {
       hypercubes[i] = 0 ;
     }
 
@@ -93,14 +89,13 @@ public class AdaptiveGridTest {
 
   @Test
   public void shouldGetAverageOccupationReturnTheRightValue() {
-    AdaptiveGrid<DoubleSolution> adaptiveGrid ;
 
-    int bisections = 5 ;
-    int objectives = 2 ;
-    adaptiveGrid = new AdaptiveGrid<>(bisections, objectives) ;
+      var bisections = 5 ;
+      var objectives = 2 ;
+      var adaptiveGrid = new AdaptiveGrid<DoubleSolution>(bisections, objectives);
 
-    int[] hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
-    for (int i: hypercubes) {
+      var hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
+    for (var i: hypercubes) {
       hypercubes[i] = 0 ;
     }
 
@@ -116,12 +111,12 @@ public class AdaptiveGridTest {
 	@Test
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvidedInRouletteWheel() {
 		// Configuration
-		AdaptiveGrid<Solution<?>> grid = new AdaptiveGrid<>(5, 2);
+        var grid = new AdaptiveGrid<Solution<?>>(5, 2);
 
 		// Check configuration leads to use default generator by default
-		final int[] defaultUses = { 0 };
-		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		final var defaultUses = new int[]{0};
+        var defaultGenerator = JMetalRandom.getInstance();
+        var auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
@@ -130,7 +125,7 @@ public class AdaptiveGridTest {
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
-		final int[] customUses = { 0 };
+		final var customUses = new int[]{0};
 		grid.rouletteWheel((a,b) -> {
 			customUses[0]++;
 			return new Random().nextDouble()*(b-a)+a;
@@ -142,9 +137,9 @@ public class AdaptiveGridTest {
 	@Test
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvidedInRandomOccupiedHypercube() {
 		// Configuration
-		AdaptiveGrid<Solution<?>> grid = new AdaptiveGrid<>(5, 2);
-		int[] hypercubes = new int[1024];
-		for (int i : hypercubes) {
+        var grid = new AdaptiveGrid<Solution<?>>(5, 2);
+        var hypercubes = new int[1024];
+		for (var i : hypercubes) {
 			hypercubes[i] = 0;
 		}
 		hypercubes[0] = 1;
@@ -154,9 +149,9 @@ public class AdaptiveGridTest {
 		grid.calculateOccupied();
 
 		// Check configuration leads to use default generator by default
-		final int[] defaultUses = { 0 };
-		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		final var defaultUses = new int[]{0};
+        var defaultGenerator = JMetalRandom.getInstance();
+        var auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
@@ -165,7 +160,7 @@ public class AdaptiveGridTest {
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
-		final int[] customUses = { 0 };
+		final var customUses = new int[]{0};
 		grid.randomOccupiedHypercube((a,b) -> {
 			customUses[0]++;
 			return new Random().nextInt(b+1-a)+a;

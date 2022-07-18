@@ -100,7 +100,7 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   protected void initProgress() {
     evaluations = getMaxPopulationSize();
     // Initialize archive
-    for (S s : population) {
+    for (var s : population) {
       archive.add(s);
     }
   }
@@ -125,7 +125,7 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   @Override
   protected List<S> replacement(List<S> population, @NotNull List<S> offspringPopulation) {
     // population and archive are always in sync
-    for (S s : offspringPopulation) {
+    for (var s : offspringPopulation) {
       archive.add(s);
     }
     return archive.getSolutionList();
@@ -146,12 +146,12 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   @Override
   protected @NotNull List<S> selection(List<S> population) {
     // Chosen operator depends on archive size
-    CrossoverOperator<S> chosenOperator = archive.isFull() ? fullArchiveCrossoverOperator : crossoverOperator;
+    var chosenOperator = archive.isFull() ? fullArchiveCrossoverOperator : crossoverOperator;
 
     @NotNull List<S> matingPopulation = new ArrayList<>(chosenOperator.getNumberOfRequiredParents());
-    int bound = chosenOperator.getNumberOfRequiredParents();
-    for (int i = 0; i < bound; i++) {
-      S execute = selectionOperator.execute(population);
+    var bound = chosenOperator.getNumberOfRequiredParents();
+    for (var i = 0; i < bound; i++) {
+      var execute = selectionOperator.execute(population);
       matingPopulation.add(execute);
     }
 
@@ -167,7 +167,7 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
    */
   @Override
   protected List<S> reproduction(List<S> population) {
-    List<S> offspring = crossoverOperator.execute(population);
+    var offspring = crossoverOperator.execute(population);
     mutationOperator.execute(offspring.get(0));
 
     return offspring;

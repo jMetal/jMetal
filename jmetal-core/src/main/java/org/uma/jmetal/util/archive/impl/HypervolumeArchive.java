@@ -24,7 +24,7 @@ public class HypervolumeArchive<S extends Solution<?>> extends AbstractBoundedAr
   public void prune() {
     if (getSolutionList().size() > getMaxSize()) {
       computeDensityEstimator() ;
-      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), comparator) ;
+      var worst = new SolutionListUtils().findWorstSolution(getSolutionList(), comparator) ;
       getSolutionList().remove(worst);
     }
   }

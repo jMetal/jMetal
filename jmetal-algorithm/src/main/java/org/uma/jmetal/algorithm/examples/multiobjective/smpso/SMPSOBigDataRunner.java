@@ -39,9 +39,6 @@ public class SMPSOBigDataRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.smpso.SMPSOBigDataRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws Exception {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
 
     String instanceName ;
 
@@ -51,26 +48,26 @@ public class SMPSOBigDataRunner extends AbstractAlgorithmRunner {
       instanceName = "D12" ;
     }
 
-    problem = new BigOpt2015(instanceName) ;
+    DoubleProblem problem = new BigOpt2015(instanceName);
 
     @NotNull BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(20) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new SMPSOBuilder(problem, archive)
+    Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(problem, archive)
             .setMutation(mutation)
             .setMaxIterations(250)
             .setSwarmSize(20)
-     //       .setRandomGenerator(new MersenneTwisterGenerator())
+            //       .setRandomGenerator(new MersenneTwisterGenerator())
             .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute();
 
-    List<DoubleSolution> population = ((SMPSO)algorithm).getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = ((SMPSO)algorithm).getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     new SolutionListOutput(population)
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))

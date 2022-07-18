@@ -47,7 +47,7 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
     savedValues = new DoubleSolution[populationSize];
     utility = new double[populationSize];
     frequency = new int[populationSize];
-    for (int i = 0; i < utility.length; i++) {
+    for (var i = 0; i < utility.length; i++) {
       utility[i] = 1.0;
       frequency[i] = 0;
     }
@@ -61,21 +61,21 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
     initializeNeighborhood();
     idealPoint.update(population); ;
 
-    int generation = 0 ;
+    var generation = 0 ;
     evaluations = populationSize ;
     do {
-      List<Integer> order = tourSelection(10) ;
-      for (int i = 0; i < order.size(); i++) {
+      var order = tourSelection(10) ;
+      for (var i = 0; i < order.size(); i++) {
         int subProblemId = order.get(i);
         frequency[subProblemId]++;
 
-        NeighborType neighborType = chooseNeighborType() ;
-        List<DoubleSolution> parents = parentSelection(subProblemId, neighborType) ;
+        var neighborType = chooseNeighborType() ;
+        var parents = parentSelection(subProblemId, neighborType) ;
 
         differentialEvolutionCrossover.setCurrentSolution(population.get(subProblemId));
         @NotNull List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
 
-        DoubleSolution child = children.get(0) ;
+        var child = children.get(0) ;
         mutationOperator.execute(child);
         problem.evaluate(child);
 
@@ -95,8 +95,8 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
   }
 
   protected void initializePopulation() {
-    for (int i = 0; i < populationSize; i++) {
-      DoubleSolution newSolution = (DoubleSolution)problem.createSolution();
+    for (var i = 0; i < populationSize; i++) {
+      var newSolution = (DoubleSolution)problem.createSolution();
 
       problem.evaluate(newSolution);
       population.add(newSolution);
@@ -106,7 +106,7 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
 
   public void utilityFunction() throws JMetalException {
     double f1, f2, uti, delta;
-    for (int n = 0; n < populationSize; n++) {
+    for (var n = 0; n < populationSize; n++) {
       f1 = fitnessFunction(population.get(n), lambda[n]);
       f2 = fitnessFunction(savedValues[n], lambda[n]);
       delta = f2 - f1;
@@ -121,33 +121,31 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
   }
 
   public List<Integer> tourSelection(int depth) {
-    List<Integer> selected;
-    List<Integer> candidate;
 
-      // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL (NOT SORTED!!!!)
+    // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL (NOT SORTED!!!!)
       @NotNull List<Integer> result = new ArrayList<>();
-      int bound1 = problem.getNumberOfObjectives();
-      for (int i3 = 0; i3 < bound1; i3++) {
+    var bound1 = problem.getNumberOfObjectives();
+      for (var i3 = 0; i3 < bound1; i3++) {
           Integer integer1 = i3;
           result.add(integer1);
       }
-      selected = result;
+    var selected = result;
 
       // set of unselected weights
       List<Integer> list = new ArrayList<>();
-      int bound = populationSize;
-      for (int i1 = problem.getNumberOfObjectives(); i1 < bound; i1++) {
+    var bound = populationSize;
+      for (var i1 = problem.getNumberOfObjectives(); i1 < bound; i1++) {
           Integer integer = i1;
           list.add(integer);
       }
-      candidate = list;
+    var candidate = list;
 
     while (selected.size() < (int) (populationSize / 5.0)) {
-      int best_idd = (int) (randomGenerator.nextDouble() * candidate.size());
+      var best_idd = (int) (randomGenerator.nextDouble() * candidate.size());
       int i2;
       int best_sub = candidate.get(best_idd);
       int s2;
-      for (int i = 1; i < depth; i++) {
+      for (var i = 1; i < depth; i++) {
         i2 = (int) (randomGenerator.nextDouble() * candidate.size());
         s2 = candidate.get(i2);
         if (utility[s2] > utility[best_sub]) {

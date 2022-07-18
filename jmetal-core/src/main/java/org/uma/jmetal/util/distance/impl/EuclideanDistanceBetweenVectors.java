@@ -18,10 +18,10 @@ public class EuclideanDistanceBetweenVectors implements Distance<double[], doubl
     Check.that(vector1.length == vector2.length, "The vectors have different" +
             "dimension: " + vector1.length + " and " + vector2.length);
 
-    double distance = 0.0;
+      var distance = 0.0;
 
     double diff;
-    for (int i = 0; i < vector1.length ; i++){
+    for (var i = 0; i < vector1.length ; i++){
       diff = vector1[i] - vector2[i];
       distance += diff * diff ;
     }

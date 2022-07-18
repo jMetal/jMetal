@@ -35,7 +35,7 @@ public class SMPSOhvIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     /*
     Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
@@ -51,7 +51,7 @@ public class SMPSOhvIT {
     algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<>(100)).build();
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator hypervolume =
             new org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume(
@@ -60,7 +60,7 @@ public class SMPSOhvIT {
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.64);
   }

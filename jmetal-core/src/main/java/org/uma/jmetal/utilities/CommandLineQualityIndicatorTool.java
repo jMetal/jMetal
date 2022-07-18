@@ -65,11 +65,11 @@ public class CommandLineQualityIndicatorTool {
    * @param args
    */
   private static void calculateAndPrintIndicators(String[] args) throws IOException {
-    double[][] referenceFront = VectorUtils.readVectors(args[1], ",");
-    double[][] front = VectorUtils.readVectors(args[2],",");
+    var referenceFront = VectorUtils.readVectors(args[1], ",");
+    var front = VectorUtils.readVectors(args[2],",");
 
-    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
-    double[][] normalizedFront =
+    var normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    var normalizedFront =
         NormalizeUtils.normalize(
             front,
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
@@ -77,17 +77,17 @@ public class CommandLineQualityIndicatorTool {
 
     JMetalLogger.logger.info("The fronts are normalized before computing the indicators");
 
-    List<QualityIndicator> indicatorList = getAvailableIndicators(normalizedReferenceFront);
+    var indicatorList = getAvailableIndicators(normalizedReferenceFront);
 
     if (!args[0].equals("ALL")) {
-      QualityIndicator indicator = getIndicatorFromName(args[0], indicatorList);
+      var indicator = getIndicatorFromName(args[0], indicatorList);
       JMetalLogger.logger.info(() -> "" + indicator.compute(normalizedFront));
     } else {
-      for (QualityIndicator indicator : indicatorList) {
+      for (var indicator : indicatorList) {
         JMetalLogger.logger.info(() -> indicator.getName() + ": " + indicator.compute(normalizedFront));
       }
 
-      SetCoverage sc = new SetCoverage();
+      var sc = new SetCoverage();
       JMetalLogger.logger.info(
           () -> "SC(refPF, front): " + sc.compute(normalizedReferenceFront, normalizedFront));
       JMetalLogger.logger.info(

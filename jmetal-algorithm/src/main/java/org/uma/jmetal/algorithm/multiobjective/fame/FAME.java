@@ -71,7 +71,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
     OpProb = new double[operators];
     Utilization = new double[operators];
     windowSize = (int) Math.ceil(3.33333 * operators);
-    for (int x = 0; x < operators; x++) {
+    for (var x = 0; x < operators; x++) {
       OpProb[x] = (1.0);
       Utilization[x] = 0.0;
     }
@@ -115,7 +115,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
             1.4)); // probability.addTerm(new Triangle("HIGH", 0.500, 0.750, 1.000));
     engine.addOutputVariable(probability);
 
-    RuleBlock ruleBlock = new RuleBlock();
+    var ruleBlock = new RuleBlock();
     ruleBlock.addRule(
         Rule.parse(
             "if Stagnation is HIGH and OperatorUse is HIGH then Probability is MID", engine));
@@ -151,7 +151,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
   protected void updateProgress() {
     evaluations++;
     if (window == windowSize) {
-      for (int x = 0; x < operators; x++) {
+      for (var x = 0; x < operators; x++) {
         engine.setInputValue("Stagnation", Stagnation);
         engine.setInputValue("OperatorUse", Utilization[x]);
         engine.process();
@@ -167,8 +167,8 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
   @Override
   protected List<S> selection(List<S> population) {
     @NotNull List<S> matingPopulation = new ArrayList<>(3);
-    for (int x = 0; x < 3; x++) {
-      double aleat = Math.random();
+    for (var x = 0; x < 3; x++) {
+      var aleat = Math.random();
       if (aleat <= 0.1) // 0.1 n_n wiiii (0.1 lo hace parecido a measo1 (0.05 asco))
       matingPopulation.add((S) selectionOperator.execute(population));
       else {
@@ -184,37 +184,33 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
     @NotNull List<S> offspringPopulation = new ArrayList<>(1);
     List<DoubleSolution> parents = null;
 
-    double probabilityPolynomial, DristributionIndex;
-    probabilityPolynomial = 0.30;
-    DristributionIndex = 20;
-    PolynomialMutation mutationPolynomial = new PolynomialMutation(probabilityPolynomial, DristributionIndex);
+    var probabilityPolynomial = 0.30;
+    double DristributionIndex = 20;
+    var mutationPolynomial = new PolynomialMutation(probabilityPolynomial, DristributionIndex);
 
-    double probabilityUniform, perturbation;
-    probabilityUniform = 0.30;
-    perturbation = 0.1;
+    var probabilityUniform = 0.30;
+    var perturbation = 0.1;
     @NotNull UniformMutation mutationUniform = new UniformMutation(probabilityUniform, perturbation);
 
-    double CR, F;
-    CR = 1.0;
-    F = 0.5;
-    DifferentialEvolutionCrossover crossoverOperator_DE =
+    var CR = 1.0;
+    var F = 0.5;
+    var crossoverOperator_DE =
         new DifferentialEvolutionCrossover(CR, F, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double crossoverProbability, crossoverDistributionIndex;
-    crossoverProbability = 1.0;
-    crossoverDistributionIndex = 20.0;
-    SBXCrossover crossoverOperator_SBX =
+    var crossoverProbability = 1.0;
+    var crossoverDistributionIndex = 20.0;
+    var crossoverOperator_SBX =
         new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    Random rnd = new Random();
-    int operator = rnd.nextInt(operators);
+    var rnd = new Random();
+    var operator = rnd.nextInt(operators);
     List<S> offspring = new ArrayList<>(1);
     // ROULETTE
-    double cont = 0.0;
-    double[] array = OpProb;
-    int bound = operators;
-    for (int i = 0; i < bound; i++) {
-      double v = array[i];
+    var cont = 0.0;
+    var array = OpProb;
+    var bound = operators;
+    for (var i = 0; i < bound; i++) {
+      var v = array[i];
       cont += v;
     }
     while (cont > 0) {
@@ -308,15 +304,15 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
 
   @Override
   protected List<S> createInitialPopulation() {
-    SpatialSpreadDeviation<S> distancia = new SpatialSpreadDeviation<>();
+    var distancia = new SpatialSpreadDeviation<S>();
     @NotNull List<S> population = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      S newIndividual = getProblem().createSolution();
+    for (var i = 0; i < getMaxPopulationSize(); i++) {
+      var newIndividual = getProblem().createSolution();
       distancia.setAttribute(newIndividual, 0.0);
       population.add(newIndividual);
     }
     evaluator.evaluate(population, getProblem());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
+    for (var i = 0; i < getMaxPopulationSize(); i++) {
       archiveSSD.add(population.get(i));
     }
     return population;
@@ -339,9 +335,9 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
   }
 
   protected @NotNull List<S> fast_nondonimated_sort(@NotNull Ranking<S> ranking) {
-    SpatialSpreadDeviation<S> SSD = new SpatialSpreadDeviation<S>();
+    var SSD = new SpatialSpreadDeviation<S>();
     List<S> population = new ArrayList<>(getMaxPopulationSize());
-    int rankingIndex = 0;
+    var rankingIndex = 0;
     while (populationIsNotFull(population)) {
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
         addRankedSolutionsToPopulation(ranking, rankingIndex, population);
@@ -365,20 +361,19 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
   }
 
   protected void addRankedSolutionsToPopulation(@NotNull Ranking<S> ranking, int rank, List<S> population) {
-    List<S> front;
 
-    front = ranking.getSubFront(rank);
+    var front = ranking.getSubFront(rank);
 
     population.addAll(front);
   }
 
   protected void addLastRankedSolutionsToPopulation(
       Ranking<S> ranking, int rank, List<S> population) {
-    List<S> currentRankedFront = ranking.getSubFront(rank);
+    var currentRankedFront = ranking.getSubFront(rank);
 
     currentRankedFront.sort(new SpatialSpreadDeviationComparator<>());
 
-    int i = 0;
+    var i = 0;
     while (population.size() < getMaxPopulationSize()) {
       population.add(currentRankedFront.get(i));
       i++;

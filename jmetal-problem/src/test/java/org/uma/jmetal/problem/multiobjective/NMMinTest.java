@@ -15,7 +15,7 @@ class NMMinTest {
   @Test
   void evaluateSimpleSolutions() {
     problem = new NMMin(1, 100, -100, -1000, 1000) ;
-    IntegerSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
     solution.variables().set(0, 100);
     problem.evaluate(solution);
 

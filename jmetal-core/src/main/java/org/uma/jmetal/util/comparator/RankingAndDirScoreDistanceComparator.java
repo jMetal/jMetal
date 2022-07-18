@@ -31,7 +31,7 @@ public class RankingAndDirScoreDistanceComparator<S extends Solution<?>>
 
   @Override
   public int compare(S o1, S o2) {
-    int result = rankComparator.compare(o1, o2);
+    var result = rankComparator.compare(o1, o2);
     if (result == 0) {
       return dirScoreComparator.compare(o1, o2);
     }

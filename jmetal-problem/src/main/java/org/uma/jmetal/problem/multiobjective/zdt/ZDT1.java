@@ -28,7 +28,7 @@ public class ZDT1 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -38,11 +38,11 @@ public class ZDT1 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
+    var f = new double[solution.objectives().length];
 
     f[0] = solution.variables().get(0);
-    double g = this.evalG(solution);
-    double h = this.evalH(f[0], g);
+    var g = this.evalG(solution);
+    var h = this.evalH(f[0], g);
     f[1] = h * g;
 
     solution.objectives()[0] = f[0];
@@ -57,13 +57,13 @@ public class ZDT1 extends AbstractDoubleProblem {
    * @param solution Solution
    */
   protected double evalG(@NotNull DoubleSolution solution) {
-      double g = 0.0;
-      int bound = solution.variables().size();
-      for (int i = 1; i < bound; i++) {
+    var g = 0.0;
+    var bound = solution.variables().size();
+      for (var i = 1; i < bound; i++) {
           double v = solution.variables().get(i);
           g += v;
       }
-      double constant = 9.0 / (solution.variables().size() - 1);
+    var constant = 9.0 / (solution.variables().size() - 1);
 
     return constant * g + 1.0;
   }
@@ -75,8 +75,7 @@ public class ZDT1 extends AbstractDoubleProblem {
    * @param g Second argument of the function H.
    */
   protected double evalH(double f, double g) {
-    double h ;
-    h = 1.0 - Math.sqrt(f / g);
+    var h = 1.0 - Math.sqrt(f / g);
     return h;
   }
 }

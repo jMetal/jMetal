@@ -7,11 +7,11 @@ package org.uma.jmetal.problem.multiobjective.re;
  */
 public class Util {
   public static double getClosestValue(double[] targetArray, double compValue) {
-    double closestValue = targetArray[0];
-    double minDiffValue = Math.abs(targetArray[0] - compValue);
+    var closestValue = targetArray[0];
+    var minDiffValue = Math.abs(targetArray[0] - compValue);
     double tmpDiffValue = 0;
 
-    for (int i = 1; i < targetArray.length; i++) {
+    for (var i = 1; i < targetArray.length; i++) {
       tmpDiffValue = Math.abs(targetArray[i] - compValue);
       if (tmpDiffValue < minDiffValue) {
         minDiffValue = tmpDiffValue;

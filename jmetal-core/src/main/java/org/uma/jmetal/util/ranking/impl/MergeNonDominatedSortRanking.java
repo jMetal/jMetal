@@ -48,15 +48,15 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
     population =
             new double[n]
                     [SORT_INDEX + 1]; // 2 extra fields to store: The solution id and the solution index after ordering by the first objective
-    for (int i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
       population[i] = new double[SORT_INDEX + 1];
       System.arraycopy(solutionSet.get(i).objectives(), 0, population[i], 0, m);
       population[i][SOL_ID] = i;
     }
     int ranking[] = sort(population);
     rankedSubPopulations = new ArrayList<ArrayList<S>>();
-    for (int i = 0; i < n; i++) {
-      for (int r = rankedSubPopulations.size(); r <= ranking[i]; r++) {
+    for (var i = 0; i < n; i++) {
+      for (var r = rankedSubPopulations.size(); r <= ranking[i]; r++) {
         rankedSubPopulations.add(new ArrayList<S>());
       }
       solutionSet.get(i).attributes().put(attributeId, ranking[i]);
@@ -77,8 +77,8 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
           @NotNull double src[][], @NotNull double dest[][], int low, int high, int obj, int toObj) {
     int i, j, s;
     double temp[] = null;
-    int destLow = low;
-    int length = high - low;
+    var destLow = low;
+    var length = high - low;
 
     if (length < INSERTIONSORT) {
       for (i = low; i < high; i++) {
@@ -90,8 +90,8 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
       }
       return temp == null; // if temp==null, src is already sorted
     }
-    int mid = (low + high) >>> 1;
-    boolean isSorted = merge_sort(dest, src, low, mid, obj, toObj);
+    var mid = (low + high) >>> 1;
+    var isSorted = merge_sort(dest, src, low, mid, obj, toObj);
     isSorted &= merge_sort(dest, src, mid, high, obj, toObj);
 
     // If list is already sorted, just copy from src to dest.
@@ -113,12 +113,12 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
   }
 
   private boolean sortFirstObjective() {
-    int p = 0;
+    var p = 0;
     System.arraycopy(population, 0, work, 0, n);
     merge_sort(population, work, 0, n, 0, m);
     population[0] = work[0];
     population[0][SORT_INDEX] = 0;
-    for (int q = 1; q < n; q++) {
+    for (var q = 1; q < n; q++) {
       if (0 != compare_lex(population[p], work[q], 0, m)) {
         p++;
         population[p] = work[q];
@@ -132,7 +132,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
 
   private boolean sortSecondObjective() {
     int p, solutionId;
-    boolean dominance = false;
+    var dominance = false;
     System.arraycopy(population, 0, work, 0, n);
     merge_sort(population, work, 0, n, 1, 2);
     System.arraycopy(work, 0, population, 0, n);
@@ -141,7 +141,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
       dominance |= bsManager.initializeSolutionBitset(solutionId);
       bsManager.updateIncrementalBitset(solutionId);
       if (2 == m) {
-        int initSolId = ((int) population[p][SOL_ID]);
+        var initSolId = ((int) population[p][SOL_ID]);
         bsManager.computeSolutionRanking(solutionId, initSolId);
       }
     }
@@ -152,7 +152,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
     int p, solutionId, initSolId, lastObjective = m - 1;
     boolean dominance;
     System.arraycopy(population, 0, work, 0, n);
-    for (int obj = 2; obj < m; obj++) {
+    for (var obj = 2; obj < m; obj++) {
       if (merge_sort(
               population,
               work,
@@ -196,7 +196,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
     }
     ranking = bsManager.getRanking();
     // UPDATING DUPLICATED SOLUTIONS
-    for (int[] duplicated : duplicatedSolutions)
+    for (var duplicated : duplicatedSolutions)
       ranking[duplicated[1]] =
               ranking[duplicated[0]]; // ranking[dup solution]=ranking[original solution]
 

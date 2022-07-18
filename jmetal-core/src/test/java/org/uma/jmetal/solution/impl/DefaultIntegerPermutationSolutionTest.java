@@ -16,20 +16,20 @@ public class DefaultIntegerPermutationSolutionTest {
 
   @Test
   public void shouldConstructorCreateAValidSolution() {
-    int permutationLength = 20;
+    var permutationLength = 20;
     AbstractIntegerPermutationProblem problem =
         new MockIntegerPermutationProblem(permutationLength);
-    PermutationSolution<Integer> solution = problem.createSolution();
+    var solution = problem.createSolution();
 
     List<Integer> list = new ArrayList<>();
-    int bound = problem.getNumberOfVariables();
-    for (int i = 0; i < bound; i++) {
-      Integer integer = solution.variables().get(i);
+    var bound = problem.getNumberOfVariables();
+    for (var i = 0; i < bound; i++) {
+      var integer = solution.variables().get(i);
       list.add(integer);
     }
     list.sort(null);
     List<Integer> result = new ArrayList<>();
-    for (int i = 0; i < permutationLength; i++) {
+    for (var i = 0; i < permutationLength; i++) {
       Integer integer = i;
       result.add(integer);
     }

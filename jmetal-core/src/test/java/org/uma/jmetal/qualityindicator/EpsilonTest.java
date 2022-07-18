@@ -20,7 +20,7 @@ public class EpsilonTest {
 
   @Test
   public void shouldComputeRaiseAnExceptionIfTheFrontIsNull() {
-    double[][] referenceFront = new double[0][0];
+    var referenceFront = new double[0][0];
     double[][] front = null;
     Assertions.assertThrows(NullParameterException.class, () -> new Epsilon(referenceFront).compute(front));
   }
@@ -29,8 +29,8 @@ public class EpsilonTest {
   public void shouldComputeReturnZeroIfTheFrontsContainOnePointWhichIsTheSame() {
     double[] vector = {10, 12, -1};
 
-    double[][] front = {vector};
-    double[][] referenceFront = {vector};
+    var front = new double[][]{vector};
+    var referenceFront = new double[][]{vector};
 
     Assertions.assertEquals(0.0, new Epsilon(referenceFront).compute(front), EPSILON);
   }
@@ -41,8 +41,8 @@ public class EpsilonTest {
    */
   @Test
   public void shouldComputeReturnTheRightValueIfTheFrontsContainOnePointWhichIsNotTheSame() {
-    double[][] front = {{2, 3}};
-    double[][] referenceFront = {{1, 2}};
+    var front = new double[][]{{2, 3}};
+    var referenceFront = new double[][]{{1, 2}};
 
     Assertions.assertEquals(1.0, new Epsilon(referenceFront).compute(front), EPSILON);
   }
@@ -53,8 +53,8 @@ public class EpsilonTest {
    */
   @Test
   public void shouldComputeReturnTheCorrectValueCaseA() {
-    double[][] front = {{1.5, 4.0}, {2.0, 3.0}, {3.0, 2.0}};
-    double[][] referenceFront = {{1.0, 3.0}, {1.5, 2.0}, {2.0, 1.5}};
+    var front = new double[][]{{1.5, 4.0}, {2.0, 3.0}, {3.0, 2.0}};
+    var referenceFront = new double[][]{{1.0, 3.0}, {1.5, 2.0}, {2.0, 1.5}};
 
     Assertions.assertEquals(1.0, new Epsilon(referenceFront).compute(front), EPSILON);
   }
@@ -65,8 +65,8 @@ public class EpsilonTest {
    */
   @Test
   public void shouldComputeReturnTheCorrectValueCaseB() {
-    double[][] front = {{1.5, 4.0}, {1.5, 2.0}, {2.0, 1.5}};
-    double[][] referenceFront = {{1.0, 3.0}, {1.5, 2.0}, {2.0, 1.5}};
+    var front = new double[][]{{1.5, 4.0}, {1.5, 2.0}, {2.0, 1.5}};
+    var referenceFront = new double[][]{{1.0, 3.0}, {1.5, 2.0}, {2.0, 1.5}};
 
     Assertions.assertEquals(0.5, new Epsilon(referenceFront).compute(front), EPSILON);
   }

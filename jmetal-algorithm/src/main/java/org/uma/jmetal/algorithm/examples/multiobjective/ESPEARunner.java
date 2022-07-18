@@ -29,11 +29,7 @@ public class ESPEARunner extends AbstractAlgorithmRunner {
    *                               java org.uma.jmetal.runner.multiobjective.ESPEARunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    String referenceParetoFront = "";
+    var referenceParetoFront = "";
 
     String problemName;
     if (args.length == 1) {
@@ -46,17 +42,17 @@ public class ESPEARunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT3.csv";
     }
 
-    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    ESPEABuilder<DoubleSolution> builder = new ESPEABuilder<>(problem, crossover, mutation);
+    var builder = new ESPEABuilder<DoubleSolution>(problem, crossover, mutation);
     builder.setMaxEvaluations(25000);
     builder.setPopulationSize(100);
     builder.setReplacementStrategy(ReplacementStrategy.WORST_IN_ARCHIVE);
@@ -64,13 +60,13 @@ public class ESPEARunner extends AbstractAlgorithmRunner {
 //    ScalarizationWrapper wrapper = new ScalarizationWrapper(ScalarizationType.TRADEOFF_UTILITY);
 //    builder.setScalarization(wrapper);
 
-    algorithm = builder.build();
+      Algorithm<List<DoubleSolution>> algorithm = builder.build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

@@ -16,20 +16,20 @@ public class CrossoverParameter extends CategoricalParameter {
 
   public @NotNull CrossoverOperator<DoubleSolution> getParameter() {
     CrossoverOperator<DoubleSolution> result;
-    Double crossoverProbability = (Double) findGlobalParameter("crossoverProbability").getValue();
-    RepairDoubleSolutionStrategyParameter repairDoubleSolution =
+    var crossoverProbability = (Double) findGlobalParameter("crossoverProbability").getValue();
+    var repairDoubleSolution =
         (RepairDoubleSolutionStrategyParameter) findGlobalParameter("crossoverRepairStrategy");
 
     switch (getValue()) {
       case "SBX":
-        Double distributionIndex =
+        var distributionIndex =
             (Double) findSpecificParameter("sbxDistributionIndex").getValue();
         result =
             new SBXCrossover(
                 crossoverProbability, distributionIndex, repairDoubleSolution.getParameter());
         break;
       case "BLX_ALPHA":
-        Double alpha = (Double) findSpecificParameter("blxAlphaCrossoverAlphaValue").getValue();
+        var alpha = (Double) findSpecificParameter("blxAlphaCrossoverAlphaValue").getValue();
         result =
             new BLXAlphaCrossover(crossoverProbability, alpha, repairDoubleSolution.getParameter());
         break;

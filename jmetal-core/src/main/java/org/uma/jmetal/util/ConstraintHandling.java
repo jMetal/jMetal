@@ -44,9 +44,9 @@ public class ConstraintHandling {
    * @return
    */
   public static <S extends Solution<?>> int numberOfViolatedConstraints(S solution) {
-    long count = 0L;
-    int bound = solution.constraints().length;
-    for (int i = 0; i < bound; i++) {
+    var count = 0L;
+    var bound = solution.constraints().length;
+    for (var i = 0; i < bound; i++) {
       if (solution.constraints()[i] < 0) {
         count++;
       }
@@ -86,16 +86,16 @@ public class ConstraintHandling {
    * @return
    */
   public static <S extends Solution<?>> double overallConstraintViolationDegree(@NotNull S solution) {
-    double overallConstraintViolation =
+    var overallConstraintViolation =
         (double) solution.attributes().getOrDefault(
             PRECOMPUTED.OVERALL_CONSTRAINT_VIOLATION,
             0.0);
     if (overallConstraintViolation == 0.0) {
-      double sum = 0.0;
-      int bound = solution.constraints().length;
-      for (int i = 0; i < bound; i++) {
+      var sum = 0.0;
+      var bound = solution.constraints().length;
+      for (var i = 0; i < bound; i++) {
         if (solution.constraints()[i] < 0.0) {
-          double constraint = solution.constraints()[i];
+          var constraint = solution.constraints()[i];
           sum += constraint;
         }
       }
@@ -112,7 +112,7 @@ public class ConstraintHandling {
    */
   public static <S extends Solution<?>> double feasibilityRatio(List<S> solutions) {
     Check.collectionIsNotEmpty(solutions);
-    long count = 0L;
+    var count = 0L;
     for (@NotNull S solution : solutions) {
       if (isFeasible(solution)) {
         count++;

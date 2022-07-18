@@ -42,10 +42,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
    * @author Antonio J. Nebro
    */
   public static void main(String @NotNull [] args) throws JMetalException, IOException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -58,29 +55,28 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf" ;
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    List<List<Double>> referencePoints;
-    referencePoints = new ArrayList<>();
+    List<List<Double>> referencePoints = new ArrayList<>();
     //referencePoints.add(Arrays.asList(0.6, 0.1)) ;
     referencePoints.add(Arrays.asList(0.2, 0.3)) ;
     referencePoints.add(Arrays.asList(0.8, 0.2)) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int maxIterations = 250;
-    int swarmSize = 100 ;
+    var maxIterations = 250;
+    var swarmSize = 100 ;
 
       List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
-      for (List<Double> referencePoint : referencePoints) {
-          CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
+      for (var referencePoint : referencePoints) {
+        var doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
                   swarmSize / referencePoints.size(), referencePoint);
           archivesWithReferencePoints.add(doubleSolutionCrowdingDistanceArchiveWithReferencePoint);
       }
 
-      algorithm = new SMPSORP(problem,
+    Algorithm<List<DoubleSolution>> algorithm = new SMPSORP(problem,
             swarmSize,
             archivesWithReferencePoints,
             referencePoints,
@@ -93,14 +89,14 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
             0.1, 0.1,
             -1.0, -1.0,
             new DefaultDominanceComparator<>(),
-            new SequentialSolutionListEvaluator<>() );
+            new SequentialSolutionListEvaluator<>());
 
     /* Measure management */
-    MeasureManager measureManager = ((SMPSORP) algorithm).getMeasureManager();
+    var measureManager = ((SMPSORP) algorithm).getMeasureManager();
 
-    BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
+    var solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
-    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
+    var iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
     @NotNull ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
@@ -112,12 +108,12 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
 
     /* End of measure management */
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
     chart.saveChart("SMPSORP", BitmapEncoder.BitmapFormat.PNG);
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
@@ -126,7 +122,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
-    for (int i = 0 ; i < archivesWithReferencePoints.size(); i++) {
+    for (var i = 0; i < archivesWithReferencePoints.size(); i++) {
       new SolutionListOutput(archivesWithReferencePoints.get(i).getSolutionList())
           .setVarFileOutputContext(new DefaultFileOutputContext("VAR" + i + ".tsv"))
           .setFunFileOutputContext(new DefaultFileOutputContext("FUN" + i + ".tsv"))

@@ -73,16 +73,16 @@ public class ErrorRatio extends QualityIndicator {
    * @throws JMetalException
    */
   private double errorRatio(double[][] front, double[] @NotNull [] referenceFront) {
-    int numberOfObjectives = referenceFront[0].length ;
+    var numberOfObjectives = referenceFront[0].length ;
     double sum = 0;
 
-    for (int i = 0; i < front.length; i++) {
-      double[] currentPoint = front[i];
-      boolean thePointIsInTheParetoFront = false;
-      for (int j = 0; j < referenceFront.length; j++) {
-        double[] currentParetoFrontPoint = referenceFront[j];
-        boolean found = true;
-        for (int k = 0; k < numberOfObjectives; k++) {
+    for (var i = 0; i < front.length; i++) {
+      var currentPoint = front[i];
+      var thePointIsInTheParetoFront = false;
+      for (var j = 0; j < referenceFront.length; j++) {
+        var currentParetoFrontPoint = referenceFront[j];
+        var found = true;
+        for (var k = 0; k < numberOfObjectives; k++) {
           if (currentPoint[k] != currentParetoFrontPoint[k]) {
             found = false;
             break;

@@ -57,41 +57,39 @@ public class IntegerPolynomialMutationExample {
       distributionIndex = Double.parseDouble(args[2]);
     }
 
-    IntegerProblem problem ;
-
-    problem = new NIntegerMin(1, 10, -1000, 1000);
+    IntegerProblem problem = new NIntegerMin(1, 10, -1000, 1000);
     @NotNull MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(1.0, distributionIndex) ;
 
-    IntegerSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
     solution.variables().set(0, 0);
 
     List<IntegerSolution> population = new ArrayList<>(numberOfPoints) ;
-    for (int i = 0 ; i < numberOfPoints ; i++) {
-      IntegerSolution newSolution = (IntegerSolution) solution.copy();
+    for (var i = 0; i < numberOfPoints ; i++) {
+      var newSolution = (IntegerSolution) solution.copy();
       mutation.execute(newSolution) ;
       population.add(newSolution) ;
     }
 
     population.sort(new IntegerVariableComparator());
-    double[][] classifier = classify(population, problem, granularity);
+    var classifier = classify(population, problem, granularity);
 
     PlotFront plot = new PlotSmile(classifier) ;
     plot.plot();
   }
 
   private static double[][] classify(List<IntegerSolution> solutions, IntegerProblem problem, int granularity) {
-    Bounds<Integer> bounds = problem.getVariableBounds().get(0);
+    var bounds = problem.getVariableBounds().get(0);
     double grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity ;
-    double[][] classifier = new double[granularity][] ;
-    for (int i = 0 ; i < granularity; i++) {
+    var classifier = new double[granularity][] ;
+    for (var i = 0; i < granularity; i++) {
       classifier[i] = new double[2] ;
       classifier[i][0] = bounds.getLowerBound() + i * grain ;
       classifier[i][1] = 0 ;
     }
 
-    for (IntegerSolution solution : solutions) {
-      boolean found = false ;
-      int index = 0 ;
+    for (var solution : solutions) {
+      var found = false ;
+      var index = 0 ;
       while (!found) {
         if (solution.variables().get(0) <= classifier[index][0]) {
           classifier[index][1] ++ ;

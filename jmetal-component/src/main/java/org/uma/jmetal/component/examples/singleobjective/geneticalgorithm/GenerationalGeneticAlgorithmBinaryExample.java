@@ -29,18 +29,18 @@ public class GenerationalGeneticAlgorithmBinaryExample {
   public static void main(String[] args) throws JMetalException, IOException {
     BinaryProblem problem = new OneMax(512) ;
 
-    double crossoverProbability = 0.9;
+    var crossoverProbability = 0.9;
     var crossover = new SinglePointCrossover(crossoverProbability);
 
-    double mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
+    var mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
     var mutation = new BitFlipMutation(mutationProbability);
 
-    int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    var populationSize = 100;
+    var offspringPopulationSize = populationSize;
 
     @NotNull Termination termination = new TerminationByEvaluations(25000);
 
-    EvolutionaryAlgorithm<BinarySolution> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
+    var geneticAlgorithm = new GeneticAlgorithmBuilder<>(
         "GGA",
                     problem,
                     populationSize,
@@ -54,7 +54,7 @@ public class GenerationalGeneticAlgorithmBinaryExample {
 
     geneticAlgorithm.run();
 
-    List<BinarySolution> population = geneticAlgorithm.getResult();
+    var population = geneticAlgorithm.getResult();
     JMetalLogger.logger.info("Total execution time : " + geneticAlgorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + geneticAlgorithm.getNumberOfEvaluations());
     JMetalLogger.logger.info("Best fitness: " + geneticAlgorithm.getResult().get(0).objectives()[0]);

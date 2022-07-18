@@ -15,7 +15,7 @@ import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOPSO;
 public class AutoMOPSOIraceFileGenerator {
 
   public static void main(String[] args) {
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--referenceFrontFileName ZDT1.csv "
             + "--maximumNumberOfEvaluations 25000 "
@@ -48,7 +48,7 @@ public class AutoMOPSOIraceFileGenerator {
             + "--weightMax 0.5 ")
             .split("\\s+");
 
-    IraceParameterFileGenerator parameterFileGenerator = new IraceParameterFileGenerator();
+    var parameterFileGenerator = new IraceParameterFileGenerator();
     parameterFileGenerator.generateConfigurationFile(new AutoMOPSO(), parameters);
   }
 }

@@ -62,7 +62,7 @@ public class AdaptiveRandomNeighborhood<S> implements Neighborhood<S> {
   private void createNeighborhoods() {
     neighbours = new ArrayList<List<Integer>>(solutionListSize);
 
-    for (int i = 0; i < solutionListSize; i++) {
+    for (var i = 0; i < solutionListSize; i++) {
       neighbours.add(new ArrayList<Integer>());
       neighbours.get(i).add(i);
     }
@@ -72,7 +72,7 @@ public class AdaptiveRandomNeighborhood<S> implements Neighborhood<S> {
    * Add random neighbors to all the neighborhoods
    */
   private void addRandomNeighbors() {
-    for (int i = 0; i < solutionListSize; i++) {
+    for (var i = 0; i < solutionListSize; i++) {
       while(neighbours.get(i).size() <= numberOfRandomNeighbours) {
         int random = randomGenerator.getRandomValue(0, solutionListSize - 1);
         neighbours.get(i).add(random) ;
@@ -82,10 +82,10 @@ public class AdaptiveRandomNeighborhood<S> implements Neighborhood<S> {
 
   private @NotNull List<S> getIthNeighborhood(@NotNull List<S> solutionList, int index) {
     List<S> neighborhood = new ArrayList<>();
-    int bound = (numberOfRandomNeighbours + 1);
-    for (int i = 0; i < bound; i++) {
+    var bound = (numberOfRandomNeighbours + 1);
+    for (var i = 0; i < bound; i++) {
       int i1 = neighbours.get(index).get(i);
-      S s = solutionList.get(i1);
+      var s = solutionList.get(i1);
       neighborhood.add(s);
     }
 

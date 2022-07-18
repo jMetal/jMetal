@@ -30,12 +30,8 @@ public class ParallelPESA2Runner extends AbstractAlgorithmRunner {
    *     org.uma.jmetal.runner.multiobjective.ParallelPESA2Runner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
 
-    String referenceParetoFront = "";
+    var referenceParetoFront = "";
 
     String problemName;
     if (args.length == 1) {
@@ -48,33 +44,32 @@ public class ParallelPESA2Runner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
     }
 
-    problem = ProblemFactory.loadProblem(problemName);
+      Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     SolutionListEvaluator<DoubleSolution> evaluator =
         new MultiThreadedSolutionListEvaluator<DoubleSolution>(0);
 
-    algorithm =
-        new PESA2Builder<DoubleSolution>(problem, crossover, mutation)
-            .setMaxEvaluations(25000)
-            .setPopulationSize(10)
-            .setArchiveSize(100)
-            .setBisections(5)
-            .setSolutionListEvaluator(evaluator)
-            .build();
+      Algorithm<List<DoubleSolution>> algorithm = new PESA2Builder<DoubleSolution>(problem, crossover, mutation)
+              .setMaxEvaluations(25000)
+              .setPopulationSize(10)
+              .setArchiveSize(100)
+              .setBisections(5)
+              .setSolutionListEvaluator(evaluator)
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
-    long computingTime = algorithmRunner.getComputingTime();
+    var computingTime = algorithmRunner.getComputingTime();
 
     evaluator.shutdown();
 

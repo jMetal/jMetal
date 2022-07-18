@@ -35,11 +35,11 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
   public List<DoubleSolution> create() {
     @NotNull List<DoubleSolution> solutionList = new ArrayList<>(numberOfSolutionsToCreate);
 
-    for (int i = 0; i < numberOfSolutionsToCreate; i++) {
-      List<Double> variables = generateVariables();
+    for (var i = 0; i < numberOfSolutionsToCreate; i++) {
+      var variables = generateVariables();
       DoubleSolution newSolution =
           new DefaultDoubleSolution(problem.getVariableBounds(), problem.getNumberOfObjectives(), 0);
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+      for (var j = 0; j < problem.getNumberOfVariables(); j++) {
         newSolution.variables().set(j, variables.get(j));
       }
 
@@ -55,9 +55,9 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
     double value;
     int range;
 
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+    for (var i = 0; i < problem.getNumberOfVariables(); i++) {
       sumOfReverseFrequencyValues[i] = 0;
-      for (int j = 0; j < numberOfSubRanges; j++) {
+      for (var j = 0; j < numberOfSubRanges; j++) {
         reverseFrequency[j][i] = sumOfFrequencyValues[i] - frequency[j][i];
         sumOfReverseFrequencyValues[i] += reverseFrequency[j][i];
       }
@@ -76,11 +76,11 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
       frequency[range][i]++;
       sumOfFrequencyValues[i]++;
 
-      Bounds<Double> bounds = problem.getVariableBounds().get(i);
-      Double lowerBound = bounds.getLowerBound();
-      Double upperBound = bounds.getUpperBound();
-      double low = lowerBound + range * (upperBound - lowerBound) / numberOfSubRanges;
-      double high = low + (upperBound - lowerBound) / numberOfSubRanges;
+      var bounds = problem.getVariableBounds().get(i);
+      var lowerBound = bounds.getLowerBound();
+      var upperBound = bounds.getUpperBound();
+      var low = lowerBound + range * (upperBound - lowerBound) / numberOfSubRanges;
+      var high = low + (upperBound - lowerBound) / numberOfSubRanges;
 
       vars.add(i, JMetalRandom.getInstance().nextDouble(low, high));
     }

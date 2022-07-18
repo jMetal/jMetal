@@ -28,10 +28,8 @@ public class DMOPSORunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.DMOPSORunner problemName [referenceFront]
    */
   public static void main(String[] args) throws Exception {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
 
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -44,16 +42,16 @@ public class DMOPSORunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv" ;
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    algorithm = new DMOPSO(problem, 91, 250, 0.0, 1.0, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
-            FunctionType.TCHE, "resources/weightVectorFiles/moead", 2) ;
+      Algorithm<List<DoubleSolution>> algorithm = new DMOPSO(problem, 91, 250, 0.0, 1.0, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
+              FunctionType.TCHE, "resources/weightVectorFiles/moead", 2);
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

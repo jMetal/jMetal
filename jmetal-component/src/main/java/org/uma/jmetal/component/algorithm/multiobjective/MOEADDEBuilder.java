@@ -53,9 +53,9 @@ public class MOEADDEBuilder {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    int offspringPopulationSize = 1;
+    var offspringPopulationSize = 1;
 
-    DifferentialEvolutionCrossover crossover =
+    var crossover =
         new DifferentialEvolutionCrossover(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 

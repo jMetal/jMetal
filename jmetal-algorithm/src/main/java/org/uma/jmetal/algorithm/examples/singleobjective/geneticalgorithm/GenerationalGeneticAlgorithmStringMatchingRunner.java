@@ -27,39 +27,33 @@ import java.util.List;
  */
 public class GenerationalGeneticAlgorithmStringMatchingRunner {
   public static void main(String[] args) {
-    StringMatching problem;
-    Algorithm<CharSequenceSolution> algorithm;
-    CrossoverOperator<CharSequenceSolution> crossover;
-    MutationOperator<CharSequenceSolution> mutation;
-    SelectionOperator<List<CharSequenceSolution>, CharSequenceSolution> selection;
 
-    problem = new StringMatching("jMetal is an optimization framework");
+    var problem = new StringMatching("jMetal is an optimization framework");
 
-    crossover = new NullCrossover<>();
+    CrossoverOperator<CharSequenceSolution> crossover = new NullCrossover<>();
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    mutation = new CharSequenceRandomMutation(mutationProbability, problem.getAlphabet());
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    MutationOperator<CharSequenceSolution> mutation = new CharSequenceRandomMutation(mutationProbability, problem.getAlphabet());
 
-    selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
+    SelectionOperator<List<CharSequenceSolution>, CharSequenceSolution> selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
 
-    algorithm =
-        new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
+    var algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
             .setPopulationSize(50)
             .setMaxEvaluations(250000)
             .setSelectionOperator(selection)
             .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    CharSequenceSolution solution = algorithm.getResult();
+    var solution = algorithm.getResult();
     List<CharSequenceSolution> population = new ArrayList<>(1);
     population.add(solution);
 
-    long computingTime = algorithmRunner.getComputingTime();
+    var computingTime = algorithmRunner.getComputingTime();
 
       @NotNull StringBuilder sb = new StringBuilder();
-      for (Character character : solution.variables()) {
-          String s = String.valueOf(character);
+      for (var character : solution.variables()) {
+        var s = String.valueOf(character);
           sb.append(s);
       }
       JMetalLogger.logger.info(

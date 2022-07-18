@@ -22,7 +22,7 @@ public class CreateNRandomSolutions<S extends Solution<?>> implements CreateNewS
       throw new JMetalException("The problem is null") ;
     }
 
-    for (int s = 0; s < numberOfSolutionsToCreate; s++) {
+    for (var s = 0; s < numberOfSolutionsToCreate; s++) {
       solutionList.add(problem.createSolution());
     }
   }

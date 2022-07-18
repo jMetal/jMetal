@@ -99,12 +99,12 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
    * @param solution    The solution to mutate
    */
   public void doMutation(double probability, DoubleSolution solution){
-    for (int i = 0; i < solution.variables().size(); i++) {
+    for (var i = 0; i < solution.variables().size(); i++) {
       if (randomGenenerator.getRandomValue() < probability) {
         double rand = randomGenenerator.getRandomValue();
         double tmp;
 
-        Bounds<Double> bounds = solution.getBounds(i);
+        var bounds = solution.getBounds(i);
         if (rand <= 0.5) {
           tmp = delta(bounds.getUpperBound() - solution.variables().get(i),
               perturbation);
@@ -127,9 +127,8 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
   /** Calculates the delta value used in NonUniform mutation operator */
   private double delta(double y, double bMutationParameter) {
     double rand = randomGenenerator.getRandomValue();
-    int it, maxIt;
-    it = currentIteration;
-    maxIt = maxIterations;
+    var it = currentIteration;
+    var maxIt = maxIterations;
 
     return (y * (1.0 -
         Math.pow(rand,

@@ -18,14 +18,14 @@ public class MutationParameter extends CategoricalParameter {
 
   public @NotNull MutationOperator<DoubleSolution> getParameter() {
     MutationOperator<DoubleSolution> result;
-    int numberOfProblemVariables = (int) getNonConfigurableParameter("numberOfProblemVariables") ;
+    var numberOfProblemVariables = (int) getNonConfigurableParameter("numberOfProblemVariables") ;
     Double mutationProbability = (Double) findGlobalParameter("mutationProbabilityFactor").getValue() * 1.0/numberOfProblemVariables;
-    RepairDoubleSolutionStrategyParameter repairDoubleSolution =
+    var repairDoubleSolution =
             (RepairDoubleSolutionStrategyParameter) findGlobalParameter("mutationRepairStrategy");
 
     switch (getValue()) {
       case "polynomial":
-        Double distributionIndex =
+        var distributionIndex =
                 (Double) findSpecificParameter("polynomialMutationDistributionIndex").getValue();
         result =
                 new PolynomialMutation(
@@ -39,7 +39,7 @@ public class MutationParameter extends CategoricalParameter {
                         mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
         break;
       case "uniform":
-        Double perturbation = (Double) findSpecificParameter("uniformMutationPerturbation").getValue();
+        var perturbation = (Double) findSpecificParameter("uniformMutationPerturbation").getValue();
         result =
                 new UniformMutation(mutationProbability, perturbation, repairDoubleSolution.getParameter());
         break;

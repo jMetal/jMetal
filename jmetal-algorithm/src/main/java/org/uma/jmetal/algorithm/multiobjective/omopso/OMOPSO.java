@@ -98,7 +98,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
     @NotNull List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
-    for (int i = 0; i < swarmSize; i++) {
+    for (var i = 0; i < swarmSize; i++) {
       newSolution = problem.createSolution();
       swarm.add(newSolution);
     }
@@ -119,8 +119,8 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   @Override
   protected void initializeLeader(List<DoubleSolution> swarm) {
-    for (DoubleSolution solution : swarm) {
-      DoubleSolution particle = (DoubleSolution) solution.copy();
+    for (var solution : swarm) {
+      var particle = (DoubleSolution) solution.copy();
       if (leaderArchive.add(particle)) {
         epsilonArchive.add((DoubleSolution) particle.copy());
       }
@@ -129,8 +129,8 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   @Override
   protected void initializeParticlesMemory(List<DoubleSolution> swarm)  {
-    for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+    for (var i = 0; i < swarm.size(); i++) {
+      var particle = (DoubleSolution) swarm.get(i).copy();
       localBest[i] = particle;
     }
   }
@@ -140,17 +140,15 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
     double r1, r2, W, C1, C2;
     DoubleSolution bestGlobal;
 
-    for (int i = 0; i < swarmSize; i++) {
-      DoubleSolution particle = swarm.get(i);
-      DoubleSolution bestParticle = (DoubleSolution) localBest[i];
+    for (var i = 0; i < swarmSize; i++) {
+      var particle = swarm.get(i);
+      var bestParticle = (DoubleSolution) localBest[i];
 
       //Select a global localBest for calculate the speed of particle i, bestGlobal
-      DoubleSolution one ;
-      DoubleSolution two;
-      int pos1 = randomGenerator.nextInt(0, leaderArchive.getSolutionList().size() - 1);
-      int pos2 = randomGenerator.nextInt(0, leaderArchive.getSolutionList().size() - 1);
-      one = leaderArchive.getSolutionList().get(pos1);
-      two = leaderArchive.getSolutionList().get(pos2);
+      var pos1 = randomGenerator.nextInt(0, leaderArchive.getSolutionList().size() - 1);
+      var pos2 = randomGenerator.nextInt(0, leaderArchive.getSolutionList().size() - 1);
+      var one = leaderArchive.getSolutionList().get(pos1);
+      var two = leaderArchive.getSolutionList().get(pos2);
 
       if (crowdingDistanceComparator.compare(one, two) < 1) {
         bestGlobal = one ;
@@ -166,7 +164,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
       W = randomGenerator.nextDouble(0.1, 0.5);
       //
 
-      for (int var = 0; var < particle.variables().size(); var++) {
+      for (var var = 0; var < particle.variables().size(); var++) {
         //Computing the velocity of this particle
         speed[i][var] = W * speed[i][var] + C1 * r1 * (bestParticle.variables().get(var) -
             particle.variables().get(var)) +
@@ -178,13 +176,13 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   /** Update the position of each particle */
   @Override
   protected void updatePosition(List<DoubleSolution> swarm)  {
-    for (int i = 0; i < swarmSize; i++) {
-      DoubleSolution particle = swarm.get(i);
-      for (int var = 0; var < particle.variables().size(); var++) {
+    for (var i = 0; i < swarmSize; i++) {
+      var particle = swarm.get(i);
+      for (var var = 0; var < particle.variables().size(); var++) {
         particle.variables().set(var, particle.variables().get(var) + speed[i][var]);
-        Bounds<Double> bounds = problem.getVariableBounds().get(var) ;
-        Double lowerBound = bounds.getLowerBound() ;
-        Double upperBound = bounds.getUpperBound() ;
+        var bounds = problem.getVariableBounds().get(var) ;
+        var lowerBound = bounds.getLowerBound() ;
+        var upperBound = bounds.getUpperBound() ;
         if (particle.variables().get(var) < lowerBound) {
           particle.variables().set(var, lowerBound);
           speed[i][var] = speed[i][var] * -1.0;
@@ -199,18 +197,18 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   @Override
   protected void updateParticlesMemory(List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      int flag = dominanceComparator.compare(swarm.get(i), localBest[i]);
+    for (var i = 0; i < swarm.size(); i++) {
+      var flag = dominanceComparator.compare(swarm.get(i), localBest[i]);
       if (flag != 1) {
-        DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+        var particle = (DoubleSolution) swarm.get(i).copy();
         localBest[i] = particle;
       }
     }
   }
 
   @Override protected void initializeVelocity(@NotNull List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+    for (var i = 0; i < swarm.size(); i++) {
+      for (var j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
     }
@@ -221,7 +219,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   protected void perturbation(List<DoubleSolution> swarm)  {
     nonUniformMutation.setCurrentIteration(currentIteration);
 
-    for (int i = 0; i < swarm.size(); i++) {
+    for (var i = 0; i < swarm.size(); i++) {
       if (i % 3 == 0) {
         nonUniformMutation.execute(swarm.get(i));
       } else if (i % 3 == 1) {
@@ -235,8 +233,8 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
    * @param swarm List of solutions (swarm)
    */
   @Override protected void updateLeaders(List<DoubleSolution> swarm) {
-    for (DoubleSolution solution : swarm) {
-      DoubleSolution particle = (DoubleSolution) solution.copy();
+    for (var solution : swarm) {
+      var particle = (DoubleSolution) solution.copy();
       if (leaderArchive.add(particle)) {
         epsilonArchive.add((DoubleSolution) particle.copy());
       }

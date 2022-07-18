@@ -72,13 +72,13 @@ public class StudyVisualizer {
       directory = args[0];
     }
 
-    StudyVisualizer visualizer = new StudyVisualizer(directory, TYPE_OF_FRONT_TO_SHOW.NONE);
+    var visualizer = new StudyVisualizer(directory, TYPE_OF_FRONT_TO_SHOW.NONE);
     visualizer.createHTMLPageForEachIndicator();
   }
 
   public void createHTMLPageForEachIndicator() throws IOException {
-    StringColumn indicators = getUniquesValuesOfStringColumn(INDICATOR_NAME);
-    for (String indicator : indicators) {
+    var indicators = getUniquesValuesOfStringColumn(INDICATOR_NAME);
+    for (var indicator : indicators) {
       @NotNull Html htmlPage = createHtmlPage(indicator);
       htmlPage.setPathFolder(folderPath + "/html");
       htmlPage.save();
@@ -91,16 +91,16 @@ public class StudyVisualizer {
     @NotNull HtmlGridView tablesGridView = createTestTables(indicator);
     htmlPage.addComponent(tablesGridView);
 
-    StringColumn problems = getUniquesValuesOfStringColumn(PROBLEM);
+    var problems = getUniquesValuesOfStringColumn(PROBLEM);
     if (typeOfFrontToShow == TYPE_OF_FRONT_TO_SHOW.NONE) {
-      HtmlGridView boxPlotsGrid = new HtmlGridView();
-      for (String problem : problems) {
-        HtmlFigure figure = createBoxPlot(indicator, problem);
+      var boxPlotsGrid = new HtmlGridView();
+      for (var problem : problems) {
+        var figure = createBoxPlot(indicator, problem);
         boxPlotsGrid.addComponent(figure);
       }
       htmlPage.addComponent(boxPlotsGrid);
     } else {
-      for (String problem : problems) {
+      for (var problem : problems) {
         @NotNull HtmlGridView gridView = createInformationForEachProblem(indicator, problem);
         htmlPage.addComponent(gridView);
       }
@@ -109,16 +109,16 @@ public class StudyVisualizer {
   }
 
   private HtmlGridView createTestTables(@NotNull String indicator) {
-    StringColumn algorithms = getUniquesValuesOfStringColumn(ALGORITHM);
-    StringColumn problems = getUniquesValuesOfStringColumn(PROBLEM);
-    Table tableFilteredByIndicator = filterTableByIndicator(table, indicator);
+    var algorithms = getUniquesValuesOfStringColumn(ALGORITHM);
+    var problems = getUniquesValuesOfStringColumn(PROBLEM);
+    var tableFilteredByIndicator = filterTableByIndicator(table, indicator);
 
-    boolean minimize = true;
+    var minimize = true;
 
-    MedianValuesTable medianValuesTable =
+    var medianValuesTable =
         new MedianValuesTable(
             tableFilteredByIndicator, indicator, algorithms, problems, INDICATOR_VALUE);
-    WilcoxonTestTable wilcoxonTable =
+    var wilcoxonTable =
         new WilcoxonTestTable(
             tableFilteredByIndicator, indicator, algorithms, problems, INDICATOR_VALUE);
     if (indicator.equals("HV")) {
@@ -127,7 +127,7 @@ public class StudyVisualizer {
     @NotNull FriedmanTestTable friedmanTable =
         new FriedmanTestTable(tableFilteredByIndicator, algorithms, problems, minimize);
 
-    HtmlGridView htmlGridView = new HtmlGridView();
+    var htmlGridView = new HtmlGridView();
     htmlGridView.addComponent(medianValuesTable);
     htmlGridView.addComponent(wilcoxonTable);
     htmlGridView.addComponent(friedmanTable);
@@ -136,11 +136,11 @@ public class StudyVisualizer {
 
   private HtmlGridView createInformationForEachProblem(String indicator, String problem)
       throws IOException {
-    HtmlGridView gridView = new HtmlGridView(problem);
+    var gridView = new HtmlGridView(problem);
     @NotNull HtmlFigure boxPlot = createBoxPlot(indicator, problem);
     gridView.addComponent(boxPlot);
-    StringColumn algorithms = getUniquesValuesOfStringColumn(ALGORITHM);
-    for (String algorithm : algorithms) {
+    var algorithms = getUniquesValuesOfStringColumn(ALGORITHM);
+    for (var algorithm : algorithms) {
       @NotNull HtmlFigure frontPlot = createFrontPlot(indicator, problem, algorithm);
       gridView.addComponent(frontPlot);
     }
@@ -148,32 +148,32 @@ public class StudyVisualizer {
   }
 
   private HtmlFigure createBoxPlot(String indicator, String problem) {
-    Table tableFilteredByIndicator = filterTableByIndicator(table, indicator);
-    Table tableFilteredByIndicatorAndProblem =
+    var tableFilteredByIndicator = filterTableByIndicator(table, indicator);
+    var tableFilteredByIndicatorAndProblem =
         filterTableByProblem(tableFilteredByIndicator, problem);
-    BoxTrace trace =
+    var trace =
         BoxTrace.builder(
                 tableFilteredByIndicatorAndProblem.categoricalColumn(ALGORITHM),
                 tableFilteredByIndicatorAndProblem.doubleColumn(INDICATOR_VALUE))
             .build();
-    Layout layout = Layout.builder().title(problem).build();
-    Figure figure = new Figure(layout, trace);
+    var layout = Layout.builder().title(problem).build();
+    var figure = new Figure(layout, trace);
     return new HtmlFigure(figure);
   }
 
   private HtmlFigure createFrontPlot(String indicator, String problem, String algorithm)
       throws IOException {
-    String frontFileName = "";
+    var frontFileName = "";
     if (typeOfFrontToShow == TYPE_OF_FRONT_TO_SHOW.BEST) {
       frontFileName = "BEST";
     } else if (typeOfFrontToShow == TYPE_OF_FRONT_TO_SHOW.MEDIAN) {
       frontFileName = "MEDIAN";
     }
-    String csv = algorithm + "/" + problem + "/" + frontFileName + "_" + indicator + "_FUN.csv";
-    String path = folderPath + "/data/" + csv;
-    CsvReadOptions csvReader = CsvReadOptions.builder(path).header(false).build();
-    Table funTable = Table.read().usingOptions(csvReader);
-    int numberOfObjectives = funTable.columnCount();
+    var csv = algorithm + "/" + problem + "/" + frontFileName + "_" + indicator + "_FUN.csv";
+    var path = folderPath + "/data/" + csv;
+    var csvReader = CsvReadOptions.builder(path).header(false).build();
+    var funTable = Table.read().usingOptions(csvReader);
+    var numberOfObjectives = funTable.columnCount();
     @Nullable Trace scatterTrace = null;
     if (numberOfObjectives == 2) {
       scatterTrace = ScatterTrace.builder(funTable.column(0), funTable.column(1)).build();
@@ -183,8 +183,8 @@ public class StudyVisualizer {
                   funTable.numberColumn(0), funTable.numberColumn(1), funTable.numberColumn(2))
               .build();
     }
-    Layout layout = Layout.builder().title(algorithm).build();
-    Figure figure = new Figure(layout, scatterTrace);
+    var layout = Layout.builder().title(algorithm).build();
+    var figure = new Figure(layout, scatterTrace);
     return new HtmlFigure(figure);
   }
 
@@ -193,8 +193,8 @@ public class StudyVisualizer {
   }
 
   public @NotNull StringColumn dropDuplicateRowsInColumn(StringColumn column) {
-    LinkedList<String> result = new LinkedList<String>();
-    for (int row = 0; row < column.size(); row++) {
+    var result = new LinkedList<String>();
+    for (var row = 0; row < column.size(); row++) {
       if (!result.contains(column.get(row))) {
         result.add(column.get(row));
       }

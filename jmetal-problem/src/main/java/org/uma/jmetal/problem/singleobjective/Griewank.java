@@ -27,7 +27,7 @@ public class Griewank extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-600.0);
       upperLimit.add(600.0);
     }
@@ -38,21 +38,21 @@ public class Griewank extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables() ;
+    var numberOfVariables = getNumberOfVariables() ;
 
-      double[] x = new double[10];
-      int count = 0;
-      for (int i = 0; i < numberOfVariables; i++) {
+    var x = new double[10];
+    var count = 0;
+      for (var i = 0; i < numberOfVariables; i++) {
           double v = solution.variables().get(i);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
       }
       x = Arrays.copyOfRange(x, 0, count);
 
-      double sum = 0.0;
-    double mult = 1.0;
-    double d = 4000.0;
-    for (int var = 0; var < numberOfVariables; var++) {
+    var sum = 0.0;
+    var mult = 1.0;
+    var d = 4000.0;
+    for (var var = 0; var < numberOfVariables; var++) {
       sum += x[var] * x[var];
       mult *= Math.cos(x[var] / Math.sqrt(var + 1));
     }

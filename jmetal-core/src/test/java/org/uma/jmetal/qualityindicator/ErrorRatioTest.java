@@ -20,25 +20,25 @@ public class ErrorRatioTest {
 
   @Test
   public void shouldComputeRaiseAnExceptionIfTheFrontIsNull() {
-    double[][] referenceFront = new double[0][0];
+    var referenceFront = new double[0][0];
     double[][] front = null;
     Assertions.assertThrows(NullParameterException.class, () -> new ErrorRatio(referenceFront).compute(front));
   }
 
   @Test
   public void shouldExecuteReturnZeroIfTheFrontsContainOnePointWhichIsTheSame() {
-    double[] point = {10.0, 12.0, -1.0};
+    var point = new double[]{10.0, 12.0, -1.0};
 
-    double[][] front = {point};
-    double[][] referenceFront = {point};
+    var front = new double[][]{point};
+    var referenceFront = new double[][]{point};
 
     Assertions.assertEquals(0.0, new ErrorRatio(referenceFront).compute(front), EPSILON);
   }
 
   @Test
   public void shouldExecuteReturnOneIfTheFrontsContainADifferentPoint() {
-    double[][] front = {{10.0, 12.0, -1.0}};
-    double[][] referenceFront = {{3.0, 5.0, -2.0}};
+    var front = new double[][]{{10.0, 12.0, -1.0}};
+    var referenceFront = new double[][]{{3.0, 5.0, -2.0}};
 
     Assertions.assertEquals(1.0, new ErrorRatio(referenceFront).compute(front), EPSILON);
   }
@@ -49,8 +49,8 @@ public class ErrorRatioTest {
    */
   @Test
   public void shouldExecuteReturnTheCorrectValueCaseA() {
-    double[][] front = {{1.5, 4.0}, {1.5, 2.0}, {2.0, 1.5}};
-    double[][] referenceFront = {{1.0, 3.0}, {1.5, 2.0}, {2.0, 1.5}};
+    var front = new double[][]{{1.5, 4.0}, {1.5, 2.0}, {2.0, 1.5}};
+    var referenceFront = new double[][]{{1.0, 3.0}, {1.5, 2.0}, {2.0, 1.5}};
 
     Assertions.assertEquals(1.0 / front.length, new ErrorRatio(referenceFront).compute(front), EPSILON);
   }
@@ -61,8 +61,8 @@ public class ErrorRatioTest {
    */
   @Test
   public void shouldExecuteReturnTheCorrectValueCaseB() {
-    double[][] front = {{1.5, 3.0}, {4.0, 2.0}};
-    double[][] referenceFront = {{-1.0, -1.0}, {0.0, 0.0}};
+    var front = new double[][]{{1.5, 3.0}, {4.0, 2.0}};
+    var referenceFront = new double[][]{{-1.0, -1.0}, {0.0, 0.0}};
 
     Assertions.assertEquals(1.0, new ErrorRatio(referenceFront).compute(front), EPSILON);
 

@@ -34,7 +34,7 @@ public class Kursawe extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-5.0);
       upperLimit.add(5.0);
     }
@@ -45,14 +45,14 @@ public class Kursawe extends AbstractDoubleProblem {
   /** Evaluate() method */
   public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution){
     double aux, xi, xj;
-    double[] fx = new double[solution.objectives().length];
-    double @NotNull [] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < solution.variables().size(); i++) {
+    var fx = new double[solution.objectives().length];
+    var x = new double[getNumberOfVariables()];
+    for (var i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i) ;
     }
 
     fx[0] = 0.0;
-    for (int var = 0; var < solution.variables().size() - 1; var++) {
+    for (var var = 0; var < solution.variables().size() - 1; var++) {
       xi = x[var] * x[var];
       xj = x[var + 1] * x[var + 1];
       aux = (-0.2) * Math.sqrt(xi + xj);
@@ -61,7 +61,7 @@ public class Kursawe extends AbstractDoubleProblem {
 
     fx[1] = 0.0;
 
-    for (int var = 0; var < solution.variables().size(); var++) {
+    for (var var = 0; var < solution.variables().size(); var++) {
       fx[1] += Math.pow(Math.abs(x[var]), 0.8) +
         5.0 * Math.sin(Math.pow(x[var], 3.0));
     }

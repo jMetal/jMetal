@@ -19,7 +19,7 @@ public class Viennet3 extends AbstractDoubleProblem {
   * Creates a default instance of the Viennet3 problem.
   */
   public Viennet3() {
-    int numberOfVariables = 2 ;
+      var numberOfVariables = 2 ;
     setNumberOfObjectives(3);
     setNumberOfConstraints(0);
     setName("Viennet3") ;
@@ -27,7 +27,7 @@ public class Viennet3 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-3.0);
       upperLimit.add(3.0);
     }
@@ -38,12 +38,12 @@ public class Viennet3 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables() ;
+      var numberOfVariables = getNumberOfVariables() ;
 
-    double[] f = new double[solution.objectives().length];
-      double[] x = new double[10];
-      int count = 0;
-      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+      var f = new double[solution.objectives().length];
+      var x = new double[10];
+      var count = 0;
+      for (var i1 = 0; i1 < numberOfVariables; i1++) {
           double v = solution.variables().get(i1);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
@@ -53,8 +53,8 @@ public class Viennet3 extends AbstractDoubleProblem {
       f[0] = 0.5 * (x[0]*x[0] + x[1]*x[1]) + Math.sin(x[0]*x[0] + x[1]*x[1]) ;
 
     // Second function
-    double value1 = 3.0 * x[0] - 2.0 * x[1] + 4.0 ;
-    double value2 = x[0] - x[1] + 1.0 ;
+      var value1 = 3.0 * x[0] - 2.0 * x[1] + 4.0 ;
+      var value2 = x[0] - x[1] + 1.0 ;
     f[1] = (value1 * value1)/8.0 + (value2 * value2)/27.0 + 15.0 ;
 
     // Third function
@@ -62,7 +62,7 @@ public class Viennet3 extends AbstractDoubleProblem {
           Math.exp(-(x[0]*x[0])-(x[1]*x[1])) ;
 
         
-    for (int i = 0; i < solution.objectives().length; i++)
+    for (var i = 0; i < solution.objectives().length; i++)
       solution.objectives()[i] = f[i];
 
     return solution ;

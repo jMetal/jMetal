@@ -44,14 +44,14 @@ public abstract class WFG extends AbstractDoubleProblem {
     this.l = l;
     this.m = M;
 
-    int numberOfVariables = this.k + this.l ;
+    var numberOfVariables = this.k + this.l ;
     setNumberOfObjectives(this.m);
     setNumberOfConstraints(0);
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(2.0*(i+1));
     }
@@ -63,9 +63,9 @@ public abstract class WFG extends AbstractDoubleProblem {
    * Gets the x vector
    */
   public float[] calculateX(float[] t) {
-    float[] x = new float[m];
+    var x = new float[m];
 
-    for (int i = 0; i < m - 1; i++) {
+    for (var i = 0; i < m - 1; i++) {
       x[i] = Math.max(t[m - 1], a[i]) * (t[i] - (float) 0.5) + (float) 0.5;
     }
 
@@ -78,10 +78,10 @@ public abstract class WFG extends AbstractDoubleProblem {
    * Normalizes a vector (consulte wfg toolkit reference)
    */
   public float[] normalise(float[] z) {
-    float[] result = new float[z.length];
+    var result = new float[z.length];
 
-    for (int i = 0; i < z.length; i++) {
-      float bound = (float) 2.0 * (i + 1);
+    for (var i = 0; i < z.length; i++) {
+      var bound = (float) 2.0 * (i + 1);
       result[i] = z[i] / bound;
       result[i] = correctTo01(result[i]);
     }
@@ -92,11 +92,11 @@ public abstract class WFG extends AbstractDoubleProblem {
   /**
    */
   public float correctTo01(float a) {
-    float min = (float) 0.0;
-    float max = (float) 1.0;
+    var min = (float) 0.0;
+    var max = (float) 1.0;
 
-    float minEpsilon = min - epsilon;
-    float maxEpsilon = max + epsilon;
+    var minEpsilon = min - epsilon;
+    var maxEpsilon = max + epsilon;
 
     if ((a <= min && a >= minEpsilon) || (a >= min && a <= minEpsilon)) {
       return min;
@@ -115,8 +115,8 @@ public abstract class WFG extends AbstractDoubleProblem {
    * @return the subvector
    */
   public float[] subVector(float[] z, int head, int tail) {
-    int size = tail - head + 1;
-    float[] result = new float[size];
+    var size = tail - head + 1;
+    var result = new float[size];
 
     System.arraycopy(z, head, result, head - head, tail + 1 - head);
 

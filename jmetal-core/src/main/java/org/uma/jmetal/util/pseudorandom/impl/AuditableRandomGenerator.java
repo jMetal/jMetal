@@ -73,28 +73,28 @@ public class AuditableRandomGenerator implements PseudoRandomGenerator {
 	}
 
 	private void notifies(Audit audit) {
-		for (Consumer<Audit> listener : listeners) {
+		for (var listener : listeners) {
 			listener.accept(audit);
 		}
 	}
 
 	@Override
 	public int nextInt(int lowerBound, int upperBound) {
-		int result = generator.nextInt(lowerBound, upperBound);
+		var result = generator.nextInt(lowerBound, upperBound);
 		notifies(new Audit(RandomMethod.BOUNDED_INT, new Bounds(lowerBound, upperBound), result));
 		return result;
 	}
 
 	@Override
 	public double nextDouble(double lowerBound, double upperBound) {
-		double result = generator.nextDouble(lowerBound, upperBound);
+		var result = generator.nextDouble(lowerBound, upperBound);
 		notifies(new Audit(RandomMethod.BOUNDED_DOUBLE, new Bounds(lowerBound, upperBound), result));
 		return result;
 	}
 
 	@Override
 	public double nextDouble() {
-		double result = generator.nextDouble();
+		var result = generator.nextDouble();
 		notifies(new Audit(RandomMethod.DOUBLE, null, result));
 		return result;
 	}

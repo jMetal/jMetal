@@ -19,12 +19,12 @@ public class RandomGeneratorTest {
 
 	@Test
 	public void testFilteredGeneratorGeneratesCorrectValues() {
-		Random random = new Random();
-		RandomGenerator<Integer> generator = RandomGenerator.filter(() -> random.nextInt(5), (i) -> i != 2);
+		var random = new Random();
+		var generator = RandomGenerator.filter(() -> random.nextInt(5), (i) -> i != 2);
 
         Set<Integer> generated = new HashSet<>();
-        for (int i = 0; i < 10000; i++) {
-            Integer randomValue = generator.getRandomValue();
+        for (var i = 0; i < 10000; i++) {
+			var randomValue = generator.getRandomValue();
             generated.add(randomValue);
         }
 
@@ -37,14 +37,14 @@ public class RandomGeneratorTest {
 
 	@Test
 	public void testArrayGeneratorGeneratesAllValues() {
-		JavaRandomGenerator random = new JavaRandomGenerator();
+		var random = new JavaRandomGenerator();
 		BoundedRandomGenerator<Integer> indexSelector = random::nextInt;
-		String[] values = { "a", "b", "c" };
-		RandomGenerator<String> generator = RandomGenerator.forArray(indexSelector, values);
+		var values = new String[]{"a", "b", "c"};
+		var generator = RandomGenerator.forArray(indexSelector, values);
 
         Set<String> generated = new HashSet<>();
-        for (int i = 0; i < 10000; i++) {
-            String randomValue = generator.getRandomValue();
+        for (var i = 0; i < 10000; i++) {
+			var randomValue = generator.getRandomValue();
             generated.add(randomValue);
         }
 
@@ -54,14 +54,14 @@ public class RandomGeneratorTest {
 
 	@Test
 	public void testCollectionGeneratorGeneratesAllValues() {
-		JavaRandomGenerator random = new JavaRandomGenerator();
+		var random = new JavaRandomGenerator();
 		BoundedRandomGenerator<Integer> indexSelector = random::nextInt;
 		Collection<String> values = Arrays.asList("a", "b", "c");
-		RandomGenerator<String> generator = RandomGenerator.forCollection(indexSelector, values);
+		var generator = RandomGenerator.forCollection(indexSelector, values);
 
         Set<String> generated = new HashSet<>();
-        for (int i = 0; i < 10000; i++) {
-            String randomValue = generator.getRandomValue();
+        for (var i = 0; i < 10000; i++) {
+			var randomValue = generator.getRandomValue();
             generated.add(randomValue);
         }
 
@@ -75,13 +75,13 @@ public class RandomGeneratorTest {
 
 	@Test
 	public void testEnumGeneratorGeneratesAllValues() {
-		JavaRandomGenerator random = new JavaRandomGenerator();
+		var random = new JavaRandomGenerator();
 		BoundedRandomGenerator<Integer> indexSelector = random::nextInt;
-		RandomGenerator<EnumValues> generator = RandomGenerator.forEnum(indexSelector, EnumValues.class);
+		var generator = RandomGenerator.forEnum(indexSelector, EnumValues.class);
 
         Set<EnumValues> generated = new HashSet<>();
-        for (int i = 0; i < 10000; i++) {
-            EnumValues randomValue = generator.getRandomValue();
+        for (var i = 0; i < 10000; i++) {
+			var randomValue = generator.getRandomValue();
             generated.add(randomValue);
         }
 

@@ -21,7 +21,7 @@ class RE23Test {
   @Test
   public void shouldEvaluateWorkProperly() {
     DoubleProblem problem = new RE23();
-    DoubleSolution solution = problem.createSolution();
+    var solution = problem.createSolution();
     problem.evaluate(solution);
 
     assertEquals(4, solution.variables().size());

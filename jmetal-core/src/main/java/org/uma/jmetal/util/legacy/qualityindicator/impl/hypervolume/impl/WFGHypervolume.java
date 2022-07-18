@@ -82,7 +82,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
     @Override
     public int compare(@NotNull Point p, @NotNull Point q) {
-      for (int i = n - 1; i >= 0; i--)
+      for (var i = n - 1; i >= 0; i--)
         if (BEATS(p.objectives[i], q.objectives[i]))
           return -1;
         else if (BEATS(q.objectives[i], p.objectives[i]))
@@ -106,9 +106,9 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     public Front(double frente[][]) {
       points = new Point[frente.length];
       this.nPoints = frente.length;
-      for (int x = 0; x < frente.length; x++) {
+      for (var x = 0; x < frente.length; x++) {
         points[x] = new Point(frente[0].length);
-        for (int j = 0; j < frente[0].length; j++) {
+        for (var j = 0; j < frente[0].length; j++) {
           points[x].objectives[j] = frente[x][j];
         }
       }
@@ -125,13 +125,11 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     n = noObjectives;
     safe = 0;
     fr = 0;
-    double volume;
-    Front frente;
-    frente = new Front(fronton);
+    var frente = new Front(fronton);
     fs = new Front[noObjectives - 2]; // maxdepth = objetivos-2
-    for (int x = 0; x < noObjectives - 2; x++)
+    for (var x = 0; x < noObjectives - 2; x++)
       fs[x] = new Front(fronton); // maxm numero de puntos
-    volume = hv(frente);
+    var volume = hv(frente);
     return volume;
   }
 
@@ -149,14 +147,14 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   // returns -1 if p dominates q, 1 if q dominates p, 2 if p == q, 0 otherwise
   // k is the highest index inspected
   {
-    for (int i = k; i >= 0; i--)
+    for (var i = k; i >= 0; i--)
       if (BEATS(p.objectives[i], q.objectives[i])) {
-        for (int j = i - 1; j >= 0; j--)
+        for (var j = i - 1; j >= 0; j--)
           if (BEATS(q.objectives[j], p.objectives[j]))
             return 0;
         return -1;
       } else if (BEATS(q.objectives[i], p.objectives[i])) {
-        for (int j = i - 1; j >= 0; j--)
+        for (var j = i - 1; j >= 0; j--)
           if (BEATS(p.objectives[j], q.objectives[j]))
             return 0;
         return 1;
@@ -177,17 +175,17 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   // and dominated
   // points removed
   {
-    int l = 0;
-    int u = p - 1;
-    for (int i = p - 1; i >= 0; i--)
+    var l = 0;
+    var u = p - 1;
+    for (var i = p - 1; i >= 0; i--)
       if (BEATS(ps.points[p].objectives[n - 1], ps.points[i].objectives[n - 1])) {
         fs[fr].points[u].objectives[n - 1] = ps.points[i].objectives[n - 1];
-        for (int j = 0; j < n - 1; j++)
+        for (var j = 0; j < n - 1; j++)
           fs[fr].points[u].objectives[j] = WORSE(ps.points[p].objectives[j], ps.points[i].objectives[j]);
         u--;
       } else {
         fs[fr].points[l].objectives[n - 1] = ps.points[p].objectives[n - 1];
-        for (int j = 0; j < n - 1; j++)
+        for (var j = 0; j < n - 1; j++)
           fs[fr].points[l].objectives[j] = WORSE(ps.points[p].objectives[j], ps.points[i].objectives[j]);
         l++;
       }
@@ -200,8 +198,8 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     // to compare the
     // last objective
     fs[fr].nPoints = 1;
-    for (int i = 1; i < l; i++) {
-      int j = 0;
+    for (var i = 1; i < l; i++) {
+      var j = 0;
       while (j < fs[fr].nPoints)
         switch (dominates2way(fs[fr].points[i], fs[fr].points[j], n - 2)) {
         case 0:
@@ -215,7 +213,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
           fs[fr].points[i] = t;
           while (j < fs[fr].nPoints - 1 && dominates1way(fs[fr].points[j], fs[fr].points[fs[fr].nPoints - 1], n - 1))
             fs[fr].nPoints--;
-          int k = j + 1;
+          var k = j + 1;
           while (k < fs[fr].nPoints)
             if (dominates1way(fs[fr].points[j], fs[fr].points[k], n - 2)) {
               t = fs[fr].points[k];
@@ -235,8 +233,8 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       }
     }
     safe = (int) WORSE(l, fs[fr].nPoints);
-    for (int i = l; i < p; i++) {
-      int j = 0;
+    for (var i = l; i < p; i++) {
+      var j = 0;
       while (j < safe)
         if (dominates1way(fs[fr].points[j], fs[fr].points[i], n - 2))
           j = fs[fr].nPoints + 1;
@@ -255,7 +253,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
           fs[fr].points[i] = t;
           while (j < fs[fr].nPoints - 1 && dominates1way(fs[fr].points[j], fs[fr].points[fs[fr].nPoints - 1], n - 1))
             fs[fr].nPoints--;
-          int k = j + 1;
+          var k = j + 1;
           while (k < fs[fr].nPoints)
             if (dominates1way(fs[fr].points[j], fs[fr].points[k], n - 1)) {
               t = fs[fr].points[k];
@@ -281,10 +279,10 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   // returns the hypervolume of ps[0 .. k-1] in 2D
   // assumes that ps is sorted improving
   {
-    double volume = ps.points[0].objectives[0] * ps.points[0].objectives[1];
-      double sum = 0.0;
-      for (int i = 1; i < k; i++) {
-          double v = ps.points[i].objectives[1] * (ps.points[i].objectives[0] - ps.points[i - 1].objectives[0]);
+    var volume = ps.points[0].objectives[0] * ps.points[0].objectives[1];
+    var sum = 0.0;
+      for (var i = 1; i < k; i++) {
+        var v = ps.points[i].objectives[1] * (ps.points[i].objectives[0] - ps.points[i - 1].objectives[0]);
           sum += v;
       }
       volume += sum;
@@ -295,10 +293,10 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   // returns the inclusive hypervolume of p
   {
       double volume = 1;
-      double[] array = p.objectives;
-      int bound = n;
-      for (int i = 0; i < bound; i++) {
-          double v = array[i];
+    var array = p.objectives;
+    var bound = n;
+      for (var i = 0; i < bound; i++) {
+        var v = array[i];
           volume = volume * v;
       }
       return volume;
@@ -310,12 +308,12 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     double vp = 1;
     double vq = 1;
     double vpq = 1;
-    for (int i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
       vp *= p.objectives[i];
       vq *= q.objectives[i];
       vpq *= WORSE(p.objectives[i], q.objectives[i]);
     }
-    double suma = vp + vq - vpq;
+    var suma = vp + vq - vpq;
     return suma;
   }
 
@@ -329,7 +327,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     double vpr = 1;
     double vqr = 1;
     double vpqr = 1;
-    for (int i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
       vp *= p.objectives[i];
       vq *= q.objectives[i];
       vr *= r.objectives[i];
@@ -378,7 +376,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     double vprs = 1;
     double vqrs = 1;
     double vpqrs = 1;
-    for (int i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
       vp *= p.objectives[i];
       vq *= q.objectives[i];
       vr *= r.objectives[i];
@@ -398,7 +396,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
             vqrs *= s.objectives[i];
             vpqrs *= s.objectives[i];
           } else {
-            double z1 = WORSE(q.objectives[i], s.objectives[i]);
+            var z1 = WORSE(q.objectives[i], s.objectives[i]);
             vpq *= q.objectives[i];
             vpr *= r.objectives[i];
             vps *= WORSE(p.objectives[i], s.objectives[i]);
@@ -424,7 +422,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
           vqrs *= s.objectives[i];
           vpqrs *= s.objectives[i];
         } else {
-          double z1 = WORSE(p.objectives[i], r.objectives[i]);
+          var z1 = WORSE(p.objectives[i], r.objectives[i]);
           vpq *= q.objectives[i];
           vpr *= z1;
           vps *= WORSE(p.objectives[i], s.objectives[i]);
@@ -439,8 +437,8 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
         }
       else if (BEATS(q.objectives[i], r.objectives[i]))
         if (BEATS(p.objectives[i], s.objectives[i])) {
-          double z1 = WORSE(p.objectives[i], r.objectives[i]);
-          double z2 = WORSE(r.objectives[i], s.objectives[i]);
+          var z1 = WORSE(p.objectives[i], r.objectives[i]);
+          var z2 = WORSE(r.objectives[i], s.objectives[i]);
           vpq *= p.objectives[i];
           vpr *= z1;
           vps *= s.objectives[i];
@@ -453,8 +451,8 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
           vqrs *= z2;
           vpqrs *= z2;
         } else {
-          double z1 = WORSE(p.objectives[i], r.objectives[i]);
-          double z2 = WORSE(r.objectives[i], s.objectives[i]);
+          var z1 = WORSE(p.objectives[i], r.objectives[i]);
+          var z2 = WORSE(r.objectives[i], s.objectives[i]);
           vpq *= p.objectives[i];
           vpr *= z1;
           vps *= p.objectives[i];
@@ -480,7 +478,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
         vqrs *= s.objectives[i];
         vpqrs *= s.objectives[i];
       } else {
-        double z1 = WORSE(q.objectives[i], s.objectives[i]);
+        var z1 = WORSE(q.objectives[i], s.objectives[i]);
         vpq *= p.objectives[i];
         vpr *= p.objectives[i];
         vps *= p.objectives[i];
@@ -501,9 +499,9 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   // returns the exclusive hypervolume of ps[p] relative to ps[0 .. p-1]
   {
     makeDominatedBit(ps, p);
-    double a = inclhv(ps.points[p]);
-    double b = hv(fs[fr - 1]);
-    double volume = a - b;
+    var a = inclhv(ps.points[p]);
+    var b = hv(fs[fr - 1]);
+    var volume = a - b;
     fr--;
     return volume;
   }
@@ -516,7 +514,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     case 1:
       return inclhv(ps.points[0]);
     case 2: {
-      double regreso = inclhv2(ps.points[0], ps.points[1]);
+      var regreso = inclhv2(ps.points[0], ps.points[1]);
       return regreso;
     }
     case 3:
@@ -538,27 +536,27 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       return hv2(ps, ps.nPoints);
 
     if (n == 3 && safe > 0) {
-      double volume = ps.points[0].objectives[2] * hv2(ps, safe);
+      var volume = ps.points[0].objectives[2] * hv2(ps, safe);
       n--;
         // we can ditch dominated points here, but they will be ditched anyway
         // in
         // makeDominatedBit
-        double sum = 0.0;
-        int bound = ps.nPoints;
-        for (int i = safe; i < bound; i++) {
-            double v = ps.points[i].objectives[n] * exclhv(ps, i);
+      var sum = 0.0;
+      var bound = ps.nPoints;
+        for (var i = safe; i < bound; i++) {
+          var v = ps.points[i].objectives[n] * exclhv(ps, i);
             sum += v;
         }
         volume += sum;
       n++;
       return volume;
     } else {
-      double volume = inclhv4(ps.points[0], ps.points[1], ps.points[2], ps.points[3]);
+      var volume = inclhv4(ps.points[0], ps.points[1], ps.points[2], ps.points[3]);
       n--;
-      for (int i = 4; i < ps.nPoints; i++) { // we can ditch dominated points here, but they will be ditched anyway in
+      for (var i = 4; i < ps.nPoints; i++) { // we can ditch dominated points here, but they will be ditched anyway in
                                              // makeDominatedBit
-        double a = ps.points[i].objectives[n];
-        double b = exclhv(ps, i);
+        var a = ps.points[i].objectives[n];
+        var b = exclhv(ps, i);
         volume += a * b;
       }
       n++;
@@ -576,10 +574,9 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
    */
   private double hypervolume(org.uma.jmetal.util.legacy.front.Front front, org.uma.jmetal.util.legacy.front.Front referenceFront) {
 
-    org.uma.jmetal.util.legacy.front.Front invertedFront;
-    invertedFront = FrontUtils.getInvertedFront(front);
+    var invertedFront = FrontUtils.getInvertedFront(front);
 
-    int numberOfObjectives = referenceFront.getPoint(0).getDimension();
+    var numberOfObjectives = referenceFront.getPoint(0).getDimension();
 
     // STEP4. The hypervolume (control is passed to the Java version of Zitzler
     // code)
@@ -599,40 +596,40 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       org.uma.jmetal.util.legacy.front.Front referenceFront = new ArrayFront(referenceFrontList);
 
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
-      double[] maximumValues = FrontUtils.getMaximumValues(referenceFront);
-      double[] minimumValues = FrontUtils.getMinimumValues(referenceFront);
+      var maximumValues = FrontUtils.getMaximumValues(referenceFront);
+      var minimumValues = FrontUtils.getMinimumValues(referenceFront);
 
       // STEP 2. Get the normalized front
-      FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
-      org.uma.jmetal.util.legacy.front.Front normalizedFront = frontNormalizer.normalize(front);
+      var frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
+      var normalizedFront = frontNormalizer.normalize(front);
 
       // compute offsets for reference point in normalized space
-        double @NotNull [] offsets = new double[10];
-        int count = 0;
-        for (int i1 = 0; i1 < maximumValues.length; i1++) {
-            double v = offset / (maximumValues[i1] - minimumValues[i1]);
+      var offsets = new double[10];
+      var count = 0;
+        for (var i1 = 0; i1 < maximumValues.length; i1++) {
+          var v = offset / (maximumValues[i1] - minimumValues[i1]);
             if (offsets.length == count) offsets = Arrays.copyOf(offsets, count * 2);
             offsets[count++] = v;
         }
         offsets = Arrays.copyOfRange(offsets, 0, count);
         // STEP 3. Inverse the pareto front. This is needed because the original
       // metric by Zitzler is for maximization problem
-      org.uma.jmetal.util.legacy.front.@NotNull Front invertedFront = FrontUtils.getInvertedFront(normalizedFront);
+      var invertedFront = FrontUtils.getInvertedFront(normalizedFront);
 
       // shift away from origin, so that boundary points also get a contribution > 0
-      for (int i = 0; i < invertedFront.getNumberOfPoints(); i++) {
-        org.uma.jmetal.util.point.Point point = invertedFront.getPoint(i);
+      for (var i = 0; i < invertedFront.getNumberOfPoints(); i++) {
+        var point = invertedFront.getPoint(i);
 
-        for (int j = 0; j < point.getDimension(); j++) {
+        for (var j = 0; j < point.getDimension(); j++) {
           point.setValue(j, point.getValue(j) + offsets[j]);
         }
       }
 
-      HypervolumeContributionAttribute<S> hvContribution = new HypervolumeContributionAttribute<>();
+      var hvContribution = new HypervolumeContributionAttribute<S>();
 
       // calculate contributions and sort
-      double[] contributions = hvContributions(FrontUtils.convertFrontToArray(invertedFront));
-      for (int i = 0; i < contributions.length; i++) {
+      var contributions = hvContributions(FrontUtils.convertFrontToArray(invertedFront));
+      for (var i = 0; i < contributions.length; i++) {
         hvContribution.setAttribute(solutionList.get(i), contributions[i]);
       }
 
@@ -652,19 +649,19 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
    */
   private double[] hvContributions(double[][] front) {
 
-    int numberOfObjectives = front[0].length;
-    double @NotNull [] contributions = new double[front.length];
-    double[][] frontSubset = new double[front.length - 1][front[0].length];
-    LinkedList<double[]> frontCopy = new LinkedList<double[]>();
+    var numberOfObjectives = front[0].length;
+    var contributions = new double[front.length];
+    var frontSubset = new double[front.length - 1][front[0].length];
+    var frontCopy = new LinkedList<double[]>();
     Collections.addAll(frontCopy, front);
-    double[][] totalFront = frontCopy.toArray(frontSubset);
-    double totalVolume = CalculateHypervolume(totalFront, totalFront.length, numberOfObjectives);
-    for (int i = 0; i < front.length; i++) {
-      double[] evaluatedPoint = frontCopy.remove(i);
+    var totalFront = frontCopy.toArray(frontSubset);
+    var totalVolume = CalculateHypervolume(totalFront, totalFront.length, numberOfObjectives);
+    for (var i = 0; i < front.length; i++) {
+      var evaluatedPoint = frontCopy.remove(i);
       frontSubset = frontCopy.toArray(frontSubset);
       // STEP4. The hypervolume (control is passed to java version of Zitzler code)
-      double hv = CalculateHypervolume(frontSubset, frontSubset.length, numberOfObjectives);
-      double contribution = totalVolume - hv;
+      var hv = CalculateHypervolume(frontSubset, frontSubset.length, numberOfObjectives);
+      var contribution = totalVolume - hv;
       contributions[i] = contribution;
       // put point back
       frontCopy.add(i, evaluatedPoint);

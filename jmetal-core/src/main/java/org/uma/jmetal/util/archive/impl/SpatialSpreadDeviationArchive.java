@@ -39,7 +39,7 @@ public class SpatialSpreadDeviationArchive<S extends Solution<?>> extends
   public void prune() {
     if (getSolutionList().size() > getMaxSize()) {
       computeDensityEstimator();
-      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), crowdingDistanceComparator) ;
+      var worst = new SolutionListUtils().findWorstSolution(getSolutionList(), crowdingDistanceComparator) ;
       getSolutionList().remove(worst);
     }
   }

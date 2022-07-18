@@ -74,11 +74,11 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
     int best;
     evaluations = 0;
 
-    int rounds = improvementRounds;
+    var rounds = improvementRounds;
 
-    int i = 0;
+    var i = 0;
     while (i < rounds) {
-      S mutatedSolution = mutationOperator.execute((S) solution.copy());
+      var mutatedSolution = mutationOperator.execute((S) solution.copy());
 
       problem.evaluate(mutatedSolution);
       evaluations++;

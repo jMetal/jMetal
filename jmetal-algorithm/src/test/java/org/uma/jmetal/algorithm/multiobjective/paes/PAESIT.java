@@ -28,19 +28,18 @@ public class PAESIT {
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem()
       throws Exception {
-    Kursawe problem = new Kursawe();
+    var problem = new Kursawe();
     CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm = new PAES<>(problem, 25000, 100, 5, mutation);
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     /*
     Rationale: the default problem is Kursawe, and usually PAES, configured with standard
@@ -52,17 +51,16 @@ public class PAESIT {
   @Test
   @Ignore
   public void shouldTheHypervolumeHaveAMinimumValue() throws Exception {
-    ZDT1 problem = new ZDT1();
-    MutationOperator<DoubleSolution> mutation;
+    var problem = new ZDT1();
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm = new PAES<>(problem, 25000, 100, 5, mutation);
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     org.uma.jmetal.qualityindicator.QualityIndicator hypervolume =
             new org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume(
@@ -71,7 +69,7 @@ public class PAESIT {
     // Rationale: the default problem is ZDT1, and OMOPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.6);
   }
@@ -79,12 +77,11 @@ public class PAESIT {
   @Test
   @Ignore
   public void shouldTheCrowdingDistanceVariantWorkProperly() throws Exception {
-    ZDT1 problem = new ZDT1();
-    MutationOperator<DoubleSolution> mutation;
+    var problem = new ZDT1();
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm =
         new PAES<>(
@@ -94,7 +91,7 @@ public class PAESIT {
             mutation);
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
@@ -103,7 +100,7 @@ public class PAESIT {
     // Rationale: the default problem is ZDT1, and PAES, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.6
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.6);
   }
@@ -111,38 +108,37 @@ public class PAESIT {
   @Test
   public void shouldTheAlgorithmReturnAGoodQualityFrontWhenSolvingAConstrainedProblem()
       throws Exception {
-    ConstrEx problem = new ConstrEx();
+    var problem = new ConstrEx();
     CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm = new PAES<>(problem, 25000, 100, 5, mutation);
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    var population = algorithm.getResult() ;
 
-    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
+    var referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
 
     printFinalSolutionSet(population);
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
     // Rationale: the default problem is ConstrEx, and APES, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.7
 
-    double[][] normalizedFront =
+    var normalizedFront =
             NormalizeUtils.normalize(
                     SolutionListUtils.getMatrixWithObjectiveValues(population),
                     NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
                     NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertTrue(population.size() >= 85) ;
     assertTrue(hv > 0.7) ;

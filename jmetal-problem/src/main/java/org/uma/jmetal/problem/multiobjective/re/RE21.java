@@ -21,24 +21,23 @@ public class RE21 extends AbstractDoubleProblem {
 
   /** Constructor */
   public RE21() {
-    int numberOfVariables = 4;
+    var numberOfVariables = 4;
     setNumberOfObjectives(2);
     setNumberOfConstraints(0);
     setName("RE21");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
-    List<Double> upperLimit;
 
     double f = 10;
     double sigma = 10;
-    double tmpVar = (f / sigma);
+    var tmpVar = (f / sigma);
 
-      ArrayList<Double> doubles = new ArrayList<>(numberOfVariables);
-      for (int i = 0; i < numberOfVariables; i++) {
+    var doubles = new ArrayList<Double>(numberOfVariables);
+      for (var i = 0; i < numberOfVariables; i++) {
           Double aDouble = 3 * tmpVar;
           doubles.add(aDouble);
       }
-      upperLimit = doubles;
+    List<Double> upperLimit = doubles;
 
     lowerLimit.add(0, tmpVar);
     lowerLimit.add(1, Math.sqrt(2.0) * tmpVar);

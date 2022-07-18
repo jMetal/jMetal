@@ -30,13 +30,12 @@ public class ZDT6 extends ZDT1 {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double @NotNull [] f = new double[solution.objectives().length];
+    var f = new double[solution.objectives().length];
 
-    double x1;
-    x1 = solution.variables().get(0);
+    double x1 = solution.variables().get(0);
     f[0] = 1 - Math.exp(-4 * x1) * Math.pow(Math.sin(6 * Math.PI * x1), 6);
-    double g = this.evalG(solution);
-    double h = this.evalH(f[0], g);
+    var g = this.evalG(solution);
+    var h = this.evalH(f[0], g);
     f[1] = h * g;
 
     solution.objectives()[0] = f[0];
@@ -51,9 +50,9 @@ public class ZDT6 extends ZDT1 {
    * @param solution Solution
    */
   protected double evalG(DoubleSolution solution) {
-      double g = 0.0;
-      int bound = solution.variables().size();
-      for (int var = 1; var < bound; var++) {
+    var g = 0.0;
+    var bound = solution.variables().size();
+      for (var var = 1; var < bound; var++) {
           double v = solution.variables().get(var);
           g += v;
       }

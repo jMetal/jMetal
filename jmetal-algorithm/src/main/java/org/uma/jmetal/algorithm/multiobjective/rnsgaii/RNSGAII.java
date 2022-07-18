@@ -104,8 +104,7 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> implements
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
 
-    RankingAndPreferenceSelection<S> rankingAndCrowdingSelection ;
-    rankingAndCrowdingSelection = new RankingAndPreferenceSelection<S>(getMaxPopulationSize(), interestPoint, epsilon) ;
+    var rankingAndCrowdingSelection = new RankingAndPreferenceSelection<S>(getMaxPopulationSize(), interestPoint, epsilon);
 
     return rankingAndCrowdingSelection.execute(jointPopulation) ;
   }

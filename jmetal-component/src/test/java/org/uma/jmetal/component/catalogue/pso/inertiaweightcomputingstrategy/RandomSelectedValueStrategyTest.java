@@ -19,8 +19,8 @@ class RandomSelectedValueStrategyTest {
 
   @Test
   void constructorCreatesAValidInstance() {
-    double lowerBound = 0.1 ;
-    double upperBound = 0.5 ;
+    var lowerBound = 0.1 ;
+    var upperBound = 0.5 ;
     var randomSelectedValueStrategy = new RandomSelectedValueStrategy(lowerBound, upperBound) ;
     assertEquals(lowerBound, randomSelectedValueStrategy.getLowerBound());
     assertEquals(upperBound, randomSelectedValueStrategy.getUpperBound());
@@ -28,24 +28,24 @@ class RandomSelectedValueStrategyTest {
 
   @Test
   void constructorWithAnUpperBoundLowerThanALowerBoundThrowsAnException() {
-    double lowerBound = 0.3 ;
-    double upperBound = 0.2 ;
+    var lowerBound = 0.3 ;
+    var upperBound = 0.2 ;
     assertThrows(InvalidConditionException.class, () -> new RandomSelectedValueStrategy(lowerBound, upperBound)) ;
   }
 
   @Test
   void computeReturnsAValidValue() {
-    double lowerBound = 0.1 ;
-    double upperBound = 0.5 ;
+    var lowerBound = 0.1 ;
+    var upperBound = 0.5 ;
     var randomSelectedValueStrategy = new RandomSelectedValueStrategy(lowerBound, upperBound) ;
-    double weight = randomSelectedValueStrategy.compute() ;
+    var weight = randomSelectedValueStrategy.compute() ;
     assertTrue((weight >= lowerBound) && (weight <= upperBound));
   }
 
   @Test
   void computeReturnsTheLowerBoundIfBothBoundsAreEquals() {
-    double lowerBound = 0.2 ;
-    double upperBound = 0.2 ;
+    var lowerBound = 0.2 ;
+    var upperBound = 0.2 ;
     var randomSelectedValueStrategy = new RandomSelectedValueStrategy(lowerBound, upperBound) ;
     assertEquals(lowerBound, randomSelectedValueStrategy.compute());
   }

@@ -21,7 +21,7 @@ public class Water extends AbstractDoubleProblem {
     setName("Water");
 
     @NotNull List<Double> lowerLimit = Arrays.asList(LOWERLIMIT);
-    List<Double> upperLimit = Arrays.asList(UPPERLIMIT);
+    var upperLimit = Arrays.asList(UPPERLIMIT);
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -29,10 +29,10 @@ public class Water extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double[] fx = new double[solution.objectives().length];
-      double[] x = new double[10];
-      int count = 0;
-      for (Double aDouble : solution.variables()) {
+    var fx = new double[solution.objectives().length];
+    var x = new double[10];
+    var count = 0;
+      for (var aDouble : solution.variables()) {
           double v = aDouble;
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
@@ -57,10 +57,10 @@ public class Water extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[getNumberOfConstraints()];
-      double[] x = new double[10];
-      int count = 0;
-      for (Double aDouble : solution.variables()) {
+    var constraint = new double[getNumberOfConstraints()];
+    var x = new double[10];
+    var count = 0;
+      for (var aDouble : solution.variables()) {
           double v = aDouble;
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
@@ -75,7 +75,7 @@ public class Water extends AbstractDoubleProblem {
     constraint[5] = 2000 - (0.417 * x[0] * x[1] + 1721.26 * x[2] - 136.54);
     constraint[6] = 550 - (0.164 / (x[0] * x[1]) + 631.13 * x[2] - 54.48);
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

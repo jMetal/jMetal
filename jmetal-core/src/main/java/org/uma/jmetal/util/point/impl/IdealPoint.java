@@ -22,7 +22,7 @@ public class IdealPoint extends ArrayPoint {
     Check.that(point.length == this.point.length, "The point to be update have a dimension of " + point.length + " "
             + "while the parameter point has a dimension of " + point.length);
 
-    for (int i = 0; i < point.length; i++) {
+    for (var i = 0; i < point.length; i++) {
       if (this.point[i] > point[i]) {
         this.point[i] = point[i];
       }

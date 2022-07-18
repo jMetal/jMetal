@@ -107,7 +107,7 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
 
   @Override protected List<S> replacement(@NotNull List<S> population,
                                           List<S> offspringPopulation) {
-    List<S> pop = super.replacement(population, offspringPopulation) ;
+    var pop = super.replacement(population, offspringPopulation) ;
 
     @NotNull Ranking<S> ranking = new FastNonDominatedSortRanking<>(dominanceComparator);
     ranking.compute(population);

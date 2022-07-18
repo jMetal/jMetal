@@ -18,7 +18,6 @@ import org.uma.jmetal.util.legacy.front.Front;
 public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Double>> {
 
   @Override public @NotNull List<Double> findLowestValues(Front front) {
-    List<Double> minimumValue;
 
     if (front == null) {
       throw new JMetalException("The front is null") ;
@@ -26,17 +25,17 @@ public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Doub
       throw new JMetalException("The front is empty") ;
     }
 
-    int numberOfObjectives = front.getPointDimensions() ;
+    var numberOfObjectives = front.getPointDimensions() ;
 
       List<Double> list = new ArrayList<>();
-      for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+      for (var i1 = 0; i1 < numberOfObjectives; i1++) {
           Double positiveInfinity = Double.POSITIVE_INFINITY;
           list.add(positiveInfinity);
       }
-      minimumValue = list;
+    var minimumValue = list;
 
-    for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
-      for (int j = 0; j < numberOfObjectives; j++) {
+    for (var i = 0; i < front.getNumberOfPoints(); i++) {
+      for (var j = 0; j < numberOfObjectives; j++) {
         if (front.getPoint(i).getValue(j) < minimumValue.get(j)) {
           minimumValue.set(j, front.getPoint(i).getValue(j));
         }
@@ -47,7 +46,6 @@ public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Doub
   }
 
   @Override public List<Double> findHighestValues(Front front) {
-    List<Double> maximumValue;
 
     if (front == null) {
       throw new JMetalException("The front is null") ;
@@ -55,17 +53,17 @@ public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Doub
       throw new JMetalException("The front is empty") ;
     }
 
-    int numberOfObjectives = front.getPointDimensions() ;
+    var numberOfObjectives = front.getPointDimensions() ;
 
       List<Double> list = new ArrayList<>();
-      for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+      for (var i1 = 0; i1 < numberOfObjectives; i1++) {
           Double negativeInfinity = Double.NEGATIVE_INFINITY;
           list.add(negativeInfinity);
       }
-      maximumValue = list;
+    var maximumValue = list;
 
-    for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
-      for (int j = 0; j < numberOfObjectives; j++) {
+    for (var i = 0; i < front.getNumberOfPoints(); i++) {
+      for (var j = 0; j < numberOfObjectives; j++) {
         if (front.getPoint(i).getValue(j) > maximumValue.get(j)) {
           maximumValue.set(j, front.getPoint(i).getValue(j));
         }

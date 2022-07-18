@@ -35,19 +35,19 @@ public class MaF14 extends AbstractDoubleProblem {
 
     //evaluate sublen14,len14
     nk14 = 2;
-    double[] c = new double[numberOfObjectives];
+    var c = new double[numberOfObjectives];
     c[0] = 3.8 * 0.1 * (1 - 0.1);
     double sumc = 0;
     sumc += c[0];
-    for (int i = 1; i < numberOfObjectives; i++) {
+    for (var i = 1; i < numberOfObjectives; i++) {
       c[i] = 3.8 * c[i - 1] * (1 - c[i - 1]);
       sumc += c[i];
     }
 
-    int[] sublen = new int[numberOfObjectives];
-    int[] len = new int[numberOfObjectives + 1];
+    var sublen = new int[numberOfObjectives];
+    var len = new int[numberOfObjectives + 1];
     len[0] = 0;
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       sublen[i] = (int) Math.ceil(Math.round(c[i] / sumc * numberOfVariables) / (double) nk14);
       len[i + 1] = len[i] + (nk14 * sublen[i]);
     }
@@ -63,11 +63,11 @@ public class MaF14 extends AbstractDoubleProblem {
     @NotNull List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-    for (int i = 0; i < numberOfObjectives - 1; i++) {
+    for (var i = 0; i < numberOfObjectives - 1; i++) {
         lower.add(0.0);
         upper.add(1.0);
     }
-    for (int i = numberOfObjectives - 1; i < numberOfVariables; i++) {
+    for (var i = numberOfObjectives - 1; i < numberOfVariables; i++) {
         lower.add(0.0);
         upper.add(10.0);
     }
@@ -78,33 +78,32 @@ public class MaF14 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
 
-    int numberOfVariables = solution.variables().size();
-    int numberOfObjectives = solution.objectives().length;
+    var numberOfVariables = solution.variables().size();
+    var numberOfObjectives = solution.objectives().length;
 
-    double[] x;
-    double @NotNull [] f = new double[numberOfObjectives];
+    var f = new double[numberOfObjectives];
 
-      double[] arr = new double[10];
-      int count = 0;
-      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+    var arr = new double[10];
+    var count = 0;
+      for (var i1 = 0; i1 < numberOfVariables; i1++) {
           double v = solution.variables().get(i1);
           if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
           arr[count++] = v;
       }
       arr = Arrays.copyOfRange(arr, 0, count);
-      x = arr;
+    var x = arr;
 
     //change x
-    for (int i = numberOfObjectives - 1; i < numberOfVariables; i++) {
+    for (var i = numberOfObjectives - 1; i < numberOfVariables; i++) {
       x[i] = (1 + (i + 1) / (double) numberOfVariables) * x[i] - 10 * x[0];
     }
     // evaluate eta,g
-    double @NotNull [] g = new double[numberOfObjectives];
+    var g = new double[numberOfObjectives];
     double sub1;
-    for (int i = 0; i < numberOfObjectives; i = i + 2) {
-      double[] tx = new double[sublen14[i]];
+    for (var i = 0; i < numberOfObjectives; i = i + 2) {
+      var tx = new double[sublen14[i]];
       sub1 = 0;
-      for (int j = 0; j < nk14; j++) {
+      for (var j = 0; j < nk14; j++) {
         System
             .arraycopy(x, len14[i] + numberOfObjectives - 1 + j * sublen14[i], tx, 0, sublen14[i]);
         sub1 += Rastrigin(tx);
@@ -112,10 +111,10 @@ public class MaF14 extends AbstractDoubleProblem {
       g[i] = sub1 / (nk14 * sublen14[i]);
     }
 
-    for (int i = 1; i < numberOfObjectives; i = i + 2) {
-      double[] tx = new double[sublen14[i]];
+    for (var i = 1; i < numberOfObjectives; i = i + 2) {
+      var tx = new double[sublen14[i]];
       sub1 = 0;
-      for (int j = 0; j < nk14; j++) {
+      for (var j = 0; j < nk14; j++) {
         System
             .arraycopy(x, len14[i] + numberOfObjectives - 1 + j * sublen14[i], tx, 0, sublen14[i]);
         sub1 += Rosenbrock(tx);
@@ -126,32 +125,32 @@ public class MaF14 extends AbstractDoubleProblem {
     // evaluate fm,fm-1,...,2,f1
     double subf1 = 1;
     f[numberOfObjectives - 1] = (1 - x[0]) * (1 + g[numberOfObjectives - 1]);
-    for (int i = numberOfObjectives - 2; i > 0; i--) {
+    for (var i = numberOfObjectives - 2; i > 0; i--) {
       subf1 *= x[numberOfObjectives - i - 2];
       f[i] = subf1 * (1 - x[numberOfObjectives - i - 1]) * (1 + g[i]);
     }
     f[0] = subf1 * x[numberOfObjectives - 2] * (1 + g[0]);
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       solution.objectives()[i] = f[i];
     }
     return solution ;
   }
 
   public static double Rastrigin(double @NotNull [] x) {
-      double eta = 0.0;
-      for (double v : x) {
-          double v1 = (Math.pow(v, 2) - 10 * Math.cos(2 * Math.PI * v) + 10);
+    var eta = 0.0;
+      for (var v : x) {
+        var v1 = (Math.pow(v, 2) - 10 * Math.cos(2 * Math.PI * v) + 10);
           eta += v1;
       }
       return eta;
   }
 
   public static double Rosenbrock(double[] x) {
-      double eta = 0.0;
-      int bound = x.length - 1;
-      for (int i = 0; i < bound; i++) {
-          double v = (100 * Math.pow(Math.pow(x[i], 2) - x[i + 1], 2) + Math.pow((x[i] - 1), 2));
+    var eta = 0.0;
+    var bound = x.length - 1;
+      for (var i = 0; i < bound; i++) {
+        var v = (100 * Math.pow(Math.pow(x[i], 2) - x[i + 1], 2) + Math.pow((x[i] - 1), 2));
           eta += v;
       }
       return eta;

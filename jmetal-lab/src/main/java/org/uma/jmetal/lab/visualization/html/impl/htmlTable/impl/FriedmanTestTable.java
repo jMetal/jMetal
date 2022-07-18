@@ -21,17 +21,17 @@ public class FriedmanTestTable extends HtmlTable<String> {
     this.title = "Friedman ranking and Holm test";
     @NotNull FriedmanTest test = new FriedmanTest(minimizar, table, algorithms, problems, "IndicatorValue");
     test.computeHolmTest();
-    Table ranking = test.getResults();
+    var ranking = test.getResults();
     this.headersColumn = ranking.columnNames().toArray(new String[0]);
     this.data = new String[algorithms.size()][ranking.columnCount()];
-    for (int i = 0; i < algorithms.size(); i++) {
-      for (int j = 0; j < ranking.columnCount(); j++) {
+    for (var i = 0; i < algorithms.size(); i++) {
+      for (var j = 0; j < ranking.columnCount(); j++) {
         if (j == ranking.columnIndex("Algorithm")) {
           this.data[i][j] = ranking.stringColumn(0).get(i);
         } else if (j == ranking.columnIndex("Hypothesis")) {
           this.data[i][j] = ranking.stringColumn(j).get(i);
         } else if (j == ranking.columnIndex("p-value")) {
-          DecimalFormat format = new DecimalFormat("0.###E0");
+          var format = new DecimalFormat("0.###E0");
           this.data[i][j] = format.format(ranking.doubleColumn(j).get(i));
         } else {
           @NotNull DecimalFormat format = new DecimalFormat("##.###");

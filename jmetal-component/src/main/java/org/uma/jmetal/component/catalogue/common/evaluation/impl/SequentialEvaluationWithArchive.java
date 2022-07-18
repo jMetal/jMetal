@@ -22,7 +22,7 @@ public class SequentialEvaluationWithArchive<S extends Solution<?>> extends Sequ
 
   @Override
   public List<S> evaluate(@NotNull List<S> solutionList) {
-    List<S> solutions = super.evaluate(solutionList) ;
+    var solutions = super.evaluate(solutionList) ;
 
       for (@NotNull S solution : solutions) {
           archive.add((S) solution.copy());

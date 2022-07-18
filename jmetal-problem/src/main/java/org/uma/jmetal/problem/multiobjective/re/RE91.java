@@ -23,7 +23,7 @@ public class RE91 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("RE91");
 
-    List<Double> lowerLimit = List.of(0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4);
+    var lowerLimit = List.of(0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4);
     @NotNull List<Double> upperLimit = List.of(1.5, 1.35, 1.5, 1.5, 2.265, 1.2, 1.2);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -32,8 +32,8 @@ public class RE91 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[11];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    var x = new double[11];
+    for (var i = 0; i < getNumberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 
@@ -102,7 +102,7 @@ public class RE91 extends AbstractDoubleProblem {
                     + 0.227 * x[1] * x[1])
                 / 0.32);
 
-    double temp =
+    var temp =
         ((28.98
                     + 3.818 * x[2]
                     - 4.2 * x[0] * x[1]

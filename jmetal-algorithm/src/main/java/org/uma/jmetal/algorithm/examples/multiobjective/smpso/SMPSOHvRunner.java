@@ -42,11 +42,8 @@ public class SMPSOHvRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws Exception {
     JMetalRandom.getInstance().setSeed(1);
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
 
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -59,28 +56,28 @@ public class SMPSOHvRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     @NotNull BoundedArchive<DoubleSolution> archive =
         new HypervolumeArchive(100, new PISAHypervolume<>()) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new SMPSOBuilder(problem, archive)
-        .setMutation(mutation)
-        .setMaxIterations(250)
-        .setSwarmSize(100)
-        .setRandomGenerator(new MersenneTwisterGenerator())
-        .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
-        .build();
+    Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(problem, archive)
+            .setMutation(mutation)
+            .setMaxIterations(250)
+            .setSwarmSize(100)
+            .setRandomGenerator(new MersenneTwisterGenerator())
+            .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

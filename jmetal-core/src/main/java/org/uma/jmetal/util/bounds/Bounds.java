@@ -28,12 +28,12 @@ public interface Bounds<T extends Comparable<T>> extends Serializable {
    * @return the value or one of the limits
    */
   default T restrict(T value) {
-    T lowerBound = getLowerBound();
+    var lowerBound = getLowerBound();
     if (lowerBound.compareTo(value) > 0) {
       return lowerBound;
     }
 
-    T upperBound = getUpperBound();
+    var upperBound = getUpperBound();
     if (upperBound.compareTo(value) < 0) {
       return upperBound;
     }

@@ -27,29 +27,26 @@ public class MOMBI2IT {
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
-    DTLZ1 problem = new DTLZ1() ;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
+    var problem = new DTLZ1() ;
 
-    JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
+    var randomGenerator = JMetalRandom.getInstance() ;
     randomGenerator.setSeed(1450278534242L);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<>());
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<>());
 
     algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<>(),
         "../resources/weightVectorFiles/mombi2/weight_03D_12.sld");
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    var population = algorithm.getResult() ;
 
     /*
     Rationale: the default problem is DTLZ1, and MOMBI2, configured with standard
@@ -62,29 +59,26 @@ public class MOMBI2IT {
 
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
-    DTLZ1 problem = new DTLZ1() ;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
+    var problem = new DTLZ1() ;
 
-    JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
+    var randomGenerator = JMetalRandom.getInstance() ;
     randomGenerator.setSeed(1450278534242L);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
         "../resources/weightVectorFiles/mombi2/weight_03D_12.sld");
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    var population = algorithm.getResult() ;
 
     /*
     Rationale: the default problem is DTLZ1, and MOMBI2, configured with standard
@@ -97,7 +91,7 @@ public class MOMBI2IT {
     // Rationale: the default problem is DTLZ1 (3 objectives), and MOMBI2, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.96) ;
 

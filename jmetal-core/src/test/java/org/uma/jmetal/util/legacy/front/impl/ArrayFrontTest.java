@@ -45,7 +45,7 @@ public class ArrayFrontTest {
 
   @BeforeAll
   public static void startup() throws IOException {
-    Properties jMetalProperties = new Properties() ;
+    var jMetalProperties = new Properties() ;
     jMetalProperties.load(new FileInputStream("../jmetal.properties"));
 
     resourcesDirectory = "../" + jMetalProperties.getProperty("resourcesDirectory") ;
@@ -103,9 +103,9 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldCreateAnArrayFrontFromAListOfSolutionsHavingOneDoubleSolutionObject() {
-    int numberOfObjectives = 3;
+    var numberOfObjectives = 3;
 
-    List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(-1.0, 1.0));
+    var bounds = Arrays.asList(Bounds.create(-1.0, 1.0));
     List<DoubleSolution> list =
         Arrays.asList(new DefaultDoubleSolution(bounds, numberOfObjectives, 0));
     Front front = new ArrayFront(list);
@@ -117,9 +117,9 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldCreateAnArrayFrontFromAListOfSolutionsHavingTwoDoubleSolutionObject() {
-    int numberOfObjectives = 3;
+    var numberOfObjectives = 3;
 
-    List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(-1.0, 1.0));
+    var bounds = Arrays.asList(Bounds.create(-1.0, 1.0));
     List<DoubleSolution> list =
         Arrays.asList(
             new DefaultDoubleSolution(bounds, numberOfObjectives, 0),
@@ -133,9 +133,9 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldCreateAnArrayFrontFromAListOfSolutionsHavingOneSingleSolutionObject() {
-    int numberOfObjectives = 3;
+    var numberOfObjectives = 3;
 
-    List<Bounds<Integer>> bounds = Arrays.asList(Bounds.create(0, 1)) ;
+    var bounds = Arrays.asList(Bounds.create(0, 1)) ;
 
     List<IntegerSolution> list =
         Arrays.asList(
@@ -161,9 +161,9 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldCreateAnArrayFrontFromASolutionListResultInTwoEqualsFronts() {
-    int numberOfObjectives = 3;
+    var numberOfObjectives = 3;
 
-    List<Bounds<Integer>> bounds = Arrays.asList(Bounds.create(0, 1)) ;
+    var bounds = Arrays.asList(Bounds.create(0, 1)) ;
 
     IntegerSolution solution1 =
         new DefaultIntegerSolution(bounds, numberOfObjectives, 0);
@@ -176,7 +176,7 @@ public class ArrayFrontTest {
     solution2.objectives()[1] = 523;
     solution2.objectives()[2] = -123423455;
 
-    List<IntegerSolution> list = Arrays.asList(solution1, solution2);
+    var list = Arrays.asList(solution1, solution2);
 
     Front front = new ArrayFront(list);
 
@@ -194,8 +194,8 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldCreateAnArrayFrontFromAnotherFrontResultInTwoEqualsFrontssss() {
-    int numberOfPoints = 2;
-    int pointDimensions = 2;
+    var numberOfPoints = 2;
+    var pointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, pointDimensions);
 
     Point point1 = new ArrayPoint(pointDimensions);
@@ -222,82 +222,82 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldSetPointRaiseAnExceptionWhenThePointIsNull() {
-    int numberOfPoints = 1;
-    int numberOfPointDimensions = 2;
+    var numberOfPoints = 1;
+    var numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
     Executable executable = () -> front.setPoint(0, null);
-    
-    JMetalException cause = assertThrows(JMetalException.class, executable);
+
+    var cause = assertThrows(JMetalException.class, executable);
     assertThat(cause.getMessage(), containsString("The point is null"));
   }
 
   @Test
   public void shouldSetPointRaiseAnExceptionWhenTheIndexIsNegative() {
-    int numberOfPoints = 1;
-    int numberOfPointDimensions = 2;
+    var numberOfPoints = 1;
+    var numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
     Executable executable = () -> front.setPoint(-1, new ArrayPoint(1));
-    
-    JMetalException cause = assertThrows(JMetalException.class, executable);
+
+    var cause = assertThrows(JMetalException.class, executable);
     assertThat(cause.getMessage(), containsString("The index value is negative"));
   }
 
   @Test
   public void shouldSetPointRaiseAnExceptionWhenTheIndexIsGreaterThanTheFrontSize() {
-    int numberOfPoints = 1;
-    int numberOfPointDimensions = 2;
+    var numberOfPoints = 1;
+    var numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
     Executable executable = () -> front.setPoint(3, new ArrayPoint(1));
-    
-    JMetalException cause = assertThrows(JMetalException.class, executable);
+
+    var cause = assertThrows(JMetalException.class, executable);
     assertThat(cause.getMessage(),
             containsString("The index value (3) is greater than the number of " + "points (1)"));
   }
 
   @Test
   public void shouldSetPointAssignTheCorrectObject() {
-    int numberOfPoints = 1;
-    int numberOfPointDimensions = 2;
+    var numberOfPoints = 1;
+    var numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
     Point point = new ArrayPoint(1);
     front.setPoint(0, point);
 
-    Point newPoint = front.getPoint(0);
+    var newPoint = front.getPoint(0);
     assertSame(point, newPoint);
   }
 
   @Test
   public void shouldGetPointRaiseAnExceptionWhenTheIndexIsNegative() {
-    int numberOfPoints = 1;
-    int numberOfPointDimensions = 2;
+    var numberOfPoints = 1;
+    var numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
     Executable executable = () -> front.getPoint(-1);
-    
-    JMetalException cause = assertThrows(JMetalException.class, executable);
+
+    var cause = assertThrows(JMetalException.class, executable);
     assertThat(cause.getMessage(), containsString("The index value is negative"));
   }
 
   @Test
   public void shouldGetPointRaiseAnExceptionWhenTheIndexIsGreaterThanTheFrontSize() {
-    int numberOfPoints = 1;
-    int numberOfPointDimensions = 2;
+    var numberOfPoints = 1;
+    var numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
     Executable executable = () -> front.getPoint(3);
-    
-    JMetalException cause = assertThrows(JMetalException.class, executable);
+
+    var cause = assertThrows(JMetalException.class, executable);
     assertThat(cause.getMessage(),
             containsString("The index value (3) is greater than the number of " + "points (1)"));
   }
 
   @Test
   public void shouldGetPointReturnTheCorrectObject() {
-    int numberOfPoints = 1;
-    int numberOfPointDimensions = 2;
+    var numberOfPoints = 1;
+    var numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
     Point point = new ArrayPoint(1);
     front.setPoint(0, point);
@@ -307,8 +307,8 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldEqualsReturnTrueIfTheArgumentIsTheSameObject() {
-    int numberOfPoints = 1;
-    int numberOfPointDimensions = 2;
+    var numberOfPoints = 1;
+    var numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
     assertTrue(front.equals(front));
@@ -316,8 +316,8 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldEqualsReturnFalseIfTheArgumentIsNull() {
-    int numberOfPoints = 1;
-    int numberOfPointDimensions = 2;
+    var numberOfPoints = 1;
+    var numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
     assertFalse(front.equals(null));
@@ -326,8 +326,8 @@ public class ArrayFrontTest {
   @SuppressWarnings("unlikely-arg-type")
   @Test
   public void shouldEqualsReturnFalseIfTheArgumentIsFromAWrongClass() {
-    int numberOfPoints = 1;
-    int numberOfPointDimensions = 2;
+    var numberOfPoints = 1;
+    var numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
     assertFalse(front.equals(new ArrayList<Integer>()));
@@ -335,8 +335,8 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldEqualsReturnTrueIfTheArgumentIsEqual() {
-    int numberOfPoints = 1;
-    int pointDimensions = 2;
+    var numberOfPoints = 1;
+    var pointDimensions = 2;
     Front front1 = new ArrayFront(numberOfPoints, pointDimensions);
     Front front2 = new ArrayFront(numberOfPoints, pointDimensions);
 
@@ -355,7 +355,7 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldEqualsReturnFalseIfTheComparedFrontHasADifferentNumberOfPoints() {
-    int pointDimensions = 2;
+    var pointDimensions = 2;
     Front front1 = new ArrayFront(1, pointDimensions);
     Front front2 = new ArrayFront(2, pointDimensions);
 
@@ -372,8 +372,8 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldEqualsReturnFalseIfTheFrontsAreDifferent() {
-    int numberOfPoints = 1;
-    int pointDimensions = 2;
+    var numberOfPoints = 1;
+    var pointDimensions = 2;
     Front front1 = new ArrayFront(numberOfPoints, pointDimensions);
     Front front2 = new ArrayFront(numberOfPoints, pointDimensions);
 
@@ -392,8 +392,8 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldSortReturnAnOrderedFront() {
-    int numberOfPoints = 3;
-    int pointDimensions = 2;
+    var numberOfPoints = 3;
+    var pointDimensions = 2;
     Front front1 = new ArrayFront(numberOfPoints, pointDimensions);
 
     Point point1 = new ArrayPoint(pointDimensions);
@@ -425,14 +425,14 @@ public class ArrayFrontTest {
   @Test
   public void shouldCreateInputStreamThrownAnExceptionIfFileDoesNotExist()
       throws FileNotFoundException {
-    String fileName = "abcdefadg";
+    var fileName = "abcdefadg";
 
     assertThrows(FileNotFoundException.class, () -> new ArrayFront(fileName));
   }
 
   @Test
   public void shouldReadFrontAnEmptyFileCreateAnEmptyFront() throws FileNotFoundException {
-    String fileName = resourcesDirectory + "/unitTestsData/arrayFront/emptyFile.dat";
+    var fileName = resourcesDirectory + "/unitTestsData/arrayFront/emptyFile.dat";
     Front front = new ArrayFront(fileName);
 
     assertEquals(0, front.getNumberOfPoints());
@@ -441,7 +441,7 @@ public class ArrayFrontTest {
   /** Test using a file containing: 1.0 2.0 -3.0 */
   @Test
   public void shouldReadFrontAFileWithOnePointCreateTheCorrectFront() throws FileNotFoundException {
-    String fileName = resourcesDirectory + "/unitTestsData/arrayFront/fileWithOnePoint.dat";
+    var fileName = resourcesDirectory + "/unitTestsData/arrayFront/fileWithOnePoint.dat";
 
     Front front = new ArrayFront(fileName);
 
@@ -457,7 +457,7 @@ public class ArrayFrontTest {
   @Disabled
   public void shouldReadFrontWithALineContainingWrongDataRaiseAnException()
       throws FileNotFoundException, JMetalException {
-    String fileName = "../resources/unitTestsData/arrayFront/fileWithWrongData.dat";
+    var fileName = "../resources/unitTestsData/arrayFront/fileWithWrongData.dat";
 
     assertThrows(JMetalException.class, () -> new ArrayFront(fileName));
   }
@@ -466,7 +466,7 @@ public class ArrayFrontTest {
   @Test
   public void shouldReadFrontWithALineWithALineMissingDataRaiseAnException()
       throws FileNotFoundException, JMetalException {
-    String fileName = resourcesDirectory + "/unitTestsData/arrayFront/fileWithMissingData.dat";
+    var fileName = resourcesDirectory + "/unitTestsData/arrayFront/fileWithMissingData.dat";
 
     assertThrows(InvalidConditionException.class, () -> new ArrayFront(fileName));
   }
@@ -475,7 +475,7 @@ public class ArrayFrontTest {
   @Test
   public void shouldReadFrontFourPointsCreateTheCorrectFront()
       throws FileNotFoundException, JMetalException {
-    String fileName = resourcesDirectory + "/unitTestsData/arrayFront/fileWithFourPoints.dat";
+    var fileName = resourcesDirectory + "/unitTestsData/arrayFront/fileWithFourPoints.dat";
 
     Front front = new ArrayFront(fileName);
 

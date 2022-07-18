@@ -27,20 +27,20 @@ public class GenerationalGeneticAlgorithmExample {
   public static void main(String[] args) throws JMetalException, IOException {
     Problem<DoubleSolution> problem = new Sphere(20) ;
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    var populationSize = 100;
+    var offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(125000);
 
-    EvolutionaryAlgorithm<DoubleSolution> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
+    var geneticAlgorithm = new GeneticAlgorithmBuilder<>(
         "GGA",
                     problem,
                     populationSize,
@@ -52,7 +52,7 @@ public class GenerationalGeneticAlgorithmExample {
 
     geneticAlgorithm.run();
 
-    List<DoubleSolution> population = geneticAlgorithm.getResult();
+    var population = geneticAlgorithm.getResult();
     JMetalLogger.logger.info("Total execution time : " + geneticAlgorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + geneticAlgorithm.getNumberOfEvaluations());
     JMetalLogger.logger.info("Best fitness: " + geneticAlgorithm.getResult().get(0).objectives()[0]);

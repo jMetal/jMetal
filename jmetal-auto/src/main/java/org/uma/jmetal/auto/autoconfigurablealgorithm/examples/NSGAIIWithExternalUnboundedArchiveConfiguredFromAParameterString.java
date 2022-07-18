@@ -17,9 +17,9 @@ import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 public class NSGAIIWithExternalUnboundedArchiveConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "DTLZ2.3D.csv";
+    var referenceFrontFileName = "DTLZ2.3D.csv";
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
             + "--referenceFrontFileName " + referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 50000 "
@@ -44,15 +44,15 @@ public class NSGAIIWithExternalUnboundedArchiveConfiguredFromAParameterString {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoNSGAII autoNSGAII = new AutoNSGAII();
+    var autoNSGAII = new AutoNSGAII();
     autoNSGAII.parseAndCheckParameters(parameters);
 
     AutoNSGAII.print(autoNSGAII.fixedParameterList);
     AutoNSGAII.print(autoNSGAII.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+    var nsgaII = autoNSGAII.create();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    var evaluationObserver = new EvaluationObserver(1000);
     nsgaII.getObservable().register(evaluationObserver);
 
     nsgaII.run();

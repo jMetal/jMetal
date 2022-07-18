@@ -26,15 +26,15 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class SMPSOStoppingByKeyboardExample {
   public static void main(String[] args) throws Exception {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    var problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     @NotNull String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
 
     @NotNull Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    int swarmSize = 100 ;
+    var swarmSize = 100 ;
     @NotNull Termination termination = new TerminationByKeyboard();
 
-    ParticleSwarmOptimizationAlgorithm smpso = new SMPSOBuilder(
+    var smpso = new SMPSOBuilder(
         (DoubleProblem) problem,
         swarmSize)
         .setTermination(termination)
@@ -42,7 +42,7 @@ public class SMPSOStoppingByKeyboardExample {
 
     smpso.run();
 
-    List<DoubleSolution> population = smpso.getResult();
+    var population = smpso.getResult();
     JMetalLogger.logger.info("Total execution time : " + smpso.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + smpso.getEvaluation());
 

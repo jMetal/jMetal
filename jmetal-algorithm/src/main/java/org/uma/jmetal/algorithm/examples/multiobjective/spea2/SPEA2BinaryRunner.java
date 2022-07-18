@@ -33,13 +33,8 @@ public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.spea2.SPEA2BinaryRunner problemName [referenceFront]
    */
   public static void main(String @NotNull [] args) throws JMetalException, FileNotFoundException {
-    BinaryProblem problem;
-    Algorithm<List<BinarySolution>> algorithm;
-    CrossoverOperator<BinarySolution> crossover;
-    MutationOperator<BinarySolution> mutation;
-    SelectionOperator<List<BinarySolution>, BinarySolution> selection;
 
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -52,25 +47,25 @@ public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "" ;
     }
 
-    problem = (BinaryProblem) ProblemFactory.<BinarySolution> loadProblem(problemName);
+    var problem = (BinaryProblem) ProblemFactory.<BinarySolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossoverProbability = 0.9 ;
+    CrossoverOperator<BinarySolution> crossover = new SinglePointCrossover(crossoverProbability);
 
-    double mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
-    mutation = new BitFlipMutation(mutationProbability) ;
+    var mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
+    MutationOperator<BinarySolution> mutation = new BitFlipMutation(mutationProbability);
 
-    selection = new BinaryTournamentSelection<BinarySolution>();
+    SelectionOperator<List<BinarySolution>, BinarySolution> selection = new BinaryTournamentSelection<BinarySolution>();
 
-    algorithm = new SPEA2Builder<>(problem, crossover, mutation)
-        .setSelectionOperator(selection)
-        .setMaxIterations(250)
-        .setPopulationSize(100)
-        .build() ;
+    Algorithm<List<BinarySolution>> algorithm = new SPEA2Builder<>(problem, crossover, mutation)
+            .setSelectionOperator(selection)
+            .setMaxIterations(250)
+            .setPopulationSize(100)
+            .build();
 
     new AlgorithmRunner.Executor(algorithm).execute() ;
 
-    List<BinarySolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     printFinalSolutionSet(population);
     if (!referenceParetoFront.equals("")) {

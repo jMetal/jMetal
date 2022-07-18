@@ -20,7 +20,7 @@ class CRE22Test {
   @Test
   public void shouldEvaluateWorkProperly() {
     DoubleProblem problem = new CRE22();
-    DoubleSolution solution = problem.createSolution();
+    var solution = problem.createSolution();
     problem.evaluate(solution);
 
     assertEquals(4, solution.variables().size());

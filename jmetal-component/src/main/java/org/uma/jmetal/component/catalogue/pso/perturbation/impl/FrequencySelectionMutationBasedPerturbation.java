@@ -51,7 +51,7 @@ public class FrequencySelectionMutationBasedPerturbation implements Perturbation
     Check.notNull(swarm);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
-    for (int i = 0; i < swarm.size(); i++) {
+    for (var i = 0; i < swarm.size(); i++) {
       if ((i % frequencyOfApplication) == 0) {
         mutationOperator.execute(swarm.get(i));
       }

@@ -34,14 +34,14 @@ public class MedianValuesTable extends HtmlTable<Double> {
     this.headersRow = problems.asObjectArray();
     this.data = new Double[problems.size()][algorithms.size()];
 
-    for (int row = 0; row < problems.size(); row++) {
+    for (var row = 0; row < problems.size(); row++) {
 
-      Table tableFilteredByProblem = filterTableBy(table, problems.name(), problems.get(row));
+      var tableFilteredByProblem = filterTableBy(table, problems.name(), problems.get(row));
 
-      for (int column = 0; column < algorithms.size(); column++) {
-        Table tableCompleteFiltered =
+      for (var column = 0; column < algorithms.size(); column++) {
+        var tableCompleteFiltered =
             filterTableBy(tableFilteredByProblem, algorithms.name(), algorithms.get(column));
-        DoubleColumn indicatorValues = tableCompleteFiltered.doubleColumn(indicatorValueColumnName);
+        var indicatorValues = tableCompleteFiltered.doubleColumn(indicatorValueColumnName);
         this.data[row][column] = indicatorValues.median();
       }
     }
@@ -61,9 +61,9 @@ public class MedianValuesTable extends HtmlTable<Double> {
   }
 
   protected StringBuilder createRowOfData(int index) {
-    DecimalFormat format = new DecimalFormat("0.#####E0");
-    StringBuilder html = new StringBuilder();
-    Double[] orderedData = getDataOrderedByObjective(data[index]);
+    var format = new DecimalFormat("0.#####E0");
+    var html = new StringBuilder();
+    var orderedData = getDataOrderedByObjective(data[index]);
     for (Object elem : data[index]) {
       html.append("<td ");
       if (!orderedData[0].equals(orderedData[orderedData.length - 1])) {
@@ -76,14 +76,14 @@ public class MedianValuesTable extends HtmlTable<Double> {
   }
 
   private Double[] getDataOrderedByObjective(Double @NotNull [] data) {
-    Double[] orderedData = data.clone();
+    var orderedData = data.clone();
     if (objective == Objective.MAXIMIZE) Arrays.sort(orderedData, Collections.reverseOrder());
     if (objective == Objective.MINIMIZE) Arrays.sort(orderedData);
     return orderedData;
   }
 
   public String getCSS() {
-    StringBuilder stringBuilder = new StringBuilder(super.getCSS());
+    var stringBuilder = new StringBuilder(super.getCSS());
     stringBuilder.append(".best { background-color: ").append(BEST_COLOR).append("; } ");
     stringBuilder
         .append(".secondBest { background-color: ")

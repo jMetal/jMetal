@@ -46,13 +46,8 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
    *     org.uma.jmetal.runner.multiobjective.nsgaii.ParallelNSGAIIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    String referenceParetoFront = "";
+    var referenceParetoFront = "";
 
     String problemName;
     if (args.length == 1) {
@@ -65,36 +60,36 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>();
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>();
 
     SolutionListEvaluator<DoubleSolution> evaluator =
         new MultiThreadedSolutionListEvaluator<DoubleSolution>(8);
 
-    int populationSize = 100;
-    NSGAIIBuilder<DoubleSolution> builder =
+    var populationSize = 100;
+    var builder =
         new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(25000)
             .setSolutionListEvaluator(evaluator);
 
-    algorithm = builder.build();
+    Algorithm<List<DoubleSolution>> algorithm = builder.build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
     builder.getSolutionListEvaluator().shutdown();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     evaluator.shutdown();
 
@@ -116,12 +111,7 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
      *                           problemName [referenceFront]
      */
     public static void main(String[] args) throws JMetalException, InterruptedException, IOException {
-      Problem<DoubleSolution> problem;
-      Algorithm<List<DoubleSolution>> algorithm;
-      CrossoverOperator<DoubleSolution> crossover;
-      MutationOperator<DoubleSolution> mutation;
-      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-      String referenceParetoFront = "";
+      var referenceParetoFront = "";
 
       String problemName;
       if (args.length == 2) {
@@ -132,25 +122,25 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
         referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
       }
 
-      problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+      var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-      double crossoverProbability = 0.9;
-      double crossoverDistributionIndex = 20.0;
-      crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+      var crossoverProbability = 0.9;
+      var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-      double mutationProbability = 1.0 / problem.getNumberOfVariables();
-      double mutationDistributionIndex = 20.0;
-      mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+      var mutationProbability = 1.0 / problem.getNumberOfVariables();
+      var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-      selection = new BinaryTournamentSelection<DoubleSolution>(
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(
               new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-      int maxEvaluations = 25000;
-      int populationSize = 100;
+      var maxEvaluations = 25000;
+      var populationSize = 100;
 
       @NotNull List<Double> referencePoint = Arrays.asList(0.5, 0.5) ;
 
-      algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
+      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
               .setSelectionOperator(selection)
               .setMaxEvaluations(maxEvaluations)
               .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
@@ -159,13 +149,13 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
 
       ((NSGAIIMeasures<DoubleSolution>) algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
 
-      MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>) algorithm).getMeasureManager();
+      var measureManager = ((NSGAIIMeasures<DoubleSolution>) algorithm).getMeasureManager();
 
           /* Measure management */
-      BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
+      var solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
               .<List<DoubleSolution>>getPushMeasure("currentPopulation");
 
-      ChartContainer chart = new ChartContainer(algorithm.getName(), 100);
+      var chart = new ChartContainer(algorithm.getName(), 100);
       chart.setFrontChart(0, 1, referenceParetoFront);
       chart.setReferencePoint(referencePoint);
       chart.initChart();
@@ -173,11 +163,11 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
       solutionListMeasure.register(new ChartListener(chart));
       /* End of measure management */
 
-      AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+      var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
       chart.saveChart("./chart", BitmapEncoder.BitmapFormat.PNG);
 
-      List<DoubleSolution> population = algorithm.getResult();
-      long computingTime = algorithmRunner.getComputingTime();
+      var population = algorithm.getResult();
+      var computingTime = algorithmRunner.getComputingTime();
 
       JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

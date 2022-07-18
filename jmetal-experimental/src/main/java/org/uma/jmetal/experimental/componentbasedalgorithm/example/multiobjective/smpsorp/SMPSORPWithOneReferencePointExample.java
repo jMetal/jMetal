@@ -34,9 +34,6 @@ public class SMPSORPWithOneReferencePointExample {
    * @author Antonio J. Nebro
    */
   public static void main(String[] args) throws JMetalException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
 
     String problemName;
     if (args.length == 1) {
@@ -44,22 +41,21 @@ public class SMPSORPWithOneReferencePointExample {
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    List<List<Double>> referencePoints;
-    referencePoints = new ArrayList<>();
+    List<List<Double>> referencePoints = new ArrayList<>();
     referencePoints.add(List.of(0.2, 0.8));
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int maxEvaluations = 25000;
-    int swarmSize = 100;
+    var maxEvaluations = 25000;
+    var swarmSize = 100;
 
       @NotNull List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
-      for (List<Double> referencePoint : referencePoints) {
-          CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
+      for (var referencePoint : referencePoints) {
+        var doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
                   swarmSize / referencePoints.size(), referencePoint);
           archivesWithReferencePoints.add(doubleSolutionCrowdingDistanceArchiveWithReferencePoint);
       }
@@ -67,7 +63,7 @@ public class SMPSORPWithOneReferencePointExample {
       @NotNull Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
     Termination termination = new TerminationByEvaluations(maxEvaluations) ;
 
-    algorithm = new SMPSORP(problem,
+    Algorithm<List<DoubleSolution>> algorithm = new SMPSORP(problem,
             swarmSize,
             archivesWithReferencePoints,
             referencePoints,
@@ -82,7 +78,7 @@ public class SMPSORPWithOneReferencePointExample {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
     //long computingTime = algorithm.
 
     //JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

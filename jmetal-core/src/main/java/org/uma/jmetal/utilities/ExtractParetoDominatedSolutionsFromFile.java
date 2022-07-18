@@ -33,12 +33,12 @@ public class ExtractParetoDominatedSolutionsFromFile {
               + "\nThe second argument is the name of the file containing the computed output."
               + "\nThe third argument is the number of objectives of the problem whose front is to be extracted.");
 
-    String inputFileName = args[0];
-    String outputFileName = args[1];
-    int numberOfObjectives = Integer.parseInt(args[2]);
+    var inputFileName = args[0];
+    var outputFileName = args[1];
+    var numberOfObjectives = Integer.parseInt(args[2]);
 
-    NonDominatedSolutionListArchive<PointSolution> archive =
-        new NonDominatedSolutionListArchive<>();
+    var archive =
+        new NonDominatedSolutionListArchive<PointSolution>();
 
     if (Files.isRegularFile(Paths.get(inputFileName))) {
       archive.addAll(StoredSolutionsUtils.readSolutionsFromFile(inputFileName, numberOfObjectives));

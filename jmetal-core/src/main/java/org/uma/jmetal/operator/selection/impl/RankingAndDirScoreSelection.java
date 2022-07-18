@@ -50,9 +50,9 @@ public class RankingAndDirScoreSelection<S extends Solution<?>>
   }
 
   private List<S> dirScoreSelection(@NotNull Ranking<S> ranking) {
-    DirScore<S> dirScore = new DirScore<>(referenceVectors);
+    var dirScore = new DirScore<S>(referenceVectors);
     List<S> population = new ArrayList<>(solutionsToSelect);
-    int rankingIndex = 0;
+    var rankingIndex = 0;
     while (population.size() < solutionsToSelect) {
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
         dirScore.computeDensityEstimator(ranking.getSubFront(rankingIndex));
@@ -69,11 +69,11 @@ public class RankingAndDirScoreSelection<S extends Solution<?>>
   @Override
   protected void addLastRankedSolutionsToPopulation(
       Ranking<S> ranking, int rank, List<S> population) {
-    List<S> currentRankedFront = ranking.getSubFront(rank);
+    var currentRankedFront = ranking.getSubFront(rank);
 
     currentRankedFront.sort(new DirScoreComparator<>());
 
-    int i = 0;
+    var i = 0;
     while (population.size() < solutionsToSelect) {
       population.add(currentRankedFront.get(i));
       i++;

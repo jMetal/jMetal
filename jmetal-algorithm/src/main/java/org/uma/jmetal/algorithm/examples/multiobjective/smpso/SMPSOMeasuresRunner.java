@@ -38,11 +38,8 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args)
       throws JMetalException, InterruptedException, FileNotFoundException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
 
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -55,48 +52,48 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFronts/ZDT4.csv" ;
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     @NotNull BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int maxIterations = 250 ;
-    int swarmSize = 100 ;
+    var maxIterations = 250 ;
+    var swarmSize = 100 ;
 
-    algorithm = new SMPSOBuilder(problem, archive)
-        .setMutation(mutation)
-        .setMaxIterations(maxIterations)
-        .setSwarmSize(swarmSize)
-        .setRandomGenerator(new MersenneTwisterGenerator())
-        .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
-        .setVariant(SMPSOBuilder.SMPSOVariant.Measures)
-        .build();
+    Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(problem, archive)
+            .setMutation(mutation)
+            .setMaxIterations(maxIterations)
+            .setSwarmSize(swarmSize)
+            .setRandomGenerator(new MersenneTwisterGenerator())
+            .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+            .setVariant(SMPSOBuilder.SMPSOVariant.Measures)
+            .build();
 
     /* Measure management */
-    MeasureManager measureManager = ((SMPSOMeasures)algorithm).getMeasureManager() ;
+    var measureManager = ((SMPSOMeasures)algorithm).getMeasureManager() ;
 
-    CountingMeasure currentIteration =
+    var currentIteration =
         (CountingMeasure) measureManager.<Long>getPullMeasure("currentIteration");
-    DurationMeasure currentComputingTime =
+    var currentComputingTime =
         (DurationMeasure) measureManager.<Long>getPullMeasure("currentExecutionTime");
 
-    BasicMeasure<List<DoubleSolution>> solutionListMeasure =
+    var solutionListMeasure =
         (BasicMeasure<List<DoubleSolution>>) measureManager.<List<DoubleSolution>> getPushMeasure("currentPopulation");
-    CountingMeasure iteration2 =
+    var iteration2 =
         (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
     solutionListMeasure.register(new Listener());
     iteration2.register(new Listener2());
     /* End of measure management */
 
-    Thread algorithmThread = new Thread(algorithm) ;
+    var algorithmThread = new Thread(algorithm) ;
     algorithmThread.start();
 
     /* Using the measures */
-    int i = 0 ;
+    var i = 0 ;
     while(currentIteration.get() < maxIterations) {
       TimeUnit.SECONDS.sleep(1);
       System.out.println("Iteration (" + i + ")            : " + currentIteration.get()) ;
@@ -106,7 +103,7 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
 
     algorithmThread.join();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    var population = algorithm.getResult() ;
     long computingTime = currentComputingTime.get() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

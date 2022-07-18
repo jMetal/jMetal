@@ -97,19 +97,18 @@ public class F03ShiftedRotatedHighCondElliptic extends TestFunc {
 
   // Function body
   public double f(double @NotNull [] x) {
-    double result = 0.0;
 
     Benchmark.shift(m_z, x, m_o);
     Benchmark.rotate(m_zM, m_z, m_matrix);
 
-    double sum = 0.0;
-    int bound = mDimension;
-    for (int i = 0; i < bound; i++) {
-      double v = Math.pow(constant, i) * m_zM[i] * m_zM[i];
+    var sum = 0.0;
+    var bound = mDimension;
+    for (var i = 0; i < bound; i++) {
+      var v = Math.pow(constant, i) * m_zM[i] * m_zM[i];
       sum += v;
     }
 
-    result = sum + mBias;
+    var result = sum + mBias;
 
     return (result);
   }

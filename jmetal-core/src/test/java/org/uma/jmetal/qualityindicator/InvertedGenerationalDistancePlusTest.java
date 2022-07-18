@@ -19,26 +19,26 @@ public class InvertedGenerationalDistancePlusTest {
 
   @Test
   public void shouldComputeRaiseAnExceptionIfTheFrontIsNull() {
-    double[][] referenceFront = new double[0][0];
+    var referenceFront = new double[0][0];
     double[][] front = null;
     Assertions.assertThrows(NullParameterException.class, () -> new InvertedGenerationalDistancePlus(referenceFront).compute(front));
   }
 
   @Test
   public void shouldEvaluateReturnZeroIfTheFrontAndTheReferenceFrontContainsTheSamePoints() {
-    double[] point = {4.0, 10.0};
-    double[][] referenceFront = {point};
-    double[][] front = {point};
+    var point = new double[]{4.0, 10.0};
+    var referenceFront = new double[][]{point};
+    var front = new double[][]{point};
 
     Assertions.assertEquals(0.0, new InvertedGenerationalDistancePlus(referenceFront).compute(front), EPSILON);
   }
 
   @Test
   public void shouldEvaluateReturnTheCorrectValueCaseA() {
-    double[][] front = {{0.2, 0.5}, {0.3, 0.4}, {0.4, 0.3}};
-    double[][] referenceFront = {{0.1, 0.7}, {0.2, 0.3}, {0.6, 0.2}};
+    var front = new double[][]{{0.2, 0.5}, {0.3, 0.4}, {0.4, 0.3}};
+    var referenceFront = new double[][]{{0.1, 0.7}, {0.2, 0.3}, {0.6, 0.2}};
 
-    InvertedGenerationalDistancePlus igdPlus =
+    var igdPlus =
             new InvertedGenerationalDistancePlus(referenceFront);
 
     Assertions.assertEquals((2.0 * Math.sqrt(0.01) + Math.sqrt(0.02)) / 3.0, igdPlus.compute(front), EPSILON);
@@ -46,10 +46,10 @@ public class InvertedGenerationalDistancePlusTest {
 
   @Test
   public void shouldEvaluateReturnTheCorrectValueCaseB() {
-    double[][] front = {{0.3, 0.7}, {0.5, 0.6}, {0.7, 0.4}};
-    double[][] referenceFront = {{0.1, 0.7}, {0.2, 0.3}, {0.6, 0.2}};
+    var front = new double[][]{{0.3, 0.7}, {0.5, 0.6}, {0.7, 0.4}};
+    var referenceFront = new double[][]{{0.1, 0.7}, {0.2, 0.3}, {0.6, 0.2}};
 
-    InvertedGenerationalDistancePlus igdPlus =
+    var igdPlus =
             new InvertedGenerationalDistancePlus(referenceFront);
 
     Assertions.assertEquals((0.2 + Math.sqrt(0.01 + 0.16) + Math.sqrt(0.01 + 0.04)) / 3.0, igdPlus.compute(front), EPSILON);

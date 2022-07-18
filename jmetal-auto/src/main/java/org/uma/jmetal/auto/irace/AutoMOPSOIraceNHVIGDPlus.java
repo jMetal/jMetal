@@ -18,17 +18,17 @@ public class AutoMOPSOIraceNHVIGDPlus {
     @NotNull AutoMOPSO mopsoWithParameters = new AutoMOPSO();
     mopsoWithParameters.parseAndCheckParameters(args);
 
-    ParticleSwarmOptimizationAlgorithm mopso = mopsoWithParameters.create();
+    var mopso = mopsoWithParameters.create();
     mopso.run();
 
-    String referenceFrontFile = "resources/referenceFrontsCSV/"
+    var referenceFrontFile = "resources/referenceFrontsCSV/"
         + mopsoWithParameters.referenceFrontFilenameParameter.getValue();
 
-    double[] @NotNull [] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
-    double[] @NotNull [] front = getMatrixWithObjectiveValues(mopso.getResult());
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
+    var front = getMatrixWithObjectiveValues(mopso.getResult());
 
-    double[] @NotNull [] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
-    double[][] normalizedFront =
+    var normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    var normalizedFront =
         NormalizeUtils.normalize(
             front,
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),

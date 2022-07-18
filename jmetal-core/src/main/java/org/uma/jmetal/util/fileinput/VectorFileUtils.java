@@ -23,10 +23,9 @@ public class VectorFileUtils {
    * @throws JMetalException if error while read file
    */
   public static double[][] readVectors(String filePath) {
-    double[][] referenceVectors;
-    String path = filePath ;
+    var path = filePath ;
 
-    URL url = VectorFileUtils.class.getClassLoader().getResource(filePath);
+    var url = VectorFileUtils.class.getClassLoader().getResource(filePath);
     if (url != null) {
       try {
         path = Paths.get(url.toURI()).toString();
@@ -41,12 +40,12 @@ public class VectorFileUtils {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    referenceVectors = new double[vectorStrList.size()][];
-    for (int i = 0; i < vectorStrList.size(); i++) {
-      String vectorStr = vectorStrList.get(i);
-      String[] objectArray = vectorStr.split("\\s+");
+    var referenceVectors = new double[vectorStrList.size()][];
+    for (var i = 0; i < vectorStrList.size(); i++) {
+      var vectorStr = vectorStrList.get(i);
+      var objectArray = vectorStr.split("\\s+");
       referenceVectors[i] = new double[objectArray.length];
-      for (int j = 0; j < objectArray.length; j++) {
+      for (var j = 0; j < objectArray.length; j++) {
         referenceVectors[i][j] = Double.parseDouble(objectArray[j]);
       }
     }

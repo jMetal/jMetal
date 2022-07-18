@@ -38,8 +38,8 @@ public class IntegerValueAttributeComparator<S extends Solution<?>> extends Attr
 
     int result ;
 
-    int value1 = 0 ;
-    int value2 = 0 ;
+    var value1 = 0 ;
+    var value2 = 0 ;
 
     if (solution1.attributes().get(attributeName) != null) {
       value1 = (int) solution1.attributes().get(attributeName);

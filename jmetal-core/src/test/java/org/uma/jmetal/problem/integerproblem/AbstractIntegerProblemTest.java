@@ -41,7 +41,7 @@ class AbstractIntegerProblemTest {
   void createSolutionProducesAValidInstance() {
     problem.setVariableBounds(List.of(1,2,3), List.of(2,3,4));
 
-    IntegerSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
     assertThat(solution.variables()).hasSize(3) ;
     assertThat(solution.objectives()).isEmpty(); ;
     assertThat(solution.constraints()).isEmpty(); ;

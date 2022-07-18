@@ -24,21 +24,20 @@ public class CMAESUtils {
 
     // Householder reduction to tridiagonal form.
 
-    for (int i = n - 1; i > 0; i--) {
+    for (var i = n - 1; i > 0; i--) {
 
       // Scale to avoid under/overflow.
 
-      double scale;
-      double h = 0.0;
-      double sum = 0.0;
-      for (int k = 0; k < i; k++) {
-        double abs = Math.abs(d[k]);
+      var h = 0.0;
+      var sum = 0.0;
+      for (var k = 0; k < i; k++) {
+        var abs = Math.abs(d[k]);
         sum += abs;
       }
-      scale = sum;
+      var scale = sum;
       if (scale == 0.0) {
         e[i] = d[i - 1];
-        for (int j = 0; j < i; j++) {
+        for (var j = 0; j < i; j++) {
           d[j] = v[i - 1][j];
           v[i][j] = 0.0;
           v[j][i] = 0.0;
@@ -60,49 +59,49 @@ public class CMAESUtils {
   private static double householderIteration(int index, double scale,
         double[][]v, double d[], double e[]) {
 
-    double h = 0.0;
+    var h = 0.0;
 
     // Generate Householder vector.
-    for (int k = 0; k < index; k++) {
+    for (var k = 0; k < index; k++) {
       d[k] /= scale;
       h += d[k] * d[k];
     }
-    double f = d[index - 1];
-    double g = Math.sqrt(h);
+    var f = d[index - 1];
+    var g = Math.sqrt(h);
     if (f > 0) {
       g = -g;
     }
     e[index] = scale * g;
     h = h - f * g;
     d[index - 1] = f - g;
-    for (int j = 0; j < index; j++) {
+    for (var j = 0; j < index; j++) {
       e[j] = 0.0;
     }
 
     // Apply similarity transformation to remaining columns.
-    for (int j = 0; j < index; j++) {
+    for (var j = 0; j < index; j++) {
       f = d[j];
       v[j][index] = f;
       g = e[j] + v[j][j] * f;
-      for (int k = j + 1; k <= index - 1; k++) {
+      for (var k = j + 1; k <= index - 1; k++) {
         g += v[k][j] * d[k];
         e[k] += v[k][j] * f;
       }
       e[j] = g;
     }
     f = 0.0;
-    for (int j = 0; j < index; j++) {
+    for (var j = 0; j < index; j++) {
       e[j] /= h;
       f += e[j] * d[j];
     }
-    double hh = f / (h + h);
-    for (int j = 0; j < index; j++) {
+    var hh = f / (h + h);
+    for (var j = 0; j < index; j++) {
       e[j] -= hh * d[j];
     }
-    for (int j = 0; j < index; j++) {
+    for (var j = 0; j < index; j++) {
       f = d[j];
       g = e[j];
-      for (int k = j; k <= index - 1; k++) {
+      for (var k = j; k <= index - 1; k++) {
         v[k][j] -= (f * e[k] + g * d[k]);
       }
       d[j] = v[index - 1][j];
@@ -115,29 +114,29 @@ public class CMAESUtils {
 
   private static void accumulateTransformations(int n, double[][]v, double[]d) {
 
-    for (int i = 0; i < n - 1; i++) {
+    for (var i = 0; i < n - 1; i++) {
       v[n - 1][i] = v[i][i];
       v[i][i] = 1.0;
-      double h = d[i + 1];
+      var h = d[i + 1];
       if (h != 0.0) {
-        for (int k = 0; k <= i; k++) {
+        for (var k = 0; k <= i; k++) {
           d[k] = v[k][i + 1] / h;
         }
-        for (int j = 0; j <= i; j++) {
-          double g = 0.0;
-          for (int k = 0; k <= i; k++) {
+        for (var j = 0; j <= i; j++) {
+          var g = 0.0;
+          for (var k = 0; k <= i; k++) {
             g += v[k][i + 1] * v[k][j];
           }
-          for (int k = 0; k <= i; k++) {
+          for (var k = 0; k <= i; k++) {
             v[k][j] -= g * d[k];
           }
         }
       }
-      for (int k = 0; k <= i; k++) {
+      for (var k = 0; k <= i; k++) {
         v[k][i + 1] = 0.0;
       }
     }
-    for (int j = 0; j < n; j++) {
+    for (var j = 0; j < n; j++) {
       d[j] = v[n - 1][j];
       v[n - 1][j] = 0.0;
     }
@@ -157,15 +156,15 @@ public class CMAESUtils {
     System.arraycopy(e, 1, e, 0, n - 1);
     e[n - 1] = 0.0;
 
-    double f = 0.0;
-    double tst1 = 0.0;
-    double eps = Math.pow(2.0, -52.0);
-    for (int l = 0; l < n; l++) {
+    var f = 0.0;
+    var tst1 = 0.0;
+    var eps = Math.pow(2.0, -52.0);
+    for (var l = 0; l < n; l++) {
 
       // Find small subdiagonal element
 
       tst1 = Math.max(tst1, Math.abs(d[l]) + Math.abs(e[l]));
-      int m = l;
+      var m = l;
       while (m < n) {
         if (Math.abs(e[m]) <= eps * tst1) {
           break;
@@ -177,7 +176,7 @@ public class CMAESUtils {
       // otherwise, iterate.
 
       if (m > l) {
-        int iter = 0;
+        var iter = 0;
         do {
           iter = iter + 1;  // (Could check iteration count here.)
 
@@ -202,17 +201,17 @@ public class CMAESUtils {
 
   private static double specificShift(int idx, int n, double @NotNull [] d, double[] e) {
 
-    double g = d[idx];
-    double p = (d[idx + 1] - g) / (2.0 * e[idx]);
-    double r = hypot(p, 1.0);
+    var g = d[idx];
+    var p = (d[idx + 1] - g) / (2.0 * e[idx]);
+    var r = hypot(p, 1.0);
     if (p < 0) {
       r = -r;
     }
     d[idx] = e[idx] / (p + r);
     d[idx + 1] = e[idx] * (p + r);
 
-    double h = g - d[idx];
-    for (int i = idx + 2; i < n; i++) {
+    var h = g - d[idx];
+    for (var i = idx + 2; i < n; i++) {
       d[i] -= h;
     }
     return h;
@@ -222,21 +221,21 @@ public class CMAESUtils {
   private static void implicitQLTransformation(int l, int m, int n, double v[][],
                                                double @NotNull [] d, double[] e) {
 
-    double dl1 = d[l + 1];
-    double p = d[m];
-    double c = 1.0;
-    double c2 = c;
-    double c3 = c;
-    double el1 = e[l + 1];
-    double s = 0.0;
-    double s2 = 0.0;
-    for (int i = m - 1; i >= l; i--) {
+    var dl1 = d[l + 1];
+    var p = d[m];
+    var c = 1.0;
+    var c2 = c;
+    var c3 = c;
+    var el1 = e[l + 1];
+    var s = 0.0;
+    var s2 = 0.0;
+    for (var i = m - 1; i >= l; i--) {
       c3 = c2;
       c2 = c;
       s2 = s;
-      double g = c * e[i];
-      double h = c * p;
-      double r = hypot(p, e[i]);
+      var g = c * e[i];
+      var h = c * p;
+      var r = hypot(p, e[i]);
       e[i + 1] = s * r;
       s = e[i] / r;
       c = p / r;
@@ -245,7 +244,7 @@ public class CMAESUtils {
 
       // Accumulate transformation.
 
-      for (int k = 0; k < n; k++) {
+      for (var k = 0; k < n; k++) {
         h = v[k][i + 1];
         v[k][i + 1] = s * v[k][i] + c * h;
         v[k][i] = c * v[k][i] - s * h;
@@ -259,10 +258,10 @@ public class CMAESUtils {
 
   private static void sortEigenValues(int n, double[] d, double[][] v) {
 
-    for (int i = 0; i < n - 1; i++) {
-      int k = i;
-      double p = d[i];
-      for (int j = i + 1; j < n; j++) {
+    for (var i = 0; i < n - 1; i++) {
+      var k = i;
+      var p = d[i];
+      for (var j = i + 1; j < n; j++) {
         if (d[j] < p) { // NH find smallest k>i
           k = j;
           p = d[j];
@@ -271,7 +270,7 @@ public class CMAESUtils {
       if (k != i) {
         d[k] = d[i]; // swap k and i
         d[i] = p;
-        for (int j = 0; j < n; j++) {
+        for (var j = 0; j < n; j++) {
           p = v[j][i];
           v[j][i] = v[j][k];
           v[j][k] = p;
@@ -324,9 +323,9 @@ public class CMAESUtils {
   }
 
   public static double norm(double[] vector) {
-    double result = 0.0;
-    for (double v : vector) {
-      double v1 = v * v;
+    var result = 0.0;
+    for (var v : vector) {
+      var v1 = v * v;
       result += v1;
     }
     return result;

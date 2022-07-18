@@ -25,7 +25,7 @@ public class SequentialEvaluation<S extends Solution<?>> implements Evaluation<S
   @Override
   public List<S> evaluate(List<S> solutionList) {
     Check.notNull(solutionList);
-      for (S s : solutionList) {
+      for (var s : solutionList) {
           problem.evaluate(s);
       }
       computedEvaluations = solutionList.size() ;

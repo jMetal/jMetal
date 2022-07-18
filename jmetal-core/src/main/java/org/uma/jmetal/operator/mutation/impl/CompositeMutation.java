@@ -29,7 +29,7 @@ public class CompositeMutation implements MutationOperator<CompositeSolution> {
     Check.collectionIsNotEmpty(operators);
 
     this.operators = new ArrayList<>();
-    for (int i = 0; i < operators.size(); i++) {
+    for (var i = 0; i < operators.size(); i++) {
       Check.that(
           operators.get(i) instanceof MutationOperator,
           "The operator list does not contain an object implementing class CrossoverOperator");
@@ -48,14 +48,13 @@ public class CompositeMutation implements MutationOperator<CompositeSolution> {
   public CompositeSolution execute(CompositeSolution solution) {
     Check.notNull(solution);
 
-    List<Solution<?>> mutatedSolutionComponents;
-    int numberOfSolutionsInCompositeSolution = solution.variables().size();
+    var numberOfSolutionsInCompositeSolution = solution.variables().size();
     List<Solution<?>> list = new ArrayList<>();
-    for (int i = 0; i < numberOfSolutionsInCompositeSolution; i++) {
-      Solution<?> execute = operators.get(i).execute(solution.variables().get(i));
+    for (var i = 0; i < numberOfSolutionsInCompositeSolution; i++) {
+      var execute = operators.get(i).execute(solution.variables().get(i));
       list.add(execute);
     }
-    mutatedSolutionComponents = list;
+    var mutatedSolutionComponents = list;
 
     return new CompositeSolution(mutatedSolutionComponents);
   }

@@ -49,7 +49,7 @@ public class ArrayPoint implements Point {
 
     this.point = new double[point.getDimension()];
 
-    for (int i = 0; i < point.getDimension(); i++) {
+    for (var i = 0; i < point.getDimension(); i++) {
       this.point[i] = point.getValue(i);
     }
   }
@@ -71,24 +71,24 @@ public class ArrayPoint implements Point {
    * @param fileName
    */
   public ArrayPoint(@NotNull String fileName) throws IOException {
-   FileInputStream fis = new FileInputStream(fileName);
-   InputStreamReader isr = new InputStreamReader(fis);
+    var fis = new FileInputStream(fileName);
+    var isr = new InputStreamReader(fis);
    try(@NotNull BufferedReader br = new BufferedReader(isr)){
 
     List<Double> auxiliarPoint = new ArrayList<Double>();
-    String aux = br.readLine();
+     var aux = br.readLine();
     while (aux != null) {
-      StringTokenizer st = new StringTokenizer(aux);
+      var st = new StringTokenizer(aux);
 
       while (st.hasMoreTokens()) {
-        Double value = Double.valueOf(st.nextToken());
+        var value = Double.valueOf(st.nextToken());
         auxiliarPoint.add(value);
       }
       aux = br.readLine();
     }
 
     point = new double[auxiliarPoint.size()] ;
-    for (int i = 0; i < auxiliarPoint.size(); i++) {
+    for (var i = 0; i < auxiliarPoint.size(); i++) {
       point[i] = auxiliarPoint.get(i) ;
     }
 
@@ -131,15 +131,15 @@ public class ArrayPoint implements Point {
     Check.that(point.length == this.point.length, "The point to be update have a dimension of " + point.length + " "
             + "while the parameter point has a dimension of " + point.length);
 
-    for (int i = 0; i < point.length; i++) {
+    for (var i = 0; i < point.length; i++) {
       this.point[i] = point[i] ;
     }
   }
 
   @Override
   public String toString() {
-    String result = "";
-    for (double anObjectives_ : point) {
+    var result = "";
+    for (var anObjectives_ : point) {
       result += anObjectives_ + " ";
     }
 

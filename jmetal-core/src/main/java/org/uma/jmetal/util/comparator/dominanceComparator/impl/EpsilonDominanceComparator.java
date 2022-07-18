@@ -45,11 +45,11 @@ public class EpsilonDominanceComparator<S extends Solution<?>> implements Domina
   }
 
   private int dominanceTest(@NotNull Solution<?> solution1, Solution<?> solution2) {
-    boolean bestIsOne = false ;
-    boolean bestIsTwo = false ;
-    for (int i = 0; i < solution1.objectives().length; i++) {
-      double value1 = Math.floor(solution1.objectives()[i] / epsilon);
-      double value2 = Math.floor(solution2.objectives()[i] / epsilon);
+    var bestIsOne = false ;
+    var bestIsTwo = false ;
+    for (var i = 0; i < solution1.objectives().length; i++) {
+      var value1 = Math.floor(solution1.objectives()[i] / epsilon);
+      var value2 = Math.floor(solution2.objectives()[i] / epsilon);
       if (value1 < value2) {
         bestIsOne = true;
 
@@ -65,12 +65,12 @@ public class EpsilonDominanceComparator<S extends Solution<?>> implements Domina
       }
     }
     if (!bestIsOne && !bestIsTwo) {
-      double dist1 = 0.0;
-      double dist2 = 0.0;
+      var dist1 = 0.0;
+      var dist2 = 0.0;
 
-      for (int i = 0; i < solution1.objectives().length; i++) {
-        double index1 = Math.floor(solution1.objectives()[i] / epsilon);
-        double index2 = Math.floor(solution2.objectives()[i] / epsilon);
+      for (var i = 0; i < solution1.objectives().length; i++) {
+        var index1 = Math.floor(solution1.objectives()[i] / epsilon);
+        var index2 = Math.floor(solution2.objectives()[i] / epsilon);
 
         dist1 += Math.pow(solution1.objectives()[i] - index1 * epsilon,
                 2.0);

@@ -54,10 +54,10 @@ public class CF8 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i1 = 0; i1 < numberOfVariables; i1++) {
+    for (var i1 = 0; i1 < numberOfVariables; i1++) {
       lowerLimit.add(0.0 + 1e-10);
     }
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       upperLimit.add(1.0 - 1e-10);
     }
 
@@ -70,42 +70,41 @@ public class CF8 extends AbstractDoubleProblem {
    * @param solution The solution to evaluate
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = VectorUtils.toArray(solution.variables());
-    double @NotNull [] f = new double[getNumberOfObjectives()];
-    double[] constraint = new double[getNumberOfConstraints()];
+    var x = VectorUtils.toArray(solution.variables());
+    var f = new double[getNumberOfObjectives()];
+    var constraint = new double[getNumberOfConstraints()];
 
     /* ----------------------Evaluate objectives (begin)--------------------------*/
-    double[] sx = new double[getNumberOfObjectives()]; // Cumulative squared sum
+    var sx = new double[getNumberOfObjectives()]; // Cumulative squared sum
 
     // Step 1. Compute squredSum Sx
-    double squredSum = 0.0;
-    for (int i = getNumberOfObjectives() - 1; i >= 0; i--) {
+    var squredSum = 0.0;
+    for (var i = getNumberOfObjectives() - 1; i >= 0; i--) {
       squredSum = squredSum + x[i] * x[i];
       sx[i] = squredSum;
     }
 
     // Step 2. Compute THETA_
-    double[] theta = new double[10];
-    int count = 0;
-    int bound1 = getNumberOfObjectives() - 1;
-    for (int i1 = 0; i1 < bound1; i1++) {
-      double v = 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i1 + 1]) / x[i1]);
+    var theta = new double[10];
+    var count = 0;
+    var bound1 = getNumberOfObjectives() - 1;
+    for (var i1 = 0; i1 < bound1; i1++) {
+      var v = 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i1 + 1]) / x[i1]);
       if (theta.length == count) theta = Arrays.copyOf(theta, count * 2);
       theta[count++] = v;
     }
     theta = Arrays.copyOfRange(theta, 0, count);
 
     // Step 3. Compute T_
-    double t;
-    t = (1 - sx[0]) * (1 - sx[0]); // (1 - XI^2)^2
+    var t = (1 - sx[0]) * (1 - sx[0]); // (1 - XI^2)^2
 
     // Compute h function. Here is Ackley function
-    double OptX = 0.2;
-    double sum1 = 0.0;
-    double sum2 = 0.0;
+    var OptX = 0.2;
+    var sum1 = 0.0;
+    var sum2 = 0.0;
     double d = getNumberOfVariables() - getNumberOfObjectives();
 
-    for (int i = getNumberOfObjectives(); i < getNumberOfVariables(); i++) {
+    for (var i = getNumberOfObjectives(); i < getNumberOfVariables(); i++) {
       sum1 = sum1 + ((x[i] - OptX) * (x[i] - OptX));
       sum2 = sum2 + Math.cos(2 * Math.PI * (x[i] - OptX));
     }
@@ -113,14 +112,14 @@ public class CF8 extends AbstractDoubleProblem {
     sum1 = sum1 / d;
     sum2 = sum2 / d;
 
-    double h = 20 - 20 * Math.exp(-0.2 * Math.sqrt(sum1)) - Math.exp(sum2) + Math.exp(1);
+    var h = 20 - 20 * Math.exp(-0.2 * Math.sqrt(sum1)) - Math.exp(sum2) + Math.exp(1);
 
     t = t + h; // Add h to T_
 
     // Step 4. Specify PF shape: Concave
-    double sumProd = 1.0;
+    var sumProd = 1.0;
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (var i = 0; i < getNumberOfObjectives(); i++) {
       if (i != getNumberOfObjectives() - 1) {
         f[i] = sumProd * Math.cos(Math.PI / 2.0 * theta[i]);
         sumProd *= Math.sin(Math.PI / 2.0 * theta[i]);
@@ -130,7 +129,7 @@ public class CF8 extends AbstractDoubleProblem {
     }
 
     // Step 5. Set objectives
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (var i = 0; i < getNumberOfObjectives(); i++) {
       solution.objectives()[i] = (1 + t) * f[i];
     }
     /* ----------------------Evaluate objectives (end)--------------------------*/
@@ -142,14 +141,14 @@ public class CF8 extends AbstractDoubleProblem {
     constraint[1] = -(sx[0] + h - r);
 
     // Other constraints, if necessary
-    for (int i = 0; i < k; i++) {
+    for (var i = 0; i < k; i++) {
       constraint[2 * (i + 1)] = theta[i] - belta;
       constraint[2 * (i + 1) + 1] = -(theta[i] - alpha);
     }
 
     // Set constraints
-    int bound = getNumberOfConstraints();
-    for (int i = 0; i < bound; i++) {
+    var bound = getNumberOfConstraints();
+    for (var i = 0; i < bound; i++) {
       solution.constraints()[i] = constraint[i];
     }
     /* ----------------------Evaluate constraints (end)--------------------------*/

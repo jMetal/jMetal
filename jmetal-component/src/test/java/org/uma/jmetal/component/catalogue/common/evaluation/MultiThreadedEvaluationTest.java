@@ -36,8 +36,8 @@ class MultiThreadedEvaluationTest {
 
   @Test
   void TheConstructorInitializesTheNumberOfComputedEvaluationsAndTheNumberOfThreads() {
-    DoubleProblem problem = mock(DoubleProblem.class);
-    MultiThreadedEvaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(1, problem);
+    var problem = mock(DoubleProblem.class);
+    var evaluation = new MultiThreadedEvaluation<DoubleSolution>(1, problem);
 
     assertThat(evaluation.getComputedEvaluations()).isZero();
     assertThat(evaluation.getNumberOfThreads()).isEqualTo(1) ;
@@ -45,25 +45,25 @@ class MultiThreadedEvaluationTest {
 
   @Test
   void TheConstructorInitializesTheNumberOfThreadsIfThisValueIsGreaterThanZero() {
-    int numberOfThreads = 8 ;
-    DoubleProblem problem = mock(DoubleProblem.class);
-    MultiThreadedEvaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(numberOfThreads, problem);
+    var numberOfThreads = 8 ;
+    var problem = mock(DoubleProblem.class);
+    var evaluation = new MultiThreadedEvaluation<DoubleSolution>(numberOfThreads, problem);
 
     assertThat(evaluation.getNumberOfThreads()).isEqualTo(numberOfThreads) ;
   }
 
   @Test
   void TheConstructorInitializesTheNumberOfThreadsToTheDefaultValueIfTheParameterIsZero() {
-    int numberOfThreads = 0 ;
-    DoubleProblem problem = mock(DoubleProblem.class);
-    MultiThreadedEvaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(numberOfThreads, problem);
+    var numberOfThreads = 0 ;
+    var problem = mock(DoubleProblem.class);
+    var evaluation = new MultiThreadedEvaluation<DoubleSolution>(numberOfThreads, problem);
 
     assertThat(evaluation.getNumberOfThreads()).isEqualTo(Runtime.getRuntime().availableProcessors()) ;
   }
 
   @Test
   void evaluateANullListRaisesAnException() {
-    DoubleProblem problem = mock(DoubleProblem.class);
+    var problem = mock(DoubleProblem.class);
     Evaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(4, problem);
 
     assertThatThrownBy(() -> evaluation.evaluate(null)).isInstanceOf(NullParameterException.class);
@@ -71,7 +71,7 @@ class MultiThreadedEvaluationTest {
 
   @Test
   void evaluateAnEmptyListDoesNotIncrementTheNumberOfComputedEvaluations() {
-    DoubleProblem problem = mock(DoubleProblem.class);
+    var problem = mock(DoubleProblem.class);
     Evaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(2, problem);
 
     evaluation.evaluate(new ArrayList<>());
@@ -81,7 +81,7 @@ class MultiThreadedEvaluationTest {
 
   @Test
   void evaluateAnEmptyListWithASolutionWorksProperly() {
-    DoubleProblem problem = mock(DoubleProblem.class);
+    var problem = mock(DoubleProblem.class);
     Evaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(4, problem);
 
     evaluation.evaluate(List.of(mock(DoubleSolution.class)));
@@ -92,12 +92,12 @@ class MultiThreadedEvaluationTest {
 
   @Test
   void evaluateAnListWithNSolutionsWorksProperly() {
-    DoubleProblem problem = mock(DoubleProblem.class);
+    var problem = mock(DoubleProblem.class);
     Evaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(4,problem);
 
-    int numberOfSolutions = 10;
+    var numberOfSolutions = 10;
     List<DoubleSolution> solutions = new ArrayList<>(numberOfSolutions);
-      for (int i = 0; i < numberOfSolutions; i++) {
+      for (var i = 0; i < numberOfSolutions; i++) {
           solutions.add(mock(DoubleSolution.class));
       }
 

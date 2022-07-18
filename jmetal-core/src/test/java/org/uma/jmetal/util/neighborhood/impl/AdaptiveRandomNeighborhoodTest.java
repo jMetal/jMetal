@@ -52,7 +52,7 @@ public class AdaptiveRandomNeighborhoodTest {
 
   @Test
   public void shouldConstructorCreateAnInstanceIfTheParamtersAreValid() {
-    AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
+    var neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(6, 4) ;
 
     assertNotNull(neighborhood) ;
@@ -69,7 +69,7 @@ public class AdaptiveRandomNeighborhoodTest {
 
   @Test
   public void shouldGetNeighborsWithANullListOfSolutionsThrowAnException() {
-    AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
+    var neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(4, 2)  ;
 
     exception.expect(JMetalException.class);
@@ -80,16 +80,16 @@ public class AdaptiveRandomNeighborhoodTest {
 
   @Test
   public void shouldGetNeighborsWithANegativeSolutionIndexThrowAnException() {
-    int solutionListSize = 4 ;
-    AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
+    var solutionListSize = 4 ;
+    var neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, 2) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution position value is negative: -1"));
 
     List<IntegerSolution> list = new ArrayList<>();
-    for (int i = 0; i < solutionListSize; i++) {
-      IntegerSolution mock = mock(IntegerSolution.class);
+    for (var i = 0; i < solutionListSize; i++) {
+      var mock = mock(IntegerSolution.class);
       list.add(mock);
     }
 
@@ -98,8 +98,8 @@ public class AdaptiveRandomNeighborhoodTest {
 
   @Test
   public void shouldGetNeighborsWithATooBigSolutionIndexThrowAnException() {
-    int solutionListSize = 4 ;
-    AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
+    var solutionListSize = 4 ;
+    var neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, 2) ;
 
     exception.expect(JMetalException.class);
@@ -107,8 +107,8 @@ public class AdaptiveRandomNeighborhoodTest {
             "is equal or greater than the solution list size: " + solutionListSize));
 
     List<IntegerSolution> list = new ArrayList<>();
-    for (int i = 0; i < solutionListSize; i++) {
-      IntegerSolution mock = mock(IntegerSolution.class);
+    for (var i = 0; i < solutionListSize; i++) {
+      var mock = mock(IntegerSolution.class);
       list.add(mock);
     }
 
@@ -117,8 +117,8 @@ public class AdaptiveRandomNeighborhoodTest {
 
   @Test
   public void shouldGetNeighborsThrowAnExceptionIfTheListSizeIsNotCorrect() {
-    int solutionListSize = 4 ;
-    AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
+    var solutionListSize = 4 ;
+    var neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, 2) ;
 
     exception.expect(JMetalException.class);
@@ -126,9 +126,9 @@ public class AdaptiveRandomNeighborhoodTest {
             "is different to the value: " + solutionListSize));
 
     List<IntegerSolution> list = new ArrayList<>();
-    int bound = solutionListSize - 1;
-    for (int i = 0; i < bound; i++) {
-      IntegerSolution mock = mock(IntegerSolution.class);
+    var bound = solutionListSize - 1;
+    for (var i = 0; i < bound; i++) {
+      var mock = mock(IntegerSolution.class);
       list.add(mock);
     }
 
@@ -144,18 +144,18 @@ public class AdaptiveRandomNeighborhoodTest {
    */
   @Test
   public void shouldGetNeighborsReturnTwoNeighborsPlusTheCurrentSolution() {
-    int solutionListSize = 4 ;
-    int numberOfNeighbors = 2 ;
-    AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
+    var solutionListSize = 4 ;
+    var numberOfNeighbors = 2 ;
+    var neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, numberOfNeighbors) ;
 
     List<IntegerSolution> list = new ArrayList<>(solutionListSize);
-    for (int i = 0; i < solutionListSize; i++) {
-      IntegerSolution mock = mock(IntegerSolution.class);
+    for (var i = 0; i < solutionListSize; i++) {
+      var mock = mock(IntegerSolution.class);
       list.add(mock);
     }
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+    var result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(numberOfNeighbors + 1, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
   }
@@ -173,9 +173,9 @@ public class AdaptiveRandomNeighborhoodTest {
    */
   @Test
   public void shouldGetNeighborsReturnThreeNeighborsPlusTheCurrentSolution() {
-    int solutionListSize = 3 ;
-    int numberOfNeighbors = 1 ;
-    AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
+    var solutionListSize = 3 ;
+    var numberOfNeighbors = 1 ;
+    var neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, numberOfNeighbors) ;
 
     @SuppressWarnings("unchecked")
@@ -185,15 +185,14 @@ public class AdaptiveRandomNeighborhoodTest {
     ReflectionTestUtils.setField(neighborhood, "randomGenerator", randomGenerator);
 
     List<IntegerSolution> list = new ArrayList<>(solutionListSize);
-    for (int i = 0; i < solutionListSize; i++) {
-      IntegerSolution mock = mock(IntegerSolution.class);
+    for (var i = 0; i < solutionListSize; i++) {
+      var mock = mock(IntegerSolution.class);
       list.add(mock);
     }
 
     neighborhood.recompute();
 
-    List<IntegerSolution> result ;
-    result = neighborhood.getNeighbors(list, 0) ;
+    var result = neighborhood.getNeighbors(list, 0);
     assertEquals(numberOfNeighbors + 1, result.size()) ;
     assertEquals(list.get(0), result.get(0));
     assertEquals(list.get(2), result.get(1));
@@ -212,13 +211,13 @@ public class AdaptiveRandomNeighborhoodTest {
 	@Test
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
-		int solutionListSize = 3;
-		int numberOfRandomNeighbours = 1;
+      var solutionListSize = 3;
+      var numberOfRandomNeighbours = 1;
 
 		// Check configuration leads to use default generator by default
-		final int[] defaultUses = { 0 };
-		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		final var defaultUses = new int[]{0};
+      var defaultGenerator = JMetalRandom.getInstance();
+      var auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
@@ -227,7 +226,7 @@ public class AdaptiveRandomNeighborhoodTest {
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
-		final int[] customUses = { 0 };
+		final var customUses = new int[]{0};
 		new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours, (a, b) -> {
 			customUses[0]++;
 			return new Random().nextInt(b-a+1)+a;

@@ -21,7 +21,7 @@ public class DefaultRestartStrategy<S extends Solution<?>> implements RestartStr
   }
 
   public void restart(List<S> solutionList, DynamicProblem<S,?> problem) {
-    int numberOfRemovedSolutions = removeSolutionsStrategy.remove(solutionList, problem);
+    var numberOfRemovedSolutions = removeSolutionsStrategy.remove(solutionList, problem);
     createNewSolutionsStrategy.create(solutionList, problem, numberOfRemovedSolutions); ;
   }
 }

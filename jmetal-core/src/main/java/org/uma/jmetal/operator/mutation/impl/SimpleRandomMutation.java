@@ -58,12 +58,12 @@ public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {
 
   /** Implements the mutation operation */
   private void doMutation(double probability, DoubleSolution solution) {
-    for (int i = 0; i < solution.variables().size(); i++) {
+    for (var i = 0; i < solution.variables().size(); i++) {
       if (randomGenerator.getRandomValue() <= probability) {
-        Bounds<Double> bounds = solution.getBounds(i);
-        Double lowerBound = bounds.getLowerBound();
-        Double upperBound = bounds.getUpperBound();
-        Double randomValue = randomGenerator.getRandomValue();
+        var bounds = solution.getBounds(i);
+        var lowerBound = bounds.getLowerBound();
+        var upperBound = bounds.getUpperBound();
+        var randomValue = randomGenerator.getRandomValue();
         @NotNull Double value = lowerBound + ((upperBound - lowerBound) * randomValue);
 
         solution.variables().set(i, value);

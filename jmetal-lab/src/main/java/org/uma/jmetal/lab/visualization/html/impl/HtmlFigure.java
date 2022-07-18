@@ -19,7 +19,7 @@ public class HtmlFigure implements HtmlComponent {
   }
 
   public @NotNull String getHtml() {
-    StringBuilder stringBuilder = new StringBuilder();
+    var stringBuilder = new StringBuilder();
     stringBuilder
         .append("<div id='")
         .append(hashCode())
@@ -31,7 +31,7 @@ public class HtmlFigure implements HtmlComponent {
   }
 
   public String getCSS() {
-    StringBuilder stringBuilder = new StringBuilder();
+    var stringBuilder = new StringBuilder();
     stringBuilder.append(".svg-container { width: 80%, margin: auto} ");
     return stringBuilder.toString();
   }

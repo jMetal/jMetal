@@ -120,7 +120,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 
-    for (int i = 0; i < x.length; i++) {
+    for (var i = 0; i < x.length; i++) {
       if (randomGenerator.getRandomValue() <= mutationProbability) {
         y = x[i];
         yl = lowerBound[i];
@@ -156,10 +156,10 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 
-    for (int i = 0; i < solution.variables().size(); i++) {
+    for (var i = 0; i < solution.variables().size(); i++) {
       if (randomGenerator.getRandomValue() <= mutationProbability) {
         y = solution.variables().get(i);
-        Bounds<Double> bounds = solution.getBounds(i);
+        var bounds = solution.getBounds(i);
         yl = bounds.getLowerBound();
         yu = bounds.getUpperBound();
         if (yl == yu) {

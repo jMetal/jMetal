@@ -24,8 +24,8 @@ public class TSVToCSVConverter {
       throw new JMetalException("Wrong number of arguments: two file names are required.");
     }
 
-    String inputFileName = args[0];
-    String outputFileName = args[1];
+      var inputFileName = args[0];
+      var outputFileName = args[1];
 
     Stream<String> lines;
     BufferedWriter outputFile;

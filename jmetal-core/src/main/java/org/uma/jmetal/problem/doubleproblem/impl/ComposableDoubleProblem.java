@@ -103,15 +103,15 @@ public class ComposableDoubleProblem implements DoubleProblem {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    Double @NotNull [] vars = solution.variables().toArray(new Double[getNumberOfVariables()]);
+    var vars = solution.variables().toArray(new Double[getNumberOfVariables()]);
 
-    int bound1 = getNumberOfObjectives();
-    for (int i1 = 0; i1 < bound1; i1++) {
+    var bound1 = getNumberOfObjectives();
+    for (var i1 = 0; i1 < bound1; i1++) {
       solution.objectives()[i1] = objectiveFunctions.get(i1).apply(vars);
     }
 
-    int bound = getNumberOfConstraints();
-    for (int i = 0; i < bound; i++) {
+    var bound = getNumberOfConstraints();
+    for (var i = 0; i < bound; i++) {
       solution.constraints()[i] = constraints.get(i).apply(vars);
     }
 

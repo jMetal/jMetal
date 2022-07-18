@@ -70,10 +70,10 @@ public class GenericUniformCrossover<S extends BinarySolution> implements Crosso
     offspring.add((S) parent2.copy());
 
     if (crossoverRandomGenerator.getRandomValue() < probability) {
-      for (int variableIndex = 0; variableIndex < parent1.variables().size(); variableIndex++) {
-        for (int bitIndex = 0;
-            bitIndex < parent1.variables().get(variableIndex).getBinarySetLength();
-            bitIndex++) {
+      for (var variableIndex = 0; variableIndex < parent1.variables().size(); variableIndex++) {
+        for (var bitIndex = 0;
+             bitIndex < parent1.variables().get(variableIndex).getBinarySetLength();
+             bitIndex++) {
           if (crossoverRandomGenerator.getRandomValue() < 0.5) {
             offspring
                 .get(0)

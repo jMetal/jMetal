@@ -27,8 +27,8 @@ public abstract class ListGrouping<C extends Comparable<C>> implements Collectio
   }
 
   protected void createGroups() {
-    int groupSize = computeGroupSize();
-    int index = groupValues(groupSize);
+    var groupSize = computeGroupSize();
+    var index = groupValues(groupSize);
 
     fillRemainingIndices(index);
   }
@@ -40,10 +40,10 @@ public abstract class ListGrouping<C extends Comparable<C>> implements Collectio
    * @return the position of the index after the grouping
    */
   private int groupValues(int groupSize) {
-    int index = 0 ;
-    for (int i = 0; i < numberOfGroups; i++) {
+    var index = 0 ;
+    for (var i = 0; i < numberOfGroups; i++) {
       groups.add(new ArrayList<>());
-      for (int j = 0; j < groupSize; j++) {
+      for (var j = 0; j < groupSize; j++) {
         groups.get(i).add(indices.get(index++));
       }
     }
@@ -56,7 +56,7 @@ public abstract class ListGrouping<C extends Comparable<C>> implements Collectio
    * @param index
    */
   private void fillRemainingIndices(int index) {
-    int lastGroupIndex = groups.size() - 1 ;
+    var lastGroupIndex = groups.size() - 1 ;
     while (index < indices.size()) {
       groups.get(lastGroupIndex).add(indices.get(index++)) ;
     }

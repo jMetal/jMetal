@@ -50,8 +50,8 @@ public class C1_DTLZ3 extends DTLZ3 {
   public void evaluateConstraints(DoubleSolution solution) {
     double sum1 = 0 ;
     double sum2 = 0 ;
-    for (int i = 0; i < solution.objectives().length; i++) {
-      double v = Math.pow(solution.objectives()[i], 2) ;
+    for (var i = 0; i < solution.objectives().length; i++) {
+      var v = Math.pow(solution.objectives()[i], 2) ;
       sum1 += v - 16.0 ;
       sum2 += v - Math.pow(rValue.get(solution.objectives().length), 2.0) ;
     }

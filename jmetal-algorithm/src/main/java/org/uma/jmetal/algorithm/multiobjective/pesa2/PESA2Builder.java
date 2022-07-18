@@ -86,9 +86,8 @@ public class PESA2Builder<S extends Solution<?>> implements AlgorithmBuilder<PES
   }
 
   public PESA2<S> build() {
-    PESA2<S> algorithm  ;
-    algorithm = new PESA2<S>(problem, maxEvaluations, populationSize, archiveSize, biSections,
-        crossoverOperator, mutationOperator, evaluator);
+    var algorithm = new PESA2<S>(problem, maxEvaluations, populationSize, archiveSize, biSections,
+            crossoverOperator, mutationOperator, evaluator);
     
     return algorithm ;
   }

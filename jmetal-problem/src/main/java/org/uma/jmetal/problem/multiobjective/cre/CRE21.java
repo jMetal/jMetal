@@ -44,17 +44,16 @@ public class CRE21 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double @NotNull [] constraint = new double[this.getNumberOfConstraints()];
-    double x2, x3;
+    var constraint = new double[this.getNumberOfConstraints()];
 
-    x2 = solution.variables().get(1);
-    x3 = solution.variables().get(2);
+    double x2 = solution.variables().get(1);
+    double x3 = solution.variables().get(2);
 
     constraint[0] = 0.1 - solution.objectives()[0];
     constraint[1] = 100000.0 - -solution.objectives()[1];
     constraint[2] = 100000 - ((80.0 * Math.sqrt(1.0 + x3 * x3)) / (x3 * x2));
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i] < 0.0) {
         constraint[i] = -constraint[i];
       } else {
@@ -62,7 +61,7 @@ public class CRE21 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

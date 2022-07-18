@@ -50,22 +50,22 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
             .yAxisTitle("Objective " + this.objective2).build();
     this.frontChart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter).setMarkerSize(5);
 
-    double[] xData = new double[]{0};
-    double[] yData = new double[]{0};
-    XYSeries frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
+    var xData = new double[]{0};
+    var yData = new double[]{0};
+    var frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
     frontChartSeries.setMarkerColor(Color.blue);
 
     this.charts.put("Front", this.frontChart);
   }
 
   public synchronized void setReferencePoint(List<List<Double>> referencePoint) {
-    for (int i = 0; i < referencePoint.size(); i++) {
+    for (var i = 0; i < referencePoint.size(); i++) {
       double rp1 = referencePoint.get(i).get(this.objective1);
       double rp2 = referencePoint.get(i).get(this.objective2);
 
       referencePointName.add("Reference Point [" + rp1 + ", " + rp2 + "]");
 
-      XYSeries referencePointSeries = this.frontChart.addSeries(referencePointName.get(i),
+      var referencePointSeries = this.frontChart.addSeries(referencePointName.get(i),
               new double[]{rp1},
               new double[]{rp2});
       referencePointSeries.setMarkerColor(Color.green);
@@ -73,7 +73,7 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
   }
 
   public synchronized void updateReferencePoint(List<List<Double>> referencePoint) {
-    for (int i = 0; i < referencePoint.size(); i++) {
+    for (var i = 0; i < referencePoint.size(); i++) {
       double rp1 = referencePoint.get(i).get(this.objective1);
       double rp2 = referencePoint.get(i).get(this.objective2);
 
@@ -81,7 +81,7 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
 
       referencePointName.set(i, "Reference Point [" + rp1 + ", " + rp2 + "]");
 
-      XYSeries referencePointSeries = this.frontChart.addSeries(referencePointName.get(i),
+      var referencePointSeries = this.frontChart.addSeries(referencePointName.get(i),
               new double[]{rp1},
               new double[]{rp2});
       referencePointSeries.setMarkerColor(Color.green);
@@ -123,7 +123,7 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
 
   public void repaint() {
     try {
-      for (int i = 0; i < this.charts.values().size(); i++) {
+      for (var i = 0; i < this.charts.values().size(); i++) {
         this.swingWrapper.repaintChart(i);
       }
     } catch (IndexOutOfBoundsException e) {
@@ -133,10 +133,10 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
   }
 
   private double[] getSolutionsForObjective(List<S> solutionList, int objective) {
-    double[] result = new double[10];
-    int count = 0;
-    for (S s : solutionList) {
-      double v = s.objectives()[objective];
+    var result = new double[10];
+    var count = 0;
+    for (var s : solutionList) {
+      var v = s.objectives()[objective];
       if (result.length == count) result = Arrays.copyOf(result, count * 2);
       result[count++] = v;
     }
@@ -145,7 +145,7 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
   }
 
   public void saveChart(String fileName, BitmapEncoder.BitmapFormat format) throws IOException {
-    for (String chart : this.charts.keySet()) {
+    for (var chart : this.charts.keySet()) {
       BitmapEncoder.saveBitmap(this.charts.get(chart), fileName + "_" + chart, format);
     }
   }

@@ -35,12 +35,7 @@ public class NSGAIIStoppingByTimeRunner extends AbstractAlgorithmRunner {
     java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -53,41 +48,41 @@ public class NSGAIIStoppingByTimeRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
-    problem = ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(
-        new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(
+              new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    int thresholdComputingTimeInMilliseconds = 4000 ;
-    int populationSize = 100 ;
-    int matingPoolSize = 100 ;
-    int offspringPopulationSize = 100 ;
+    var thresholdComputingTimeInMilliseconds = 4000 ;
+    var populationSize = 100 ;
+    var matingPoolSize = 100 ;
+    var offspringPopulationSize = 100 ;
 
-    algorithm = new NSGAIIStoppingByTime<DoubleSolution>(
-            problem,
-            populationSize,
-            thresholdComputingTimeInMilliseconds,
-            matingPoolSize,
-            offspringPopulationSize,
-            crossover,
-            mutation,
-            selection,
-            new DominanceWithConstraintsComparator<>(),
-            new SequentialSolutionListEvaluator<>()) ;
+      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIStoppingByTime<DoubleSolution>(
+              problem,
+              populationSize,
+              thresholdComputingTimeInMilliseconds,
+              matingPoolSize,
+              offspringPopulationSize,
+              crossover,
+              mutation,
+              selection,
+              new DominanceWithConstraintsComparator<>(),
+              new SequentialSolutionListEvaluator<>());
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

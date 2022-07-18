@@ -28,35 +28,30 @@ public class GenerationalGeneticAlgorithmBinaryEncodingRunner {
    * Usage: java org.uma.jmetal.runner.singleobjective.GenerationalGeneticAlgorithmBinaryEncodingRunner
    */
   public static void main(String[] args) throws Exception {
-    BinaryProblem problem;
-    Algorithm<BinarySolution> algorithm;
-    CrossoverOperator<BinarySolution> crossover;
-    MutationOperator<BinarySolution> mutation;
-    SelectionOperator<List<BinarySolution>, BinarySolution> selection;
 
-    problem = new OneMax(512) ;
+      BinaryProblem problem = new OneMax(512);
 
-    crossover = new SinglePointCrossover(0.9) ;
+      CrossoverOperator<BinarySolution> crossover = new SinglePointCrossover(0.9);
 
-    double mutationProbability = 1.0 / problem.getBitsFromVariable(0) ;
-    mutation = new BitFlipMutation(mutationProbability) ;
+    var mutationProbability = 1.0 / problem.getBitsFromVariable(0) ;
+      MutationOperator<BinarySolution> mutation = new BitFlipMutation(mutationProbability);
 
-    selection = new BinaryTournamentSelection<BinarySolution>();
+      SelectionOperator<List<BinarySolution>, BinarySolution> selection = new BinaryTournamentSelection<BinarySolution>();
 
-    algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
-            .setPopulationSize(100)
-            .setMaxEvaluations(25000)
-            .setSelectionOperator(selection)
-            .build() ;
+    var algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
+              .setPopulationSize(100)
+              .setMaxEvaluations(25000)
+              .setSelectionOperator(selection)
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    BinarySolution solution = algorithm.getResult() ;
+    var solution = algorithm.getResult() ;
     List<BinarySolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionListOutput(population)
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))

@@ -11,25 +11,25 @@ class CosineSimilarityBetweenVectorsTest {
 
   @Test
   void shouldIdenticalPointsHaveADistanceOfOne() {
-    CosineSimilarityBetweenVectors distance = new CosineSimilarityBetweenVectors(new double[]{0.0, 0.0}) ;
+    var distance = new CosineSimilarityBetweenVectors(new double[]{0.0, 0.0}) ;
 
-    double receivedValue = distance.compute(new double[]{1.0, 1.0}, new double[]{1.0, 1.0}) ;
+    var receivedValue = distance.compute(new double[]{1.0, 1.0}, new double[]{1.0, 1.0}) ;
     assertThat(receivedValue).isEqualTo(1.0, withPrecision(EPSILON));
   }
 
   @Test
   void shouldPointsInTheSameDirectionHaveADistanceOfOne() {
-    CosineSimilarityBetweenVectors distance = new CosineSimilarityBetweenVectors(new double[]{0.0, 0.0}) ;
+    var distance = new CosineSimilarityBetweenVectors(new double[]{0.0, 0.0}) ;
 
-    double receivedValue = distance.compute(new double[]{1.0, 1.0}, new double[]{2.0, 2.0}) ;
+    var receivedValue = distance.compute(new double[]{1.0, 1.0}, new double[]{2.0, 2.0}) ;
     assertThat(receivedValue).isEqualTo(1.0, withPrecision(EPSILON));
   }
 
   @Test
   void shouldTwoPerpendicularPointsHaveADistanceOfZero() {
-    CosineSimilarityBetweenVectors distance = new CosineSimilarityBetweenVectors(new double[]{0.0, 0.0}) ;
+    var distance = new CosineSimilarityBetweenVectors(new double[]{0.0, 0.0}) ;
 
-    double receivedValue = distance.compute(new double[]{0.0, 1.0}, new double[]{1.0, 0.0}) ;
+    var receivedValue = distance.compute(new double[]{0.0, 1.0}, new double[]{1.0, 0.0}) ;
     assertThat(receivedValue).isEqualTo(0.0, withPrecision(EPSILON));
   }
 }

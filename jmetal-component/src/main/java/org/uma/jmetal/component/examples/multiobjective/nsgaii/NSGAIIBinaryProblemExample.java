@@ -33,12 +33,12 @@ public class NSGAIIBinaryProblemExample {
     var  crossover = new SinglePointCrossover(0.9);
     var mutation = new BitFlipMutation(1.0 / problem.getTotalNumberOfBits());
 
-    int populationSize = 100;
-    int offspringPopulationSize = 100;
+    var populationSize = 100;
+    var offspringPopulationSize = 100;
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    EvolutionaryAlgorithm<BinarySolution> nsgaii = new NSGAIIBuilder<>(
+    var nsgaii = new NSGAIIBuilder<>(
                     problem,
                     populationSize,
                     offspringPopulationSize,
@@ -49,7 +49,7 @@ public class NSGAIIBinaryProblemExample {
 
     nsgaii.run();
 
-    List<BinarySolution> population = nsgaii.getResult();
+    var population = nsgaii.getResult();
     JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 

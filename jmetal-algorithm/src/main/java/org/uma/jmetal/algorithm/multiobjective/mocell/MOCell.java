@@ -120,7 +120,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   @Override
   protected List<S> reproduction(List<S> population) {
     List<S> result = new ArrayList<>(1);
-    List<S> offspring = crossoverOperator.execute(population);
+    var offspring = crossoverOperator.execute(population);
     mutationOperator.execute(offspring.get(0));
     result.add(offspring.get(0));
     return result;
@@ -128,7 +128,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   protected @NotNull List<S> replacement(@NotNull List<S> population, List<S> offspringPopulation) {
-    int flag =
+    var flag =
         dominanceComparator.compare(population.get(currentIndividual), offspringPopulation.get(0));
 
     if (flag == 1) { // The new individual dominates
@@ -160,12 +160,12 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     rank.compute(currentNeighbors);
 
     DensityEstimator<S> crowdingDistance = new CrowdingDistanceDensityEstimator<>();
-    for (int j = 0; j < rank.getNumberOfSubFronts(); j++) {
+    for (var j = 0; j < rank.getNumberOfSubFronts(); j++) {
       crowdingDistance.compute(rank.getSubFront(j));
     }
 
     Collections.sort(this.currentNeighbors, new RankingAndCrowdingDistanceComparator<S>());
-    S worst = this.currentNeighbors.get(this.currentNeighbors.size() - 1);
+    var worst = this.currentNeighbors.get(this.currentNeighbors.size() - 1);
 
     archive.add(offspringPopulation.get(0));
 

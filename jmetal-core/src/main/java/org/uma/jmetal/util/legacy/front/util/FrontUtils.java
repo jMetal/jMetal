@@ -35,19 +35,19 @@ public class FrontUtils {
       throw new EmptyFrontException();
     }
 
-    int numberOfObjectives = front.getPoint(0).getDimension();
+    var numberOfObjectives = front.getPoint(0).getDimension();
 
-      double[] maximumValue = new double[10];
-      int count = 0;
-      for (int i1 = 0; i1 < numberOfObjectives; i1++) {
-          double negativeInfinity = Double.NEGATIVE_INFINITY;
+    var maximumValue = new double[10];
+    var count = 0;
+      for (var i1 = 0; i1 < numberOfObjectives; i1++) {
+        var negativeInfinity = Double.NEGATIVE_INFINITY;
           if (maximumValue.length == count) maximumValue = Arrays.copyOf(maximumValue, count * 2);
           maximumValue[count++] = negativeInfinity;
       }
       maximumValue = Arrays.copyOfRange(maximumValue, 0, count);
 
-      for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      for (int j = 0; j < numberOfObjectives; j++) {
+      for (var i = 0; i < front.getNumberOfPoints(); i++) {
+      for (var j = 0; j < numberOfObjectives; j++) {
         if (front.getPoint(i).getValue(j) > maximumValue[j]) {
           maximumValue[j] = front.getPoint(i).getValue(j);
         }
@@ -70,19 +70,19 @@ public class FrontUtils {
       throw new EmptyFrontException();
     }
 
-    int numberOfObjectives = front.getPoint(0).getDimension();
+    var numberOfObjectives = front.getPoint(0).getDimension();
 
-      double @NotNull [] minimumValue = new double[10];
-      int count = 0;
-      for (int i1 = 0; i1 < numberOfObjectives; i1++) {
-          double maxValue = Double.MAX_VALUE;
+    var minimumValue = new double[10];
+    var count = 0;
+      for (var i1 = 0; i1 < numberOfObjectives; i1++) {
+        var maxValue = Double.MAX_VALUE;
           if (minimumValue.length == count) minimumValue = Arrays.copyOf(minimumValue, count * 2);
           minimumValue[count++] = maxValue;
       }
       minimumValue = Arrays.copyOfRange(minimumValue, 0, count);
 
-      for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      for (int j = 0; j < numberOfObjectives; j++) {
+      for (var i = 0; i < front.getNumberOfPoints(); i++) {
+      for (var j = 0; j < numberOfObjectives; j++) {
         if (front.getPoint(i).getValue(j) < minimumValue[j]) {
           minimumValue[j] = front.getPoint(i).getValue(j);
         }
@@ -121,10 +121,10 @@ public class FrontUtils {
       throw new JMetalException("The point is null");
     }
 
-    double minDistance = Double.MAX_VALUE;
+    var minDistance = Double.MAX_VALUE;
 
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      double aux = distance.compute(point.getValues(), front.getPoint(i).getValues());
+    for (var i = 0; i < front.getNumberOfPoints(); i++) {
+      var aux = distance.compute(point.getValues(), front.getPoint(i).getValues());
       if ((aux < minDistance) && (aux > 0.0)) {
         minDistance = aux;
       }
@@ -163,10 +163,10 @@ public class FrontUtils {
       throw new JMetalException("The point is null");
     }
 
-    double minDistance = distance.compute(point.getValues(), front.getPoint(0).getValues());
+    var minDistance = distance.compute(point.getValues(), front.getPoint(0).getValues());
 
-    for (int i = 1; i < front.getNumberOfPoints(); i++) {
-      double aux = distance.compute(point.getValues(), front.getPoint(i).getValues());
+    for (var i = 1; i < front.getNumberOfPoints(); i++) {
+      var aux = distance.compute(point.getValues(), front.getPoint(i).getValues());
       if (aux < minDistance) {
         minDistance = aux;
       }
@@ -189,11 +189,11 @@ public class FrontUtils {
       throw new EmptyFrontException();
     }
 
-    int numberOfDimensions = front.getPoint(0).getDimension();
+    var numberOfDimensions = front.getPoint(0).getDimension();
     @NotNull Front invertedFront = new ArrayFront(front.getNumberOfPoints(), numberOfDimensions);
 
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      for (int j = 0; j < numberOfDimensions; j++) {
+    for (var i = 0; i < front.getNumberOfPoints(); i++) {
+      for (var j = 0; j < numberOfDimensions; j++) {
         if (front.getPoint(i).getValue(j) <= 1.0
                 && front.getPoint(i).getValue(j) >= 0.0) {
           invertedFront.getPoint(i).setValue(j, 1.0 - front.getPoint(i).getValue(j));
@@ -218,11 +218,11 @@ public class FrontUtils {
       throw new NullFrontException();
     }
 
-    double[][] arrayFront = new double[front.getNumberOfPoints()][];
+    var arrayFront = new double[front.getNumberOfPoints()][];
 
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
+    for (var i = 0; i < front.getNumberOfPoints(); i++) {
       arrayFront[i] = new double[front.getPoint(i).getDimension()];
-      for (int j = 0; j < front.getPoint(i).getDimension(); j++) {
+      for (var j = 0; j < front.getPoint(i).getDimension(); j++) {
         arrayFront[i][j] = front.getPoint(i).getValue(j);
       }
     }
@@ -277,7 +277,7 @@ public class FrontUtils {
     }
 
     int numberOfObjectives;
-    int solutionSetSize = front.getNumberOfPoints();
+    var solutionSetSize = front.getNumberOfPoints();
     if (front.getNumberOfPoints() == 0) {
       numberOfObjectives = 0;
     } else {
@@ -285,9 +285,9 @@ public class FrontUtils {
     }
     List<PointSolution> solutionSet = new ArrayList<>(solutionSetSize);
 
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      PointSolution solution = new PointSolution(numberOfObjectives);
-      for (int j = 0; j < numberOfObjectives; j++) {
+    for (var i = 0; i < front.getNumberOfPoints(); i++) {
+      var solution = new PointSolution(numberOfObjectives);
+      for (var j = 0; j < numberOfObjectives; j++) {
         solution.objectives()[j] = front.getPoint(i).getValue(j);
       }
 

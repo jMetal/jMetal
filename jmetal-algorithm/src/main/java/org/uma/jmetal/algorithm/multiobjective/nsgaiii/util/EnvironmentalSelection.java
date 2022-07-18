@@ -43,18 +43,17 @@ public class EnvironmentalSelection<S extends Solution<?>>
   }
 
   public @NotNull List<Double> translateObjectives(List<S> population) {
-    List<Double> ideal_point;
-    ideal_point = new ArrayList<>(numberOfObjectives);
+    List<Double> ideal_point = new ArrayList<>(numberOfObjectives);
 
-    for (int f = 0; f < numberOfObjectives; f += 1) {
-      double minf = Double.MAX_VALUE;
-      for (int i = 0; i < fronts.get(0).size(); i += 1) // min values must appear in the first front
+    for (var f = 0; f < numberOfObjectives; f += 1) {
+      var minf = Double.MAX_VALUE;
+      for (var i = 0; i < fronts.get(0).size(); i += 1) // min values must appear in the first front
       {
         minf = Math.min(minf, fronts.get(0).get(i).objectives()[f]);
       }
       ideal_point.add(minf);
 
-      for (List<S> list : fronts) {
+      for (var list : fronts) {
         for (@NotNull S s : list) {
           if (f == 0) // in the first objective we create the vector of conv_objs
           setAttribute(s, new ArrayList<Double>());
@@ -74,9 +73,9 @@ public class EnvironmentalSelection<S extends Solution<?>>
   // different to the one impelemented in C++
   // ----------------------------------------------------------------------
   private double ASF(@NotNull S s, int index) {
-    double max_ratio = Double.NEGATIVE_INFINITY;
-    for (int i = 0; i < s.objectives().length; i++) {
-      double weight = (index == i) ? 1.0 : 0.000001;
+    var max_ratio = Double.NEGATIVE_INFINITY;
+    for (var i = 0; i < s.objectives().length; i++) {
+      var weight = (index == i) ? 1.0 : 0.000001;
       max_ratio = Math.max(max_ratio, s.objectives()[i] / weight);
     }
     return max_ratio;
@@ -86,10 +85,10 @@ public class EnvironmentalSelection<S extends Solution<?>>
   private @NotNull List<S> findExtremePoints(List<S> population) {
     List<S> extremePoints = new ArrayList<>();
     S min_indv = null;
-    for (int f = 0; f < numberOfObjectives; f += 1) {
-      double min_ASF = Double.MAX_VALUE;
+    for (var f = 0; f < numberOfObjectives; f += 1) {
+      var min_ASF = Double.MAX_VALUE;
       for (@NotNull S s : fronts.get(0)) { // only consider the individuals in the first front
-        double asf = ASF(s, f);
+        var asf = ASF(s, f);
         if (asf < min_ASF) {
           min_ASF = asf;
           min_indv = s;
@@ -102,31 +101,30 @@ public class EnvironmentalSelection<S extends Solution<?>>
   }
 
   public List<Double> guassianElimination(@NotNull List<List<Double>> A, List<Double> b) {
-    List<Double> x;
 
-    int N = A.size();
-    for (int i = 0; i < N; i += 1) {
+    var N = A.size();
+    for (var i = 0; i < N; i += 1) {
       A.get(i).add(b.get(i));
     }
 
-    for (int base = 0; base < N - 1; base += 1) {
-      for (int target = base + 1; target < N; target += 1) {
-        double ratio = A.get(target).get(base) / A.get(base).get(base);
-        for (int term = 0; term < A.get(base).size(); term += 1) {
+    for (var base = 0; base < N - 1; base += 1) {
+      for (var target = base + 1; target < N; target += 1) {
+        var ratio = A.get(target).get(base) / A.get(base).get(base);
+        for (var term = 0; term < A.get(base).size(); term += 1) {
           A.get(target).set(term, A.get(target).get(term) - A.get(base).get(term) * ratio);
         }
       }
     }
 
     List<Double> list = new ArrayList<>();
-    for (int i1 = 0; i1 < N; i1++) {
+    for (var i1 = 0; i1 < N; i1++) {
       Double aDouble = 0.0;
       list.add(aDouble);
     }
-    x = list;
+    var x = list;
 
-    for (int i = N - 1; i >= 0; i -= 1) {
-      for (int known = i + 1; known < N; known += 1) {
+    for (var i = N - 1; i >= 0; i -= 1) {
+      for (var known = i + 1; known < N; known += 1) {
         A.get(i).set(N, A.get(i).get(N) - A.get(i).get(known) * x.get(known));
       }
       x.set(i, A.get(i).get(N) / A.get(i).get(i));
@@ -137,9 +135,9 @@ public class EnvironmentalSelection<S extends Solution<?>>
   public List<Double> constructHyperplane(List<S> population, @NotNull List<S> extreme_points) {
     // Check whether there are duplicate extreme points.
     // This might happen but the original paper does not mention how to deal with it.
-    boolean duplicate = false;
-    for (int i = 0; !duplicate && i < extreme_points.size(); i += 1) {
-      for (int j = i + 1; !duplicate && j < extreme_points.size(); j += 1) {
+    var duplicate = false;
+    for (var i = 0; !duplicate && i < extreme_points.size(); i += 1) {
+      for (var j = i + 1; !duplicate && j < extreme_points.size(); j += 1) {
         duplicate = extreme_points.get(i).equals(extreme_points.get(j));
       }
     }
@@ -151,8 +149,8 @@ public class EnvironmentalSelection<S extends Solution<?>>
     {
         // extreme_points[f] stands for the individual with the largest value of objective f
       @NotNull List<Double> list = new ArrayList<>();
-      int bound = numberOfObjectives;
-      for (int f = 0; f < bound; f++) {
+      var bound = numberOfObjectives;
+      for (var f = 0; f < bound; f++) {
         Double objective = extreme_points.get(f).objectives()[f];
         list.add(objective);
       }
@@ -161,18 +159,18 @@ public class EnvironmentalSelection<S extends Solution<?>>
       // Find the equation of the hyperplane
       // (pop[0].objs().size(), 1.0);
       List<Double> b = new ArrayList<>();
-      int bound1 = numberOfObjectives;
-      for (int i1 = 0; i1 < bound1; i1++) {
+      var bound1 = numberOfObjectives;
+      for (var i1 = 0; i1 < bound1; i1++) {
         Double aDouble1 = 1.0;
         b.add(aDouble1);
       }
 
-      List<List<Double>> A = extreme_points.stream().<List<Double>>map(s -> {
+      var A = extreme_points.stream().<List<Double>>map(s -> {
         List<Double> list = new ArrayList<>();
-        double[] array = s.objectives();
-        int bound = numberOfObjectives;
-        for (int i = 0; i < bound; i++) {
-          double v = array[i];
+        var array = s.objectives();
+        var bound = numberOfObjectives;
+        for (var i = 0; i < bound; i++) {
+          var v = array[i];
           Double aDouble = v;
           list.add(aDouble);
         }
@@ -182,8 +180,8 @@ public class EnvironmentalSelection<S extends Solution<?>>
 
       // Find intercepts
       @NotNull List<Double> list = new ArrayList<>();
-      int bound = numberOfObjectives;
-      for (int f = 0; f < bound; f++) {
+      var bound = numberOfObjectives;
+      for (var f = 0; f < bound; f++) {
         Double aDouble = 1.0 / x.get(f);
         list.add(aDouble);
       }
@@ -194,11 +192,11 @@ public class EnvironmentalSelection<S extends Solution<?>>
 
   public void normalizeObjectives(
           List<S> population, List<Double> intercepts, @NotNull List<Double> ideal_point) {
-    for (int t = 0; t < fronts.size(); t += 1) {
+    for (var t = 0; t < fronts.size(); t += 1) {
       for (@NotNull S s : fronts.get(t)) {
 
-        for (int f = 0; f < numberOfObjectives; f++) {
-          List<Double> conv_obj = (List<Double>) getAttribute(s);
+        for (var f = 0; f < numberOfObjectives; f++) {
+          var conv_obj = (List<Double>) getAttribute(s);
           if (Math.abs(intercepts.get(f) - ideal_point.get(f)) > 10e-10) {
             conv_obj.set(f, conv_obj.get(f) / (intercepts.get(f) - ideal_point.get(f)));
           } else {
@@ -211,16 +209,16 @@ public class EnvironmentalSelection<S extends Solution<?>>
 
   public double perpendicularDistance(@NotNull List<Double> direction, List<Double> point) {
     double numerator = 0, denominator = 0;
-    for (int i = 0; i < direction.size(); i += 1) {
+    for (var i = 0; i < direction.size(); i += 1) {
       numerator += direction.get(i) * point.get(i);
       denominator += Math.pow(direction.get(i), 2.0);
     }
-    double k = numerator / denominator;
+    var k = numerator / denominator;
 
-    double d = 0.0;
-    int bound = direction.size();
-    for (int i = 0; i < bound; i++) {
-      double pow = Math.pow(k * direction.get(i) - point.get(i), 2.0);
+    var d = 0.0;
+    var bound = direction.size();
+    for (var i = 0; i < bound; i++) {
+      var pow = Math.pow(k * direction.get(i) - point.get(i), 2.0);
       d += pow;
     }
     return Math.sqrt(d);
@@ -228,12 +226,12 @@ public class EnvironmentalSelection<S extends Solution<?>>
 
   public void associate(List<S> population) {
 
-    for (int t = 0; t < fronts.size(); t++) {
+    for (var t = 0; t < fronts.size(); t++) {
       for (@NotNull S s : fronts.get(t)) {
-        int min_rp = -1;
-        double min_dist = Double.MAX_VALUE;
-        for (int r = 0; r < this.referencePoints.size(); r++) {
-          double d =
+        var min_rp = -1;
+        var min_dist = Double.MAX_VALUE;
+        for (var r = 0; r < this.referencePoints.size(); r++) {
+          var d =
               perpendicularDistance(
                   this.referencePoints.get(r).position, (List<Double>) getAttribute(s));
           if (d < min_dist) {
@@ -290,9 +288,9 @@ public class EnvironmentalSelection<S extends Solution<?>>
 
     // ---------- Step 14 / Algorithm 2 ----------
     // vector<double> ideal_point = TranslateObjectives(&cur, fronts);
-    List<Double> ideal_point = translateObjectives(source);
-    List<S> extreme_points = findExtremePoints(source);
-    List<Double> intercepts = constructHyperplane(source, extreme_points);
+    var ideal_point = translateObjectives(source);
+    var extreme_points = findExtremePoints(source);
+    var intercepts = constructHyperplane(source, extreme_points);
 
     normalizeObjectives(source, intercepts, ideal_point);
     // ---------- Step 15 / Algorithm 3, Step 16 ----------
@@ -312,7 +310,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
       final var min_rp_index = 1 == first.size() ? 0 : rand.nextInt(0, first.size() - 1);
       final var min_rp = first.remove(min_rp_index);
       if (first.isEmpty()) this.referencePointsTree.pollFirstEntry();
-      S chosen = SelectClusterMember(min_rp);
+      var chosen = SelectClusterMember(min_rp);
       if (chosen != null) {
         min_rp.AddMember();
         this.addToTree(min_rp);

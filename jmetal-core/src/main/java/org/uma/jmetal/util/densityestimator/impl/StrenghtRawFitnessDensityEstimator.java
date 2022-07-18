@@ -35,14 +35,14 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
    */
   @Override
   public void compute(List<S> solutionList) {
-    double[][] distance = SolutionListUtils.distanceMatrix(solutionList);
-    double @NotNull [] strength = new double[solutionList.size()];
-    double @NotNull [] rawFitness = new double[solutionList.size()];
+    var distance = SolutionListUtils.distanceMatrix(solutionList);
+    var strength = new double[solutionList.size()];
+    var rawFitness = new double[solutionList.size()];
     double kDistance;
 
     // strength(i) = |{j | j <- SolutionSet and i dominate j}|
-    for (int i = 0; i < solutionList.size(); i++) {
-      for (S solution : solutionList) {
+    for (var i = 0; i < solutionList.size(); i++) {
+      for (var solution : solutionList) {
         if (DOMINANCE_COMPARATOR.compare(solutionList.get(i), solution) == -1) {
           strength[i] += 1.0;
         }
@@ -51,8 +51,8 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
 
     // Calculate the raw fitness
     // rawFitness(i) = |{sum strenght(j) | j <- SolutionSet and j dominate i}|
-    for (int i = 0; i < solutionList.size(); i++) {
-      for (int j = 0; j < solutionList.size(); j++) {
+    for (var i = 0; i < solutionList.size(); i++) {
+      for (var j = 0; j < solutionList.size(); j++) {
         if (DOMINANCE_COMPARATOR.compare(solutionList.get(i), solutionList.get(j)) == 1) {
           rawFitness[i] += strength[j];
         }
@@ -62,7 +62,7 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
     // Add the distance to the k-th individual. In the reference paper of SPEA2,
     // k = sqrt(population.size()), but a value of k = 1 is recommended. See
     // http://www.tik.ee.ethz.ch/pisa/selectors/spea2/spea2_documentation.txt
-    for (int i = 0; i < distance.length; i++) {
+    for (var i = 0; i < distance.length; i++) {
       Arrays.sort(distance[i]);
       kDistance = 1.0 / (distance[i][k] + 2.0);
       solutionList.get(i).attributes().put(attributeId, rawFitness[i] + kDistance);

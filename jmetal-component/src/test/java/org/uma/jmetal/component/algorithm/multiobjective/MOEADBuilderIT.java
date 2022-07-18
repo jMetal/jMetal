@@ -27,27 +27,27 @@ class MOEADBuilderIT {
   @Test
   void MOEADWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSeventySevenOnProblemDTLZ1()
       throws IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceFrontFileName = "DTLZ1.3D.csv";
+    var problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    var referenceFrontFileName = "DTLZ1.3D.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 91;
+    var populationSize = 91;
 
     Termination termination = new TerminationByEvaluations(40000);
 
-    String weightVectorDirectory = "../resources/weightVectorFiles/moead";
+    var weightVectorDirectory = "../resources/weightVectorFiles/moead";
 
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
+    var moead = new MOEADBuilder<>(
         problem,
         populationSize,
         crossover,
@@ -63,20 +63,20 @@ class MOEADBuilderIT {
 
     moead.run();
 
-    List<DoubleSolution> population = moead.getResult();
+    var population = moead.getResult();
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    var referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertThat(populationSize).isGreaterThan(90) ;
     assertThat(hv).isGreaterThan(0.77) ;
@@ -85,25 +85,25 @@ class MOEADBuilderIT {
   @Test
   void MOEADDEWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroSixtyFiveOnProblemLZ09F2()
       throws IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceFrontFileName = "DTLZ1.3D.csv";
+    var problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    var referenceFrontFileName = "DTLZ1.3D.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
-    double cr = 1.0 ;
-    double f = 0.5 ;
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var cr = 1.0 ;
+    var f = 0.5 ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 300;
+    var populationSize = 300;
 
     Termination termination = new TerminationByEvaluations(175000);
 
-    String weightVectorDirectory = "../resources/weightVectorFiles/moead";
+    var weightVectorDirectory = "../resources/weightVectorFiles/moead";
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
 
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADDEBuilder(
+    var moead = new MOEADDEBuilder(
         problem,
         populationSize,
         cr,
@@ -120,20 +120,20 @@ class MOEADBuilderIT {
 
     moead.run();
 
-    List<DoubleSolution> population = moead.getResult();
+    var population = moead.getResult();
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    var referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertThat(populationSize).isGreaterThan(90) ;
     assertThat(hv).isGreaterThan(0.65) ;

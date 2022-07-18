@@ -51,7 +51,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     savedValues = new DoubleSolution[populationSize];
     utility = new double[populationSize];
     frequency = new int[populationSize];
-    for (int i = 0; i < utility.length; i++) {
+    for (var i = 0; i < utility.length; i++) {
       utility[i] = 1.0;
       frequency[i] = 0;
     }
@@ -67,24 +67,24 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     idealPoint.update(population);
     nadirPoint.update(population);
 
-    int generation = 0;
+    var generation = 0;
     evaluations = populationSize;
     do {
-      int[] permutation = new int[populationSize];
+      var permutation = new int[populationSize];
       MOEADUtils.randomPermutation(permutation, populationSize);
       offspringPopulation.clear();
 
-      for (int i = 0; i < populationSize; i++) {
-        int subProblemId = permutation[i];
+      for (var i = 0; i < populationSize; i++) {
+        var subProblemId = permutation[i];
         frequency[subProblemId]++;
 
-        NeighborType neighborType = chooseNeighborType();
-        List<DoubleSolution> parents = parentSelection(subProblemId, neighborType);
+        var neighborType = chooseNeighborType();
+        var parents = parentSelection(subProblemId, neighborType);
 
         differentialEvolutionCrossover.setCurrentSolution(population.get(subProblemId));
-        List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
+        var children = differentialEvolutionCrossover.execute(parents);
 
-        DoubleSolution child = children.get(0);
+        var child = children.get(0);
         mutationOperator.execute(child);
         problem.evaluate(child);
 
@@ -119,8 +119,8 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     offspringPopulation = new ArrayList<>(populationSize);
     jointPopulation = new ArrayList<>(populationSize);
 
-    for (int i = 0; i < populationSize; i++) {
-      DoubleSolution newSolution = (DoubleSolution) problem.createSolution();
+    for (var i = 0; i < populationSize; i++) {
+      var newSolution = (DoubleSolution) problem.createSolution();
 
       problem.evaluate(newSolution);
       population.add(newSolution);
@@ -135,7 +135,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
   public void utilityFunction() throws JMetalException {
     double f1, f2, uti, delta;
-    for (int n = 0; n < populationSize; n++) {
+    for (var n = 0; n < populationSize; n++) {
       f1 = fitnessFunction(population.get(n), lambda[n]);
       f2 = fitnessFunction(savedValues[n], lambda[n]);
       delta = f2 - f1;
@@ -150,34 +150,32 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   }
 
   public @NotNull List<Integer> tourSelection(int depth) {
-    List<Integer> selected;
-    List<Integer> candidate;
 
-      // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL
+    // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL
       // (NOT SORTED!!!!)
       List<Integer> result = new ArrayList<>();
-      int bound1 = problem.getNumberOfObjectives();
-      for (int i3 = 0; i3 < bound1; i3++) {
+    var bound1 = problem.getNumberOfObjectives();
+      for (var i3 = 0; i3 < bound1; i3++) {
           @NotNull Integer integer1 = i3;
           result.add(integer1);
       }
-      selected = result;
+    var selected = result;
 
       // set of unselected weights
       @NotNull List<Integer> list = new ArrayList<>();
-      int bound = populationSize;
-      for (int i1 = problem.getNumberOfObjectives(); i1 < bound; i1++) {
+    var bound = populationSize;
+      for (var i1 = problem.getNumberOfObjectives(); i1 < bound; i1++) {
           @NotNull Integer integer = i1;
           list.add(integer);
       }
-      candidate = list;
+    var candidate = list;
 
     while (selected.size() < (int) (populationSize / 5.0)) {
-      int best_idd = (int) (randomGenerator.nextDouble() * candidate.size());
+      var best_idd = (int) (randomGenerator.nextDouble() * candidate.size());
       int i2;
       int best_sub = candidate.get(best_idd);
       int s2;
-      for (int i = 1; i < depth; i++) {
+      for (var i = 1; i < depth; i++) {
         i2 = (int) (randomGenerator.nextDouble() * candidate.size());
         s2 = candidate.get(i2);
         if (utility[s2] > utility[best_sub]) {
@@ -196,31 +194,30 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
    */
   public void stmSelection() {
 
-    int[] idx = new int[populationSize];
-    double @NotNull [] nicheCount = new double[populationSize];
+    var nicheCount = new double[populationSize];
 
-    int[][] solPref = new int[jointPopulation.size()][];
-    double[][] solMatrix = new double[jointPopulation.size()][];
-    double[][] distMatrix = new double[jointPopulation.size()][];
-    double[] @NotNull [] fitnessMatrix = new double[jointPopulation.size()][];
+    var solPref = new int[jointPopulation.size()][];
+    var solMatrix = new double[jointPopulation.size()][];
+    var distMatrix = new double[jointPopulation.size()][];
+    var fitnessMatrix = new double[jointPopulation.size()][];
 
-    for (int i = 0; i < jointPopulation.size(); i++) {
+    for (var i = 0; i < jointPopulation.size(); i++) {
       solPref[i] = new int[populationSize];
       solMatrix[i] = new double[populationSize];
       distMatrix[i] = new double[populationSize];
       fitnessMatrix[i] = new double[populationSize];
     }
-    int[] @NotNull [] subpPref = new int[populationSize][];
-    double[] @NotNull [] subpMatrix = new double[populationSize][];
-    for (int i = 0; i < populationSize; i++) {
+    var subpPref = new int[populationSize][];
+    var subpMatrix = new double[populationSize][];
+    for (var i = 0; i < populationSize; i++) {
       subpPref[i] = new int[jointPopulation.size()];
       subpMatrix[i] = new double[jointPopulation.size()];
     }
 
     // Calculate the preference values of solution matrix
-    for (int i = 0; i < jointPopulation.size(); i++) {
-      int minIndex = 0;
-      for (int j = 0; j < populationSize; j++) {
+    for (var i = 0; i < jointPopulation.size(); i++) {
+      var minIndex = 0;
+      for (var j = 0; j < populationSize; j++) {
         fitnessMatrix[i][j] = fitnessFunction(jointPopulation.get(i), lambda[j]);
         distMatrix[i][j] = calculateDistance2(jointPopulation.get(i), lambda[j]);
         if (distMatrix[i][j] < distMatrix[i][minIndex]) {
@@ -231,31 +228,31 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     }
 
     // calculate the preference values of subproblem matrix and solution matrix
-    for (int i = 0; i < jointPopulation.size(); i++) {
-      for (int j = 0; j < populationSize; j++) {
+    for (var i = 0; i < jointPopulation.size(); i++) {
+      for (var j = 0; j < populationSize; j++) {
         subpMatrix[j][i] = fitnessFunction(jointPopulation.get(i), lambda[j]);
         solMatrix[i][j] = distMatrix[i][j] + nicheCount[j];
       }
     }
 
     // sort the preference value matrix to get the preference rank matrix
-    for (int i = 0; i < populationSize; i++) {
-      for (int j = 0; j < jointPopulation.size(); j++) {
+    for (var i = 0; i < populationSize; i++) {
+      for (var j = 0; j < jointPopulation.size(); j++) {
         subpPref[i][j] = j;
       }
       MOEADUtils.quickSort(subpMatrix[i], subpPref[i], 0, jointPopulation.size() - 1);
     }
-    for (int i = 0; i < jointPopulation.size(); i++) {
-      for (int j = 0; j < populationSize; j++) {
+    for (var i = 0; i < jointPopulation.size(); i++) {
+      for (var j = 0; j < populationSize; j++) {
         solPref[i][j] = j;
       }
       MOEADUtils.quickSort(solMatrix[i], solPref[i], 0, populationSize - 1);
     }
 
-    idx = stableMatching(subpPref, solPref, populationSize, jointPopulation.size());
+    var idx = stableMatching(subpPref, solPref, populationSize, jointPopulation.size());
 
     population.clear();
-    for (int i = 0; i < populationSize; i++) {
+    for (var i = 0; i < populationSize; i++) {
       population.add(i, jointPopulation.get(idx[i]));
     }
   }
@@ -267,39 +264,38 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   public int[] stableMatching(int[][] manPref, int[][] womanPref, int menSize, int womenSize) {
 
     // Indicates the mating status
-    int[] statusMan = new int[menSize];
-    int[] statusWoman;
+    var statusMan = new int[menSize];
 
-    final int NOT_ENGAGED = -1;
-      int[] arr = new int[10];
-      int count = 0;
-      for (int i1 = 0; i1 < womenSize; i1++) {
-          int not_engaged = NOT_ENGAGED;
+    final var NOT_ENGAGED = -1;
+    var arr = new int[10];
+    var count = 0;
+      for (var i1 = 0; i1 < womenSize; i1++) {
+        var not_engaged = NOT_ENGAGED;
           if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
           arr[count++] = not_engaged;
       }
       arr = Arrays.copyOfRange(arr, 0, count);
-      statusWoman = arr;
+    var statusWoman = arr;
 
     // List of men that are not currently engaged.
-      LinkedList<Integer> freeMen = new LinkedList<>();
-      for (int i = 0; i < menSize; i++) {
+    var freeMen = new LinkedList<Integer>();
+      for (var i = 0; i < menSize; i++) {
           @NotNull Integer integer = i;
           freeMen.add(integer);
       }
 
       // next[i] is the next woman to whom i has not yet proposed.
-    int @NotNull [] next = new int[womenSize];
+    var next = new int[womenSize];
 
     while (!freeMen.isEmpty()) {
       int m = freeMen.remove();
-      int w = manPref[m][next[m]];
+      var w = manPref[m][next[m]];
       next[m]++;
       if (statusWoman[w] == NOT_ENGAGED) {
         statusMan[m] = w;
         statusWoman[w] = m;
       } else {
-        int m1 = statusWoman[w];
+        var m1 = statusWoman[w];
         if (prefers(m, m1, womanPref[w], menSize)) {
           statusMan[m] = w;
           statusWoman[w] = m;
@@ -318,8 +314,8 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
    */
   public boolean prefers(int x, int y, int[] womanPref, int size) {
 
-    for (int i = 0; i < size; i++) {
-      int pref = womanPref[i];
+    for (var i = 0; i < size; i++) {
+      var pref = womanPref[i];
       if (pref == x) {
         return true;
       }
@@ -336,38 +332,33 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
    * Calculate the perpendicular distance between the solution and reference line
    */
   public double calculateDistance(@NotNull DoubleSolution individual, double[] lambda) {
-    double scale;
-    double distance;
-
-    double[] vecInd;
-    double[] vecProj;
 
     // vecInd has been normalized to the range [0,1]
-      double[] result = new double[10];
-      int count1 = 0;
-      int bound1 = problem.getNumberOfObjectives();
-      for (int i1 = 0; i1 < bound1; i1++) {
-          double v1 = (individual.objectives()[i1] - idealPoint.getValue(i1)) /
+    var result = new double[10];
+    var count1 = 0;
+    var bound1 = problem.getNumberOfObjectives();
+      for (var i1 = 0; i1 < bound1; i1++) {
+        var v1 = (individual.objectives()[i1] - idealPoint.getValue(i1)) /
                   (nadirPoint.getValue(i1) - idealPoint.getValue(i1));
           if (result.length == count1) result = Arrays.copyOf(result, count1 * 2);
           result[count1++] = v1;
       }
       result = Arrays.copyOfRange(result, 0, count1);
-      vecInd = result;
+    var vecInd = result;
 
-    scale = innerproduct(vecInd, lambda) / innerproduct(lambda, lambda);
-      double[] arr = new double[10];
-      int count = 0;
-      int bound = problem.getNumberOfObjectives();
-      for (int i = 0; i < bound; i++) {
-          double v = vecInd[i] - scale * lambda[i];
+    var scale = innerproduct(vecInd, lambda) / innerproduct(lambda, lambda);
+    var arr = new double[10];
+    var count = 0;
+    var bound = problem.getNumberOfObjectives();
+      for (var i = 0; i < bound; i++) {
+        var v = vecInd[i] - scale * lambda[i];
           if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
           arr[count++] = v;
       }
       arr = Arrays.copyOfRange(arr, 0, count);
-      vecProj = arr;
+    var vecProj = arr;
 
-    distance = norm_vector(vecProj);
+    var distance = norm_vector(vecProj);
 
     return distance;
   }
@@ -377,42 +368,36 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
    */
   public double calculateDistance2(DoubleSolution individual, double[] lambda) {
 
-    double distance;
-    double distanceSum;
-
-    double[] vecInd;
-    double[] normalizedObj;
-
-      double sum = 0.0;
-      double[] array = individual.objectives();
-      int bound2 = problem.getNumberOfObjectives();
-      for (int j = 0; j < bound2; j++) {
-          double v2 = array[j];
+    var sum = 0.0;
+    var array = individual.objectives();
+    var bound2 = problem.getNumberOfObjectives();
+      for (var j = 0; j < bound2; j++) {
+        var v2 = array[j];
           sum += v2;
       }
-      distanceSum = sum;
-      double @NotNull [] result = new double[10];
-      int count1 = 0;
-      int bound1 = problem.getNumberOfObjectives();
-      for (int i1 = 0; i1 < bound1; i1++) {
-          double v1 = individual.objectives()[i1] / distanceSum;
+    var distanceSum = sum;
+    var result = new double[10];
+    var count1 = 0;
+    var bound1 = problem.getNumberOfObjectives();
+      for (var i1 = 0; i1 < bound1; i1++) {
+        var v1 = individual.objectives()[i1] / distanceSum;
           if (result.length == count1) result = Arrays.copyOf(result, count1 * 2);
           result[count1++] = v1;
       }
       result = Arrays.copyOfRange(result, 0, count1);
-      normalizedObj = result;
-      double[] arr = new double[10];
-      int count = 0;
-      int bound = problem.getNumberOfObjectives();
-      for (int i = 0; i < bound; i++) {
-          double v = normalizedObj[i] - lambda[i];
+    var normalizedObj = result;
+    var arr = new double[10];
+    var count = 0;
+    var bound = problem.getNumberOfObjectives();
+      for (var i = 0; i < bound; i++) {
+        var v = normalizedObj[i] - lambda[i];
           if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
           arr[count++] = v;
       }
       arr = Arrays.copyOfRange(arr, 0, count);
-      vecInd = arr;
+    var vecInd = arr;
 
-    distance = norm_vector(vecInd);
+    var distance = norm_vector(vecInd);
 
     return distance;
   }
@@ -421,10 +406,10 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
    * Calculate the norm of the vector
    */
   public double norm_vector(double[] z) {
-      double sum = 0.0;
-      int bound = problem.getNumberOfObjectives();
-      for (int i = 0; i < bound; i++) {
-          double v = z[i] * z[i];
+    var sum = 0.0;
+    var bound = problem.getNumberOfObjectives();
+      for (var i = 0; i < bound; i++) {
+        var v = z[i] * z[i];
           sum += v;
       }
 
@@ -435,9 +420,9 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
    * Calculate the dot product of two vectors
    */
   public double innerproduct(double[] vec1, double[] vec2) {
-      double sum = 0.0;
-      for (int i = 0; i < vec1.length; i++) {
-          double v = vec1[i] * vec2[i];
+    var sum = 0.0;
+      for (var i = 0; i < vec1.length; i++) {
+        var v = vec1[i] * vec2[i];
           sum += v;
       }
 

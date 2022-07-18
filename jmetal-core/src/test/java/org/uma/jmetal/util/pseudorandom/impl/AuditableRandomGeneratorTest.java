@@ -15,14 +15,14 @@ public class AuditableRandomGeneratorTest {
 
 	@Test
 	public void testAuditableRandomGeneratorProvidesCorrectAuditWhenGettingDouble() {
-		JavaRandomGenerator generator = new JavaRandomGenerator();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(generator);
+		var generator = new JavaRandomGenerator();
+		var auditor = new AuditableRandomGenerator(generator);
 		List<Audit> audits = new LinkedList<>();
 		auditor.addListener(audits::add);
 		
 		auditor.nextDouble();
 		assertEquals(1, audits.size());
-		Audit audit = audits.get(0);
+		var audit = audits.get(0);
 		assertEquals(RandomMethod.DOUBLE, audit.getMethod());
 		assertFalse(audit.getBounds().isPresent());
 		assertNotNull(audit.getResult());
@@ -30,14 +30,14 @@ public class AuditableRandomGeneratorTest {
 
 	@Test
 	public void testAuditableRandomGeneratorProvidesCorrectAuditWhenGettingBoundedDouble() {
-		JavaRandomGenerator generator = new JavaRandomGenerator();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(generator);
+		var generator = new JavaRandomGenerator();
+		var auditor = new AuditableRandomGenerator(generator);
 		List<Audit> audits = new LinkedList<>();
 		auditor.addListener(audits::add);
 		
 		auditor.nextDouble(10.0, 20.0);
 		assertEquals(1, audits.size());
-		Audit audit = audits.get(0);
+		var audit = audits.get(0);
 		assertEquals(RandomMethod.BOUNDED_DOUBLE, audit.getMethod());
 		assertTrue(audit.getBounds().isPresent());
 		assertEquals(10.0, audit.getBounds().get().lower);
@@ -47,14 +47,14 @@ public class AuditableRandomGeneratorTest {
 
 	@Test
 	public void testAuditableRandomGeneratorProvidesCorrectAuditWhenGettingBoundedInteger() {
-		JavaRandomGenerator generator = new JavaRandomGenerator();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(generator);
+		var generator = new JavaRandomGenerator();
+		var auditor = new AuditableRandomGenerator(generator);
 		List<Audit> audits = new LinkedList<>();
 		auditor.addListener(audits::add);
 		
 		auditor.nextInt(10, 20);
 		assertEquals(1, audits.size());
-		Audit audit = audits.get(0);
+		var audit = audits.get(0);
 		assertEquals(RandomMethod.BOUNDED_INT, audit.getMethod());
 		assertTrue(audit.getBounds().isPresent());
 		assertEquals(10, audit.getBounds().get().lower);

@@ -74,7 +74,7 @@ public class FrontNormalizerTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The front is null"));
 
-    FrontNormalizer frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
+    var frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
     frontNormalizer.normalize((Front) null) ;
   }
 
@@ -83,7 +83,7 @@ public class FrontNormalizerTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The front is null"));
 
-    FrontNormalizer frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
+    var frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
     frontNormalizer.normalize((List<DoubleSolution>) null) ;
   }
 
@@ -94,7 +94,7 @@ public class FrontNormalizerTest {
 
     Front front = new ArrayFront(0, 0);
 
-    FrontNormalizer frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
+    var frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
     frontNormalizer.normalize(front) ;
   }
 
@@ -105,7 +105,7 @@ public class FrontNormalizerTest {
 
     List<DoubleSolution> solutionList = Collections.emptyList() ;
 
-    FrontNormalizer frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
+    var frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
     frontNormalizer.normalize(solutionList) ;
   }
 
@@ -116,11 +116,11 @@ public class FrontNormalizerTest {
     exception.expectMessage(containsString("The length of the point dimensions (2) " +
         "is different from the length of the maximum array (4)"));
 
-    int numberOfPointDimensions = 2 ;
+    var numberOfPointDimensions = 2 ;
 
     Front front = new ArrayFront(1, numberOfPointDimensions);
 
-    FrontNormalizer frontNormalizer = new FrontNormalizer(new double[4], new double[4]) ;
+    var frontNormalizer = new FrontNormalizer(new double[4], new double[4]) ;
     frontNormalizer.normalize(front) ;
   }
 
@@ -132,8 +132,8 @@ public class FrontNormalizerTest {
    */
   @Test
   public void shouldNormalizeReturnTheCorrectFrontIfThisContainsOnePoint() {
-    int numberOfPoints = 1 ;
-    int numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point = new ArrayPoint(numberOfDimensions) ;
@@ -145,8 +145,8 @@ public class FrontNormalizerTest {
     double[] minimum = {0, 0} ;
     double[] maximum = {4, 4} ;
 
-    FrontNormalizer frontNormalizer = new FrontNormalizer(minimum, maximum) ;
-    Front normalizedFront = frontNormalizer.normalize(front) ;
+    var frontNormalizer = new FrontNormalizer(minimum, maximum) ;
+    var normalizedFront = frontNormalizer.normalize(front) ;
 
     assertEquals(0.5, normalizedFront.getPoint(0).getValue(0), EPSILON) ;
     assertEquals(1.0, normalizedFront.getPoint(0).getValue(1), EPSILON) ;
@@ -163,8 +163,8 @@ public class FrontNormalizerTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("Maximum and minimum values of index 0 are the same: 2"));
 
-    int numberOfPoints = 1 ;
-    int numberOfDimensions = 2 ;
+    var numberOfPoints = 1 ;
+    var numberOfDimensions = 2 ;
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point = new ArrayPoint(numberOfDimensions) ;
@@ -176,7 +176,7 @@ public class FrontNormalizerTest {
     double[] minimum = {2, 4} ;
     double[] maximum = {2, 4} ;
 
-    FrontNormalizer frontNormalizer = new FrontNormalizer(minimum, maximum) ;
+    var frontNormalizer = new FrontNormalizer(minimum, maximum) ;
     frontNormalizer.normalize(front) ;
   }
 
@@ -188,8 +188,8 @@ public class FrontNormalizerTest {
    */
   @Test
   public void shouldGetNormalizedFrontReturnTheCorrectFrontIfThisContainsTwoPoints() {
-    int numberOfPoints = 2 ;
-    int numberOfDimensions = 2 ;
+    var numberOfPoints = 2 ;
+    var numberOfDimensions = 2 ;
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
@@ -205,8 +205,8 @@ public class FrontNormalizerTest {
     double[] minimum = {-10, 1} ;
     double[] maximum = {6, 8} ;
 
-    FrontNormalizer frontNormalizer = new FrontNormalizer(minimum, maximum) ;
-    Front normalizedFront = frontNormalizer.normalize(front) ;
+    var frontNormalizer = new FrontNormalizer(minimum, maximum) ;
+    var normalizedFront = frontNormalizer.normalize(front) ;
 
     assertEquals(0.75, normalizedFront.getPoint(0).getValue(0), EPSILON) ;
     assertEquals(3.0/7.0, normalizedFront.getPoint(0).getValue(1), EPSILON) ;
@@ -222,7 +222,7 @@ public class FrontNormalizerTest {
    */
   @Test
   public void shouldGetNormalizedFrontReturnTheCorrectFrontIfTheSolutionListContainsTwoPoints() {
-    int numberOfDimensions = 2 ;
+    var numberOfDimensions = 2 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setValue(0, 2);
@@ -238,8 +238,8 @@ public class FrontNormalizerTest {
     double[] minimum = {-10, 1} ;
     double[] maximum = {6, 8} ;
 
-    FrontNormalizer frontNormalizer = new FrontNormalizer(minimum, maximum) ;
-    List<? extends Solution<?>> normalizedList = frontNormalizer.normalize(solutionList) ;
+    var frontNormalizer = new FrontNormalizer(minimum, maximum) ;
+    var normalizedList = frontNormalizer.normalize(solutionList) ;
 
     assertEquals(0.75, normalizedList.get(0).objectives()[0], EPSILON) ;
     assertEquals(3.0/7.0, normalizedList.get(0).objectives()[1], EPSILON) ;

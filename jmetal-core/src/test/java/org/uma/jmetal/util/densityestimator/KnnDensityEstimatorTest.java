@@ -27,11 +27,11 @@ class KnnDensityEstimatorTest {
     */
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    KnnDensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
-    DoubleSolution solution3 = problem.createSolution();
-    DoubleSolution solution4 = problem.createSolution();
+    var densityEstimator = new KnnDensityEstimator<DoubleSolution>(1);
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
+    var solution3 = problem.createSolution();
+    var solution4 = problem.createSolution();
 
     solution1.objectives()[0] = 1.0;
     solution1.objectives()[1] = 5.0;
@@ -45,7 +45,7 @@ class KnnDensityEstimatorTest {
     solution4.objectives()[0] = 5.0;
     solution4.objectives()[1] = 1.0;
 
-    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3, solution4);
+    var solutionList = Arrays.asList(solution1, solution2, solution3, solution4);
 
     densityEstimator.compute(solutionList);
 
@@ -75,12 +75,12 @@ class KnnDensityEstimatorTest {
 
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    KnnDensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
-    DoubleSolution solution3 = problem.createSolution();
-    DoubleSolution solution4 = problem.createSolution();
-    DoubleSolution solution5 = problem.createSolution();
+    var densityEstimator = new KnnDensityEstimator<DoubleSolution>(1);
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
+    var solution3 = problem.createSolution();
+    var solution4 = problem.createSolution();
+    var solution5 = problem.createSolution();
 
     solution1.objectives()[0] = 1.0;
     solution1.objectives()[1] = 5.0;
@@ -97,7 +97,7 @@ class KnnDensityEstimatorTest {
     solution5.objectives()[0] = 3.0;
     solution5.objectives()[1] = 2.0;
 
-    List<DoubleSolution> solutionList =
+    var solutionList =
         Arrays.asList(solution1, solution2, solution4, solution3, solution5);
 
     densityEstimator.compute(solutionList);

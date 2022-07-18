@@ -40,30 +40,26 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
    * @author Antonio J. Nebro
    */
   public static void main(String[] args) throws JMetalException, InterruptedException {
-    DoubleProblem problem;
-    SMPSORP algorithm;
-    MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    var problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    var referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    List<List<Double>> referencePoints;
-    referencePoints = new ArrayList<>();
+    List<List<Double>> referencePoints = new ArrayList<>();
 
     referencePoints.add(Arrays.asList(0.2, 0.8));
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int maxEvaluations = 25000;
-    int swarmSize = 100;
+    var maxEvaluations = 25000;
+    var swarmSize = 100;
 
       List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
-      for (List<Double> referencePoint : referencePoints) {
-          CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
+      for (var referencePoint : referencePoints) {
+        var doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
                   swarmSize / referencePoints.size(), referencePoint);
           archivesWithReferencePoints.add(doubleSolutionCrowdingDistanceArchiveWithReferencePoint);
       }
@@ -71,7 +67,7 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
       Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
     Termination termination = new TerminationByEvaluations(maxEvaluations);
 
-    algorithm = new SMPSORP(problem,
+    var algorithm = new SMPSORP(problem,
             swarmSize,
             archivesWithReferencePoints,
             referencePoints,
@@ -89,10 +85,10 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
 
     algorithm.getObservable().register(runTimeChartObserver);
 
-    Thread algorithmThread = new Thread(algorithm);
+    var algorithmThread = new Thread(algorithm);
     @NotNull ChangeReferencePoint changeReferencePoint = new ChangeReferencePoint(algorithm, referencePoints, archivesWithReferencePoints, runTimeChartObserver.getChart()) ;
 
-    Thread changePointsThread = new Thread(changeReferencePoint) ;
+    var changePointsThread = new Thread(changeReferencePoint) ;
 
     algorithmThread.start();
     changePointsThread.start();
@@ -127,18 +123,18 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
 
     @Override
     public void run() {
-      try (Scanner scanner = new Scanner(System.in)) {
+      try (var scanner = new Scanner(System.in)) {
         double v1 ;
         double v2 ;
 
         while (true) {
           System.out.println("Introduce the new reference point (between commas):");
-          String s = scanner.nextLine() ;
+          var s = scanner.nextLine() ;
 
           try (@NotNull Scanner sl = new Scanner(s)) {
             sl.useDelimiter(",");
 
-            for (int i = 0; i < referencePoints.size(); i++) {
+            for (var i = 0; i < referencePoints.size(); i++) {
               try {
                 v1 = Double.parseDouble(sl.next());
                 v2 = Double.parseDouble(sl.next());

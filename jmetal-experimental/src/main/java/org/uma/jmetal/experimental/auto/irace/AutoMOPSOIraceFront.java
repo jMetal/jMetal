@@ -11,31 +11,31 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 public class AutoMOPSOIraceFront {
 
   public static void main(String[] args) throws IOException {
-    AutoMOPSO mopsoWithParameters = new AutoMOPSO();
+    var mopsoWithParameters = new AutoMOPSO();
     mopsoWithParameters.parseAndCheckParameters(args);
 
-    ParticleSwarmOptimizationAlgorithm mopso = mopsoWithParameters.create();
+    var mopso = mopsoWithParameters.create();
     mopso.run();
 
-    double[][] front = getMatrixWithObjectiveValues(mopso.getResult());
-    for (int i = 0; i < front.length; i++) {
-      for (int j = 0; j < front[0].length; j++) {
+    var front = getMatrixWithObjectiveValues(mopso.getResult());
+    for (var i = 0; i < front.length; i++) {
+      for (var j = 0; j < front[0].length; j++) {
         System.out.print(front[i][j] + "\t");
       }
       System.out.println();
     }
 
     // Alternative 1
-      for (double[] objectives : front) {
-          for (int j = 0; j < front[0].length; j++) {
+      for (var objectives : front) {
+          for (var j = 0; j < front[0].length; j++) {
               System.out.print(objectives[j] + "\t");
           }
           System.out.println();
       }
 
     // Alternative 2
-    List<DoubleSolution> resultFront = mopso.getResult();
-    for (DoubleSolution solution : resultFront) {
+    var resultFront = mopso.getResult();
+    for (var solution : resultFront) {
       for (Double objetive : solution.objectives()) {
         System.out.print(objetive + "\t");
       }

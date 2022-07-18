@@ -19,7 +19,7 @@ public class NSGAIIConfiguredFromAParameterString {
   public static void main(String[] args) {
     @NotNull String referenceFrontFileName = "ZDT1.csv" ;
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName "+ referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 25000 "
@@ -48,9 +48,9 @@ public class NSGAIIConfiguredFromAParameterString {
     AutoNSGAII.print(autoNSGAII.fixedParameterList);
     AutoNSGAII.print(autoNSGAII.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+    var nsgaII = autoNSGAII.create();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    var evaluationObserver = new EvaluationObserver(1000);
     @NotNull RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "NSGA-II", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);

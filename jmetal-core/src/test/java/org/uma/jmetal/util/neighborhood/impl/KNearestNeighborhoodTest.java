@@ -19,18 +19,18 @@ public class KNearestNeighborhoodTest {
   public void shouldGetNeighborsWorkProperlyCaseA() {
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    DoubleSolution solution1 = problem.createSolution() ;
+    var solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 0.0 ;
     solution1.objectives()[1] = 0.0 ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.objectives()[0] = 1.0 ;
     solution2.objectives()[1] = 1.0 ;
 
-    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2) ;
+    var solutionList = Arrays.asList(solution1, solution2) ;
 
-    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(1) ;
-    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 0) ;
+    var neighborhood = new KNearestNeighborhood<DoubleSolution>(1) ;
+    var neighbors = neighborhood.getNeighbors(solutionList, 0) ;
 
     assertEquals(1, neighbors.size());
     assertSame(solution2, neighbors.get(0));
@@ -43,22 +43,22 @@ public class KNearestNeighborhoodTest {
   public void shouldGetNeighborsWorkProperlyCaseB() {
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    DoubleSolution solution1 = problem.createSolution() ;
+    var solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 0.0 ;
     solution1.objectives()[1] = 0.0 ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.objectives()[0] = 1.0 ;
     solution2.objectives()[1] = 1.0 ;
 
-    DoubleSolution solution3 = problem.createSolution() ;
+    var solution3 = problem.createSolution() ;
     solution3.objectives()[0] = 2.0 ;
     solution3.objectives()[1] = 2.0 ;
 
-    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3) ;
+    var solutionList = Arrays.asList(solution1, solution2, solution3) ;
 
-    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(2) ;
-    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 0) ;
+    var neighborhood = new KNearestNeighborhood<DoubleSolution>(2) ;
+    var neighbors = neighborhood.getNeighbors(solutionList, 0) ;
 
     assertEquals(2, neighbors.size());
     assertSame(solution2, neighbors.get(0));
@@ -72,22 +72,22 @@ public class KNearestNeighborhoodTest {
   public void shouldGetNeighborsWorkProperlyCaseC() {
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    DoubleSolution solution1 = problem.createSolution() ;
+    var solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 0.0 ;
     solution1.objectives()[1] = 0.0 ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.objectives()[0] = 1.0 ;
     solution2.objectives()[1] = 1.0 ;
 
-    DoubleSolution solution3 = problem.createSolution() ;
+    var solution3 = problem.createSolution() ;
     solution3.objectives()[0] = 2.0 ;
     solution3.objectives()[1] = 2.0 ;
 
-    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3) ;
+    var solutionList = Arrays.asList(solution1, solution2, solution3) ;
 
-    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(2) ;
-    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 1) ;
+    var neighborhood = new KNearestNeighborhood<DoubleSolution>(2) ;
+    var neighbors = neighborhood.getNeighbors(solutionList, 1) ;
 
     assertEquals(2, neighbors.size());
     assertSame(solution1, neighbors.get(0));
@@ -101,22 +101,22 @@ public class KNearestNeighborhoodTest {
   public void shouldGetNeighborsWorkProperlyCaseD() {
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    DoubleSolution solution1 = problem.createSolution() ;
+    var solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 0.0 ;
     solution1.objectives()[1] = 0.0 ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.objectives()[0] = 1.0 ;
     solution2.objectives()[1] = 1.0 ;
 
-    DoubleSolution solution3 = problem.createSolution() ;
+    var solution3 = problem.createSolution() ;
     solution3.objectives()[0] = 2.0 ;
     solution3.objectives()[1] = 2.0 ;
 
-    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3) ;
+    var solutionList = Arrays.asList(solution1, solution2, solution3) ;
 
-    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(2) ;
-    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 2) ;
+    var neighborhood = new KNearestNeighborhood<DoubleSolution>(2) ;
+    var neighbors = neighborhood.getNeighbors(solutionList, 2) ;
 
     assertEquals(2, neighbors.size());
     assertSame(solution2, neighbors.get(0));
@@ -130,30 +130,30 @@ public class KNearestNeighborhoodTest {
   public void shouldGetNeighborsWorkProperlyCaseE() {
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    DoubleSolution solution1 = problem.createSolution() ;
+    var solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 0.0 ;
     solution1.objectives()[1] = 0.0 ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.objectives()[0] = 1.0 ;
     solution2.objectives()[1] = 1.0 ;
 
-    DoubleSolution solution3 = problem.createSolution() ;
+    var solution3 = problem.createSolution() ;
     solution3.objectives()[0] = 2.0 ;
     solution3.objectives()[1] = 2.0 ;
 
-    DoubleSolution solution4 = problem.createSolution() ;
+    var solution4 = problem.createSolution() ;
     solution4.objectives()[0] = 3.0 ;
     solution4.objectives()[1] = 3.0 ;
 
-    DoubleSolution solution5 = problem.createSolution() ;
+    var solution5 = problem.createSolution() ;
     solution5.objectives()[0] = 4.0 ;
     solution5.objectives()[1] = 4.0 ;
 
-    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3, solution4, solution5) ;
+    var solutionList = Arrays.asList(solution1, solution2, solution3, solution4, solution5) ;
 
-    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(3) ;
-    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 0) ;
+    var neighborhood = new KNearestNeighborhood<DoubleSolution>(3) ;
+    var neighbors = neighborhood.getNeighbors(solutionList, 0) ;
 
     assertEquals(3, neighbors.size());
     assertSame(solution2, neighbors.get(0));
@@ -168,30 +168,30 @@ public class KNearestNeighborhoodTest {
   public void shouldGetNeighborsWorkProperlyCaseF() {
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    DoubleSolution solution1 = problem.createSolution() ;
+    var solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 0.0 ;
     solution1.objectives()[1] = 0.0 ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.objectives()[0] = 1.0 ;
     solution2.objectives()[1] = 1.0 ;
 
-    DoubleSolution solution3 = problem.createSolution() ;
+    var solution3 = problem.createSolution() ;
     solution3.objectives()[0] = 2.0 ;
     solution3.objectives()[1] = 2.0 ;
 
-    DoubleSolution solution4 = problem.createSolution() ;
+    var solution4 = problem.createSolution() ;
     solution4.objectives()[0] = 3.0 ;
     solution4.objectives()[1] = 3.0 ;
 
-    DoubleSolution solution5 = problem.createSolution() ;
+    var solution5 = problem.createSolution() ;
     solution5.objectives()[0] = 4.0 ;
     solution5.objectives()[1] = 4.0 ;
 
-    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3, solution4, solution5) ;
+    var solutionList = Arrays.asList(solution1, solution2, solution3, solution4, solution5) ;
 
-    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(3) ;
-    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 2) ;
+    var neighborhood = new KNearestNeighborhood<DoubleSolution>(3) ;
+    var neighbors = neighborhood.getNeighbors(solutionList, 2) ;
 
     assertEquals(3, neighbors.size());
     assertSame(solution2, neighbors.get(0));

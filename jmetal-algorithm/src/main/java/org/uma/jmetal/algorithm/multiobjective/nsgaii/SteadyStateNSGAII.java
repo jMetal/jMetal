@@ -56,7 +56,7 @@ public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
     parents.add(population.get(0));
     parents.add(population.get(1));
 
-    List<S> offspring = crossoverOperator.execute(parents);
+    var offspring = crossoverOperator.execute(parents);
 
     mutationOperator.execute(offspring.get(0));
 

@@ -31,21 +31,19 @@ public class AGEMOEAIIIT {
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem()
       throws Exception {
     DoubleProblem problem = new Kursawe();
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
         new SurvivalScoreComparator<>());
 
-    int populationSize = 100;
+    var populationSize = 100;
     algorithm =
         new AGEMOEAIIBuilder<>(problem)
             .setCrossoverOperator(crossover)
@@ -56,7 +54,7 @@ public class AGEMOEAIIIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     /*
     Rationale: the default problem is Kursawe, and usually AGE-MOEA-II, configured with standard
@@ -68,18 +66,16 @@ public class AGEMOEAIIIT {
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
     DoubleProblem problem = new ZDT1();
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
+    var populationSize = 100;
     algorithm =
         new AGEMOEAIIBuilder<>(problem)
             .setCrossoverOperator(crossover)
@@ -92,7 +88,7 @@ public class AGEMOEAIIIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator hypervolume =
         new PISAHypervolume(
@@ -101,7 +97,7 @@ public class AGEMOEAIIIT {
     // Rationale: the default problem is ZDT1, and AGE-MOEA-II, configured with standard settings,
     // should return find a front with a hypervolume value higher than 0.62
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.62);
   }
@@ -109,19 +105,17 @@ public class AGEMOEAIIIT {
   @Test
   public void shouldTheAlgorithmReturnAGoodQualityFrontWhenSolvingAConstrainedProblem()
       throws Exception {
-    ConstrEx problem = new ConstrEx();
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
+    var problem = new ConstrEx();
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
+    var populationSize = 100;
     algorithm =
         new AGEMOEAIIBuilder<>(problem)
             .setCrossoverOperator(crossover)
@@ -132,23 +126,23 @@ public class AGEMOEAIIIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
-    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv";
+    var referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv";
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",");
+    var referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",");
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
     // Rationale: the default problem is DTLZ1 (3 objectives), and AGE-MOEA-II, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertTrue(population.size() >= 85);
     assertTrue(hv > 0.77);

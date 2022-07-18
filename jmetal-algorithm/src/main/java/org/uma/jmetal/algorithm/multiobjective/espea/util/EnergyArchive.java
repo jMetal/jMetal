@@ -176,11 +176,11 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
       distanceMatrix = SolutionListUtils.distanceMatrix(getSolutionList());
 
     // Set fitness based on replacement strategy
-    double @NotNull [] energyVector = energyVector(distanceMatrix);
-    double[] replacementVector = replacementVector(distanceMatrix);
+    var energyVector = energyVector(distanceMatrix);
+    var replacementVector = replacementVector(distanceMatrix);
     // Flag for memorizing whether solution can improve archive
-    boolean eligible = false;
-    for (int i = 0; i < replacementVector.length; i++) {
+    var eligible = false;
+    for (var i = 0; i < replacementVector.length; i++) {
       // New solution is better than incumbent
       if (replacementVector[i] < energyVector[i]) {
         eligible = true;
@@ -217,7 +217,7 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
   public void prune() {
     if (getSolutionList().size() > getMaxSize()) {
       computeDensityEstimator();
-      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), fitnessComparator);
+      var worst = new SolutionListUtils().findWorstSolution(getSolutionList(), fitnessComparator);
       getSolutionList().remove(worst);
     }
   }
@@ -234,21 +234,21 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
    */
   private void scaleToPositive() {
     // Obtain min value
-    boolean seen = false;
+    var seen = false;
     double best = 0;
-    for (S s : getSolutionList()) {
-      Double attribute = scalarization.getAttribute(s);
+    for (var s : getSolutionList()) {
+      var attribute = scalarization.getAttribute(s);
       double v = attribute;
       if (!seen || Double.compare(v, best) < 0) {
         seen = true;
         best = v;
       }
     }
-    double minScalarization = seen ? best : Double.MAX_VALUE;
+    var minScalarization = seen ? best : Double.MAX_VALUE;
       if (minScalarization < 0) {
       // Avoid scalarization values of 0
-      double eps = 10e-6;
-      for (S solution : getSolutionList()) {
+        var eps = 10e-6;
+      for (var solution : getSolutionList()) {
         scalarization.setAttribute(solution, eps + scalarization.getAttribute(solution) + minScalarization);
       }
     }
@@ -265,9 +265,9 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
   private double[] energyVector(double[][] distanceMatrix) {
     // Ignore the set (maxSize + 1)'th archive member since it's the new
     // solution that is tested for eligibility of replacement.
-    double[] energyVector = new double[distanceMatrix.length - 1];
-    for (int i = 0; i < energyVector.length - 1; i++) {
-      for (int j = i + 1; j < energyVector.length; j++) {
+    var energyVector = new double[distanceMatrix.length - 1];
+    for (var i = 0; i < energyVector.length - 1; i++) {
+      for (var j = i + 1; j < energyVector.length; j++) {
         energyVector[i] += scalarization.getAttribute(archive.get(j)) / distanceMatrix[i][j];
         energyVector[j] += scalarization.getAttribute(archive.get(i)) / distanceMatrix[i][j];
       }
@@ -285,16 +285,16 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
    * @return The replacement energy vector.
    */
   private double[] replacementVector(double[] @NotNull [] distanceMatrix) {
-    double[] replacementVector = new double[distanceMatrix.length - 1];
+    var replacementVector = new double[distanceMatrix.length - 1];
     // Energy between archive member k and new solution
-    double @NotNull [] individualEnergy = new double[distanceMatrix.length - 1];
+    var individualEnergy = new double[distanceMatrix.length - 1];
     // Sum of all individual energies
-    double totalEnergy = 0.0;
-    for (int i = 0; i < replacementVector.length; i++) {
+    var totalEnergy = 0.0;
+    for (var i = 0; i < replacementVector.length; i++) {
       individualEnergy[i] = scalarization.getAttribute(archive.get(i)) / distanceMatrix[i][maxSize];
       totalEnergy += individualEnergy[i];
     }
-    for (int i = 0; i < individualEnergy.length; i++) {
+    for (var i = 0; i < individualEnergy.length; i++) {
       replacementVector[i] = totalEnergy - individualEnergy[i];
       replacementVector[i] *= scalarization.getAttribute(archive.get(maxSize));
     }

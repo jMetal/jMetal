@@ -19,8 +19,8 @@ public class DefaultLocalBestUpdate implements LocalBestUpdate {
 
   @Override
   public DoubleSolution[] update(List<DoubleSolution> swarm, DoubleSolution[] localBest) {
-    for (int i = 0; i < swarm.size(); i++) {
-      int result = dominanceComparator.compare(swarm.get(i), localBest[i]) ;
+    for (var i = 0; i < swarm.size(); i++) {
+      var result = dominanceComparator.compare(swarm.get(i), localBest[i]) ;
       if (result != 1) {
         localBest[i] = (DoubleSolution)swarm.get(i).copy() ;
       }

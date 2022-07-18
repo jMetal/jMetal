@@ -47,10 +47,10 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
     while (offspringPopulation.size() < offspringPopulationSize) {
       crossover.setCurrentSolution(solutionList.get(solutionIndexGenerator.getValue()));
 
-      int numberOfRequiredParentsToCross = crossover.getNumberOfRequiredParents() ;
+      var numberOfRequiredParentsToCross = crossover.getNumberOfRequiredParents() ;
 
       @NotNull List<DoubleSolution> parents = new ArrayList<>(numberOfRequiredParentsToCross);
-      for (int j = 0; j < numberOfRequiredParentsToCross; j++) {
+      for (var j = 0; j < numberOfRequiredParentsToCross; j++) {
         parents.add(matingPool.get(0));
         matingPool.remove(0);
       }

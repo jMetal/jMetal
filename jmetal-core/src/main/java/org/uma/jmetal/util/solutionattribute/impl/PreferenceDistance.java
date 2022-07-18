@@ -35,7 +35,7 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
 
   @Override
   public void computeDensityEstimator(@NotNull List<S> solutionList) {
-    int size = solutionList.size();
+    var size = solutionList.size();
 
     if (size == 0) {
       return;
@@ -55,11 +55,11 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
 
     // Use a new SolutionSet to avoid altering the original solutionSet
     List<S> front = new ArrayList<>(size);
-    for (S solution : solutionList) {
+    for (var solution : solutionList) {
       front.add(solution);
     }
 
-    for (int i = 0; i < size; i++) {
+    for (var i = 0; i < size; i++) {
       front.get(i).attributes().put(getAttributeIdentifier(), 0.0);
     }
 
@@ -67,16 +67,16 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
     double objetiveMinn;
     double distance;
 
-    int numberOfObjectives = solutionList.get(0).objectives().length;
+    var numberOfObjectives = solutionList.get(0).objectives().length;
     weights = new ArrayList<>();
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       weights.add(1.0d / numberOfObjectives);
     }
 
-    for (int i = 0; i < front.size() - 1; i++) {
-      double normalizeDiff = 0.0D;
+    for (var i = 0; i < front.size() - 1; i++) {
+      var normalizeDiff = 0.0D;
       distance = 0.0D;
-      for (int j = 0; j < numberOfObjectives; j++) {
+      for (var j = 0; j < numberOfObjectives; j++) {
         // Sort the population by Obj n
         Collections.sort(front, new ObjectiveComparator<S>(j));
         objetiveMinn = front.get(0).objectives()[j];
@@ -97,23 +97,23 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
   public List<S> epsilonClean(List<S> solutionList) {
     List<S> preference = new ArrayList<>();
     @NotNull List<S> temporalList = new LinkedList<>(solutionList);
-    int numerOfObjectives = solutionList.get(0).objectives().length;
+    var numerOfObjectives = solutionList.get(0).objectives().length;
 
     while (!temporalList.isEmpty()) {
-      int indexRandom = JMetalRandom.getInstance().nextInt(0, temporalList.size() - 1); // 0
+      var indexRandom = JMetalRandom.getInstance().nextInt(0, temporalList.size() - 1); // 0
 
-      S randomSolution = temporalList.get(indexRandom);
+      var randomSolution = temporalList.get(indexRandom);
 
       preference.add(randomSolution);
       temporalList.remove(indexRandom);
 
-      for (int indexOfSolution = 0; indexOfSolution < temporalList.size(); indexOfSolution++) {
+      for (var indexOfSolution = 0; indexOfSolution < temporalList.size(); indexOfSolution++) {
         double sum = 0;
 
-        for (int indexOfObjective = 0; indexOfObjective < numerOfObjectives; indexOfObjective++) {
+        for (var indexOfObjective = 0; indexOfObjective < numerOfObjectives; indexOfObjective++) {
           temporalList.sort(new ObjectiveComparator<S>(indexOfObjective));
-          double objetiveMinn = temporalList.get(0).objectives()[indexOfObjective];
-          double objetiveMaxn =
+          var objetiveMinn = temporalList.get(0).objectives()[indexOfObjective];
+          var objetiveMaxn =
               temporalList.get(temporalList.size() - 1).objectives()[indexOfObjective];
           sum =
               sum

@@ -28,13 +28,13 @@ public class ListOrderedGrouping<C extends Comparable<C>> extends ListGrouping<C
   public void computeGroups(List<C> list) {
     Check.notNull(list);
     indices = new ArrayList<>(list.size());
-      int bound = list.size();
-      for (int i = 0; i < bound; i++) {
+    var bound = list.size();
+      for (var i = 0; i < bound; i++) {
           indices.add(i);
       }
 
       List<Integer> result = new ArrayList<>();
-      for (Integer index : indices) {
+      for (var index : indices) {
           result.add(index);
       }
       result.sort(Comparator.comparing(list::get));

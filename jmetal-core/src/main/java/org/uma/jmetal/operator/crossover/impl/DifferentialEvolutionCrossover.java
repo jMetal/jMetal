@@ -275,33 +275,33 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    */
   @Override
   public List<DoubleSolution> execute(List<DoubleSolution> parentSolutions) {
-    DoubleSolution child = (DoubleSolution) currentSolution.copy();
+    var child = (DoubleSolution) currentSolution.copy();
 
-    int numberOfVariables = parentSolutions.get(0).variables().size();
+    var numberOfVariables = parentSolutions.get(0).variables().size();
     int jrand = jRandomGenerator.getRandomValue(0, numberOfVariables - 1);
 
-    Double[][] parent = new Double[getNumberOfRequiredParents()][];
+    var parent = new Double[getNumberOfRequiredParents()][];
 
-    int bound = getNumberOfRequiredParents();
-    for (int i = 0; i < bound; i++) {
+    var bound = getNumberOfRequiredParents();
+    for (var i = 0; i < bound; i++) {
       parent[i] = new Double[numberOfVariables];
       parentSolutions.get(i).variables().toArray(parent[i]);
     }
 
     if (crossoverType.equals(DE_CROSSOVER_TYPE.BIN)) {
-      for (int j = 0; j < numberOfVariables; j++) {
+      for (var j = 0; j < numberOfVariables; j++) {
         if (crRandomGenerator.getRandomValue(0.0, 1.0) < cr || j == jrand) {
-          double value = mutate(parent, j);
+          var value = mutate(parent, j);
 
           child.variables().set(j, value);
         }
       }
     } else if (crossoverType.equals(DE_CROSSOVER_TYPE.EXP)) {
       int j = jRandomGenerator.getRandomValue(0, numberOfVariables - 1);
-      int l = 0;
+      var l = 0;
 
       do {
-        double value = mutate(parent, j);
+        var value = mutate(parent, j);
 
         child.variables().set(j, value);
 
@@ -318,9 +318,9 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   private void repairVariableValues(DoubleSolution solution) {
-    int bound = solution.variables().size();
-    for (int i = 0; i < bound; i++) {
-      Bounds<Double> bounds = solution.getBounds(i);
+    var bound = solution.variables().size();
+    for (var i = 0; i < bound; i++) {
+      var bounds = solution.getBounds(i);
       solution.variables().set(
               i,
               solutionRepair.repairSolutionVariableValue(

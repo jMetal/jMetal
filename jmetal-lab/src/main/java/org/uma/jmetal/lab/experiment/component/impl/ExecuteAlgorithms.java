@@ -40,9 +40,9 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
         "java.util.concurrent.ForkJoinPool.common.parallelism",
         "" + this.experiment.getNumberOfCores());
 
-    int retryCounter = 0 ;
-    int maxRetries = 5 ;
-    boolean computationNotFinished = true ;
+    var retryCounter = 0 ;
+    var maxRetries = 5 ;
+    var computationNotFinished = true ;
 
     while (computationNotFinished && (retryCounter < maxRetries)) {
       @NotNull List<ExperimentAlgorithm<?, ?>> unfinishedAlgorithmList = checkTaskStatus() ;
@@ -78,7 +78,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
               + "/" + experiment.getOutputParetoFrontFileName()
               + algorithm.getRunId()
               + ".csv";
-      File file = new File(resultFileName);
+      var file = new File(resultFileName);
       if (!file.exists()) {
         unfinishedAlgorithmList.add(algorithm);
         System.out.println(resultFileName + ". Status: " + file.exists());
@@ -98,25 +98,21 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
   }
 
   private boolean experimentDirectoryDoesNotExist() {
-    boolean result;
-    File experimentDirectory;
 
-    experimentDirectory = new File(experiment.getExperimentBaseDirectory());
-    result = !experimentDirectory.exists() || !experimentDirectory.isDirectory();
+    var experimentDirectory = new File(experiment.getExperimentBaseDirectory());
+    var result = !experimentDirectory.exists() || !experimentDirectory.isDirectory();
 
     return result;
   }
 
   private void createExperimentDirectory() {
-    File experimentDirectory;
-    experimentDirectory = new File(experiment.getExperimentBaseDirectory());
+    var experimentDirectory = new File(experiment.getExperimentBaseDirectory());
 
     if (experimentDirectory.exists()) {
       experimentDirectory.delete();
     }
 
-    boolean result;
-    result = new File(experiment.getExperimentBaseDirectory()).mkdirs();
+    var result = new File(experiment.getExperimentBaseDirectory()).mkdirs();
     if (!result) {
       throw new JMetalException(
           "Error creating org.uma.jmetal.experiment directory: "

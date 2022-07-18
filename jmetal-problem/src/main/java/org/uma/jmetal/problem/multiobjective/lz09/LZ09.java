@@ -83,9 +83,8 @@ public class LZ09 {
 
   // control the distance
   double betaFunction(List<Double> x, int type) {
-    double beta;
-    beta = 0;
-    int dim = x.size();
+    double beta = 0;
+    var dim = x.size();
 
     if (dim == 0) {
       beta = 0;
@@ -93,9 +92,9 @@ public class LZ09 {
 
     if (type == 1) {
       beta = 0;
-        double sum = 0.0;
-        for (int i = 0; i < dim; i++) {
-            double v = x.get(i) * x.get(i);
+      var sum = 0.0;
+        for (var i = 0; i < dim; i++) {
+          var v = x.get(i) * x.get(i);
             sum += v;
         }
         beta += sum;
@@ -104,9 +103,9 @@ public class LZ09 {
 
     if (type == 2) {
       beta = 0;
-        double sum = 0.0;
-        for (int i = 0; i < dim; i++) {
-            double v = Math.sqrt(i + 1) * x.get(i) * x.get(i);
+      var sum = 0.0;
+        for (var i = 0; i < dim; i++) {
+          var v = Math.sqrt(i + 1) * x.get(i) * x.get(i);
             sum += v;
         }
         beta += sum;
@@ -115,7 +114,7 @@ public class LZ09 {
 
     if (type == 3) {
       double sum = 0, xx;
-      for (int i = 0; i < dim; i++) {
+      for (var i = 0; i < dim; i++) {
         xx = 2 * x.get(i);
         sum += (xx * xx - Math.cos(4 * Math.PI * xx) + 1);
       }
@@ -124,7 +123,7 @@ public class LZ09 {
 
     if (type == 4) {
       double sum = 0, prod = 1, xx;
-      for (int i = 0; i < dim; i++) {
+      for (var i = 0; i < dim; i++) {
         xx = 2 * x.get(i);
         sum += xx * xx;
         prod *= Math.cos(10 * Math.PI * xx / Math.sqrt(i + 1));
@@ -139,26 +138,25 @@ public class LZ09 {
   double psfunc2(double x, double t1, int dim, int type, int css) {
     // type:  the type of curve 
     // css:   the class of index
-    double beta;
-    beta = 0.0;
+    var beta = 0.0;
 
     dim++;
 
     if (type == 21) {
-      double xy = 2 * (x - 0.5);
+      var xy = 2 * (x - 0.5);
       beta = xy - Math.pow(t1, 0.5 * (nvar + 3 * dim - 8) / (nvar - 2));
     }
 
     if (type == 22) {
-      double theta = 6 * Math.PI * t1 + dim * Math.PI / nvar;
-      double xy = 2 * (x - 0.5);
+      var theta = 6 * Math.PI * t1 + dim * Math.PI / nvar;
+      var xy = 2 * (x - 0.5);
       beta = xy - Math.sin(theta);
     }
 
     if (type == 23) {
-      double theta = 6 * Math.PI * t1 + dim * Math.PI / nvar;
-      double ra = 0.8 * t1;
-      double xy = 2 * (x - 0.5);
+      var theta = 6 * Math.PI * t1 + dim * Math.PI / nvar;
+      var ra = 0.8 * t1;
+      var xy = 2 * (x - 0.5);
       if (css == 1) {
         beta = xy - ra * Math.cos(theta);
       } else {
@@ -167,9 +165,9 @@ public class LZ09 {
     }
 
     if (type == 24) {
-      double theta = 6 * Math.PI * t1 + dim * Math.PI / nvar;
-      double xy = 2 * (x - 0.5);
-      double ra = 0.8 * t1;
+      var theta = 6 * Math.PI * t1 + dim * Math.PI / nvar;
+      var xy = 2 * (x - 0.5);
+      var ra = 0.8 * t1;
       if (css == 1) {
         beta = xy - ra * Math.cos(theta / 3);
       } else {
@@ -178,10 +176,10 @@ public class LZ09 {
     }
 
     if (type == 25) {
-      double rho = 0.8;
-      double phi = Math.PI * t1;
-      double theta = 6 * Math.PI * t1 + dim * Math.PI / nvar;
-      double xy = 2 * (x - 0.5);
+      var rho = 0.8;
+      var phi = Math.PI * t1;
+      var theta = 6 * Math.PI * t1 + dim * Math.PI / nvar;
+      var xy = 2 * (x - 0.5);
       if (css == 1) {
         beta = xy - rho * Math.sin(phi) * Math.sin(theta);
       } else if (css == 2) {
@@ -192,9 +190,9 @@ public class LZ09 {
     }
 
     if (type == 26) {
-      double theta = 6 * Math.PI * t1 + dim * Math.PI / nvar;
-      double ra = 0.3 * t1 * (t1 * Math.cos(4 * theta) + 2);
-      double xy = 2 * (x - 0.5);
+      var theta = 6 * Math.PI * t1 + dim * Math.PI / nvar;
+      var ra = 0.3 * t1 * (t1 * Math.cos(4 * theta) + 2);
+      var xy = 2 * (x - 0.5);
       if (css == 1) {
         beta = xy - ra * Math.cos(theta);
       } else {
@@ -209,20 +207,19 @@ public class LZ09 {
   double psfunc3(double x, double t1, double t2, int dim, int type) {
     // type:  the type of curve 
     // css:   the class of index
-    double beta;
-    beta = 0.0;
+    var beta = 0.0;
 
     dim++;
 
     if (type == 31) {
-      double xy = 4 * (x - 0.5);
-      double rate = 1.0 * dim / nvar;
+      var xy = 4 * (x - 0.5);
+      var rate = 1.0 * dim / nvar;
       beta = xy - 4 * (t1 * t1 * rate + t2 * (1.0 - rate)) + 2;
     }
 
     if (type == 32) {
-      double theta = 2 * Math.PI * t1 + dim * Math.PI / nvar;
-      double xy = 4 * (x - 0.5);
+      var theta = 2 * Math.PI * t1 + dim * Math.PI / nvar;
+      var xy = 4 * (x - 0.5);
       beta = xy - 2 * t2 * Math.sin(theta);
     }
 
@@ -232,18 +229,18 @@ public class LZ09 {
   void objective(List<Double> xVar, @NotNull List<Double> yObj) {
     // 2-objective case
     if (nobj == 2) {
-        boolean result = false;
-        for (int i : new int[]{21, 22, 23, 24, 26}) {
+      var result = false;
+        for (var i : new int[]{21, 22, 23, 24, 26}) {
             if (ltype == i) {
                 result = true;
                 break;
             }
         }
         if (result) {
-        double g = 0, h = 0, a, b;
-        ArrayList<Double> aa = new ArrayList<Double>();
+        double a, b;
+          var aa = new ArrayList<Double>();
         @NotNull ArrayList<Double> bb = new ArrayList<Double>();
-        for (int n = 1; n < nvar; n++) {
+        for (var n = 1; n < nvar; n++) {
           if (n % 2 == 0) {
             a = psfunc2(xVar.get(n), xVar.get(0), n, ltype, 1);  // linkage
             aa.add(a);
@@ -253,8 +250,8 @@ public class LZ09 {
           }
 
         }
-        g = betaFunction(aa, dtype);
-        h = betaFunction(bb, dtype);
+          var g = betaFunction(aa, dtype);
+          var h = betaFunction(bb, dtype);
 
         double alpha[] = new double[2];
         alphaFunction(alpha, xVar, 2, ptype);  // shape function
@@ -265,11 +262,11 @@ public class LZ09 {
       }
 
       if (ltype == 25) {
-        double g = 0, h = 0, a, b;
+        double a, b;
         double /*e = 0,*/ c;
-        ArrayList<Double> aa = new ArrayList<Double>();
+        var aa = new ArrayList<Double>();
         @NotNull ArrayList<Double> bb = new ArrayList<Double>();
-        for (int n = 1; n < nvar; n++) {
+        for (var n = 1; n < nvar; n++) {
           if (n % 3 == 0) {
             a = psfunc2(xVar.get(n), xVar.get(0), n, ltype, 1);
             aa.add(a);
@@ -285,8 +282,8 @@ public class LZ09 {
             }
           }
         }
-        g = betaFunction(aa, dtype);
-        h = betaFunction(bb, dtype);
+        var g = betaFunction(aa, dtype);
+        var h = betaFunction(bb, dtype);
         double alpha[] = new double[2];
         alphaFunction(alpha, xVar, 2, ptype);
         yObj.set(0, alpha[0] + h);
@@ -299,11 +296,11 @@ public class LZ09 {
     // 3-objective case
     if (nobj == 3) {
       if (ltype == 31 || ltype == 32) {
-        double g = 0, h = 0, e = 0, a;
-        ArrayList<Double> aa = new ArrayList<Double>();
-        ArrayList<Double> bb = new ArrayList<Double>();
+        double a;
+        var aa = new ArrayList<Double>();
+        var bb = new ArrayList<Double>();
         @NotNull ArrayList<Double> cc = new ArrayList<Double>();
-        for (int n = 2; n < nvar; n++) {
+        for (var n = 2; n < nvar; n++) {
           a = psfunc3(xVar.get(n), xVar.get(0), xVar.get(1), n, ltype);
           if (n % 3 == 0) {
             aa.add(a);
@@ -314,9 +311,9 @@ public class LZ09 {
           }
         }
 
-        g = betaFunction(aa, dtype);
-        h = betaFunction(bb, dtype);
-        e = betaFunction(cc, dtype);
+        var g = betaFunction(aa, dtype);
+        var h = betaFunction(bb, dtype);
+        var e = betaFunction(cc, dtype);
 
         @NotNull double alpha[] = new double[3];
         alphaFunction(alpha, xVar, 3, ptype);

@@ -27,7 +27,7 @@ public class SolutionListUtils {
 
   public static <S extends Solution<?>> List<S> getNonDominatedSolutions(List<S> solutionList) {
     @NotNull Archive<S> nonDominatedSolutionArchive = new NonDominatedSolutionListArchive<>() ;
-      for (S s : solutionList) {
+      for (var s : solutionList) {
           nonDominatedSolutionArchive.add(s);
       }
 
@@ -39,8 +39,8 @@ public class SolutionListUtils {
       throw new IllegalArgumentException("No solution provided: " + solutionList);
     }
 
-    S worstKnown = solutionList.iterator().next();
-    for (S candidateSolution : solutionList) {
+    var worstKnown = solutionList.iterator().next();
+    for (var candidateSolution : solutionList) {
       if (comparator.compare(worstKnown, candidateSolution) < 0) {
         worstKnown = candidateSolution;
       }
@@ -61,12 +61,12 @@ public class SolutionListUtils {
     Check.notNull(comparator);
     Check.collectionIsNotEmpty(solutionList);
 
-    int index = 0;
-    S bestKnown = solutionList.get(0);
+    var index = 0;
+    var bestKnown = solutionList.get(0);
     S candidateSolution;
 
     int flag;
-    for (int i = 1; i < solutionList.size(); i++) {
+    for (var i = 1; i < solutionList.size(); i++) {
       candidateSolution = solutionList.get(i);
       flag = comparator.compare(bestKnown, candidateSolution);
       if (flag == 1) {
@@ -91,12 +91,12 @@ public class SolutionListUtils {
     Check.notNull(comparator);
     Check.collectionIsNotEmpty(solutionList);
 
-    int index = 0;
-    S worstKnown = solutionList.get(0);
+    var index = 0;
+    var worstKnown = solutionList.get(0);
     S candidateSolution;
 
     int flag;
-    for (int i = 1; i < solutionList.size(); i++) {
+    for (var i = 1; i < solutionList.size(); i++) {
       candidateSolution = solutionList.get(i);
       flag = comparator.compare(worstKnown, candidateSolution);
       if (flag == -1) {
@@ -117,13 +117,12 @@ public class SolutionListUtils {
       return new double[0][0];
     }
 
-    int numberOfObjectives = solutionList.get(0).objectives().length;
-    int solutionListSize = solutionList.size();
+    var numberOfObjectives = solutionList.get(0).objectives().length;
+    var solutionListSize = solutionList.size();
 
-    double[][] objectives;
-    objectives = new double[solutionListSize][numberOfObjectives];
-    for (int i = 0; i < solutionListSize; i++) {
-      for (int j = 0; j < numberOfObjectives; j++) {
+    var objectives = new double[solutionListSize][numberOfObjectives];
+    for (var i = 0; i < solutionListSize; i++) {
+      for (var j = 0; j < numberOfObjectives; j++) {
         objectives[i][j] = solutionList.get(i).objectives()[j];
       }
     }
@@ -142,7 +141,7 @@ public class SolutionListUtils {
   public static <S extends Solution<?>> List<S> normalizeSolutionList(
       List<S> solutions, double[] minValues, double[] maxValues) {
       List<S> normalizedSolutions = new ArrayList<>(solutions.size());
-      for (S solution : solutions) {
+      for (var solution : solutions) {
           @NotNull S normalize = SolutionUtils.normalize(solution, minValues, maxValues);
           normalizedSolutions.add(normalize);
       }
@@ -161,12 +160,12 @@ public class SolutionListUtils {
     Check.notNull(solutions);
     Check.collectionIsNotEmpty(solutions);
 
-    double[] minValues = new double[solutions.get(0).objectives().length];
-    double @NotNull [] maxValues = new double[solutions.get(0).objectives().length];
+    var minValues = new double[solutions.get(0).objectives().length];
+    var maxValues = new double[solutions.get(0).objectives().length];
 
-    for (int i = 0; i < minValues.length; i++) {
-      int best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i));
-      int worst = findIndexOfWorstSolution(solutions, new ObjectiveComparator<>(i));
+    for (var i = 0; i < minValues.length; i++) {
+      var best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i));
+      var worst = findIndexOfWorstSolution(solutions, new ObjectiveComparator<>(i));
       minValues[i] = solutions.get(best).objectives()[i];
       maxValues[i] = solutions.get(worst).objectives()[i];
     }
@@ -184,11 +183,11 @@ public class SolutionListUtils {
   @SuppressWarnings("unchecked")
   public static <S extends Solution<?>> List<S> getInvertedFront(List<S> solutionSet) {
     List<S> invertedFront = new ArrayList<>(solutionSet.size());
-    int numberOfObjectives = solutionSet.get(0).objectives().length;
+    var numberOfObjectives = solutionSet.get(0).objectives().length;
 
-    for (int i = 0; i < solutionSet.size(); i++) {
+    for (var i = 0; i < solutionSet.size(); i++) {
       invertedFront.add(i, (S) solutionSet.get(i).copy());
-      for (int j = 0; j < numberOfObjectives; j++) {
+      for (var j = 0; j < numberOfObjectives; j++) {
         if (solutionSet.get(i).objectives()[j] <= 1.0
             && solutionSet.get(i).objectives()[j] >= 0.0) {
           invertedFront.get(i).objectives()[j] = 1.0 - solutionSet.get(i).objectives()[j];
@@ -204,10 +203,10 @@ public class SolutionListUtils {
 
   public static <S extends Solution<?>> boolean isSolutionDominatedBySolutionList(
       S solution, List<? extends S> solutionSet) {
-    boolean result = false;
+    var result = false;
     Comparator<S> dominance = new DominanceWithConstraintsComparator<>();
 
-    int i = 0;
+    var i = 0;
 
     while (!result && (i < solutionSet.size())) {
       if (dominance.compare(solution, solutionSet.get(i)) == 1) {
@@ -228,7 +227,7 @@ public class SolutionListUtils {
    */
   public static <S> @NotNull List<S> selectNRandomDifferentSolutions(
           int numberOfSolutionsToBeReturned, @NotNull List<S> solutionList) {
-    JMetalRandom random = JMetalRandom.getInstance();
+    var random = JMetalRandom.getInstance();
     return selectNRandomDifferentSolutions(
         numberOfSolutionsToBeReturned, solutionList, random::nextInt);
   }
@@ -281,10 +280,10 @@ public class SolutionListUtils {
    * @return
    */
   public static <S extends Solution<?>> double[][] distanceMatrix(List<S> solutionSet) {
-    double[][] distance = new double[solutionSet.size()][solutionSet.size()];
-    for (int i = 0; i < solutionSet.size(); i++) {
+    var distance = new double[solutionSet.size()][solutionSet.size()];
+    for (var i = 0; i < solutionSet.size(); i++) {
       distance[i][i] = 0.0;
-      for (int j = i + 1; j < solutionSet.size(); j++) {
+      for (var j = i + 1; j < solutionSet.size(); j++) {
         distance[i][j] =
             SolutionUtils.distanceBetweenObjectives(solutionSet.get(i), solutionSet.get(j));
         distance[j][i] = distance[i][j];
@@ -295,10 +294,10 @@ public class SolutionListUtils {
 
   public static <S extends Solution<?>> double[][] normalizedDistanceMatrix(
       List<S> solutionSet, double[] maxs, double[] mins) {
-    double[] @NotNull [] distance = new double[solutionSet.size()][solutionSet.size()];
-    for (int i = 0; i < solutionSet.size(); i++) {
+    var distance = new double[solutionSet.size()][solutionSet.size()];
+    for (var i = 0; i < solutionSet.size(); i++) {
       distance[i][i] = 0.0;
-      for (int j = i + 1; j < solutionSet.size(); j++) {
+      for (var j = i + 1; j < solutionSet.size(); j++) {
         distance[i][j] =
             SolutionUtils.normalizedDistanceBetweenObjectives(
                 solutionSet.get(i), solutionSet.get(j), maxs, mins);
@@ -316,9 +315,9 @@ public class SolutionListUtils {
    */
   public static <S> boolean solutionListsAreEquals(List<S> solutions, List<S> newSolutionList) {
     boolean found;
-    for (S solution : solutions) {
+    for (var solution : solutions) {
 
-      int j = 0;
+      var j = 0;
       found = false;
       while (j < newSolutionList.size()) {
         if (solution.equals(newSolutionList.get(j))) {
@@ -350,8 +349,8 @@ public class SolutionListUtils {
         (percentageOfSolutionsToRemove >= 0) && (percentageOfSolutionsToRemove <= 100),
         "The percentage of solutions to remove is invalid: " + percentageOfSolutionsToRemove);
 
-    int solutionListOriginalSize = solutionList.size();
-    int numberOfSolutionsToRemove =
+    var solutionListOriginalSize = solutionList.size();
+    var numberOfSolutionsToRemove =
         (int) (solutionListOriginalSize * percentageOfSolutionsToRemove / 100.0);
 
     removeSolutionsFromList(solutionList, numberOfSolutionsToRemove);
@@ -407,10 +406,10 @@ public class SolutionListUtils {
    */
   public static <S extends Solution<?>> double[] getObjectiveArrayFromSolutionList(
       List<S> solutionList, int objective) {
-      double[] result = new double[10];
-      int count = 0;
-      for (S s : solutionList) {
-          double v = s.objectives()[objective];
+    var result = new double[10];
+    var count = 0;
+      for (var s : solutionList) {
+        var v = s.objectives()[objective];
           if (result.length == count) result = Arrays.copyOf(result, count * 2);
           result[count++] = v;
       }
@@ -441,14 +440,14 @@ public class SolutionListUtils {
 
     if (originalSolutionList.get(0).objectives().length == 2) {
       Archive<S> archive = new CrowdingDistanceArchive<>(finalListSize) ;
-        for (S s : originalSolutionList) {
+        for (var s : originalSolutionList) {
             archive.add(s);
         }
 
         return archive.getSolutionList() ;
     }
 
-    for (int i = 0; i < originalSolutionList.size(); i++) {
+    for (var i = 0; i < originalSolutionList.size(); i++) {
       originalSolutionList.get(i).attributes().put("INDEX_", i);
     }
 
@@ -458,10 +457,10 @@ public class SolutionListUtils {
 
     // STEP 2. Find the solution having the best objective value, being the objective randomly
     // selected
-    int randomObjective =
+    var randomObjective =
             JMetalRandom.getInstance().nextInt(0, solutions.get(0).objectives().length - 1);
 
-    int bestSolutionIndex =
+    var bestSolutionIndex =
             findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective));
 
     //  STEP 3. Add the solution to the current list of selected solutions and remove it from the original list
@@ -473,11 +472,11 @@ public class SolutionListUtils {
     @NotNull Distance<S, List<S>> distance =
             new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
     while (selectedSolutions.size() < finalListSize) {
-      for (S solution : solutions) {
+      for (var solution : solutions) {
         solution.attributes().put(
                 "SUBSET_SELECTION_DISTANCE", distance.compute(solution, selectedSolutions));
       }
-      int largestDistanceSolutionIndex =
+      var largestDistanceSolutionIndex =
               findIndexOfBestSolution(
                       solutions,
                       new DoubleValueAttributeComparator<>(
@@ -487,8 +486,8 @@ public class SolutionListUtils {
     }
 
       List<S> resultList = new ArrayList<>();
-      for (S solution : selectedSolutions) {
-          S index_ = originalSolutionList.get((int) solution.attributes().get("INDEX_"));
+      for (var solution : selectedSolutions) {
+        var index_ = originalSolutionList.get((int) solution.attributes().get("INDEX_"));
           resultList.add(index_);
       }
 
@@ -502,10 +501,10 @@ public class SolutionListUtils {
    * @return
    */
   public static <S extends Solution<?>> double[][] getMatrixWithObjectiveValues(@NotNull List<S> solutionList) {
-    double[][] matrix = new double[solutionList.size()][] ;
+    var matrix = new double[solutionList.size()][] ;
 
-      int bound = solutionList.size();
-      for (int i = 0; i < bound; i++) {
+    var bound = solutionList.size();
+      for (var i = 0; i < bound; i++) {
           matrix[i] = solutionList.get(i).objectives();
       }
 

@@ -15,13 +15,13 @@ public class PermutationFactory {
     Check.notNull(randomGenerator);
 
     List<Integer> integerList = new LinkedList<>() ;
-      for (int i = 0; i < length; i++) {
+      for (var i = 0; i < length; i++) {
           integerList.add(i);
       }
 
       @NotNull List<Integer> permutation = new ArrayList<>(length) ;
     while(!integerList.isEmpty()) {
-      int index = randomGenerator.nextInt(0, integerList.size()-1) ;
+      var index = randomGenerator.nextInt(0, integerList.size()-1) ;
       permutation.add(integerList.get(index)) ;
       integerList.remove(index) ;
     }

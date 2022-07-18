@@ -109,10 +109,10 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
     double rnd, deltaq, tempDelta;
     double y, yl, yu;
 
-    for (int i = 0; i < solution.variables().size(); i++) {
+    for (var i = 0; i < solution.variables().size(); i++) {
       if (randomGenerator.nextDouble() <= probability) {
         y = solution.variables().get(i);
-        Bounds<Double> bounds = solution.getBounds(i);
+        var bounds = solution.getBounds(i);
         yl = bounds.getLowerBound() ;
         yu = bounds.getUpperBound() ;
         rnd = randomGenerator.nextDouble();

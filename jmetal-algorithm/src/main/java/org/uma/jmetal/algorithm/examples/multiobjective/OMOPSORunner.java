@@ -31,10 +31,8 @@ public class OMOPSORunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.OMOPSORunner problemName [referenceFront]
    */
   public static void main(String[] args) throws Exception {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
 
-    String referenceParetoFront = "" ;
+    var referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -47,23 +45,23 @@ public class OMOPSORunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
 
-    algorithm = new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<>())
-        .setMaxIterations(250)
-        .setSwarmSize(100)
-        .setEta(0.0075)
-        .setUniformMutation(new UniformMutation(mutationProbability, 0.5))
-        .setNonUniformMutation(new NonUniformMutation(mutationProbability, 0.5, 250))
-        .build();
+      Algorithm<List<DoubleSolution>> algorithm = new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<>())
+              .setMaxIterations(250)
+              .setSwarmSize(100)
+              .setEta(0.0075)
+              .setUniformMutation(new UniformMutation(mutationProbability, 0.5))
+              .setNonUniformMutation(new NonUniformMutation(mutationProbability, 0.5, 250))
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();
 
-    List<DoubleSolution> population = SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

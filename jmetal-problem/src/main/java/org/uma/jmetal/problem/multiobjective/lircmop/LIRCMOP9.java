@@ -28,10 +28,10 @@ public class LIRCMOP9 extends LIRCMOP8 {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-      double[] x = new double[10];
-      int count = 0;
-      int bound = getNumberOfVariables();
-      for (int i = 0; i < bound; i++) {
+      var x = new double[10];
+      var count = 0;
+      var bound = getNumberOfVariables();
+      for (var i = 0; i < bound; i++) {
           double v = solution.variables().get(i);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v;
@@ -47,10 +47,10 @@ public class LIRCMOP9 extends LIRCMOP8 {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(@NotNull DoubleSolution solution) {
-    double f0 = solution.objectives()[0];
-    double f1 = solution.objectives()[1];
+      var f0 = solution.objectives()[0];
+      var f1 = solution.objectives()[1];
     double N = 4.0, theta = -0.25 * Math.PI;
-    double @NotNull [] constraint = new double[getNumberOfConstraints()];
+      var constraint = new double[getNumberOfConstraints()];
     constraint[0] =
         f0 * Math.sin(theta)
             + f1 * Math.cos(theta)

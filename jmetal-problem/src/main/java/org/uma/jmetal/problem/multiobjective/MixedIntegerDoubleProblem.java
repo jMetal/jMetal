@@ -47,11 +47,11 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
     integerBounds = new ArrayList<>(numberOfIntegerVariables);
     doubleBounds = new ArrayList<>(numberOfDoubleVariables);
 
-    for (int i = 0; i < numberOfIntegerVariables; i++) {
+    for (var i = 0; i < numberOfIntegerVariables; i++) {
       integerBounds.add(Bounds.create(lowerBound, upperBound));
     }
 
-    for (int i = 0; i < numberOfDoubleVariables; i++) {
+    for (var i = 0; i < numberOfDoubleVariables; i++) {
       doubleBounds.add(Bounds.create((double) lowerBound, (double) upperBound));
     }
   }
@@ -59,20 +59,18 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
   /** Evaluate() method */
   @Override
   public CompositeSolution evaluate(CompositeSolution solution) {
-    int approximationToN;
-    int approximationToM;
 
-    approximationToN = 0;
-    approximationToM = 0;
+    var approximationToN = 0;
+    var approximationToM = 0;
 
-    List<Integer> integerVariables = ((IntegerSolution) solution.variables().get(0)).variables();
-    for (Integer integerVariable : integerVariables) {
+    var integerVariables = ((IntegerSolution) solution.variables().get(0)).variables();
+    for (var integerVariable : integerVariables) {
       approximationToN += Math.abs(valueN - integerVariable);
       approximationToM += Math.abs(valueM - integerVariable);
     }
 
-    List<Double> doubleVariables = ((DoubleSolution) solution.variables().get(1)).variables();
-    for (Double doubleVariable : doubleVariables) {
+    var doubleVariables = ((DoubleSolution) solution.variables().get(1)).variables();
+    for (var doubleVariable : doubleVariables) {
       approximationToN += Math.abs(valueN - doubleVariable);
       approximationToM += Math.abs(valueM - doubleVariable);
     }

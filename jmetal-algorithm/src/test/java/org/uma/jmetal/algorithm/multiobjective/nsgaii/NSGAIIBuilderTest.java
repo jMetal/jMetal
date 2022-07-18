@@ -36,15 +36,15 @@ public class NSGAIIBuilderTest {
     problem = mock(Problem.class);
     when(problem.getNumberOfVariables()).thenReturn(NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    int populationSize  = 100 ;
+    var populationSize  = 100 ;
     builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize);
   }
 
@@ -54,7 +54,7 @@ public class NSGAIIBuilderTest {
   }
 
   @Test public void buildAlgorithm() {
-    NSGAII<DoubleSolution> algorithm = builder.build();
+    var algorithm = builder.build();
     assertNotNull(algorithm);
   }
 
@@ -66,11 +66,11 @@ public class NSGAIIBuilderTest {
     assertEquals(100, builder.getPopulationSize());
     assertEquals(25000, builder.getMaxIterations());
 
-    SBXCrossover crossover = (SBXCrossover) builder.getCrossoverOperator();
+    var crossover = (SBXCrossover) builder.getCrossoverOperator();
     assertEquals(0.9, crossover.getCrossoverProbability(), EPSILON);
     assertEquals(20.0, crossover.getDistributionIndex(), EPSILON);
 
-    PolynomialMutation mutation = (PolynomialMutation) builder.getMutationOperator();
+    var mutation = (PolynomialMutation) builder.getMutationOperator();
     assertEquals(1.0 / NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM, mutation.getMutationProbability(),
         EPSILON);
     assertEquals(20.0, mutation.getDistributionIndex(), EPSILON);
@@ -103,7 +103,7 @@ public class NSGAIIBuilderTest {
   }
 
   @Test public void setNewEvaluator() {
-    MultiThreadedSolutionListEvaluator<DoubleSolution> evaluator =
+    var evaluator =
         new MultiThreadedSolutionListEvaluator<DoubleSolution>(2);
     assertNotEquals(evaluator, builder.getSolutionListEvaluator());
     builder.setSolutionListEvaluator(evaluator);

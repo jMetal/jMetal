@@ -71,7 +71,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     this.parentSelection = parentSelection;
     this.evaluator = evaluator;
 
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+    for (var i = 0; i < problem.getNumberOfVariables(); i++) {
       size += problem.getBitsFromVariable(i);
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
@@ -100,9 +100,9 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
   @Override protected List<BinarySolution> createInitialPopulation() {
       List<BinarySolution> population = new ArrayList<>(getMaxPopulationSize());
-      int bound = getMaxPopulationSize();
-      for (int i = 0; i < bound; i++) {
-          BinarySolution solution = problem.createSolution();
+    var bound = getMaxPopulationSize();
+      for (var i = 0; i < bound; i++) {
+        var solution = problem.createSolution();
           population.add(solution);
       }
       return population;
@@ -116,9 +116,9 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
   @Override protected List<BinarySolution> selection(@NotNull List<BinarySolution> population) {
       List<BinarySolution> matingPopulation = new ArrayList<>(population.size());
-      int bound = population.size();
-      for (int i = 0; i < bound; i++) {
-          BinarySolution execute = parentSelection.execute(population);
+    var bound = population.size();
+      for (var i = 0; i < bound; i++) {
+        var execute = parentSelection.execute(population);
           matingPopulation.add(execute);
       }
 
@@ -128,13 +128,13 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   @Override protected @NotNull List<BinarySolution> reproduction(List<BinarySolution> matingPopulation) {
     List<BinarySolution> offspringPopulation = new ArrayList<>();
 
-    for (int i = 0; i < matingPopulation.size(); i += 2) {
+    for (var i = 0; i < matingPopulation.size(); i += 2) {
       List<BinarySolution> parents = new ArrayList<>(2);
       parents.add(matingPopulation.get(i));
       parents.add(matingPopulation.get(i + 1));
 
       if (hammingDistance(parents.get(0), parents.get(1)) >= minimumDistance) {
-        List<BinarySolution> offspring = crossover.execute(parents);
+        var offspring = crossover.execute(parents);
         offspringPopulation.add(offspring.get(0));
         offspringPopulation.add(offspring.get(1));
       }
@@ -150,7 +150,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     union.addAll(population);
     union.addAll(offspringPopulation);
 
-    List<BinarySolution> newPopulation = newGenerationSelection.execute(union);
+    var newPopulation = newGenerationSelection.execute(union);
 
     if (SolutionListUtils.solutionListsAreEquals(population, newPopulation)) {
       minimumDistance--;
@@ -160,13 +160,13 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
      // minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
       minimumDistance = (int) (0.35 * (1 - 0.35) * size);
 
-      int preserve = (int) Math.floor(preservedPopulation * population.size());
+      var preserve = (int) Math.floor(preservedPopulation * population.size());
       newPopulation = new ArrayList<>(getMaxPopulationSize());
       population.sort(comparator);
-      for (int i = 0; i < preserve; i++) {
+      for (var i = 0; i < preserve; i++) {
         newPopulation.add((BinarySolution) population.get(i).copy());
       }
-      for (int i = preserve; i < getMaxPopulationSize(); i++) {
+      for (var i = preserve; i < getMaxPopulationSize(); i++) {
         @Nullable BinarySolution solution = (BinarySolution) population.get(i).copy();
         cataclysmicMutation.execute(solution);
 
@@ -178,8 +178,8 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   }
 
   @Override public List<BinarySolution> getResult() {
-    NonDominatedSolutionListArchive<BinarySolution> archive = new NonDominatedSolutionListArchive<>() ;
-    for (BinarySolution solution : getPopulation()) {
+    var archive = new NonDominatedSolutionListArchive<BinarySolution>() ;
+    for (var solution : getPopulation()) {
       archive.add(solution) ;
     }
 
@@ -195,10 +195,10 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
    */
 
   private int hammingDistance(@NotNull BinarySolution solutionOne, BinarySolution solutionTwo) {
-      int distance = 0;
-      int bound = problem.getNumberOfVariables();
-      for (int i = 0; i < bound; i++) {
-          int hammingDistance = hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i));
+    var distance = 0;
+    var bound = problem.getNumberOfVariables();
+      for (var i = 0; i < bound; i++) {
+        var hammingDistance = hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i));
           distance += hammingDistance;
       }
 
@@ -210,8 +210,8 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
       throw new JMetalException("The bitsets have different length: "
           + bitSet1.getBinarySetLength() +", " + bitSet2.getBinarySetLength()) ;
     }
-    int distance = 0;
-    int i = 0;
+    var distance = 0;
+    var i = 0;
     while (i < bitSet1.getBinarySetLength()) {
       if (bitSet1.get(i) != bitSet2.get(i)) {
         distance++;

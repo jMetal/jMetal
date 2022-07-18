@@ -35,10 +35,10 @@ public class C1_DTLZ1 extends DTLZ1 {
   }
 
   public void evaluateConstraints(DoubleSolution solution) {
-    double sum = 0.0;
-    int bound = solution.objectives().length - 2;
-    for (int i = 0; i < bound; i++) {
-      double v = solution.objectives()[i] / 0.5;
+    var sum = 0.0;
+    var bound = solution.objectives().length - 2;
+    for (var i = 0; i < bound; i++) {
+      var v = solution.objectives()[i] / 0.5;
       sum += v;
     }
 

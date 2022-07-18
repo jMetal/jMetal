@@ -25,7 +25,7 @@ public class FDA4 extends FDA {
     @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -35,35 +35,35 @@ public class FDA4 extends FDA {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double @NotNull [] f = new double[solution.objectives().length];
-    double g = this.evalG(solution, M - 1);
+    var f = new double[solution.objectives().length];
+    var g = this.evalG(solution, M - 1);
     f[0] = this.evalF1(solution, g);
     f[1] = evalFK(solution, g, 2);
     f[2] = evalFM(solution, g);
-    for (int i = 0; i < solution.objectives().length; i++) {
+    for (var i = 0; i < solution.objectives().length; i++) {
       solution.objectives()[i] = f[i];
     }
     return solution ;
   }
 
   private double evalF1(DoubleSolution solution, double g) {
-    double f = 1.0d + g;
-      double mult = 1.0d;
-      for (int i = 1; i <= M - 1; i++) {
-          double cos = Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
+    var f = 1.0d + g;
+    var mult = 1.0d;
+      for (var i = 1; i <= M - 1; i++) {
+        var cos = Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
           mult = mult * cos;
       }
       return f * mult;
   }
 
   private double evalFK(@NotNull DoubleSolution solution, double g, int k) {
-    double f = 1.0d + g;
+    var f = 1.0d + g;
     double mult;
-    double aux = Math.sin((solution.variables().get(M - k) * Math.PI) / 2.0d);
-      double acc = 1.0d;
-      int bound = M - k;
-      for (int i = 1; i <= bound; i++) {
-          double cos = Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
+    var aux = Math.sin((solution.variables().get(M - k) * Math.PI) / 2.0d);
+    var acc = 1.0d;
+    var bound = M - k;
+      for (var i = 1; i <= bound; i++) {
+        var cos = Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
           acc = acc * cos;
       }
       mult = acc;
@@ -77,20 +77,19 @@ public class FDA4 extends FDA {
    * @param solution Solution
    */
   private double evalG(@NotNull DoubleSolution solution, int limitInf) {
-    double g;
-    double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-      double sum = 0.0;
-      int bound = solution.variables().size();
-      for (int i = limitInf; i < bound; i++) {
-          double pow = Math.pow((solution.variables().get(i) - Gt), 2.0d);
+    var Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
+    var sum = 0.0;
+    var bound = solution.variables().size();
+      for (var i = limitInf; i < bound; i++) {
+        var pow = Math.pow((solution.variables().get(i) - Gt), 2.0d);
           sum += pow;
       }
-      g = sum;
+    var g = sum;
     return g;
   }
 
   private double evalFM(@NotNull DoubleSolution solution, double g) {
-    double fm = 1.0d + g;
+    var fm = 1.0d + g;
     fm *= Math.sin(solution.variables().get(0) * Math.PI / 2);
     return fm;
   }

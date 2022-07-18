@@ -24,7 +24,7 @@ public class Rastrigin extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-5.12);
       upperLimit.add(5.12);
     }
@@ -35,11 +35,11 @@ public class Rastrigin extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables() ;
+    var numberOfVariables = getNumberOfVariables() ;
 
-      double[] x = new double[10];
-      int count = 0;
-      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+    var x = new double[10];
+    var count = 0;
+      for (var i1 = 0; i1 < numberOfVariables; i1++) {
           double v1 = solution.variables().get(i1);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v1;
@@ -47,12 +47,12 @@ public class Rastrigin extends AbstractDoubleProblem {
       x = Arrays.copyOfRange(x, 0, count);
 
       double result;
-    double a = 10.0;
-    double w = 2 * Math.PI;
+    var a = 10.0;
+    var w = 2 * Math.PI;
 
-      double sum = 0.0;
-      for (int i = 0; i < numberOfVariables; i++) {
-          double v = x[i] * x[i] - a * Math.cos(w * x[i]);
+    var sum = 0.0;
+      for (var i = 0; i < numberOfVariables; i++) {
+        var v = x[i] * x[i] - a * Math.cos(w * x[i]);
           sum += v;
       }
       result = sum;

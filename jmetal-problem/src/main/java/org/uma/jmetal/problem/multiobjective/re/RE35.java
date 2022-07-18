@@ -25,7 +25,7 @@ public class RE35 extends AbstractDoubleProblem {
     setName("RE35");
 
     @NotNull List<Double> lowerLimit = List.of(2.6, 0.7, 17.0, 7.3, 7.3, 2.9, 5.0);
-    List<Double> upperLimit = List.of(3.6, 0.8, 28.0, 8.3, 8.3, 3.9, 5.5);
+    var upperLimit = List.of(3.6, 0.8, 28.0, 8.3, 8.3, 3.9, 5.5);
     setVariableBounds(lowerLimit, upperLimit);
   }
 
@@ -34,7 +34,7 @@ public class RE35 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
-    double x3 = Math.rint(solution.variables().get(2));
+    var x3 = Math.rint(solution.variables().get(2));
     double x4 = solution.variables().get(3);
     double x5 = solution.variables().get(4);
     double x6 = solution.variables().get(5);
@@ -46,10 +46,10 @@ public class RE35 extends AbstractDoubleProblem {
             + 7.477 * (x6 * x6 * x6 + x7 * x7 * x7)
             + 0.7854 * (x4 * x6 * x6 + x5 * x7 * x7);
 
-    double tmpVar = Math.pow((745.0 * x4) / (x2 * x3), 2.0) + 1.69 * 1e7;
+    var tmpVar = Math.pow((745.0 * x4) / (x2 * x3), 2.0) + 1.69 * 1e7;
     solution.objectives()[1] = Math.sqrt(tmpVar) / (0.1 * x6 * x6 * x6);
 
-    double @NotNull [] g = new double[numberOfOriginalConstraints];
+    var g = new double[numberOfOriginalConstraints];
     g[0] = -(1.0 / (x1 * x2 * x2 * x3)) + 1.0 / 27.0;
     g[1] = -(1.0 / (x1 * x2 * x2 * x3 * x3)) + 1.0 / 397.5;
     g[2] = -(x4 * x4 * x4) / (x2 * x3 * x6 * x6 * x6 * x6) + 1.0 / 1.93;
@@ -63,14 +63,14 @@ public class RE35 extends AbstractDoubleProblem {
     tmpVar = Math.pow((745.0 * x5) / (x2 * x3), 2.0) + 1.575 * 1e8;
     g[10] = -Math.sqrt(tmpVar) / (0.1 * x7 * x7 * x7) + 1100.0;
 
-    for (int i = 0; i < numberOfOriginalConstraints; i++) {
+    for (var i = 0; i < numberOfOriginalConstraints; i++) {
       if (g[i] < 0.0) g[i] = -g[i];
       else g[i] = 0;
     }
 
-      double sum = 0.0;
-      for (int i : new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) {
-          double v = g[i];
+    var sum = 0.0;
+      for (var i : new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) {
+        var v = g[i];
           sum += v;
       }
       solution.objectives()[2] = sum;

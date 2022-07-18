@@ -38,11 +38,11 @@ public class ExtractSubsetOfParetoDominatedSolutionsFromFile {
             + "\nThe second argument is the name of the file containing the computed output."
             + "\nThe third argument is the number of solutions to select from the input file");
 
-    String inputFileName = args[0];
-    String outputFileName = args[1];
-    int numberOfSolutions = Integer.parseInt(args[2]);
+    var inputFileName = args[0];
+    var outputFileName = args[1];
+    var numberOfSolutions = Integer.parseInt(args[2]);
 
-    Stream<String> lines = Files.lines(Path.of(inputFileName));
+    var lines = Files.lines(Path.of(inputFileName));
 
     @NotNull List<PointSolution> solutions = lines
         .filter(line -> !line.equals(""))
@@ -53,7 +53,7 @@ public class ExtractSubsetOfParetoDominatedSolutionsFromFile {
 
     Archive<PointSolution> archive = new BestSolutionsArchive<>(
         new NonDominatedSolutionListArchive<>(), numberOfSolutions);
-    for (PointSolution solution : solutions) {
+    for (var solution : solutions) {
       archive.add(solution);
     }
 
@@ -61,11 +61,11 @@ public class ExtractSubsetOfParetoDominatedSolutionsFromFile {
   }
 
   private static double[] parseLineContainingObjectives(String line) {
-    String[] stringValues = line.split(",");
-    double[] doubles = new double[10];
-    int count = 0;
-    for (String stringValue : stringValues) {
-      double v = Double.parseDouble(stringValue);
+    var stringValues = line.split(",");
+    var doubles = new double[10];
+    var count = 0;
+    for (var stringValue : stringValues) {
+      var v = Double.parseDouble(stringValue);
       if (doubles.length == count) doubles = Arrays.copyOf(doubles, count * 2);
       doubles[count++] = v;
     }

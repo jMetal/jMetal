@@ -20,26 +20,26 @@ public class NadirPointTest {
 
   @Test
   public void shouldConstructorCreateANadirPointWithAllObjectiveValuesCorrectlyInitialized() {
-    int numberOfObjectives = 4 ;
+    var numberOfObjectives = 4 ;
 
     referencePoint = new NadirPoint(numberOfObjectives) ;
 
     assertEquals(numberOfObjectives, referencePoint.getDimension()) ;
 
-    for (int i = 0 ; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       assertEquals(DEFAULT_INITIAL_VALUE, referencePoint.getValue(i), EPSILON) ;
     }
   }
 
   @Test
   public void shouldUpdateWithOneSolutionMakeTheNadirPointHaveTheSolutionValues() {
-    int numberOfObjectives = 2 ;
+    var numberOfObjectives = 2 ;
 
     referencePoint = new NadirPoint(numberOfObjectives) ;
 
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    DoubleSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
     solution.objectives()[0] = 1 ;
     solution.objectives()[1] = 2 ;
 
@@ -50,17 +50,17 @@ public class NadirPointTest {
 
   @Test
   public void shouldUpdateWithTwoSolutionsLeadToTheCorrectNadirPoint() {
-    int numberOfObjectives = 2 ;
+    var numberOfObjectives = 2 ;
 
     referencePoint = new NadirPoint(numberOfObjectives) ;
 
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
-    DoubleSolution solution1 = problem.createSolution() ;
+    var solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 0 ;
     solution1.objectives()[1] = 1 ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.objectives()[0] = 1 ;
     solution2.objectives()[1] = 0 ;
 
@@ -73,22 +73,22 @@ public class NadirPointTest {
 
   @Test
   public void shouldUpdateWithThreeSolutionsLeadToTheCorrectNadirPoint() {
-    int numberOfObjectives = 3 ;
+    var numberOfObjectives = 3 ;
 
     referencePoint = new NadirPoint(numberOfObjectives) ;
 
     DoubleProblem problem = new FakeDoubleProblem(3, 3, 0) ;
-    DoubleSolution solution1 = problem.createSolution() ;
+    var solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 3.0 ;
     solution1.objectives()[1] = 1.0 ;
     solution1.objectives()[2] = 2.0 ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.objectives()[0] = 0.2 ;
     solution2.objectives()[1] = 4.0 ;
     solution2.objectives()[2] = 5.5 ;
 
-    DoubleSolution solution3 = problem.createSolution() ;
+    var solution3 = problem.createSolution() ;
     solution3.objectives()[0] = 5.0 ;
     solution3.objectives()[1] = 6.0 ;
     solution3.objectives()[2] = 1.5 ;
@@ -104,27 +104,27 @@ public class NadirPointTest {
 
   @Test
   public void shouldUpdateAListOfSolutionsLeadToTheCorrectNadirPoint() {
-    int numberOfObjectives = 3 ;
+    var numberOfObjectives = 3 ;
 
     referencePoint = new NadirPoint(numberOfObjectives) ;
 
     DoubleProblem problem = new FakeDoubleProblem(3, 3, 0) ;
-    DoubleSolution solution1 = problem.createSolution() ;
+    var solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 3.0 ;
     solution1.objectives()[1] = 1.0 ;
     solution1.objectives()[2] = 2.0 ;
 
-    DoubleSolution solution2 = problem.createSolution() ;
+    var solution2 = problem.createSolution() ;
     solution2.objectives()[0] = 0.2 ;
     solution2.objectives()[1] = 4.0 ;
     solution2.objectives()[2] = 5.5 ;
 
-    DoubleSolution solution3 = problem.createSolution() ;
+    var solution3 = problem.createSolution() ;
     solution3.objectives()[0] = 5.0 ;
     solution3.objectives()[1] = 6.0 ;
     solution3.objectives()[2] = 1.5 ;
 
-    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3) ;
+    var solutionList = Arrays.asList(solution1, solution2, solution3) ;
 
     referencePoint.update(solutionList);
 

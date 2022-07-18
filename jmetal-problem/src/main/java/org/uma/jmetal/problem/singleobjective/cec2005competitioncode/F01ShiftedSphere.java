@@ -79,7 +79,7 @@ public class F01ShiftedSphere extends TestFunc {
 
   // Function body
   public double f(double[] x) {
-    double result = 0.0;
+    var result = 0.0;
 
     Benchmark.shift(memoryBuffer, x, shiftedGlobalOptimum);
 

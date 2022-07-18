@@ -15,7 +15,7 @@ public class SequentialSolutionListEvaluator<S> implements SolutionListEvaluator
 
   @Override
   public List<S> evaluate(@NotNull List<S> solutionList, @NotNull Problem<S> problem) throws JMetalException {
-      for (S s : solutionList) {
+      for (var s : solutionList) {
           problem.evaluate(s);
       }
 

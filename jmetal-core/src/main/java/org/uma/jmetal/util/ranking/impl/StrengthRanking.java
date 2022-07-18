@@ -40,12 +40,12 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
 
   @Override
   public Ranking<S> compute(@NotNull List<S> solutionList) {
-    int[] strength = new int[solutionList.size()];
-    int[] rawFitness = new int[solutionList.size()];
+    var strength = new int[solutionList.size()];
+    var rawFitness = new int[solutionList.size()];
 
     // strength(i) = |{j | j <- SolutionSet and i dominate j}|
-    for (int i = 0; i < solutionList.size(); i++) {
-      for (int j = 0; j < solutionList.size(); j++) {
+    for (var i = 0; i < solutionList.size(); i++) {
+      for (var j = 0; j < solutionList.size(); j++) {
         if (dominanceComparator.compare(solutionList.get(i), solutionList.get(j)) < 0) {
           strength[i] += 1.0;
         }
@@ -54,16 +54,16 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
 
     // Calculate the raw fitness:
     // rawFitness(i) = |{sum strength(j) | j <- SolutionSet and j dominate i}|
-    for (int i = 0; i < solutionList.size(); i++) {
-      for (int j = 0; j < solutionList.size(); j++) {
+    for (var i = 0; i < solutionList.size(); i++) {
+      for (var j = 0; j < solutionList.size(); j++) {
         if (dominanceComparator.compare(solutionList.get(i), solutionList.get(j)) == 1) {
           rawFitness[i] += strength[j];
         }
       }
     }
 
-    int maxFitnessValue = 0;
-    for (int i = 0; i < solutionList.size(); i++) {
+    var maxFitnessValue = 0;
+    for (var i = 0; i < solutionList.size(); i++) {
       solutionList.get(i).attributes().put(attributeId, rawFitness[i]);
       if (rawFitness[i] > maxFitnessValue) {
         maxFitnessValue = rawFitness[i];
@@ -72,19 +72,19 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
 
     // front[i] contains the list of individuals belonging to the front i
     rankedSubPopulations = new ArrayList<>(maxFitnessValue + 1);
-      int bound = maxFitnessValue + 1;
-      for (int index = 0; index < bound; index++) {
+    var bound = maxFitnessValue + 1;
+      for (var index = 0; index < bound; index++) {
           rankedSubPopulations.add(new ArrayList<>());
       }
 
       // Assign each solution to its corresponding front
-      for (S solution : solutionList) {
+      for (var solution : solutionList) {
           rankedSubPopulations.get((int) solution.attributes().get(attributeId)).add(solution);
       }
 
       // Remove empty fronts
     // rankedSubPopulations.stream().filter(list -> (list.size() == 0));
-    int counter = 0;
+    var counter = 0;
     while (counter < rankedSubPopulations.size()) {
       if (rankedSubPopulations.get(counter).size() == 0) {
         rankedSubPopulations.remove(counter);

@@ -125,7 +125,7 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
 
   @Override
   protected List<S> reproduction(List<S> population) {
-    S mutatedSolution = (S) population.get(0).copy();
+    var mutatedSolution = (S) population.get(0).copy();
     mutationOperator.execute(mutatedSolution);
 
     List<S> mutationSolutionList = new ArrayList<>(1);
@@ -135,10 +135,10 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    S current = population.get(0);
-    S mutatedSolution = (S) offspringPopulation.get(0).copy();
+    var current = population.get(0);
+    var mutatedSolution = (S) offspringPopulation.get(0).copy();
 
-    int flag = comparator.compare(current, mutatedSolution);
+    var flag = comparator.compare(current, mutatedSolution);
     if (flag == 1) {
       current = mutatedSolution;
       archive.add(mutatedSolution);
@@ -149,7 +149,7 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
         }
       }
     } else {
-      double acceptanceProbability = compute_acceptance_probability(current, mutatedSolution, temperature);
+      var acceptanceProbability = compute_acceptance_probability(current, mutatedSolution, temperature);
 
       if (acceptanceProbability > JMetalRandom.getInstance().nextDouble()) {
         current = mutatedSolution;
@@ -164,15 +164,15 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   protected double compute_acceptance_probability(@NotNull S currentSolution, @NotNull S mutatedSolution, double temperature) {
-      double value = 0.0;
-      int bound = currentSolution.objectives().length;
-      for (int i = 0; i < bound; i++) {
-          double v = (mutatedSolution.objectives()[i] - currentSolution.objectives()[i])
+    var value = 0.0;
+    var bound = currentSolution.objectives().length;
+      for (var i = 0; i < bound; i++) {
+        var v = (mutatedSolution.objectives()[i] - currentSolution.objectives()[i])
                   / Math.max(temperature, minimumTemperature);
           value += v;
       }
 
-      double probability = Math.exp(-1.0 * value);
+    var probability = Math.exp(-1.0 * value);
     Check.probabilityIsValid(probability);
     return probability;
   }

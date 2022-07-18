@@ -22,10 +22,10 @@ public class EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace
 
   @Override
   public double compute(S solution, L solutionList) {
-    double bestDistance = Double.MAX_VALUE;
+    var bestDistance = Double.MAX_VALUE;
 
-    for (S s : solutionList) {
-      double aux = distance.compute(solution.objectives(), s.objectives());
+    for (var s : solutionList) {
+      var aux = distance.compute(solution.objectives(), s.objectives());
       if (aux < bestDistance)
         bestDistance = aux;
     }

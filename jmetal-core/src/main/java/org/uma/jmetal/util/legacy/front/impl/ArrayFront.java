@@ -52,9 +52,9 @@ public class ArrayFront implements Front {
     points = new Point[numberOfPoints];
 
     points = new Point[numberOfPoints];
-    for (int i = 0; i < numberOfPoints; i++) {
+    for (var i = 0; i < numberOfPoints; i++) {
       Point point = new ArrayPoint(pointDimensions);
-      for (int j = 0; j < pointDimensions; j++) {
+      for (var j = 0; j < pointDimensions; j++) {
         point.setValue(j, solutionList.get(i).objectives()[j]);
       }
       points[i] = point;
@@ -73,7 +73,7 @@ public class ArrayFront implements Front {
     points = new Point[numberOfPoints];
 
     points = new Point[numberOfPoints];
-    for (int i = 0; i < numberOfPoints; i++) {
+    for (var i = 0; i < numberOfPoints; i++) {
       points[i] = new ArrayPoint(front.getPoint(i));
     }
   }
@@ -84,9 +84,9 @@ public class ArrayFront implements Front {
     pointDimensions = dimensions;
     points = new Point[this.numberOfPoints];
 
-    for (int i = 0; i < this.numberOfPoints; i++) {
+    for (var i = 0; i < this.numberOfPoints; i++) {
       @NotNull Point point = new ArrayPoint(pointDimensions);
-      for (int j = 0; j < pointDimensions; j++) {
+      for (var j = 0; j < pointDimensions; j++) {
         point.setValue(j, 0.0);
       }
       points[i] = point;
@@ -96,21 +96,21 @@ public class ArrayFront implements Front {
   public ArrayFront(@NotNull String fileName, String separator) throws FileNotFoundException {
     this();
 
-    InputStream inputStream = createInputStream(fileName);
-    InputStreamReader isr = new InputStreamReader(inputStream);
+    var inputStream = createInputStream(fileName);
+    var isr = new InputStreamReader(inputStream);
     @NotNull BufferedReader br = new BufferedReader(isr);
 
     @NotNull List<Point> list = new ArrayList<>();
-    int numberOfObjectives = 0;
+    var numberOfObjectives = 0;
     String line;
     try {
       line = br.readLine();
 
       while (line != null) {
-        String @NotNull [] stringValues = line.split(separator);
-        double[] values = new double[10];
-        int count = 0;
-        for (String stringValue : stringValues) {
+        var stringValues = line.split(separator);
+        var values = new double[10];
+        var count = 0;
+        for (var stringValue : stringValues) {
           double valueOf = Double.valueOf(stringValue);
           if (values.length == count) values = Arrays.copyOf(values, count * 2);
           values[count++] = valueOf;
@@ -148,7 +148,7 @@ public class ArrayFront implements Front {
     } else {
       pointDimensions = points[0].getDimension();
     }
-    for (int i = 0; i < numberOfPoints; i++) {
+    for (var i = 0; i < numberOfPoints; i++) {
       points[i] = list.get(i);
     }
   }
@@ -165,7 +165,7 @@ public class ArrayFront implements Front {
   }
 
   public InputStream createInputStream(String fileName) throws FileNotFoundException {
-    InputStream inputStream = getClass().getResourceAsStream(fileName);
+    var inputStream = getClass().getResourceAsStream(fileName);
     if (inputStream == null) {
       inputStream = new FileInputStream(fileName);
     }
@@ -228,7 +228,7 @@ public class ArrayFront implements Front {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ArrayFront that = (ArrayFront) o;
+    var that = (ArrayFront) o;
 
     if (numberOfPoints != that.numberOfPoints) return false;
     if (pointDimensions != that.pointDimensions) return false;
@@ -239,7 +239,7 @@ public class ArrayFront implements Front {
 
   @Override
   public int hashCode() {
-    int result = Arrays.hashCode(points);
+    var result = Arrays.hashCode(points);
     result = 31 * result + numberOfPoints;
     result = 31 * result + pointDimensions;
     return result;
@@ -253,12 +253,12 @@ public class ArrayFront implements Front {
   @Override
   public double[][] getMatrix() {
     List<double[]> list = new ArrayList<>();
-    int bound = getNumberOfPoints();
-    for (int i = 0; i < bound; i++) {
-      double[] values = points[i].getValues();
+    var bound = getNumberOfPoints();
+    for (var i = 0; i < bound; i++) {
+      var values = points[i].getValues();
       list.add(values);
     }
-    double[][] matrix = list.toArray(new double[0][]);
+    var matrix = list.toArray(new double[0][]);
 
       return matrix;
   }

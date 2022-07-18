@@ -54,12 +54,12 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
     @NotNull Iterator<S> iterator = getSolutionList().iterator();
 
     while (iterator.hasNext()) {
-      S element = iterator.next();
-      int flag = dominanceComparator.compare(solution, element);
+      var element = iterator.next();
+      var flag = dominanceComparator.compare(solution, element);
       if (flag == -1) { // The Individual to insert dominates other
         // individuals in  the setArchive
         iterator.remove(); //Delete it from the setArchive
-        int location = grid.location(element);
+        var location = grid.location(element);
         if (grid.getLocationDensity(location) > 1) {//The hypercube contains
           grid.removeSolution(location);            //more than one individual
         } else {
@@ -81,8 +81,7 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
 
     if (this.getSolutionList().size() < this.getMaxSize()) { //The setArchive is not full
       grid.updateGrid(solution, getSolutionList()); // Update the grid if applicable
-      int location;
-      location = grid.location(solution); // Get the location of the solution
+      var location = grid.location(solution); // Get the location of the solution
       grid.addSolution(location); // Increment the density of the hypercube
       getSolutionList().add(solution); // Add the solution to the list
       return true;
@@ -90,7 +89,7 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
 
     // At this point, the solution has to be inserted and the setArchive is full
     grid.updateGrid(solution, getSolutionList());
-    int location = grid.location(solution);
+    var location = grid.location(solution);
     if (location == grid.getMostPopulatedHypercube()) { // The solution is in the
       // most populated hypercube
       return false; // Not inserted
@@ -110,10 +109,10 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
   }
   
   public void prune() {
-    Iterator<S> iterator = getSolutionList().iterator();
+    var iterator = getSolutionList().iterator();
     while (iterator.hasNext()) {
-      S element = iterator.next();
-      int location = grid.location(element);
+      var element = iterator.next();
+      var location = grid.location(element);
       if (location == grid.getMostPopulatedHypercube()) {
         iterator.remove();
         grid.removeSolution(location);

@@ -59,21 +59,21 @@ public class Spread extends QualityIndicator {
     Arrays.sort(referenceFront, 0, referenceFront.length, new LexicographicalVectorComparator()) ;
 
     // STEP 2. Compute df and dl (See specifications in Deb's description of the metric)
-    double df = distance.compute(front[0], referenceFront[0]) ;
-    double dl = distance.compute(front[front.length - 1],
+    var df = distance.compute(front[0], referenceFront[0]) ;
+    var dl = distance.compute(front[front.length - 1],
             referenceFront[referenceFront.length - 1]) ;
 
     double mean;
-    double diversitySum = df + dl;
+    var diversitySum = df + dl;
 
-    int numberOfPoints = front.length ;
+    var numberOfPoints = front.length ;
 
     // STEP 3. Calculate the mean of distances between points i and (i - 1).
     // (the points are in lexicografical order)
-      double sum = 0.0;
-      int bound = (numberOfPoints - 1);
-      for (int i1 = 0; i1 < bound; i1++) {
-          double compute = distance.compute(front[i1], front[i1 + 1]);
+    var sum = 0.0;
+    var bound = (numberOfPoints - 1);
+      for (var i1 = 0; i1 < bound; i1++) {
+        var compute = distance.compute(front[i1], front[i1 + 1]);
           sum += compute;
       }
       mean = sum;
@@ -83,7 +83,7 @@ public class Spread extends QualityIndicator {
     // STEP 4. If there are more than a single point, continue computing the
     // metric. In other case, return the worse value (1.0, see metric's description).
     if (numberOfPoints > 1) {
-      for (int i = 0; i < (numberOfPoints - 1); i++) {
+      for (var i = 0; i < (numberOfPoints - 1); i++) {
         diversitySum += Math.abs(distance.compute(front[i],
                 front[i + 1]) - mean);
       }

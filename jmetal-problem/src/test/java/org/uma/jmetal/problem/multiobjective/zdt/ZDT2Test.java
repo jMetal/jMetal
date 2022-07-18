@@ -9,7 +9,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 class ZDT2Test {
   @Test
   void constructorMustCreateAValidInstanceUsingTheDefaultConstructor() {
-    int defaultNumberOfVariables = 30 ;
+    var defaultNumberOfVariables = 30 ;
     DoubleProblem problem = new ZDT2() ;
 
     assertThat(problem.getNumberOfVariables()).isEqualTo(defaultNumberOfVariables) ;
@@ -25,7 +25,7 @@ class ZDT2Test {
 
   @Test
   void constructorMustCreateAValidInstanceWhenIndicatingTheNumberOVariables() {
-    int numberOfVariables = 10 ;
+    var numberOfVariables = 10 ;
     DoubleProblem problem = new ZDT2(numberOfVariables) ;
 
     assertThat(problem.getNumberOfVariables()).isEqualTo(numberOfVariables) ;
@@ -41,10 +41,10 @@ class ZDT2Test {
 
   @Test
   void createSolutionGeneratesAValidSolution() {
-    int numberOfVariables = 10 ;
+    var numberOfVariables = 10 ;
 
     DoubleProblem problem = new ZDT2(numberOfVariables) ;
-    DoubleSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
 
     assertThat(solution).isNotNull() ;
     assertThat(solution.variables()).hasSize(numberOfVariables) ;

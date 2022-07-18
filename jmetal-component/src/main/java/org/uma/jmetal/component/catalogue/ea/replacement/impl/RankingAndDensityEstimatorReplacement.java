@@ -54,7 +54,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
   }
 
   private @NotNull List<S> oneShotTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
-    List<S> currentRankSolutions = ranking.getSubFront(rankingId);
+    var currentRankSolutions = ranking.getSubFront(rankingId);
     densityEstimator.compute(currentRankSolutions);
 
     List<S> resultList = new ArrayList<>();
@@ -66,7 +66,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
               rankingId + 1, sizeOfTheResultingSolutionList - currentRankSolutions.size()));
     } else {
       currentRankSolutions.sort(Comparator.comparing(densityEstimator::getValue).reversed());
-      int i = 0;
+      var i = 0;
       while (resultList.size() < sizeOfTheResultingSolutionList) {
         resultList.add(currentRankSolutions.get(i));
         i++;
@@ -77,7 +77,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
   }
 
   private List<S> sequentialTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
-    List<S> currentRankSolutions = ranking.getSubFront(rankingId);
+    var currentRankSolutions = ranking.getSubFront(rankingId);
     densityEstimator.compute(currentRankSolutions);
 
     @NotNull List<S> resultList = new ArrayList<>();
@@ -88,7 +88,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
           sequentialTruncation(
               rankingId + 1, sizeOfTheResultingSolutionList - currentRankSolutions.size()));
     } else {
-      for (S solution : currentRankSolutions) {
+      for (var solution : currentRankSolutions) {
         resultList.add(solution);
       }
       while (resultList.size() > sizeOfTheResultingSolutionList) {

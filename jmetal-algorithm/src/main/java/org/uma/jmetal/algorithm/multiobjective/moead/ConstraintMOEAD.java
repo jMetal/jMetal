@@ -55,19 +55,19 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
     evaluations = populationSize ;
 
     do {
-      int[] permutation = new int[populationSize];
+      var permutation = new int[populationSize];
       MOEADUtils.randomPermutation(permutation, populationSize);
 
-      for (int i = 0; i < populationSize; i++) {
-        int subProblemId = permutation[i];
+      for (var i = 0; i < populationSize; i++) {
+        var subProblemId = permutation[i];
 
         @NotNull NeighborType neighborType = chooseNeighborType() ;
         @NotNull List<DoubleSolution> parents = parentSelection(subProblemId, neighborType) ;
 
         differentialEvolutionCrossover.setCurrentSolution(population.get(subProblemId));
-        List<DoubleSolution> children = differentialEvolutionCrossover.execute(parents);
+        var children = differentialEvolutionCrossover.execute(parents);
 
-        DoubleSolution child = children.get(0) ;
+        var child = children.get(0) ;
         mutationOperator.execute(child);
         problem.evaluate(child);
 
@@ -83,8 +83,8 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
   }
 
   public void initializePopulation() {
-    for (int i = 0; i < populationSize; i++) {
-      DoubleSolution newSolution = (DoubleSolution)problem.createSolution() ;
+    for (var i = 0; i < populationSize; i++) {
+      var newSolution = (DoubleSolution)problem.createSolution() ;
 
       problem.evaluate(newSolution);
       population.add(newSolution);
@@ -94,33 +94,31 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
   @Override
   protected void updateNeighborhood(DoubleSolution individual, int subproblemId, NeighborType neighborType) {
     int size;
-    int time;
 
-    time = 0;
+    var time = 0;
 
     if (neighborType == NeighborType.NEIGHBOR) {
       size = neighborhood[subproblemId].length;
     } else {
       size = population.size();
     }
-    int @NotNull [] perm = new int[size];
+    var perm = new int[size];
 
     MOEADUtils.randomPermutation(perm, size);
 
-    for (int i = 0; i < size; i++) {
+    for (var i = 0; i < size; i++) {
       int k;
       if (neighborType == NeighborType.NEIGHBOR) {
         k = neighborhood[subproblemId][perm[i]];
       } else {
         k = perm[i];
       }
-      double f1, f2;
 
-      f1 = fitnessFunction(population.get(k), lambda[k]);
-      f2 = fitnessFunction(individual, lambda[k]);
+      var f1 = fitnessFunction(population.get(k), lambda[k]);
+      var f2 = fitnessFunction(individual, lambda[k]);
 
       if (violationThresholdComparator.needToCompare(population.get(k), individual)) {
-        int flag = violationThresholdComparator.compare(population.get(k), individual);
+        var flag = violationThresholdComparator.compare(population.get(k), individual);
         if (flag == 1) {
           population.set(k, (DoubleSolution) individual.copy());
         } else if (flag == 0) {

@@ -52,17 +52,17 @@ public abstract class AbstractSolution<T> implements Solution<T> {
     attributes = new HashMap<>();
 
     variables = new ArrayList<>(numberOfVariables);
-    for (int i2 = 0; i2 < numberOfVariables; i2++) {
+    for (var i2 = 0; i2 < numberOfVariables; i2++) {
       variables.add(i2, null);
     }
 
     objectives = new double[numberOfObjectives];
-    for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+    for (var i1 = 0; i1 < numberOfObjectives; i1++) {
       objectives[i1] = 0.0;
     }
 
     constraints = new double[numberOfConstraints];
-    for (int i = 0; i < numberOfConstraints; i++) {
+    for (var i = 0; i < numberOfConstraints; i++) {
       constraints[i] = 0.0;
     }
 
@@ -72,7 +72,7 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   @Override
   public String toString() {
     @NotNull StringBuilder result = new StringBuilder("Variables: ");
-    for (T variable : variables) {
+    for (var variable : variables) {
       result.append(variable).append(" ");
     }
     result.append("Objectives: ");

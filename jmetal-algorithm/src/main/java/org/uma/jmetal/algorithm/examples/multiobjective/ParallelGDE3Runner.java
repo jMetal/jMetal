@@ -28,12 +28,8 @@ public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
    *     org.uma.jmetal.runner.multiobjective.ParallelGDE3Runner problemName [referenceFront]
    */
   public static void main(String[] args) throws FileNotFoundException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    DifferentialEvolutionSelection selection;
-    DifferentialEvolutionCrossover crossover;
 
-    String referenceParetoFront = "";
+    var referenceParetoFront = "";
 
     String problemName;
     if (args.length == 1) {
@@ -46,31 +42,29 @@ public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double cr = 0.5;
-    double f = 0.5;
-    crossover =
-        new DifferentialEvolutionCrossover(
-            cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
-    selection = new DifferentialEvolutionSelection();
+    var cr = 0.5;
+    var f = 0.5;
+    var crossover = new DifferentialEvolutionCrossover(
+              cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+    var selection = new DifferentialEvolutionSelection();
 
     SolutionListEvaluator<DoubleSolution> evaluator =
         new MultiThreadedSolutionListEvaluator<DoubleSolution>(0);
 
-    algorithm =
-        new GDE3Builder(problem)
-            .setCrossover(crossover)
-            .setSelection(selection)
-            .setMaxEvaluations(25000)
-            .setPopulationSize(100)
-            .setSolutionSetEvaluator(evaluator)
-            .build();
+      Algorithm<List<DoubleSolution>> algorithm = new GDE3Builder(problem)
+              .setCrossover(crossover)
+              .setSelection(selection)
+              .setMaxEvaluations(25000)
+              .setPopulationSize(100)
+              .setSolutionSetEvaluator(evaluator)
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = ((GDE3) algorithm).getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = ((GDE3) algorithm).getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     evaluator.shutdown();
 

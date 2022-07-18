@@ -51,15 +51,14 @@ public class OneMax extends AbstractBinaryProblem {
   /** Evaluate() method */
   @Override
   public BinarySolution evaluate(BinarySolution solution) {
-    int counterOnes;
 
-    counterOnes = 0;
+    var counterOnes = 0;
 
     BitSet bitset = solution.variables().get(0);
 
-      long count = 0L;
-      int bound = bitset.length();
-      for (int i = 0; i < bound; i++) {
+    var count = 0L;
+    var bound = bitset.length();
+      for (var i = 0; i < bound; i++) {
           if (bitset.get(i)) {
               count++;
           }

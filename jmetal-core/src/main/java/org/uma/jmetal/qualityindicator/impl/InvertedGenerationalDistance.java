@@ -66,9 +66,9 @@ public class InvertedGenerationalDistance extends QualityIndicator {
    * @param referenceFront The reference pareto front
    */
   public double invertedGenerationalDistance(double[][] front, double[][] referenceFront) {
-      double sum = 0.0;
-      for (double[] vector : referenceFront) {
-          double v = Math.pow(VectorUtils.distanceToClosestVector(vector, front), pow);
+    var sum = 0.0;
+      for (var vector : referenceFront) {
+        var v = Math.pow(VectorUtils.distanceToClosestVector(vector, front), pow);
           sum += v;
       }
 

@@ -110,7 +110,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
 
   @Override
   protected List<S> reproduction(List<S> population) {
-    S mutatedSolution = (S) population.get(0).copy();
+    var mutatedSolution = (S) population.get(0).copy();
     mutationOperator.execute(mutatedSolution);
 
     List<S> mutationSolutionList = new ArrayList<>(1);
@@ -120,10 +120,10 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
 
   @Override
   protected List<S> replacement(List<S> population, @NotNull List<S> offspringPopulation) {
-    S current = population.get(0);
-    S mutatedSolution = (S) offspringPopulation.get(0).copy();
+    var current = population.get(0);
+    var mutatedSolution = (S) offspringPopulation.get(0).copy();
 
-    int flag = comparator.compare(current, mutatedSolution);
+    var flag = comparator.compare(current, mutatedSolution);
     if (flag == 1) {
       current = mutatedSolution;
       archive.add(mutatedSolution);

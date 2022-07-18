@@ -32,28 +32,28 @@ public class BitFlipMutationTest {
 
   @Test
   public void shouldConstructorAssignTheCorrectProbabilityValue() {
-    double mutationProbability = 0.1 ;
-    BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
+    var mutationProbability = 0.1 ;
+    var mutation = new BitFlipMutation(mutationProbability) ;
     assertEquals(mutationProbability, (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
   }
 
   @Test (expected = InvalidProbabilityValueException.class)
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
-    double mutationProbability = -0.1 ;
+    var mutationProbability = -0.1 ;
     new BitFlipMutation(mutationProbability) ;
   }
 
   @Test
   public void shouldGetMutationProbabilityReturnTheRightValue() {
-    double mutationProbability = 0.1 ;
-    BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
+    var mutationProbability = 0.1 ;
+    var mutation = new BitFlipMutation(mutationProbability) ;
     assertEquals(mutationProbability, mutation.getMutationProbability(), EPSILON) ;
   }
 
   @Test (expected = NullParameterException.class)
   public void shouldExecuteWithNullParameterThrowAnException() {
-    BitFlipMutation mutation = new BitFlipMutation(0.1) ;
+    var mutation = new BitFlipMutation(0.1) ;
 
     mutation.execute(null) ;
   }
@@ -62,14 +62,14 @@ public class BitFlipMutationTest {
   public void shouldMutateASingleVariableSolutionReturnTheSameSolutionIfNoBitsAreMutated() {
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
-    double mutationProbability = 0.01;
+    var mutationProbability = 0.01;
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.02, 0.02, 0.02, 0.02) ;
 
-    BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
+    var mutation = new BitFlipMutation(mutationProbability) ;
     BinaryProblem problem = new MockBinaryProblem(1) ;
-    BinarySolution solution = problem.createSolution() ;
-    BinarySolution oldSolution = (BinarySolution)solution.copy() ;
+    var solution = problem.createSolution() ;
+    var oldSolution = (BinarySolution)solution.copy() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
@@ -83,14 +83,14 @@ public class BitFlipMutationTest {
   public void shouldMutateASingleVariableSolutionWhenASingleBitIsMutated() {
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
-    double mutationProbability = 0.01;
+    var mutationProbability = 0.01;
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.02, 0.0, 0.02, 0.02) ;
 
-    BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
+    var mutation = new BitFlipMutation(mutationProbability) ;
     BinaryProblem problem = new MockBinaryProblem(1) ;
-    BinarySolution solution = problem.createSolution() ;
-    BinarySolution oldSolution = (BinarySolution)solution.copy() ;
+    var solution = problem.createSolution() ;
+    var oldSolution = (BinarySolution)solution.copy() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
@@ -104,14 +104,14 @@ public class BitFlipMutationTest {
   public void shouldMutateATwoVariableSolutionReturnTheSameSolutionIfNoBitsAreMutated() {
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
-    double mutationProbability = 0.01;
+    var mutationProbability = 0.01;
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.02, 0.02, 0.02, 0.02, 0.2, 0.2, 0.2, 0.2) ;
 
-    BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
+    var mutation = new BitFlipMutation(mutationProbability) ;
     BinaryProblem problem = new MockBinaryProblem(2) ;
-    BinarySolution solution = problem.createSolution() ;
-    BinarySolution oldSolution = (BinarySolution)solution.copy() ;
+    var solution = problem.createSolution() ;
+    var oldSolution = (BinarySolution)solution.copy() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
@@ -125,14 +125,14 @@ public class BitFlipMutationTest {
   public void shouldMutateATwoVariableSolutionWhenTwoBitsAreMutated() {
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
-    double mutationProbability = 0.01;
+    var mutationProbability = 0.01;
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.01, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.02) ;
 
-    BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
+    var mutation = new BitFlipMutation(mutationProbability) ;
     BinaryProblem problem = new MockBinaryProblem(2) ;
-    BinarySolution solution = problem.createSolution() ;
-    BinarySolution oldSolution = (BinarySolution)solution.copy() ;
+    var solution = problem.createSolution() ;
+    var oldSolution = (BinarySolution)solution.copy() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
@@ -157,7 +157,7 @@ public class BitFlipMutationTest {
 
       bitsPerVariable = new int[numberOfVariables] ;
 
-      for (int var = 0; var < numberOfVariables; var++) {
+      for (var var = 0; var < numberOfVariables; var++) {
         bitsPerVariable[var] = NUMBER_OF_BITS_OF_MOCKED_BINARY_PROBLEM;
       }
     }
@@ -170,7 +170,7 @@ public class BitFlipMutationTest {
     @Override
     public List<Integer> getListOfBitsPerVariable() {
       List<Integer> list = new ArrayList<>();
-      for (int i : bitsPerVariable) {
+      for (var i : bitsPerVariable) {
         Integer integer = i;
         list.add(integer);
       }
@@ -195,14 +195,14 @@ public class BitFlipMutationTest {
   @Test
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
-		double mutationProbability = 0.1;
+    var mutationProbability = 0.1;
 
 		BinarySolution solution = new DefaultBinarySolution(List.of(2), 2) ;
 
 		// Check configuration leads to use default generator by default
-		final int[] defaultUses = { 0 };
-		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		final var defaultUses = new int[]{0};
+    var defaultGenerator = JMetalRandom.getInstance();
+    var auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
@@ -211,7 +211,7 @@ public class BitFlipMutationTest {
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
-		final int[] customUses = { 0 };
+		final var customUses = new int[]{0};
 		new BitFlipMutation(mutationProbability, () -> {
 			customUses[0]++;
 			return new Random().nextDouble();

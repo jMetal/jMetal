@@ -27,8 +27,8 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
 
     this.bounds = boundsList;
 
-    int bound = bounds.size();
-    for (int i = 0; i < bound; i++) {
+    var bound = bounds.size();
+    for (var i = 0; i < bound; i++) {
       variables().set(
               i, JMetalRandom.getInstance().nextInt(this.bounds.get(i).getLowerBound(), this.bounds.get(i).getUpperBound()));
     }
@@ -40,16 +40,16 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
   public DefaultIntegerSolution(@NotNull DefaultIntegerSolution solution) {
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
-    int bound2 = solution.variables().size();
-    for (int i2 = 0; i2 < bound2; i2++) {
+    var bound2 = solution.variables().size();
+    for (var i2 = 0; i2 < bound2; i2++) {
       variables().set(i2, solution.variables().get(i2));
     }
-    int bound1 = solution.objectives().length;
-    for (int i1 = 0; i1 < bound1; i1++) {
+    var bound1 = solution.objectives().length;
+    for (var i1 = 0; i1 < bound1; i1++) {
       objectives()[i1] = solution.objectives()[i1];
     }
-    int bound = solution.constraints().length;
-    for (int i = 0; i < bound; i++) {
+    var bound = solution.constraints().length;
+    for (var i = 0; i < bound; i++) {
       constraints()[i] = solution.constraints()[i];
     }
 

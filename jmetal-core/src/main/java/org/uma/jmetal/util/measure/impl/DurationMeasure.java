@@ -76,7 +76,7 @@ public class DurationMeasure extends SimplePullMeasure<Long> {
 			// not in a round
 			return 0;
 		} else {
-			long now = System.currentTimeMillis();
+			var now = System.currentTimeMillis();
 			return now - roundStart;
 		}
 	}

@@ -17,22 +17,22 @@ class MuPlusLambdaReplacementTest {
 
   @Test
   public void replaceReturnsAPopulationOfTheRequiredSizeIfMuIs10AndLambdaIs2() {
-    int mu = 10;
-    int lambda = 2;
-    FakeDoubleProblem problem = new FakeDoubleProblem();
+      var mu = 10;
+      var lambda = 2;
+      var problem = new FakeDoubleProblem();
       List<DoubleSolution> population = new ArrayList<>();
-      for (int i1 = 0; i1 < mu; i1++) {
-          DoubleSolution problemSolution = problem.createSolution();
+      for (var i1 = 0; i1 < mu; i1++) {
+          var problemSolution = problem.createSolution();
           population.add(problemSolution);
       }
 
       List<DoubleSolution> offspringPopulation = new ArrayList<>();
-      for (int i = 0; i < lambda; i++) {
-          DoubleSolution solution = problem.createSolution();
+      for (var i = 0; i < lambda; i++) {
+          var solution = problem.createSolution();
           offspringPopulation.add(solution);
       }
 
-      MuPlusLambdaReplacement<DoubleSolution> replacement = new MuPlusLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
+      var replacement = new MuPlusLambdaReplacement<DoubleSolution>(new ObjectiveComparator<>(0)) ;
 
     assertEquals(mu, replacement.replace(population, offspringPopulation).size()) ;
   }

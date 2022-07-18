@@ -54,7 +54,7 @@ public class RankingAndDensityEstimatorPreference<S> {
   }
 
   private void recomputeDensityEstimator() {
-    for (int i = 0; i < ranking.getNumberOfSubFronts(); i++) {
+    for (var i = 0; i < ranking.getNumberOfSubFronts(); i++) {
       densityEstimator.compute(ranking.getSubFront(i));
     }
   }

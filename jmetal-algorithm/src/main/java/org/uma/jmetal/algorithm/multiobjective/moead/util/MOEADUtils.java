@@ -27,16 +27,16 @@ public class MOEADUtils {
    */
   public static void quickSort(double[] array, int[] idx, int from, int to) {
     if (from < to) {
-      double temp = array[to];
-      int tempIdx = idx[to];
-      int i = from - 1;
-      for (int j = from; j < to; j++) {
+      var temp = array[to];
+      var tempIdx = idx[to];
+      var i = from - 1;
+      for (var j = from; j < to; j++) {
         if (array[j] <= temp) {
           i++;
-          double tempValue = array[j];
+          var tempValue = array[j];
           array[j] = array[i];
           array[i] = tempValue;
-          int tempIndex = idx[j];
+          var tempIndex = idx[j];
           idx[j] = idx[i];
           idx[i] = tempIndex;
         }
@@ -51,23 +51,23 @@ public class MOEADUtils {
   }
 
   public static double distVector(double @NotNull [] vector1, double[] vector2) {
-    int dim = vector1.length;
-      double sum = 0.0;
-      for (int n = 0; n < dim; n++) {
-          double v = (vector1[n] - vector2[n]) * (vector1[n] - vector2[n]);
+    var dim = vector1.length;
+    var sum = 0.0;
+      for (var n = 0; n < dim; n++) {
+        var v = (vector1[n] - vector2[n]) * (vector1[n] - vector2[n]);
           sum += v;
       }
       return Math.sqrt(sum);
   }
 
   public static void minFastSort(double x[], int idx[], int n, int m) {
-    for (int i = 0; i < m; i++) {
-      for (int j = i + 1; j < n; j++) {
+    for (var i = 0; i < m; i++) {
+      for (var j = i + 1; j < n; j++) {
         if (x[i] > x[j]) {
-          double temp = x[i];
+          var temp = x[i];
           x[i] = x[j];
           x[j] = temp;
-          int id = idx[i];
+          var id = idx[i];
           idx[i] = idx[j];
           idx[j] = id;
         }
@@ -76,18 +76,18 @@ public class MOEADUtils {
   }
 
   public static void randomPermutation(int[] perm, int size) {
-    JMetalRandom randomGenerator = JMetalRandom.getInstance();
-    int @NotNull [] index = new int[size];
-    boolean[] flag = new boolean[size];
+    var randomGenerator = JMetalRandom.getInstance();
+    var index = new int[size];
+    var flag = new boolean[size];
 
-    for (int n = 0; n < size; n++) {
+    for (var n = 0; n < size; n++) {
       index[n] = n;
       flag[n] = true;
     }
 
-    int num = 0;
+    var num = 0;
     while (num < size) {
-      int start = randomGenerator.nextInt(0, size - 1);
+      var start = randomGenerator.nextInt(0, size - 1);
       while (true) {
         if (flag[start]) {
           perm[num] = index[start];
@@ -121,7 +121,7 @@ public class MOEADUtils {
     }
 
     if (solutionList.size() > 0) {
-      int numberOfObjectives = solutionList.get(0).objectives().length;
+      var numberOfObjectives = solutionList.get(0).objectives().length;
       if (numberOfObjectives == 2) {
         twoObjectivesCase(solutionList, resultSolutionList, newSolutionListSize);
       } else {
@@ -134,26 +134,26 @@ public class MOEADUtils {
 
   private static <S extends Solution<?>> void twoObjectivesCase(
       List<S> solutionList, List<S> resultSolutionList, int newSolutionListSize) {
-    double[][] lambda = new double[newSolutionListSize][2];
+    var lambda = new double[newSolutionListSize][2];
 
     // Compute the mombi2-weights.weight vectors
-    for (int i = 0; i < newSolutionListSize; i++) {
-      double a = 1.0 * i / (newSolutionListSize - 1);
+    for (var i = 0; i < newSolutionListSize; i++) {
+      var a = 1.0 * i / (newSolutionListSize - 1);
       lambda[i][0] = a;
       lambda[i][1] = 1 - a;
     }
 
     @NotNull IdealPoint idealPoint = new IdealPoint(2);
-      for (S solution : solutionList) {
+      for (var solution : solutionList) {
           idealPoint.update(solution.objectives());
       }
 
       // Select the best solution for each mombi2-weights.weight vector
-    for (int i = 0; i < newSolutionListSize; i++) {
-      S currentBest = solutionList.get(0);
-      double value = scalarizingFitnessFunction(currentBest, lambda[i], idealPoint);
-      for (int j = 1; j < solutionList.size(); j++) {
-        double aux =
+    for (var i = 0; i < newSolutionListSize; i++) {
+      var currentBest = solutionList.get(0);
+      var value = scalarizingFitnessFunction(currentBest, lambda[i], idealPoint);
+      for (var j = 1; j < solutionList.size(); j++) {
+        var aux =
             scalarizingFitnessFunction(
                 solutionList.get(j),
                 lambda[i],
@@ -164,24 +164,24 @@ public class MOEADUtils {
         }
       }
       @SuppressWarnings("unchecked")
-      S copy = (S) currentBest.copy();
+      var copy = (S) currentBest.copy();
       resultSolutionList.add(copy);
     }
   }
 
   public static void shuffle(int sequence[]) {
     @NotNull JMetalRandom randomGenerator = JMetalRandom.getInstance();
-    int[] index = new int[sequence.length];
-    boolean @NotNull [] flag = new boolean[sequence.length];
+    var index = new int[sequence.length];
+    var flag = new boolean[sequence.length];
     System.arraycopy(sequence, 0, index, 0, sequence.length);
 
-    for (int n = 0; n < sequence.length; n++) {
+    for (var n = 0; n < sequence.length; n++) {
       flag[n] = true;
     }
 
-    int num = 0;
+    var num = 0;
     while (num < sequence.length) {
-      int start = randomGenerator.nextInt(0, sequence.length - 1);
+      var start = randomGenerator.nextInt(0, sequence.length - 1);
       while (true) {
         if (flag[start]) {
           sequence[num] = index[start];
@@ -204,30 +204,29 @@ public class MOEADUtils {
     @NotNull Distance<S, List<S>> distance =
         new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
 
-    int randomIndex = JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1);
+    var randomIndex = JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1);
 
     // create a list containing all the solutions but the selected one (only references to them)
-    List<S> candidate;
     resultSolutionList.add(solutionList.get(randomIndex));
 
       @NotNull List<S> list = new ArrayList<>();
-      int bound = solutionList.size();
-      for (int i1 = 0; i1 < bound; i1++) {
+    var bound = solutionList.size();
+      for (var i1 = 0; i1 < bound; i1++) {
           if (i1 != randomIndex) {
-              S s = solutionList.get(i1);
+            var s = solutionList.get(i1);
               list.add(s);
           }
       }
-      candidate = list;
+    var candidate = list;
 
     while (resultSolutionList.size() < newSolutionListSize) {
-      int index = 0;
-      S selected = candidate.get(0); // it should be a next! (n <= population size!)
-      double aux = distance.compute(selected, solutionList);
-      int i = 1;
+      var index = 0;
+      var selected = candidate.get(0); // it should be a next! (n <= population size!)
+      var aux = distance.compute(selected, solutionList);
+      var i = 1;
       while (i < candidate.size()) {
-        S nextCandidate = candidate.get(i);
-        double distanceValue = distance.compute(nextCandidate, solutionList);
+        var nextCandidate = candidate.get(i);
+        var distanceValue = distance.compute(nextCandidate, solutionList);
         if (aux < distanceValue) {
           index = i;
           aux = distanceValue;
@@ -236,9 +235,9 @@ public class MOEADUtils {
       }
 
       // add the selected to res and remove from candidate list
-      S removedSolution = candidate.remove(index);
+      var removedSolution = candidate.remove(index);
       @SuppressWarnings("unchecked")
-      S copy = (S) removedSolution.copy();
+      var copy = (S) removedSolution.copy();
       resultSolutionList.add(copy);
     }
   }
@@ -246,10 +245,10 @@ public class MOEADUtils {
   private static <S extends Solution<?>> double scalarizingFitnessFunction(
           @NotNull S currentBest, double[] lambda, IdealPoint idealPoint) {
 
-    double maxFun = -1.0e+30;
+    var maxFun = -1.0e+30;
 
-    for (int n = 0; n < idealPoint.getDimension(); n++) {
-      double diff = Math.abs(currentBest.objectives()[n] - idealPoint.getValue(n));
+    for (var n = 0; n < idealPoint.getDimension(); n++) {
+      var diff = Math.abs(currentBest.objectives()[n] - idealPoint.getValue(n));
 
       double functionValue;
       if (lambda[n] == 0) {

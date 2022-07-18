@@ -90,12 +90,12 @@ public class GroupedPolynomialMutation implements MutationOperator<DoubleSolutio
     double y, yl, yu, val, xy;
 
     variableGrouping.computeGroups(solution.variables());
-    int groupIndex = randomGenerator.nextInt(0, variableGrouping.numberOfGroups() - 1);
-    List<Integer> variableIndex = variableGrouping.getGroup(groupIndex);
+    var groupIndex = randomGenerator.nextInt(0, variableGrouping.numberOfGroups() - 1);
+    var variableIndex = variableGrouping.getGroup(groupIndex);
 
-    for (int i = 0; i < variableIndex.size(); i++) {
+    for (var i = 0; i < variableIndex.size(); i++) {
       y = solution.variables().get(variableIndex.get(i));
-      Bounds<Double> bounds = solution.getBounds(variableIndex.get(i));
+      var bounds = solution.getBounds(variableIndex.get(i));
       yl = bounds.getLowerBound();
       yu = bounds.getUpperBound();
       if (yl == yu) {

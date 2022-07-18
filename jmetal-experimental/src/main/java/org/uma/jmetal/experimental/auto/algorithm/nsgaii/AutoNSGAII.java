@@ -74,7 +74,7 @@ public class AutoNSGAII {
     fixedParameterList.add(referenceFrontFilename);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
 
-    for (Parameter<?> parameter : fixedParameterList) {
+    for (var parameter : fixedParameterList) {
       parameter.parse().check();
     }
     populationSizeParameter = new PositiveIntegerValue("populationSize", args);
@@ -105,7 +105,7 @@ public class AutoNSGAII {
             "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     crossoverParameter.addGlobalParameter(crossoverRepairStrategy);
 
-    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
+    var distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
     crossoverParameter.addSpecificParameter("SBX", distributionIndex);
 
     @NotNull RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
@@ -114,9 +114,9 @@ public class AutoNSGAII {
     @NotNull MutationParameter mutationParameter =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
 
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0.0, 2.0) ;
+    var mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0.0, 2.0) ;
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
-    RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
+    var mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutationParameter.addGlobalParameter(mutationRepairStrategy);
@@ -125,15 +125,15 @@ public class AutoNSGAII {
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
     mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
-    RealParameter distributionIndexForLinkedPolynomialMutation =
+    var distributionIndexForLinkedPolynomialMutation =
             new RealParameter("linkedPolynomialMutationDistributionIndex", args, 5.0, 400.0);
     mutationParameter.addSpecificParameter("linkedPolynomial", distributionIndexForLinkedPolynomialMutation);
 
-    RealParameter uniformMutationPerturbation =
+    var uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
-    RealParameter nonUniformMutationPerturbation =
+    var nonUniformMutationPerturbation =
             new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
@@ -202,30 +202,30 @@ public class AutoNSGAII {
 
     Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
-    MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
-        new MultiComparator<>(
+    var rankingAndCrowdingComparator =
+        new MultiComparator<DoubleSolution>(
             Arrays.asList(
                 Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed()));
 
-    SolutionsCreation<DoubleSolution> initialSolutionsCreation =
+    var initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());
 
-    MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter("mutation") ;
+    var mutationParameter = (MutationParameter) variationParameter.findSpecificParameter("mutation") ;
     if (mutationParameter.getValue().equals("nonUniform")) {
       mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
       mutationParameter.addNonConfigurableParameter("maxIterations",
               maximumNumberOfEvaluationsParameter.getValue()/populationSizeParameter.getValue());
     }
-    Variation<DoubleSolution> variation = (Variation<DoubleSolution>) variationParameter.getParameter();
+    var variation = (Variation<DoubleSolution>) variationParameter.getParameter();
 
-    MatingPoolSelection<DoubleSolution> selection =
+    var selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
                 variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 
     @NotNull Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
-    Preference<DoubleSolution> preferenceForReplacement = new Preference<>(ranking, densityEstimator) ;
+    var preferenceForReplacement = new Preference<DoubleSolution>(ranking, densityEstimator) ;
     Replacement<DoubleSolution> replacement =
             new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement, Replacement.RemovalPolicy.oneShot);
 
@@ -246,7 +246,7 @@ public class AutoNSGAII {
   }
 
   public static void print(List<Parameter<?>> parameterList) {
-    for (Parameter<?> parameter : parameterList) {
+    for (var parameter : parameterList) {
       System.out.println(parameter);
     }
   }

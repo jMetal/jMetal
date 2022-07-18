@@ -46,7 +46,7 @@ public class SimpleMeasureManager implements MeasureManager {
 	 */
 	@Override
 	public @NotNull Collection<Object> getMeasureKeys() {
-		HashSet<Object> keys = new HashSet<>();
+		var keys = new HashSet<Object>();
 		keys.addAll(pullers.keySet());
 		keys.addAll(pushers.keySet());
 		return keys;

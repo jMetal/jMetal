@@ -40,7 +40,7 @@ public class DynamicNSGAIIRunner {
         new BinaryTournamentSelection<>();
 
     @NotNull InvertedGenerationalDistance igd = new InvertedGenerationalDistance();
-    CoverageFront coverageFront = new CoverageFront(0.055, igd);
+    var coverageFront = new CoverageFront(0.055, igd);
     DynamicAlgorithm<List<DoubleSolution>> algorithm =
         new DynamicNSGAII<>(
             problem,

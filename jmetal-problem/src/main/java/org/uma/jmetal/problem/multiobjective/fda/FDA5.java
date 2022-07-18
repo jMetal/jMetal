@@ -27,7 +27,7 @@ public class FDA5 extends FDA implements Serializable {
     @NotNull List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -37,39 +37,39 @@ public class FDA5 extends FDA implements Serializable {
 
   @Override
   public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
-    double g = this.evalG(solution, M - 1);
-    double Ft = 1.0d + 100.0d * Math.pow(Math.sin(0.5d * Math.PI * time), 4.0d);
+    var f = new double[solution.objectives().length];
+    var g = this.evalG(solution, M - 1);
+    var Ft = 1.0d + 100.0d * Math.pow(Math.sin(0.5d * Math.PI * time), 4.0d);
     f[0] = this.evalF1(solution, g, Ft);
     f[1] = evalFK(solution, g, 2, Ft);
     f[2] = evalFM(solution, g, Ft);
-    for (int i = 0; i < solution.objectives().length; i++) {
+    for (var i = 0; i < solution.objectives().length; i++) {
       solution.objectives()[i] = f[i];
     }
     return solution ;
   }
 
   private double evalF1(@NotNull DoubleSolution solution, double g, double Ft) {
-    double f = 1.0d + g;
-      double mult = 1.0d;
-      for (int i = 1; i <= M - 1; i++) {
-          double y_i = Math.pow(solution.variables().get(i - 1), Ft);
-          double cos = Math.cos(y_i * Math.PI / 2.0d);
+    var f = 1.0d + g;
+    var mult = 1.0d;
+      for (var i = 1; i <= M - 1; i++) {
+        var y_i = Math.pow(solution.variables().get(i - 1), Ft);
+        var cos = Math.cos(y_i * Math.PI / 2.0d);
           mult = mult * cos;
       }
       return f * mult;
   }
 
   private double evalFK(@NotNull DoubleSolution solution, double g, int k, double Ft) {
-    double f = 1.0d + g;
-      double mult = 1.0d;
-      int bound = M - k;
-      for (int i = 1; i <= bound; i++) {
-          double y_i = Math.pow(solution.variables().get(i - 1), Ft);
-          double cos = Math.cos(y_i * Math.PI / 2.0d);
+    var f = 1.0d + g;
+    var mult = 1.0d;
+    var bound = M - k;
+      for (var i = 1; i <= bound; i++) {
+        var y_i = Math.pow(solution.variables().get(i - 1), Ft);
+        var cos = Math.cos(y_i * Math.PI / 2.0d);
           mult = mult * cos;
       }
-      double yy = Math.pow(solution.variables().get(M - k), Ft);
+    var yy = Math.pow(solution.variables().get(M - k), Ft);
     mult *= Math.sin(yy * Math.PI / 2.0d);
     return f * mult;
   }
@@ -80,22 +80,21 @@ public class FDA5 extends FDA implements Serializable {
    * @param solution Solution
    */
   private double evalG(DoubleSolution solution, int limitInf) {
-    double g;
-    double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-      double sum = 0.0;
-      int bound = solution.variables().size();
-      for (int i = limitInf; i < bound; i++) {
-          double pow = Math.pow((solution.variables().get(i) - Gt), 2.0d);
+    var Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
+    var sum = 0.0;
+    var bound = solution.variables().size();
+      for (var i = limitInf; i < bound; i++) {
+        var pow = Math.pow((solution.variables().get(i) - Gt), 2.0d);
           sum += pow;
       }
-      g = sum;
+    var g = sum;
     return g + Gt;
   }
 
   private double evalFM(@NotNull DoubleSolution solution, double g, double Ft) {
-    double fm = 1.0d + g;
-    double y_1 = Math.pow(solution.variables().get(0), Ft);
-    double mult = Math.sin(y_1 * Math.PI / 2.0d);
+    var fm = 1.0d + g;
+    var y_1 = Math.pow(solution.variables().get(0), Ft);
+    var mult = Math.sin(y_1 * Math.PI / 2.0d);
     return fm * mult;
   }
 }

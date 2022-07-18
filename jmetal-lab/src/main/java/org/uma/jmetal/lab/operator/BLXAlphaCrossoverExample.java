@@ -55,20 +55,18 @@ public class BLXAlphaCrossoverExample {
       alpha = Double.parseDouble(args[2]);
     }
 
-    DoubleProblem problem;
-
-    problem = new Kursawe(1);
+    DoubleProblem problem = new Kursawe(1);
     CrossoverOperator<DoubleSolution> crossover = new BLXAlphaCrossover(1.0, alpha);
 
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
+    var solution1 = problem.createSolution();
+    var solution2 = problem.createSolution();
     solution1.variables().set(0, -2.0);
     solution2.variables().set(0, 2.0);
-    List<DoubleSolution> parents = Arrays.asList(solution1, solution2);
+    var parents = Arrays.asList(solution1, solution2);
 
     @NotNull List<DoubleSolution> population = new ArrayList<>(numberOfPoints);
-    for (int i = 0; i < numberOfPoints; i++) {
-      List<DoubleSolution> solutions = (List<DoubleSolution>) crossover.execute(parents);
+    for (var i = 0; i < numberOfPoints; i++) {
+      var solutions = (List<DoubleSolution>) crossover.execute(parents);
       population.add(solutions.get(0));
       population.add(solutions.get(1));
     }
@@ -79,25 +77,25 @@ public class BLXAlphaCrossoverExample {
         .setVarFileOutputContext(new DefaultFileOutputContext("solutionsBLXAlpha"))
         .print();
 
-    double[][] classifier = classify(population, problem, granularity);
+    var classifier = classify(population, problem, granularity);
     @NotNull PlotFront plot = new PlotSmile(classifier);
     plot.plot();
   }
 
   private static double[][] classify(
           @NotNull List<DoubleSolution> solutions, @NotNull DoubleProblem problem, int granularity) {
-    Bounds<Double> bounds = problem.getVariableBounds().get(0);
-    double grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity;
-    double[] @NotNull [] classifier = new double[granularity][];
-    for (int i = 0; i < granularity; i++) {
+    var bounds = problem.getVariableBounds().get(0);
+    var grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity;
+    var classifier = new double[granularity][];
+    for (var i = 0; i < granularity; i++) {
       classifier[i] = new double[2];
       classifier[i][0] = bounds.getLowerBound() + i * grain;
       classifier[i][1] = 0;
     }
 
-    for (DoubleSolution solution : solutions) {
-      boolean found = false;
-      int index = 0;
+    for (var solution : solutions) {
+      var found = false;
+      var index = 0;
       while (!found) {
         if (solution.variables().get(0) <= classifier[index][0]) {
           classifier[index][1]++;

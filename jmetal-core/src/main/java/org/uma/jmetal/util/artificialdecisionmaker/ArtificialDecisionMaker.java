@@ -35,9 +35,9 @@ public abstract class ArtificialDecisionMaker<S, R> implements Algorithm<R> {
   public abstract List<Double> getDistances();
   @Override
   public void run() {
-    List<Double> initialReferencePoints=generatePreferenceInformation();
+    var initialReferencePoints=generatePreferenceInformation();
     R front;
-    List<Double> interestingPoint=initialReferencePoints;
+    var interestingPoint=initialReferencePoints;
     initProgress();
     while (!isStoppingConditionReached()) {
       this.algorithm.updatePointOfInterest(interestingPoint);

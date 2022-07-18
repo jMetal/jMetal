@@ -28,8 +28,8 @@ public class RandomSolutionsCreation<S extends Solution<?>> implements Solutions
 
   public List<S> create() {
     List<S> solutionList = new ArrayList<>(numberOfSolutionsToCreate);
-      int bound = numberOfSolutionsToCreate;
-      for (int i = 0; i < bound; i++) {
+    var bound = numberOfSolutionsToCreate;
+      for (var i = 0; i < bound; i++) {
           solutionList.add(problem.createSolution());
       }
 

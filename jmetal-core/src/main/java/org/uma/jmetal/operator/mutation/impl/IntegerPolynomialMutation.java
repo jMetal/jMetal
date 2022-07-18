@@ -102,10 +102,10 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
     Double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 
-    for (int i = 0; i < solution.variables().size(); i++) {
+    for (var i = 0; i < solution.variables().size(); i++) {
       if (randomGenerator.getRandomValue() <= probability) {
         y = (double)solution.variables().get(i);
-        Bounds<Integer> bounds = solution.getBounds(i);
+        var bounds = solution.getBounds(i);
         yl = (double)bounds.getLowerBound() ;
         yu = (double)bounds.getUpperBound() ;
         if (yl == yu) {

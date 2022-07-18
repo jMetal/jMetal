@@ -50,11 +50,10 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
   @Override
   public @NotNull Ranking<S> compute(@NotNull List<S> population) {
     int numberOfRanksForFeasibleSolutions,
-        numberOfRanksForUnfeasibleSolutions,
         rank,
         indexOfBestSolution;
     int index, indexOfWeight;
-    int numberOfWeights =
+    var numberOfWeights =
         this.utilityFunctionsNadir.getSize() + this.utilityFunctionsUtopia.getSize();
     int[] rankForUnfeasibleSolutions;
     double value, minimumValue;
@@ -63,7 +62,7 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
     S solutionToInsert;
 
     // Split the population in feasible and unfeasible solutions
-    for (S solution : population) {
+    for (var solution : population) {
       if ((numberOfViolatedConstraints.getAttribute(solution) != null
           && numberOfViolatedConstraints.getAttribute(solution) > 0)) {
         unfeasibleSolutions.add(solution);
@@ -84,12 +83,12 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
     }
 
     // Each unfeasible solution goes to a different front
-    numberOfRanksForUnfeasibleSolutions = unfeasibleSolutions.size();
+    var numberOfRanksForUnfeasibleSolutions = unfeasibleSolutions.size();
 
     // Initialization of properties
     this.numberOfRanks = numberOfRanksForFeasibleSolutions + numberOfRanksForUnfeasibleSolutions;
     this.rankedSubpopulations = new ArrayList<>(this.numberOfRanks);
-    for (int i = 0; i < this.numberOfRanks; i++) {
+    for (var i = 0; i < this.numberOfRanks; i++) {
       this.rankedSubpopulations.add(new ArrayList<S>());
     }
 
@@ -105,7 +104,7 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
             indexOfBestSolution = 0;
             minimumValue =
                 this.utilityFunctionsUtopia.evaluate(feasibleSolutions.get(0), indexOfWeight);
-            for (int solutionIdx = 1; solutionIdx < feasibleSolutions.size(); solutionIdx++) {
+            for (var solutionIdx = 1; solutionIdx < feasibleSolutions.size(); solutionIdx++) {
               value =
                   this.utilityFunctionsUtopia.evaluate(
                       feasibleSolutions.get(solutionIdx), indexOfWeight);
@@ -125,7 +124,7 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
             indexOfBestSolution = 0;
             minimumValue =
                 this.utilityFunctionsNadir.evaluate(feasibleSolutions.get(0), indexOfWeight);
-            for (int solutionIdx = 1; solutionIdx < feasibleSolutions.size(); solutionIdx++) {
+            for (var solutionIdx = 1; solutionIdx < feasibleSolutions.size(); solutionIdx++) {
               value =
                   this.utilityFunctionsNadir.evaluate(
                       feasibleSolutions.get(solutionIdx), indexOfWeight);
@@ -172,7 +171,7 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
     int indexOfFirstSolution, indexOfSecondSolution, indexOfWeight;
     double overallConstraintViolationSolution1, overallConstraintViolationSolution2;
     double minimumValueFirstSolution, minimumValueSecondSolution, value;
-    int @NotNull [] rank = new int[population.size()];
+    var rank = new int[population.size()];
     Arrays.fill(rank, 0);
 
     // Iteration for each solution

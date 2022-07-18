@@ -71,7 +71,7 @@ public class compendiumExperiment {
     public static void main(String[] args) throws IOException {
         Check.that(args.length == 1, "Missing argument: experimentBaseDirectory");
 
-        String experimentBaseDirectory = args[0];
+        var experimentBaseDirectory = args[0];
 
         List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
         problemList.add(new ExperimentProblem<>(new ZDT1()).setReferenceFront("ZDT1.csv"));
@@ -97,10 +97,10 @@ public class compendiumExperiment {
         problemList.add(new ExperimentProblem<>(new WFG9()).setReferenceFront("WFG9.2D.csv"));
 
 
-        List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+        var algorithmList =
                 configureAlgorithmList(problemList);
 
-        Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+        var experiment =
                 new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("CompendiumExperiments")
                         .setAlgorithmList(algorithmList)
                         .setProblemList(problemList)
@@ -136,7 +136,7 @@ public class compendiumExperiment {
     static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
             List<ExperimentProblem<DoubleSolution>> problemList) {
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-        for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+        for (var run = 0; run < INDEPENDENT_RUNS; run++) {
             for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
                 Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
                         experimentProblem.getProblem(),
@@ -149,8 +149,8 @@ public class compendiumExperiment {
             }
 
             for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-                double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
-                double mutationDistributionIndex = 20.0;
+                var mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+                var mutationDistributionIndex = 20.0;
                 Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                         (DoubleProblem) experimentProblem.getProblem(),
                         new CrowdingDistanceArchive<DoubleSolution>(100))
@@ -166,7 +166,7 @@ public class compendiumExperiment {
             for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
 
                 /* OMOPSO */
-                String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
+                var parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
                         .getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 25000 "
@@ -201,12 +201,12 @@ public class compendiumExperiment {
                         .split("\\s+");
                 @NotNull AutoMOPSO OMOPSO = new AutoMOPSO();
                 OMOPSO.parseAndCheckParameters(parametersOMOPSO);
-                ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
+                var omopso = OMOPSO.create();
 
                 algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
 
                 /* AMOPSOz */
-                String[] parametersAMOPSOzWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                var parametersAMOPSOzWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 25000 "
                         + "--swarmSize 22 " +
@@ -240,12 +240,12 @@ public class compendiumExperiment {
                         .split("\\s+");
                 @NotNull AutoMOPSO AutoMOPSOz = new AutoMOPSO();
                 AutoMOPSOz.parseAndCheckParameters(parametersAMOPSOzWithtConfig);
-                ParticleSwarmOptimizationAlgorithm amopsoz = AutoMOPSOz.create();
+                var amopsoz = AutoMOPSOz.create();
 
                 algorithms.add(new ExperimentAlgorithm<>(amopsoz, "AMOPSOz", experimentProblem, run));
 
                 /* AMOPSOd with config*/
-                String @NotNull [] parametersAMOPSOdWithConfig =
+                var parametersAMOPSOdWithConfig =
                         ("--problemName "
                                 + experimentProblem.getProblem().getClass().getName()
                                 + " "
@@ -280,16 +280,16 @@ public class compendiumExperiment {
                                 + "--velocityChangeWhenLowerLimitIsReached 0.1399 "
                                 + "--velocityChangeWhenUpperLimitIsReached -0.7488")
                                 .split("\\s+");
-                AutoMOPSO AMOPSOd = new AutoMOPSO();
+                var AMOPSOd = new AutoMOPSO();
                 AMOPSOd.parseAndCheckParameters(parametersAMOPSOdWithConfig);
-                ParticleSwarmOptimizationAlgorithm amopsoD = AMOPSOd.create();
+                var amopsoD = AMOPSOd.create();
 
                 algorithms.add(
                         new ExperimentAlgorithm<>(amopsoD, "AMOPSOd", experimentProblem, run));
 
 
                 /* AMOPSOw */
-                String @NotNull [] parametersAutoMOPSOwWithtConfig =
+                var parametersAutoMOPSOwWithtConfig =
                         ("--problemName "
                                 + experimentProblem.getProblem().getClass().getName()
                                 + " "
@@ -324,9 +324,9 @@ public class compendiumExperiment {
                                 + "--velocityChangeWhenLowerLimitIsReached -0.8592 "
                                 + "--velocityChangeWhenUpperLimitIsReached -0.6444")
                                 .split("\\s+");
-                AutoMOPSO AutoMOPSOw = new AutoMOPSO();
+                var AutoMOPSOw = new AutoMOPSO();
                 AutoMOPSOw.parseAndCheckParameters(parametersAutoMOPSOwWithtConfig);
-                ParticleSwarmOptimizationAlgorithm automopsow = AutoMOPSOw.create();
+                var automopsow = AutoMOPSOw.create();
 
                 algorithms.add(
                         new ExperimentAlgorithm<>(automopsow, "AMOPSOw", experimentProblem, run));

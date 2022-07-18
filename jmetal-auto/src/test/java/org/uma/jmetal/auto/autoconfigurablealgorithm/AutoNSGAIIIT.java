@@ -18,9 +18,9 @@ class AutoNSGAIIIT {
   @Test
   void AutoNSGAIIWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT1()
       throws IOException {
-    String referenceFrontFileName = "ZDT1.csv" ;
+    var referenceFrontFileName = "ZDT1.csv" ;
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--referenceFrontFileName "+ referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
@@ -43,27 +43,27 @@ class AutoNSGAIIIT {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoNSGAII autoNSGAII = new AutoNSGAII();
+    var autoNSGAII = new AutoNSGAII();
     autoNSGAII.parseAndCheckParameters(parameters);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+    var nsgaII = autoNSGAII.create();
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.getResult() ;
+    var population  = nsgaII.getResult() ;
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    var referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertTrue(population.size() >= 95) ;
     assertTrue(hv > 0.65) ;
@@ -72,9 +72,9 @@ class AutoNSGAIIIT {
   @Test
   void AutoNSGAIIExternalUnboundedArchiveReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT4()
       throws IOException {
-    String referenceFrontFileName = "ZDT4.csv" ;
+    var referenceFrontFileName = "ZDT4.csv" ;
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
             + "--referenceFrontFileName "+ referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
@@ -100,27 +100,27 @@ class AutoNSGAIIIT {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoNSGAII autoNSGAII = new AutoNSGAII();
+    var autoNSGAII = new AutoNSGAII();
     autoNSGAII.parseAndCheckParameters(parameters);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+    var nsgaII = autoNSGAII.create();
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.getResult() ;
+    var population  = nsgaII.getResult() ;
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    var referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertTrue(population.size() >= 95) ;
     assertTrue(hv > 0.65) ;
@@ -130,9 +130,9 @@ class AutoNSGAIIIT {
   @Test
   void AutoNSGAIIExternalCrowdingArchiveReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT4()
       throws IOException {
-    String referenceFrontFileName = "ZDT4.csv" ;
+    var referenceFrontFileName = "ZDT4.csv" ;
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
             + "--referenceFrontFileName "+ referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
@@ -158,27 +158,27 @@ class AutoNSGAIIIT {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoNSGAII autoNSGAII = new AutoNSGAII();
+    var autoNSGAII = new AutoNSGAII();
     autoNSGAII.parseAndCheckParameters(parameters);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+    var nsgaII = autoNSGAII.create();
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.getResult() ;
+    var population  = nsgaII.getResult() ;
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    var referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertThat(population).hasSizeGreaterThan(95) ;
     assertThat(hv).isGreaterThan(0.64) ;
@@ -187,9 +187,9 @@ class AutoNSGAIIIT {
   @Test
   void AutoNSGAIIExternalUnboundedArchiveReturnsAFrontWithHVHigherThanZeroPointFourOnProblemDTLZ2()
       throws IOException {
-    String referenceFrontFileName = "DTLZ2.3D.csv" ;
+    var referenceFrontFileName = "DTLZ2.3D.csv" ;
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
             + "--referenceFrontFileName "+ referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 50000 "
@@ -214,27 +214,27 @@ class AutoNSGAIIIT {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoNSGAII autoNSGAII = new AutoNSGAII();
+    var autoNSGAII = new AutoNSGAII();
     autoNSGAII.parseAndCheckParameters(parameters);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+    var nsgaII = autoNSGAII.create();
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.getResult() ;
+    var population  = nsgaII.getResult() ;
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    var referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double[][] normalizedFront =
+    var normalizedFront =
         NormalizeUtils.normalize(
             SolutionListUtils.getMatrixWithObjectiveValues(population),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertTrue(population.size() >= 95) ;
     assertTrue(hv > 0.40) ;

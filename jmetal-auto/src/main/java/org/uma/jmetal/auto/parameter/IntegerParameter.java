@@ -42,7 +42,7 @@ public class IntegerParameter extends Parameter<Integer> {
 
   @Override
   public @NotNull String toString() {
-    StringBuilder result =
+    var result =
             new StringBuilder("Name: "
                     + getName()
                     + ": "
@@ -52,10 +52,10 @@ public class IntegerParameter extends Parameter<Integer> {
                     + lowerBound
                     + ". Upper bound: "
                     + upperBound);
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (var parameter : getGlobalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (var parameter : getSpecificParameters()) {
       result.append("\n  -> ").append(parameter.getRight().toString());
     }
     return result.toString();

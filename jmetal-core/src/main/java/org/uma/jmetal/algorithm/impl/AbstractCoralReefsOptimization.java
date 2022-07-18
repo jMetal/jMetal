@@ -103,9 +103,9 @@ public abstract class AbstractCoralReefsOptimization<S, R>
 
 		@Override
 		public int compareTo(@NotNull Coordinate arg0) {
-			int diffX = Math.abs(arg0.x - this.x);
-			int diffY = Math.abs(arg0.y - this.y);
-			double result = Math.sqrt((diffX * diffX) + (diffY * diffY));
+			var diffX = Math.abs(arg0.x - this.x);
+			var diffY = Math.abs(arg0.y - this.y);
+			var result = Math.sqrt((diffX * diffX) + (diffY * diffY));
 
 			return Integer.parseInt(Double.toString(result));
 		}
@@ -118,7 +118,7 @@ public abstract class AbstractCoralReefsOptimization<S, R>
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			Coordinate other = (Coordinate) obj;
+			var other = (Coordinate) obj;
 
 			if (x != other.x)
 				return false;
@@ -273,7 +273,7 @@ public abstract class AbstractCoralReefsOptimization<S, R>
 
 			brooders = new ArrayList<S>((int) (Fbr * population.size()));
 
-			for (S coral : population) {
+			for (var coral : population) {
 				if (!broadcastSpawners.contains(coral)) {
 					brooders.add(coral);
 				}

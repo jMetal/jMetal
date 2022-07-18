@@ -34,14 +34,9 @@ public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIBinaryRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws Exception {
-    BinaryProblem problem;
-    Algorithm<List<BinarySolution>> algorithm;
-    CrossoverOperator<BinarySolution> crossover;
-    MutationOperator<BinarySolution> mutation;
-    SelectionOperator<List<BinarySolution>, BinarySolution> selection;
 
-    String problemName ;
-    String referenceParetoFront = "" ;
+      String problemName ;
+    var referenceParetoFront = "" ;
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
@@ -52,27 +47,27 @@ public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "" ;
     }
 
-    problem = (BinaryProblem) ProblemFactory.<BinarySolution> loadProblem(problemName);
+    var problem = (BinaryProblem) ProblemFactory.<BinarySolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    crossover = new SinglePointCrossover(crossoverProbability) ;
+    var crossoverProbability = 0.9 ;
+      CrossoverOperator<BinarySolution> crossover = new SinglePointCrossover(crossoverProbability);
 
-    double mutationProbability = 1.0 / problem.getBitsFromVariable(0) ;
-    mutation = new BitFlipMutation(mutationProbability) ;
+    var mutationProbability = 1.0 / problem.getBitsFromVariable(0) ;
+      MutationOperator<BinarySolution> mutation = new BitFlipMutation(mutationProbability);
 
-    selection = new BinaryTournamentSelection<BinarySolution>() ;
+      SelectionOperator<List<BinarySolution>, BinarySolution> selection = new BinaryTournamentSelection<BinarySolution>();
 
-    int populationSize = 100;
-    algorithm = new NSGAIIBuilder<BinarySolution>(problem, crossover, mutation, populationSize)
-            .setSelectionOperator(selection)
-            .setMaxEvaluations(25000)
-            .build() ;
+    var populationSize = 100;
+      Algorithm<List<BinarySolution>> algorithm = new NSGAIIBuilder<BinarySolution>(problem, crossover, mutation, populationSize)
+              .setSelectionOperator(selection)
+              .setMaxEvaluations(25000)
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<BinarySolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

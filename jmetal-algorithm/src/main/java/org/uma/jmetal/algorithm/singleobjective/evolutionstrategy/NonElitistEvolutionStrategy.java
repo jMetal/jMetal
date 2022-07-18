@@ -56,9 +56,9 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
 
   @Override protected List<S> createInitialPopulation() {
       @NotNull List<S> population = new ArrayList<>(mu);
-      int bound = mu;
-      for (int i = 0; i < bound; i++) {
-          S solution = getProblem().createSolution();
+    var bound = mu;
+      for (var i = 0; i < bound; i++) {
+        var solution = getProblem().createSolution();
           population.add(solution);
       }
 
@@ -66,7 +66,7 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
   }
 
   @Override protected List<S> evaluatePopulation(List<S> population) {
-    for (S solution : population) {
+    for (var solution : population) {
       getProblem().evaluate(solution);
     }
 
@@ -85,9 +85,9 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
   @SuppressWarnings("unchecked")
   @Override protected List<S> reproduction(List<S> population) {
     List<S> offspringPopulation = new ArrayList<>(lambda);
-    for (int i = 0; i < mu; i++) {
-      for (int j = 0; j < lambda / mu; j++) {
-        S offspring = (S)population.get(i).copy();
+    for (var i = 0; i < mu; i++) {
+      for (var j = 0; j < lambda / mu; j++) {
+        var offspring = (S)population.get(i).copy();
         mutation.execute(offspring);
         offspringPopulation.add(offspring);
       }
@@ -101,9 +101,9 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
     offspringPopulation.sort(comparator);
 
       List<S> newPopulation = new ArrayList<>(mu);
-      int bound = mu;
-      for (int i = 0; i < bound; i++) {
-          S s = offspringPopulation.get(i);
+    var bound = mu;
+      for (var i = 0; i < bound; i++) {
+        var s = offspringPopulation.get(i);
           newPopulation.add(s);
       }
       return newPopulation;

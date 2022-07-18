@@ -16,9 +16,9 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class ComponentBasedNSGAIIConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "ZDT1.csv" ;
+    var referenceFrontFileName = "ZDT1.csv" ;
 
-    String[] parameters =
+    var parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName "+ referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 25000 "
@@ -47,7 +47,7 @@ public class ComponentBasedNSGAIIConfiguredFromAParameterString {
     AutoNSGAII.print(NSGAII.fixedParameterList);
     AutoNSGAII.print(NSGAII.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = NSGAII.create();
+    var nsgaII = NSGAII.create();
 
     @NotNull EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     @NotNull RunTimeChartObserver<DoubleSolution> runTimeChartObserver =

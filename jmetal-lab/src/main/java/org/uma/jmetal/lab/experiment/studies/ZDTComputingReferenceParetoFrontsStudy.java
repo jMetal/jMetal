@@ -68,16 +68,16 @@ public class ZDTComputingReferenceParetoFrontsStudy {
     if (args.length != 1) {
       throw new JMetalException("Needed arguments: experimentBaseDirectory");
     }
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
-    List<ExperimentProblem<DoubleSolution>> problemList = List.of(
+    var problemList = List.of(
             new ExperimentProblem<>(new ZDT1()),
             new ExperimentProblem<>(new ZDT2()),
             new ExperimentProblem<>(new ZDT3()),
             new ExperimentProblem<>(new ZDT4()),
             new ExperimentProblem<>(new ZDT6()));
 
-    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+    var algorithmList =
             configureAlgorithmList(problemList);
 
     @NotNull ExperimentBuilder<DoubleSolution, List<DoubleSolution>> zdt2Study =
@@ -98,7 +98,7 @@ public class ZDTComputingReferenceParetoFrontsStudy {
             new InvertedGenerationalDistancePlus())) ;
     zdt2Study.setIndependentRuns(INDEPENDENT_RUNS);
     zdt2Study.setNumberOfCores(8);
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment = zdt2Study.build();
+    var experiment = zdt2Study.build();
 
     new ExecuteAlgorithms<>(experiment).run();
     new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
@@ -124,11 +124,11 @@ public class ZDTComputingReferenceParetoFrontsStudy {
           @NotNull List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
 
       for (@NotNull ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-        double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
+        var mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+        var mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                 (DoubleProblem) experimentProblem.getProblem(),
                 new CrowdingDistanceArchive<DoubleSolution>(100))
@@ -151,7 +151,7 @@ public class ZDTComputingReferenceParetoFrontsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      for (var experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(experimentProblem.getProblem(), MOEADBuilder.Variant.MOEAD)
                 .setCrossover(new DifferentialEvolutionCrossover(1.0, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
                 .setMutation(new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),

@@ -52,15 +52,13 @@ public class OneZeroMax extends AbstractBinaryProblem {
   /** Evaluate() method */
   @Override
     public BinarySolution evaluate(@NotNull BinarySolution solution) {
-    int counterOnes;
-    int counterZeroes;
 
-    counterOnes = 0;
-    counterZeroes = 0;
+    var counterOnes = 0;
+    var counterZeroes = 0;
 
     BitSet bitset = solution.variables().get(0) ;
 
-    for (int i = 0; i < bitset.length(); i++) {
+    for (var i = 0; i < bitset.length(); i++) {
       if (bitset.get(i)) {
         counterOnes++;
       } else {

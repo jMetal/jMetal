@@ -91,40 +91,36 @@ public class PMXCrossover implements
     offspring.add((PermutationSolution<Integer>) parents.get(0).copy()) ;
     offspring.add((PermutationSolution<Integer>) parents.get(1).copy()) ;
 
-    int permutationLength = parents.get(0).variables().size() ;
+    var permutationLength = parents.get(0).variables().size() ;
 
     if (crossoverRandomGenerator.getRandomValue() < probability) {
-      int cuttingPoint1;
-      int cuttingPoint2;
 
       // STEP 1: Get two cutting points
-      cuttingPoint1 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
-      cuttingPoint2 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
+      int cuttingPoint1 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
+      int cuttingPoint2 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
       while (cuttingPoint2 == cuttingPoint1)
         cuttingPoint2 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
 
       if (cuttingPoint1 > cuttingPoint2) {
-        int swap;
-        swap = cuttingPoint1;
+        var swap = cuttingPoint1;
         cuttingPoint1 = cuttingPoint2;
         cuttingPoint2 = swap;
       }
 
       // STEP 2: Get the subchains to interchange
-      int replacement1[];
       @NotNull int replacement2[] = new int[permutationLength];
-        int[] arr = new int[10];
-        int count = 0;
-        for (int i1 = 0; i1 < permutationLength; i1++) {
-            int i2 = replacement2[i1] = -1;
+      var arr = new int[10];
+      var count = 0;
+        for (var i1 = 0; i1 < permutationLength; i1++) {
+          var i2 = replacement2[i1] = -1;
             if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
             arr[count++] = i2;
         }
         arr = Arrays.copyOfRange(arr, 0, count);
-        replacement1 = arr;
+      var replacement1 = arr;
 
       // STEP 3: Interchange
-      for (int i = cuttingPoint1; i <= cuttingPoint2; i++) {
+      for (var i = cuttingPoint1; i <= cuttingPoint2; i++) {
         offspring.get(0).variables().set(i, parents.get(1).variables().get(i));
         offspring.get(1).variables().set(i, parents.get(0).variables().get(i));
 
@@ -133,15 +129,15 @@ public class PMXCrossover implements
       }
 
       // STEP 4: Repair offspring
-      for (int i = 0; i < permutationLength; i++) {
+      for (var i = 0; i < permutationLength; i++) {
         if ((i >= cuttingPoint1) && (i <= cuttingPoint2))
           continue;
 
         int n1 = parents.get(0).variables().get(i);
-        int m1 = replacement1[n1];
+        var m1 = replacement1[n1];
 
         int n2 = parents.get(1).variables().get(i);
-        int m2 = replacement2[n2];
+        var m2 = replacement2[n2];
 
         while (m1 != -1) {
           n1 = m1;

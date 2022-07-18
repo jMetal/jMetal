@@ -36,20 +36,20 @@ public class TerminationByQualityIndicator implements Termination {
     evaluations = 0 ;
     evaluationsLimitReached = false ;
 
-    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    var normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
     qualityIndicator.setReferenceFront(normalizedReferenceFront);
     referenceFrontIndicatorValue = qualityIndicator.compute(normalizedReferenceFront);
   }
 
   @Override
   public boolean isMet(Map<String, Object> algorithmStatusData) {
-    List<Solution<?>> population = (List<Solution<?>>) algorithmStatusData.get("POPULATION");
+    var population = (List<Solution<?>>) algorithmStatusData.get("POPULATION");
     evaluations = (int) algorithmStatusData.get("EVALUATIONS") ;
 
     Check.notNull(population);
 
-    double[][] front = SolutionListUtils.getMatrixWithObjectiveValues(population);
-    double[][] normalizedFront =
+    var front = SolutionListUtils.getMatrixWithObjectiveValues(population);
+    var normalizedFront =
         NormalizeUtils.normalize(
             front,
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
@@ -57,8 +57,8 @@ public class TerminationByQualityIndicator implements Termination {
 
     computedIndicatorValue = qualityIndicator.compute(normalizedFront);
 
-    boolean unsuccessfulStopCondition = evaluationsLimit <= evaluations ;
-    boolean successfulStopCondition = computedIndicatorValue >= percentage * referenceFrontIndicatorValue ;
+    var unsuccessfulStopCondition = evaluationsLimit <= evaluations ;
+    var successfulStopCondition = computedIndicatorValue >= percentage * referenceFrontIndicatorValue ;
 
     if (unsuccessfulStopCondition) {
       evaluationsLimitReached = true ;

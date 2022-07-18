@@ -30,14 +30,14 @@ public class BinaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
-    BinaryTournamentSelection<Solution<Object>> selection =
+    var selection =
         new BinaryTournamentSelection<Solution<Object>>();
     assertThrows(NullParameterException.class, () -> selection.execute(null));
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
-    BinaryTournamentSelection<Solution<Object>> selection =
+    var selection =
         new BinaryTournamentSelection<Solution<Object>>();
     assertThrows(EmptyCollectionException.class, () -> selection.execute(new ArrayList<>(0)));
   }
@@ -51,9 +51,9 @@ public class BinaryTournamentSelectionTest {
     var solution2 = problem.createSolution();
     var solution3 = problem.createSolution();
 
-    List<DoubleSolution> population = List.of(solution1, solution2, solution3);
+    var population = List.of(solution1, solution2, solution3);
 
-    BinaryTournamentSelection<DoubleSolution> selection = new BinaryTournamentSelection<>();
+    var selection = new BinaryTournamentSelection<DoubleSolution>();
     assertNotNull(selection.execute(population));
   }
 
@@ -71,14 +71,14 @@ public class BinaryTournamentSelectionTest {
   public void shouldExecuteWorkProperlyIfTheTwoSolutionsInTheListAreNondominated() {
     Comparator<DoubleSolution> comparator = mock(Comparator.class);
 
-    DoubleSolution solution1 = mock(DoubleSolution.class);
-    DoubleSolution solution2 = mock(DoubleSolution.class);
+    var solution1 = mock(DoubleSolution.class);
+    var solution2 = mock(DoubleSolution.class);
 
-    List<DoubleSolution> population = Arrays.<DoubleSolution>asList(solution1, solution2);
+    var population = Arrays.<DoubleSolution>asList(solution1, solution2);
 
-    BinaryTournamentSelection<DoubleSolution> selection =
+    var selection =
         new BinaryTournamentSelection<DoubleSolution>(comparator);
-    DoubleSolution result = selection.execute(population);
+    var result = selection.execute(population);
 
     assertThat(result, Matchers.either(Matchers.is(solution1)).or(Matchers.is(solution2)));
     verify(comparator).compare(any(DoubleSolution.class), any(DoubleSolution.class));

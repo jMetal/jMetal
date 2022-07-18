@@ -37,7 +37,7 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
 
   @Override
   public void compute(List<S> solutionList) {
-    int size = solutionList.size();
+    var size = solutionList.size();
 
     if (size == 0) {
       return;

@@ -77,22 +77,22 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
   private  void  initialiceRankingCoeficient(){
     rankingCoeficient = new ArrayList<>();
-    for (int i = 0; i < problem.getNumberOfObjectives() ; i++) {
+    for (var i = 0; i < problem.getNumberOfObjectives() ; i++) {
       rankingCoeficient.add(1.0/problem.getNumberOfObjectives());
     }
   }
 
   private void updateObjectiveVector(List<S> solutionList){
-   for (int j = 0; j < numberOfObjectives; j++) {
+   for (var j = 0; j < numberOfObjectives; j++) {
       solutionList.sort(new ObjectiveComparator<>(j));
-      double objetiveMinn = solutionList.get(0).objectives()[j];
-      double objetiveMaxn = solutionList.get(solutionList.size() - 1).objectives()[j];
+       var objetiveMinn = solutionList.get(0).objectives()[j];
+       var objetiveMaxn = solutionList.get(solutionList.size() - 1).objectives()[j];
       idealOjectiveVector.add(objetiveMinn);
       nadirObjectiveVector.add(objetiveMaxn);
     }
     if(problem instanceof DoubleProblem){
-      DoubleProblem aux =(DoubleProblem) problem;
-      for (int i = 0; i < numberOfObjectives ; i++) {
+        var aux =(DoubleProblem) problem;
+      for (var i = 0; i < numberOfObjectives ; i++) {
         Bounds<?> bounds = aux.getVariableBounds().get(i);
         idealOjectiveVector.add(((Number) bounds.getLowerBound()).doubleValue());
         nadirObjectiveVector.add(((Number) bounds.getUpperBound()).doubleValue());
@@ -109,14 +109,14 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     nadirObjectiveVector = new ArrayList<>(numberOfObjectives);
 
     List<S> solutions = new ArrayList<>();
-    S sol = problem.createSolution();
+      var sol = problem.createSolution();
     problem.evaluate(sol);
     solutions.add(sol);
     updateObjectiveVector(solutions);
    // solutionRun = solutions.get(0);
       List<Double> referencePoint = new ArrayList<>(numberOfObjectives);
-      for (int j = 0; j < numberOfObjectives; j++) {
-        double rand = random.nextDouble(0.0, 1.0);
+      for (var j = 0; j < numberOfObjectives; j++) {
+          var rand = random.nextDouble(0.0, 1.0);
         if (rand < considerationProbability * rankingCoeficient.get(j)) {
           referencePoint.add( asp.get(j));
         } else {
@@ -132,7 +132,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
   @Override
   protected boolean isStoppingConditionReached() {
-    boolean stop = evaluations > maxEvaluations ;
+      var stop = evaluations > maxEvaluations ;
 
     if(indexOfRelevantObjectiveFunctions!=null   ){
       stop = stop || indexOfRelevantObjectiveFunctions.size()==numberOfObjectives;
@@ -154,25 +154,24 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
   @Override
   protected List<Integer> relevantObjectiveFunctions(List<S> front) {
-    List<Integer> order;
-    @NotNull List<Integer> indexRelevantObjectivesFunctions = new ArrayList<>();
+      @NotNull List<Integer> indexRelevantObjectivesFunctions = new ArrayList<>();
     SortedMap<Double, List<Integer>> map = new TreeMap<>(Collections.reverseOrder());
-    for (int i = 0; i < rankingCoeficient.size(); i++) {
-      List<Integer> aux = map.getOrDefault(rankingCoeficient.get(i), new ArrayList<>());
+    for (var i = 0; i < rankingCoeficient.size(); i++) {
+        var aux = map.getOrDefault(rankingCoeficient.get(i), new ArrayList<>());
       aux.add(i);
       map.putIfAbsent(rankingCoeficient.get(i),aux);
     }
-    Set<Double> keys =map.keySet();
+      var keys =map.keySet();
       List<Integer> list = new ArrayList<>();
-      for (Double key : keys) {
-          for (Integer integer : map.get(key)) {
+      for (var key : keys) {
+          for (var integer : map.get(key)) {
               list.add(integer);
           }
       }
-      order = list;
-    S solution = getSolution(front,currentReferencePoint);
-    for (Integer i : order) {
-      double rand = random.nextDouble(0.0, 1.0);
+      var order = list;
+      var solution = getSolution(front,currentReferencePoint);
+    for (var i : order) {
+        var rand = random.nextDouble(0.0, 1.0);
       if ((asp.get(i) - solution.objectives()[i]) < tolerance
           && rand < considerationProbability) {
         indexRelevantObjectivesFunctions.add(i);
@@ -190,11 +189,11 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     List<Double> result = new ArrayList<>();
     @NotNull List<S> temporal = new ArrayList<>(front);
 
-      S solution = getSolution(temporal,currentReferencePoint);
+      var solution = getSolution(temporal,currentReferencePoint);
       solutionRun = solution;
       temporal.remove(solution);
 
-        for (int i = 0; i < numberOfObjectives; i++) {
+        for (var i = 0; i < numberOfObjectives; i++) {
           if (indexOfRelevantObjectiveFunctions.contains(i)) {
             result.add(
                 asp.get(i) - (asp.get(i) - solution.objectives()[i]) / 2);
@@ -214,22 +213,22 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   private void calculateDistance(S solution, @NotNull List<Double> referencePoint) {
     @NotNull EuclideanDistanceBetweenSolutionsInObjectiveSpace<S> euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>();
 
-    double distance = euclidean
+      var distance = euclidean
         .compute(solution, getSolutionFromRP(referencePoint));
     distances.add(distance);
   }
   private S getSolutionFromRP(List<Double> referencePoint){
-    S result = problem.createSolution();
-    for (int i = 0; i < result.objectives().length; i++) {
+      var result = problem.createSolution();
+    for (var i = 0; i < result.objectives().length; i++) {
       result.objectives()[i] = referencePoint.get(i);
     }
     return result;
   }
 
  private double prediction(int index,List<S> paretoOptimalSolutions,S solution) {
-  DecisionTreeEstimator<S> dte = new DecisionTreeEstimator<S>(paretoOptimalSolutions);
+     var dte = new DecisionTreeEstimator<S>(paretoOptimalSolutions);
 
-   double data=dte.doPrediction(index,solution);
+     var data=dte.doPrediction(index,solution);
    return data;
  }
   @Override
@@ -251,15 +250,14 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   }
 
   private S getSolution(List<S> front, @NotNull List<Double> referencePoint) {
-    S result = front.get(0);
-    EuclideanDistanceBetweenSolutionsInObjectiveSpace<S> euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>();
+      var euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<S>();
     SortedMap<Double, S> map = new TreeMap<>();
-    S aux = getSolutionFromRP(referencePoint);
+      var aux = getSolutionFromRP(referencePoint);
     for (@NotNull S solution : front) {
-      double distance = euclidean.compute(solution,aux);
+        var distance = euclidean.compute(solution,aux);
       map.put(distance, solution);
     }
-    result = map.get(map.firstKey());
+      var result = map.get(map.firstKey());
     return result;
   }
 

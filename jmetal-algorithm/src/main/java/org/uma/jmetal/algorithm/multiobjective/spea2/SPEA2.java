@@ -82,13 +82,12 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
 
     while (offSpringPopulation.size() < getMaxPopulationSize()){
       @NotNull List<S> parents = new ArrayList<>(2);
-      S candidateFirstParent = selectionOperator.execute(population);
+      var candidateFirstParent = selectionOperator.execute(population);
       parents.add(candidateFirstParent);
-      S candidateSecondParent;
-      candidateSecondParent = selectionOperator.execute(population);
+      var candidateSecondParent = selectionOperator.execute(population);
       parents.add(candidateSecondParent);
 
-      List<S> offspring = crossoverOperator.execute(parents);
+      var offspring = crossoverOperator.execute(parents);
       mutationOperator.execute(offspring.get(0));
       offSpringPopulation.add(offspring.get(0));
     }

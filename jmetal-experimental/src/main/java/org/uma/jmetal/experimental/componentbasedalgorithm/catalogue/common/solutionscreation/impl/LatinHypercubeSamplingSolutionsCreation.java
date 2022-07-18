@@ -24,20 +24,20 @@ public class LatinHypercubeSamplingSolutionsCreation
   }
 
   public List<DoubleSolution> create() {
-    int[][] latinHypercube = new int[numberOfSolutionsToCreate][problem.getNumberOfVariables()];
-    for (int dim = 0; dim < problem.getNumberOfVariables(); dim++) {
-      List<Integer> permutation = getPermutation(numberOfSolutionsToCreate);
-      for (int v = 0; v < numberOfSolutionsToCreate; v++) {
+    var latinHypercube = new int[numberOfSolutionsToCreate][problem.getNumberOfVariables()];
+    for (var dim = 0; dim < problem.getNumberOfVariables(); dim++) {
+      var permutation = getPermutation(numberOfSolutionsToCreate);
+      for (var v = 0; v < numberOfSolutionsToCreate; v++) {
         latinHypercube[v][dim] = permutation.get(v);
       }
     }
 
     List<DoubleSolution> solutionList = new ArrayList<>(numberOfSolutionsToCreate);
-    for (int i = 0; i < numberOfSolutionsToCreate; i++) {
+    for (var i = 0; i < numberOfSolutionsToCreate; i++) {
       DoubleSolution newSolution =
           new DefaultDoubleSolution(problem.getVariableBounds(), problem.getNumberOfObjectives(), 0);
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
-        Bounds<Double> bounds = problem.getVariableBounds().get(j);
+      for (var j = 0; j < problem.getNumberOfVariables(); j++) {
+        var bounds = problem.getVariableBounds().get(j);
         newSolution.variables().set(
             j,
             NormalizeUtils.normalize(
@@ -56,7 +56,7 @@ public class LatinHypercubeSamplingSolutionsCreation
 
   private List<Integer> getPermutation(int permutationLength) {
       List<Integer> randomSequence = new ArrayList<>(permutationLength);
-      for (int i = 0; i < permutationLength; i++) {
+      for (var i = 0; i < permutationLength; i++) {
           Integer integer = i;
           randomSequence.add(integer);
       }

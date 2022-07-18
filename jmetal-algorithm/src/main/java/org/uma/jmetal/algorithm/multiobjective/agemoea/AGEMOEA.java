@@ -61,9 +61,9 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   @Override
   protected List<S> selection(List<S> population) {
     List<S> matingPopulation = new ArrayList<>(population.size());
-    int bound = getMaxPopulationSize();
-    for (int i = 0; i < bound; i++) {
-      S solution = selectionOperator.execute(population);
+    var bound = getMaxPopulationSize();
+    for (var i = 0; i < bound; i++) {
+      var solution = selectionOperator.execute(population);
       @Nullable S copy = (S) solution.copy();
       matingPopulation.add(copy);
     }
@@ -73,20 +73,20 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   @Override
   protected List<S> reproduction(@NotNull List<S> matingPool) {
-    int numberOfParents = crossoverOperator.getNumberOfRequiredParents();
+    var numberOfParents = crossoverOperator.getNumberOfRequiredParents();
 
     checkNumberOfParents(matingPool, numberOfParents);
 
     @NotNull List<S> offspringPopulation = new ArrayList<>(maxPopulationSize);
-    for (int i = 0; i < matingPool.size(); i += numberOfParents) {
+    for (var i = 0; i < matingPool.size(); i += numberOfParents) {
       List<S> parents = new ArrayList<>(numberOfParents);
-      for (int j = 0; j < numberOfParents; j++) {
+      for (var j = 0; j < numberOfParents; j++) {
         parents.add(matingPool.get(i + j));
       }
 
-      List<S> offspring = crossoverOperator.execute(parents);
+      var offspring = crossoverOperator.execute(parents);
 
-      for (S s : offspring) {
+      for (var s : offspring) {
         mutationOperator.execute(s);
         offspringPopulation.add(s);
         if (offspringPopulation.size() >= maxPopulationSize) {
@@ -104,8 +104,7 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     jointPopulation.addAll(offspringPopulation) ;
 
 
-    AGEMOEAEnvironmentalSelection<S> environmentalSelection;
-    environmentalSelection = new AGEMOEAEnvironmentalSelection(getProblem().getNumberOfObjectives());
+    AGEMOEAEnvironmentalSelection<S> environmentalSelection = new AGEMOEAEnvironmentalSelection(getProblem().getNumberOfObjectives());
 
     return environmentalSelection.execute(jointPopulation, maxPopulationSize);
   }

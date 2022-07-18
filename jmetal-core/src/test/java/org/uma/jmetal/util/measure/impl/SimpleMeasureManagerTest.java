@@ -15,16 +15,16 @@ public class SimpleMeasureManagerTest {
 
 	@Test
 	public void testStartEmpty() {
-		SimpleMeasureManager manager = new SimpleMeasureManager();
+		var manager = new SimpleMeasureManager();
 		assertEquals(0, manager.getMeasureKeys().size());
 	}
 
 	@Test
 	public void testSetGetPullMeasure() {
-		SimpleMeasureManager manager = new SimpleMeasureManager();
-		CountingMeasure measure1 = new CountingMeasure();
-		CountingMeasure measure2 = new CountingMeasure();
-		CountingMeasure measure3 = new CountingMeasure();
+		var manager = new SimpleMeasureManager();
+		var measure1 = new CountingMeasure();
+		var measure2 = new CountingMeasure();
+		var measure3 = new CountingMeasure();
 
 		manager.setPullMeasure(1, measure1);
 		assertEquals(measure1, manager.getPullMeasure(1));
@@ -38,10 +38,10 @@ public class SimpleMeasureManagerTest {
 
 	@Test
 	public void testSetGetPushMeasure() {
-		SimpleMeasureManager manager = new SimpleMeasureManager();
-		CountingMeasure measure1 = new CountingMeasure();
-		CountingMeasure measure2 = new CountingMeasure();
-		CountingMeasure measure3 = new CountingMeasure();
+		var manager = new SimpleMeasureManager();
+		var measure1 = new CountingMeasure();
+		var measure2 = new CountingMeasure();
+		var measure3 = new CountingMeasure();
 
 		manager.setPushMeasure(1, measure1);
 		assertEquals(measure1, manager.getPushMeasure(1));
@@ -55,8 +55,8 @@ public class SimpleMeasureManagerTest {
 
 	@Test
 	public void testSetMeasureGetBoth() {
-		SimpleMeasureManager manager = new SimpleMeasureManager();
-		CountingMeasure measure = new CountingMeasure();
+		var manager = new SimpleMeasureManager();
+		var measure = new CountingMeasure();
 
 		manager.setMeasure(1, measure);
 		assertEquals(measure, manager.getPullMeasure(1));
@@ -65,8 +65,8 @@ public class SimpleMeasureManagerTest {
 
 	@Test
 	public void testAddMeasureAddKey() {
-		SimpleMeasureManager manager = new SimpleMeasureManager();
-		CountingMeasure measure = new CountingMeasure();
+		var manager = new SimpleMeasureManager();
+		var measure = new CountingMeasure();
 
 		manager.setPullMeasure(1, measure);
 		assertEquals(1, manager.getMeasureKeys().size());
@@ -86,8 +86,8 @@ public class SimpleMeasureManagerTest {
 
 	@Test
 	public void testRemoveBothMeasuresRemoveKey() {
-		SimpleMeasureManager manager = new SimpleMeasureManager();
-		CountingMeasure measure = new CountingMeasure();
+		var manager = new SimpleMeasureManager();
+		var measure = new CountingMeasure();
 
 		manager.setPullMeasure(1, measure);
 		manager.setPushMeasure(2, measure);
@@ -121,8 +121,8 @@ public class SimpleMeasureManagerTest {
 
 	@Test
 	public void testRemoveBothAtOnce() {
-		SimpleMeasureManager manager = new SimpleMeasureManager();
-		CountingMeasure measure = new CountingMeasure();
+		var manager = new SimpleMeasureManager();
+		var measure = new CountingMeasure();
 
 		manager.setPullMeasure(1, measure);
 		manager.setPushMeasure(1, measure);
@@ -134,14 +134,14 @@ public class SimpleMeasureManagerTest {
 	@Test
 	public void testAddMultipleMeasures() {
 		Map<Object, Measure<?>> measures = new HashMap<Object, Measure<?>>();
-		CountingMeasure measure1 = new CountingMeasure();
-		LastEvaluationMeasure<Object, Object> measure2 = new LastEvaluationMeasure<>();
-		DurationMeasure measure3 = new DurationMeasure();
+		var measure1 = new CountingMeasure();
+		var measure2 = new LastEvaluationMeasure<Object, Object>();
+		var measure3 = new DurationMeasure();
 		measures.put(1, measure1);
 		measures.put(2, measure2);
 		measures.put(3, measure3);
 
-		SimpleMeasureManager manager = new SimpleMeasureManager();
+		var manager = new SimpleMeasureManager();
 		manager.setAllMeasures(measures);
 
 		assertEquals(3, manager.getMeasureKeys().size());
@@ -158,11 +158,11 @@ public class SimpleMeasureManagerTest {
 
 	@Test
 	public void testRemoveMultipleMeasures() {
-		CountingMeasure measure1 = new CountingMeasure();
-		CountingMeasure measure2 = new CountingMeasure();
-		CountingMeasure measure3 = new CountingMeasure();
+		var measure1 = new CountingMeasure();
+		var measure2 = new CountingMeasure();
+		var measure3 = new CountingMeasure();
 
-		SimpleMeasureManager manager = new SimpleMeasureManager();
+		var manager = new SimpleMeasureManager();
 		manager.setPullMeasure(1, measure1);
 		manager.setPullMeasure(2, measure2);
 		manager.setPullMeasure(3, measure3);

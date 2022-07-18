@@ -61,18 +61,18 @@ public class GeneralizedSpread extends QualityIndicator {
    *  @return the value of the generalized spread metric
    **/
   public double generalizedSpread(double[][] front, double[] @NotNull [] referenceFront) {
-    int numberOfObjectives = front[0].length ;
+      var numberOfObjectives = front[0].length ;
 
-    double[] @NotNull [] extremeValues = new double[numberOfObjectives][] ;
-    for (int i = 0; i < numberOfObjectives; i++) {
+      var extremeValues = new double[numberOfObjectives][] ;
+    for (var i = 0; i < numberOfObjectives; i++) {
       //Arrays.sort(referenceFront, new VectorPositionComparator(i));
-      int finalI = i;
+        var finalI = i;
       Arrays.sort(referenceFront, Comparator.comparingDouble(x -> x[finalI])) ;
-        double[] newPoint = new double[10];
-        int count = 0;
-        double[] array = referenceFront[referenceFront.length - 1];
-        for (int j = 0; j < numberOfObjectives; j++) {
-            double v = array[j];
+        var newPoint = new double[10];
+        var count = 0;
+        var array = referenceFront[referenceFront.length - 1];
+        for (var j = 0; j < numberOfObjectives; j++) {
+            var v = array[j];
             if (newPoint.length == count) newPoint = Arrays.copyOf(newPoint, count * 2);
             newPoint[count++] = v;
         }
@@ -80,7 +80,7 @@ public class GeneralizedSpread extends QualityIndicator {
         extremeValues[i] = newPoint ;
     }
 
-    int numberOfPoints = front.length;
+      var numberOfPoints = front.length;
 
     Arrays.sort(front, new LexicographicalVectorComparator());
     // front.sort(new LexicographicalPointComparator());
@@ -88,22 +88,22 @@ public class GeneralizedSpread extends QualityIndicator {
     if (new EuclideanDistanceBetweenVectors().compute(front[0], front[front.length - 1]) == 0.0) {
       return 1.0;
     } else {
-        double dmean = 0.0;
-        for (double[] doubles : front) {
-            double distanceToNearestVector = VectorUtils.distanceToNearestVector(doubles, front);
+        var dmean = 0.0;
+        for (var doubles : front) {
+            var distanceToNearestVector = VectorUtils.distanceToNearestVector(doubles, front);
             dmean += distanceToNearestVector;
         }
 
         dmean = dmean / (numberOfPoints);
 
-        double dExtrems = 0.0;
-        for (double[] extremeValue : extremeValues) {
-            double v = VectorUtils.distanceToClosestVector(extremeValue, front);
+        var dExtrems = 0.0;
+        for (var extremeValue : extremeValues) {
+            var v = VectorUtils.distanceToClosestVector(extremeValue, front);
             dExtrems += v;
         }
 
-        double mean = 0.0;
-      for (int i = 0; i < front.length; i++) {
+        var mean = 0.0;
+      for (var i = 0; i < front.length; i++) {
         mean += Math.abs(VectorUtils.distanceToNearestVector(front[i], front) - dmean);
       }
 

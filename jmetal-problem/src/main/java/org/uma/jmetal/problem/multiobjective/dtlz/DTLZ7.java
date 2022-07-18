@@ -31,7 +31,7 @@ public class DTLZ7 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     @NotNull List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }
@@ -41,27 +41,26 @@ public class DTLZ7 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables();
-    int numberOfObjectives = solution.objectives().length;
+    var numberOfVariables = getNumberOfVariables();
+    var numberOfObjectives = solution.objectives().length;
 
-    double[] f = new double[numberOfObjectives];
-    double[] x;
+    var f = new double[numberOfObjectives];
 
-    int k = getNumberOfVariables() - solution.objectives().length + 1;
+    var k = getNumberOfVariables() - solution.objectives().length + 1;
 
-    double[] arr = new double[10];
-    int count = 0;
-    for (int i1 = 0; i1 < numberOfVariables; i1++) {
+    var arr = new double[10];
+    var count = 0;
+    for (var i1 = 0; i1 < numberOfVariables; i1++) {
       double v1 = solution.variables().get(i1);
       if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
       arr[count++] = v1;
     }
     arr = Arrays.copyOfRange(arr, 0, count);
-    x = arr;
+    var x = arr;
 
-    double g = 0.0;
-    for (int j = numberOfVariables - k; j < numberOfVariables; j++) {
-      double v = x[j];
+    var g = 0.0;
+    for (var j = numberOfVariables - k; j < numberOfVariables; j++) {
+      var v = x[j];
       g += v;
     }
 
@@ -69,8 +68,8 @@ public class DTLZ7 extends AbstractDoubleProblem {
 
     System.arraycopy(x, 0, f, 0, numberOfObjectives - 1);
 
-    double h = 0.0;
-    for (int i = 0; i < numberOfObjectives - 1; i++) {
+    var h = 0.0;
+    for (var i = 0; i < numberOfObjectives - 1; i++) {
       h += (f[i] / (1.0 + g)) * (1 + Math.sin(3.0 * Math.PI * f[i]));
     }
 
@@ -78,7 +77,7 @@ public class DTLZ7 extends AbstractDoubleProblem {
 
     f[numberOfObjectives - 1] = (1 + g) * h;
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       solution.objectives()[i] = f[i];
     }
 

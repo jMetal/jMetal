@@ -36,7 +36,7 @@ class DefaultVelocityInitializationTest {
     swarm.add(problem.createSolution());
     swarm.add(problem.createSolution());
 
-    double[][] speed = new DefaultVelocityInitialization().initialize(swarm) ;
+    var speed = new DefaultVelocityInitialization().initialize(swarm) ;
     assertEquals(4, speed.length) ;
     assertEquals(3, speed[0].length) ;
   }
@@ -49,7 +49,7 @@ class DefaultVelocityInitializationTest {
     swarm.add(problem.createSolution());
     swarm.add(problem.createSolution());
 
-    double[][] speed = new DefaultVelocityInitialization().initialize(swarm) ;
+    var speed = new DefaultVelocityInitialization().initialize(swarm) ;
     assertEquals(0.0, speed[0][0]) ;
     assertEquals(0.0, speed[0][1]) ;
     assertEquals(0.0, speed[1][0]) ;

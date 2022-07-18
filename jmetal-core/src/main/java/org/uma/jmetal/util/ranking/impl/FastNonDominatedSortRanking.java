@@ -42,19 +42,19 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
 
   @Override
   public Ranking<S> compute(List<S> solutionList) {
-    List<S> population = solutionList;
+    var population = solutionList;
 
     // dominateMe[i] contains the number of population dominating i
-    int[] dominateMe = new int[population.size()];
+    var dominateMe = new int[population.size()];
 
     // iDominate[k] contains the list of population dominated by k
     List<List<Integer>> iDominate = new ArrayList<>(population.size());
 
     // front[i] contains the list of individuals belonging to the front i
-    ArrayList<List<Integer>> front = new ArrayList<>(population.size() + 1);
-    int bound = population.size() + 1;
-    for (int i1 = 0; i1 < bound; i1++) {
-      LinkedList<Integer> integers = new LinkedList<>();
+    var front = new ArrayList<List<Integer>>(population.size() + 1);
+    var bound = population.size() + 1;
+    for (var i1 = 0; i1 < bound; i1++) {
+      var integers = new LinkedList<Integer>();
       front.add(integers);
     }
 
@@ -62,7 +62,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
 
       // Fast non dominated sorting algorithm
     // Contribution of Guillaume Jacquenot
-    for (int p = 0; p < population.size(); p++) {
+    for (var p = 0; p < population.size(); p++) {
       // Initialize the list of individuals that i dominate and the number
       // of individuals that dominate me
       iDominate.add(new LinkedList<Integer>());
@@ -70,9 +70,9 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
     }
 
     int flagDominate;
-    for (int p = 0; p < (population.size() - 1); p++) {
+    for (var p = 0; p < (population.size() - 1); p++) {
       // For all q individuals , calculate if p dominates q or vice versa
-      for (int q = p + 1; q < population.size(); q++) {
+      for (var q = p + 1; q < population.size(); q++) {
         flagDominate = dominanceComparator.compare(solutionList.get(p), solutionList.get(q));
 
         if (flagDominate == -1) {
@@ -85,7 +85,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
       }
     }
 
-    for (int i = 0; i < population.size(); i++) {
+    for (var i = 0; i < population.size(); i++) {
       if (dominateMe[i] == 0) {
         front.get(0).add(i);
         solutionList.get(i).attributes().put(attributeId, 0);
@@ -93,7 +93,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
     }
 
     // Obtain the rest of fronts
-    int i = 0;
+    var i = 0;
     Iterator<Integer> it1, it2; // Iterators
     while (front.get(i).size() != 0) {
       i++;
@@ -113,7 +113,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
 
     rankedSubPopulations = new ArrayList<>();
     // 0,1,2,....,i-1 are fronts, then i fronts
-    for (int j = 0; j < i; j++) {
+    for (var j = 0; j < i; j++) {
       rankedSubPopulations.add(j, new ArrayList<S>(front.get(j).size()));
       it1 = front.get(j).iterator();
       while (it1.hasNext()) {

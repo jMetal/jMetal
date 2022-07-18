@@ -27,7 +27,7 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 	public ASFUtilityFunctionSet(double [] @NotNull [] weights) {
 		super(weights);
 		this.referencePoint = new ArrayList<>(this.getVectorSize());
-		for (int i = 0; i < this.getVectorSize(); i++)
+		for (var i = 0; i < this.getVectorSize(); i++)
 			this.referencePoint.add(0.0);
 	}
 	
@@ -39,7 +39,7 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 	public ASFUtilityFunctionSet(String file_path) {
 		super(file_path);
 		this.referencePoint = new ArrayList<>(this.getVectorSize());
-		for (int i = 0; i < this.getVectorSize(); i++)
+		for (var i = 0; i < this.getVectorSize(); i++)
 			this.referencePoint.add(0.0);
 	}
 
@@ -49,10 +49,10 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 			throw new JMetalException("Vector value " + vector + " invalid") ;
 		}
 
-		double result = Double.NEGATIVE_INFINITY;
-		List<Double> weightVector 	 =  this.getWeightVector(vector);
+		var result = Double.NEGATIVE_INFINITY;
+		var weightVector 	 =  this.getWeightVector(vector);
 		@NotNull List<Double> objectiveValues =  new ArrayList<>(solution.objectives().length);
-		for (int i = 0; i < solution.objectives().length;i++) 
+		for (var i = 0; i < solution.objectives().length; i++)
 			if (normalizer==null) {
         objectiveValues.add(solution.objectives()[i]);
       }
@@ -60,7 +60,7 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
         objectiveValues.add(this.normalizer.normalize(solution.objectives()[i], i));
       }
 		
-		for (int i = 0; i < weightVector.size(); i++) {
+		for (var i = 0; i < weightVector.size(); i++) {
 			result = Math.max(result, 
 							  Math.abs(objectiveValues.get(i) - this.referencePoint.get(i))
 							  /(weightVector.get(i) > 0.0 ? weightVector.get(i):1e-2));

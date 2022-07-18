@@ -22,7 +22,7 @@ public class CRE31 extends AbstractDoubleProblem {
     setNumberOfConstraints(10);
     setName("CRE31");
 
-    List<Double> lowerLimit = List.of(0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4);
+    var lowerLimit = List.of(0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4);
     @NotNull List<Double> upperLimit = List.of(1.5, 1.35, 1.5, 1.5, 2.625, 1.2, 1.2);
 
     setVariableBounds(lowerLimit, upperLimit);
@@ -42,8 +42,8 @@ public class CRE31 extends AbstractDoubleProblem {
     solution.objectives()[0] = 1.98 + 4.9 * x1 + 6.67 * x2 + 6.98 * x3 + 4.01 * x4 + 1.78 * x5 + 0.00001 * x6 + 2.73 * x7;
     solution.objectives()[1] = 4.72 - 0.5 * x4 - 0.19 * x2 * x3;
 
-    double Vmbp = 10.58 - 0.674 * x1 * x2 - 0.67275 * x2;
-    double Vfd = 16.45 - 0.489 * x3 * x7 - 0.843 * x5 * x6;
+    var Vmbp = 10.58 - 0.674 * x1 * x2 - 0.67275 * x2;
+    var Vfd = 16.45 - 0.489 * x3 * x7 - 0.843 * x5 * x6;
 
     solution.objectives()[2] = 0.5 * (Vmbp + Vfd);
 
@@ -54,7 +54,7 @@ public class CRE31 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(@NotNull DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    var constraint = new double[this.getNumberOfConstraints()];
 
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
@@ -63,8 +63,8 @@ public class CRE31 extends AbstractDoubleProblem {
     double x6 = solution.variables().get(5);
     double x7 = solution.variables().get(6);
 
-    double Vmbp = 10.58 - 0.674 * x1 * x2 - 0.67275 * x2;
-    double Vfd = 16.45 - 0.489 * x3 * x7 - 0.843 * x5 * x6;
+    var Vmbp = 10.58 - 0.674 * x1 * x2 - 0.67275 * x2;
+    var Vfd = 16.45 - 0.489 * x3 * x7 - 0.843 * x5 * x6;
 
     constraint[0] = -(1.0 / (x1 * x2 * x2 * x3)) + 1.0 / 27.0;
     constraint[1] = 0.32 -(0.261 - 0.0159 * x1 * x2 - 0.06486 * x1 -  0.019 * x2 * x7 + 0.0144 * x3 * x5 + 0.0154464 * x6);
@@ -77,7 +77,7 @@ public class CRE31 extends AbstractDoubleProblem {
     constraint[8] = 9.9 - Vmbp ;
     constraint[9] = 15.7 - Vfd ;
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i] < 0.0) {
         constraint[i] = -constraint[i];
       } else {
@@ -85,7 +85,7 @@ public class CRE31 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

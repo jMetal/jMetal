@@ -80,7 +80,7 @@ public class F13ShiftedExpandedGriewankRosenbrock extends TestFunc {
 
     // z = x - o + 1 = x - (o - 1)
     // Do the "(o - 1)" part first
-    for (int i = 0; i < mDimension; i++) {
+    for (var i = 0; i < mDimension; i++) {
       m_o[i] -= 1.0;
     }
   }
@@ -88,7 +88,7 @@ public class F13ShiftedExpandedGriewankRosenbrock extends TestFunc {
   // Function body
   public double f(double[] x) {
 
-    double result = 0.0;
+    var result = 0.0;
 
     Benchmark.shift(m_z, x, m_o);
 

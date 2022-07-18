@@ -29,7 +29,7 @@ public class OMOPSOIT {
       throws Exception {
     DoubleProblem problem = new ZDT1();
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
 
     algorithm =
         new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
@@ -42,7 +42,7 @@ public class OMOPSOIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     /*
     Rationale: the default problem is ZDT1, and OMOPSO, configured with standard settings, should
@@ -55,7 +55,7 @@ public class OMOPSOIT {
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
     DoubleProblem problem = new ZDT1();
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
 
     algorithm =
         new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
@@ -68,7 +68,7 @@ public class OMOPSOIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
@@ -77,7 +77,7 @@ public class OMOPSOIT {
     // Rationale: the default problem is ZDT1, and OMOPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
+    var hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.64);
   }

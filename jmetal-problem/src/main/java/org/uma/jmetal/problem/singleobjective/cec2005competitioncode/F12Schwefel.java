@@ -85,21 +85,21 @@ public class F12Schwefel extends TestFunc {
     //	1. a 		100x100
     //	2. b 		100x100
     //	3. alpha	1x100
-    double[] @NotNull [] m_data = new double[100 + 100 + 1][mDimension];
+    var m_data = new double[100 + 100 + 1][mDimension];
 
     // Load the shifted global optimum
     Benchmark.loadMatrixFromFile(file_data, m_data.length, mDimension, m_data);
-    for (int i = 0; i < mDimension; i++) {
-      for (int j = 0; j < mDimension; j++) {
+    for (var i = 0; i < mDimension; i++) {
+      for (var j = 0; j < mDimension; j++) {
         m_a[i][j] = m_data[i][j];
         m_b[i][j] = m_data[100 + i][j];
       }
       m_o[i] = m_data[100 + 100][i];
     }
 
-    for (int i = 0; i < mDimension; i++) {
+    for (var i = 0; i < mDimension; i++) {
       m_A[i] = 0.0;
-      for (int j = 0; j < mDimension; j++) {
+      for (var j = 0; j < mDimension; j++) {
         m_A[i] += (m_a[i][j] * Math.sin(m_o[j]) + m_b[i][j] * Math.cos(m_o[j]));
       }
     }
@@ -108,15 +108,15 @@ public class F12Schwefel extends TestFunc {
   // Function body
   public double f(double[] x) {
 
-    double sum = 0.0;
+    var sum = 0.0;
 
-    for (int i = 0; i < mDimension; i++) {
+    for (var i = 0; i < mDimension; i++) {
       m_B[i] = 0.0;
-      for (int j = 0; j < mDimension; j++) {
+      for (var j = 0; j < mDimension; j++) {
         m_B[i] += (m_a[i][j] * Math.sin(x[j]) + m_b[i][j] * Math.cos(x[j]));
       }
 
-      double temp = m_A[i] - m_B[i];
+      var temp = m_A[i] - m_B[i];
       sum += (temp * temp);
     }
 

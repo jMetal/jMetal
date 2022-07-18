@@ -77,7 +77,7 @@ public class SimplePushMeasure<Value> extends SimpleMeasure<Value> implements
 	 *            the value to send to the observers
 	 */
 	public void push(Value value) {
-		for (MeasureListener<Value> listener : listeners) {
+		for (var listener : listeners) {
 			listener.measureGenerated(value);
 		}
 	}

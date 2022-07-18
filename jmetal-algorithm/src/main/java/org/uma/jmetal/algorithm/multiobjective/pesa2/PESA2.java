@@ -70,12 +70,12 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   @Override protected List<S> selection(List<S> population) {
     List<S> matingPopulation = new ArrayList<>(getMaxPopulationSize()) ;
 
-    for (S solution : population) {
+    for (var solution : population) {
       archive.add(solution) ;
     }
 
     while (matingPopulation.size() < getMaxPopulationSize()) {
-      S solution = selectionOperator.execute(archive) ;
+      var solution = selectionOperator.execute(archive) ;
 
       matingPopulation.add(solution);
     }
@@ -85,12 +85,12 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
 
   @Override protected List<S> reproduction(List<S> population) {
     List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i+=2) {
+    for (var i = 0; i < getMaxPopulationSize(); i+=2) {
       List<S> parents = new ArrayList<>(2);
       parents.add(population.get(i));
       parents.add(population.get(i + 1));
 
-      List<S> offspring = crossoverOperator.execute(parents);
+      var offspring = crossoverOperator.execute(parents);
 
       mutationOperator.execute(offspring.get(0));
 
@@ -100,7 +100,7 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override protected List<S> replacement(List<S> population, @NotNull List<S> offspringPopulation) {
-    for (S solution : offspringPopulation) {
+    for (var solution : offspringPopulation) {
       archive.add(solution) ;
     }
 

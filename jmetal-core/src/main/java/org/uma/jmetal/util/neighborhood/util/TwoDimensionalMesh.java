@@ -44,9 +44,9 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
     // --------
 
     mesh = new int[rows][columns];
-    int solution = 0;
-    for (int row = 0; row < rows; row++) {
-      for (int column = 0; column < columns; column++) {
+    var solution = 0;
+    for (var row = 0; row < rows; row++) {
+      for (var column = 0; column < columns; column++) {
         mesh[row][column] = solution++;
       }
     }
@@ -78,17 +78,14 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
    * @return
    */
   private int getNeighbor(int solution, int @NotNull [] neighbor) {
-    int row = getRow(solution) ;
-    int col = getColumn((solution)) ;
+    var row = getRow(solution) ;
+    var col = getColumn((solution)) ;
 
-    int r ;
-    int c ;
-
-    r = (row + neighbor[0]) % this.rows ;
+    var r = (row + neighbor[0]) % this.rows;
     if (r < 0)
       r = rows - 1;
 
-    c = (col + neighbor[1]) % this.columns ;
+    var c = (col + neighbor[1]) % this.columns;
     if (c < 0)
       c = columns - 1 ;
 
@@ -104,9 +101,9 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
    */
   private @NotNull List<S> findNeighbors(@NotNull List<S> solutionSet, int solution, int [] @NotNull [] neighborhood) {
       List<S> neighbors = new ArrayList<>(neighborhood.length + 1);
-      for (int @NotNull [] neighbor : neighborhood) {
-          int i = getNeighbor(solution, neighbor);
-          S s = solutionSet.get(i);
+      for (var neighbor : neighborhood) {
+        var i = getNeighbor(solution, neighbor);
+        var s = solutionSet.get(i);
           neighbors.add(s);
       }
 

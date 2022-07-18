@@ -38,14 +38,14 @@ public class StringMatching extends CharSequenceProblem {
   @Override
   public CharSequenceSolution evaluate(@NotNull CharSequenceSolution solution) {
     Check.that(solution.getLength() == targetString.length(), "The solution has an invalid length");
-      long count = 0L;
-      int bound = targetString.length();
-      for (int i = 0; i < bound; i++) {
+    var count = 0L;
+    var bound = targetString.length();
+      for (var i = 0; i < bound; i++) {
           if (targetString.charAt(i) != solution.variables().get(i)) {
               count++;
           }
       }
-      int counter = (int) count;
+    var counter = (int) count;
 
       // counter += Math.abs(targetString.charAt(i) - solution.variables().get(i)) ;
 
@@ -57,7 +57,7 @@ public class StringMatching extends CharSequenceProblem {
   @Override
   public @NotNull CharSequenceSolution createSolution() {
     @NotNull CharSequenceSolution solution = new CharSequenceSolution(targetString.length(), getNumberOfObjectives()) ;
-    for (int i = 0 ; i < targetString.length(); i++) {
+    for (var i = 0; i < targetString.length(); i++) {
       solution.variables().set(i, alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length-1)]);
     }
 

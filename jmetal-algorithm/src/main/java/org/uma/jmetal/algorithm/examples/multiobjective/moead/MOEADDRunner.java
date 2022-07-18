@@ -32,10 +32,8 @@ public class MOEADDRunner extends AbstractAlgorithmRunner {
    * [referenceFront]
    */
   public static void main(String[] args) throws FileNotFoundException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
     String problemName;
-    String referenceParetoFront = "";
+    var referenceParetoFront = "";
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
@@ -46,18 +44,15 @@ public class MOEADDRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/UF2.csv";
     }
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    MutationOperator<DoubleSolution> mutation;
-    CrossoverOperator<DoubleSolution> crossover;
+    var crossoverProbability = 1.0;
+    var crossoverDistributionIndex = 30.0;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double crossoverProbability = 1.0;
-    double crossoverDistributionIndex = 30.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
-
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     @NotNull MOEADBuilder builder =  new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADD);
     builder.setCrossover(crossover)
@@ -70,13 +65,13 @@ public class MOEADDRunner extends AbstractAlgorithmRunner {
             .setNeighborSize(20)
             .setFunctionType(AbstractMOEAD.FunctionType.PBI)
             .setDataDirectory("MOEAD_Weights");
-    algorithm = builder.build();
+    Algorithm<List<DoubleSolution>> algorithm = builder.build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var population = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

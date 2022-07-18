@@ -126,8 +126,8 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
     deltaMax = new double[problem.getNumberOfVariables()];
     deltaMin = new double[problem.getNumberOfVariables()];
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      Bounds<Double> bounds = problem.getVariableBounds().get(i) ;
+    for (var i = 0; i < problem.getNumberOfVariables(); i++) {
+      var bounds = problem.getVariableBounds().get(i) ;
       deltaMax[i] = (bounds.getUpperBound() - bounds.getLowerBound()) / 2.0 ;
       deltaMin[i] = -deltaMax[i];
     }
@@ -153,7 +153,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     @NotNull List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
-    for (int i = 0; i < swarmSize; i++) {
+    for (var i = 0; i < swarmSize; i++) {
       newSolution = problem.createSolution();
       swarm.add(newSolution);
     }
@@ -168,8 +168,8 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   protected void initializeLeaders(List<DoubleSolution> swarm) {
-    for (int i = 0; i < getSwarm().size(); i++) {
-      DoubleSolution particle = (DoubleSolution)getSwarm().get(i).copy() ;
+    for (var i = 0; i < getSwarm().size(); i++) {
+      var particle = (DoubleSolution)getSwarm().get(i).copy() ;
       globalBest[i] = particle;
     }
 
@@ -177,7 +177,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
-    for (int i = 0; i < getSwarm().size(); i++) {
+    for (var i = 0; i < getSwarm().size(); i++) {
       @Nullable DoubleSolution particle = (DoubleSolution)getSwarm().get(i).copy() ;
       localBest[i] = particle;
     }
@@ -185,8 +185,8 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
   protected void initializeVelocity(List<DoubleSolution> swarm) {
     // Initialize the speed and age of each particle to 0
-    for (int i = 0; i < swarmSize; i++) {
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+    for (var i = 0; i < swarmSize; i++) {
+      for (var j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
       age[i] = 0;
@@ -194,17 +194,17 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   protected void updateVelocity(int i) {
-    
-    DoubleSolution particle = getSwarm().get(i) ;
-    DoubleSolution bestParticle = localBest[i] ;
-    DoubleSolution bestGlobal = globalBest[shfGBest[i]] ;
 
-    double r1 = randomGenerator.nextDouble(r1Min, r1Max);
-    double r2 = randomGenerator.nextDouble(r2Min, r2Max);
-    double C1 = randomGenerator.nextDouble(c1Min, c1Max);
-    double C2 = randomGenerator.nextDouble(c2Min, c2Max);
+    var particle = getSwarm().get(i) ;
+    var bestParticle = localBest[i] ;
+    var bestGlobal = globalBest[shfGBest[i]] ;
+
+    var r1 = randomGenerator.nextDouble(r1Min, r1Max);
+    var r2 = randomGenerator.nextDouble(r2Min, r2Max);
+    var C1 = randomGenerator.nextDouble(c1Min, c1Max);
+    var C2 = randomGenerator.nextDouble(c2Min, c2Max);
     
-    for (int var = 0; var < particle.variables().size(); var++) {
+    for (var var = 0; var < particle.variables().size(); var++) {
       //Computing the velocity of this particle
         speed[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
                 (inertiaWeight(iterations, maxIterations, this.weightMax, this.weightMin) * speed[i][var] +
@@ -217,8 +217,8 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   private void computeNewPositions(int i) {
-    DoubleSolution particle = getSwarm().get(i) ;
-    for (int var = 0; var < particle.variables().size(); var++) {
+    var particle = getSwarm().get(i) ;
+    for (var var = 0; var < particle.variables().size(); var++) {
       particle.variables().set(var, particle.variables().get(var) + speed[i][var]) ;
     }
   }
@@ -228,22 +228,21 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
    */
   protected void initializeUniformWeight() {
     if ((problem.getNumberOfObjectives() == 2) && (swarmSize <= 300)) {
-      for (int n = 0; n < swarmSize; n++) {
-        double a = 1.0 * n / (swarmSize - 1);
+      for (var n = 0; n < swarmSize; n++) {
+        var a = 1.0 * n / (swarmSize - 1);
         lambda[n][0] = a;
         lambda[n][1] = 1 - a;
       }
     } else {
-      String dataFileName;
-      dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
-          swarmSize + ".dat";
+      var dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
+              swarmSize + ".dat";
 
       try {
 
         //       String path =
         // Paths.get(VectorFileUtils.class.getClassLoader().getResource(filePath).toURI()).toString
         // ();
-        String path = "/" + dataDirectory + "/" + dataFileName;
+        var path = "/" + dataDirectory + "/" + dataFileName;
 
         @Nullable InputStream inputStream =
             getClass()
@@ -253,16 +252,16 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
           inputStream = new FileInputStream(dataDirectory + "/" + dataFileName);
         }
         @NotNull InputStreamReader isr = new InputStreamReader(inputStream);
-        BufferedReader br = new BufferedReader(isr);
+        var br = new BufferedReader(isr);
 
-        int i = 0;
-        int j = 0;
-        String aux = br.readLine();
+        var i = 0;
+        var j = 0;
+        var aux = br.readLine();
         while (aux != null) {
-          StringTokenizer st = new StringTokenizer(aux);
+          var st = new StringTokenizer(aux);
           j = 0;
           while (st.hasMoreTokens()) {
-            double value = parseDouble(st.nextToken());
+            var value = parseDouble(st.nextToken());
             lambda[i][j] = value;
             j++;
           }
@@ -280,19 +279,19 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
 
   private void initIdealPoint()  {
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
       z[i] = 1.0e+30;
       indArray[i] = problem.createSolution() ;
       problem.evaluate(indArray[i]);
     }
 
-    for (int i = 0; i < swarmSize; i++) {
+    for (var i = 0; i < swarmSize; i++) {
       updateReference(getSwarm().get(i));
     }
   }
 
   private void updateReference(DoubleSolution individual) {
-    for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
+    for (var n = 0; n < problem.getNumberOfObjectives(); n++) {
       if (individual.objectives()[n] < z[n]) {
         z[n] = individual.objectives()[n];
 
@@ -305,12 +304,12 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
     double gBestFitness ;
 
-    for(int j = 0; j<lambda.length; j++){
+    for(var j = 0; j<lambda.length; j++){
       gBestFitness = fitnessFunction(globalBest[j], lambda[j]) ;
 
-      for (int i = 0 ; i < getSwarm().size(); i++) {
-        double v1 = fitnessFunction(getSwarm().get(i), lambda[j]) ;
-        double v2 = gBestFitness ;
+      for (var i = 0; i < getSwarm().size(); i++) {
+        var v1 = fitnessFunction(getSwarm().get(i), lambda[j]) ;
+        var v2 = gBestFitness ;
         if (v1 < v2) {
           globalBest[j] = (DoubleSolution)getSwarm().get(i).copy() ;
           gBestFitness = v1;
@@ -321,11 +320,10 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
   private void updateLocalBest(int part) {
 
-    double f1, f2;
-    DoubleSolution indiv = (DoubleSolution)getSwarm().get(part).copy();
+    var indiv = (DoubleSolution)getSwarm().get(part).copy();
 
-    f1 = fitnessFunction(localBest[part], lambda[part]);
-    f2 = fitnessFunction(indiv, lambda[part]);
+    var f1 = fitnessFunction(localBest[part], lambda[part]);
+    var f2 = fitnessFunction(indiv, lambda[part]);
 
     if(age[part] >= maxAge || f2 <= f1){
       localBest[part] = indiv;
@@ -336,13 +334,13 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   private double fitnessFunction(@NotNull DoubleSolution sol, double[] lambda){
-    double fitness = 0.0;
+    var fitness = 0.0;
 
     if (functionType == FunctionType.TCHE) {
-      double maxFun = -1.0e+30;
+      var maxFun = -1.0e+30;
 
-      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
-        double diff = Math.abs(sol.objectives()[n] - z[n]);
+      for (var n = 0; n < problem.getNumberOfObjectives(); n++) {
+        var diff = Math.abs(sol.objectives()[n] - z[n]);
 
         double feval;
         if (lambda[n] == 0) {
@@ -358,10 +356,10 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
       fitness = maxFun;
 
     }else if(functionType == FunctionType.AGG){
-      double sum = 0.0;
-      int bound = problem.getNumberOfObjectives();
-      for (int n = 0; n < bound; n++) {
-        double v = (lambda[n]) * sol.objectives()[n];
+      var sum = 0.0;
+      var bound = problem.getNumberOfObjectives();
+      for (var n = 0; n < bound; n++) {
+        var v = (lambda[n]) * sol.objectives()[n];
         sum += v;
       }
 
@@ -369,11 +367,11 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
     }else if(functionType == FunctionType.PBI){
       double d1, d2, nl;
-      double theta = 5.0;
+      var theta = 5.0;
 
       d1 = d2 = nl = 0.0;
 
-      for (int i = 0; i < problem.getNumberOfObjectives(); i++)
+      for (var i = 0; i < problem.getNumberOfObjectives(); i++)
       {
         d1 += (sol.objectives()[i] - z[i]) * lambda[i];
         nl += Math.pow(lambda[i], 2.0);
@@ -381,7 +379,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
       nl = Math.sqrt(nl);
       d1 = Math.abs(d1) / nl;
 
-      for (int i = 0; i < problem.getNumberOfObjectives(); i++)
+      for (var i = 0; i < problem.getNumberOfObjectives(); i++)
       {
         d2 += Math.pow((sol.objectives()[i] - z[i]) - d1 * (lambda[i] / nl), 2.0);
       }
@@ -397,21 +395,20 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   private void shuffleGlobalBest(){
-    int[] aux;
     int rnd;
     int tmp;
 
-    int[] arr = new int[10];
-    int count = 0;
-    int bound = swarmSize;
-    for (int i1 = 0; i1 < bound; i1++) {
+    var arr = new int[10];
+    var count = 0;
+    var bound = swarmSize;
+    for (var i1 = 0; i1 < bound; i1++) {
       if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
       arr[count++] = i1;
     }
     arr = Arrays.copyOfRange(arr, 0, count);
-    aux = arr;
+    var aux = arr;
 
-    for (int i = 0; i < swarmSize; i++) {
+    for (var i = 0; i < swarmSize; i++) {
       rnd = randomGenerator.nextInt(i, swarmSize - 1);
       tmp = aux[rnd];
       aux[rnd] = aux[i];
@@ -421,12 +418,12 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
   private void repairBounds(int part){
 
-    DoubleSolution particle = getSwarm().get(part) ;
+    var particle = getSwarm().get(part) ;
 
-    for(int var = 0; var < particle.variables().size(); var++){
-      Bounds<Double> bounds = problem.getVariableBounds().get(var) ;
-      Double lowerBound = bounds.getLowerBound() ;
-      Double upperBound = bounds.getUpperBound() ;
+    for(var var = 0; var < particle.variables().size(); var++){
+      var bounds = problem.getVariableBounds().get(var) ;
+      var lowerBound = bounds.getLowerBound() ;
+      var upperBound = bounds.getUpperBound() ;
       if (particle.variables().get(var) < lowerBound) {
         particle.variables().set(var, lowerBound);
         speed[part][var] = speed[part][var] * changeVelocity1;
@@ -439,19 +436,18 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   private void resetParticle(int i) {
-    DoubleSolution particle = getSwarm().get(i) ;
+    var particle = getSwarm().get(i) ;
     double mean, sigma, N;
 
-    for (int var = 0; var < particle.variables().size(); var++) {
-      DoubleSolution gB, pB;
-      gB = globalBest[shfGBest[i]];
-      pB = localBest[i];
+    for (var var = 0; var < particle.variables().size(); var++) {
+      var gB = globalBest[shfGBest[i]];
+      var pB = localBest[i];
 
       mean = (gB.variables().get(var) - pB.variables().get(var))/2;
 
       sigma = Math.abs(gB.variables().get(var) - pB.variables().get(var));
 
-      java.util.Random rnd = new java.util.Random();
+      var rnd = new java.util.Random();
 
       N = rnd.nextGaussian()*sigma + mean;
 
@@ -463,12 +459,10 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   private double velocityConstriction(double v, double @NotNull [] deltaMax, double[] deltaMin,
                                       int variableIndex, int particleIndex) {
 
-    double result;
+    var dmax = deltaMax[variableIndex];
+    var dmin = deltaMin[variableIndex];
 
-    double dmax = deltaMax[variableIndex];
-    double dmin = deltaMin[variableIndex];
-
-    result = v;
+    var result = v;
 
     if (v > dmax) {
       result = dmax;
@@ -482,7 +476,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   private double constrictionCoefficient(double c1, double c2) {
-    double rho = c1 + c2;
+    var rho = c1 + c2;
     if (rho <= 4) {
       return 1.0;
     } else {
@@ -512,7 +506,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     while (!isStoppingConditionReached()) {
       shuffleGlobalBest();
 
-      for (int i = 0 ; i < getSwarm().size(); i++) {
+      for (var i = 0; i < getSwarm().size(); i++) {
         if (age[i] < maxAge) {
           updateVelocity(i);
           computeNewPositions(i);

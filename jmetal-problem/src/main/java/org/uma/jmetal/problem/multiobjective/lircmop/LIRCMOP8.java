@@ -26,14 +26,14 @@ public class LIRCMOP8 extends LIRCMOP6 {
   @Override
   public void evaluateConstraints(@NotNull DoubleSolution solution) {
     double r = 0.1, theta = -0.25 * Math.PI;
-    double[] a_array = new double[] {2.0, 2.5, 2.5};
-    double[] b_array = new double[] {6.0, 12.0, 10.0};
-    double[] xOffset = new double[] {1.2, 2.25, 3.5};
-    double @NotNull [] yOffset = new double[] {1.2, 2.25, 3.5};
-    double f1 = solution.objectives()[0];
-    double f2 = solution.objectives()[1];
-    double[] constraint = new double[getNumberOfConstraints()];
-    for (int i = 0; i < xOffset.length; i++) {
+    var a_array = new double[] {2.0, 2.5, 2.5};
+    var b_array = new double[] {6.0, 12.0, 10.0};
+    var xOffset = new double[] {1.2, 2.25, 3.5};
+    var yOffset = new double[] {1.2, 2.25, 3.5};
+    var f1 = solution.objectives()[0];
+    var f2 = solution.objectives()[1];
+    var constraint = new double[getNumberOfConstraints()];
+    for (var i = 0; i < xOffset.length; i++) {
       constraint[i] =
           Math.pow(
                   ((f1 - xOffset[i]) * Math.cos(theta) - (f2 - yOffset[i]) * Math.sin(theta))

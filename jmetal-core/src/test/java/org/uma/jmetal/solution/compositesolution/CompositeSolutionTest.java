@@ -40,8 +40,8 @@ public class CompositeSolutionTest {
   @Test
   public void
       shouldConstructorCreateAValidCompositeSolutionComposedOfaDoubleAndAnIntegerSolutions() {
-    int numberOfObjectives = 2;
-    int numberOfConstraints = 1;
+    var numberOfObjectives = 2;
+    var numberOfConstraints = 1;
     DoubleSolution doubleSolution =
         new DefaultDoubleSolution(List.of(Bounds.create(3.0, 5.0)),
             numberOfObjectives, numberOfConstraints);
@@ -49,7 +49,7 @@ public class CompositeSolutionTest {
         new DefaultIntegerSolution(List.of(Bounds.create(2, 10)),
             numberOfObjectives, numberOfConstraints);
 
-    CompositeSolution solution =
+    var solution =
         new CompositeSolution(Arrays.asList(doubleSolution, integerSolution));
     assertNotNull(solution);
     assertEquals(2, solution.variables().size());
@@ -65,8 +65,8 @@ public class CompositeSolutionTest {
 
   @Test
   public void shouldCopyConstructorWorkProperly() {
-    int numberOfObjectives = 2;
-    int numberOfConstraints = 1;
+    var numberOfObjectives = 2;
+    var numberOfConstraints = 1;
     DoubleSolution doubleSolution =
         new DefaultDoubleSolution(
             Arrays.asList(Bounds.create(3.0, 5.0), Bounds.create(1.0, 3.0)),
@@ -76,10 +76,10 @@ public class CompositeSolutionTest {
         new DefaultIntegerSolution(Arrays.asList(Bounds.create(2, 10)),
             numberOfObjectives, numberOfConstraints);
 
-    CompositeSolution solution =
+    var solution =
         new CompositeSolution(Arrays.asList(doubleSolution, integerSolution));
 
-    CompositeSolution newSolution = new CompositeSolution(solution) ;
+    var newSolution = new CompositeSolution(solution) ;
 
     assertEquals(solution.variables().size(), newSolution.variables().size());
     assertEquals(solution.objectives().length, newSolution.objectives().length);

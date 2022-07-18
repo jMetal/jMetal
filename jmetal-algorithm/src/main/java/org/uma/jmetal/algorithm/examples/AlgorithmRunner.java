@@ -32,8 +32,8 @@ public class AlgorithmRunner {
     }
 
     public AlgorithmRunner execute() {
-      long initTime = System.currentTimeMillis();
-      Thread thread = new Thread(algorithm) ;
+      var initTime = System.currentTimeMillis();
+      var thread = new Thread(algorithm) ;
       thread.start();
       try {
         thread.join();

@@ -50,26 +50,26 @@ public class ConvexC2_DTLZ2 extends DTLZ2 {
   }
 
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[getNumberOfConstraints()];
+    var constraint = new double[getNumberOfConstraints()];
 
-    double sum = 0.0;
-    for (double v1 : solution.objectives()) {
+    var sum = 0.0;
+    for (var v1 : solution.objectives()) {
       sum += v1;
     }
 
-    double lambda = sum / solution.objectives().length;
+    var lambda = sum / solution.objectives().length;
 
     sum = 0;
-    double result = 0.0;
-    for (double v : solution.objectives()) {
-      double pow = Math.pow(v - lambda, 2.0);
+    var result = 0.0;
+    for (var v : solution.objectives()) {
+      var pow = Math.pow(v - lambda, 2.0);
       result += pow;
     }
     sum += result;
 
     constraint[0] = sum - Math.pow(rValue.get(solution.objectives().length), 2.0);
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (var i = 0; i < getNumberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

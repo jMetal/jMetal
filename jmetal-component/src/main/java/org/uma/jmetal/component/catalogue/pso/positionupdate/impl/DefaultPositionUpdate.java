@@ -43,14 +43,14 @@ public class DefaultPositionUpdate implements PositionUpdate {
     Check.that(swarm.size() == speed.length, "The sizes of the list of particles and the speed matrix " +
             "do not match: " + swarm.size() + " vs " + speed.length);
 
-    for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = swarm.get(i);
-      for (int j = 0; j < particle.variables().size(); j++) {
+    for (var i = 0; i < swarm.size(); i++) {
+      var particle = swarm.get(i);
+      for (var j = 0; j < particle.variables().size(); j++) {
         particle.variables().set(j, particle.variables().get(j) + speed[i][j]);
 
-        Bounds<Double> bounds = positionBounds.get(j);
-        Double lowerBound = bounds.getLowerBound();
-        Double upperBound = bounds.getUpperBound();
+        var bounds = positionBounds.get(j);
+        var lowerBound = bounds.getLowerBound();
+        var upperBound = bounds.getUpperBound();
         if (particle.variables().get(j) < lowerBound) {
           particle.variables().set(j, lowerBound);
           speed[i][j] = speed[i][j] * velocityChangeWhenLowerLimitIsReached;

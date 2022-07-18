@@ -46,27 +46,27 @@ public class GenerateReferenceParetoFront implements ExperimentComponent {
    */
   @Override
   public void run() throws IOException {
-    String outputDirectoryName = experiment.getReferenceFrontDirectory() ;
+    var outputDirectoryName = experiment.getReferenceFrontDirectory() ;
 
     createOutputDirectory(outputDirectoryName) ;
 
     @NotNull List<String> referenceFrontFileNames = new LinkedList<>() ;
     for (@NotNull ExperimentProblem<?> problem : experiment.getProblemList()) {
-      NonDominatedSolutionListArchive<PointSolution> nonDominatedSolutionArchive =
+      var nonDominatedSolutionArchive =
           new NonDominatedSolutionListArchive<PointSolution>() ;
 
       for (@NotNull ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
         @NotNull String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
             algorithm.getAlgorithmTag() + "/" + problem.getTag() ;
 
-        for (int i = 0; i < experiment.getIndependentRuns(); i++) {
-          String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
+        for (var i = 0; i < experiment.getIndependentRuns(); i++) {
+          var frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
               i + ".csv";
           Front front = new ArrayFront(frontFileName, ",") ;
-          List<PointSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
+          var solutionList = FrontUtils.convertFrontToSolutionList(front) ;
           @NotNull GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
-          for (PointSolution solution : solutionList) {
+          for (var solution : solutionList) {
             solutionAttribute.setAttribute(solution, algorithm.getAlgorithmTag());
             nonDominatedSolutionArchive.add(solution) ;
           }
@@ -84,10 +84,9 @@ public class GenerateReferenceParetoFront implements ExperimentComponent {
   }
 
   private @NotNull File createOutputDirectory(String outputDirectoryName) {
-    File outputDirectory ;
-    outputDirectory = new File(outputDirectoryName) ;
+    var outputDirectory = new File(outputDirectoryName);
     if (!outputDirectory.exists()) {
-      boolean result = new File(outputDirectoryName).mkdir() ;
+      var result = new File(outputDirectoryName).mkdir() ;
       JMetalLogger.logger.info("Creating " + outputDirectoryName + ". Status = " + result);
     }
 

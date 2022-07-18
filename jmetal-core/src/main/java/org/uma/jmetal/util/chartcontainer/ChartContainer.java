@@ -71,9 +71,9 @@ public class ChartContainer {
       this.displayReferenceFront(referenceFrontFileName);
     }
 
-    double[] xData = new double[] {0};
-    double[] yData = new double[] {0};
-    XYSeries frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
+    var xData = new double[] {0};
+    var yData = new double[] {0};
+    var frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
     frontChartSeries.setMarkerColor(Color.blue);
 
     this.charts.put("Front", this.frontChart);
@@ -82,7 +82,7 @@ public class ChartContainer {
   public void setReferencePoint(List<Double> referencePoint) {
     double rp1 = referencePoint.get(this.objective1);
     double rp2 = referencePoint.get(this.objective2);
-    XYSeries referencePointSeries =
+    var referencePointSeries =
         this.frontChart.addSeries(
             "Reference Point [" + rp1 + ", " + rp2 + "]", new double[] {rp1}, new double[] {rp2});
     referencePointSeries.setMarkerColor(Color.green);
@@ -101,10 +101,10 @@ public class ChartContainer {
         .setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter)
         .setMarkerSize(5);
 
-    double @NotNull [] xData = new double[] {0};
-    double[] yData = new double[] {0};
+    var xData = new double[] {0};
+    var yData = new double[] {0};
 
-    XYSeries varChartSeries = this.varChart.addSeries(this.name, xData, yData);
+    var varChartSeries = this.varChart.addSeries(this.name, xData, yData);
     varChartSeries.setMarkerColor(Color.blue);
 
     this.charts.put("VAR", this.varChart);
@@ -151,7 +151,7 @@ public class ChartContainer {
   }
 
   public void addIndicatorChart(String indicator) {
-    XYChart indicatorChart = new XYChartBuilder().xAxisTitle("n").yAxisTitle(indicator).build();
+    var indicatorChart = new XYChartBuilder().xAxisTitle("n").yAxisTitle(indicator).build();
     indicatorChart
         .getStyler()
         .setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter)
@@ -162,7 +162,7 @@ public class ChartContainer {
     List<Double> indicatorValues = new ArrayList<Double>();
     indicatorValues.add(0.0);
 
-    XYSeries indicatorSeries =
+    var indicatorSeries =
         indicatorChart.addSeries(this.name, indicatorIterations, indicatorValues);
     indicatorSeries.setMarkerColor(Color.blue);
 
@@ -189,7 +189,7 @@ public class ChartContainer {
 
   public void repaint() {
     try {
-      for (int i = 0; i < this.charts.values().size(); i++) {
+      for (var i = 0; i < this.charts.values().size(); i++) {
         this.swingWrapper.repaintChart(i);
       }
     } catch (IndexOutOfBoundsException e) {
@@ -200,11 +200,11 @@ public class ChartContainer {
 
   private void displayFront(String name, String fileName, int objective1, int objective2)
       throws FileNotFoundException {
-    ArrayFront front = new ArrayFront(fileName);
-    double[][] data = FrontUtils.convertFrontToArray(front);
-    double[] xData = getObjectiveValues(data, objective1);
-    double @NotNull [] yData = getObjectiveValues(data, objective2);
-    XYSeries referenceFront = this.frontChart.addSeries(name, xData, yData);
+    var front = new ArrayFront(fileName);
+    var data = FrontUtils.convertFrontToArray(front);
+    var xData = getObjectiveValues(data, objective1);
+    var yData = getObjectiveValues(data, objective2);
+    var referenceFront = this.frontChart.addSeries(name, xData, yData);
     referenceFront.setMarkerColor(Color.red);
   }
 
@@ -218,10 +218,10 @@ public class ChartContainer {
   }
 
   private double[] getObjectiveValues(double[][] data, int obj) {
-    double @NotNull [] values = new double[10];
-    int count = 0;
-    for (double[] datum : data) {
-      double v = datum[obj];
+    var values = new double[10];
+    var count = 0;
+    for (var datum : data) {
+      var v = datum[obj];
       if (values.length == count) values = Arrays.copyOf(values, count * 2);
       values[count++] = v;
     }
@@ -230,10 +230,10 @@ public class ChartContainer {
   }
 
   private double[] getSolutionsForObjective(List<DoubleSolution> solutionList, int objective) {
-    double[] result = new double[10];
-    int count = 0;
-    for (DoubleSolution doubleSolution : solutionList) {
-      double v = doubleSolution.objectives()[objective];
+    var result = new double[10];
+    var count = 0;
+    for (var doubleSolution : solutionList) {
+      var v = doubleSolution.objectives()[objective];
       if (result.length == count) result = Arrays.copyOf(result, count * 2);
       result[count++] = v;
     }
@@ -242,9 +242,9 @@ public class ChartContainer {
   }
 
   private double[] getVariableValues(List<DoubleSolution> solutionList, int variable) {
-    double[] result = new double[10];
-    int count = 0;
-    for (DoubleSolution doubleSolution : solutionList) {
+    var result = new double[10];
+    var count = 0;
+    for (var doubleSolution : solutionList) {
       double v = doubleSolution.variables().get(variable);
       if (result.length == count) result = Arrays.copyOf(result, count * 2);
       result[count++] = v;
@@ -254,7 +254,7 @@ public class ChartContainer {
   }
 
   public void saveChart(String fileName, BitmapFormat format) throws IOException {
-    for (String chart : this.charts.keySet()) {
+    for (var chart : this.charts.keySet()) {
       BitmapEncoder.saveBitmap(this.charts.get(chart), fileName + "_" + chart, format);
     }
   }

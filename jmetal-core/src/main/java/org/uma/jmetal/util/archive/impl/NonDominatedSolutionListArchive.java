@@ -50,7 +50,7 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
    */
   @Override
   public boolean add(S solution) {
-    boolean isSolutionInserted = false;
+    var isSolutionInserted = false;
     if (solutionList.isEmpty()) {
       solutionList.add(solution);
       isSolutionInserted = true;
@@ -64,12 +64,12 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
 
   private boolean insertSolutionIfNonDominatedAndIsNotInTheArchive(S solution,
       boolean solutionInserted) {
-    boolean isDominated = false;
-    boolean isContained = false;
+    var isDominated = false;
+    var isContained = false;
     @NotNull Iterator<S> iterator = solutionList.iterator();
     while (((!isDominated) && (!isContained)) && (iterator.hasNext())) {
-      S listIndividual = iterator.next();
-      int flag = dominanceComparator.compare(solution, listIndividual);
+      var listIndividual = iterator.next();
+      var flag = dominanceComparator.compare(solution, listIndividual);
       if (flag == -1) {
         iterator.remove();
       } else if (flag == 1) {
@@ -91,7 +91,7 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
   }
 
   public Archive<S> addAll(List<S> list) {
-    for (S solution : list) {
+    for (var solution : list) {
       this.add(solution);
     }
 

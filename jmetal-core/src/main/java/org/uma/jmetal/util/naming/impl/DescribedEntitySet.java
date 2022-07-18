@@ -17,7 +17,7 @@ public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<E
 
   @Override
   public boolean add(@NotNull Entity e) {
-    Entity stored = map.get(e.getName());
+    var stored = map.get(e.getName());
     if (stored == null) {
       map.put(e.getName(), e);
       return true;
@@ -112,7 +112,7 @@ public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<E
     @NotNull TreeSet<String> displaySet =
         new TreeSet<>(
                 (s1, s2) -> {
-                  int comparison = s1.compareToIgnoreCase(s2);
+                  var comparison = s1.compareToIgnoreCase(s2);
                   return comparison == 0 ? s1.compareTo(s2) : comparison;
                 });
     displaySet.addAll(map.keySet());

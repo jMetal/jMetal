@@ -24,17 +24,17 @@ public class RemoveNSolutionsAccordingToTheCrowdingDistance<S extends Solution<?
     } else if (problem == null) {
       throw new JMetalException("The problem is null") ;
     }
-    int numberOfSolutions = solutionList.size() - numberOfSolutionsToDelete;
+    var numberOfSolutions = solutionList.size() - numberOfSolutionsToDelete;
     if(numberOfSolutions < 0){
       numberOfSolutions = solutionList.size();
     }
-    CrowdingDistanceArchive<S> archive = new CrowdingDistanceArchive<>(numberOfSolutions) ;
-    for (S solution: solutionList) {
+    var archive = new CrowdingDistanceArchive<S>(numberOfSolutions) ;
+    for (var solution: solutionList) {
       archive.add(solution) ;
     }
     solutionList.clear();
 
-    for (S solution: archive.getSolutionList()) {
+    for (var solution: archive.getSolutionList()) {
       solutionList.add(solution) ;
     }
 

@@ -24,7 +24,7 @@ public class Transformations {
 
       JMetalLogger.logger.severe("wfg.Transformations.bPoly: Param alpha " +
         "must be > 0");
-      Class<String> cls = String.class;
+      var cls = String.class;
       @NotNull String name = cls.getName();
       throw new JMetalException("Exception in " + name + ".bPoly()");
     }
@@ -36,8 +36,8 @@ public class Transformations {
    * bFlat transformation
    */
   public float bFlat(float y, float A, float B, float C) {
-    float tmp1 = Math.min((float) 0, (float) Math.floor(y - B)) * A * (B - y) / B;
-    float tmp2 = Math.min((float) 0, (float) Math.floor(C - y)) * (1 - A) * (y - C) / (1 - C);
+    var tmp1 = Math.min((float) 0, (float) Math.floor(y - B)) * A * (B - y) / B;
+    var tmp2 = Math.min((float) 0, (float) Math.floor(C - y)) * (1 - A) * (y - C) / (1 - C);
 
     return correctTo01(A + tmp1 - tmp2);
   }
@@ -53,14 +53,12 @@ public class Transformations {
    * sDecept transformation
    */
   public float sDecept(float y, float A, float B, float C) {
-    float tmp, tmp1, tmp2;
 
-    tmp1 = (float) Math.floor(y - A + B) * ((float) 1.0 - C + (A - B) / B) / (A - B);
-    tmp2 =
-      (float) Math.floor(A + B - y) * ((float) 1.0 - C + ((float) 1.0 - A - B) / B) / ((float) 1.0
-        - A - B);
+    var tmp1 = (float) Math.floor(y - A + B) * ((float) 1.0 - C + (A - B) / B) / (A - B);
+    var tmp2 = (float) Math.floor(A + B - y) * ((float) 1.0 - C + ((float) 1.0 - A - B) / B) / ((float) 1.0
+            - A - B);
 
-    tmp = Math.abs(y - A) - B;
+    var tmp = Math.abs(y - A) - B;
 
     return correctTo01((float) 1 + tmp * (tmp1 + tmp2 + (float) 1.0 / B));
   }
@@ -69,14 +67,13 @@ public class Transformations {
    * sMulti transformation
    */
   public float sMulti(float y, int A, int B, float C) {
-    float tmp1, tmp2;
 
-    tmp1 = ((float) 4.0 * A + (float) 2.0) *
-      (float) Math.PI *
-      ((float) 0.5 - Math.abs(y - C) / ((float) 2.0 * ((float) Math.floor(C - y) + C)));
-    tmp2 = (float) 4.0 * B *
-      (float) StrictMath.pow(Math.abs(y - C) / ((float) 2.0 * ((float) Math.floor(C - y) + C))
-        , (float) 2.0);
+    var tmp1 = ((float) 4.0 * A + (float) 2.0) *
+            (float) Math.PI *
+            ((float) 0.5 - Math.abs(y - C) / ((float) 2.0 * ((float) Math.floor(C - y) + C)));
+    var tmp2 = (float) 4.0 * B *
+            (float) StrictMath.pow(Math.abs(y - C) / ((float) 2.0 * ((float) Math.floor(C - y) + C))
+                    , (float) 2.0);
 
     return correctTo01(((float) 1.0 + (float) Math.cos(tmp1) + tmp2) / (B + (float) 2.0));
   }
@@ -86,7 +83,7 @@ public class Transformations {
    */
   public float rSum(float @NotNull [] y, float[] w) {
     float tmp1 = (float) 0.0, tmp2 = (float) 0.0;
-    for (int i = 0; i < y.length; i++) {
+    for (var i = 0; i < y.length; i++) {
       tmp1 += y[i] * w[i];
       tmp2 += w[i];
     }
@@ -98,14 +95,13 @@ public class Transformations {
    * rNonsep transformation
    */
   public float rNonsep(float @NotNull [] y, int A) {
-    float tmp, denominator, numerator;
 
-    tmp = (float) Math.ceil(A / (float) 2.0);
-    denominator = y.length * tmp * ((float) 1.0 + (float) 2.0 * A - (float) 2.0 * tmp) / A;
-    numerator = (float) 0.0;
-    for (int j = 0; j < y.length; j++) {
+    var tmp = (float) Math.ceil(A / (float) 2.0);
+    var denominator = y.length * tmp * ((float) 1.0 + (float) 2.0 * A - (float) 2.0 * tmp) / A;
+    var numerator = (float) 0.0;
+    for (var j = 0; j < y.length; j++) {
       numerator += y[j];
-      for (int k = 0; k <= A - 2; k++) {
+      for (var k = 0; k <= A - 2; k++) {
         numerator += Math.abs(y[j] - y[(j + k + 1) % y.length]);
       }
     }
@@ -117,12 +113,11 @@ public class Transformations {
    * bParam transformation
    */
   public float bParam(float y, float u, float A, float B, float C) {
-    float result, v, exp;
 
-    v = A - ((float) 1.0 - (float) 2.0 * u) *
-      Math.abs((float) Math.floor((float) 0.5 - u) + A);
-    exp = B + (C - B) * v;
-    result = (float) StrictMath.pow(y, exp);
+    var v = A - ((float) 1.0 - (float) 2.0 * u) *
+            Math.abs((float) Math.floor((float) 0.5 - u) + A);
+    var exp = B + (C - B) * v;
+    var result = (float) StrictMath.pow(y, exp);
 
     return correctTo01(result);
   }
@@ -130,10 +125,10 @@ public class Transformations {
   /**
    */
   float correctTo01(float a) {
-    float min = (float) 0.0;
-    float max = (float) 1.0;
-    float min_epsilon = min - EPSILON;
-    float max_epsilon = max + EPSILON;
+    var min = (float) 0.0;
+    var max = (float) 1.0;
+    var min_epsilon = min - EPSILON;
+    var max_epsilon = max + EPSILON;
 
     if ((a <= min && a >= min_epsilon) || (a >= min && a <= min_epsilon)) {
       return min;

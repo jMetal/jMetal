@@ -24,23 +24,21 @@ public class PESA2IT {
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem()
       throws Exception {
-    Kursawe problem = new Kursawe();
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
+    var problem = new Kursawe();
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm = new PESA2Builder<>(problem, crossover, mutation).build();
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     /*
     Rationale: the default problem is Kursawe, and usually PESA2, configured with standard
@@ -52,39 +50,37 @@ public class PESA2IT {
   @Test
   public void shouldTheAlgorithmReturnAGoodQualityFrontWhenSolvingAConstrainedProblem()
       throws Exception {
-    ConstrEx problem = new ConstrEx();
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
+    var problem = new ConstrEx();
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm = new PESA2Builder<DoubleSolution>(problem, crossover, mutation).build();
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    var population = algorithm.getResult() ;
 
-    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
+    var referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
+    var referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
     // Rationale: the default problem is ConstrEx, and PESA-II, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.7
 
-    double[][] normalizedFront =
+    var normalizedFront =
             NormalizeUtils.normalize(
                     SolutionListUtils.getMatrixWithObjectiveValues(population),
                     NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
                     NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    double hv = hypervolume.compute(normalizedFront);
+    var hv = hypervolume.compute(normalizedFront);
 
     assertTrue(population.size() >= 98);
     assertTrue(hv > 0.7);

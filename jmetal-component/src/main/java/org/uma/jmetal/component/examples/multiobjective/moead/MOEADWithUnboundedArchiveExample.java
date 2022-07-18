@@ -32,29 +32,29 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
  */
 public class MOEADWithUnboundedArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2Minus";
+    var problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2Minus";
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
     @NotNull var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 91;
+    var populationSize = 91;
 
     @NotNull Termination termination = new TerminationByEvaluations(40000);
 
-    String weightVectorDirectory = "resources/weightVectorFiles/moead";
+    var weightVectorDirectory = "resources/weightVectorFiles/moead";
 
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
 
     Archive<DoubleSolution> externalArchive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), populationSize) ;
 
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
+    var moead = new MOEADBuilder<>(
         problem,
         populationSize,
         crossover,
@@ -67,7 +67,7 @@ public class MOEADWithUnboundedArchiveExample {
 
     moead.run();
 
-    List<DoubleSolution> population = externalArchive.getSolutionList();
+    var population = externalArchive.getSolutionList();
     JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
 

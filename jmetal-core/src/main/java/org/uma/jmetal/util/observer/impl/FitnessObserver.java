@@ -38,17 +38,17 @@ public class FitnessObserver implements Observer<Map<String, Object>> {
    */
   @Override
   public void update(Observable<Map<String, Object>> observable, Map<String, Object> data) {
-    Solution<?> solution = (Solution<?>)data.get("BEST_SOLUTION") ;
-    Integer evaluations = (Integer)data.get("EVALUATIONS") ;
+      var solution = (Solution<?>)data.get("BEST_SOLUTION") ;
+      var evaluations = (Integer)data.get("EVALUATIONS") ;
 
     if (solution!=null && evaluations != null) {
       if (evaluations % frequency == 0) {
-          StringBuilder sb = new StringBuilder();
-          for (double objective : solution.objectives()) {
+          var sb = new StringBuilder();
+          for (var objective : solution.objectives()) {
               @NotNull String s = objective + " ";
               sb.append(s);
           }
-          String objectiveValues = sb.toString();
+          var objectiveValues = sb.toString();
           JMetalLogger.logger.info("Evaluations: " + evaluations + ". Fitness: " + objectiveValues);
       }
     } else {

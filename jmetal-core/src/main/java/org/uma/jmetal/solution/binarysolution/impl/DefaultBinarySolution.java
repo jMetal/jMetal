@@ -48,7 +48,7 @@ public class DefaultBinarySolution
 
     this.bitsPerVariable = solution.bitsPerVariable;
 
-    for (int i = 0; i < variables().size(); i++) {
+    for (var i = 0; i < variables().size(); i++) {
       variables().set(i, (BinarySet) solution.variables().get(i).clone());
     }
 
@@ -61,8 +61,8 @@ public class DefaultBinarySolution
   private static @NotNull BinarySet createNewBinarySet(int numberOfBits, JMetalRandom randomGenerator) {
     @NotNull BinarySet bitSet = new BinarySet(numberOfBits);
 
-    for (int i = 0; i < numberOfBits; i++) {
-      double rnd = randomGenerator.nextDouble();
+    for (var i = 0; i < numberOfBits; i++) {
+      var rnd = randomGenerator.nextDouble();
       if (rnd < 0.5) {
         bitSet.set(i);
       } else {
@@ -84,9 +84,9 @@ public class DefaultBinarySolution
 
   @Override
   public int getTotalNumberOfBits() {
-    int sum = 0;
+    var sum = 0;
     for (@NotNull BinarySet binarySet : variables()) {
-      int binarySetLength = binarySet.getBinarySetLength();
+      var binarySetLength = binarySet.getBinarySetLength();
       sum += binarySetLength;
     }
 
@@ -94,7 +94,7 @@ public class DefaultBinarySolution
   }
 
   private void initializeBinaryVariables(JMetalRandom randomGenerator) {
-    for (int i = 0; i < variables().size(); i++) {
+    for (var i = 0; i < variables().size(); i++) {
       variables().set(i, createNewBinarySet(bitsPerVariable.get(i), randomGenerator));
     }
   }

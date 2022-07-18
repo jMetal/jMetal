@@ -25,14 +25,10 @@ import org.uma.jmetal.util.observer.impl.FitnessObserver;
 
 public class AsynchronousMultiThreadedGeneticAlgorithmExample {
   public static void main(String[] args) {
-    CrossoverOperator<BinarySolution> crossover;
-    MutationOperator<BinarySolution> mutation;
-    SelectionOperator<List<BinarySolution>, BinarySolution> selection ;
-    Replacement<BinarySolution> replacement ;
 
-    int populationSize = 100;
-    int maxEvaluations = 25000;
-    int numberOfCores = 16 ;
+    var populationSize = 100;
+    var maxEvaluations = 25000;
+    var numberOfCores = 16 ;
 
     @NotNull OneMax problem = new OneMax(1024) {
       @Override
@@ -46,22 +42,22 @@ public class AsynchronousMultiThreadedGeneticAlgorithmExample {
       private void computingDelay() {
         for (long i = 0 ; i < 10000; i++)
           for (long j = 0; j < 100; j++) {
-            double a = sin(i)*Math.cos(j) ;
+            var a = sin(i)*Math.cos(j) ;
           }
       }
     } ;
 
-    double crossoverProbability = 0.9;
-    crossover = new UniformCrossover(crossoverProbability);
+    var crossoverProbability = 0.9;
+    CrossoverOperator<BinarySolution> crossover = new UniformCrossover(crossoverProbability);
 
-    double mutationProbability = 1.0 / 1024;
-    mutation = new BitFlipMutation(mutationProbability);
+    var mutationProbability = 1.0 / 1024;
+    MutationOperator<BinarySolution> mutation = new BitFlipMutation(mutationProbability);
 
-    selection = new BinaryTournamentSelection<>(new ObjectiveComparator<>(0)) ;
+    SelectionOperator<List<BinarySolution>, BinarySolution> selection = new BinaryTournamentSelection<>(new ObjectiveComparator<>(0));
 
-    replacement = new MuPlusLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
+    Replacement<BinarySolution> replacement = new MuPlusLambdaReplacement<>(new ObjectiveComparator<>(0));
 
-    long initTime = System.currentTimeMillis();
+    var initTime = System.currentTimeMillis();
     @NotNull AsynchronousMultiThreadedGeneticAlgorithm<BinarySolution> geneticAlgorithm =
         new AsynchronousMultiThreadedGeneticAlgorithm<>(
             numberOfCores, problem, populationSize, crossover, mutation, selection, replacement, new TerminationByEvaluations(maxEvaluations));
@@ -71,9 +67,9 @@ public class AsynchronousMultiThreadedGeneticAlgorithmExample {
 
     geneticAlgorithm.run();
 
-    long endTime = System.currentTimeMillis();
+    var endTime = System.currentTimeMillis();
 
-    List<BinarySolution> resultList = geneticAlgorithm.getResult();
+    var resultList = geneticAlgorithm.getResult();
 
     JMetalLogger.logger.info("Computing time: " + (endTime - initTime));
     new SolutionListOutput(resultList)

@@ -51,7 +51,7 @@ public class RunTimeForDynamicProblemsChartObserver<S extends Solution<?>> imple
   @Override
   public void update(Observable<Map<String, Object>> observable, Map<String, Object> data) {
     evaluations = (Integer)data.get("EVALUATIONS") ;
-    List<S> population = (List<S>) data.get("POPULATION");
+    var population = (List<S>) data.get("POPULATION");
 
     if (evaluations!=null && population!=null) {
       if (this.chart != null) {

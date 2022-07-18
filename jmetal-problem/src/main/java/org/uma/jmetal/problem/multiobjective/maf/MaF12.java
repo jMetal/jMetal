@@ -41,7 +41,7 @@ public class MaF12 extends AbstractDoubleProblem {
     @NotNull List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (var i = 0; i < numberOfVariables; i++) {
       lower.add(0.0);
       upper.add(2.0 * (i + 1));
     }
@@ -57,45 +57,43 @@ public class MaF12 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
 
-    int numberOfVariables_ = solution.variables().size();
-    int numberOfObjectives_ = solution.objectives().length;
+    var numberOfVariables_ = solution.variables().size();
+    var numberOfObjectives_ = solution.objectives().length;
 
-    double[] x;
-    double[] f = new double[numberOfObjectives_];
+    var f = new double[numberOfObjectives_];
 
-      double[] result = new double[10];
-      int count1 = 0;
-      for (int i2 = 0; i2 < numberOfVariables_; i2++) {
+    var result = new double[10];
+    var count1 = 0;
+      for (var i2 = 0; i2 < numberOfVariables_; i2++) {
           double v2 = solution.variables().get(i2);
           if (result.length == count1) result = Arrays.copyOf(result, count1 * 2);
           result[count1++] = v2;
       }
       result = Arrays.copyOfRange(result, 0, count1);
-      x = result;
+    var x = result;
 
     double subf1 = 1;
     // evaluate zi,t1i,t2i,t3i,t4i,yi
-    double[] z;
-    double[] t1 = new double[numberOfVariables_];
-    double @NotNull [] t2 = new double[numberOfVariables_];
-    double @NotNull [] t3 = new double[numberOfObjectives_];
-    double[] y = new double[numberOfObjectives_];
+    var t1 = new double[numberOfVariables_];
+    var t2 = new double[numberOfVariables_];
+    var t3 = new double[numberOfObjectives_];
+    var y = new double[numberOfObjectives_];
     double sub1, sub2 = 0;
-    int lb1 = 0, ub1 = 0, lb2 = 0, ub2 = 0;
-      double[] arr = new double[10];
-      int count = 0;
-      for (int i1 = 0; i1 < numberOfVariables_; i1++) {
-          double v1 = x[i1] / (2 * i1 + 2);
+    int lb1 = 0, ub1 = 0;
+    var arr = new double[10];
+    var count = 0;
+      for (var i1 = 0; i1 < numberOfVariables_; i1++) {
+        var v1 = x[i1] / (2 * i1 + 2);
           if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
           arr[count++] = v1;
       }
       arr = Arrays.copyOfRange(arr, 0, count);
-      z = arr;
-    for (int i = 0; i < numberOfVariables_ - 1; i++) {
+    var z = arr;
+    for (var i = 0; i < numberOfVariables_ - 1; i++) {
       sub1 = 0;
-        double sum = 0.0;
-        for (int j = i + 1; j < numberOfVariables_; j++) {
-            double v = z[j];
+      var sum = 0.0;
+        for (var j = i + 1; j < numberOfVariables_; j++) {
+          var v = z[j];
             sum += v;
         }
         sub1 += sum;
@@ -105,11 +103,11 @@ public class MaF12 extends AbstractDoubleProblem {
     }
     t1[numberOfVariables_ - 1] = z[numberOfVariables_ - 1];
 
-    for (int i = 0; i < K12; i++) {
+    for (var i = 0; i < K12; i++) {
       t2[i] = 1 + (Math.abs(t1[i] - 0.35) - 0.001) * (349.95 * Math.floor(t1[i] - 0.349) / 0.349
           + 649.95 * Math.floor(0.351 - t1[i]) / 0.649 + 1000);
     }
-    for (int i = K12; i < numberOfVariables_; i++) {
+    for (var i = K12; i < numberOfVariables_; i++) {
       t2[i] = 1.0 / 97 * (1 + Math.cos(
           122 * Math.PI * (0.5 - Math.abs(t1[i] - 0.35) * 0.5 / (Math.floor(0.35 - t1[i]) + 0.35)))
           + 380 * Math.pow(Math.abs(t1[i] - 0.35) * 0.5 / (Math.floor(0.35 - t1[i]) + 0.35), 2));
@@ -120,13 +118,13 @@ public class MaF12 extends AbstractDoubleProblem {
         Math.ceil(0.5 * K12 / (numberOfObjectives_ - 1)) * (1 + 2 * K12 / (numberOfObjectives_ - 1)
             - 2 * Math.ceil(0.5 * K12 / (numberOfObjectives_ - 1)));
     sub2 = Math.ceil(L12 / 2.0) * (1 + 2 * (L12) - 2 * Math.ceil(L12 / 2.0));
-    lb2 = 0;
-    ub2 = K12 / (numberOfObjectives_ - 1) - 2;
-    for (int i = 0; i < numberOfObjectives_ - 1; i++) {
+    var lb2 = 0;
+    var ub2 = K12 / (numberOfObjectives_ - 1) - 2;
+    for (var i = 0; i < numberOfObjectives_ - 1; i++) {
       sub4 = 0;
       lb1 = i * K12 / (numberOfObjectives_ - 1) + 1;
       ub1 = (i + 1) * K12 / (numberOfObjectives_ - 1);
-      for (int j = lb1 - 1; j < ub1; j++) {
+      for (var j = lb1 - 1; j < ub1; j++) {
         h = lb2;
         sub3 = 0;
         while (h <= ub2) {
@@ -144,7 +142,7 @@ public class MaF12 extends AbstractDoubleProblem {
     ub2 = L12 - 2;
     sub3 = 0;
     sub4 = 0;
-    for (int j = lb1 - 1; j < ub1; j++) {
+    for (var j = lb1 - 1; j < ub1; j++) {
       for (h = j + 1; h < K12 + L12; h++) {
         sub3 += Math.abs(t2[j] - t2[h]);
       }
@@ -153,7 +151,7 @@ public class MaF12 extends AbstractDoubleProblem {
 
     sub4 += (sub3 * 2);
     t3[numberOfObjectives_ - 1] = sub4 / sub2;
-    for (int i = 0; i < numberOfObjectives_ - 1; i++) {
+    for (var i = 0; i < numberOfObjectives_ - 1; i++) {
       y[i] = (t3[i] - 0.5) * Math.max(1, t3[numberOfObjectives_ - 1]) + 0.5;
     }
     y[numberOfObjectives_ - 1] = t3[numberOfObjectives_ - 1];
@@ -161,7 +159,7 @@ public class MaF12 extends AbstractDoubleProblem {
     // evaluate fm,fm-1,...,2,f1
     f[numberOfObjectives_ - 1] =
         y[numberOfObjectives_ - 1] + 2 * numberOfObjectives_ * Math.cos(Math.PI * y[0] / 2);
-    for (int i = numberOfObjectives_ - 2; i > 0; i--) {
+    for (var i = numberOfObjectives_ - 2; i > 0; i--) {
       subf1 *= Math.sin(Math.PI * y[numberOfObjectives_ - i - 2] / 2);
       f[i] = y[numberOfObjectives_ - 1] + 2 * (i + 1) * subf1 * Math
           .cos(Math.PI * y[numberOfObjectives_ - i - 1] / 2);
@@ -169,7 +167,7 @@ public class MaF12 extends AbstractDoubleProblem {
     f[0] =
         y[numberOfObjectives_ - 1] + 2 * subf1 * Math.sin(Math.PI * y[numberOfObjectives_ - 2] / 2);
 
-    for (int i = 0; i < numberOfObjectives_; i++) {
+    for (var i = 0; i < numberOfObjectives_; i++) {
       solution.objectives()[i] = f[i];
     }
     return solution ;

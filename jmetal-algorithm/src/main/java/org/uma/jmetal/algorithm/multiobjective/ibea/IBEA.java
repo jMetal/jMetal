@@ -58,17 +58,16 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
    * Execute() method
    */
   @Override public void run() {
-    int evaluations;
-    List<S> solutionSet, offSpringSolutionSet;
+    List<S> offSpringSolutionSet;
 
     //Initialize the variables
-    solutionSet = new ArrayList<>(populationSize);
+    List<S> solutionSet = new ArrayList<>(populationSize);
     archive = new ArrayList<>(archiveSize);
-    evaluations = 0;
+    var evaluations = 0;
 
     //-> Create the initial solutionSet
     S newSolution;
-    for (int i = 0; i < populationSize; i++) {
+    for (var i = 0; i < populationSize; i++) {
       newSolution = problem.createSolution();
       problem.evaluate(newSolution);
       evaluations++;
@@ -90,12 +89,12 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
       S parent1;
       S parent2;
       while (offSpringSolutionSet.size() < populationSize) {
-        int j = 0;
+        var j = 0;
         do {
           j++;
           parent1 = selectionOperator.execute(archive);
         } while (j < IBEA.TOURNAMENTS_ROUNDS);
-        int k = 0;
+        var k = 0;
         do {
           k++;
           parent2 = selectionOperator.execute(archive);
@@ -106,7 +105,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
         parents.add(parent2);
 
         //make the crossover
-        List<S> offspring = crossoverOperator.execute(parents);
+        var offspring = crossoverOperator.execute(parents);
         mutationOperator.execute(offspring.get(0));
         problem.evaluate(offspring.get(0));
         //problem.evaluateConstraints(offSpring[0]);
@@ -127,14 +126,14 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
    */
   double calculateHypervolumeIndicator(Solution<?> solutionA, Solution<?> solutionB, int d,
       double maximumValues[], double minimumValues[]) {
-    double a, b, r, max;
+    double b;
     double volume ;
-    double rho = 2.0;
+    var rho = 2.0;
 
-    r = rho * (maximumValues[d - 1] - minimumValues[d - 1]);
-    max = minimumValues[d - 1] + r;
+    var r = rho * (maximumValues[d - 1] - minimumValues[d - 1]);
+    var max = minimumValues[d - 1] + r;
 
-    a = solutionA.objectives()[d-1];
+    var a = solutionA.objectives()[d - 1];
     if (solutionB == null) {
       b = max;
     } else {
@@ -175,16 +174,16 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
     indicatorValues = new ArrayList<List<Double>>();
     maxIndicatorValue = -Double.MAX_VALUE;
 
-    for (int j = 0; j < solutionSet.size(); j++) {
+    for (var j = 0; j < solutionSet.size(); j++) {
       A = new ArrayList<>(1);
       A.add(solutionSet.get(j));
 
       List<Double> aux = new ArrayList<Double>();
-      for (S solution : solutionSet) {
+      for (var solution : solutionSet) {
         B = new ArrayList<>(1);
         B.add(solution);
 
-        int flag = (new DominanceWithConstraintsComparator<S>()).compare(A.get(0), B.get(0));
+        var flag = (new DominanceWithConstraintsComparator<S>()).compare(A.get(0), B.get(0));
 
         double value;
         if (flag == -1) {
@@ -210,18 +209,17 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
    * Calculate the fitness for the individual at position pos
    */
   public void fitness(List<S> solutionSet, int pos) {
-    double fitness;
-    double kappa = 0.05;
+    var kappa = 0.05;
 
-      double sum = 0.0;
-      int bound = solutionSet.size();
-      for (int i = 0; i < bound; i++) {
+    var sum = 0.0;
+    var bound = solutionSet.size();
+      for (var i = 0; i < bound; i++) {
           if (i != pos) {
-              double exp = Math.exp((-1 * indicatorValues.get(i).get(pos) / maxIndicatorValue) / kappa);
+            var exp = Math.exp((-1 * indicatorValues.get(i).get(pos) / maxIndicatorValue) / kappa);
               sum += exp;
           }
       }
-      fitness = sum;
+    var fitness = sum;
     solutionFitness.setAttribute(solutionSet.get(pos), fitness);
   }
 
@@ -230,17 +228,17 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
    */
   public void calculateFitness(List<S> solutionSet) {
     // Obtains the lower and upper bounds of the population
-    double[] maximumValues = new double[problem.getNumberOfObjectives()];
-    double @NotNull [] minimumValues = new double[problem.getNumberOfObjectives()];
+    var maximumValues = new double[problem.getNumberOfObjectives()];
+    var minimumValues = new double[problem.getNumberOfObjectives()];
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
       maximumValues[i] = -Double.MAX_VALUE;
       minimumValues[i] = Double.MAX_VALUE;
     }
 
-    for (S solution : solutionSet) {
-      for (int obj = 0; obj < problem.getNumberOfObjectives(); obj++) {
-        double value = solution.objectives()[obj];
+    for (var solution : solutionSet) {
+      for (var obj = 0; obj < problem.getNumberOfObjectives(); obj++) {
+        var value = solution.objectives()[obj];
         if (value > maximumValues[obj]) {
           maximumValues[obj] = value;
         }
@@ -251,7 +249,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
     }
 
     computeIndicatorValuesHD(solutionSet, maximumValues, minimumValues);
-    for (int pos = 0; pos < solutionSet.size(); pos++) {
+    for (var pos = 0; pos < solutionSet.size(); pos++) {
       fitness(solutionSet, pos);
     }
   }
@@ -262,11 +260,11 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
   public void removeWorst(List<S> solutionSet) {
 
     // Find the worst;
-    double worst = (double) solutionFitness.getAttribute(solutionSet.get(0));
-    int worstIndex = 0;
-    double kappa = 0.05;
+    var worst = (double) solutionFitness.getAttribute(solutionSet.get(0));
+    var worstIndex = 0;
+    var kappa = 0.05;
 
-    for (int i = 1; i < solutionSet.size(); i++) {
+    for (var i = 1; i < solutionSet.size(); i++) {
       if ((double) solutionFitness.getAttribute(solutionSet.get(i)) > worst) {
         worst = (double) solutionFitness.getAttribute(solutionSet.get(i));
         worstIndex = i;
@@ -274,9 +272,9 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
     }
 
     // Update the population
-    for (int i = 0; i < solutionSet.size(); i++) {
+    for (var i = 0; i < solutionSet.size(); i++) {
       if (i != worstIndex) {
-        double fitness = (double) solutionFitness.getAttribute(solutionSet.get(i));
+        var fitness = (double) solutionFitness.getAttribute(solutionSet.get(i));
         fitness -= Math.exp((-indicatorValues.get(worstIndex).get(i) / maxIndicatorValue) / kappa);
         solutionFitness.setAttribute(solutionSet.get(i), fitness);
       }
@@ -284,7 +282,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
 
     // remove worst from the indicatorValues list
     indicatorValues.remove(worstIndex);
-    for (List<Double> anIndicatorValues_ : indicatorValues) {
+    for (var anIndicatorValues_ : indicatorValues) {
       anIndicatorValues_.remove(worstIndex);
     }
 

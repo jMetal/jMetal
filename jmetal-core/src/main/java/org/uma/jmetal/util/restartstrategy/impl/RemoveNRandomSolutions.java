@@ -30,9 +30,9 @@ public class RemoveNRandomSolutions<S extends Solution<?>> implements RemoveSolu
       throw new JMetalException("The solution list is empty") ;
     }
 
-    int numberOfSolutionsToRemove = numberOfSolutionsToDelete ;
-      for (int s = 0; s < numberOfSolutionsToRemove; s++) {
-          int chosen = JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1);
+    var numberOfSolutionsToRemove = numberOfSolutionsToDelete ;
+      for (var s = 0; s < numberOfSolutionsToRemove; s++) {
+        var chosen = JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1);
           solutionList.remove(chosen);
       }
       return numberOfSolutionsToDelete ;

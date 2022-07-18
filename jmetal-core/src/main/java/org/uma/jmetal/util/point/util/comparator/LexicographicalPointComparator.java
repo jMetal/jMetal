@@ -32,14 +32,14 @@ public class LexicographicalPointComparator implements Comparator<Point> {
     }
 
     // Determine the first i such as pointOne[i] != pointTwo[i];
-    int index = 0;
+    var index = 0;
     while ((index < pointOne.getDimension())
         && (index < pointTwo.getDimension())
         && pointOne.getValue(index) == pointTwo.getValue(index)) {
       index++;
     }
 
-    int result = 0 ;
+    var result = 0 ;
     if ((index >= pointOne.getDimension()) || (index >= pointTwo.getDimension())) {
       result = 0;
     } else if (pointOne.getValue(index) < pointTwo.getValue(index)) {

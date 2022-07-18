@@ -89,14 +89,14 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     fixedParameterList.add(referenceFrontFilenameParameter);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
 
-    for (Parameter<?> parameter : fixedParameterList) {
+    for (var parameter : fixedParameterList) {
       parameter.parse().check();
     }
 
     swarmSizeParameter = new IntegerParameter("swarmSize", args, 10, 200);
     archiveSizeParameter = new PositiveIntegerValue("archiveSize", args);
 
-    CreateInitialSolutionsParameter swarmInitializationParameter = new CreateInitialSolutionsParameter("swarmInitialization",
+    var swarmInitializationParameter = new CreateInitialSolutionsParameter("swarmInitialization",
             args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
 
     velocityInitializationParameter =
@@ -133,7 +133,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     inertiaWeightComputingParameter = new InertiaWeightComputingParameter(args,
         List.of("constantValue", "randomSelectedValue", "linearIncreasingValue", "linearDecreasingValue"));
 
-    RealParameter weightParameter = new RealParameter("weight", args, 0.1, 1.0);
+    var weightParameter = new RealParameter("weight", args, 0.1, 1.0);
     @NotNull RealParameter wMinParameter = new RealParameter("weightMin", args, 0.1, 0.5);
     @NotNull RealParameter wMaxParameter = new RealParameter("weightMax", args, 0.5, 1.0);
     inertiaWeightComputingParameter.addSpecificParameter("constantValue", weightParameter);
@@ -184,7 +184,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
-    RealParameter nonUniformMutationPerturbation =
+    var nonUniformMutationPerturbation =
         new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
@@ -206,8 +206,8 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   }
 
   private VelocityUpdateParameter configureVelocityUpdate(String[] args) {
-    RealParameter c1MinParameter = new RealParameter("c1Min", args, 1.0, 2.0);
-    RealParameter c1MaxParameter = new RealParameter("c1Max", args, 2.0, 3.0);
+    var c1MinParameter = new RealParameter("c1Min", args, 1.0, 2.0);
+    var c1MaxParameter = new RealParameter("c1Max", args, 2.0, 3.0);
     @NotNull RealParameter c2MinParameter = new RealParameter("c2Min", args, 1.0, 2.0);
     @NotNull RealParameter c2MaxParameter = new RealParameter("c2Max", args, 2.0, 3.0);
 
@@ -229,7 +229,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
    * Create an instance of MOPSO from the parsed parameters
    */
   public ParticleSwarmOptimizationAlgorithm create() {
-    Problem<DoubleSolution> problem = getProblem() ;
+    var problem = getProblem() ;
     int swarmSize = swarmSizeParameter.getValue();
     int maximumNumberOfEvaluations = maximumNumberOfEvaluationsParameter.getValue();
 
@@ -239,7 +239,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     var termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
 
     leaderArchiveParameter.setSize(archiveSizeParameter.getValue());
-    BoundedArchive<DoubleSolution> leaderArchive = (BoundedArchive<DoubleSolution>) leaderArchiveParameter.getParameter();
+    var leaderArchive = (BoundedArchive<DoubleSolution>) leaderArchiveParameter.getParameter();
     @NotNull var velocityInitialization = new DefaultVelocityInitialization();
 
     if (velocityUpdateParameter.getValue().equals("constrainedVelocityUpdate")) {
@@ -252,13 +252,13 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
           maximumNumberOfEvaluationsParameter.getValue() / swarmSizeParameter.getValue());
       inertiaWeightComputingParameter.addNonConfigurableParameter("swarmSize", swarmSizeParameter.getValue());
     }
-    InertiaWeightComputingStrategy inertiaWeightComputingStrategy = inertiaWeightComputingParameter.getParameter() ;
+    var inertiaWeightComputingStrategy = inertiaWeightComputingParameter.getParameter() ;
 
     var velocityUpdate = velocityUpdateParameter.getParameter();
 
-    LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter();
+    var localBestInitialization = localBestInitializationParameter.getParameter();
     @NotNull GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter();
-    GlobalBestSelection globalBestSelection = globalBestSelectionParameter.getParameter(
+    var globalBestSelection = globalBestSelectionParameter.getParameter(
         leaderArchive.getComparator());
 
     if (mutationParameter.getValue().equals("nonUniform")) {
@@ -277,7 +277,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     @NotNull PositionUpdate positionUpdate = positionUpdateParameter.getParameter();
 
     @NotNull GlobalBestUpdate globalBestUpdate = globalBestUpdateParameter.getParameter();
-    LocalBestUpdate localBestUpdate = localBestUpdateParameter.getParameter(
+    var localBestUpdate = localBestUpdateParameter.getParameter(
         new DefaultDominanceComparator<DoubleSolution>());
 
     return new ParticleSwarmOptimizationAlgorithm("OMOPSO",
@@ -298,7 +298,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   }
 
   public static void print(@NotNull List<Parameter<?>> parameterList) {
-    for (Parameter<?> parameter : parameterList) {
+    for (var parameter : parameterList) {
       System.out.println(parameter);
     }
   }

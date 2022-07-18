@@ -9,7 +9,7 @@ public class RandomGlobalBestSelection implements GlobalBestSelection {
 
   @Override
   public DoubleSolution select(List<DoubleSolution> globalBestList) {
-    int randomSolution = JMetalRandom.getInstance()
+    var randomSolution = JMetalRandom.getInstance()
         .nextInt(0, globalBestList.size() - 1);
     return globalBestList.get(randomSolution);
   }

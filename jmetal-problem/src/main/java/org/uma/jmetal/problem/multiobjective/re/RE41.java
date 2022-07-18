@@ -33,23 +33,23 @@ public class RE41 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public @NotNull DoubleSolution evaluate(@NotNull DoubleSolution solution) {
-    double x1 = Math.rint(solution.variables().get(0));
-    double x2 = Math.rint(solution.variables().get(1));
-    double x3 = Math.rint(solution.variables().get(2));
-    double x4 = Math.rint(solution.variables().get(3));
-    double x5 = Math.rint(solution.variables().get(4));
-    double x6 = Math.rint(solution.variables().get(5));
-    double x7 = Math.rint(solution.variables().get(6));
+    var x1 = Math.rint(solution.variables().get(0));
+    var x2 = Math.rint(solution.variables().get(1));
+    var x3 = Math.rint(solution.variables().get(2));
+    var x4 = Math.rint(solution.variables().get(3));
+    var x5 = Math.rint(solution.variables().get(4));
+    var x6 = Math.rint(solution.variables().get(5));
+    var x7 = Math.rint(solution.variables().get(6));
 
     solution.objectives()[0] =
         1.98 + 4.9 * x1 + 6.67 * x2 + 6.98 * x3 + 4.01 * x4 + 1.78 * x5 + 0.00001 * x6 + 2.73 * x7;
     solution.objectives()[1] = 4.72 - 0.5 * x4 - 0.19 * x2 * x3;
 
-    double Vmbp = 10.58 - 0.674 * x1 * x2 - 0.67275 * x2;
-    double Vfd = 16.45 - 0.489 * x3 * x7 - 0.843 * x5 * x6;
+    var Vmbp = 10.58 - 0.674 * x1 * x2 - 0.67275 * x2;
+    var Vfd = 16.45 - 0.489 * x3 * x7 - 0.843 * x5 * x6;
     solution.objectives()[2] = 0.5 * (Vmbp + Vfd);
 
-    double[] g = new double[numberOfOriginalConstraints];
+    var g = new double[numberOfOriginalConstraints];
 
     g[0] = 1 - (1.16 - 0.3717 * x2 * x4 - 0.0092928 * x3);
     g[1] =
@@ -80,15 +80,15 @@ public class RE41 extends AbstractDoubleProblem {
     g[8] = 9.9 - Vmbp;
     g[9] = 15.7 - Vfd;
 
-    for (int i = 0; i < numberOfOriginalConstraints; i++) {
+    for (var i = 0; i < numberOfOriginalConstraints; i++) {
       if (g[i] < 0.0) g[i] = -g[i];
       else g[i] = 0;
     }
 
-      double valueObjectiveThree = 0.0;
-      int bound = numberOfOriginalConstraints;
-      for (int i = 0; i < bound; i++) {
-          double v = g[i];
+    var valueObjectiveThree = 0.0;
+    var bound = numberOfOriginalConstraints;
+      for (var i = 0; i < bound; i++) {
+        var v = g[i];
           valueObjectiveThree += v;
       }
 

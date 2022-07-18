@@ -101,15 +101,14 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
    */
   protected void initializeUniformWeight() {
     if ((problem.getNumberOfObjectives() == 2) && (populationSize <= 300)) {
-      for (int n = 0; n < populationSize; n++) {
-        double a = 1.0 * n / (populationSize - 1);
+      for (var n = 0; n < populationSize; n++) {
+        var a = 1.0 * n / (populationSize - 1);
         lambda[n][0] = a;
         lambda[n][1] = 1 - a;
       }
     } else {
-      String dataFileName;
-      dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
-          populationSize + ".dat";
+      var dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
+              populationSize + ".dat";
 
       try {
 
@@ -118,24 +117,24 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
         // ();
         @NotNull String path = "/" + dataDirectory + "/" + dataFileName ;
 
-        InputStream inputStream =
+        var inputStream =
             getClass()
                 .getClassLoader()
                 .getResourceAsStream(path);
         if (inputStream == null) {
           inputStream = new FileInputStream(dataDirectory + "/" + dataFileName);
         }
-        InputStreamReader isr = new InputStreamReader(inputStream);
-        BufferedReader br = new BufferedReader(isr);
+        var isr = new InputStreamReader(inputStream);
+        var br = new BufferedReader(isr);
 
-        int i = 0;
-        int j = 0;
-        String aux = br.readLine();
+        var i = 0;
+        var j = 0;
+        var aux = br.readLine();
         while (aux != null) {
           @NotNull StringTokenizer st = new StringTokenizer(aux);
           j = 0;
           while (st.hasMoreTokens()) {
-            double value = parseDouble(st.nextToken());
+            var value = parseDouble(st.nextToken());
             lambda[i][j] = value;
             j++;
           }
@@ -154,12 +153,12 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
    * Initialize neighborhoods
    */
   protected void initializeNeighborhood() {
-    double @NotNull [] x = new double[populationSize];
-    int[] idx = new int[populationSize];
+    var x = new double[populationSize];
+    var idx = new int[populationSize];
 
-    for (int i = 0; i < populationSize; i++) {
+    for (var i = 0; i < populationSize; i++) {
       // calculate the distances based on weight vectors
-      for (int j = 0; j < populationSize; j++) {
+      for (var j = 0; j < populationSize; j++) {
         x[j] = MOEADUtils.distVector(lambda[i], lambda[j]);
         idx[j] = j;
       }
@@ -172,7 +171,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
   }
 
   protected NeighborType chooseNeighborType() {
-    double rnd = randomGenerator.nextDouble();
+    var rnd = randomGenerator.nextDouble();
     NeighborType neighborType ;
 
     if (rnd < neighborhoodSelectionProbability) {
@@ -184,7 +183,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
   }
 
   protected @NotNull List<S> parentSelection(int subProblemId, NeighborType neighborType) {
-    List<Integer> matingPool = matingSelection(subProblemId, 2, neighborType);
+    var matingPool = matingSelection(subProblemId, 2, neighborType);
 
     List<S> parents = new ArrayList<>(3);
 
@@ -201,21 +200,20 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
    * @param neighbourType neighbour type
    */
   protected List<Integer> matingSelection(int subproblemId, int numberOfSolutionsToSelect, NeighborType neighbourType) {
-    int neighbourSize;
     int selectedSolution;
 
     @NotNull List<Integer> listOfSolutions = new ArrayList<>(numberOfSolutionsToSelect) ;
 
-    neighbourSize = neighborhood[subproblemId].length;
+    var neighbourSize = neighborhood[subproblemId].length;
     while (listOfSolutions.size() < numberOfSolutionsToSelect) {
       if (neighbourType == NeighborType.NEIGHBOR) {
-        int random = randomGenerator.nextInt(0, neighbourSize - 1);
+        var random = randomGenerator.nextInt(0, neighbourSize - 1);
         selectedSolution = neighborhood[subproblemId][random];
       } else {
         selectedSolution = randomGenerator.nextInt(0, populationSize - 1);
       }
-      boolean flag = true;
-      for (Integer individualId : listOfSolutions) {
+      var flag = true;
+      for (var individualId : listOfSolutions) {
         if (individualId == selectedSolution) {
           flag = false;
           break;
@@ -240,30 +238,28 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
   @SuppressWarnings("unchecked")
   protected  void updateNeighborhood(@NotNull S individual, int subProblemId, NeighborType neighborType) throws JMetalException {
     int size;
-    int time;
 
-    time = 0;
+    var time = 0;
 
     if (neighborType == NeighborType.NEIGHBOR) {
       size = neighborhood[subProblemId].length;
     } else {
       size = population.size();
     }
-    int @NotNull [] perm = new int[size];
+    var perm = new int[size];
 
     MOEADUtils.randomPermutation(perm, size);
 
-    for (int i = 0; i < size; i++) {
+    for (var i = 0; i < size; i++) {
       int k;
       if (neighborType == NeighborType.NEIGHBOR) {
         k = neighborhood[subProblemId][perm[i]];
       } else {
         k = perm[i];
       }
-      double f1, f2;
 
-      f1 = fitnessFunction(population.get(k), lambda[k]);
-      f2 = fitnessFunction(individual, lambda[k]);
+      var f1 = fitnessFunction(population.get(k), lambda[k]);
+      var f2 = fitnessFunction(individual, lambda[k]);
 
       if (f2 < f1) {
         population.set(k, (S)individual.copy());
@@ -280,10 +276,10 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     double fitness;
 
     if (MOEAD.FunctionType.TCHE.equals(functionType)) {
-      double maxFun = -1.0e+30;
+      var maxFun = -1.0e+30;
 
-      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
-        double diff = Math.abs(individual.objectives()[n] - idealPoint.getValue(n));
+      for (var n = 0; n < problem.getNumberOfObjectives(); n++) {
+        var diff = Math.abs(individual.objectives()[n] - idealPoint.getValue(n));
 
         double feval;
         if (lambda[n] == 0) {
@@ -298,10 +294,10 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
 
       fitness = maxFun;
     } else if (MOEAD.FunctionType.AGG.equals(functionType)) {
-      double sum = 0.0;
-      int bound = problem.getNumberOfObjectives();
-      for (int n = 0; n < bound; n++) {
-        double v = (lambda[n]) * individual.objectives()[n];
+      var sum = 0.0;
+      var bound = problem.getNumberOfObjectives();
+      for (var n = 0; n < bound; n++) {
+        var v = (lambda[n]) * individual.objectives()[n];
         sum += v;
       }
 
@@ -309,18 +305,18 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
 
     } else if (MOEAD.FunctionType.PBI.equals(functionType)) {
       double d1, d2, nl;
-      double theta = 5.0;
+      var theta = 5.0;
 
       d1 = d2 = nl = 0.0;
 
-      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
         d1 += (individual.objectives()[i] - idealPoint.getValue(i)) * lambda[i];
         nl += Math.pow(lambda[i], 2.0);
       }
       nl = Math.sqrt(nl);
       d1 = Math.abs(d1) / nl;
 
-      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
         d2 += Math.pow((individual.objectives()[i] - idealPoint.getValue(i)) - d1 * (lambda[i] / nl), 2.0);
       }
       d2 = Math.sqrt(d2);

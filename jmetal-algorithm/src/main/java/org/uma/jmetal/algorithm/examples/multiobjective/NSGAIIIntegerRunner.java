@@ -35,15 +35,10 @@ public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIIntegerRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws FileNotFoundException {
-    Problem<IntegerSolution> problem;
-    Algorithm<List<IntegerSolution>> algorithm;
-    CrossoverOperator<IntegerSolution> crossover;
-    MutationOperator<IntegerSolution> mutation;
-    SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
-    
-    String problemName ;
 
-    String referenceParetoFront = "" ;
+      String problemName ;
+
+    var referenceParetoFront = "" ;
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
@@ -54,29 +49,29 @@ public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "";
     }
 
-    problem = ProblemFactory.<IntegerSolution> loadProblem(problemName);
+    var problem = ProblemFactory.<IntegerSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new IntegerSBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
+      CrossoverOperator<IntegerSolution> crossover = new IntegerSBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
+      MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<IntegerSolution>() ;
+      SelectionOperator<List<IntegerSolution>, IntegerSolution> selection = new BinaryTournamentSelection<IntegerSolution>();
 
-    int populationSize = 100 ;
-    algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation, populationSize)
-            .setSelectionOperator(selection)
-            .setMaxEvaluations(25000)
-            .build() ;
+    var populationSize = 100 ;
+      Algorithm<List<IntegerSolution>> algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation, populationSize)
+              .setSelectionOperator(selection)
+              .setMaxEvaluations(25000)
+              .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<IntegerSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var population = algorithm.getResult() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

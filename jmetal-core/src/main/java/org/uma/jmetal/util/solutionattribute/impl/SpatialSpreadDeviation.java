@@ -43,10 +43,10 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
    */
   @Override
   public void computeDensityEstimator(List<S> solutionList) {
-    int size = solutionList.size();
+    var size = solutionList.size();
 
     if (size <= solutionList.get(0).objectives().length) {
-      for (int x = 0; x < size; x++) {
+      for (var x = 0; x < size; x++) {
         solutionList.get(x).attributes().put(getAttributeID(), Double.POSITIVE_INFINITY);
       }
       return;
@@ -54,20 +54,20 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
 
     // Use a new SolutionSet to avoid altering the original solutionSet
     List<S> front = new ArrayList<>(size);
-    for (S solution : solutionList) {
+    for (var solution : solutionList) {
       front.add(solution);
     }
 
-    for (int i = 0; i < size; i++) {
+    for (var i = 0; i < size; i++) {
       front.get(i).attributes().put(getAttributeID(), 0.0);
     }
 
-    int numberOfObjectives = solutionList.get(0).objectives().length;
+    var numberOfObjectives = solutionList.get(0).objectives().length;
 
     double objetiveMaxn[] = new double[numberOfObjectives];
     double objetiveMinn[] = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
       Collections.sort(front, new ObjectiveComparator<S>(i));
       objetiveMinn[i] = front.get(0).objectives()[i];
@@ -77,14 +77,13 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
       front.get(0).attributes().put(getAttributeID(), Double.POSITIVE_INFINITY);
       front.get(size - 1).attributes().put(getAttributeID(), Double.POSITIVE_INFINITY);
     }
-    double[] @NotNull [] distance =
+    var distance =
         SolutionListUtils.normalizedDistanceMatrix(front, objetiveMaxn, objetiveMinn);
 
-    double dminn, dmaxx;
-    dminn = Double.MAX_VALUE;
-    dmaxx = 0.0;
-    for (int i = 0; i < distance.length; i++)
-      for (int j = 0; j < distance.length; j++) {
+    var dminn = Double.MAX_VALUE;
+    var dmaxx = 0.0;
+    for (var i = 0; i < distance.length; i++)
+      for (var j = 0; j < distance.length; j++) {
         if (i != j) {
           if (distance[i][j] < dminn) {
             dminn = distance[i][j];
@@ -95,9 +94,9 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
         }
       }
 
-    for (int i = 0; i < front.size(); i++) {
-      double temp = 0.0;
-      for (int j = 0; j < distance.length; j++) {
+    for (var i = 0; i < front.size(); i++) {
+      var temp = 0.0;
+      for (var j = 0; j < distance.length; j++) {
         if (i != j) {
           temp += Math.pow(distance[i][j] - (dmaxx - dminn), 2);
         }
@@ -111,15 +110,15 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
     }
 
     // int k = numberOfObjectives la solucion 0 es ella misma
-    for (int i = 0; i < distance.length; i++) {
+    for (var i = 0; i < distance.length; i++) {
       Arrays.sort(distance[i]);
-      double kDistance = 0.0;
-      for (int k = numberOfObjectives; k > 0; k--) {
+      var kDistance = 0.0;
+      for (var k = numberOfObjectives; k > 0; k--) {
         // kDistance += (dmaxx-dminn) / (distance[i][k]);//me gusta mas este
         // kDistance += (dmaxx-dminn) / (distance[i][k]+dminn);//original
         kDistance += (dmaxx - dminn) / distance[i][k];
       }
-      double temp = (double) front.get(i).attributes().get(getAttributeID());
+      var temp = (double) front.get(i).attributes().get(getAttributeID());
       // if(temp!=Double.POSITIVE_INFINITY)
       // kDistance=kDistance/numberOfObjectives-1;
       temp -= kDistance;

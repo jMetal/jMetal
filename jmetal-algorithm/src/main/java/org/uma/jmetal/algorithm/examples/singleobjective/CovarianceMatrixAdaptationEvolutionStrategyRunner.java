@@ -21,21 +21,20 @@ public class CovarianceMatrixAdaptationEvolutionStrategyRunner {
    */
   public static void main(String[] args) throws Exception {
 
-    Algorithm<DoubleSolution> algorithm;
     @NotNull DoubleProblem problem = new Sphere() ;
 
-    algorithm = new CovarianceMatrixAdaptationEvolutionStrategy.Builder(problem)
-            .build() ;
+    Algorithm<DoubleSolution> algorithm = new CovarianceMatrixAdaptationEvolutionStrategy.Builder(problem)
+            .build();
 
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    DoubleSolution solution = algorithm.getResult() ;
+    var solution = algorithm.getResult() ;
     List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
-    long computingTime = algorithmRunner.getComputingTime() ;
+    var computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionListOutput(population)
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))

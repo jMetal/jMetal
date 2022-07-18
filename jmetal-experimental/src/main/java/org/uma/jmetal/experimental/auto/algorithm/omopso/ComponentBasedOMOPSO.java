@@ -39,9 +39,9 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class ComponentBasedOMOPSO {
   public static void main(String[] args) {
     DoubleProblem problem = new WFG2();
-    String referenceFrontFileName = "resources/referenceFrontsCSV/WFG2.2D.csv" ;
-    int swarmSize = 100;
-    int maximumNumberOfEvaluations = 25000;
+    var referenceFrontFileName = "resources/referenceFrontsCSV/WFG2.2D.csv" ;
+    var swarmSize = 100;
+    var maximumNumberOfEvaluations = 25000;
 
     var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
     var evaluation = new SequentialEvaluation<>(problem);
@@ -53,28 +53,28 @@ public class ComponentBasedOMOPSO {
     @NotNull BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
     var globalBestSelection = new TournamentGlobalBestSelection(2, externalArchive.getComparator()) ;
 
-    ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
+    var operators = new ArrayList<MutationOperator<DoubleSolution>>();
     operators.add(new UniformMutation(1.0 / problem.getNumberOfVariables(), 0.5));
     operators.add(new NonUniformMutation(1.0 / problem.getNumberOfVariables(), 0.5, 250));
     operators.add(new NullMutation<>());
-    CompositeDoubleSolutionMutation mutation = new CompositeDoubleSolutionMutation(operators);
+    var mutation = new CompositeDoubleSolutionMutation(operators);
 
-    double c1Min = 1.5;
-    double c1Max = 2.0;
-    double c2Min = 1.5;
-    double c2Max = 2.0;
-    double weightMin = 0.1;
-    double weightMax = 0.5;
+    var c1Min = 1.5;
+    var c1Max = 2.0;
+    var c2Min = 1.5;
+    var c2Max = 2.0;
+    var weightMin = 0.1;
+    var weightMax = 0.5;
 
     var inertiaWeightStrategy = new RandomSelectedValueStrategy(weightMin, weightMax) ;
 
     var velocityUpdate = new DefaultVelocityUpdate(c1Min, c1Max, c2Min, c2Max);
 
-    double velocityChangeWhenLowerLimitIsReached = -1.0;
-    double velocityChangeWhenUpperLimitIsReached = -1.0;
+    var velocityChangeWhenLowerLimitIsReached = -1.0;
+    var velocityChangeWhenUpperLimitIsReached = -1.0;
     var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
         velocityChangeWhenUpperLimitIsReached, problem.getVariableBounds());
-    int frequencyOfMutation = 7;
+    var frequencyOfMutation = 7;
     @NotNull var perturbation = new FrequencySelectionMutationBasedPerturbation(
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0), frequencyOfMutation);
     //var perturbation = new FrequencySelectionMutationBasedPerturbation(mutation);
@@ -96,7 +96,7 @@ public class ComponentBasedOMOPSO {
         globalBestSelection,
         externalArchive);
 
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("OMOPSO",
+    var runTimeChartObserver = new RunTimeChartObserver<DoubleSolution>("OMOPSO",
         80, 500, referenceFrontFileName);
 
     omopso.getObservable().register(runTimeChartObserver);

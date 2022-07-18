@@ -67,7 +67,7 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
     initTime = System.currentTimeMillis();
     initProgress() ;
     while (!termination.isMet(attributes)) {
-      List<S> solutions = solutionsCreation.create();
+      var solutions = solutionsCreation.create();
       evaluation.evaluate(solutions);
       evaluatedSolutions = solutions.size() ;
       updateBestFoundSolutions(solutions) ;
@@ -100,7 +100,7 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
   }
 
   protected void updateBestFoundSolutions(List<S> solutions) {
-      for (S solution : solutions) {
+      for (var solution : solutions) {
           archive.add(solution);
       }
   }

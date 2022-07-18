@@ -73,35 +73,34 @@ public class BinaryProblemsStudy {
     if (args.length != 1) {
       throw new JMetalException("Needed arguments: experimentBaseDirectory");
     }
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     @NotNull List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new ZDT5()));
     problemList.add(new ExperimentProblem<>(new OneZeroMax(512)));
 
-    List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList =
+    var algorithmList =
         configureAlgorithmList(problemList);
 
-    Experiment<BinarySolution, List<BinarySolution>> experiment;
-    experiment = new ExperimentBuilder<BinarySolution, List<BinarySolution>>("BinaryProblemsStudy")
-        .setAlgorithmList(algorithmList)
-        .setProblemList(problemList)
-        .setExperimentBaseDirectory(experimentBaseDirectory)
-        .setOutputParetoFrontFileName("FUN")
-        .setOutputParetoSetFileName("VAR")
-        .setReferenceFrontDirectory(experimentBaseDirectory + "/BinaryProblemsStudy/referenceFronts")
-        .setIndicatorList(Arrays.asList(
-            new Epsilon(),
-            new Spread(),
-            new GenerationalDistance(),
-            new PISAHypervolume(),
-                new NormalizedHypervolume(),
-                new InvertedGenerationalDistance(),
-            new InvertedGenerationalDistancePlus())
-        )
-        .setIndependentRuns(INDEPENDENT_RUNS)
-        .setNumberOfCores(8)
-        .build();
+    var experiment = new ExperimentBuilder<BinarySolution, List<BinarySolution>>("BinaryProblemsStudy")
+            .setAlgorithmList(algorithmList)
+            .setProblemList(problemList)
+            .setExperimentBaseDirectory(experimentBaseDirectory)
+            .setOutputParetoFrontFileName("FUN")
+            .setOutputParetoSetFileName("VAR")
+            .setReferenceFrontDirectory(experimentBaseDirectory + "/BinaryProblemsStudy/referenceFronts")
+            .setIndicatorList(Arrays.asList(
+                    new Epsilon(),
+                    new Spread(),
+                    new GenerationalDistance(),
+                    new PISAHypervolume(),
+                    new NormalizedHypervolume(),
+                    new InvertedGenerationalDistance(),
+                    new InvertedGenerationalDistancePlus())
+            )
+            .setIndependentRuns(INDEPENDENT_RUNS)
+            .setNumberOfCores(8)
+            .build();
 
     new ExecuteAlgorithms<>(experiment).run();
     new GenerateReferenceParetoFront(experiment).run();
@@ -120,9 +119,9 @@ public class BinaryProblemsStudy {
   static List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> configureAlgorithmList(
       List<ExperimentProblem<BinarySolution>> problemList) {
     List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
 
-      for (ExperimentProblem<BinarySolution> problem : problemList) {
+      for (var problem : problemList) {
         Algorithm<List<BinarySolution>> algorithm = new NSGAIIBuilder<>(
                 problem.getProblem(),
                 new SinglePointCrossover(1.0),
@@ -146,7 +145,7 @@ public class BinaryProblemsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problem, run));
       }
 
-      for (ExperimentProblem<BinarySolution> problem : problemList) {
+      for (var problem : problemList) {
         Algorithm<List<BinarySolution>> algorithm = new MOCellBuilder<>(
                 problem.getProblem(),
                 new SinglePointCrossover(1.0),
@@ -158,16 +157,12 @@ public class BinaryProblemsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problem, run));
       }
 
-      for (ExperimentProblem<BinarySolution> problem : problemList) {
-        CrossoverOperator<BinarySolution> crossoverOperator;
-        MutationOperator<BinarySolution> mutationOperator;
-        SelectionOperator<List<BinarySolution>, BinarySolution> parentsSelection;
-        SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection;
+      for (var problem : problemList) {
 
-        crossoverOperator = new HUXCrossover(1.0);
-        parentsSelection = new RandomSelection<>();
-        newGenerationSelection = new RankingAndCrowdingSelection<>(100);
-        mutationOperator = new BitFlipMutation(0.35);
+        CrossoverOperator<BinarySolution> crossoverOperator = new HUXCrossover(1.0);
+        SelectionOperator<List<BinarySolution>, BinarySolution> parentsSelection = new RandomSelection<>();
+        SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection = new RankingAndCrowdingSelection<>(100);
+        MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(0.35);
         Algorithm<List<BinarySolution>> algorithm = new MOCHCBuilder(
                 (BinaryProblem) problem.getProblem())
                 .setInitialConvergenceCount(0.25)

@@ -9,7 +9,7 @@ public class SimpleDescribedEntityTest {
 
 	@Test
 	public void testSetGetName() {
-		SimpleDescribedEntity entity = new SimpleDescribedEntity();
+		var entity = new SimpleDescribedEntity();
 
 		entity.setName("test");
 		assertEquals("test", entity.getName());
@@ -20,7 +20,7 @@ public class SimpleDescribedEntityTest {
 
 	@Test
 	public void testSetGetDescription() {
-		SimpleDescribedEntity entity = new SimpleDescribedEntity();
+		var entity = new SimpleDescribedEntity();
 
 		entity.setDescription("test");
 		assertEquals("test", entity.getDescription());
@@ -46,7 +46,7 @@ public class SimpleDescribedEntityTest {
 
 	@Test
 	public void testCorrectNameWhenProvided() {
-		String name = "named measure";
+		var name = "named measure";
 		assertEquals(name, new SimpleDescribedEntity(name).getName());
 		assertEquals(name,
 				new SimpleDescribedEntity(name, "description").getName());
@@ -54,7 +54,7 @@ public class SimpleDescribedEntityTest {
 
 	@Test
 	public void testCorrectDescriptionWhenProvided() {
-		String description = "My measure description is awesome!";
+		var description = "My measure description is awesome!";
 		assertEquals(description, new SimpleDescribedEntity("measure",
 				description).getDescription());
 	}

@@ -26,8 +26,8 @@ private final @NotNull Comparator<S> comparator ;
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
 
-    S acc = solutionList.get(0);
-    for (S s : solutionList) {
+    var acc = solutionList.get(0);
+    for (var s : solutionList) {
       acc = (comparator.compare(acc, s) < 0) ? acc : s;
     }
     return acc;

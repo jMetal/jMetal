@@ -29,14 +29,12 @@ public class DifferentialEvolutionCrossoverParameter extends CategoricalParamete
   }
 
   public @NotNull DifferentialEvolutionCrossover getParameter() {
-    DifferentialEvolutionCrossover result;
-    Double cr = (Double) findSpecificParameter("cr").getValue();
-    Double f = (Double) findSpecificParameter("f").getValue();
+    var cr = (Double) findSpecificParameter("cr").getValue();
+    var f = (Double) findSpecificParameter("f").getValue();
 
-    String variant = getValue() ;
+    var variant = getValue() ;
 
-    result =
-        new DifferentialEvolutionCrossover(
+    var result = new DifferentialEvolutionCrossover(
             cr, f, DifferentialEvolutionCrossover.getVariantFromString(variant));
 
     return result;

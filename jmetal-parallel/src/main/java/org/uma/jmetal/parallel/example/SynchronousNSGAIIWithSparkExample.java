@@ -38,13 +38,8 @@ public class SynchronousNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
    *     org.uma.jmetal.runner.multiobjective.nsgaii.ParallelNSGAIIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    problem = new ZDT2() {
+    Problem<DoubleSolution> problem = new ZDT2() {
       @Override
       public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
         super.evaluate(solution);
@@ -56,41 +51,41 @@ public class SynchronousNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
       private void computingDelay() {
         for (long i = 0; i < 1000; i++)
           for (long j = 0; j < 1000; j++) {
-            double a = sin(i) * Math.cos(j);
+            var a = sin(i) * Math.cos(j);
           }
       }
     };
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
 
-    int maxEvaluations = 25000;
-    int populationSize = 100;
+    var maxEvaluations = 25000;
+    var populationSize = 100;
 
     Logger.getLogger("org").setLevel(Level.OFF) ;
 
-    SparkConf sparkConf = new SparkConf()
+    var sparkConf = new SparkConf()
             .setMaster("local[8]")
             .setAppName("NSGA-II with Spark");
 
-    JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
+    var sparkContext = new JavaSparkContext(sparkConf);
     @NotNull SolutionListEvaluator<DoubleSolution> evaluator = new SparkSolutionListEvaluator<>(sparkContext) ;
 
-    algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
+    Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(maxEvaluations)
             .setSolutionListEvaluator(new SparkSolutionListEvaluator<>(sparkContext))
             .build();
 
     algorithm.run();
-    List<DoubleSolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
 
     evaluator.shutdown();
 

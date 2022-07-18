@@ -34,12 +34,12 @@ public class PESA2BuilderTest {
     problem = mock(Problem.class);
     when(problem.getNumberOfVariables()).thenReturn(NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
+    var crossoverProbability = 0.9 ;
+    var crossoverDistributionIndex = 20.0 ;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
+    var mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    var mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     builder = new PESA2Builder<DoubleSolution>(problem, crossover, mutation);
@@ -51,7 +51,7 @@ public class PESA2BuilderTest {
   }
 
   @Test public void buildAlgorithm() {
-    PESA2<DoubleSolution> algorithm = builder.build();
+    var algorithm = builder.build();
     assertNotNull(algorithm);
   }
 
@@ -63,11 +63,11 @@ public class PESA2BuilderTest {
     assertEquals(100, builder.getPopulationSize());
     assertEquals(25000, builder.getMaxEvaluations());
 
-    SBXCrossover crossover = (SBXCrossover) builder.getCrossoverOperator();
+    var crossover = (SBXCrossover) builder.getCrossoverOperator();
     assertEquals(0.9, crossover.getCrossoverProbability(), EPSILON);
     assertEquals(20.0, crossover.getDistributionIndex(), EPSILON);
 
-    PolynomialMutation mutation = (PolynomialMutation) builder.getMutationOperator();
+    var mutation = (PolynomialMutation) builder.getMutationOperator();
     assertEquals(1.0 / NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM, mutation.getMutationProbability(),
         EPSILON);
     assertEquals(20.0, mutation.getDistributionIndex(), EPSILON);
@@ -78,7 +78,7 @@ public class PESA2BuilderTest {
   }
 
   @Test public void setNewEvaluator() {
-    MultiThreadedSolutionListEvaluator<DoubleSolution> evaluator =
+    var evaluator =
         new MultiThreadedSolutionListEvaluator<DoubleSolution>(2);
     assertNotEquals(evaluator, builder.getSolutionListEvaluator());
     builder.setSolutionListEvaluator(evaluator);

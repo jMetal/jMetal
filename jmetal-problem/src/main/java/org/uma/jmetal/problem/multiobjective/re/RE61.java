@@ -26,7 +26,7 @@ public class RE61 extends AbstractDoubleProblem {
     setName("RE61");
 
     @NotNull List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);
-    List<Double> upperLimit = List.of(0.45, 0.10, 0.10);
+      var upperLimit = List.of(0.45, 0.10, 0.10);
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -34,10 +34,10 @@ public class RE61 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public @NotNull DoubleSolution evaluate(DoubleSolution solution) {
-      double[] x = new double[10];
-      int count = 0;
-      int bound = getNumberOfVariables();
-      for (int i1 = 0; i1 < bound; i1++) {
+      var x = new double[10];
+      var count = 0;
+      var bound = getNumberOfVariables();
+      for (var i1 = 0; i1 < bound; i1++) {
           double v1 = solution.variables().get(i1);
           if (x.length == count) x = Arrays.copyOf(x, count * 2);
           x[count++] = v1;
@@ -50,7 +50,7 @@ public class RE61 extends AbstractDoubleProblem {
     solution.objectives()[3] = 250 * 2289 * Math.exp(-39.75 * x[1] + 9.9 * x[2] + 2.74);
     solution.objectives()[4] = 25 * (1.39 / (x[0] * x[1]) + 4940 * x[2] - 80);
 
-    double[] g = new double[numberOfOriginalConstraints];
+      var g = new double[numberOfOriginalConstraints];
     g[0] = 1 - (0.00139 / (x[0] * x[1]) + 4.94 * x[2] - 0.08);
     g[1] = 1 - (0.000306 / (x[0] * x[1]) + 1.082 * x[2] - 0.0986);
     g[2] = 50000 - (12.307 / (x[0] * x[1]) + 49408.24 * x[2] + 4051.02);
@@ -59,7 +59,7 @@ public class RE61 extends AbstractDoubleProblem {
     g[5] = 2000 - (0.417 * x[0] * x[1] + 1721.26 * x[2] - 136.54);
     g[6] = 550 - (0.164 / (x[0] * x[1]) + 631.13 * x[2] - 54.48);
 
-    for (int i = 0; i < numberOfOriginalConstraints; i++) {
+    for (var i = 0; i < numberOfOriginalConstraints; i++) {
       if (g[i] < 0.0) {
         g[i] = -g[i];
       } else {
@@ -67,8 +67,8 @@ public class RE61 extends AbstractDoubleProblem {
       }
     }
 
-      double sum = 0.0;
-      for (double v : g) {
+      var sum = 0.0;
+      for (var v : g) {
           sum += v;
       }
       solution.objectives()[5] = sum;

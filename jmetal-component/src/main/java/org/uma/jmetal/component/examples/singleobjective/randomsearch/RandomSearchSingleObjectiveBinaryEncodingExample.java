@@ -37,12 +37,12 @@ public class RandomSearchSingleObjectiveBinaryEncodingExample extends AbstractAl
           "Random Search", solutionsCreation, evaluation,
                     termination);
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000) ;
+    var evaluationObserver = new EvaluationObserver(1000) ;
     algorithm.getObservable().register(evaluationObserver);
 
     algorithm.run();
 
-    List<BinarySolution> population = algorithm.getResult();
+    var population = algorithm.getResult();
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 

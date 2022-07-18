@@ -33,9 +33,9 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
     super(solutions.size(), solutions.get(0).objectives().length, solutions.get(0).constraints().length);
     Check.notNull(solutions);
     Check.collectionIsNotEmpty(solutions);
-    int numberOfObjectives = solutions.get(0).objectives().length;
-    int numberOfConstraints = solutions.get(0).constraints().length;
-    for (Solution<?> solution : solutions) {
+    var numberOfObjectives = solutions.get(0).objectives().length;
+    var numberOfConstraints = solutions.get(0).constraints().length;
+    for (var solution : solutions) {
       Check.that(
           solution.objectives().length == numberOfObjectives,
           "The solutions in the list must have the same number of objectives: "
@@ -46,7 +46,7 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
                       + numberOfConstraints);
     }
 
-    for (int i = 0 ; i < solutions.size(); i++) {
+    for (var i = 0; i < solutions.size(); i++) {
       variables().set(i, solutions.get(i)) ;
     }
   }
@@ -58,16 +58,16 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
   public CompositeSolution(CompositeSolution solution) {
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length) ;
 
-    int bound2 = solution.variables().size();
-    for (int i2 = 0; i2 < bound2; i2++) {
+    var bound2 = solution.variables().size();
+    for (var i2 = 0; i2 < bound2; i2++) {
       variables().set(i2, solution.variables().get(i2).copy());
     }
-    int bound1 = solution.objectives().length;
-    for (int i1 = 0; i1 < bound1; i1++) {
+    var bound1 = solution.objectives().length;
+    for (var i1 = 0; i1 < bound1; i1++) {
       objectives()[i1] = solution.objectives()[i1];
     }
-    int bound = solution.constraints().length;
-    for (int i = 0; i < bound; i++) {
+    var bound = solution.constraints().length;
+    for (var i = 0; i < bound; i++) {
       constraints()[i] = solution.constraints()[i];
     }
 

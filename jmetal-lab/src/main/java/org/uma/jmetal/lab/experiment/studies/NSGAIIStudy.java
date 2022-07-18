@@ -62,7 +62,7 @@ public class NSGAIIStudy {
     if (args.length != 1) {
       throw new JMetalException("Missing argument: experimentBaseDirectory");
     }
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new ZDT1()));
@@ -74,7 +74,7 @@ public class NSGAIIStudy {
     @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
         configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    var experiment =
         new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
@@ -113,8 +113,8 @@ public class NSGAIIStudy {
       List<ExperimentProblem<DoubleSolution>> problemList) {
     @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-      for (int i = 0; i < problemList.size(); i++) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm =
             new NSGAIIBuilder<>(
                     problemList.get(i).getProblem(),
@@ -127,7 +127,7 @@ public class NSGAIIStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm =
             new NSGAIIBuilder<>(
                     problemList.get(i).getProblem(),
@@ -140,7 +140,7 @@ public class NSGAIIStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm =
             new NSGAIIBuilder<>(
                     problemList.get(i).getProblem(),
@@ -153,7 +153,7 @@ public class NSGAIIStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm =
             new NSGAIIBuilder<>(
                     problemList.get(i).getProblem(),

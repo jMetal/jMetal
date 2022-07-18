@@ -61,7 +61,7 @@ public class PointSolution implements Solution<Double> {
     this.numberOfObjectives = point.getDimension();
     objectives = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       this.objectives[i] = point.getValue(i);
     }
   }
@@ -75,7 +75,7 @@ public class PointSolution implements Solution<Double> {
     this.numberOfObjectives = solution.objectives().length;
     objectives = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       this.objectives[i] = solution.objectives()[i];
     }
   }
@@ -88,7 +88,7 @@ public class PointSolution implements Solution<Double> {
   public PointSolution(@NotNull PointSolution point) {
     this(point.objectives().length);
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       this.objectives[i] = point.objectives()[i];
     }
   }
@@ -103,7 +103,7 @@ public class PointSolution implements Solution<Double> {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    PointSolution that = (PointSolution) o;
+    var that = (PointSolution) o;
 
     if (numberOfObjectives != that.numberOfObjectives) return false;
     if (!Arrays.equals(objectives, that.objectives)) return false;

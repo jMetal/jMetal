@@ -111,7 +111,7 @@ public class F18RotatedHybridComposition2 extends TestFunc {
 
     // Load the shifted global optimum
     Benchmark.loadMatrixFromFile(file_data, NUM_FUNC, mDimension, m_o);
-    for (int i = 0; i < mDimension; i++) {
+    for (var i = 0; i < mDimension; i++) {
       m_o[9][i] = 0.0;
     }
     // Load the matrix
@@ -130,8 +130,8 @@ public class F18RotatedHybridComposition2 extends TestFunc {
     theJob.z = m_z;
     theJob.zM = m_zM;
     // Calculate/estimate the fmax for all the functions involved
-    for (int i = 0; i < NUM_FUNC; i++) {
-      for (int j = 0; j < mDimension; j++) {
+    for (var i = 0; i < NUM_FUNC; i++) {
+      for (var j = 0; j < mDimension; j++) {
         m_testPoint[j] = (5.0 / m_lambda[i]);
       }
       Benchmark.rotate(m_testPointM, m_testPoint, m_M[i]);
@@ -143,7 +143,7 @@ public class F18RotatedHybridComposition2 extends TestFunc {
   // Function body
   public double f(double[] x) throws JMetalException {
 
-    double result = 0.0;
+    var result = 0.0;
 
     result = Benchmark.hybrid_composition(x, theJob);
 
@@ -155,7 +155,7 @@ public class F18RotatedHybridComposition2 extends TestFunc {
 
   private class MyHCJob extends HCJob {
     public double basicFunc(int func_no, double[] x) throws JMetalException {
-      double result = 0.0;
+      var result = 0.0;
       switch (func_no) {
         case 0:
         case 1:

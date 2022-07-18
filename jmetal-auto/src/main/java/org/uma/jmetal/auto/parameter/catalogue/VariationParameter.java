@@ -22,12 +22,12 @@ public class VariationParameter extends CategoricalParameter {
     int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").getValue() ;
 
     if ("crossoverAndMutationVariation".equals(getValue())) {
-      CrossoverParameter crossoverParameter =
+      var crossoverParameter =
           (CrossoverParameter) findSpecificParameter("crossover");
-      MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
+      var mutationParameter = (MutationParameter) findSpecificParameter("mutation");
 
-      CrossoverOperator<DoubleSolution> crossoverOperator = crossoverParameter.getDoubleSolutionParameter();
-      MutationOperator<DoubleSolution> mutationOperatorOperator =
+      var crossoverOperator = crossoverParameter.getDoubleSolutionParameter();
+      var mutationOperatorOperator =
           mutationParameter.getDoubleSolutionParameter();
 
       result =
@@ -45,12 +45,12 @@ public class VariationParameter extends CategoricalParameter {
     int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").getValue() ;
 
     if ("crossoverAndMutationVariation".equals(getValue())) {
-      CrossoverParameter crossoverParameter =
+      var crossoverParameter =
           (CrossoverParameter) findSpecificParameter("crossover");
-      MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
+      var mutationParameter = (MutationParameter) findSpecificParameter("mutation");
 
       @NotNull CrossoverOperator<BinarySolution> crossoverOperator = crossoverParameter.getBinarySolutionParameter();
-      MutationOperator<BinarySolution> mutationOperatorOperator =
+      var mutationOperatorOperator =
           mutationParameter.getBinarySolutionParameter();
 
       result =

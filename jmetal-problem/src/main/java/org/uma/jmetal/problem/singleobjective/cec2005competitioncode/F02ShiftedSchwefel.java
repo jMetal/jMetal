@@ -81,7 +81,7 @@ public class F02ShiftedSchwefel extends TestFunc {
 
   // Function body
   public double f(double[] x) {
-    double result = 0.0;
+    var result = 0.0;
 
     Benchmark.shift(m_z, x, m_o);
 

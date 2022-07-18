@@ -39,7 +39,7 @@ public class MaF05 extends AbstractDoubleProblem {
     @NotNull List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+      for (var i1 = 0; i1 < numberOfVariables; i1++) {
           lower.add(0.0);
           upper.add(1.0);
       }
@@ -47,10 +47,10 @@ public class MaF05 extends AbstractDoubleProblem {
       setVariableBounds(lower, upper);
 
     //other constants during the whole process once M&D are defined
-      double @NotNull [] c5 = new double[10];
-      int count = 0;
-      for (int i = 0; i < numberOfObjectives; i++) {
-          double pow = Math.pow(2, i + 1);
+    var c5 = new double[10];
+    var count = 0;
+      for (var i = 0; i < numberOfObjectives; i++) {
+        var pow = Math.pow(2, i + 1);
           if (c5.length == count) c5 = Arrays.copyOf(c5, count * 2);
           c5[count++] = pow;
       }
@@ -66,24 +66,23 @@ public class MaF05 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
 
-    int numberOfVariables = solution.variables().size();
-    int numberOfObjectives = solution.objectives().length;
+    var numberOfVariables = solution.variables().size();
+    var numberOfObjectives = solution.objectives().length;
 
-    double[] x;
-    double[] f = new double[numberOfObjectives];
+    var f = new double[numberOfObjectives];
 
-      double @NotNull [] arr = new double[10];
-      int count = 0;
-      for (int i2 = 0; i2 < numberOfVariables; i2++) {
+    var arr = new double[10];
+    var count = 0;
+      for (var i2 = 0; i2 < numberOfVariables; i2++) {
           double v = solution.variables().get(i2);
           if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
           arr[count++] = v;
       }
       arr = Arrays.copyOfRange(arr, 0, count);
-      x = arr;
-      double g = 0.0;
-      for (int i1 = numberOfObjectives - 1; i1 < numberOfVariables; i1++) {
-          double pow = Math.pow(x[i1] - 0.5, 2);
+    var x = arr;
+    var g = 0.0;
+      for (var i1 = numberOfObjectives - 1; i1 < numberOfVariables; i1++) {
+        var pow = Math.pow(x[i1] - 0.5, 2);
           g += pow;
       }
       // evaluate g
@@ -92,7 +91,7 @@ public class MaF05 extends AbstractDoubleProblem {
     f[numberOfObjectives - 1] =
         2 * Math.pow(Math.sin(Math.PI * Math.pow(x[0], 100) / 2) * subf3, 1);
     // fi=2^i*(subf1*subf2)*(subf3)
-    for (int i = numberOfObjectives - 2; i > 0; i--) {
+    for (var i = numberOfObjectives - 2; i > 0; i--) {
       subf1 *= Math.cos(Math.PI * Math.pow(x[numberOfObjectives - i - 2], 100) / 2);
       f[i] = const5[numberOfObjectives - i - 1] * Math.pow(
           subf1 * Math.sin(Math.PI * Math.pow(x[numberOfObjectives - i - 1], 100) / 2) * subf3, 1);
@@ -101,7 +100,7 @@ public class MaF05 extends AbstractDoubleProblem {
         .pow(subf1 * (Math.cos(Math.PI * Math.pow(x[numberOfObjectives - 2], 100) / 2)) * subf3,
             1);
 
-    for (int i = 0; i < numberOfObjectives; i++) {
+    for (var i = 0; i < numberOfObjectives; i++) {
       solution.objectives()[i] = f[i];
     }
     return solution ;

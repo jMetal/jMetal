@@ -34,48 +34,44 @@ public class ArtificiallDecisionMakerIT {
   @Ignore
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
-    Problem<DoubleSolution> problem;
-    InteractiveAlgorithm<DoubleSolution, List<DoubleSolution>> algorithmRun;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    int numberIterations = 1;
-    int numberObjectives = 3;
-    int numberVariables = 7;
-    String weightsName = "";
-    int populationSize = 100;
+      InteractiveAlgorithm<DoubleSolution, List<DoubleSolution>> algorithmRun;
+    var numberIterations = 1;
+    var numberObjectives = 3;
+    var numberVariables = 7;
+    var weightsName = "";
+    var populationSize = 100;
 
-    problem = new DTLZ1(numberVariables, numberObjectives);
+      Problem<DoubleSolution> problem = new DTLZ1(numberVariables, numberObjectives);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossoverProbability = 0.9;
+    var crossoverDistributionIndex = 20.0;
+      CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutationProbability = 1.0 / problem.getNumberOfVariables();
+    var mutationDistributionIndex = 20.0;
+      MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(
-        new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+      SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(
+              new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    IdealPoint idealPoint = new IdealPoint(problem.getNumberOfObjectives());
+    var idealPoint = new IdealPoint(problem.getNumberOfObjectives());
     idealPoint.update(problem.createSolution().objectives());
-    NadirPoint nadirPoint = new NadirPoint(problem.getNumberOfObjectives());
+    var nadirPoint = new NadirPoint(problem.getNumberOfObjectives());
     nadirPoint.update(problem.createSolution().objectives());
-    double considerationProbability = 0.1;
+    var considerationProbability = 0.1;
     List<Double> rankingCoeficient = new ArrayList<>();
-    int bound = problem.getNumberOfObjectives();
-    for (int i1 = 0; i1 < bound; i1++) {
+    var bound = problem.getNumberOfObjectives();
+    for (var i1 = 0; i1 < bound; i1++) {
       Double aDouble = 1.0 / problem.getNumberOfObjectives();
       rankingCoeficient.add(aDouble);
     }
 
-    for (int cont = 0; cont < numberIterations; cont++) {
+    for (var cont = 0; cont < numberIterations; cont++) {
       List<Double> referencePoint = new ArrayList<>();
 
-      double epsilon = 0.01;
+      var epsilon = 0.01;
       List<Double> asp = new ArrayList<>();
-      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      for (var i = 0; i < problem.getNumberOfObjectives(); i++) {
         asp.add(0.0);//initialize asp to ideal
         referencePoint.add(0.0);//initialization
       }
@@ -91,7 +87,7 @@ public class ArtificiallDecisionMakerIT {
           .build();
       algorithm.run();
 
-      List<Double> referencePoints = ((ArtificialDecisionMakerDecisionTree<DoubleSolution>) algorithm)
+      var referencePoints = ((ArtificialDecisionMakerDecisionTree<DoubleSolution>) algorithm)
           .getReferencePoints();
 
       assertTrue(referencePoints.size() >= numberObjectives * numberIterations);

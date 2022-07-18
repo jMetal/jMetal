@@ -33,8 +33,8 @@ public class ListLinearGrouping<C extends Comparable<C>> extends ListGrouping<C>
 
     if (lastListSize != list.size()) {
       indices = new ArrayList<>(list.size());
-        int bound = list.size();
-        for (int i = 0; i < bound; i++) {
+      var bound = list.size();
+        for (var i = 0; i < bound; i++) {
             indices.add(i);
         }
 

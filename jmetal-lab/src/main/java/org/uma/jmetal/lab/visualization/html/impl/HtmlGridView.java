@@ -31,7 +31,7 @@ public class HtmlGridView implements HtmlComponent {
 
   @Override
   public String getHtml() {
-    StringBuilder stringBuilder = new StringBuilder();
+    var stringBuilder = new StringBuilder();
     if (title != null) {
       stringBuilder.append("<h2>").append(title).append("</h2>\n");
     }
@@ -47,13 +47,13 @@ public class HtmlGridView implements HtmlComponent {
 
   @Override
   public @NotNull String getCSS() {
-    StringBuilder stringBuilder = new StringBuilder();
+    var stringBuilder = new StringBuilder();
     stringBuilder.append("h2 { text-align: center; }");
     stringBuilder.append(".grid-container")
         .append(
             " { display: flex; flex-direction: row; flex-wrap: wrap; flex-shrink: 0; justify-content: space-evenly; align-items: center; }");
     stringBuilder.append(".grid-container .grid-item ").append("{ margin: 15px; }");
-    for (HtmlComponent component : components) {
+    for (var component : components) {
       stringBuilder.append(component.getCSS());
     }
     return stringBuilder.toString();

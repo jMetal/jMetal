@@ -19,8 +19,8 @@ public class PESA2Selection<S extends Solution<?>> implements SelectionOperator<
 
   @Override public S execute(@NotNull AdaptiveGridArchive<S> archive) {
     int selected;
-    int hypercube1 = archive.getGrid().randomOccupiedHypercube();
-    int hypercube2 = archive.getGrid().randomOccupiedHypercube();
+    var hypercube1 = archive.getGrid().randomOccupiedHypercube();
+    var hypercube2 = archive.getGrid().randomOccupiedHypercube();
 
     if (hypercube1 != hypercube2){
       if (archive.getGrid().getLocationDensity(hypercube1) <
@@ -42,10 +42,10 @@ public class PESA2Selection<S extends Solution<?>> implements SelectionOperator<
     } else {
       selected = hypercube1;
     }
-    int base = randomGenerator.nextInt(0, archive.size() - 1);
-    int cnt = 0;
+    var base = randomGenerator.nextInt(0, archive.size() - 1);
+    var cnt = 0;
     while (cnt < archive.size()){
-      S individual = (S) archive.get((base + cnt)% archive.size());
+      var individual = (S) archive.get((base + cnt)% archive.size());
       if (archive.getGrid().location(individual) != selected){
         cnt++;
       } else {

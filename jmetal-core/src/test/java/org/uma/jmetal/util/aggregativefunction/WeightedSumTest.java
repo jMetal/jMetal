@@ -19,7 +19,7 @@ public class WeightedSumTest {
   @Test
   public void shouldComputeWorkCorrectlyWithAWeightVectorOfDimensionTwo() {
 
-    double result = aggregativeFunction.compute(new double[]{1.3, 0.5}, new double[]{1.0, 0.0}) ;
+    var result = aggregativeFunction.compute(new double[]{1.3, 0.5}, new double[]{1.0, 0.0}) ;
     assertEquals(1.3, result, EPSILON);
 
     result = aggregativeFunction.compute(new double[]{1.3, 0.5}, new double[]{0.0, 1.0}) ;
@@ -31,7 +31,7 @@ public class WeightedSumTest {
 
   @Test
   public void shouldComputeWorkCorrectlyWithAWeightVectorOfDimensionThree() {
-    double result = aggregativeFunction.compute(new double[]{1.3, 3.5, -1.5}, new double[]{1.0, 0.0, 0.0}) ;
+    var result = aggregativeFunction.compute(new double[]{1.3, 3.5, -1.5}, new double[]{1.0, 0.0, 0.0}) ;
     assertEquals(1.3, result, EPSILON);
 
     result = aggregativeFunction.compute(new double[]{1.3, 3.5, -1.5}, new double[]{0.0, 1.0, 0.0}) ;

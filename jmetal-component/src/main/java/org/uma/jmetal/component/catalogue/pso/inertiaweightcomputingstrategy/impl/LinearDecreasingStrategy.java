@@ -23,8 +23,8 @@ public class LinearDecreasingStrategy implements InertiaWeightRangeBasedComputin
   @Override
   public double compute() {
     computeCounter++ ;
-    int currentIteration = (computeCounter % swamSize) ;
-    double weight = maximumWeight - (maximumWeight - minimumWeight) * currentIteration/maximumNumberOfIterations ;
+    var currentIteration = (computeCounter % swamSize) ;
+    var weight = maximumWeight - (maximumWeight - minimumWeight) * currentIteration/maximumNumberOfIterations ;
 
     return weight ;
   }

@@ -34,8 +34,8 @@ public class GenerateHtmlPages<Result extends List<? extends Solution<?>>>
 
   @Override
   public void run() throws IOException {
-    String directory = experiment.getExperimentBaseDirectory();
-    StudyVisualizer visualizer = new StudyVisualizer(directory, defaultTypeOfFrontToShow);
+    var directory = experiment.getExperimentBaseDirectory();
+    var visualizer = new StudyVisualizer(directory, defaultTypeOfFrontToShow);
     visualizer.createHTMLPageForEachIndicator();
   }
 }

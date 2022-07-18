@@ -21,7 +21,7 @@ class RE42Test {
   @Test
   public void shouldEvaluateWorkProperly() {
     DoubleProblem problem = new RE42();
-    DoubleSolution solution = problem.createSolution();
+    var solution = problem.createSolution();
     problem.evaluate(solution);
 
     assertEquals(6, solution.variables().size());

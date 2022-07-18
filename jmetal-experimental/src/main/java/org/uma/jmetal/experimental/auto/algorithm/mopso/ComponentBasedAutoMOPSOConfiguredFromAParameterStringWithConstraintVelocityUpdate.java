@@ -15,7 +15,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithConstraint
   public static void main(String[] args) {
     @NotNull String referenceFrontFileName = "ZDT4.csv";
 
-    String[] parameters = ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
+    var parameters = ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
         + "--referenceFrontFileName " + referenceFrontFileName + " "
         + "--maximumNumberOfEvaluations 25000 "
         + "--swarmSize 100 "
@@ -47,7 +47,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithConstraint
     )
         .split("\\s+");
 
-    AutoMOPSO autoMOPSO = new AutoMOPSO();
+    var autoMOPSO = new AutoMOPSO();
     autoMOPSO.parseAndCheckParameters(parameters);
 
     AutoMOPSO.print(autoMOPSO.fixedParameterList);
@@ -55,9 +55,9 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithConstraint
 
     @NotNull ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>(
+    var evaluationObserver = new EvaluationObserver(1000);
+    var runTimeChartObserver =
+        new RunTimeChartObserver<DoubleSolution>(
             "MOPSO Constrained", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 
     mopso.getObservable().register(runTimeChartObserver);

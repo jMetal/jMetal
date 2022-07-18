@@ -61,27 +61,26 @@ public class CoralReefsOptimization<S>
 
 	@Override
 	protected List<S> createInitialPopulation() {
-		List<S> population;
 
-		int quantity = (int) (getRho() * getN() * getM());
+		var quantity = (int) (getRho() * getN() * getM());
 
 		@NotNull ArrayList<S> s = new ArrayList<>(getN() * getM());
-		for (int i = 0; i < quantity; i++) {
-			S solution = problem.createSolution();
+		for (var i = 0; i < quantity; i++) {
+			var solution = problem.createSolution();
 			s.add(solution);
 		}
-		population = s;
+		List<S> population = s;
 		return population;
 	}
 
 	@Override
 	protected @NotNull List<Coordinate> generateCoordinates() {
-		int popSize = getPopulationSize();
-		MersenneTwisterGenerator random = new MersenneTwisterGenerator();
+		var popSize = getPopulationSize();
+		var random = new MersenneTwisterGenerator();
 
 		@NotNull ArrayList<Coordinate> coordinates = new ArrayList<>(popSize);
-		for (int i = 0; i < popSize; i++) {
-			Coordinate coordinate = new Coordinate(random.nextInt(0, getN() - 1),
+		for (var i = 0; i < popSize; i++) {
+			var coordinate = new Coordinate(random.nextInt(0, getN() - 1),
 					random.nextInt(0, getM() - 1));
 			coordinates.add(coordinate);
 		}
@@ -91,7 +90,7 @@ public class CoralReefsOptimization<S>
 
 	@Override
 	protected @NotNull List<S> evaluatePopulation(@NotNull List<S> population) {
-		for (int solution = 0; solution < population.size(); solution++) {
+		for (var solution = 0; solution < population.size(); solution++) {
 			this.problem.evaluate(population.get(solution));
 		}
 		return population;
@@ -99,7 +98,7 @@ public class CoralReefsOptimization<S>
 
 	@Override
 	protected List<S> selectBroadcastSpawners(List<S> population) {
-		int quantity = (int) (getFbs() * population.size());
+		var quantity = (int) (getFbs() * population.size());
 
 		if ((quantity % 2) == 1) {
 			quantity--;
@@ -107,8 +106,8 @@ public class CoralReefsOptimization<S>
 
 		List<S> spawners = new ArrayList<S>(quantity);
 
-		for (int i = 0; i < quantity; i++) {
-			S solution = selectionOperator.execute(population);
+		for (var i = 0; i < quantity; i++) {
+			var solution = selectionOperator.execute(population);
 			spawners.add(solution);
 		}
 
@@ -141,11 +140,11 @@ public class CoralReefsOptimization<S>
 
 	@Override
 	protected List<S> asexualReproduction(List<S> brooders) {
-		int sz = brooders.size();
+		var sz = brooders.size();
 
 		@NotNull List<S> larvae = new ArrayList<>(sz);
-		for (int i = 0; i < sz; i++) {
-			S execute = mutationOperator.execute(brooders.get(i));
+		for (var i = 0; i < sz; i++) {
+			var execute = mutationOperator.execute(brooders.get(i));
 			larvae.add(execute);
 		}
 
@@ -156,13 +155,13 @@ public class CoralReefsOptimization<S>
 	protected List<S> larvaeSettlementPhase(List<S> larvae, @NotNull List<S> population,
                                             List<Coordinate> coordinates) {
 
-		int attempts = getAttemptsToSettle();
+		var attempts = getAttemptsToSettle();
 		int index;
 
-		for (S larva : larvae) {
+		for (var larva : larvae) {
 
-			for (int attempt = 0; attempt < attempts; attempt++) {
-				Coordinate C = new Coordinate(random.nextInt(0, getN() - 1),
+			for (var attempt = 0; attempt < attempts; attempt++) {
+				var C = new Coordinate(random.nextInt(0, getN() - 1),
 						random.nextInt(0, getM() - 1));
 
 				if (!coordinates.contains(C)) {
@@ -189,13 +188,13 @@ public class CoralReefsOptimization<S>
 	@Override
 	protected @NotNull List<S> depredation(@NotNull List<S> population,
                                            @NotNull List<Coordinate> coordinates) {
-		int popSize = population.size();
-		int quantity = (int) (getFd() * popSize);
+		var popSize = population.size();
+		var quantity = (int) (getFd() * popSize);
 
 		quantity = popSize - quantity;
 
 		double coin;
-		for (int i = popSize-1; i > quantity; i--) {
+		for (var i = popSize-1; i > quantity; i--) {
 			coin = random.nextDouble();
 			
 			if(coin < getPd()){

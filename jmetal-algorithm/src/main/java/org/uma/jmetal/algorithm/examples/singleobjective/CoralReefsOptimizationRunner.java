@@ -32,7 +32,6 @@ public class CoralReefsOptimizationRunner {
 	 * org.uma.jmetal.runner.singleobjective.CoralReefsOptimizationRunner
 	 */
 	public static void main(String[] args) throws Exception {
-		Algorithm<List<BinarySolution>> algorithm;
 		BinaryProblem problem = new OneMax(512);
 
 		@NotNull CrossoverOperator<BinarySolution> crossoverOperator = new SinglePointCrossover(
@@ -41,19 +40,19 @@ public class CoralReefsOptimizationRunner {
 				1.0 / problem.getBitsFromVariable(0));
 		@NotNull SelectionOperator<List<BinarySolution>, BinarySolution> selectionOperator = new BinaryTournamentSelection<BinarySolution>();
 
-		algorithm = new CoralReefsOptimizationBuilder<BinarySolution>(problem,
+		Algorithm<List<BinarySolution>> algorithm = new CoralReefsOptimizationBuilder<BinarySolution>(problem,
 				selectionOperator, crossoverOperator, mutationOperator)
 				.setM(10).setN(10).setRho(0.6).setFbs(0.9).setFbr(0.1)
 				.setFa(0.1).setPd(0.1).setAttemptsToSettle(3)
 				.setComparator(new ObjectiveComparator<BinarySolution>(0))
 				.build();
 
-		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(
+		var algorithmRunner = new AlgorithmRunner.Executor(
 				algorithm).execute();
 
-		List<BinarySolution> population = algorithm.getResult();
-		
-		long computingTime = algorithmRunner.getComputingTime();
+		var population = algorithm.getResult();
+
+		var computingTime = algorithmRunner.getComputingTime();
 
 		new SolutionListOutput(population)
 				.setVarFileOutputContext(

@@ -64,7 +64,7 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
     if (args.length != 1) {
       throw new JMetalException("Needed arguments: experimentBaseDirectory");
     }
-    String experimentBaseDirectory = args[0];
+    var experimentBaseDirectory = args[0];
 
     @NotNull List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new ZDT1(10), "ZDT110"));
@@ -76,7 +76,7 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
     @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+    var experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTScalabilityStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
@@ -116,11 +116,11 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
   static @NotNull List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
-    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+    for (var run = 0; run < INDEPENDENT_RUNS; run++) {
 
-      for (int i = 0; i < problemList.size(); i++) {
-        double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
+      for (var i = 0; i < problemList.size(); i++) {
+        var mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
+        var mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                 (DoubleProblem) problemList.get(i).getProblem(),
                 new CrowdingDistanceArchive<DoubleSolution>(100))
@@ -132,7 +132,7 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20.0),
@@ -143,7 +143,7 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (var i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 10.0),

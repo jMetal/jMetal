@@ -27,13 +27,11 @@ public class StandardPSO2007Runner {
   /** Usage: java org.uma.jmetal.runner.singleobjective.StandardPSO2007Runner [cores] */
   public static void main(String[] args) throws Exception {
 
-    DoubleProblem problem;
-    Algorithm<DoubleSolution> algorithm;
-    SolutionListEvaluator<DoubleSolution> evaluator;
+      SolutionListEvaluator<DoubleSolution> evaluator;
 
-    String problemName = "org.uma.jmetal.problem.singleobjective.Sphere";
+    var problemName = "org.uma.jmetal.problem.singleobjective.Sphere";
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     int numberOfCores;
     if (args.length == 1) {
@@ -48,18 +46,17 @@ public class StandardPSO2007Runner {
       evaluator = new MultiThreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
     }
 
-    algorithm =
-        new StandardPSO2007(
-            problem,
-            10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())),
-            25000,
-            3,
-            evaluator);
+      Algorithm<DoubleSolution> algorithm = new StandardPSO2007(
+              problem,
+              10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())),
+              25000,
+              3,
+              evaluator);
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    var algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    DoubleSolution solution = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    var solution = algorithm.getResult();
+    var computingTime = algorithmRunner.getComputingTime();
 
     List<DoubleSolution> population = new ArrayList<>(1);
     population.add(solution);

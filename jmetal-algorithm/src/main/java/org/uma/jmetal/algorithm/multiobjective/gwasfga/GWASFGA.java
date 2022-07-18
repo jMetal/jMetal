@@ -36,18 +36,18 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
 
     setMaxPopulationSize(populationSize);
 
-    int halfVectorSize = super.weights.length  / 2;
-    int evenVectorsSize    = (super.weights.length%2==0) ? halfVectorSize : (halfVectorSize+1);
+    var halfVectorSize = super.weights.length  / 2;
+    var evenVectorsSize    = (super.weights.length%2==0) ? halfVectorSize : (halfVectorSize+1);
 
-    double [][] evenVectors = new double[evenVectorsSize][getProblem().getNumberOfObjectives()];
-    double [] @NotNull [] oddVectors = new double[halfVectorSize][getProblem().getNumberOfObjectives()];
+    var evenVectors = new double[evenVectorsSize][getProblem().getNumberOfObjectives()];
+    var oddVectors = new double[halfVectorSize][getProblem().getNumberOfObjectives()];
 
-    int index = 0;
-    for (int i = 0; i < super.weights.length; i = i + 2)
+    var index = 0;
+    for (var i = 0; i < super.weights.length; i = i + 2)
       evenVectors[index++] = super.weights[i];
 
     index = 0;
-    for (int i = 1; i < super.weights.length; i = i + 2)
+    for (var i = 1; i < super.weights.length; i = i + 2)
       oddVectors[index++] = super.weights[i];
 
     this.achievementScalarizingNadir  =  createUtilityFunction(this.getNadirPoint(), evenVectors);

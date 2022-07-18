@@ -37,7 +37,7 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   public String getHtml() {
-    StringBuilder html = new StringBuilder("<div>\n");
+    var html = new StringBuilder("<div>\n");
     html.append("<table>\n");
     html.append(appendTitle());
     html.append(appendColumnHeaders());
@@ -47,7 +47,7 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   private StringBuilder appendTitle() {
-    StringBuilder stringBuilder = new StringBuilder();
+    var stringBuilder = new StringBuilder();
     if (title != null) {
       stringBuilder.append("<caption>").append(title).append("</caption>\n");
     }
@@ -55,14 +55,14 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   private StringBuilder appendColumnHeaders() {
-    StringBuilder stringBuilder = new StringBuilder();
+    var stringBuilder = new StringBuilder();
     stringBuilder.append("<tr>");
     // FIRST CELL EMPTY IF THERE ARE ROW HEADERS
     if (headersRow != null) {
       stringBuilder.append("<th>").append("</th>");
     }
     if (headersColumn != null) {
-      for (String elem : headersColumn) {
+      for (var elem : headersColumn) {
         stringBuilder.append("<th>").append(elem).append("</th>");
       }
     }
@@ -72,7 +72,7 @@ public class HtmlTable<T> implements HtmlComponent {
 
   private StringBuilder appendData() {
     @NotNull StringBuilder html = new StringBuilder();
-    for (int i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
       html.append("<tr>");
       if (headersRow != null) {
         html.append("<th>").append(headersRow[i]).append("</th>");
@@ -92,7 +92,7 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   public @NotNull String getCSS() {
-    StringBuilder stringBuilder = new StringBuilder();
+    var stringBuilder = new StringBuilder();
     stringBuilder.append("table { margin: auto; }");
     stringBuilder.append("th,td { border:1px solid black; text-align: center; padding: 15px }");
     stringBuilder.append(

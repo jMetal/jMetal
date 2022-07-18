@@ -9,7 +9,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 class RastriginTest {
   @Test
   void constructorMustCreateAValidInstance() {
-    int variables = 3 ;
+    var variables = 3 ;
     DoubleProblem problem = new Rastrigin(3) ;
 
     assertThat(problem.getNumberOfVariables()).isEqualTo(variables) ;
@@ -26,7 +26,7 @@ class RastriginTest {
   @Test
   void createSolutionGeneratesAValidSolution() {
     DoubleProblem problem = new Rastrigin(20) ;
-    DoubleSolution solution = problem.createSolution() ;
+    var solution = problem.createSolution() ;
 
     assertThat(solution).isNotNull() ;
     assertThat(solution.variables()).hasSize(20) ;

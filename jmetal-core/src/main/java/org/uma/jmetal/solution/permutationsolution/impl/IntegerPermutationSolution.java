@@ -27,14 +27,14 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
     super(permutationLength, numberOfObjectives);
 
       List<Integer> randomSequence = new ArrayList<>(permutationLength);
-      for (int i1 = 0; i1 < permutationLength; i1++) {
+      for (var i1 = 0; i1 < permutationLength; i1++) {
           Integer integer = i1;
           randomSequence.add(integer);
       }
 
       java.util.Collections.shuffle(randomSequence);
 
-      for (int i = 0; i < permutationLength; i++) {
+      for (var i = 0; i < permutationLength; i++) {
           variables().set(i, randomSequence.get(i));
       }
   }
@@ -47,7 +47,7 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
 
     Arrays.setAll(objectives(), i -> solution.objectives()[i]);
 
-    for (int i = 0; i < variables().size(); i++) {
+    for (var i = 0; i < variables().size(); i++) {
       variables().set(i, solution.variables().get(i));
     }
 
