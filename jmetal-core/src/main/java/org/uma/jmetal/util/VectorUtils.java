@@ -133,8 +133,8 @@ public class VectorUtils {
 
     double minDistance = Double.MAX_VALUE;
 
-    for (int i = 0; i < front.length; i++) {
-      double aux = distance.compute(vector, front[i]);
+    for (double[] value : front) {
+      double aux = distance.compute(vector, value);
       if ((aux < minDistance) && (aux > 0.0)) {
         minDistance = aux;
       }

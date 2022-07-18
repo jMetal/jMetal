@@ -83,7 +83,7 @@ public interface BoundedRandomGenerator<Value extends Comparable<Value>> extends
 			 * significantly impact the distribution, thus making it equivalent
 			 * to [0;1[ in any case.
 			 */
-			Double doubleValue = unboundedGenerator.getRandomValue() % 1;
+			double doubleValue = unboundedGenerator.getRandomValue() % 1;
 
 			return doubleValue * (max - min) + min;
 		};

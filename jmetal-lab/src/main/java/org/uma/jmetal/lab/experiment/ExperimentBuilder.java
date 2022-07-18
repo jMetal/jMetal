@@ -21,9 +21,7 @@ public class ExperimentBuilder<S extends Solution<?>, Result extends List<S>> {
   private String outputParetoFrontFileName;
   private String outputParetoSetFileName;
   private int independentRuns;
-
   private List<QualityIndicator> indicatorList ;
-
   private int numberOfCores ;
 
   public ExperimentBuilder(String experimentName) {

@@ -10,7 +10,6 @@ import org.uma.jmetal.util.restartstrategy.RestartStrategy;
  */
 public interface DynamicAlgorithm<Result> extends Algorithm<Result> {
   DynamicProblem<?, ?> getDynamicProblem() ;
-
   void restart();
   RestartStrategy<?> getRestartStrategy();
   Observable<Map<String, Object>> getObservable() ;

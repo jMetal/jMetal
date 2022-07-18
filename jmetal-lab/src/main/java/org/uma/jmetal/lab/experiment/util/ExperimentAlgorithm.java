@@ -52,15 +52,15 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
         outputDirectoryName + "/" + experimentData.getOutputParetoFrontFileName() + runId + ".csv";
     String varFile =
         outputDirectoryName + "/" + experimentData.getOutputParetoSetFileName() + runId + ".csv";
-    JMetalLogger.logger.info(
-        " Running algorithm: "
-            + algorithmTag
-            + ", problem: "
-            + problemTag
-            + ", run: "
-            + runId
-            + ", funFile: "
-            + funFile);
+    String message = " Running algorithm: "
+        + algorithmTag
+        + ", problem: "
+        + problemTag
+        + ", run: "
+        + runId
+        + ", funFile: "
+        + funFile ;
+    JMetalLogger.logger.info(message);
 
     try {
       algorithm.run();
