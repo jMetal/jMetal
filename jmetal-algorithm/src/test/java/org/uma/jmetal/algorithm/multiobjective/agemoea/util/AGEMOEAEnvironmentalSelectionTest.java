@@ -129,7 +129,7 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
                 (Double) front.get(1).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId())));
         assertTrue(Double.isInfinite(
                 (Double) front.get(2).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId())));
-        assertEquals(2 + 2d / 3d,
+        assertEquals(2d + 2d / 3d,
                 (Double) front.get(3).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId()));
     }
 
