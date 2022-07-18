@@ -45,7 +45,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 /**
  * Class to configure NSGA-II with an argument string using class {@link EvolutionaryAlgorithm}
  *
- * @autor Antonio J. Nebro
+ * @author Antonio J. Nebro
  */
 public class AutoNSGAII implements AutoConfigurableAlgorithm {
 
@@ -58,7 +58,6 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
   private IntegerParameter populationSizeWithArchiveParameter;
-  private IntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter<DoubleSolution> selectionParameter;
   private VariationParameter variationParameter;
@@ -150,8 +149,8 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
         problem.getNumberOfVariables());
 
-    offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1,
-        400);
+    IntegerParameter offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1,
+            400);
 
     variationParameter =
         new VariationParameter(args, List.of("crossoverAndMutationVariation"));
