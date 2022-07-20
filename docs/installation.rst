@@ -4,7 +4,7 @@ jMetal is a Maven project hosted in GitHub, so there are two ways of getting the
 
 The software requirements to use jMetal are:
 
-* Java 13+ JDK 
+* Java 14+ JDK
 * Maven
 * Optional: R, Latex.
 

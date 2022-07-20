@@ -34,7 +34,7 @@ The jMetal project is a Maven project structured in the following sub-projects:
 
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
     :caption: Index:
 
     installation.rst
@@ -43,7 +43,6 @@ The jMetal project is a Maven project structured in the following sub-projects:
     constraints.rst
     experimentation.rst
     parallel.rst
-    autoconfigurationNSGAII.rst
-    autoconfigurationMOPSO.rst
+    autoconfiguration.rst
     component.rst
     mnds.rst
