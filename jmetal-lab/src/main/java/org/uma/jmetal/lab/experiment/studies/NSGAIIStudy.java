@@ -38,20 +38,24 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * Example of experimental study based on solving the ZDT problems with four versions of NSGA-II,
  * each of them applying a different crossover probability (from 0.7 to 1.0).
  *
- * <p>This org.uma.jmetal.experiment assumes that the reference Pareto front are known and that,
+ * This org.uma.jmetal.experiment assumes that the reference Pareto front are known and that,
  * given a problem named P, there is a corresponding file called P.pf containing its corresponding
  * Pareto front. If this is not the case, please refer to class {@link DTLZStudy} to see an example
  * of how to explicitly indicate the name of those files.
  *
- * <p>Six quality indicators are used for performance assessment.
+ * Six quality indicators are used for performance assessment.
  *
- * <p>The steps to carry out the org.uma.jmetal.experiment are: 1. Configure the
- * org.uma.jmetal.experiment 2. Execute the algorithms 3. Compute the quality indicators 4. Generate
- * Latex tables reporting means and medians 5. Generate Latex tables with the result of applying the
- * Wilcoxon Rank Sum Test 6. Generate Latex tables with the ranking obtained by applying the
- * Friedman test 7. Generate R scripts to obtain boxplots
+ * The steps to carry out the org.uma.jmetal.experiment are:
+ *  1. Configure experiment
+ *  2. Execute algorithms
+ *  3. Compute quality indicators
+ *  4. Generate Latex tables reporting means and medians
+ *  5. Generate Latex tables with the result of applying the Wilcoxon Rank Sum Test
+ *  6. Generate Latex tables with the ranking obtained by applying the Friedman test
+ *  7. Generate R scripts to obtain boxplots
+ *  8. Generate HTML pages with including the above data
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro (ajnebro@uma.es)
  */
 public class NSGAIIStudy {
   private static final int INDEPENDENT_RUNS = 25;
@@ -96,10 +100,10 @@ public class NSGAIIStudy {
     new ExecuteAlgorithms<>(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
-    new GenerateHtmlPages<>(experiment).run() ;
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
+    new GenerateHtmlPages<>(experiment).run() ;
   }
 
   /**
