@@ -491,7 +491,7 @@ The ``org.uma.jmetal.auto.autoconfigurablealgorithm`` contains the ``AutoMOPSO``
     }
 
 Auto-configuration process
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To replicate the study presented in the paper accepted in ANTs 2022 we must follow the next steps.
 
