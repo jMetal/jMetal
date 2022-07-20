@@ -21,7 +21,7 @@ public class RandomSelection<S extends Solution<?>> implements Selection<S> {
   private final BoundedRandomGenerator<Integer> randomGenerator;
 
   public RandomSelection(int numberOfElementsToSelect) {
-    this(numberOfElementsToSelect, false);
+    this(numberOfElementsToSelect, true);
   }
 
   public RandomSelection(int numberOfElementsToSelect, boolean withReplacement) {

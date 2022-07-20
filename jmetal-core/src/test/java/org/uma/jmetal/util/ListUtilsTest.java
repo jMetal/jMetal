@@ -55,7 +55,7 @@ class ListUtilsTest {
     }
 
     @Test
-    void selectionWithALowerListSizeThanTheNumberOfRequestedElementsRaisesAnException() {
+    void selectionWithAListSizeLowerThanTheNumberOfRequestedElementsRaisesAnException() {
       var list = List.of(1, 2, 3, 4);
       int numberOfRequestedElements = 5;
       assertThatThrownBy(
@@ -129,13 +129,11 @@ class ListUtilsTest {
     }
 
     @Test
-    void selectionWithALowerListSizeThanTheNumberOfRequestedElementsRaisesAnException() {
+    void selectionWithAListSizeLowerThanTheNumberOfRequestedElementsReturnsTheRightNumberOfElements() {
       var list = List.of(1, 2, 3, 4);
-      int numberOfRequestedElements = 5;
-      assertThatThrownBy(
-          () -> ListUtils.randomSelectionWithReplacement(numberOfRequestedElements, list,
-              JMetalRandom.getInstance()::nextInt)).isInstanceOf(
-          InvalidConditionException.class);
+      int numberOfRequestedElements = 10;
+
+      assertThat(ListUtils.randomSelectionWithReplacement(numberOfRequestedElements, list)).hasSize(numberOfRequestedElements) ;
     }
 
     @Test

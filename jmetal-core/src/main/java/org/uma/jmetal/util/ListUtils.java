@@ -13,7 +13,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class ListUtils {
 
   /**
-   * Selects N random elements from a list without replacement
+   * Selects N random elements from a list without replacement.
+   * The size of the list must be equal or higher than the number of elements to select.
    */
   public static <S> List<S> randomSelectionWithoutReplacement(
       int numberOfElementsSelect, List<S> solutionList) {
@@ -23,7 +24,8 @@ public class ListUtils {
   }
 
   /**
-   * Selects N random elements from a list without replacement
+   * Selects N random elements from a list without replacement.
+   * The size of the list must be equal or higher than the number of elements to select.
    *
    * @param list The list
    * @param randomGenerator The random number generator
@@ -52,30 +54,11 @@ public class ListUtils {
 
     return selectedIndices.stream().map(list::get).collect(
         Collectors.toList());
-
-    /*
-    List<S> resultList = new ArrayList<>(numberOfSolutionsToBeReturned);
-
-    if (list.size() == 1) {
-      resultList.add(list.get(0));
-    } else {
-      Collection<Integer> positions = new HashSet<>(numberOfSolutionsToBeReturned);
-      while (positions.size() < numberOfSolutionsToBeReturned) {
-        int nextPosition = randomGenerator.getRandomValue(0, list.size() - 1);
-        if (!positions.contains(nextPosition)) {
-          positions.add(nextPosition);
-          resultList.add(list.get(nextPosition));
-        }
-      }
-    }
-
-    return resultList;
-
-     */
   }
 
   /**
-   * Selects N random elements from a list with replacement
+   * Selects N random elements from a list with replacement.
+   * The size of the list can be smaller than the number of requested elements.
    */
   public static <S> List<S> randomSelectionWithReplacement(
       int numberOfElementsSelect, List<S> solutionList) {
@@ -85,7 +68,8 @@ public class ListUtils {
   }
 
   /**
-   * Selects N random elements from a list with replacement
+   * Selects N random elements from a list with replacement.
+   * The size of the list can be smaller than the number of requested elements.
    *
    * @param list The list
    * @param randomGenerator The random number generator
@@ -99,14 +83,6 @@ public class ListUtils {
     Check.notNull(randomGenerator);
     Check.valueIsNotNegative(numberOfElementsToSelect);
     Check.collectionIsNotEmpty(list);
-    Check.that(
-        list.size() >= numberOfElementsToSelect,
-        "The solution list size ("
-            + list.size()
-            + ") is less than "
-            + "the number of requested solutions ("
-            + numberOfElementsToSelect
-            + ")");
 
     List<S> selectedSolutions = new ArrayList<>();
 
@@ -124,7 +100,7 @@ public class ListUtils {
    *
    * @param firstList A <code>list</code>
    * @param secondList A <code>list</code>
-   * @return true if both are contains equals solutions, false in other case
+   * @return true if both lists contain the same elements (in any order), false in other case
    */
   public static <S> boolean listAreEquals(List<S> firstList, List<S> secondList) {
     Check.notNull(firstList);
