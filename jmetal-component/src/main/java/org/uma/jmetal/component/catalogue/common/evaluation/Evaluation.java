@@ -8,7 +8,7 @@ import org.uma.jmetal.solution.Solution;
  *
  *  @author Antonio J. Nebro <antonio@lcc.uma.es>
  *
- * @param <S>
+ * @param <S> Solution
  */
 public interface Evaluation<S extends Solution<?>> {
   List<S> evaluate(List<S> solutionList) ;

@@ -8,7 +8,7 @@ import org.uma.jmetal.solution.Solution;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  *
- * @param <S>
+ * @param <S> Solution
  */
 @FunctionalInterface
 public interface SolutionsCreation<S extends Solution<?>> {
