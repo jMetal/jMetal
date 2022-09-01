@@ -6,6 +6,8 @@ import org.uma.jmetal.solution.Solution;
 /**
  * Interface representing entities that create a list of solutions applying some strategy (e.g, random)
  *
+ * @author Antonio J. Nebro (ajnebro@uma.es)
+ *
  * @param <S>
  */
 @FunctionalInterface

@@ -8,7 +8,8 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
 /**
- * Class that creates a list of randomly instantiated solutions
+ * Class that creates a list of randomly instantiated solutions. The randomness is assumed because
+ * the {@link Problem#createSolution()} in general creates solutions with random values.
  *
  * @param <S>
  */

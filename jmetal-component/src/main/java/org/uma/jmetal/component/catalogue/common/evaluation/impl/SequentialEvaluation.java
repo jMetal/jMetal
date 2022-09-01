@@ -7,6 +7,8 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
+ * Class that evaluates a list of solutions sequentially.
+ *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  *
  * @param <S>
