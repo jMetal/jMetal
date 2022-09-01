@@ -101,7 +101,7 @@ public class CRE32 extends AbstractDoubleProblem {
     constraint[2] =  -(x_L / x_T) + 19.0;
     constraint[3] = 0.45 * Math.pow(DWT, 0.31) - x_T;
     constraint[4] = 0.7 * x_D + 0.7 - x_T;
-    constraint[5] = 50000.0 - DWT;
+    constraint[5] = 500000.0 - DWT;
     constraint[6] = DWT - 3000.0;
     constraint[7] = 0.32 - Fn;
 
