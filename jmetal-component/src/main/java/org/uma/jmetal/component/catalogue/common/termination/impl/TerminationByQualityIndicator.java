@@ -12,7 +12,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**
  * Class that allows to check the termination condition when current front is above a given
  * percentage of the value of a quality indicator applied to a reference front. An evaluations limit
- * is used to avoid an infinite loop if the value is never gotten.
+ * is used to avoid an infinite loop if the value is never achieved.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
