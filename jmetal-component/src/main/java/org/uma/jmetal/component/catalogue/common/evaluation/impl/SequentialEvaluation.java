@@ -33,4 +33,8 @@ public class SequentialEvaluation<S extends Solution<?>> implements Evaluation<S
   public int getComputedEvaluations() {
     return computedEvaluations;
   }
+
+  public Problem<S> getProblem() {
+    return problem ;
+  }
 }

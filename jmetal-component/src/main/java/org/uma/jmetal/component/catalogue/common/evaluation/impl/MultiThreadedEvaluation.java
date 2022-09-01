@@ -43,4 +43,8 @@ public class MultiThreadedEvaluation<S extends Solution<?>> implements Evaluatio
   public int getNumberOfThreads() {
     return numberOfThreads ;
   }
+
+  public Problem<S> getProblem() {
+    return problem ;
+  }
 }
