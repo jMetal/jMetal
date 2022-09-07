@@ -9,12 +9,12 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
- * Class that initializes the velocity of the particles randomly according the particle position
- * bounds.
+ * Class that initializes the velocity of the particles according to the standard PSO 2007 (SPSO 2007)
+ * Source: Maurice Clerc. Standard Particle Swarm Optimisation. 15 pages. 2012. <hal-00764996>
  *
  * @author Antonio J. Nebro
  */
-public class RandomVelocityInitialization implements VelocityInitialization {
+public class SPSO2007VelocityInitialization implements VelocityInitialization {
   @Override
   /**
    * Initialize the velocity of the particles.

@@ -108,7 +108,8 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
 
     velocityInitializationParameter =
         new CategoricalParameter(
-            "velocityInitialization", args, List.of("defaultVelocityInitialization", "randomVelocityInitialization"));
+            "velocityInitialization", args, List.of("defaultVelocityInitialization",
+            "SPSO2007VelocityInitialization", "SPSO2011VelocityInitialization"));
 
     velocityUpdateParameter = configureVelocityUpdate(args);
 
