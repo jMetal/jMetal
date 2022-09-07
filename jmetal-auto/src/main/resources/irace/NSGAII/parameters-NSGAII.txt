@@ -1,6 +1,6 @@
-populationSize                           "--populationSize "                      o       (100)                                              
+populationSize                           "--populationSize "                      o       (100)
 #
-algorithmResult                          "--algorithmResult "                     c       (externalArchive, population)                      
+algorithmResult                          "--algorithmResult "                     c       (externalArchive, population)
 populationSizeWithArchive                "--populationSizeWithArchive "           i       (10, 200)                      | algorithmResult %in% c("externalArchive")
 # externalArchive                        "--externalArchive "                   c       (crowdingDistanceArchive, unboundedArchive) | algorithmResult %in% c("externalArchive")
 externalArchive                          "--externalArchive "                     c       (crowdingDistanceArchive) | algorithmResult %in% c("externalArchive")
@@ -22,6 +22,6 @@ linkedPolynomialMutationDistributionIndex "--linkedPolynomialMutationDistributio
 uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
 nonUniformMutationPerturbation           "--nonUniformMutationPerturbation "      r       (0.0, 1.0)                     | mutation %in% c("nonUniform")
 #
-selection                                "--selection "                           c       (tournament, random)                               
+selection                                "--selection "                           c       (tournament, random)
 selectionTournamentSize                  "--selectionTournamentSize "             i       (2, 10)                        | selection %in% c("tournament")
 #
