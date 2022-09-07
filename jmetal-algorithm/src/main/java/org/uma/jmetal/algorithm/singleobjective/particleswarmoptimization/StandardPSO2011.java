@@ -210,22 +210,6 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
         speed[i][var] =
                 weight * speed[i][var] + randomParticle.variables().get(var) - particle.variables().get(var);
       }
-
-
-      if (localBest[i] != neighborhoodBest[i]) {
-        for (int var = 0; var < particle.variables().size(); var++) {
-          speed[i][var] = weight * speed[i][var] +
-                  r1 * (localBest[i].variables().get(var) - particle.variables().get(var)) +
-                  r2 * (neighborhoodBest[i].variables().get(var) - particle.variables().get
-                          (var));
-        }
-      } else {
-        for (int var = 0; var < particle.variables().size(); var++) {
-          speed[i][var] = weight * speed[i][var] +
-                  r1 * (localBest[i].variables().get(var) -
-                          particle.variables().get(var));
-        }
-      }
     }
   }
 
