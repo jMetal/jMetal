@@ -6,6 +6,8 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
+ * Class that initializes the velocity of the particles to 0.0
+ *
  * @author Antonio J. Nebro
  */
 public class DefaultVelocityInitialization implements VelocityInitialization {

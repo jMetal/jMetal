@@ -73,10 +73,10 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
 
       double inertiaWeight = inertiaWeightComputingStrategy.compute() ;
 
-      for (int var = 0; var < particle.variables().size(); var++) {
-        speed[i][var] = inertiaWeight * speed[i][var]
-            + c1 * r1 * (bestParticle.variables().get(var) - particle.variables().get(var))
-            + c2 * r2 * (bestGlobal.variables().get(var) - particle.variables().get(var));
+      for (int j = 0; j < particle.variables().size(); j++) {
+        speed[i][j] = inertiaWeight * speed[i][j]
+            + c1 * r1 * (bestParticle.variables().get(j) - particle.variables().get(j))
+            + c2 * r2 * (bestGlobal.variables().get(j) - particle.variables().get(j));
       }
     }
 
