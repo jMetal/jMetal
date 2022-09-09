@@ -190,7 +190,6 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
         }
       }
 
-
       double radius = 0;
       radius = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(gravityCenter, particle);
 
