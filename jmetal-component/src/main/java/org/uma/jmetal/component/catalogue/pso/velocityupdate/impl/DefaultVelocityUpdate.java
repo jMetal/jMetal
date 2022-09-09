@@ -9,12 +9,9 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
- * Method implementing a constrained velocity update. This scheme is used in, for example, SMPSO.
- * <p>
- * TODO How to compute deltaMax and deltaMin
+ * Method implementing the standard velocity PSO update strategy
  *
  * @author Antonio J. Nebro
- * @author Daniel Doblas
  */
 public class DefaultVelocityUpdate implements VelocityUpdate {
 

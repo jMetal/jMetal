@@ -11,7 +11,7 @@ import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
- * Method implementing a constrained velocity update. This scheme is used in, for example, SMPSO. *
+ * Method implementing a constrained velocity update. This scheme is used in, for example, SMPSO.
  *
  * @author Antonio J. Nebro
  * @author Daniel Doblas
