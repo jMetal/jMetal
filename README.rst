@@ -47,6 +47,8 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+* [9/12/2022] The master branch has been renamed main.
+
 * [7/5/2022] The jMetal project adopts Java 14.
 
 * [5/23/2022] Algorithm AGE-MOEA-II. Contribution of Annibale Panichella (@apanichella).
