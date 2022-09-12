@@ -23,8 +23,6 @@ The jMetal project is a Maven project structured in the following sub-projects:
 +---------------------+------------------------------------+
 | jmetal-lab          |  Experimentation and visualization |
 +---------------------+------------------------------------+
-| jmetal-experimental |  New features in development       |
-+---------------------+------------------------------------+
 | jmetal-parallel     |  Parallel extensions               |
 +---------------------+------------------------------------+
 | jmetal-auto         |  Auto-design and configuration     |
