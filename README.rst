@@ -34,8 +34,6 @@ The current development version (6.0-SNAPSHOT) is a Maven project structured in 
 +---------------------+------------------------------------+
 | jmetal-lab          |  Experimentation and visualization |
 +---------------------+------------------------------------+
-| jmetal-experimental |  New features in development       |
-+---------------------+------------------------------------+
 | jmetal-parallel     |  Parallel extensions               |
 +---------------------+------------------------------------+
 | jmetal-auto         |  Auto-design and configuration     |
@@ -49,7 +47,7 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
-* [7/5/2012] The jMetal project adopts Java 14.
+* [7/5/2022] The jMetal project adopts Java 14.
 
 * [5/23/2022] Algorithm AGE-MOEA-II. Contribution of Annibale Panichella (@apanichella).
 
