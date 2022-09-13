@@ -124,47 +124,60 @@ public class ZDTComputingReferenceParetoFrontsStudy {
 
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
 
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-        double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
-        double mutationDistributionIndex = 20.0;
-        Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
-                (DoubleProblem) experimentProblem.getProblem(),
-                new CrowdingDistanceArchive<DoubleSolution>(100))
-                .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
-                .setMaxIterations(250)
-                .setSwarmSize(100)
-                .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
-                .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
-      }
-
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
-                experimentProblem.getProblem(),
-                new SBXCrossover(1.0, 20.0),
-                new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
-                        20.0),
-                100)
-                .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
-      }
-
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-        Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(experimentProblem.getProblem(), MOEADBuilder.Variant.MOEAD)
-                .setCrossover(new DifferentialEvolutionCrossover(1.0, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
-                .setMutation(new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
-                        20.0))
-                .setMaxEvaluations(25000)
-                .setPopulationSize(100)
-                .setResultPopulationSize(100)
-                .setNeighborhoodSelectionProbability(0.9)
-                .setMaximumNumberOfReplacedSolutions(2)
-                .setNeighborSize(20)
-                .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-                .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
-      }
+      smpso(problemList, algorithms, run);
+      nsgaii(problemList, algorithms, run);
+      moead(problemList, algorithms, run);
     }
     return algorithms;
+  }
+
+  private static void moead(List<ExperimentProblem<DoubleSolution>> problemList,
+      List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run) {
+    for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(experimentProblem.getProblem(), MOEADBuilder.Variant.MOEAD)
+              .setCrossover(new DifferentialEvolutionCrossover(1.0, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
+              .setMutation(new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                      20.0))
+              .setMaxEvaluations(25000)
+              .setPopulationSize(100)
+              .setResultPopulationSize(100)
+              .setNeighborhoodSelectionProbability(0.9)
+              .setMaximumNumberOfReplacedSolutions(2)
+              .setNeighborSize(20)
+              .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
+              .build();
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
+    }
+  }
+
+  private static void nsgaii(List<ExperimentProblem<DoubleSolution>> problemList,
+      List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run) {
+    for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
+              experimentProblem.getProblem(),
+              new SBXCrossover(1.0, 20.0),
+              new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                      20.0),
+              100)
+              .build();
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
+    }
+  }
+
+  private static void smpso(List<ExperimentProblem<DoubleSolution>> problemList,
+      List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run) {
+    for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+      double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+      double mutationDistributionIndex = 20.0;
+      Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
+              (DoubleProblem) experimentProblem.getProblem(),
+              new CrowdingDistanceArchive<DoubleSolution>(100))
+              .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
+              .setMaxIterations(250)
+              .setSwarmSize(100)
+              .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+              .build();
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
+    }
   }
 }
