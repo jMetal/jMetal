@@ -9,7 +9,7 @@ import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 /**
  * Given an offspring population composed of a single solution, this solution is compared against a particular solution
  * of the population given by a {@link SequenceGenerator} object. If this last solution is replaced by the former if
- * it worse according to a {@link Comparator}.
+ * it is worse according to a {@link Comparator}.
  *
  * Once the replacement is carried out, the next sequence number is generated.
  *
