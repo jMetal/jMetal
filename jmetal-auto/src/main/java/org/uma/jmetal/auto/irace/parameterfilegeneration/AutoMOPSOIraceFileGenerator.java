@@ -17,6 +17,7 @@ public class AutoMOPSOIraceFileGenerator {
   public static void main(String[] args) {
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+            + "--randomGeneratorSeed 124 "
             + "--referenceFrontFileName ZDT1.csv "
             + "--maximumNumberOfEvaluations 25000 "
             + "--swarmSize 100 "
