@@ -23,10 +23,10 @@ weightMin                                "--weightMin "                         
 weightMax                                "--weightMax "                           r       (0.5, 1.0)                     | inertiaWeightComputingStrategy %in% c("randomSelectedValue", "linearIncreasingValue", "linearDecreasingValue")
 #
 velocityUpdate                           "--velocityUpdate "                      c       (defaultVelocityUpdate, constrainedVelocityUpdate, SPSO2011VelocityUpdate)
-c1Min                                    "--c1Min "                               r       (1.0, 2.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate","SPSO2011VelocityUpdate")
-c1Max                                    "--c1Max "                               r       (2.0, 3.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate","SPSO2011VelocityUpdate")
-c2Min                                    "--c2Min "                               r       (1.0, 2.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate","SPSO2011VelocityUpdate")
-c2Max                                    "--c2Max "                               r       (2.0, 3.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate","SPSO2011VelocityUpdate")
+c1Min                                    "--c1Min "                               r       (1.0, 2.0)
+c1Max                                    "--c1Max "                               r       (2.0, 3.0)
+c2Min                                    "--c2Min "                               r       (1.0, 2.0)
+c2Max                                    "--c2Max "                               r       (2.0, 3.0)                     
 #
 localBestInitialization                  "--localBestInitialization "             c       (defaultLocalBestInitialization)
 #
