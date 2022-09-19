@@ -20,7 +20,7 @@ public class NSGAIIWithExternalUnboundedArchiveConfiguredFromAParameterString {
     String referenceFrontFileName = "DTLZ2.3D.csv";
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2Minus "
             + "--referenceFrontFileName " + referenceFrontFileName + " "
             + "--randomGeneratorSeed 12 "
             + "--maximumNumberOfEvaluations 50000 "
@@ -59,7 +59,6 @@ public class NSGAIIWithExternalUnboundedArchiveConfiguredFromAParameterString {
     nsgaII.run();
 
     JMetalLogger.logger.info("Total computing time: " + nsgaII.getTotalComputingTime());
-    ;
 
     new SolutionListOutput(nsgaII.getResult())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
