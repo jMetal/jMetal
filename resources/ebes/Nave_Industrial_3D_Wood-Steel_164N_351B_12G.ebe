@@ -11,7 +11,6 @@ Groups of element same SECTION: 11
 Groups of element same INERTIA in Z axis: 10
 Total load HYPOTHESIS: 1
 Hypothesis COMBINATION of LOADS: 0
-GRAVITATIONAL AXIS: Y
 WEIGHT OWN OF ELEMENTS: True
 STATIC OVERLOAD in elements: 102
 STATIC LOAD in nodes: 0
