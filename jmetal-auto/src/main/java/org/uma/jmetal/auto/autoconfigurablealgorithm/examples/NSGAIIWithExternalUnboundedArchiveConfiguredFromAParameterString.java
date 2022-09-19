@@ -22,6 +22,7 @@ public class NSGAIIWithExternalUnboundedArchiveConfiguredFromAParameterString {
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
             + "--referenceFrontFileName " + referenceFrontFileName + " "
+            + "--randomGeneratorSeed 12 "
             + "--maximumNumberOfEvaluations 50000 "
             + "--algorithmResult externalArchive "
             + "--externalArchive unboundedArchive "

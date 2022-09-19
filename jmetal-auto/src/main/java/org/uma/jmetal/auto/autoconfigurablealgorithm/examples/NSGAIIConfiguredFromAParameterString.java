@@ -20,7 +20,8 @@ public class NSGAIIConfiguredFromAParameterString {
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-                + "--referenceFrontFileName "+ referenceFrontFileName + " "
+            + "--randomGeneratorSeed 12 "
+            + "--referenceFrontFileName "+ referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
