@@ -39,6 +39,7 @@ import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
@@ -53,6 +54,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
   public StringParameter referenceFrontFilename;
+  private PositiveIntegerValue randomGeneratorSeedParameter;
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
   private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
@@ -71,6 +73,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   @Override
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new StringParameter("problemName", args);
+    randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed", args) ;
     referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
         new PositiveIntegerValue("maximumNumberOfEvaluations", args);
@@ -78,6 +81,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     fixedParameterList.add(problemNameParameter);
     fixedParameterList.add(referenceFrontFilename);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
+    fixedParameterList.add(randomGeneratorSeedParameter) ;
 
     for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse().check();
@@ -193,6 +197,8 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
    * @return
    */
   public EvolutionaryAlgorithm<DoubleSolution> create() {
+    JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.getValue());
+
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
 
     Archive<DoubleSolution> archive = null;

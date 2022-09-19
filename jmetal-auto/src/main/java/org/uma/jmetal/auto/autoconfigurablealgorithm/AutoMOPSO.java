@@ -35,11 +35,12 @@ import org.uma.jmetal.component.catalogue.pso.localbestupdate.LocalBestUpdate;
 import org.uma.jmetal.component.catalogue.pso.positionupdate.PositionUpdate;
 import org.uma.jmetal.component.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Class to configure a generic MOPSO with an argument string using class {@link
@@ -57,6 +58,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   public CategoricalParameter velocityInitializationParameter;
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private PositiveIntegerValue archiveSizeParameter;
+  private PositiveIntegerValue randomGeneratorSeedParameter;
   private IntegerParameter swarmSizeParameter;
   private CreateInitialSolutionsParameter swarmInitializationParameter;
   private LocalBestInitializationParameter localBestInitializationParameter;
@@ -86,6 +88,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   @Override
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new StringParameter("problemName", args);
+    randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed", args) ;
 
     referenceFrontFilenameParameter = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
@@ -94,6 +97,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     fixedParameterList.add(problemNameParameter);
     fixedParameterList.add(referenceFrontFilenameParameter);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
+    fixedParameterList.add(randomGeneratorSeedParameter) ;
 
     for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse().check();
@@ -237,6 +241,8 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
    * Create an instance of MOPSO from the parsed parameters
    */
   public ParticleSwarmOptimizationAlgorithm create() {
+    JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.getValue());
+
     Problem<DoubleSolution> problem = getProblem() ;
     int swarmSize = swarmSizeParameter.getValue();
     int maximumNumberOfEvaluations = maximumNumberOfEvaluationsParameter.getValue();
