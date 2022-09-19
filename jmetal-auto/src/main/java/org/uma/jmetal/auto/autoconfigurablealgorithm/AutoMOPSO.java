@@ -23,8 +23,12 @@ import org.uma.jmetal.auto.parameter.catalogue.PositionUpdateParameter;
 import org.uma.jmetal.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
 import org.uma.jmetal.auto.parameter.catalogue.VelocityUpdateParameter;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
+import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluationWithArchive;
+import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.component.catalogue.pso.globalbestselection.GlobalBestSelection;
@@ -32,13 +36,19 @@ import org.uma.jmetal.component.catalogue.pso.globalbestupdate.GlobalBestUpdate;
 import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
 import org.uma.jmetal.component.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.component.catalogue.pso.localbestupdate.LocalBestUpdate;
+import org.uma.jmetal.component.catalogue.pso.perturbation.Perturbation;
 import org.uma.jmetal.component.catalogue.pso.positionupdate.PositionUpdate;
+import org.uma.jmetal.component.catalogue.pso.velocityinitialization.VelocityInitialization;
 import org.uma.jmetal.component.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
+import org.uma.jmetal.component.catalogue.pso.velocityupdate.VelocityUpdate;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
+import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
+import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -51,10 +61,10 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class AutoMOPSO implements AutoConfigurableAlgorithm{
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
-
   private StringParameter problemNameParameter;
   public StringParameter referenceFrontFilenameParameter;
   public ExternalArchiveParameter<DoubleSolution> leaderArchiveParameter;
+  private CategoricalParameter algorithmResultParameter;
   public CategoricalParameter velocityInitializationParameter;
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private PositiveIntegerValue archiveSizeParameter;
@@ -89,6 +99,9 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new StringParameter("problemName", args);
     randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed", args) ;
+
+    algorithmResultParameter =
+        new CategoricalParameter("algorithmResult", args, List.of("unboundedArchive", "leaderArchive"));
 
     referenceFrontFilenameParameter = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
@@ -159,6 +172,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     autoConfigurableParameterList.add(swarmSizeParameter);
     autoConfigurableParameterList.add(archiveSizeParameter);
     autoConfigurableParameterList.add(leaderArchiveParameter);
+    autoConfigurableParameterList.add(algorithmResultParameter);
     autoConfigurableParameterList.add(swarmInitializationParameter);
     autoConfigurableParameterList.add(velocityInitializationParameter);
     autoConfigurableParameterList.add(perturbationParameter);
@@ -243,13 +257,21 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   public ParticleSwarmOptimizationAlgorithm create() {
     JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.getValue());
 
-    Problem<DoubleSolution> problem = getProblem() ;
+    Problem<DoubleSolution> problem = getProblem();
     int swarmSize = swarmSizeParameter.getValue();
     int maximumNumberOfEvaluations = maximumNumberOfEvaluationsParameter.getValue();
 
     var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
 
-    var evaluation = new SequentialEvaluation<>(problem);
+    Evaluation<DoubleSolution> evaluation;
+    Archive<DoubleSolution> unboundedArchive = null;
+    if (algorithmResultParameter.getValue().equals("unboundedArchive")) {
+      unboundedArchive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(),
+          swarmSize);
+      evaluation = new SequentialEvaluationWithArchive<>(problem, unboundedArchive);
+    } else {
+      evaluation = new SequentialEvaluation<>(problem);
+    }
     var termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
 
     leaderArchiveParameter.setSize(archiveSizeParameter.getValue());
@@ -265,9 +287,10 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
         inertiaWeightComputingParameter.getValue().equals("linearDecreasingValue"))) {
       inertiaWeightComputingParameter.addNonConfigurableParameter("maxIterations",
           maximumNumberOfEvaluationsParameter.getValue() / swarmSizeParameter.getValue());
-      inertiaWeightComputingParameter.addNonConfigurableParameter("swarmSize", swarmSizeParameter.getValue());
+      inertiaWeightComputingParameter.addNonConfigurableParameter("swarmSize",
+          swarmSizeParameter.getValue());
     }
-    InertiaWeightComputingStrategy inertiaWeightComputingStrategy = inertiaWeightComputingParameter.getParameter() ;
+    InertiaWeightComputingStrategy inertiaWeightComputingStrategy = inertiaWeightComputingParameter.getParameter();
 
     var velocityUpdate = velocityUpdateParameter.getParameter();
 
@@ -295,21 +318,86 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     LocalBestUpdate localBestUpdate = localBestUpdateParameter.getParameter(
         new DefaultDominanceComparator<DoubleSolution>());
 
-    return new ParticleSwarmOptimizationAlgorithm("OMOPSO",
-        swarmInitialization,
-        evaluation,
-        termination,
-        velocityInitialization,
-        localBestInitialization,
-        globalBestInitialization,
-        inertiaWeightComputingStrategy,
-        velocityUpdate,
-        positionUpdate,
-        perturbation,
-        globalBestUpdate,
-        localBestUpdate,
-        globalBestSelection,
-        leaderArchive);
+    class ParticleSwarmOptimizationAlgorithmWithArchive extends ParticleSwarmOptimizationAlgorithm {
+
+      private Archive<DoubleSolution> unboundedArchive;
+
+      /**
+       * Constructor
+       */
+      public ParticleSwarmOptimizationAlgorithmWithArchive(String name,
+          SolutionsCreation<DoubleSolution> createInitialSwarm,
+          Evaluation<DoubleSolution> evaluation,
+          Termination termination,
+          VelocityInitialization velocityInitialization,
+          LocalBestInitialization localBestInitialization,
+          GlobalBestInitialization globalBestInitialization,
+          InertiaWeightComputingStrategy inertiaWeightComputingStrategy,
+          VelocityUpdate velocityUpdate,
+          PositionUpdate positionUpdate,
+          Perturbation perturbation,
+          GlobalBestUpdate globalBestUpdate,
+          LocalBestUpdate localBestUpdate,
+          GlobalBestSelection globalBestSelection,
+          BoundedArchive<DoubleSolution> leaderArchive,
+          Archive<DoubleSolution> unboundedArchive) {
+        super(name, swarmInitialization,
+            evaluation,
+            termination,
+            velocityInitialization,
+            localBestInitialization,
+            globalBestInitialization,
+            inertiaWeightComputingStrategy,
+            velocityUpdate,
+            positionUpdate,
+            perturbation,
+            globalBestUpdate,
+            localBestUpdate,
+            globalBestSelection,
+            leaderArchive);
+        this.unboundedArchive = unboundedArchive;
+      }
+
+      @Override
+      public List<DoubleSolution> getResult() {
+        return unboundedArchive.getSolutionList();
+      }
+    }
+
+    if (algorithmResultParameter.getValue().equals("unboundedArchive")) {
+     return new ParticleSwarmOptimizationAlgorithmWithArchive("MOPSO",
+          swarmInitialization,
+          evaluation,
+          termination,
+          velocityInitialization,
+          localBestInitialization,
+          globalBestInitialization,
+          inertiaWeightComputingStrategy,
+          velocityUpdate,
+          positionUpdate,
+          perturbation,
+          globalBestUpdate,
+          localBestUpdate,
+          globalBestSelection,
+          leaderArchive,
+          unboundedArchive);
+    } else {
+      return new ParticleSwarmOptimizationAlgorithm("MOPSO",
+          swarmInitialization,
+          evaluation,
+          termination,
+          velocityInitialization,
+          localBestInitialization,
+          globalBestInitialization,
+          inertiaWeightComputingStrategy,
+          velocityUpdate,
+          positionUpdate,
+          perturbation,
+          globalBestUpdate,
+          localBestUpdate,
+          globalBestSelection,
+          leaderArchive);
+    }
   }
 
   public static void print(List<Parameter<?>> parameterList) {
