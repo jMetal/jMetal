@@ -6,6 +6,13 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 
+/**
+ * Class that evaluates a list of solutions using threads.
+ *
+ * @author Antonio J. Nebro (ajnebro@uma.es)
+ *
+ * @param <S>
+ */
 public class MultiThreadedEvaluation<S extends Solution<?>> implements Evaluation<S> {
   private int computedEvaluations;
   private final Problem<S> problem;
@@ -42,5 +49,9 @@ public class MultiThreadedEvaluation<S extends Solution<?>> implements Evaluatio
 
   public int getNumberOfThreads() {
     return numberOfThreads ;
+  }
+
+  public Problem<S> getProblem() {
+    return problem ;
   }
 }

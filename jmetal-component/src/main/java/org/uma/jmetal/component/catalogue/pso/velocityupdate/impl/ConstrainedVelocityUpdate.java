@@ -11,7 +11,7 @@ import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
- * Method implementing a constrained velocity update. This scheme is used in, for example, SMPSO. *
+ * Method implementing a constrained velocity update. This scheme is used in, for example, SMPSO.
  *
  * @author Antonio J. Nebro
  * @author Daniel Doblas
@@ -104,7 +104,6 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
       DoubleSolution bestParticle = (DoubleSolution) localBest[i].copy();
 
       bestGlobal = globalBestSelection.select(leaders.getSolutionList()) ;
-      //bestGlobal = selectGlobalBest(leaders);
 
       r1 = randomGenerator.nextDouble(r1Min, r1Max);
       r2 = randomGenerator.nextDouble(r2Min, r2Max);
@@ -113,16 +112,16 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
 
       double inertiaWeight = inertiaWeightComputingStrategy.compute() ;
 
-      for (int var = 0; var < particle.variables().size(); var++) {
-        speed[i][var] =
+      for (int j = 0; j < particle.variables().size(); j++) {
+        speed[i][j] =
             velocityConstriction(
                 constrictionCoefficient(c1, c2)
-                    * (inertiaWeight * speed[i][var]
-                    + c1 * r1 * (bestParticle.variables().get(var) - particle.variables().get(var))
-                    + c2 * r2 * (bestGlobal.variables().get(var) - particle.variables().get(var))),
+                    * (inertiaWeight * speed[i][j]
+                    + c1 * r1 * (bestParticle.variables().get(j) - particle.variables().get(j))
+                    + c2 * r2 * (bestGlobal.variables().get(j) - particle.variables().get(j))),
                 deltaMax,
                 deltaMin,
-                var);
+                j);
       }
     }
 
@@ -172,9 +171,5 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
     } else {
       return 2 / (2 - rho - Math.sqrt(Math.pow(rho, 2.0) - 4.0 * rho));
     }
-  }
-
-  private double computeInertiaWeight(int iter, int miter, double wma, double wmin) {
-    return wma;
   }
 }

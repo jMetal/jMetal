@@ -108,7 +108,8 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
 
     velocityInitializationParameter =
         new CategoricalParameter(
-            "velocityInitialization", args, List.of("defaultVelocityInitialization"));
+            "velocityInitialization", args, List.of("defaultVelocityInitialization",
+            "SPSO2007VelocityInitialization", "SPSO2011VelocityInitialization"));
 
     velocityUpdateParameter = configureVelocityUpdate(args);
 
@@ -219,7 +220,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     c2MaxParameter = new RealParameter("c2Max", args, 2.0, 3.0);
 
     velocityUpdateParameter = new VelocityUpdateParameter(args,
-        List.of("defaultVelocityUpdate", "constrainedVelocityUpdate"));
+        List.of("defaultVelocityUpdate", "constrainedVelocityUpdate", "SPSO2011VelocityUpdate"));
     velocityUpdateParameter.addGlobalParameter(c1MinParameter);
     velocityUpdateParameter.addGlobalParameter(c1MaxParameter);
     velocityUpdateParameter.addGlobalParameter(c2MinParameter);
@@ -249,7 +250,8 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     BoundedArchive<DoubleSolution> leaderArchive = (BoundedArchive<DoubleSolution>) leaderArchiveParameter.getParameter();
     var velocityInitialization = new DefaultVelocityInitialization();
 
-    if (velocityUpdateParameter.getValue().equals("constrainedVelocityUpdate")) {
+    if (velocityUpdateParameter.getValue().equals("constrainedVelocityUpdate") ||
+        velocityUpdateParameter.getValue().equals("SPSO2011VelocityUpdate")) {
       velocityUpdateParameter.addNonConfigurableParameter("problem", problem);
     }
 

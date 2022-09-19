@@ -6,7 +6,7 @@ leaderArchive                            "--leaderArchive "                     
 #
 swarmInitialization                      "--swarmInitialization "                 c       (random, latinHypercubeSampling, scatterSearch)
 #
-velocityInitialization                   "--velocityInitialization "              c       (defaultVelocityInitialization)
+velocityInitialization                   "--velocityInitialization "              c       (defaultVelocityInitialization, SPSO2007VelocityInitialization, SPSO2011VelocityInitialization)
 #
 perturbation                             "--perturbation "                        c       (frequencySelectionMutationBasedPerturbation)
 mutation                                 "--mutation "                            c       (uniform, polynomial, nonUniform) | perturbation %in% c("frequencySelectionMutationBasedPerturbation")
@@ -15,18 +15,18 @@ mutationRepairStrategy                   "--mutationRepairStrategy "            
 polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("polynomial")
 uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
 nonUniformMutationPerturbation           "--nonUniformMutationPerturbation "      r       (0.0, 1.0)                     | mutation %in% c("nonUniform")
-frequencyOfApplicationOfMutationOperator "--frequencyOfApplicationOfMutationOperator " i       (1, 10)                        | perturbation %in% c("frequencySelectionMutationBasedPerturbation")
+frequencyOfApplicationOfMutationOperator "--frequencyOfApplicationOfMutationOperator " i      (1, 10)                        | perturbation %in% c("frequencySelectionMutationBasedPerturbation")
 #
 inertiaWeightComputingStrategy           "--inertiaWeightComputingStrategy "      c       (constantValue, randomSelectedValue, linearIncreasingValue, linearDecreasingValue)
 weight                                   "--weight "                              r       (0.1, 1.0)                     | inertiaWeightComputingStrategy %in% c("constantValue")
 weightMin                                "--weightMin "                           r       (0.1, 0.5)                     | inertiaWeightComputingStrategy %in% c("randomSelectedValue", "linearIncreasingValue", "linearDecreasingValue")
 weightMax                                "--weightMax "                           r       (0.5, 1.0)                     | inertiaWeightComputingStrategy %in% c("randomSelectedValue", "linearIncreasingValue", "linearDecreasingValue")
 #
-velocityUpdate                           "--velocityUpdate "                      c       (defaultVelocityUpdate, constrainedVelocityUpdate)
-c1Min                                    "--c1Min "                               r       (1.0, 2.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate")
-c1Max                                    "--c1Max "                               r       (2.0, 3.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate")
-c2Min                                    "--c2Min "                               r       (1.0, 2.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate")
-c2Max                                    "--c2Max "                               r       (2.0, 3.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate")
+velocityUpdate                           "--velocityUpdate "                      c       (defaultVelocityUpdate, constrainedVelocityUpdate, SPSO2011VelocityUpdate)
+c1Min                                    "--c1Min "                               r       (1.0, 2.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate","SPSO2011VelocityUpdate")
+c1Max                                    "--c1Max "                               r       (2.0, 3.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate","SPSO2011VelocityUpdate")
+c2Min                                    "--c2Min "                               r       (1.0, 2.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate","SPSO2011VelocityUpdate")
+c2Max                                    "--c2Max "                               r       (2.0, 3.0)                     | velocityUpdate %in% c("defaultVelocityUpdate","constrainedVelocityUpdate","SPSO2011VelocityUpdate")
 #
 localBestInitialization                  "--localBestInitialization "             c       (defaultLocalBestInitialization)
 #

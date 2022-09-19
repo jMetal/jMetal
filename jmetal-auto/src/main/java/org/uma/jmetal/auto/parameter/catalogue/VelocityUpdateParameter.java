@@ -5,6 +5,7 @@ import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.VelocityUpdate;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.impl.ConstrainedVelocityUpdate;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.impl.DefaultVelocityUpdate;
+import org.uma.jmetal.component.catalogue.pso.velocityupdate.impl.SPS2011VelocityUpdate;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -28,6 +29,14 @@ public class VelocityUpdateParameter extends CategoricalParameter {
         c2Max = (double) findGlobalParameter("c2Max").getValue();
         DoubleProblem problem = (DoubleProblem) getNonConfigurableParameter("problem");
         return new ConstrainedVelocityUpdate(c1Min, c1Max, c2Min, c2Max, problem) {
+        };
+      case "SPSO2011VelocityUpdate":
+        c1Min = (double) findGlobalParameter("c1Min").getValue();
+        c1Max = (double) findGlobalParameter("c1Max").getValue();
+        c2Min = (double) findGlobalParameter("c2Min").getValue();
+        c2Max = (double) findGlobalParameter("c2Max").getValue();
+        problem = (DoubleProblem) getNonConfigurableParameter("problem");
+        return new SPS2011VelocityUpdate(c1Min, c1Max, c2Min, c2Max, problem) {
         };
       default:
         throw new JMetalException(getValue() + " is not a valid velocity update strategy");

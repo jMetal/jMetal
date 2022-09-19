@@ -146,10 +146,6 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     return "Evolutionary algorithm";
   }
 
-  public Evaluation<S> getEvaluation() {
-    return evaluation;
-  }
-
   public Map<String, Object> getAttributes() {
     return attributes ;
   }
@@ -167,7 +163,16 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     this.termination = termination ;
   }
 
+  public Termination getTermination() {
+    return termination ;
+  }
+
   public void setEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation ;
   }
+
+  public Evaluation<S> getEvaluation() {
+    return evaluation;
+  }
+
 }

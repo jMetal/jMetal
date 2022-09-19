@@ -6,8 +6,12 @@ import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.Ine
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 
+/**
+ * Interface representing velocity update strategies
+ *
+ * @author Antonio J. Nebro
+ */
 public interface VelocityUpdate {
-
   double[][] update(
       List<DoubleSolution> swarm,
       double[][] speed, DoubleSolution[] localBest,

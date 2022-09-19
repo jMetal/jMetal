@@ -11,10 +11,10 @@ import org.uma.jmetal.lab.visualization.plot.impl.Plot3D;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
@@ -50,7 +50,7 @@ public class MOEADSolvingProblemDTLZ1Example {
 
     int populationSize = 91;
 
-    Termination termination = new TerminationByEvaluations(30000);
+    Termination termination = new TerminationByEvaluations(40000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
 

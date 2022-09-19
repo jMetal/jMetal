@@ -12,6 +12,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class VectorUtils {
+
   /**
    * Method that apply a dominance test between two vectors. It is assumed that the vectors have
    * been properly tested before calling this method to ensure that they have the same length
@@ -19,7 +20,7 @@ public class VectorUtils {
    * @param vector1
    * @param vector2
    * @return 0 if the vectors are non-dominated, -1 if vector1 dominates vector2, and 1 if vector2
-   *     dominates vector 1
+   * dominates vector 1
    */
   public static int dominanceTest(double[] vector1, double[] vector2) {
     int bestIsOne = 0;
@@ -75,7 +76,7 @@ public class VectorUtils {
   }
 
   public static double[][] readVectors(String filePath) throws IOException {
-    return readVectors(filePath, "\\s+") ;
+    return readVectors(filePath, "\\s+");
   }
 
   /**
@@ -144,8 +145,8 @@ public class VectorUtils {
   }
 
   /**
-   * This method receives a normalized front and return the inverted one.
-   * This method is for minimization problems
+   * This method receives a normalized front and return the inverted one. This method is for
+   * minimization problems
    *
    * @param front The front
    * @return The inverted front
@@ -155,16 +156,16 @@ public class VectorUtils {
     Check.that(front.length > 0, "The front is empty");
 
     int numberOfDimensions = front[0].length;
-    double[][] invertedFront = new double[front.length][numberOfDimensions] ;
+    double[][] invertedFront = new double[front.length][numberOfDimensions];
 
     for (int i = 0; i < front.length; i++) {
       for (int j = 0; j < numberOfDimensions; j++) {
         if (front[i][j] <= 1.0 && front[i][j] >= 0.0) {
-          invertedFront[i][j] =  1.0 - front[i][j];
+          invertedFront[i][j] = 1.0 - front[i][j];
         } else if (front[i][j] > 1.0) {
-          invertedFront[i][j] = 0.0 ;
+          invertedFront[i][j] = 0.0;
         } else if (front[i][j] < 0.0) {
-          invertedFront[i][j] = 1.0 ;
+          invertedFront[i][j] = 1.0;
         }
       }
     }
@@ -178,6 +179,6 @@ public class VectorUtils {
    * @return
    */
   public static double[] toArray(List<Double> list) {
-    return list.stream().mapToDouble(v->v).toArray() ;
+    return list.stream().mapToDouble(v -> v).toArray();
   }
 }

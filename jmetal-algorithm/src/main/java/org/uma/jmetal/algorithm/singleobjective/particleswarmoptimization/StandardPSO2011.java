@@ -37,6 +37,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   private DoubleSolution[] localBest;
   private DoubleSolution[] neighborhoodBest;
   private double[][] speed;
+  private DoubleSolution[] randomParticle;
   private AdaptiveRandomNeighborhood<DoubleSolution> neighborhood;
   private GenericSolutionAttribute<DoubleSolution, Integer> positionInSwarm;
   private double weight;
@@ -77,6 +78,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
     localBest = new DoubleSolution[swarmSize];
     neighborhoodBest = new DoubleSolution[swarmSize];
     speed = new double[swarmSize][problem.getNumberOfVariables()];
+    randomParticle = new DoubleSolution[swarmSize] ;
 
     positionInSwarm = new GenericSolutionAttribute<DoubleSolution, Integer>();
 
@@ -166,65 +168,41 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
 
   @Override
   public void updateVelocity(List<DoubleSolution> swarm) {
-    double r1, r2;
-
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
-
-      r1 = randomGenerator.nextDouble(0, c);
-      r2 = randomGenerator.nextDouble(0, c);
-
       DoubleSolution gravityCenter = problem.createSolution();
 
       if (this.localBest[i] != this.neighborhoodBest[i]) {
-        for (int var = 0; var < particle.variables().size(); var++) {
-          double G;
-          G = particle.variables().get(var) +
-                  c * (localBest[i].variables().get(var) +
-                          neighborhoodBest[i].variables().get(var) - 2 *
-                          particle.variables().get(var)) / 3.0;
+        for (int j = 0; j < particle.variables().size(); j++) {
+          double value = particle.variables().get(j) +
+                  c * (localBest[i].variables().get(j) +
+                          neighborhoodBest[i].variables().get(j) - 2 *
+                          particle.variables().get(j)) / 3.0;
 
-          gravityCenter.variables().set(var, G);
+          gravityCenter.variables().set(j, value);
         }
       } else {
-        for (int var = 0; var < particle.variables().size(); var++) {
-          double g  = particle.variables().get(var) +
-                  c * (localBest[i].variables().get(var) - particle.variables().get(var)) / 2.0;
+        for (int j = 0; j < particle.variables().size(); j++) {
+          double g  = particle.variables().get(j) +
+                  c * (localBest[i].variables().get(j) - particle.variables().get(j)) / 2.0;
 
-          gravityCenter.variables().set(var, g);
+          gravityCenter.variables().set(j, g);
         }
       }
-
-      DoubleSolution randomParticle = problem.createSolution() ;
 
       double radius = 0;
       radius = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(gravityCenter, particle);
 
       double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRandomGenerator()).randSphere(problem.getNumberOfVariables());
 
-      for (int var = 0; var < particle.variables().size(); var++) {
-        randomParticle.variables().set(var, gravityCenter.variables().get(var) + radius * random[var]);
+      randomParticle[i] = problem.createSolution() ;
+      for (int j = 0; j < particle.variables().size(); j++) {
+        randomParticle[i].variables().set(j, gravityCenter.variables().get(j) + radius * random[j]);
       }
 
       for (int var = 0; var < particle.variables().size(); var++) {
         speed[i][var] =
-                weight * speed[i][var] + randomParticle.variables().get(var) - particle.variables().get(var);
-      }
-
-
-      if (localBest[i] != neighborhoodBest[i]) {
-        for (int var = 0; var < particle.variables().size(); var++) {
-          speed[i][var] = weight * speed[i][var] +
-                  r1 * (localBest[i].variables().get(var) - particle.variables().get(var)) +
-                  r2 * (neighborhoodBest[i].variables().get(var) - particle.variables().get
-                          (var));
-        }
-      } else {
-        for (int var = 0; var < particle.variables().size(); var++) {
-          speed[i][var] = weight * speed[i][var] +
-                  r1 * (localBest[i].variables().get(var) -
-                          particle.variables().get(var));
-        }
+                weight * speed[i][var] + randomParticle[i].variables().get(var) - particle.variables().get(var);
       }
     }
   }
@@ -233,19 +211,19 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   public void updatePosition(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
-      for (int var = 0; var < particle.variables().size(); var++) {
-        particle.variables().set(var, particle.variables().get(var) + speed[i][var]);
+      for (int j = 0; j < particle.variables().size(); j++) {
+        particle.variables().set(j, particle.variables().get(j) + speed[i][j]);
 
-        Bounds<Double> bounds = problem.getVariableBounds().get(var) ;
+        Bounds<Double> bounds = problem.getVariableBounds().get(j) ;
         Double lowerBound = bounds.getLowerBound() ;
         Double upperBound = bounds.getUpperBound() ;
-        if (particle.variables().get(var) < lowerBound) {
-          particle.variables().set(var, lowerBound);
-          speed[i][var] = changeVelocity * speed[i][var];
+        if (particle.variables().get(j) < lowerBound) {
+          particle.variables().set(j, lowerBound);
+          speed[i][j] = changeVelocity * speed[i][j];
         }
-        if (particle.variables().get(var) > upperBound) {
-          particle.variables().set(var, upperBound);
-          speed[i][var] = changeVelocity * speed[i][var];
+        if (particle.variables().get(j) > upperBound) {
+          particle.variables().set(j, upperBound);
+          speed[i][j] = changeVelocity * speed[i][j];
         }
       }
     }
@@ -253,13 +231,6 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
 
   @Override
   public void perturbation(List<DoubleSolution> swarm) {
-    /*
-    MutationOperator<DoubleSolution> mutation =
-            new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
-    for (DoubleSolution particle : swarm) {
-      mutation.execute(particle) ;
-    }
-    */
   }
 
   @Override
