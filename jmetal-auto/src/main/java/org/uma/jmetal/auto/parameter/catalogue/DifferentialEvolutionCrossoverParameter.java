@@ -9,8 +9,8 @@ public class DifferentialEvolutionCrossoverParameter extends CategoricalParamete
     this(args,
         List.of(
             "RAND_1_BIN",
+            "RAND_2_BIN",
             "RAND_1_EXP",
-            "RAND_2_EXP",
             "BEST_1_BIN",
             "BEST_1_EXP",
             "BEST_2_BIN",

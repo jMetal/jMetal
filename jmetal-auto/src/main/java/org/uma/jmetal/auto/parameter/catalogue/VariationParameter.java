@@ -4,7 +4,7 @@ import java.util.List;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
-import org.uma.jmetal.component.catalogue.ea.variation.impl.DifferentialCrossoverVariation;
+import org.uma.jmetal.component.catalogue.ea.variation.impl.DifferentialEvolutionCrossoverVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
@@ -50,7 +50,7 @@ public class VariationParameter extends CategoricalParameter {
         Check.notNull(subProblemIdGenerator);
 
         result =
-            new DifferentialCrossoverVariation(
+            new DifferentialEvolutionCrossoverVariation(
                 1,
                 differentialEvolutionCrossoverParameter.getParameter(),
                 mutationDEParameter.getDoubleSolutionParameter(),

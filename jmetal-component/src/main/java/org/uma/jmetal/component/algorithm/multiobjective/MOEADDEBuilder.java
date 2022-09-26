@@ -13,7 +13,7 @@ import org.uma.jmetal.component.catalogue.ea.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
-import org.uma.jmetal.component.catalogue.ea.variation.impl.DifferentialCrossoverVariation;
+import org.uma.jmetal.component.catalogue.ea.variation.impl.DifferentialEvolutionCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
@@ -57,7 +57,7 @@ public class MOEADDEBuilder {
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     this.variation =
-        new DifferentialCrossoverVariation(
+        new DifferentialEvolutionCrossoverVariation(
             offspringPopulationSize, crossover, mutation, sequenceGenerator);
 
     WeightVectorNeighborhood<DoubleSolution> neighborhood = null;

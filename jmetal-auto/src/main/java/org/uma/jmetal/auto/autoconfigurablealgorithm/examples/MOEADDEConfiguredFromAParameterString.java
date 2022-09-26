@@ -17,11 +17,11 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  */
 public class MOEADDEConfiguredFromAParameterString {
   public static void main(String[] args) {
-    String referenceFrontFileName = "LZ09_F2.csv" ;
+    String referenceFrontFileName = "LZ09_F9.csv" ;
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.lz09.LZ09F2 "
-            + "--referenceFrontFileName LZ09_F2.csv "
+        ("--problemName org.uma.jmetal.problem.multiobjective.lz09.LZ09F9 "
+            + "--referenceFrontFileName LZ09_F9.csv "
             + "--randomGeneratorSeed 124 "
             + "--maximumNumberOfEvaluations 175000 "
             + "--algorithmResult population "

@@ -10,14 +10,14 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
 /** */
-public class DifferentialCrossoverVariation implements Variation<DoubleSolution> {
+public class DifferentialEvolutionCrossoverVariation implements Variation<DoubleSolution> {
   private int matingPoolSize;
   private int offspringPopulationSize;
   private SequenceGenerator<Integer> solutionIndexGenerator ;
   private DifferentialEvolutionCrossover crossover;
   private MutationOperator<DoubleSolution> mutation;
 
-  public DifferentialCrossoverVariation(
+  public DifferentialEvolutionCrossoverVariation(
       int offspringPopulationSize,
       DifferentialEvolutionCrossover crossover,
       MutationOperator<DoubleSolution> mutation, SequenceGenerator<Integer> solutionIndexGenerator) {
@@ -29,7 +29,7 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
     this.matingPoolSize = offspringPopulationSize * crossover.getNumberOfRequiredParents();
   }
 
-  public DifferentialCrossoverVariation(
+  public DifferentialEvolutionCrossoverVariation(
       int offspringPopulationSize, DifferentialEvolutionCrossover crossover, SequenceGenerator<Integer> solutionIndexGenerator) {
     this(offspringPopulationSize, crossover, new NullMutation<>(), solutionIndexGenerator);
   }
