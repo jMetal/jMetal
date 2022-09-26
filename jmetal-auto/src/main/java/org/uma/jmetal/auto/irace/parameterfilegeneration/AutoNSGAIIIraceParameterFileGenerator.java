@@ -13,6 +13,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--referenceFrontFileName ZDT1.csv "
+            + "--randomGeneratorSeed 124 "
             + "--maximumNumberOfEvaluations 25000 "
             + "--algorithmResult population "
             + "--populationSize 100 "

@@ -33,8 +33,6 @@ public class Fonseca extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
 
-
-
     int numberOfVariables = getNumberOfVariables() ;
 
     double[] f = new double[solution.objectives().length];
