@@ -174,7 +174,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
         problem.getNumberOfVariables());
 
     DifferentialEvolutionCrossoverParameter deCrossover =
-        new DifferentialEvolutionCrossoverParameter(args, List.of("RAND_1_BIN"));
+        new DifferentialEvolutionCrossoverParameter(args, List.of("RAND_1_BIN", "RAND_1_EXP", "RAND_2_BIN", "RAND_2_EXP"));
 
     RealParameter crParameter = new RealParameter("CR", args, 0.0, 1.0);
     RealParameter fParameter = new RealParameter("F", args, 0.0, 1.0);
