@@ -230,6 +230,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     Archive<DoubleSolution> archive = null;
     Evaluation<DoubleSolution> evaluation ;
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
+      externalArchiveParameter.setSize(populationSizeParameter.getValue());
+      archive = externalArchiveParameter.getParameter();
       evaluation = new SequentialEvaluationWithArchive<>(problem, archive);
     } else {
       evaluation = new SequentialEvaluation<>(problem);
