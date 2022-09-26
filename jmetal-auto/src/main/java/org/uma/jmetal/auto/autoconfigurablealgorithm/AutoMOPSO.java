@@ -272,6 +272,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     } else {
       evaluation = new SequentialEvaluation<>(problem);
     }
+
     var termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
 
     leaderArchiveParameter.setSize(archiveSizeParameter.getValue());
