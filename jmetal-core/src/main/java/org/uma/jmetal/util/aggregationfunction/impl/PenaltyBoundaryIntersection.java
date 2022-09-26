@@ -1,9 +1,9 @@
-package org.uma.jmetal.util.aggregativefunction.impl;
+package org.uma.jmetal.util.aggregationfunction.impl;
 
-import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
+import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 
-public class PenaltyBoundaryIntersection implements AggregativeFunction {
+public class PenaltyBoundaryIntersection implements AggregationFunction {
   private IdealPoint idealPoint ;
   private final double theta ;
 

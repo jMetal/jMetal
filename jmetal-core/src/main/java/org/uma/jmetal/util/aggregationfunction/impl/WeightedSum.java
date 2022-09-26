@@ -1,8 +1,8 @@
-package org.uma.jmetal.util.aggregativefunction.impl;
+package org.uma.jmetal.util.aggregationfunction.impl;
 
-import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
+import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
 
-public class WeightedSum implements AggregativeFunction {
+public class WeightedSum implements AggregationFunction {
 
   @Override
   public double compute(double[] vector, double[] weightVector) {

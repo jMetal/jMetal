@@ -28,8 +28,8 @@ public class DifferentialEvolutionCrossoverParameter extends CategoricalParamete
 
   public DifferentialEvolutionCrossover getParameter() {
     DifferentialEvolutionCrossover result;
-    Double cr = (Double) findSpecificParameter("cr").getValue();
-    Double f = (Double) findSpecificParameter("f").getValue();
+    Double cr = (Double) findGlobalParameter("CR").getValue();
+    Double f = (Double) findGlobalParameter("F").getValue();
 
     String variant = getValue() ;
 

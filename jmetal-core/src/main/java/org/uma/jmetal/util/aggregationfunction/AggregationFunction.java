@@ -1,6 +1,6 @@
-package org.uma.jmetal.util.aggregativefunction;
+package org.uma.jmetal.util.aggregationfunction;
 
-public interface AggregativeFunction {
+public interface AggregationFunction {
   double compute(double[] vector, double[] weightVector) ;
   void update(double[] vector) ;
 }

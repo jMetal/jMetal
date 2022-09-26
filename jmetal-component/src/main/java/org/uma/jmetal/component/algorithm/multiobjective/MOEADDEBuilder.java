@@ -18,8 +18,8 @@ import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
+import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
+import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
@@ -41,7 +41,7 @@ public class MOEADDEBuilder {
   private double neighborhoodSelectionProbability = 0.9;
   private int maximumNumberOfReplacedSolutions = 2;
 
-  private AggregativeFunction aggregativeFunction = new Tschebyscheff();
+  private AggregationFunction aggregativeFunction = new Tschebyscheff();
 
   public MOEADDEBuilder(Problem<DoubleSolution> problem, int populationSize, double cr, double f,
       MutationOperator<DoubleSolution> mutation, String weightVectorDirectory,
@@ -135,7 +135,7 @@ public class MOEADDEBuilder {
     return this;
   }
 
-  public MOEADDEBuilder setAggregativeFunction(AggregativeFunction aggregativeFunction) {
+  public MOEADDEBuilder setAggregativeFunction(AggregationFunction aggregativeFunction) {
     this.aggregativeFunction = aggregativeFunction;
 
     return this;

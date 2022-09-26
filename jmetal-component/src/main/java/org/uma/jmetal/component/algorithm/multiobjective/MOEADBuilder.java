@@ -18,8 +18,8 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
+import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
+import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
@@ -40,7 +40,7 @@ public class MOEADBuilder<S extends Solution<?>> {
   private double neighborhoodSelectionProbability = 0.9 ;
   private int maximumNumberOfReplacedSolutions = 2;
   private String weightVectorDirectory ;
-  private AggregativeFunction aggregativeFunction = new PenaltyBoundaryIntersection() ;
+  private AggregationFunction aggregativeFunction = new PenaltyBoundaryIntersection() ;
 
   public MOEADBuilder(Problem<S> problem, int populationSize,
       CrossoverOperator<S> crossover, MutationOperator<S> mutation, String weightVectorDirectory,
@@ -123,7 +123,7 @@ public class MOEADBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public MOEADBuilder<S> setAggregativeFunction(AggregativeFunction aggregativeFunction) {
+  public MOEADBuilder<S> setAggregativeFunction(AggregationFunction aggregativeFunction) {
     this.aggregativeFunction = aggregativeFunction;
 
     return this;

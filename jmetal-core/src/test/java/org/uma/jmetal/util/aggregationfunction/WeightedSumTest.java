@@ -1,14 +1,14 @@
-package org.uma.jmetal.util.aggregativefunction;
+package org.uma.jmetal.util.aggregationfunction;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.util.aggregativefunction.impl.WeightedSum;
+import org.uma.jmetal.util.aggregationfunction.impl.WeightedSum;
 
 public class WeightedSumTest {
 
-  private AggregativeFunction aggregativeFunction ;
+  private AggregationFunction aggregativeFunction ;
   private static final double EPSILON = 0.00000000001 ;
 
   @Before
