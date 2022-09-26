@@ -36,7 +36,6 @@ public class MOEADBuilder<S extends Solution<?>> {
   private Selection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
-
   private int neighborhoodSize = 20 ;
   private double neighborhoodSelectionProbability = 0.9 ;
   private int maximumNumberOfReplacedSolutions = 2;

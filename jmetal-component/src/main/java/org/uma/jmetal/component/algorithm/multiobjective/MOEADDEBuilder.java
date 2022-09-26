@@ -37,7 +37,6 @@ public class MOEADDEBuilder {
   private Selection<DoubleSolution> selection;
   private Variation<DoubleSolution> variation;
   private Replacement<DoubleSolution> replacement;
-
   private int neighborhoodSize = 20;
   private double neighborhoodSelectionProbability = 0.9;
   private int maximumNumberOfReplacedSolutions = 2;
