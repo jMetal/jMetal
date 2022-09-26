@@ -21,7 +21,7 @@ public class SMPSOConfiguredFromAParameterString {
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
-            + "--algorithmResult unboundedArchive "
+            + "--algorithmResult leaderArchive "
             + "--randomGeneratorSeed 13 "
             + "--referenceFrontFileName "
             + referenceFrontFileName

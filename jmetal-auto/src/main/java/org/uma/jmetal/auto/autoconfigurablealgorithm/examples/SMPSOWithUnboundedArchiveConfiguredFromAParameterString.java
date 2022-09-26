@@ -14,19 +14,19 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  * @author Daniel Doblas
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class SMPSOConfiguredFromAParameterString {
+public class SMPSOWithUnboundedArchiveConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "ZDT4.csv";
+    String referenceFrontFileName = "DTLZ2.3D.csv";
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
             + "--algorithmResult unboundedArchive "
             + "--randomGeneratorSeed 13 "
             + "--referenceFrontFileName "
             + referenceFrontFileName
             + " "
-            + "--maximumNumberOfEvaluations 25000 "
+            + "--maximumNumberOfEvaluations 40000 "
             + "--swarmSize 100 "
             + "--archiveSize 100 "
             + "--swarmInitialization random "

@@ -15,17 +15,18 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class MOEADConfiguredFromAParameterString {
+public class MOEADWithUnboundedArchiveConfiguredFromAParameterString {
   public static void main(String[] args) {
     String referenceFrontFileName = "DTLZ1.3D.csv" ;
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2Minus "
             + "--referenceFrontFileName DTLZ1.3D.csv "
             + "--randomGeneratorSeed 124 "
             + "--maximumNumberOfEvaluations 25000 "
-            + "--algorithmResult population "
             + "--populationSize 91 "
+            + "--algorithmResult externalArchive "
+            + "--externalArchive unboundedArchive "
             + "--offspringPopulationSize 1 "
             + "--createInitialSolutions random "
             + "--neighborhoodSize 20 "
@@ -45,27 +46,27 @@ public class MOEADConfiguredFromAParameterString {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoMOEAD autoNSGAII = new AutoMOEAD();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    AutoMOEAD autoMOEAD = new AutoMOEAD();
+    autoMOEAD.parseAndCheckParameters(parameters);
 
-    AutoNSGAII.print(autoNSGAII.fixedParameterList);
-    AutoNSGAII.print(autoNSGAII.autoConfigurableParameterList);
+    AutoNSGAII.print(autoMOEAD.fixedParameterList);
+    AutoNSGAII.print(autoMOEAD.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+    EvolutionaryAlgorithm<DoubleSolution> moead = autoMOEAD.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "MOEAD", 80, 1000,"resources/referenceFrontsCSV/" + referenceFrontFileName);
 
-    nsgaII.getObservable().register(evaluationObserver);
-    nsgaII.getObservable().register(runTimeChartObserver);
+    moead.getObservable().register(evaluationObserver);
+    moead.getObservable().register(runTimeChartObserver);
 
-    nsgaII.run();
+    moead.run();
 
-    JMetalLogger.logger.info("Total computing time: " + nsgaII.getTotalComputingTime()); ;
+    JMetalLogger.logger.info("Total computing time: " + moead.getTotalComputingTime()); ;
 
-    new SolutionListOutput(nsgaII.getResult())
+    new SolutionListOutput(moead.getResult())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
         .print();
