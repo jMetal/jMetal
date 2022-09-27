@@ -17,11 +17,11 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  */
 public class MOEADWithUnboundedArchiveConfiguredFromAParameterString {
   public static void main(String[] args) {
-    String referenceFrontFileName = "DTLZ1.3D.csv" ;
+    String referenceFrontFileName = "DTLZ2.3D.csv" ;
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2Minus "
-            + "--referenceFrontFileName DTLZ1.3D.csv "
+            + "--referenceFrontFileName DTLZ2.3D.csv "
             + "--randomGeneratorSeed 124 "
             + "--maximumNumberOfEvaluations 25000 "
             + "--populationSize 91 "

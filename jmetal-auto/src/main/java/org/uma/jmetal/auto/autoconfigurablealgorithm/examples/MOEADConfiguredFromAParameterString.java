@@ -23,7 +23,7 @@ public class MOEADConfiguredFromAParameterString {
         ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1 "
             + "--referenceFrontFileName DTLZ1.3D.csv "
             + "--randomGeneratorSeed 124 "
-            + "--maximumNumberOfEvaluations 25000 "
+            + "--maximumNumberOfEvaluations 35000 "
             + "--algorithmResult population "
             + "--populationSize 91 "
             + "--offspringPopulationSize 1 "

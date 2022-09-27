@@ -49,7 +49,7 @@ public class SelectionParameter<S extends Solution<?>> extends CategoricalParame
                 subProblemIdGenerator,
                 neighborhood,
                 neighborhoodSelectionProbability,
-                true);
+                false);
         break;
       default:
         throw new JMetalException("Selection component unknown: " + getValue());
