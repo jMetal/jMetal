@@ -15,11 +15,8 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithCons
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class LocalSearchRunner {
-  /**
-   * Usage: java org.uma.jmetal.runner.singleobjective.LocalSearchRunner
-   */
-  public static void main(String[] args) throws Exception {
+public class LocalSearchBinaryProblemRunner {
+  public static void main(String[] args)  {
     BinaryProblem problem = new OneMax(1024) ;
 
     MutationOperator<BinarySolution> mutationOperator =
@@ -29,7 +26,7 @@ public class LocalSearchRunner {
 
     Comparator<BinarySolution> comparator = new DominanceWithConstraintsComparator<>() ;
 
-    DefaultLocalSearch<BinarySolution> localSearch = new DefaultLocalSearch<BinarySolution>(
+    DefaultLocalSearch<BinarySolution> localSearch = new DefaultLocalSearch<>(
             improvementRounds,
             problem,
             mutationOperator,
@@ -37,9 +34,10 @@ public class LocalSearchRunner {
 
     localSearch.run();
 
-    BinarySolution newSolution = localSearch.getResult() ;
+    BinarySolution foundSolution = localSearch.getResult() ;
 
-    JMetalLogger.logger.info("Fitness: " + newSolution.objectives()[0]) ;
-    JMetalLogger.logger.info("Solution: " + newSolution.variables().get(0)) ;
+    String fitnessMessage = "Fitness: " + foundSolution.objectives()[0] ;
+    JMetalLogger.logger.info(fitnessMessage) ;
+    JMetalLogger.logger.info("Solution: " + foundSolution.variables().get(0)) ;
   }
 }
