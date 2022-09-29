@@ -30,7 +30,6 @@ public class LocalSearchContinuousProblemRunner {
             mutationOperator,
             comparator) ;
 
-
     long startTime = System.currentTimeMillis() ;
     localSearch.run();
     long endTime = System.currentTimeMillis() ;
