@@ -3,26 +3,26 @@ package org.uma.jmetal.auto.irace;
 import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
 
 import java.io.IOException;
-import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
+import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOEAD;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.VectorUtils;
 
-public class AutoNSGAIIIraceHV {
+public class AutoMOEADIraceHV {
   public static void main(String[] args) throws IOException {
-    AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
-    nsgaiiWithParameters.parseAndCheckParameters(args);
+    AutoMOEAD autoMOEAD = new AutoMOEAD();
+    autoMOEAD.parseAndCheckParameters(args);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
-    nsgaII.run();
+    EvolutionaryAlgorithm<DoubleSolution> moead = autoMOEAD.create();
+    moead.run();
 
     String referenceFrontFile =
-        "resources/referenceFrontsCSV/" + nsgaiiWithParameters.referenceFrontFilename.getValue();
+        "resources/referenceFrontsCSV/" + autoMOEAD.referenceFrontFilename.getValue();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
-    double[][] front = getMatrixWithObjectiveValues(nsgaII.getResult()) ;
+    double[][] front = getMatrixWithObjectiveValues(moead.getResult()) ;
 
     double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
     double[][] normalizedFront =

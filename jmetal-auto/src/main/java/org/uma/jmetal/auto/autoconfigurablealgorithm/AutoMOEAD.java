@@ -109,7 +109,6 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     autoConfigurableParameterList.add(populationSizeParameter);
     autoConfigurableParameterList.add(neighborhoodSizeParameter);
-    autoConfigurableParameterList.add(neighborhoodSelectionProbabilityParameter);
     autoConfigurableParameterList.add(maximumNumberOfReplacedSolutionsParameter);
     autoConfigurableParameterList.add(aggregativeFunctionParameter);
 
