@@ -13,7 +13,6 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  */
 public class EvolutionStrategyBuilder<S extends Solution<?>> implements AlgorithmBuilder<Algorithm<S>> {
   public enum EvolutionStrategyVariant {ELITIST, NON_ELITIST}
-
   private Problem<S> problem;
   private int mu;
   private int lambda;
@@ -51,9 +50,9 @@ public class EvolutionStrategyBuilder<S extends Solution<?>> implements Algorith
 
   @Override public Algorithm<S> build() {
     if (variant == EvolutionStrategyVariant.ELITIST) {
-      return new ElitistEvolutionStrategy<S>(problem, mu, lambda, maxEvaluations, mutation);
+      return new ElitistEvolutionStrategy<>(problem, mu, lambda, maxEvaluations, mutation);
     } else if (variant == EvolutionStrategyVariant.NON_ELITIST) {
-      return new NonElitistEvolutionStrategy<S>(problem, mu, lambda, maxEvaluations, mutation);
+      return new NonElitistEvolutionStrategy<>(problem, mu, lambda, maxEvaluations, mutation);
     } else {
       throw new JMetalException("Unknown variant: " + variant) ;
     }
