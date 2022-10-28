@@ -32,6 +32,6 @@ public class VelocityInitializationParameter extends CategoricalParameter {
 
   @Override
   public String getName() {
-    return "velocity initialization";
+    return "velocityInitialization";
   }
 }
