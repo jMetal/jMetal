@@ -24,20 +24,26 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  */
 @SuppressWarnings("serial")
 public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
-  /** EPS defines the minimum difference allowed between real values */
-  private static final double EPS = 1.0e-14;
 
+  /**
+   * EPS defines the minimum difference allowed between real values
+   */
+  private static final double EPS = 1.0e-14;
   private double distributionIndex;
   private double crossoverProbability;
   private RepairDoubleSolution solutionRepair;
-
   private RandomGenerator<Double> randomGenerator;
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public SBXCrossover(double crossoverProbability, double distributionIndex) {
     this(crossoverProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue());
   }
-  /** Constructor */
+
+  /**
+   * Constructor
+   */
   public SBXCrossover(
       double crossoverProbability,
       double distributionIndex,
@@ -49,7 +55,9 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
         randomGenerator);
   }
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public SBXCrossover(
       double crossoverProbability, double distributionIndex, RepairDoubleSolution solutionRepair) {
     this(
@@ -59,7 +67,9 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
         () -> JMetalRandom.getInstance().nextDouble());
   }
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public SBXCrossover(
       double crossoverProbability,
       double distributionIndex,
@@ -94,7 +104,9 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
     this.distributionIndex = distributionIndex;
   }
 
-  /** Execute() method */
+  /**
+   * Execute() method
+   */
   @Override
   public List<DoubleSolution> execute(List<DoubleSolution> solutions) {
     Check.notNull(solutions);
@@ -103,7 +115,9 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
     return doCrossover(crossoverProbability, solutions.get(0), solutions.get(1));
   }
 
-  /** doCrossover method */
+  /**
+   * doCrossover method
+   */
   public List<DoubleSolution> doCrossover(
       double probability, DoubleSolution parent1, DoubleSolution parent2) {
     List<DoubleSolution> offspring = new ArrayList<DoubleSolution>(2);
