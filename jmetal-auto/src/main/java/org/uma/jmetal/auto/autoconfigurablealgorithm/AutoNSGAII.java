@@ -159,7 +159,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
 
     variationParameter =
         new VariationParameter(args, List.of("crossoverAndMutationVariation"));
-    variationParameter.addGlobalParameter(offspringPopulationSizeParameter);
+    variationParameter.addSpecificParameter("crossoverAndMutationVariation", offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
   }
