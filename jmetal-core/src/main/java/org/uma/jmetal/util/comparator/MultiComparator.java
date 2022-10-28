@@ -6,9 +6,8 @@ import java.util.List;
 
 /**
  * @author Juanjo
- * @version 1.0
- * This class aims to implement an interface for MultiComparators. Multicomparators are
- * comparators that underneath make use of a list of comparator to possibly break the ties between
+ * @version 1.0 This class aims to implement an interface for MultiComparators. Multicomparators are
+ * comparators that underneath make use of a list of comparators to possibly break the ties between
  * solutions
  */
 public class MultiComparator<T> implements Comparator<T> {
@@ -17,33 +16,34 @@ public class MultiComparator<T> implements Comparator<T> {
 
   /**
    * Constructor
+   *
    * @param comparatorList
    */
   public MultiComparator(List<Comparator<T>> comparatorList) {
-    this.comparatorList = comparatorList ;
+    this.comparatorList = comparatorList;
   }
 
   public MultiComparator() {
-    comparatorList = new ArrayList<>() ;
+    comparatorList = new ArrayList<>();
   }
 
   public MultiComparator<T> add(Comparator<T> comparator) {
-    comparatorList.add(comparator) ;
-    return this ;
+    comparatorList.add(comparator);
+    return this;
   }
 
   /**
    * Compare two objects based on a list of comparators. It performs a lexicographical comparison as
    * follows:
-   *
+   * <p>
    * o1 is smaller than o2 if exist an index i, within the interval [0,comparatorList.size()) s.t.
    * comparatorList.get(i).compare(o1,o2)==-1 and for all j, s.t. j<i, then
    * comparatorList.get(j).compare(o1,o2)==0.
-   *
+   * <p>
    * Conversely, o1 is bigger than o2 if exist an index i, within the interval
    * [0,comparatorList.size()) s.t. comparatorList.get(i).compare(o1,o2)==1 and for all j, s.t. j<i,
    * then comparatorList.get(j).compare(o1,o2)==0.
-   *
+   * <p>
    * Finally o1 cannot be said smaller or bigger than o2 if none of the previous two cases are
    * true.
    *
@@ -66,6 +66,6 @@ public class MultiComparator<T> implements Comparator<T> {
    * @return the list of comparators
    */
   public List<? extends Comparator<T>> getComparatorList() {
-    return comparatorList ;
+    return comparatorList;
   }
 }
