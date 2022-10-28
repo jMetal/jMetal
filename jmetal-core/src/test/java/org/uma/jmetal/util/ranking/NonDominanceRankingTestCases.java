@@ -316,7 +316,6 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     double[][] objectiveValues =
             new double[][] {
                     {1.4648056109874181, 8.970087855444899E-34, 5.301705982489511E-43},
-                    {1.4648056109874181, 8.970087855444899E-34, 5.301705982489511E-43},
                     {1.5908547487753466, 4.21325648871815E-91, 5.492563533270124E-38},
                     {1.460628598699147, 7.251230487490275E-13, 6.836254915688127E-21},
                     {1.53752105026832, 1.30774962272882E-89, 1.964911546564003E-276},
@@ -340,9 +339,9 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
     ranking.compute(solutionList);
 
-    assertEquals(10, solutionList.size());
+    assertEquals(9, solutionList.size());
     assertEquals(2, ranking.getNumberOfSubFronts());
-    assertEquals(5, ranking.getSubFront(0).size());
+    assertEquals(4, ranking.getSubFront(0).size());
     assertEquals(5, ranking.getSubFront(1).size());
   }
 
@@ -354,7 +353,6 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     double[][] objectiveValues =
         new double[][] {
           {1.551119525194089, 3.0514004681678587E-46, 1.927008515185969E-40},
-          {1.4648056109874181, 8.970087855444899E-34, 5.301705982489511E-43},
           {1.5494254948894577, 1.7966427544774256E-51, 4.075358470895911E-37},
           {1.7827030380249338, 4.7213519324741183E-91, 1.093734894701149E-8},
           {1.572731735111519, 1.337698324772074E-89, 4.4182881457366E-206},
@@ -363,7 +361,6 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
           {1.7246492482280722, 2.8107611659011267E-20, 4.845071259695356E-206},
           {1.78303953210775, 2.291263808931386E-76, 4.39046494875984E-16},
           {1.6377979691545304, 6.598125815633987E-69, 4.413952566653338E-15},
-          {1.551119525194089, 3.0514004681678587E-46, 1.927008515185969E-40},
           {1.4648056109874181, 8.970087855444899E-34, 5.301705982489511E-43},
           {1.5908547487753466, 4.21325648871815E-91, 5.492563533270124E-38},
           {1.7919394752021747, 2.0778508454927406E-51, 1.1494687423683686E-8},
@@ -388,10 +385,10 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
     ranking.compute(solutionList);
 
-    assertEquals(20, solutionList.size());
+    assertEquals(18, solutionList.size());
     assertEquals(5, ranking.getNumberOfSubFronts());
-    assertEquals(5, ranking.getSubFront(0).size());
-    assertEquals(7, ranking.getSubFront(1).size());
+    assertEquals(4, ranking.getSubFront(0).size());
+    assertEquals(6, ranking.getSubFront(1).size());
     assertEquals(5, ranking.getSubFront(2).size());
     assertEquals(2, ranking.getSubFront(3).size());
     assertEquals(1, ranking.getSubFront(4).size());

@@ -12,6 +12,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  */
 @SuppressWarnings("serial")
 public class DTLZ1 extends AbstractDoubleProblem {
+
   /**
    * Creates a default DTLZ1 problem (7 variables and 3 objectives)
    */
@@ -29,8 +30,8 @@ public class DTLZ1 extends AbstractDoubleProblem {
     setNumberOfObjectives(numberOfObjectives);
     setName("DTLZ1");
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     IntStream.range(0, numberOfVariables).forEach(i -> {
       lowerLimit.add(0.0);
@@ -40,18 +41,20 @@ public class DTLZ1 extends AbstractDoubleProblem {
     setVariableBounds(lowerLimit, upperLimit);
   }
 
-  /** Evaluate() method */
+  /**
+   * Evaluate() method
+   */
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
-    int numberOfObjectives = solution.objectives().length ;
+    int numberOfObjectives = solution.objectives().length;
 
     double[] f = new double[numberOfObjectives];
-    double[] x = new double[numberOfVariables] ;
+    double[] x = new double[numberOfVariables];
 
     int k = getNumberOfVariables() - solution.objectives().length + 1;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i) ;
+      x[i] = solution.variables().get(i);
     }
 
     double g = 0.0;
@@ -70,13 +73,14 @@ public class DTLZ1 extends AbstractDoubleProblem {
       }
       if (i != 0) {
         int aux = numberOfObjectives - (i + 1);
+
         f[i] *= 1 - x[aux];
       }
     }
 
     IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
 
-    return solution ;
+    return solution;
   }
 }
 

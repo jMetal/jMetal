@@ -3,26 +3,26 @@ package org.uma.jmetal.problem.multiobjective.dtlz;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
- * Class representing problem DTLZ3 Minus (DTLZ3 where all the objective vales are multiplied by -1)
+ * Class representing problem DTLZ4 Minus (DTLZ4 where all the objective vales are multiplied by -1)
  */
 @SuppressWarnings("serial")
-public class DTLZ3Minus extends DTLZ3 {
+public class DTLZ4Minus extends DTLZ4 {
   /**
-   * Creates a default DTLZ2 problem (12 variables and 3 objectives)
+   * Creates a default DTLZ4 minus problem (12 variables and 3 objectives)
    */
-  public DTLZ3Minus() {
+  public DTLZ4Minus() {
     this(12, 3);
   }
 
   /**
-   * Creates a DTLZ2Minus problem instance
+   * Creates a DTLZ4Minus problem instance
    *
    * @param numberOfVariables  Number of variables
    * @param numberOfObjectives Number of objective functions
    */
-  public DTLZ3Minus(Integer numberOfVariables, Integer numberOfObjectives) {
+  public DTLZ4Minus(Integer numberOfVariables, Integer numberOfObjectives) {
     super(numberOfVariables, numberOfObjectives) ;
-    setName("DTLZ3Minus");
+    setName("DTLZ4Minus");
   }
 
   /** Evaluate() method */

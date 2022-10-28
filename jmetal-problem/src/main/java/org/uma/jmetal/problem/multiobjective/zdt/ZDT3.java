@@ -27,6 +27,7 @@ public class ZDT3 extends ZDT1 {
    * @param f First argument of the function H.
    * @param g Second argument of the function H.
    */
+  @Override
   protected double evalH(double f, double g) {
     double h ;
     h = 1.0 - Math.sqrt(f / g)

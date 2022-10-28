@@ -47,10 +47,11 @@ public class ZDT6 extends ZDT1 {
    *
    * @param solution Solution
    */
+  @Override
   protected double evalG(DoubleSolution solution) {
     double g = 0.0;
-    for (int var = 1; var < solution.variables().size(); var++) {
-      g += solution.variables().get(var);
+    for (int i = 1; i < solution.variables().size(); i++) {
+      g += solution.variables().get(i);
     }
     g = g / (solution.variables().size() - 1);
     g = Math.pow(g, 0.25);
@@ -65,6 +66,7 @@ public class ZDT6 extends ZDT1 {
    * @param f First argument of the function H.
    * @param g Second argument of the function H.
    */
+  @Override
   protected double evalH(double f, double g) {
     return 1.0 - Math.pow((f / g), 2.0);
   }
