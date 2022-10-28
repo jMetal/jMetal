@@ -1,0 +1,35 @@
+## This is an example of specifying instances with a file.
+# Each line is an instance relative to trainInstancesDir/testInstancesDir
+# (see scenario.txt.tmpl) and an optional sequence of instance-specific
+# parameters that will be passed to target-runner when invoked on that
+# instance.
+# Empty lines and comments are ignored.
+org.uma.jmetal.problem.multiobjective.zdt.ZDT1 --referenceFrontFileName ZDT1.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.zdt.ZDT2 --referenceFrontFileName ZDT2.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.zdt.ZDT3 --referenceFrontFileName ZDT3.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.zdt.ZDT4 --referenceFrontFileName ZDT4.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.zdt.ZDT6 --referenceFrontFileName ZDT6.csv --maximumNumberOfEvaluations 25000
+
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1_2D --referenceFrontFileName DTLZ1.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2_2D --referenceFrontFileName DTLZ2.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3_2D --referenceFrontFileName DTLZ3.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4_2D --referenceFrontFileName DTLZ4.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ5_2D --referenceFrontFileName DTLZ5.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ6_2D --referenceFrontFileName DTLZ6.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7_2D --referenceFrontFileName DTLZ7.2D.csv --maximumNumberOfEvaluations 25000
+
+org.uma.jmetal.problem.multiobjective.wfg.WFG1 --referenceFrontFileName WFG1.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.wfg.WFG2 --referenceFrontFileName WFG2.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.wfg.WFG3 --referenceFrontFileName WFG3.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.wfg.WFG4 --referenceFrontFileName WFG4.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.wfg.WFG5 --referenceFrontFileName WFG5.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.wfg.WFG6 --referenceFrontFileName WFG6.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.wfg.WFG7 --referenceFrontFileName WFG7.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.wfg.WFG8 --referenceFrontFileName WFG8.2D.csv --maximumNumberOfEvaluations 25000
+org.uma.jmetal.problem.multiobjective.wfg.WFG9 --referenceFrontFileName WFG9.2D.csv --maximumNumberOfEvaluations 25000
+
+org.uma.jmetal.problem.multiobjective.re.RE21 --referenceFrontFileName RE21.csv --maximumNumberOfEvaluations 10000
+org.uma.jmetal.problem.multiobjective.re.RE22 --referenceFrontFileName RE22.csv --maximumNumberOfEvaluations 10000
+org.uma.jmetal.problem.multiobjective.re.RE23 --referenceFrontFileName RE23.csv --maximumNumberOfEvaluations 10000
+org.uma.jmetal.problem.multiobjective.re.RE24 --referenceFrontFileName RE24.csv --maximumNumberOfEvaluations 10000
+org.uma.jmetal.problem.multiobjective.re.RE25 --referenceFrontFileName RE25.csv --maximumNumberOfEvaluations 10000

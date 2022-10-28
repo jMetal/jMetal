@@ -1,0 +1,14 @@
+## This is an example of specifying instances with a file.
+
+# Each line is an instance relative to trainInstancesDir
+# (see scenario.txt.tmpl) and an optional sequence of instance-specific
+# parameters that will be passed to target-runnerx when invoked on that
+# instance.
+
+# Empty lines and comments are ignored.
+org.uma.jmetal.problem.multiobjective.re.RE21 --referenceFrontFileName RE21.csv --maximumNumberOfEvaluations 10000
+org.uma.jmetal.problem.multiobjective.re.RE22 --referenceFrontFileName RE22.csv --maximumNumberOfEvaluations 10000
+org.uma.jmetal.problem.multiobjective.re.RE23 --referenceFrontFileName RE23.csv --maximumNumberOfEvaluations 10000
+org.uma.jmetal.problem.multiobjective.re.RE24 --referenceFrontFileName RE24.csv --maximumNumberOfEvaluations 10000
+org.uma.jmetal.problem.multiobjective.re.RE25 --referenceFrontFileName RE25.csv --maximumNumberOfEvaluations 10000
+

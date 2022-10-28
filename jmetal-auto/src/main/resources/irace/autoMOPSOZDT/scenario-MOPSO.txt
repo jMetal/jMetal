@@ -1,0 +1,230 @@
+###################################################### -*- mode: r -*- #####
+## Scenario setup for Iterated Race (irace).
+############################################################################
+
+## To use the default value of a parameter of iRace, simply do not set
+## the parameter (comment it out in this file, and do not give any
+## value on the command line).
+
+## File that contains the description of the parameters.
+parameterFile = "../parameters-MOPSO.txt"
+
+## Directory where the programs will be run.
+execDir = "./execdir"
+
+## File to save tuning results as an R dataset, either absolute path or
+## relative to execDir.
+# logFile = "./irace.Rdata"
+
+## Directory where training instances are located; either absolute path or
+## relative to current directory. If no trainInstancesFiles is provided, all
+## the files in trainInstancesDir will be listed as instances.
+trainInstancesDir = ""
+
+## File that contains a list of training instances and optionally additional
+## parameters for them. If trainInstancesDir is provided, irace will search
+## for the files in this folder.
+trainInstancesFile = "../instances-list-ZDT.txt"
+
+## Directory where testing instances are located, either absolute or relative
+## to current directory.
+testInstancesDir = ""
+
+## File containing a list of test instances and optionally additional
+## parameters for them.  If empty or NULL, do not use a file.
+testInstancesFile = "../instances-list-ZDT-DTLZ-WFG-RE_2D.txt" 
+
+## Number of elite configurations returned by irace that will be tested
+## if test instances are provided.
+testNbElites = 1
+
+## Enable/disable testing the elite configurations found at each iteration.
+testIterationElites = 1
+
+## File that contains a table of initial configurations. If empty or NULL, all
+## initial configurations are randomly generated.
+configurationsFile = "../configurationsMOPSO.txt"
+
+## File that contains a list of logical expressions that cannot be TRUE for
+## any evaluated configuration. If empty or NULL, do not use forbidden
+## expressions.
+# forbiddenFile = ""
+
+## Script called for each configuration that executes the target algorithm to
+## be tuned. See the templates and examples provided.
+targetRunner = "../target-runner-AutoMOPSOIraceHV"
+# targetRunner = "../jmetal-auto-6.0-SNAPSHOT-jar-with-dependencies.jar"
+
+## An executable that will be used to launch the target runner, when
+## targetRunner cannot be executed directly (.e.g, a Python script in
+## Windows).
+# targetRunnerLauncher = "java"
+
+## Command-line arguments provided to targetRunnerLauncher. The substrings
+## \{targetRunner\} and \{targetRunnerArgs\} will be replaced by the value of
+## the option targetRunner and by the arguments usually passed when calling
+## targetRunner, respectively. Example: "-m \{targetRunner\ --args
+## \{targetRunnerArgs\}"}.
+#targetRunnerLauncherArgs = " -cp {targetRunner} org.uma.jmetal.auto.irace.AutoMOPSOIraceNHVIGDPlus {targetRunnerArgs}"
+
+## Number of times to retry a call to targetRunner if the call failed.
+# targetRunnerRetries = 0
+
+## Optional data passed to targetRunner. This is ignored by the default
+## targetRunner function, but it may be used by custom targetRunner functions
+## to pass persistent data around.
+# targetRunnerData = ""
+
+## Optional R function to provide custom parallelization of targetRunner.
+# targetRunnerParallel = ""
+
+## Optional script or R function that provides a numeric value for each
+## configuration. See templates/target-evaluator.tmpl
+# targetEvaluator = ""
+
+## Maximum number of runs (invocations of targetRunner) that will be
+## performed. It determines the maximum budget of experiments for the tuning.
+maxExperiments = 100000
+
+## Maximum total execution time in seconds for the executions of targetRunner.
+## targetRunner must return two values: cost and time.
+# maxTime = 0
+
+## Fraction (smaller than 1) of the budget used to estimate the mean
+## computation time of a configuration. Only used when maxTime > 0
+# budgetEstimation = 0.02
+
+## Minimum time unit that is still (significantly) measureable.
+# minMeasurableTime = 0.01
+
+## Maximum number of decimal places that are significant for numerical (real)
+## parameters.
+# digits = 4
+
+## Debug level of the output of irace. Set this to 0 to silence all debug
+## messages. Higher values provide more verbose debug messages.
+# debugLevel = 0
+
+## Maximum number of iterations.
+# nbIterations = 0
+
+## Number of runs of the target algorithm per iteration.
+# nbExperimentsPerIteration = 0
+
+## Randomly sample the training instances or use them in the order given.
+sampleInstances = 0
+
+## Specifies the statistical test type: F-test or t-test.
+# testType = "F-test"
+
+## Specifies how many instances are seen before the first elimination
+## test. It must be a multiple of eachTest.
+firstTest = 5 * 5
+
+## Specifies how many instances are seen between elimination tests.
+eachTest = 5
+
+## Minimum number of configurations needed to continue the execution of each
+## race (iteration).
+# minNbSurvival = 0
+
+## Number of configurations to be sampled and evaluated at each iteration.
+# nbConfigurations = 0
+
+## Parameter used to define the number of configurations sampled and evaluated
+## at each iteration.
+# mu = 5
+
+## Confidence level for the elimination test.
+# confidence = 0.95
+
+## If the target algorithm is deterministic, configurations will be evaluated
+## only once per instance.
+# deterministic = 0
+
+## Seed of the random number generator (by default, generate a random seed).
+# seed = NA
+
+## Number of calls to targetRunner to execute in parallel. Values 0 or 1 mean
+## no parallelization.
+# parallel = 0
+
+## Enable/disable load-balancing when executing experiments in parallel.
+## Load-balancing makes better use of computing resources, but increases
+## communication overhead. If this overhead is large, disabling load-balancing
+## may be faster.
+# loadBalancing = 1
+
+## Enable/disable MPI. Use Rmpi to execute targetRunner in parallel (parameter
+## parallel is the number of slaves).
+# mpi = 0
+
+## Specify how irace waits for jobs to finish when targetRunner submits jobs
+## to a batch cluster: sge, pbs, torque, slurm or htcondor. targetRunner must
+## submit jobs to the cluster using, for example, qsub.
+# batchmode = 0
+
+## Enable/disable the soft restart strategy that avoids premature convergence
+## of the probabilistic model.
+# softRestart = 1
+
+## Soft restart threshold value for numerical parameters. If NA, NULL or "",
+## it is computed as 10^-digits.
+# softRestartThreshold = ""
+
+## Enable/disable elitist irace.
+# elitist = 1
+
+## Number of instances added to the execution list before previous instances
+## in elitist irace.
+# elitistNewInstances = 1
+
+## In elitist irace, maximum number per race of elimination tests that do not
+## eliminate a configuration. Use 0 for no limit.
+# elitistLimit = 2
+
+## User-defined R function that takes a configuration generated by irace and
+## repairs it.
+# repairConfiguration = ""
+
+## Enable the use of adaptive capping, a technique designed for minimizing the
+## computation time of configurations. This is only available when elitist is
+## active.
+# capping = 0
+
+## Measure used to obtain the execution bound from the performance of the
+## elite configurations: median, mean, worst, best.
+# cappingType = "median"
+
+## Method to calculate the mean performance of elite configurations: candidate
+## or instance.
+# boundType = "candidate"
+
+## Maximum execution bound for targetRunner. It must be specified when capping
+## is enabled.
+# boundMax = 0
+
+## Precision used for calculating the execution time. It must be specified
+## when capping is enabled.
+# boundDigits = 0
+
+## Penalization constant for timed out executions (executions that reach
+## boundMax execution time).
+# boundPar = 1
+
+## Replace the configuration cost of bounded executions with boundMax.
+# boundAsTimeout = 1
+
+## Percentage of the configuration budget used to perform a postselection race
+## of the best configurations of each iteration after the execution of irace.
+# postselection = 0
+
+## Enable/disable AClib mode. This option enables compatibility with
+## GenericWrapper4AC as targetRunner script.
+# aclib = 0
+
+## Reduce the output generated by irace to a minimum.
+# quiet = 0
+
+## END of scenario file
+############################################################################

@@ -1,0 +1,13 @@
+## This is an example of specifying instances with a file.
+# Each line is an instance relative to trainInstancesDir/testInstancesDir
+# (see scenario.txt.tmpl) and an optional sequence of instance-specific
+# parameters that will be passed to target-runner when invoked on that
+# instance.
+# Empty lines and comments are ignored.
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1 --referenceFrontFileName DTLZ1.3D.csv --maximumNumberOfEvaluations 30000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 --referenceFrontFileName DTLZ2.3D.csv --maximumNumberOfEvaluations 30000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3 --referenceFrontFileName DTLZ3.3D.csv --maximumNumberOfEvaluations 30000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4 --referenceFrontFileName DTLZ4.3D.csv --maximumNumberOfEvaluations 30000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ5 --referenceFrontFileName DTLZ5.3D.csv --maximumNumberOfEvaluations 30000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ6 --referenceFrontFileName DTLZ6.3D.csv --maximumNumberOfEvaluations 30000
+org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7 --referenceFrontFileName DTLZ7.3D.csv --maximumNumberOfEvaluations 30000

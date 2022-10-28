@@ -1,0 +1,82 @@
+#!/bin/bash
+###############################################################################
+# This script is the command that is executed every run.
+# Check the examples in examples/
+#
+# This script is run in the execution directory (execDir, --exec-dir).
+#
+# PARAMETERS:
+# $1 is the candidate configuration number
+# $2 is the instance ID
+# $3 is the seed
+# $4 is the instance name
+# The rest ($* after `shift 4') are parameters to the run
+#
+# RETURN VALUE:
+# This script should print one numerical value: the cost that must be minimized.
+# Exit with 0 if no error, with 1 in case of error
+###############################################################################
+error() {
+    echo "`TZ=UTC date`: $0: error: $@"
+    exit 1
+}
+# This parses the arguments given by irace. Do not touch it!
+CONFIG_ID=$1
+INSTANCE_ID=$2
+SEED=$3
+INSTANCE=$4
+shift 4 || error "Not enough parameters"
+CONFIG_PARAMS=$*
+# End of parsing
+
+## Find our own location.
+BINDIR=$(dirname "$(readlink -f "$(type -P $0 || echo $0)")")
+
+# EDIT THIS: Path to your executable
+EXE=java
+ALGO="AutoMOPSOIraceHV"
+# EDIT THIS: Specify how parameters are given to your executable
+EXE_PARAMS="-cp $BINDIR/jmetal-auto-6.0-SNAPSHOT-jar-with-dependencies.jar org.uma.jmetal.auto.irace.$ALGO --randomGeneratorSeed ${SEED} --problemName $INSTANCE ${CONFIG_PARAMS}"
+
+if [ ! -x "$(command -v ${EXE})" ]; then
+    error "${EXE}: not found or not executable (pwd: $(pwd))"
+fi
+
+# # If the program just prints a number, we can use 'exec' to avoid creating
+# # another process, but there can be no other commands after exec, only exit.
+# exec $EXE ${EXE_PARAMS}
+# exit 1
+
+# These files are saved in execDir. Saving them in /tmp may be faster. 
+STDOUT=c${CONFIG_ID}-${INSTANCE_ID}-${SEED}.stdout
+STDERR=c${CONFIG_ID}-${INSTANCE_ID}-${SEED}.stderr
+#echo ${STDOUT}
+#echo ${STDERR}
+
+# # Otherwise, save the output to a file, and parse the result from it.  (If
+# # you wish to ignore segmentation faults you can use '{}' around the
+# # command.)
+$EXE ${EXE_PARAMS} 1> ${STDOUT} 2> ${STDERR}
+# # If the above command fails, but you are not sure why, it may be useful to
+# # print it like:
+# echo "$EXE ${EXE_PARAMS} 1> ${STDOUT} 2> ${STDERR}"
+
+# # This may be used to introduce a delay if there are filesystem issues.
+# SLEEPTIME=1
+# while [ ! -s "${STDOUT}" ]; do
+#     sleep $SLEEPTIME
+#     let "SLEEPTIME += 1"
+# done
+
+if [ ! -s "${STDOUT}" ]; then
+    error "${STDOUT}: No such file or directory"
+fi
+
+# This is an example of reading a number from the output.  It assumes that the
+# objective value is the first number in the first column of the last line of
+# the output.
+COST=$(tail -n 1 ${STDOUT} | grep -e '^[[:space:]]*[+-]\?[0-9]' | cut -f1)
+echo "$COST"
+# Comment the following line if you wish to preserve temporary files
+rm -f "${STDOUT}" "${STDERR}"
+exit 0
