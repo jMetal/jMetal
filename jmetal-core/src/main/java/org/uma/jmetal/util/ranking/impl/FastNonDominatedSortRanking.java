@@ -21,20 +21,26 @@ import org.uma.jmetal.util.ranking.Ranking;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranking<S> {
+
   private String attributeId = getClass().getName();
   private Comparator<S> dominanceComparator;
 
   private List<ArrayList<S>> rankedSubPopulations;
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public FastNonDominatedSortRanking(Comparator<S> comparator) {
     this.dominanceComparator = comparator;
     rankedSubPopulations = new ArrayList<>();
   }
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public FastNonDominatedSortRanking() {
-    this(new DominanceWithConstraintsComparator<>(new OverallConstraintViolationDegreeComparator<>()));
+    this(new DominanceWithConstraintsComparator<>(
+        new OverallConstraintViolationDegreeComparator<>()));
   }
 
   @Override
@@ -90,7 +96,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
     // Obtain the rest of fronts
     int i = 0;
     Iterator<Integer> it1, it2; // Iterators
-    while (front.get(i).size() != 0) {
+    while (!front.get(i).isEmpty()) {
       i++;
       it1 = front.get(i - 1).iterator();
       while (it1.hasNext()) {
@@ -109,7 +115,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
     rankedSubPopulations = new ArrayList<>();
     // 0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
-      rankedSubPopulations.add(j, new ArrayList<S>(front.get(j).size()));
+      rankedSubPopulations.add(j, new ArrayList<>(front.get(j).size()));
       it1 = front.get(j).iterator();
       while (it1.hasNext()) {
         rankedSubPopulations.get(j).add(solutionList.get(it1.next()));
