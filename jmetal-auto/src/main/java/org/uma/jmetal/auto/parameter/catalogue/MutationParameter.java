@@ -67,12 +67,10 @@ public class MutationParameter extends CategoricalParameter {
     double mutationProbability = (double) findGlobalParameter(
         "mutationProbabilityFactor").getValue() / numberOfBitsInASolution;
 
-    switch (getValue()) {
-      case "bitFlip":
-        result = new BitFlipMutation(mutationProbability);
-        break;
-      default:
-        throw new JMetalException("Mutation operator does not exist: " + getName());
+    if ("bitFlip".equals(getValue())) {
+      result = new BitFlipMutation(mutationProbability);
+    } else {
+      throw new JMetalException("Mutation operator does not exist: " + getName());
     }
     return result;
   }
