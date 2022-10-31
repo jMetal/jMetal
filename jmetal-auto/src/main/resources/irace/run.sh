@@ -8,7 +8,7 @@ SCENARIO=$1
 # RUN is the run number to distinguish replications of irace
 RUN=$2
 shift 2
-N_CPUS=${SLURM_CPUS_PER_TASK:-4}
+N_CPUS=8
 let SEED=1234567+RUN
 EXECDIR=$(dirname ${SCENARIO})/execdir-${RUN}
 IRACE_PARAMS="--scenario ${SCENARIO} --debug-level 1 --parallel $N_CPUS --seed ${SEED} --exec-dir=${EXECDIR}"
