@@ -32,7 +32,7 @@ testInstancesDir = ""
 
 ## File containing a list of test instances and optionally additional
 ## parameters for them.  If empty or NULL, do not use a file.
-testInstancesFile = "../instances-list-ZDT-DTLZ-WFG-RE_2D.txt" 
+#testInstancesFile = "../instances-list-ZDT-DTLZ-WFG-RE_2D.txt" 
 
 ## Number of elite configurations returned by irace that will be tested
 ## if test instances are provided.
