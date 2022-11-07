@@ -39,6 +39,7 @@ public class MGPSO implements Algorithm<List<DoubleSolution>> {
     this.archive = archive ;
 
     Neighborhood<DoubleSolution> neighborhood = new RingNeighborhood<>() ;
+    //Neighborhood<DoubleSolution> neighborhood = new L25<>(7, 7) ;
 
     subSwarms = new ArrayList<>() ;
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
@@ -120,7 +121,9 @@ public class MGPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   protected void perturbation() {
-
+    for (MGPSOSubSwarm pso : subSwarms) {
+      pso.perturbation();
+    }
   }
 
   public List<DoubleSolution> getResult() {

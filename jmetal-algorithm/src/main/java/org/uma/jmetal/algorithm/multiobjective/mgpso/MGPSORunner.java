@@ -24,7 +24,7 @@ import java.util.List;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -45,15 +45,14 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class MGPSORunner extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws Exception {
-
     MutationOperator<DoubleSolution> mutation;
 
-    DoubleProblem problem = new ZDT1() ;
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    DoubleProblem problem = new Kursawe() ;
+    String referenceParetoFront = "resources/referenceFrontsCSV/Kursawe.csv";
 
     BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
-    var algorithm = new MGPSO(problem, 100, 25000, archive) ;
+    var algorithm = new MGPSO(problem, 98, 25000, archive) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();

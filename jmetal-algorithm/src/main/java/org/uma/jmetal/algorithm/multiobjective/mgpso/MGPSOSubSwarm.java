@@ -107,11 +107,11 @@ public class MGPSOSubSwarm extends
   public void createInitialSwarm() {
     swarm = new ArrayList<>(swarmSize);
 
-    DoubleSolution newSolution;
     for (int i = 0; i < swarmSize; i++) {
-      newSolution = problem.createSolution();
-      swarm.add(newSolution);
+      swarm.add(problem.createSolution());
     }
+
+    System.out.println("Swarm " + objectiveId + ". Size: " + swarm.size());
   }
 
   @Override
@@ -120,11 +120,13 @@ public class MGPSOSubSwarm extends
     for (DoubleSolution particle: swarm) {
       archive.add((DoubleSolution) particle.copy()) ;
     }
+    //System.out.println("Swarm " + objectiveId + ". Archive size: " + archive.size());
   }
 
   @Override
   public void initializeGlobalBest() {
     updateGlobalBest();
+    System.out.println("Swarm " + objectiveId + ". Global Best: " + globalBest.objectives()[0]);
   }
 
   @Override
@@ -199,11 +201,13 @@ public class MGPSOSubSwarm extends
 
         if (particle.variables().get(j) < problem.getVariableBounds().get(j).getLowerBound()) {
           particle.variables().set(j, problem.getVariableBounds().get(j).getLowerBound());
-          speed[i][j] = 0;
+          //speed[i][j] = speed[i][j] * -1;
+          speed[i][j] = 0 ;
         }
         if (particle.variables().get(j) > problem.getVariableBounds().get(j).getUpperBound()) {
           particle.variables().set(j, problem.getVariableBounds().get(j).getUpperBound());
-          speed[i][j] = 0;
+          // speed[i][j] = speed[i][j] * -1 ;
+          speed[i][j] = 0 ;
         }
       }
     }
@@ -214,21 +218,26 @@ public class MGPSOSubSwarm extends
     /*
     MutationOperator<DoubleSolution> mutation =
             new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
-    for (DoubleSolution particle : swarm) {
-      mutation.execute(particle) ;
+    for (int i = 0; i < swarm.size(); i++) {
+      if ((i % 6) == 0) {
+        mutation.execute(swarm.get(i)) ;
+      }
     }
-    */
+     */
   }
 
   @Override
   public void updateGlobalBest() {
     globalBest = findBestSolution.execute(swarm);
+    //System.out.println("Swarm " + objectiveId + ". Global Best: " + globalBest.objectives()[0]);
   }
 
   @Override
   public void updateParticleBest() {
     for (int i = 0; i < swarm.size(); i++) {
       List<DoubleSolution> neighbours = neighborhood.getNeighbors(swarm, i) ;
+      System.out.println("Swarm " + objectiveId + ". N size: " + neighbours.size());
+
       var localBestSolution = localBest[i] ;
       neighbours.add(swarm.get(i)) ;
 
@@ -238,9 +247,7 @@ public class MGPSOSubSwarm extends
         }
       }
 
-      if ((swarm.get(i).objectives()[objectiveId] < localBest[i].objectives()[0])) {
-        localBest[i] = (DoubleSolution) localBestSolution.copy() ;
-      }
+      localBest[i] = (DoubleSolution) localBestSolution.copy() ;
     }
   }
 
