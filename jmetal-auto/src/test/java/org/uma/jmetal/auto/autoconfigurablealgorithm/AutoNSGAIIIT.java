@@ -22,6 +22,7 @@ class AutoNSGAIIIT {
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+            + "--randomGeneratorSeed 12 "
             + "--referenceFrontFileName "+ referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
             + "--algorithmResult population "
@@ -75,14 +76,12 @@ class AutoNSGAIIIT {
     String referenceFrontFileName = "ZDT4.csv" ;
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+            + "--randomGeneratorSeed 12 "
             + "--referenceFrontFileName "+ referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
             + "--algorithmResult population "
             + "--populationSize 100 "
-            + "--algorithmResult externalArchive "
-            + "--externalArchive unboundedArchive "
-            + "--populationSizeWithArchive 100 "
             + "--offspringPopulationSize 100 "
             + "--createInitialSolutions random "
             + "--variation crossoverAndMutationVariation "
@@ -137,6 +136,7 @@ class AutoNSGAIIIT {
             + "--referenceFrontFileName "+ referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
             + "--algorithmResult population "
+            + "--randomGeneratorSeed 12 "
             + "--populationSize 100 "
             + "--algorithmResult externalArchive "
             + "--externalArchive crowdingDistanceArchive "
@@ -196,6 +196,7 @@ class AutoNSGAIIIT {
             + "--algorithmResult externalArchive "
             + "--externalArchive unboundedArchive "
             + "--populationSizeWithArchive 100 "
+            + "--randomGeneratorSeed 12 "
             + "--populationSize 100 "
             + "--offspringPopulationSize 100 "
             + "--createInitialSolutions random "
