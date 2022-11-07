@@ -169,7 +169,6 @@ public class SMPSORP
   protected void updateProgress() {
     iterations += 1;
     currentIteration.increment(1);
-    ;
     updateLeadersDensityEstimator();
 
     solutionListMeasure.push(getResult());
