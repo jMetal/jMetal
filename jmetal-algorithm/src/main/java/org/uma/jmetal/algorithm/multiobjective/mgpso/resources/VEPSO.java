@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.mgpso;
+package org.uma.jmetal.algorithm.multiobjective.mgpso.resources;
 
 import java.util.ArrayList;
 import java.util.List;

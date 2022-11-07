@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.multiobjective.mgpso;
+package org.uma.jmetal.algorithm.multiobjective.mgpso.resources;
 
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;

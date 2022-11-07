@@ -21,7 +21,6 @@
 package org.uma.jmetal.algorithm.multiobjective.mgpso;
 
 import java.util.List;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -32,37 +31,29 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
- * Class for configuring and running the VEPSO2007 algorithm
+ * Class for configuring and running the VEPSO algorithm
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 
-public class VEPSO2007Runner extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments.
-   * @throws java.io.IOException
-   * @throws SecurityException
-   * Invoking command:
-  java VEPSO2007Runner problemName [referenceFront]
-   */
+public class MGPSORunner extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws Exception {
-    Algorithm<List<DoubleSolution>> algorithm;
+
     MutationOperator<DoubleSolution> mutation;
 
     DoubleProblem problem = new ZDT1() ;
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
+    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
-    int numberOfParticlesToInform = 3 ;
-    algorithm = new VEPSO2007(problem, 100, 250, numberOfParticlesToInform, archive) ;
+    var algorithm = new MGPSO(problem, 100, 25000, archive) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();

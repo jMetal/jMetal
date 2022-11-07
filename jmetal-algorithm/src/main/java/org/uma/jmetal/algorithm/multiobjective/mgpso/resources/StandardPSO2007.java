@@ -18,34 +18,48 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.multiobjective.mgpso;
+package org.uma.jmetal.algorithm.multiobjective.mgpso.resources;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import org.uma.jmetal.operator.Operator;
+import org.uma.jmetal.operator.selection.impl.BestSolutionSelection;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.neighborhood.impl.AdaptiveRandomNeighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
+
 /**
- * Class implementing a simple PSO algorithm incorporating the constriction factor
+ * Class implementing a Standard PSO 2007 algorithm.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ConstrictionBasedPSO extends AbstractParticleSwarmOptimization<DoubleSolution, DoubleSolution> {
+@SuppressWarnings("serial")
+public class StandardPSO2007 extends
+    AbstractParticleSwarmOptimization<DoubleSolution, DoubleSolution> {
   private DoubleProblem problem;
   private SolutionListEvaluator<DoubleSolution> evaluator;
 
+  private Operator<List<DoubleSolution>, DoubleSolution> findBestSolution;
+  private Comparator<DoubleSolution> fitnessComparator;
   private int swarmSize;
   private int maxIterations;
   private int iterations;
+  private int numberOfParticlesToInform;
   private DoubleSolution[] localBest;
+  private DoubleSolution[] neighborhoodBest;
   private double[][] speed;
+  private AdaptiveRandomNeighborhood<DoubleSolution> neighborhood;
   private GenericSolutionAttribute<DoubleSolution, Integer> positionInSwarm;
   private double weight;
+  private double c;
   private JMetalRandom randomGenerator = JMetalRandom.getInstance();
-  private DoubleSolution globalBestParticle;
+  private DoubleSolution bestFoundParticle;
 
   private int objectiveId;
 
@@ -57,25 +71,33 @@ public class ConstrictionBasedPSO extends AbstractParticleSwarmOptimization<Doub
    *                    is selected to be optimized.
    * @param swarmSize
    * @param maxIterations
+   * @param numberOfParticlesToInform
    * @param evaluator
    */
-  public ConstrictionBasedPSO(DoubleProblem problem, int objectiveId, int swarmSize, int maxIterations,
-                              SolutionListEvaluator<DoubleSolution> evaluator) {
+  public StandardPSO2007(DoubleProblem problem, int objectiveId, int swarmSize, int maxIterations,
+                         int numberOfParticlesToInform, SolutionListEvaluator<DoubleSolution> evaluator) {
     this.problem = problem;
     this.swarmSize = swarmSize;
     this.maxIterations = maxIterations;
+    this.numberOfParticlesToInform = numberOfParticlesToInform;
     this.evaluator = evaluator;
     this.objectiveId = objectiveId;
 
     weight = 1.0 / (2.0 * Math.log(2));
+    c = 1.0 / 2.0 + Math.log(2);
 
-    /* Posible error, comentar a Antonio y Juanjo */
+    fitnessComparator = new ObjectiveComparator<DoubleSolution>(objectiveId);
+    findBestSolution = new BestSolutionSelection<DoubleSolution>(fitnessComparator);
+
+    /* OJO !!! Posible error, comentar a Antonio y Juanjo */
     localBest = new DoubleSolution[swarmSize];
+    neighborhoodBest = new DoubleSolution[swarmSize];
     speed = new double[swarmSize][problem.getNumberOfVariables()];
 
     positionInSwarm = new GenericSolutionAttribute<DoubleSolution, Integer>();
 
-    globalBestParticle = null;
+    bestFoundParticle = null;
+    neighborhood = new AdaptiveRandomNeighborhood<DoubleSolution>(swarmSize, this.numberOfParticlesToInform);
   }
 
   /**
@@ -84,11 +106,12 @@ public class ConstrictionBasedPSO extends AbstractParticleSwarmOptimization<Doub
    * @param problem
    * @param swarmSize
    * @param maxIterations
+   * @param numberOfParticlesToInform
    * @param evaluator
    */
-  public ConstrictionBasedPSO(DoubleProblem problem, int swarmSize, int maxIterations,
-                              SolutionListEvaluator<DoubleSolution> evaluator) {
-    this(problem, 0, swarmSize, maxIterations, evaluator);
+  public StandardPSO2007(DoubleProblem problem, int swarmSize, int maxIterations,
+                         int numberOfParticlesToInform, SolutionListEvaluator<DoubleSolution> evaluator) {
+    this(problem, 0, swarmSize, maxIterations, numberOfParticlesToInform, evaluator);
   }
 
   @Override
@@ -129,11 +152,8 @@ public class ConstrictionBasedPSO extends AbstractParticleSwarmOptimization<Doub
 
   @Override
   public void initializeGlobalBest(List<DoubleSolution> swarm) {
-    globalBestParticle = swarm.get(0) ;
     for (int i = 0; i < swarm.size(); i++) {
-      if (globalBestParticle.objectives()[objectiveId] > swarm.get(i).objectives()[objectiveId]) {
-        globalBestParticle = (DoubleSolution)swarm.get(i).copy() ;
-      }
+      neighborhoodBest[i] = getNeighborBest(i);
     }
   }
 
@@ -147,32 +167,37 @@ public class ConstrictionBasedPSO extends AbstractParticleSwarmOptimization<Doub
   @Override
   public void initializeVelocity(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
+      DoubleSolution particle = swarm.get(i);
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
-        speed[i][j] = 0.0;
+        speed[i][j] =
+                (randomGenerator.nextDouble(particle.getBounds(j).getLowerBound(), particle.getBounds(j).getUpperBound())
+                        - particle.variables().get(j)) / 2.0;
       }
     }
   }
 
   @Override
   public void updateVelocity(List<DoubleSolution> swarm) {
-    double r1, r2 ;
-    double c1, c2 ;
-    double constrictionFactor ;
+    double r1, r2;
 
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
 
-      r1 = randomGenerator.nextDouble(0, 1.0);
-      r2 = randomGenerator.nextDouble(0, 1.0);
+      r1 = randomGenerator.nextDouble(0, c);
+      r2 = randomGenerator.nextDouble(0, c);
 
-      c1 = 2.05 ;
-      c2 = 2.05 ;
-      constrictionFactor = 0.729 ;
-
-      for (int var = 0; var < particle.variables().size(); var++) {
-        speed[i][var] = constrictionFactor * (weight * speed[i][var] +
-                c1 * r1 * (localBest[i].variables().get(var) - particle.variables().get(var)) +
-                c2 * r2 * (globalBestParticle.variables().get(var) - particle.variables().get(var)));
+      if (localBest[i] != neighborhoodBest[i]) {
+        for (int var = 0; var < particle.variables().size(); var++) {
+          speed[i][var] = weight * speed[i][var] +
+                  r1 * (localBest[i].variables().get(var) - particle.variables().get(var)) +
+                  r2 * (neighborhoodBest[i].variables().get(var) - particle.variables().get(var));
+        }
+      } else {
+        for (int var = 0; var < particle.variables().size(); var++) {
+          speed[i][var] = weight * speed[i][var] +
+                  r1 * (localBest[i].variables().get(var)) -
+                          particle.variables().get(var);
+        }
       }
     }
   }
@@ -198,13 +223,31 @@ public class ConstrictionBasedPSO extends AbstractParticleSwarmOptimization<Doub
 
   @Override
   public void perturbation(List<DoubleSolution> swarm) {
+    /*
+    MutationOperator<DoubleSolution> mutation =
+            new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
+    for (DoubleSolution particle : swarm) {
+      mutation.execute(particle) ;
+    }
+    */
   }
 
   @Override
   public void updateGlobalBest(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
-      if (globalBestParticle.objectives()[objectiveId] > swarm.get(i).objectives()[objectiveId]) {
-        globalBestParticle = (DoubleSolution)swarm.get(i).copy() ;
+      neighborhoodBest[i] = getNeighborBest(i);
+    }
+
+    DoubleSolution bestSolution = findBestSolution.execute(swarm);
+
+    if (bestFoundParticle == null) {
+      bestFoundParticle = bestSolution;
+    } else {
+      if (bestSolution.objectives()[objectiveId] == bestFoundParticle.objectives()[0]) {
+        neighborhood.recompute();
+      }
+      if (bestSolution.objectives()[objectiveId] < bestFoundParticle.objectives()[0]) {
+        bestFoundParticle = bestSolution;
       }
     }
   }
@@ -220,7 +263,21 @@ public class ConstrictionBasedPSO extends AbstractParticleSwarmOptimization<Doub
 
   @Override
   public DoubleSolution getResult() {
-    return globalBestParticle;
+    return bestFoundParticle;
+  }
+
+  private DoubleSolution getNeighborBest(int i) {
+    DoubleSolution bestLocalBestSolution = null;
+
+    for (DoubleSolution solution : neighborhood.getNeighbors(getSwarm(), i)) {
+      int solutionPositionInSwarm = positionInSwarm.getAttribute(solution);
+      if ((bestLocalBestSolution == null) || (bestLocalBestSolution.objectives()[0]
+              > localBest[solutionPositionInSwarm].objectives()[0])) {
+        bestLocalBestSolution = localBest[solutionPositionInSwarm];
+      }
+    }
+
+    return bestLocalBestSolution ;
   }
 
   /* Getters */
@@ -232,13 +289,11 @@ public class ConstrictionBasedPSO extends AbstractParticleSwarmOptimization<Doub
     return localBest ;
   }
 
-  @Override
-  public String getName() {
-    return "CPSO";
+  @Override public String getName() {
+    return "SPSO07" ;
   }
 
-  @Override
-  public String getDescription() {
-    return "Constriction based PSO";
+  @Override public String getDescription() {
+    return "Standard PSO 2007" ;
   }
 }
