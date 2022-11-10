@@ -10,7 +10,7 @@ import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByE
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
 import org.uma.jmetal.component.catalogue.pso.globalbestselection.GlobalBestSelection;
-import org.uma.jmetal.component.catalogue.pso.globalbestselection.impl.BinaryTournamentGlobalBestSelection;
+import org.uma.jmetal.component.catalogue.pso.globalbestselection.impl.NaryTournamentGlobalBestSelection;
 import org.uma.jmetal.component.catalogue.pso.globalbestupdate.GlobalBestUpdate;
 import org.uma.jmetal.component.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
 import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
@@ -65,7 +65,8 @@ public class SMPSOBuilder {
     globalBestInitialization = new DefaultGlobalBestInitialization();
 
     archive = new CrowdingDistanceArchive<>(swarmSize);
-    globalBestSelection = new BinaryTournamentGlobalBestSelection(archive.getComparator()) ;
+    //globalBestSelection = new BinaryTournamentGlobalBestSelection(archive.getComparator()) ;
+    globalBestSelection = new NaryTournamentGlobalBestSelection(8, archive.getComparator()) ;
 
     double r1Min = 0.0;
     double r1Max = 1.0;
@@ -119,6 +120,12 @@ public class SMPSOBuilder {
 
   public SMPSOBuilder setPositionUpdate(PositionUpdate positionUpdate) {
     this.positionUpdate = positionUpdate ;
+
+    return this ;
+  }
+
+  public SMPSOBuilder setGlobalBestSelection(GlobalBestSelection globalBestSelection) {
+    this.globalBestSelection = globalBestSelection ;
 
     return this ;
   }

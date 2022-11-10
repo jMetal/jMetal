@@ -11,10 +11,8 @@ import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
-import org.uma.jmetal.lab.experiment.component.impl.ComputeQualityIndicators;
-import org.uma.jmetal.lab.experiment.component.impl.ExecuteAlgorithms;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateBoxplotsWithR;
-import org.uma.jmetal.lab.experiment.component.impl.GenerateFriedmanTestTables;
+import org.uma.jmetal.lab.experiment.component.impl.GenerateFriedmanHolmTestTables;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateHtmlPages;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateLatexTablesWithStatistics;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateWilcoxonTestTablesWithR;
@@ -98,7 +96,7 @@ public class SwarmIntelligenceStudy10000 {
         configureAlgorithmList(problemList);
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("SwarmIntelligenceExperiment10000b")
+        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("SwarmIntelligenceExperiment10000e3")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setReferenceFrontDirectory("resources/referenceFrontsCSV")
@@ -117,12 +115,12 @@ public class SwarmIntelligenceStudy10000 {
             .setNumberOfCores(100)
             .build();
 
-    new ExecuteAlgorithms<>(experiment).run();
+    //new ExecuteAlgorithms<>(experiment).run();
 
-    new ComputeQualityIndicators<>(experiment).run();
+    //new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
-    new GenerateFriedmanTestTables<>(experiment).run();
+    new GenerateFriedmanHolmTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run();
     new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run();
   }
@@ -242,10 +240,10 @@ public class SwarmIntelligenceStudy10000 {
             + "--globalBestSelection binaryTournament "
             + "--perturbation frequencySelectionMutationBasedPerturbation "
             + "--frequencyOfApplicationOfMutationOperator 7 "
-            + "--mutation polynomial "
+            + "--mutation uniform "
             + "--mutationProbabilityFactor 1.0 "
             + "--mutationRepairStrategy round "
-            + "--polynomialMutationDistributionIndex 20.0 "
+            + "--uniformMutationPerturbation 0.5 "
             + "--positionUpdate defaultPositionUpdate "
             + "--velocityChangeWhenLowerLimitIsReached -1.0 "
             + "--velocityChangeWhenUpperLimitIsReached -1.0 "
