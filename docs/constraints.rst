@@ -86,7 +86,7 @@ An example of constrained problem is `Srinivas <https://github.com/jMetal/jMetal
     }
   }
 
-We can observe that the problem formulation includes two constraints, which are defined in the `evaluateConstraints()` method that is called after a solution is evaluated. According to the NSGA-II constraint handling scheme, the requirement to work with constraints is that every constraint must be expressed as an inequality of type `expression >=0.0`. This way, when `expression < 0.0` then it is considered as a constraint violation, and the overall constraint violation degree will the sum of the values of the constraints array. If that value is negative, then the solution is infeasible. As the violation degree of solution is a negative number, when comparing solutions the higher the value the better.
+We can observe that the problem formulation includes two constraints, which are defined in the `evaluateConstraints()` method that is called after a solution is evaluated. According to the NSGA-II constraint handling scheme, the requirement to work with constraints is that every constraint must be expressed as an inequality of type `expression >=0.0`. This way, when `expression < 0.0` then it is considered as a constraint violation, and the overall constraint violation degree will the sum of the values of the constraints array. If that value is negative, then the solution is infeasible.
 
 To facilitate the use of constraints, jMetal provides the utility `ConstraintHandling <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/ConstraintHandling.java>`_ class, which provides the following static methods:
 

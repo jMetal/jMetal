@@ -23,15 +23,16 @@ import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 /**
- * Class to configure and run the NSGA-II algorithm configured with standard settings for solving
- * a binary problem ({@link OneZeroMax} is a multi-objective variant of OneMax).
+ * Class to configure and run the NSGA-II algorithm configured with standard settings for solving a
+ * binary problem ({@link OneZeroMax} is a multi-objective variant of OneMax).
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIISolvingConstrainedProblemExample {
+
   public static void main(String[] args) throws JMetalException, IOException {
 
-    DoubleProblem problem = new Srinivas() ;
+    DoubleProblem problem = new Srinivas();
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
@@ -46,15 +47,16 @@ public class NSGAIISolvingConstrainedProblemExample {
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator<>(
-        new OverallConstraintViolationDegreeComparator<>())) ;
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(
+        new DominanceWithConstraintsComparator<>(
+            new OverallConstraintViolationDegreeComparator<>()));
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
-                    problem,
-                    populationSize,
-                    offspringPopulationSize,
-                    crossover,
-                    mutation)
+        problem,
+        populationSize,
+        offspringPopulationSize,
+        crossover,
+        mutation)
         .setTermination(termination)
         .setRanking(ranking)
         .build();
@@ -66,9 +68,9 @@ public class NSGAIISolvingConstrainedProblemExample {
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
-            .print();
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
