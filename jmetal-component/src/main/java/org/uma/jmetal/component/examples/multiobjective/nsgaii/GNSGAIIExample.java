@@ -24,7 +24,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 /**
  * Class to configure and run the NSGA-II algorithm using a {@link GDominanceComparator}, which
- * allows empower NSGA-II with a preference articulation mechanism based on reference point.
+ * allows to empower NSGA-II with a preference articulation mechanism based on reference point.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
