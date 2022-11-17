@@ -57,8 +57,8 @@ The corresponding function values will we stored in the "FUN.csv" file (assuming
 The reason to separate the output results in two files is that the "FUN.csv" can be directly plotted with GnuPlot, R, etc. 
 
 
-Experimental studies
---------------------
+Experimental studies in jMetal
+------------------------------
 
 An experimental study is used to make a comparison of a number of algorithms when solving a set of problems. It involves the execution and subsequent analysis of the results of *R* independent runs of *A* algorithms, each of will solve *P* problems. This process is carried out in three steps:
 

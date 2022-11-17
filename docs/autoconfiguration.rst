@@ -4,12 +4,9 @@ Automatic design and configuration of multi-objective metaheuristics
 ====================================================================
 
 :Author: Antonio J. Nebro <ajnebro@uma.es>
-:Date: 2022-10-31
+:Date: 2022-11-17
 
-Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II
-with jMetal and irace", presented in GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832).
-
-Please, take into account that this is a research line that is currently guiding the evolution of jMetal,
+Before reading this section, readers are referred to the papers :ref:`[NLB+19] <NLB+19>` and :ref:`[DNL+22]<DNL+22>`. Please, take into account that this is a research line that is currently guiding the evolution of jMetal,
 so changes are expected in the incoming releases.
 
 Motivation
@@ -21,7 +18,7 @@ which are typically conducted without following a systematic strategy.
 In this context, an algorithm configuration is a complete assignment of values to all required parameters
 of the algorithm.
 
-Our approach is to combine jMetal with an auto-configuration tool. Concretely, we have selected is irace,
+Our approach is to combine jMetal with an auto-configuration tool. Concretely, we have selected irace (https://mlopez-ibanez.github.io/irace/),
 an R package that implements an elitist iterated racing algorithm, where algorithm configurations
 are sampled from a sampling distribution, uniformly at random at the beginning,
 but biased towards the best configurations found in later iterations. At each iteration, the generated
@@ -32,10 +29,10 @@ When the race terminates, the surviving configurations become
 elites for the next iteration.
 
 Using the already existing algorithms in jMetal is not feasible as their design does not fulfill
-the requirements of the integration with irace (see again https://doi.org/10.1145/3319619.3326832).
+the requirements of the integration with irace (see again :ref:`[NLB+19] <NLB+19>`).
 Our strategy has been to develop two jMetal sub-projects: ``jmetal-component`` and ``jmetal-auto``.
 
-Next we describe the two auto-configurable algorithms that are currently available: AutoNSGAII and
+We describe next the two auto-configurable algorithms that are currently available: AutoNSGAII and
 AutoMOPSO.
 
 AutoNSGA-II
@@ -53,7 +50,7 @@ algorithm with the typical parameters (selection, crossover,
 and mutation) and using ranking and crowding in the replacement
 step can be considered as a variant of NSGA-II.
 
-The components and parameters of NSGA-II that can be tuned are included in this table: 
+The components and parameters of NSGA-II (i.e., the parameter space) that can be tuned are included in this table: 
 
 +---------------------------------------+-----------------------------------------------------+
 | Parameter name                        | Allowed values                                      |
@@ -114,13 +111,13 @@ The initial population is typically filled with randomly created solutions, but 
 
 In the classical NSGA-II, the offspring population size is equal to the population size, but we can set its value from 1 (which leads to a steady-state selection scheme) to 400.
 
-The *autoNSGAII* has a *variation* component than can take a single value named *crossoverAndMutationVariation*. It is intended to represent the typical crossover and mutation operators of a genetic algorithm (additional values, e.g., *DifferentialiEvolutionVariation* are expected to be added in the future). The *crossover* operators included are *SBX* (simulated binary crossover) and *BLX_ALPHA*, which are featured by a given probability and a *crossoverRepairStrategy*, which defines what to do when the crossover produces a variable value out of the allowed bounds (please, refer to Section 3.2 and Figure 3 in the paper). The *SBX* and *BLX_ALPHA* require, if selected, a distribution index (a value in the range [5.0, 400]) and an alpha value (in the range [0.0, 1.0]), respectively. 
+The *autoNSGAII* has a *variation* component than can take a single value named *crossoverAndMutationVariation*. It is intended to represent the typical crossover and mutation operators of a genetic algorithm (additional values, e.g., *DifferentialiEvolutionVariation* are expected to be added in the future). The *crossover* operators included are *SBX* (simulated binary crossover) and *BLX_ALPHA*, which are featured by a given probability and a *crossoverRepairStrategy*, which defines what to do when the crossover produces a variable value out of the allowed bounds (please, refer to Section 3.2 and Figure 3 in the paper). The *SBX* and *BLX_ALPHA* require, if selected, a distribution index (a value within the range [5.0, 400]) and an alpha value (range [0.0, 1.0]), respectively. 
 
 Similarly, there are several mutation operators to choose from, including *polynomial*, *uniform*, and *nonUniform*, requiring all of them a mutation probability and a repairing strategy; the polynomial mutation has, as the SBX crossover, a distribution index parameter (in the range [5.0, 400]) and the *uniform* and *nonUniform* mutation operators need a perturbation value in the range [0.0, 1.0]. The mutation probability is defined by using a mutation probability factor (a value in the range [0.0, 2.0]), so that the effective mutation probability is the multiplication of that factor with 1.0/N, where N is the number of variables of the problem being optimized.
 
 Finally, the *selection* operator be *random* or *tournament*; this last one can take a value between 2 (i.e., binary tournament) and 10.
 
-As we intend to use irace as auto-tuning package, it requires a text file containing information about the parameters, the values they can take, an their relationships. We have created then a file called ``parameters-NSGAII.txt`` containing the required data::
+As we want to use irace as auto-tuning package, it requires a text file containing information about the parameters, the values they can take, an their relationships. We have created then a file called ``parameters-NSGAII.txt`` containing the parameter space::
 
   populationSize                           "--populationSize "                      o       (100)                                              
   #
@@ -200,19 +197,16 @@ Without entering into implementation details, the auto-configuration of NSGA-II 
     }
   }
 
-Auto-configuration process
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Auto-configuration of AutoNSGA-II
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To replicate the study presented in https://doi.org/10.1145/3319619.3326832 you must follow the steps indicated in this section.
+To replicate the study presented in :ref:`[NLB+19] <NLB+19>` you must follow the steps indicated in this section.
 
 The software requirements are the following:
 
 * Java JDK (14+)
 * R
 
-
-Preparing the needed stuff
-^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The first step is to create a directory for the experiment. Let us called is, for example, ``iraceJMetal``. This directory must contain:
 
@@ -245,10 +239,10 @@ and the stopping condition of the algorithm (i.e., the maximum number of evaluat
 * A copy of the ``resources`` folder of the jMetal project. This is needed to allow the algorithm to find the reference fronts.
 
 
-Running everything
-^^^^^^^^^^^^^^^^^^
+Running irace
+^^^^^^^^^^^^^
 
-Once we have all the needed resources in the `ìraceJmetal`` directory, we are ready to execute the script that will carry out the auto-configuraton by using irace. Take into account that irace will generate thousands of configurations (the default value is 100,000), so using a multi-core machine is advisable. We have tested the software in Linux and macOS.
+Once we have all the needed resources in the ``iraceJmetal`` directory, we are ready to execute the script that will carry out the auto-configuraton by using irace. Take into account that irace will generate thousands of configurations (the default value is 100,000), so using a multi-core machine is advisable. We have tested the software in Linux and macOS.
 
 To run irace simply run the following command:
 
@@ -265,7 +259,7 @@ irace will use the directory called ``autoNSGAIIZDT/execdir-1`` (the 1 is the ru
 
 .. code-block:: bash
 
-  cat execdir-1/irace.stderr.out
+  cat autoNSGAIIZDT/execdir-1/irace.stderr.out
 
 The second file contains a lot of information about the run of irace, including the configurations being tested. We are particularly interested in the best found configurations, which are written at the end of the file (just below the line starting by "# Best configuration as command lines"). For example, a result is the following:
 
@@ -278,6 +272,7 @@ This configuration can be used in the ``NSGAIIConfiguredFromAParameterString`` p
 
 AutoMOPSO
 ---------
+
 After NSGA-II, the second algorithm we have considered for auto-design and configuration is a multi-objective
 particle swarm optimizer (MOPSO). By taking the basic components of two MOPSO algorithms included
 in jMetal, namely SMPSO and OMOPSO, we have implemented an ``AutoMOPSO`` class following the same strategy
@@ -350,9 +345,7 @@ The MOPSOs generated with *AutoMOPSO* are endowed with perturbation step, consis
 a mutation operator to individuals of the swarm, which are selected according to a 
 *frequencyOfApplicationOfMutationOperatorFrequency* parameter ranging between 1 and 10. Thus,
 the particles to be mutated are those in positions divisible by that parameter. The mutation operator
-are the same used in *AutoNSGAII*.
-
-The speeds of the particles are initialized by default to 0.0.
+are the same used in *AutoNSGAII*. The speeds of the particles are initialized by default to 0.0.
 
 *weightMax* and *weightMin* represent the inertia weight. There are four strategies for computing the inertia weight: constant (a value between 0.1 and 1.0), random, linear increasing and linear decreasing, the three last with minimum and maximum weight values in the ranges [0.1, 0.5] and [0.5, 1.0], respectively.
 
@@ -413,7 +406,8 @@ As with *AutoNSGAII*, we have created then a file called ``parameters-MOPSO.txt`
 The ``AutoMOPSO`` class
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``org.uma.jmetal.auto.autoconfigurablealgorithm`` contains the ``AutoMOPSO`` class, including an example of how the SMPSO algorithm can be configured using it:
+The ``org.uma.jmetal.auto.autoconfigurablealgorithm`` contains the ``AutoMOPSO`` class, including
+an example of how the SMPSO algorithm can be configured using it:
 
 .. code-block:: java
 
@@ -484,78 +478,26 @@ The ``org.uma.jmetal.auto.autoconfigurablealgorithm`` contains the ``AutoMOPSO``
       }
     }
 
-Auto-configuration process
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Auto-configuration of AutoSMPSO
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To replicate the study presented in the paper accepted in ANTs 2022 we must follow the next steps.
+To replicate the study presented in :ref:`[DNL+22]<DNL+22>` we have just to repeat the same steps followed for AutoNSGA-II, but taking account the following:
 
-The software requirements are:
+1. The parameter file is ``parameters-MOPSO.txt``.
+2. The scenario is defined in the file ``autoMOPSOZDT/scenario-MOPSO.txt``.
+3. To run irace, the command is:
 
-* Java JDK (14+)
-* R
+.. code-block:: bash
 
+  ./run.sh autoNSGAIIZDT/scenario-MOPSO.txt 1
 
-Prepare the needed stuff
-^^^^^^^^^^^^^^^^^^^^^^^^
+When irace finishes, the best found configuration can be found by typing:
 
-The first step is to create a directory for the experiment. Let us called is, for example, ``iraceJMetal``. This directory must contain:
-
-* File ``jmetal-auto-5.12-jar-with-dependencies.jar``. To generate this file, just type the following command at the root of the jMetal project:
-
-    .. code-block:: bash
-
-      mvn clean package -DskipTests=true
-
-If everything goes fine, the file will be generated in the ``jmetal-auto/target`` folder.
-
-* The contents of folder ``jmetal-auto/src/main/resources/irace``:
+.. code-block:: bash
   
-1. ``irace.tar.gz``: file containing irace
-2. ``parameters-MOPSO.txt``: file describing the parameters that can be tuned, including their allowed values and their dependences. You are free to modify some parameter values if you know their meaning.
-3. ``instances-list.txt``: the problems to be solved and their reference Pareto fronts are included here. It currently contains the data for using the WFG benchmark problems:
-.. code-block:: text
+  cat autoMOPSOZDT/execdir-1/irace.stderr.out
 
-  org.uma.jmetal.problem.multiobjective.wfg.WFG1 --referenceFrontFileName WFG1.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG2 --referenceFrontFileName WFG2.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG3 --referenceFrontFileName WFG3.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG4 --referenceFrontFileName WFG4.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG5 --referenceFrontFileName WFG5.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG6 --referenceFrontFileName WFG6.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG7 --referenceFrontFileName WFG7.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG8 --referenceFrontFileName WFG8.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG9 --referenceFrontFileName WFG9.2D.csv --maximumNumberOfEvaluations 25000
-
-Each line indicates the problem, the name of the file containing the reference Pareto front of the problem, and the stopping condition of the algorithm (i.e., the maximum number of evaluations of the algorithm).
-
-1. ``scenario-MOPSO.txt``: default irace parameters (we usually keep this file unchanged unless the number of instance changes)
-2. ``target-runner``. Bash script which is executed in every run of irace. This file must have execution rights (if not, just type ``chmod +x target-runner`` in a terminal)
-3. ``run.sh``. Bash script to run irace. VERY IMPORTANT: the number of cores to be used by irace are indicated in the ``IRACE_PARAMS`` variable (the default value is 24).
-
-* A directory called ``execdir`` that must contain a copy of the ``resources`` folder of the jMetal project. This is needed to allow the algorithm to find the reference fronts.
-
-Running everything
-^^^^^^^^^^^^^^^^^^
-
-Once we have all the needed resources in the `ìraceJmetal`` directory, we are ready to execute the script that will carry out the auto-configuraton by using irace. Take into account that irace will generate thousands of configurations (the default value is 100,000), so using a multi-core machine is advisable. We have tested the software in Linux, macOS , and Windows 10 (in the Ubuntu Bash console).
-
-To run irace simply run the following command:
-
-.. code-block:: bash
-
-  ./run.sh MOPSO 5
-
-The last parameter is used as a seed.
-
-
-Results
-^^^^^^^
-irace will use the directory called ``execdir`` (previously created) to write a number of output files. Two of those files are of particular interest: ``irace.stderr.out`` and ``irace.sdtout.out``. The first file should be empty, i.e., we should get an empty line when executing this command:
-
-.. code-block:: bash
-
-  cat execdir/irace.stderr.out
-
-The second file contains a lot of information about the run of irace, including the configurations being tested. We are particularly interested in the best found configurations, which are written at the end of the file (just below the line starting by "# Best configuration as command lines"). For example, a result is the following:
+At the end of the output file, we can find something similar to this piece of text:
 
 .. code-block:: text
 
@@ -563,3 +505,14 @@ The second file contains a lot of information about the run of irace, including 
   2464  --swarmSize 11 --archiveSize 100 --externalArchive hypervolumeArchive --swarmInitialization scatterSearch --velocityInitialization defaultVelocityInitialization --perturbation frequencySelectionMutationBasedPerturbation --mutation uniform --mutationProbabilityFactor 0.1791 --mutationRepairStrategy random --uniformMutationPerturbation 0.7245 --frequencyOfApplicationOfMutationOperator 8 --inertiaWeightComputingStrategy constantValue --weight 0.1081 --velocityUpdate constrainedVelocityUpdate --c1Min 1.7965 --c1Max 2.4579 --c2Min 1.0514 --c2Max 2.5417 --localBestInitialization defaultLocalBestInitialization --globalBestInitialization defaultGlobalBestInitialization --globalBestSelection binaryTournament --globalBestUpdate defaultGlobalBestUpdate --localBestUpdate defaultLocalBestUpdate --positionUpdate defaultPositionUpdate --velocityChangeWhenLowerLimitIsReached 0.1399 --velocityChangeWhenUpperLimitIsReached -0.7488
 
 This configuration can be used in the ``SMPSOConfiguredFromAParameterString`` program, replacing the existing one, to run *AutoMOPSO* with those settings.
+
+References
+----------
+
+.. _NLB+19:
+
+[NLB+19]: Nebro, A.J., López-Ibáñez, M., Barba-González, C., García-Nieto, J.: Automatic configuration of NSGA-II with jMetal and irace. GECCO '19: Proceedings of the Genetic and Evolutionary Computation Conference CompanionJuly 2019. DOI: https://doi.org/10.1145/3319619.3326832
+
+.. _DNL+22:
+
+[DNL+22]: Doblas, D., Nebro, A.J., López-Ibáñez, M., García-Nieto, J, Coello Coello, C.A.: Auto. matic Design of Multi-objective Particle Swarm Optimizers. International Conference on Swarm Intelligence (ANTS 2022). DOI: https://doi.org/10.1007/978-3-031-20176-9_3
