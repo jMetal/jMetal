@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'jmetal'
-copyright = '2019, Antonio J. Nebro'
+copyright = '2022, Antonio J. Nebro'
 author = 'Antonio J. Nebro'
 
 highlight_language = 'java'
@@ -33,6 +33,8 @@ release = '6.0-SNAPSHOT'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autosectionlabel']
+extensions.append('sphinx.ext.imgmath')
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
