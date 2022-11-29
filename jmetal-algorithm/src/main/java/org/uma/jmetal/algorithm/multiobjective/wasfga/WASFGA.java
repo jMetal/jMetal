@@ -2,7 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.wasfga;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.algorithm.InteractiveAlgorithm;
+import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.mombi.AbstractMOMBI;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;

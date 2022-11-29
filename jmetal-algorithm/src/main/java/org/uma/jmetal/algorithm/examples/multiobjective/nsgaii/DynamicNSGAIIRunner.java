@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
 import java.util.List;
-import org.uma.jmetal.algorithm.DynamicAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.DynamicNSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -39,7 +38,7 @@ public class DynamicNSGAIIRunner {
 
     InvertedGenerationalDistance igd = new InvertedGenerationalDistance();
     CoverageFront coverageFront = new CoverageFront(0.055, igd);
-    DynamicAlgorithm<List<DoubleSolution>> algorithm =
+    var algorithm =
         new DynamicNSGAII<>(
             problem,
             25000,

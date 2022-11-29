@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.uma.jmetal.algorithm.DynamicAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -18,8 +17,7 @@ import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.restartstrategy.RestartStrategy;
 
 @SuppressWarnings("serial")
-public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S>
-    implements DynamicAlgorithm<List<S>> {
+public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
 
   private RestartStrategy<S> restartStrategy;
   private DynamicProblem<S, Integer> problem;
@@ -117,22 +115,18 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S>
     super.updateProgress();
   }
 
-  @Override
   public DynamicProblem<S, ?> getDynamicProblem() {
     return problem;
   }
 
-  @Override
   public void restart() {
     this.restartStrategy.restart(getPopulation(), (DynamicProblem<S, ?>) getProblem());
   }
 
-  @Override
   public RestartStrategy<?> getRestartStrategy() {
     return restartStrategy;
   }
 
-  @Override
   public Observable<Map<String, Object>> getObservable() {
     return observable;
   }

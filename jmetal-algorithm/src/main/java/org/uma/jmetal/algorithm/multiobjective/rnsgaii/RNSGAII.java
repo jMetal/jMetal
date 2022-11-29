@@ -2,7 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.algorithm.InteractiveAlgorithm;
+import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;

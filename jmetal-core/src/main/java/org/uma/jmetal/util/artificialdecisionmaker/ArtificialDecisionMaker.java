@@ -3,7 +3,6 @@ package org.uma.jmetal.util.artificialdecisionmaker;
 import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.problem.Problem;
 
 @SuppressWarnings("serial")
