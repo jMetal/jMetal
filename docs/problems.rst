@@ -93,10 +93,3 @@ The lists of single- and multi-objective problems are included in the next figur
    :scale: 90 %
    :alt: Multi-objective problems.
 
-
-Example of continuous problem: *Kursawe*
-----------------------------------------
-
-.. math::
-
-    n_{\mathrm{offset}} = \sum_{k=0}^{N-1} s_k n_k
