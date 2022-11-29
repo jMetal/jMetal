@@ -30,17 +30,26 @@ The jMetal project is a Maven project structured in the following sub-projects:
 | jmetal-component    |  Component-based algorithms        |
 +---------------------+------------------------------------+
 
-
 .. toctree::
     :maxdepth: 2
-    :caption: Index:
+    :caption: Introduction
 
     about.rst
     installation.rst
     quickStart.rst
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Basics
+
     encodings.rst
     problems.rst
     constraints.rst
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Advanced
+
     experimentation.rst
     parallel.rst
     autoconfiguration.rst
