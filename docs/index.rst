@@ -37,6 +37,7 @@ The jMetal project is a Maven project structured in the following sub-projects:
 
     about.rst
     installation.rst
+    quickStart.rst
     encodings.rst
     problems.rst
     constraints.rst
