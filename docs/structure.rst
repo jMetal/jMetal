@@ -1,4 +1,4 @@
-.. structure:
+.. _structure:
 
 Project structure
 =================

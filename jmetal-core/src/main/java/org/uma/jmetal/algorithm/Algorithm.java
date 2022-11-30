@@ -6,7 +6,7 @@ import org.uma.jmetal.util.naming.DescribedEntity;
 /**
  * Interface representing an algorithm
  * @author Antonio J. Nebro
- * @version 0.1
+ * @version 1.0
  * @param <Result> Result
  */
 public interface Algorithm<Result> extends Runnable, Serializable, DescribedEntity {

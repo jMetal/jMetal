@@ -1,7 +1,7 @@
-.. _encodings:
+.. _algorithms:
 
-The ``Solution`` interface
-==========================
+The ``Algorithm`` interface
+===========================
 
 :Author: Antonio J. Nebro
 :Version: 1.0
@@ -15,8 +15,7 @@ continuous problems) and, on the other hand, the specific operators that can be 
 the crossover and mutation operators in the case of evolutionary algorithms.
 
 The base class of all the solution encodings in jMetal is
-the `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface,
-which located in the ``org.uma.jmetal.solution`` package (``jmetal-auto`` sub-project):
+the `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface:
 
 .. code-block:: java
 
