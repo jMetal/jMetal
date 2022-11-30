@@ -515,4 +515,4 @@ References
 
 .. _DNL+22:
 
-[DNL+22]: Doblas, D., Nebro, A.J., López-Ibáñez, M., García-Nieto, J, Coello Coello, C.A.: Auto. matic Design of Multi-objective Particle Swarm Optimizers. International Conference on Swarm Intelligence (ANTS 2022). DOI: https://doi.org/10.1007/978-3-031-20176-9_3
+[DNL+22]: Doblas, D., Nebro, A.J., López-Ibáñez, M., García-Nieto, J, Coello Coello, C.A.: Automatic Design of Multi-objective Particle Swarm Optimizers. International Conference on Swarm Intelligence (ANTS 2022). DOI: https://doi.org/10.1007/978-3-031-20176-9_3

@@ -2,7 +2,7 @@ Installation
 ============
 jMetal is a Maven project hosted in GitHub, so there are two ways of getting the software: getting
 the source code from https://github.com/jMetal/jMetal or adding it as a dependence in your own
-Maven project. The sub-projects of jMetal can be obtained from the Maven Central
+Maven project. The sub-projects of jMetal can be obtained from Maven Central
 Repository (https://search.maven.org/search?q=jmetal) or
 from MvnRepository (https://mvnrepository.com/search?q=jmetal).
 
