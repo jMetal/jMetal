@@ -26,8 +26,8 @@ The problem has two objectives and three decision variables and its Pareto front
    :scale: 50 %
    :align: center
 
-The code to optimize this problem with NSGA-II can be found in class ``NSGAIIRunner``, located in the
-``org.uma.jmetal.algorithm.examples.multiobjective.nsgaii`` package in the ``jmetal-algorithm`` sub-project. The first step it to create the problem:
+The code to optimize this problem with NSGA-II can be found in class ``NSGAIIRunner`` (package
+``org.uma.jmetal.algorithm.examples.multiobjective.nsgaii``, subproject ``jmetal-algorithm``). The first step it to create the problem:
 
 .. code-block:: java
 

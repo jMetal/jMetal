@@ -7,62 +7,84 @@ The ``Algorithm`` interface
 :Version: 1.0
 :Date: 2022-11-30
 
-One of the first decisions that have to be taken when using metaheuristics is to define how to encode
-or represent the tentative solutions of the problem to solve. Representations strongly depend on
-the problem (e.g., continuous, binary, permutation, etc.) and they may restrict, on the one hand,
-the algorithms that can be used (for example, particle swarm optimization and differential evolution are designed to solve
-continuous problems) and, on the other hand, the specific operators that can be applied, as
-the crossover and mutation operators in the case of evolutionary algorithms.
-
-The base class of all the solution encodings in jMetal is
-the `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface:
+A metaheuristic in jMetal 5 is an entity that implements the ``Algorithm`` interface (package ``org.uma.jmetal.algorithm``
+in sub-project ``jmetal-core``:
 
 .. code-block:: java
 
-  package org.uma.jmetal.solution;
+  package org.uma.jmetal.algorithm;
 
   /**
-   * Interface representing a Solution
-   *
-   * @author Antonio J. Nebro <antonio@lcc.uma.es>
-   * @param <T> Type (Double, Integer, etc.)
-   */
-  public interface Solution<T> extends Serializable {
-    List<T> variables() ;
-    double[] objectives() ;
-    double[] constraints() ;
-    Map<Object,Object> attributes() ;
-
-    Solution<T> copy() ;
+    * Interface representing an algorithm
+    * @author Antonio J. Nebro
+    * @version 1.0
+    * @param <Result> Result
+    */
+  public interface Algorithm<Result> extends Runnable, Serializable, DescribedEntity {
+    void run() ;
+    Result getResult() ;
   }
 
-Any solution contains a list of decision variables, an array of objective values, and array of constraint values
-(i.e., the constraint violation degree per each of the problem side constraints), and a map of attributes
-(e.g., to assign properties such as ranking, strength, etc., which are usually algorithm dependant).
-The variable values are assigned when a solution is created (typically, when invoking the ``createSolution()`` method of a problem),
-whereas the objective and constraint values are usually assigned when evaluating a solution.
+This interface is very generic: it specifies that an algorithm must have a ``run()`` method and
+return a result by invoking the ``getResult()`` method. As it extends Runnable, any algorithm can
+be executed in a thread. The simplicity of the interface offers plenty of freedom to implement a metaheuristic. We explore
+three alternatives next.
 
-jMetal provides currently the following interfaces representing encodings (all of them extending `Solution`):
+Direct extension: NSGA-II in jMetal 4.5
+---------------------------------------
 
-* `BinarySolution <https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/solution/binarysolution/BinarySolution.java>`_
-* `IntegerSolution <https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/solution/integersolution/IntegerSolution.java>`_
-* `DoubleSolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/doublesolution/DoubleSolution.java>`_ 
-* `PermutationSolution <https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/solution/permutationsolution>`_
-* `SequenceSolution <https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/solution/sequencesolution>`_
-* `CompositeSolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/compositesolution/CompositeSolution.java>`_
+The implementation of NSGA-II in the former versions of jMetal (prior to jMetal 5) was based
+on a single class containing the behavior the algorithm. We include a revised implementation of this
+approach in class ``NSGA45``. (package ``org.uma.jmetal.algorithm.multiobjective.nsgaii``, subproject
+``jmetal-algorithm``). An extract of the code is:
 
-These interfaces are intended to allow different implementations of a given encoding, although we currently provide a default implementation for most of them:
+.. code-block:: java
 
-* `DefaultBinarySolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/binarysolution/impl/DefaultBinarySolution.java>`_: The solution chromosome is a list of binary strings. The number of solution variables is the number of strings.
+  package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
-* `DefaultIntegerSolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/integersolution/impl/DefaultIntegerSolution.java>`_: The solution chromosome is a list of integer values bounded by a lower and upper bound. Each integer value is stored in a solution variable.
+  /**
+    * Implementation of NSGA-II following the scheme used in jMetal4.5 and former versions
+    *
+    * @author Antonio J. Nebro <antonio@lcc.uma.es>
+   */
+  public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
 
-* `DefaultDoubleSolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/doublesolution/impl/DefaultDoubleSolution.java>`_: The solution chromosome is a list of double values bounded by a lower and upper bound. Each double value is stored in a solution variable.
+    /** Constructor */
+    public NSGAII45(
+        Problem<S> problem,
+        int maxEvaluations,
+        int populationSize,
+        CrossoverOperator<S> crossoverOperator,
+        MutationOperator<S> mutationOperator,
+        SelectionOperator<List<S>, S> selectionOperator,
+        SolutionListEvaluator<S> evaluator) {
+    }
 
-* `IntegerPermutationSolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/permutationsolution/impl/IntegerPermutationSolution.java>`_: The encoding is a list of N integer numbers with are arrange as a permutation of size N. Each value of the permutation is stored in a solution variable.
+    /** Run method */
+    @Override
+    public void run() {
+      population = createInitialPopulation();
+      evaluatePopulation(population);
+      while (evaluations < maxEvaluations) {
+        // Evolutionary steps: selection, variation, replacement
+        ...
 
-* `CharSequenceSolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/sequencesolution/impl/CharSequenceSolution.java>`_: The encoding a list of N char values.
+        // Ranking
+        Ranking<S> ranking = new FastNonDominatedSortRanking<>();
+        ranking.compute(jointPopulation);
 
-* `CompositeSolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/compositesolution/CompositeSolution.java>`_: A solution is composed of list of solutions, thus allowing to mix different types of encodings in a single solution. Each solution variable contains a solution.
+        // Crowding distance calculation
+        rankingAndCrowdingSelection = new RankingAndCrowdingSelection<>(populationSize);
 
-Of course, you can define your own encodings if none of the available ones suit your needs.
+        // Ranking and crowding replacement
+        population = rankingAndCrowdingSelection.execute(jointPopulation);
+      }
+    }
+
+    @Override
+    public List<S> getResult() {
+      return getNonDominatedSolutions(population);
+    }
+
+
+
