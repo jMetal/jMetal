@@ -14,7 +14,6 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  */
 @SuppressWarnings("serial")
 public class GenericBitFlipMutation<S extends BinarySolution> implements MutationOperator<S> {
-
   private double mutationProbability;
   private final RandomGenerator<Double> randomGenerator;
 

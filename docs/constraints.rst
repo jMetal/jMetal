@@ -86,21 +86,21 @@ An example of constrained problem is `Srinivas <https://github.com/jMetal/jMetal
     }
   }
 
-We can observe that the problem formulation includes two constraints, which are defined in the `evaluateConstraints()` method that is called after a solution is evaluated. According to the NSGA-II constraint handling scheme, the requirement to work with constraints is that every constraint must be expressed as an inequality of type `expression >=0.0`. This way, when `expression < 0.0` then it is considered as a constraint violation, and the overall constraint violation degree will the sum of the values of the constraints array. If that value is negative, then the solution is infeasible.
+We can observe that the problem formulation includes two constraints, which are defined in the ``evaluateConstraints()`` method that is called after a solution is evaluated. According to the NSGA-II constraint handling scheme, the requirement to work with constraints is that every constraint must be expressed as an inequality of type `expression >=0.0`. This way, when `expression < 0.0` then it is considered as a constraint violation, and the overall constraint violation degree will the sum of the values of the constraints array. If that value is negative, then the solution is infeasible.
 
 To facilitate the use of constraints, jMetal provides the utility `ConstraintHandling <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/ConstraintHandling.java>`_ class, which provides the following static methods:
 
-* `isFeasible(Solution solution)`: returns true if the solution has no constraints or the number of violated constraints is zero.
+* ``isFeasible(Solution solution)``: returns true if the solution has no constraints or the number of violated constraints is zero.
 
-* `numberOfViolatedConstraints(Solution solution)`: returns the number of violated constraints.
+* ``numberOfViolatedConstraints(Solution solution)``: returns the number of violated constraints.
 
-* `overallConstraintViolationDegree(Solution solution)`: returns the overall constraint violation degree of a solution.
+* ``overallConstraintViolationDegree(Solution solution)``: returns the overall constraint violation degree of a solution.
 
-* `feasibilityRatio(List<Solution> solutions)`:  computes the ratio of feasible solutions in a solution list.
+* ``feasibilityRatio(List<Solution> solutions)``:  computes the ratio of feasible solutions in a solution list.
 
-* `numberOfViolatedConstraints(Solution solution, int number)`: sets the number of violated constraints of a solution.
+* ``numberOfViolatedConstraints(Solution solution, int number)``: sets the number of violated constraints of a solution.
 
-* `overallConstraintViolationDegree(Solution solution, double value)`: sets the overall constraint violation degree of a solution.
+* ``overallConstraintViolationDegree(Solution solution, double value)``: sets the overall constraint violation degree of a solution.
 
 The last two methods are included to allow the adoption of adhoc mechanisms to compute both the number of violated constraints and the overall constraint violation degree. To cope with this possibility, the `ConstraintHandling <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/ConstraintHandling.java>`_ class includes the following enum type:
 
@@ -111,7 +111,7 @@ The last two methods are included to allow the adoption of adhoc mechanisms to c
     NUMBER_OF_VIOLATED_CONSTRAINTS
   }
 
-It is assumed that a solution may have an attribute whose key value is `OVERALL_CONSTRAINT_VIOLATION` or `NUMBER_OF_VIOLATED_CONSTRAINTS`. If so, the associated values are returned when querying the constraint properties of the solution; otherwise, the constraints are computed using the default scheme. This is illustrated in the `numberOfViolatedConstraints(Solution solution)` and `overallConstraintViolationDegree(Solution solution)` methods:
+It is assumed that a solution may have an attribute whose key value is ``OVERALL_CONSTRAINT_VIOLATION`` or ``NUMBER_OF_VIOLATED_CONSTRAINTS``. If so, the associated values are returned when querying the constraint properties of the solution; otherwise, the constraints are computed using the default scheme. This is illustrated in the ``numberOfViolatedConstraints(Solution solution)`` and ``overallConstraintViolationDegree(Solution solution)`` methods:
 
 .. code-block:: java
   

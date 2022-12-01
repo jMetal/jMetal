@@ -1,4 +1,4 @@
-.. _autoconfigurationNSGAII:
+.. _autoconfiguration:
 
 Automatic design and configuration of multi-objective metaheuristics
 ====================================================================

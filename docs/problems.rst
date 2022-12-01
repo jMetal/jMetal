@@ -1,10 +1,10 @@
 .. _problems:
 
-Optimization Problems
-=====================
+Problems
+========
 
 :Author: Antonio J. Nebro
-:Date: 2021-11-17
+:Date: 2022-12-1
 
 All the problems in jMetal implement the `Problem <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/Problem.java>`_ interface:
 
@@ -36,13 +36,13 @@ All the problems in jMetal implement the `Problem <https://github.com/jMetal/jMe
 Every problem is characterized by the number of decision variables, the number of objective functions and the number of constraints, so getter methods for returning those values have to be defined. The genetic type `S` allows to determine the encoding of the solutions of the problem. This way, a problem must include a method for evaluating any solution of class `S` as well as providing a `createSolution()` method for creating a new solution. A class named 
 `AbstractGenericProblem <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/AbstractGenericProblem.java>`_ containing setter and getter method implementations for the problem fields is provided.
 
-If a problem has side constraints, it is assumed that the overall constraint degree of a given solution is computed inside the `evaluate()` method.
+If a problem has side constraints, it is assumed that the overall constraint degree of a given solution is computed inside the ``evaluate()`` method.
 
-jMetal provides currently the following interfaces representing types of problems (all of them extending `Problem`), and the available implementations of them:
+jMetal provides currently the following interfaces representing types of problems (all of them extending ``Problem``), and the available implementations of them:
 
 * `BinaryProblem <https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/problem/binaryproblem/BinaryProblem.java>`_
 
-    * `AbstractBinaryProblem <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/binaryproblem/impl/AbstractBinaryProblem.java>`_: Each problem variable is a bit string, and the class includes methods such as `getBitsFromVariable(int index)` and `getTotalNumberOfBits()`.
+    * `AbstractBinaryProblem <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/binaryproblem/impl/AbstractBinaryProblem.java>`_: Each problem variable is a bit string, and the class includes methods such as ``getBitsFromVariable(int index)`` and ``getTotalNumberOfBits()``.
 
 * `IntegerProblem <https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/problem/integerproblem/IntegerProblem.java>`_
 
@@ -75,12 +75,7 @@ jMetal provides currently the following interfaces representing types of problem
 
     * `CharSequenceProblem <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/sequenceproblem/impl/CharSequenceProblem.java>`_: The problem variables are sequences of chars.
 
-The ``jmetal-problem`` subproject
----------------------------------
-
-All the problems provided by jMetal are included in the ``org.uma.jmetal.problem`` package located in
-the ``jmetal-problem`` subproject. The package includes the sub-packages ``multiobjective`` and
-``singleobjective``, which contains the codes of the problems. You can find both individual
+All the problems provided by jMetal are included in the ``org.uma.jmetal.problem`` package located in the ``jmetal-problem`` sub-project. The package includes the sub-packages ``multiobjective`` and ``singleobjective``, which contains the codes of the problems. You can find both individual
 problems (e.g., *Kursawe*, *Sphere*, etc.) and benchmarks suites (such as *ZDT*, *DTLZ* or *LZ09*).
 
 The lists of single- and multi-objective problems are included in the next figures:

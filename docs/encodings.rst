@@ -1,7 +1,7 @@
 .. _encodings:
 
-The ``Solution`` interface
-==========================
+Solutions (encodings)
+=====================
 
 :Author: Antonio J. Nebro
 :Version: 1.0

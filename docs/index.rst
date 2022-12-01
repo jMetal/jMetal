@@ -58,6 +58,7 @@ Summary of features:
     encodings.rst
     algorithms.rst
     problems.rst
+    operators.rst
     constraints.rst
 
 .. toctree::

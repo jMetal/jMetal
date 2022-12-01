@@ -12,7 +12,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 /**
- * created at 10:45 am, 2019/1/29 This algorithm (DIR-Enhanced NSGA-II [DNSGA-II]) is according to
+ * Created at 10:45 am, 2019/1/29 This algorithm (DIR-Enhanced NSGA-II [DNSGA-II]) is according to
  * "Cai X, Sun H, Fan Z. A diversity indicator based on reference vectors for many-objective
  * optimization[J]. Information Sciences, 2018, 430-431:467-486.".
  *

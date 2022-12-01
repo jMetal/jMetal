@@ -1,4 +1,4 @@
-.. component:
+.. _component:
 
 Component-based algorithms
 ==========================
