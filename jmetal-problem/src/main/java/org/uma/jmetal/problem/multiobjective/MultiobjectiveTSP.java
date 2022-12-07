@@ -27,10 +27,26 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
   public MultiobjectiveTSP(String distanceFile, String costFile) throws IOException {
     distanceMatrix = readProblem(distanceFile) ;
     costMatrix     = readProblem(costFile);
+  }
 
-    setNumberOfVariables(numberOfCities);
-    setNumberOfObjectives(2);
-    setName("MultiobjectiveTSP");
+  @Override
+  public int numberOfVariables() {
+    return numberOfCities ;
+  }
+
+  @Override
+  public int numberOfObjectives() {
+    return 2;
+  }
+
+  @Override
+  public int numberOfConstraints() {
+    return 0;
+  }
+
+  @Override
+  public String name() {
+    return "MultiobjectiveTSP";
   }
 
   /** Evaluate() method */

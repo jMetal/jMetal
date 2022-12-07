@@ -26,10 +26,26 @@ public class TSP extends AbstractIntegerPermutationProblem {
    */
   public TSP(String distanceFile) throws IOException {
     distanceMatrix = readProblem(distanceFile) ;
+  }
 
-    setNumberOfVariables(numberOfCities);
-    setNumberOfObjectives(1);
-    setName("TSP");
+  @Override
+  public int numberOfVariables() {
+    return numberOfCities ;
+  }
+
+  @Override
+  public int numberOfObjectives() {
+    return 1;
+  }
+
+  @Override
+  public int numberOfConstraints() {
+    return 0;
+  }
+
+  @Override
+  public String name() {
+    return "TSP";
   }
 
   /** Evaluate() method */

@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.mutation.impl.IntegerPolynomialMutation;
-import org.uma.jmetal.problem.doubleproblem.impl.FakeIntegerProblem;
+import org.uma.jmetal.problem.integerproblem.impl.FakeIntegerProblem;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.bounds.Bounds;
