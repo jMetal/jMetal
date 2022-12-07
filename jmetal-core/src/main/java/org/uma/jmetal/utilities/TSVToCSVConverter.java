@@ -33,7 +33,6 @@ public class TSVToCSVConverter {
       outputFile = Files.newBufferedWriter(Paths.get(outputFileName));
       lines.forEach(
           line -> {
-            // List<String> values = Arrays.asList(l.split("\\s+")) ;
             String values = line.replaceAll("\\s+", ",");
 
             if (values.endsWith(",")) {
