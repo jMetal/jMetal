@@ -26,9 +26,9 @@ public class UF6 extends AbstractDoubleProblem {
   * @param numberOfVariables Number of variables.
   */
   public UF6(Integer numberOfVariables, int N, double epsilon) {
-    setNumberOfObjectives(2) ;
-    setNumberOfConstraints(0) ;
-    setName("UF6") ;
+    numberOfObjectives(2) ;
+    numberOfConstraints(0) ;
+    name("UF6") ;
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -43,13 +43,13 @@ public class UF6 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = new double[numberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i) ;
     }
@@ -61,8 +61,8 @@ public class UF6 extends AbstractDoubleProblem {
 		count1 = count2 = 0;
  		prod1  = prod2  = 1.0;
     
-    for (int j = 2 ; j <= getNumberOfVariables(); j++) {
-			yj = x[j-1]-Math.sin(6.0*Math.PI*x[0]+j*Math.PI/ getNumberOfVariables());
+    for (int j = 2 ; j <= numberOfVariables(); j++) {
+			yj = x[j-1]-Math.sin(6.0*Math.PI*x[0]+j*Math.PI/ numberOfVariables());
 			pj = Math.cos(20.0*yj*Math.PI/Math.sqrt(j));
 			if (j % 2 == 0) {
 				sum2  += yj*yj;

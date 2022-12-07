@@ -66,8 +66,8 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     this.parentSelection = parentSelection;
     this.evaluator = evaluator;
 
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      size += problem.getBitsFromVariable(i);
+    for (int i = 0; i < problem.numberOfVariables(); i++) {
+      size += problem.bitsFromVariable(i);
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
@@ -189,7 +189,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
   private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
     int distance = 0;
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+    for (int i = 0; i < problem.numberOfVariables(); i++) {
       distance += hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i));
     }
 

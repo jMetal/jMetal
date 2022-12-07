@@ -21,7 +21,7 @@ public class C3_DTLZ1 extends DTLZ1 {
   public C3_DTLZ1(int numberOfVariables, int numberOfObjectives, int numberOfConstraints) {
     super(numberOfVariables, numberOfObjectives) ;
 
-    setNumberOfConstraints(numberOfConstraints);
+    numberOfConstraints(numberOfConstraints);
   }
 
   @Override
@@ -33,9 +33,9 @@ public class C3_DTLZ1 extends DTLZ1 {
   }
 
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double[] constraint = new double[this.numberOfConstraints()];
 
-    for (int j = 0; j < getNumberOfConstraints(); j++) {
+    for (int j = 0; j < numberOfConstraints(); j++) {
       double sum = 0 ;
       constraint[j] = 0.0 ;
       for (int i = 0; i < solution.objectives().length; i++) {
@@ -46,7 +46,7 @@ public class C3_DTLZ1 extends DTLZ1 {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

@@ -51,7 +51,7 @@ public class StandardPSO2007Runner {
     algorithm =
         new StandardPSO2007(
             problem,
-            10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())),
+            10 + (int) (2 * Math.sqrt(problem.numberOfVariables())),
             25000,
             3,
             evaluator);

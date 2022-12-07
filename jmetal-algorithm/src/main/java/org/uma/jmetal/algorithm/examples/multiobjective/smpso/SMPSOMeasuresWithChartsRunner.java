@@ -57,7 +57,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
 
     BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationProbability = 1.0 / problem.numberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 

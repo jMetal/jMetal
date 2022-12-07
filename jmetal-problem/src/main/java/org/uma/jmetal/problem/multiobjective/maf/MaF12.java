@@ -28,9 +28,9 @@ public class MaF12 extends AbstractDoubleProblem {
    */
   public MaF12(Integer numberOfVariables,
       Integer numberOfObjectives) {
-    setNumberOfObjectives(numberOfObjectives);
-    setNumberOfConstraints(0);
-    setName("MaF12");
+    numberOfObjectives(numberOfObjectives);
+    numberOfConstraints(0);
+    name("MaF12");
     K12 = numberOfObjectives - 1;
     L12 = numberOfVariables - K12;
 
@@ -42,7 +42,7 @@ public class MaF12 extends AbstractDoubleProblem {
       upper.add(2.0 * (i + 1));
     }
 
-    setVariableBounds(lower, upper);
+    variableBounds(lower, upper);
   }
 
   /**

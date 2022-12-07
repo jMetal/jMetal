@@ -55,7 +55,7 @@ public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
     double crossoverProbability = 0.9 ;
     crossover = new SinglePointCrossover(crossoverProbability) ;
 
-    double mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
+    double mutationProbability = 1.0 / problem.totalNumberOfBits() ;
     mutation = new BitFlipMutation(mutationProbability) ;
 
     selection = new BinaryTournamentSelection<BinarySolution>();

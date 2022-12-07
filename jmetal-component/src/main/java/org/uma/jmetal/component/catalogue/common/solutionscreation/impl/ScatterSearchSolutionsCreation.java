@@ -24,10 +24,10 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
     this.numberOfSolutionsToCreate = numberOfSolutionsToCreate;
     this.numberOfSubRanges = numberOfSubRanges;
 
-    sumOfFrequencyValues = new int[problem.getNumberOfVariables()];
-    sumOfReverseFrequencyValues = new int[problem.getNumberOfVariables()];
-    frequency = new int[numberOfSubRanges][problem.getNumberOfVariables()];
-    reverseFrequency = new int[numberOfSubRanges][problem.getNumberOfVariables()];
+    sumOfFrequencyValues = new int[problem.numberOfVariables()];
+    sumOfReverseFrequencyValues = new int[problem.numberOfVariables()];
+    frequency = new int[numberOfSubRanges][problem.numberOfVariables()];
+    reverseFrequency = new int[numberOfSubRanges][problem.numberOfVariables()];
   }
 
   public List<DoubleSolution> create() {
@@ -36,8 +36,8 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
     for (int i = 0; i < numberOfSolutionsToCreate; i++) {
       List<Double> variables = generateVariables();
       DoubleSolution newSolution =
-          new DefaultDoubleSolution(problem.getVariableBounds(), problem.getNumberOfObjectives(), problem.getNumberOfConstraints());
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+          new DefaultDoubleSolution(problem.variableBounds(), problem.numberOfObjectives(), problem.numberOfConstraints());
+      for (int j = 0; j < problem.numberOfVariables(); j++) {
         newSolution.variables().set(j, variables.get(j));
       }
 
@@ -48,12 +48,12 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
   }
 
   private List<Double> generateVariables() {
-    List<Double> vars = new ArrayList<>(problem.getNumberOfVariables());
+    List<Double> vars = new ArrayList<>(problem.numberOfVariables());
 
     double value;
     int range;
 
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+    for (int i = 0; i < problem.numberOfVariables(); i++) {
       sumOfReverseFrequencyValues[i] = 0;
       for (int j = 0; j < numberOfSubRanges; j++) {
         reverseFrequency[j][i] = sumOfFrequencyValues[i] - frequency[j][i];
@@ -74,7 +74,7 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
       frequency[range][i]++;
       sumOfFrequencyValues[i]++;
 
-      Bounds<Double> bounds = problem.getVariableBounds().get(i);
+      Bounds<Double> bounds = problem.variableBounds().get(i);
       Double lowerBound = bounds.getLowerBound();
       Double upperBound = bounds.getUpperBound();
       double low = lowerBound + range * (upperBound - lowerBound) / numberOfSubRanges;

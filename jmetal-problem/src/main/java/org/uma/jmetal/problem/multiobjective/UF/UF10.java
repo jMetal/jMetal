@@ -20,9 +20,9 @@ public class UF10 extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables.
    */
   public UF10(int numberOfVariables) {
-    setNumberOfObjectives(3);
-    setNumberOfConstraints(0);
-    setName("UF10");
+    numberOfObjectives(3);
+    numberOfConstraints(0);
+    name("UF10");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -36,13 +36,13 @@ public class UF10 extends AbstractDoubleProblem {
       upperLimit.add(2.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = new double[numberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i);
     }
@@ -52,10 +52,10 @@ public class UF10 extends AbstractDoubleProblem {
     sum1 = sum2 = sum3 = 0.0;
     count1 = count2 = count3 = 0;
 
-    for (int j = 3; j <= getNumberOfVariables(); j++) {
+    for (int j = 3; j <= numberOfVariables(); j++) {
       yj =
           x[j - 1]
-              - 2.0 * x[1] * Math.sin(2.0 * Math.PI * x[0] + j * Math.PI / getNumberOfVariables());
+              - 2.0 * x[1] * Math.sin(2.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables());
       hj = 4.0 * yj * yj - Math.cos(8.0 * Math.PI * yj) + 1.0;
       if (j % 3 == 1) {
         sum1 += hj;

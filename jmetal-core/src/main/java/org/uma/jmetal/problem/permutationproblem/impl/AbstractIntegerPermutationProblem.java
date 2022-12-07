@@ -14,7 +14,7 @@ public abstract class AbstractIntegerPermutationProblem
   protected String name ;
 
   @Override
-  public int getNumberOfVariables() {
+  public int numberOfVariables() {
     return numberOfVariables;
   }
 
@@ -22,7 +22,7 @@ public abstract class AbstractIntegerPermutationProblem
     this.numberOfVariables = numberOfVariables ;
   }
   @Override
-  public int getNumberOfObjectives() {
+  public int numberOfObjectives() {
     return numberOfObjectives ;
   }
 
@@ -33,24 +33,25 @@ public abstract class AbstractIntegerPermutationProblem
     this.numberOfConstraints = numberOfConstraints ;
   }
   @Override
-  public String getName() {
+  public String name() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
   @Override
-  public int getNumberOfConstraints() {
+  public int numberOfConstraints() {
     return numberOfConstraints ;
   }
 
   @Override
   public PermutationSolution<Integer> createSolution() {
-    return new IntegerPermutationSolution(getLength(), getNumberOfObjectives()) ;
+    return new IntegerPermutationSolution(length(), numberOfObjectives()) ;
   }
 
   @Override
-  public int getLength() {
-    return numberOfVariables;
+  public int length() {
+    return numberOfVariables();
   }
 }

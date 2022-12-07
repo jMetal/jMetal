@@ -135,7 +135,7 @@ public class ZDTStudy {
       ExperimentProblem<DoubleSolution> experimentProblem) {
     Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(experimentProblem.getProblem(), MOEADBuilder.Variant.MOEAD)
             .setCrossover(new DifferentialEvolutionCrossover(1.0, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
-            .setMutation(new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+            .setMutation(new PolynomialMutation(1.0 / experimentProblem.getProblem().numberOfVariables(),
                     20.0))
             .setMaxEvaluations(25000)
             .setPopulationSize(100)
@@ -155,7 +155,7 @@ public class ZDTStudy {
     Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
             experimentProblem.getProblem(),
             new SBXCrossover(1.0, 20.0),
-            new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+            new PolynomialMutation(1.0 / experimentProblem.getProblem().numberOfVariables(),
                     20.0),
             100)
             .build();
@@ -165,7 +165,7 @@ public class ZDTStudy {
   private static void smpso(
       List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run,
       ExperimentProblem<DoubleSolution> experimentProblem) {
-    double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+    double mutationProbability = 1.0 / experimentProblem.getProblem().numberOfVariables();
     double mutationDistributionIndex = 20.0;
     Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
             (DoubleProblem) experimentProblem.getProblem(),

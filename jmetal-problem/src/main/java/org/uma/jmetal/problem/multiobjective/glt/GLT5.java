@@ -29,8 +29,8 @@ public class GLT5 extends AbstractDoubleProblem {
    * @param numberOfVariables
    */
   public GLT5(int numberOfVariables) {
-    setNumberOfObjectives(3);
-    setName("GLT5");
+    numberOfObjectives(3);
+    name("GLT5");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -44,7 +44,7 @@ public class GLT5 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   @Override

@@ -77,7 +77,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
 
     localBest = new DoubleSolution[swarmSize];
     neighborhoodBest = new DoubleSolution[swarmSize];
-    speed = new double[swarmSize][problem.getNumberOfVariables()];
+    speed = new double[swarmSize][problem.numberOfVariables()];
     randomParticle = new DoubleSolution[swarmSize] ;
 
     positionInSwarm = new GenericSolutionAttribute<DoubleSolution, Integer>();
@@ -157,7 +157,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   public void initializeVelocity(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+      for (int j = 0; j < problem.numberOfVariables(); j++) {
         Bounds<Double> bounds = particle.getBounds(j) ;
         speed[i][j] = (randomGenerator.nextDouble(
                 bounds.getLowerBound() - particle.variables().get(0),
@@ -193,7 +193,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       double radius = 0;
       radius = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(gravityCenter, particle);
 
-      double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRandomGenerator()).randSphere(problem.getNumberOfVariables());
+      double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRandomGenerator()).randSphere(problem.numberOfVariables());
 
       randomParticle[i] = problem.createSolution() ;
       for (int j = 0; j < particle.variables().size(); j++) {
@@ -214,7 +214,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       for (int j = 0; j < particle.variables().size(); j++) {
         particle.variables().set(j, particle.variables().get(j) + speed[i][j]);
 
-        Bounds<Double> bounds = problem.getVariableBounds().get(j) ;
+        Bounds<Double> bounds = problem.variableBounds().get(j) ;
         Double lowerBound = bounds.getLowerBound() ;
         Double upperBound = bounds.getUpperBound() ;
         if (particle.variables().get(j) < lowerBound) {

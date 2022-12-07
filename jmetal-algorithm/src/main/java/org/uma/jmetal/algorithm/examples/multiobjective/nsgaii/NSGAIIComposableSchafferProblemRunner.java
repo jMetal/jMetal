@@ -42,7 +42,7 @@ public class NSGAIIComposableSchafferProblemRunner extends AbstractAlgorithmRunn
     String referenceParetoFront = "resources/referenceFrontsCSV/Schaffer.csv" ;
 
     problem = new ComposableDoubleProblem()
-        .setName("Schaffer")
+        .name("Schaffer")
         .addVariable(-10, 10)
         .addVariable(-10, 10)
         .addFunction((x) -> x[0] * x[0])
@@ -52,7 +52,7 @@ public class NSGAIIComposableSchafferProblemRunner extends AbstractAlgorithmRunn
     double crossoverDistributionIndex = 20.0 ;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationProbability = 1.0 / problem.numberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 

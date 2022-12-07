@@ -16,8 +16,8 @@ public class FDA4 extends FDA {
   public FDA4(Integer numberOfVariables, Integer numberOfObjectives)
       throws JMetalException {
     super();
-    setNumberOfObjectives(numberOfObjectives);
-    setName("FDA4");
+    numberOfObjectives(numberOfObjectives);
+    name("FDA4");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -27,7 +27,7 @@ public class FDA4 extends FDA {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   @Override

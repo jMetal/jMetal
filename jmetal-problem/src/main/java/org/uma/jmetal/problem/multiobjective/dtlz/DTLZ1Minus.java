@@ -23,7 +23,7 @@ public class DTLZ1Minus extends DTLZ1 {
    */
   public DTLZ1Minus(Integer numberOfVariables, Integer numberOfObjectives) throws JMetalException {
     super(numberOfVariables, numberOfObjectives) ;
-    setName("DTLZ1Minus");
+    name("DTLZ1Minus");
   }
 
   /** Evaluate() method */

@@ -15,14 +15,14 @@ public class CRE21 extends AbstractDoubleProblem {
 
   /** Constructor */
   public CRE21() {
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(3);
-    setName("CRE21");
+    numberOfObjectives(2);
+    numberOfConstraints(3);
+    name("CRE21");
 
     List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);
     List<Double> upperLimit = List.of(0.45, 0.10, 0.10);
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -42,7 +42,7 @@ public class CRE21 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double[] constraint = new double[this.numberOfConstraints()];
     double x2, x3;
 
     x2 = solution.variables().get(1);
@@ -52,7 +52,7 @@ public class CRE21 extends AbstractDoubleProblem {
     constraint[1] = 100000.0 - -solution.objectives()[1];
     constraint[2] = 100000 - ((80.0 * Math.sqrt(1.0 + x3 * x3)) / (x3 * x2));
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       if (constraint[i] < 0.0) {
         constraint[i] = -constraint[i];
       } else {
@@ -60,7 +60,7 @@ public class CRE21 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

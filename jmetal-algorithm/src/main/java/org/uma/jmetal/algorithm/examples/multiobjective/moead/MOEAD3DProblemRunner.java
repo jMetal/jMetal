@@ -52,7 +52,7 @@ public class MOEAD3DProblemRunner extends AbstractAlgorithmRunner {
         new DifferentialEvolutionCrossover(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 

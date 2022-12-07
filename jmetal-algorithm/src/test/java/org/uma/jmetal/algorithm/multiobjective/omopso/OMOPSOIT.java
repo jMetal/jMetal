@@ -29,7 +29,7 @@ public class OMOPSOIT {
       throws Exception {
     DoubleProblem problem = new ZDT1();
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
 
     algorithm =
         new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
@@ -55,7 +55,7 @@ public class OMOPSOIT {
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
     DoubleProblem problem = new ZDT1();
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
 
     algorithm =
         new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())

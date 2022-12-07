@@ -18,7 +18,7 @@ public class LocalSearchContinuousProblemRunner {
     var problem = new Sphere(20) ;
 
     var mutationOperator =
-        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
+        new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0) ;
 
     int improvementRounds = 500000 ;
 

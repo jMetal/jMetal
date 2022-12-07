@@ -26,8 +26,8 @@ public class NMMin extends AbstractIntegerProblem {
   public NMMin(int numberOfVariables, int n, int m, int lowerBound, int upperBound)  {
     valueN = n ;
     valueM = m ;
-    setNumberOfObjectives(2);
-    setName("NMMin");
+    numberOfObjectives(2);
+    name("NMMin");
 
     List<Integer> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Integer> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -37,7 +37,7 @@ public class NMMin extends AbstractIntegerProblem {
       upperLimit.add(upperBound);
     });
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

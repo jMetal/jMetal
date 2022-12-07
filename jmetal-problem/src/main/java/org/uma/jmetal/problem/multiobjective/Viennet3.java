@@ -17,9 +17,9 @@ public class Viennet3 extends AbstractDoubleProblem {
   */
   public Viennet3() {
     int numberOfVariables = 2 ;
-    setNumberOfObjectives(3);
-    setNumberOfConstraints(0);
-    setName("Viennet3") ;
+    numberOfObjectives(3);
+    numberOfConstraints(0);
+    name("Viennet3") ;
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -29,13 +29,13 @@ public class Viennet3 extends AbstractDoubleProblem {
       upperLimit.add(3.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables() ;
+    int numberOfVariables = numberOfVariables() ;
 
     double[] f = new double[solution.objectives().length];
     double[] x = new double[numberOfVariables] ;

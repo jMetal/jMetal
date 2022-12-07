@@ -18,7 +18,7 @@ public class LIRCMOP11 extends LIRCMOP10 {
   /** Constructor */
   public LIRCMOP11(int numberOfVariables) {
     super(numberOfVariables);
-    setName("LIRCMOP11");
+    name("LIRCMOP11");
   }
 
   /** EvaluateConstraints() method */
@@ -26,7 +26,7 @@ public class LIRCMOP11 extends LIRCMOP10 {
     double f0 = solution.objectives()[0];
     double f1 = solution.objectives()[1];
     double N = 4.0, theta = 0.25 * Math.PI;
-    double[] constraint = new double[getNumberOfConstraints()];
+    double[] constraint = new double[numberOfConstraints()];
     constraint[0] =
         f0 * Math.sin(theta)
             + f1 * Math.cos(theta)

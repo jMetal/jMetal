@@ -24,8 +24,8 @@ public class Kursawe extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables of the problem
    */
   public Kursawe(Integer numberOfVariables) {
-    setNumberOfObjectives(2);
-    setName("Kursawe");
+    numberOfObjectives(2);
+    name("Kursawe");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -35,7 +35,7 @@ public class Kursawe extends AbstractDoubleProblem {
       upperLimit.add(5.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /**
@@ -43,7 +43,7 @@ public class Kursawe extends AbstractDoubleProblem {
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] fx = new double[solution.objectives().length];
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = new double[numberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i);
     }

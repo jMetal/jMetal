@@ -36,7 +36,7 @@ public class IntegerPolynomialMutationTest {
   public void shouldConstructorWithProblemAndDistributionIndexParametersAssignTheCorrectValues() {
     IntegerProblem problem = new FakeIntegerProblem(4, 2, 0) ;
     IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(problem, 10.0) ;
-    assertEquals(1.0/problem.getNumberOfVariables(), (Double) ReflectionTestUtils
+    assertEquals(1.0/problem.numberOfVariables(), (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
     assertEquals(10.0, (Double) ReflectionTestUtils
         .getField(mutation, "distributionIndex"), EPSILON) ;

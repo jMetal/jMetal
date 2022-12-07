@@ -37,8 +37,8 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
     int halfVectorSize = super.weights.length  / 2;
     int evenVectorsSize    = (super.weights.length%2==0) ? halfVectorSize : (halfVectorSize+1);
 
-    double [][] evenVectors = new double[evenVectorsSize][getProblem().getNumberOfObjectives()];
-    double [][] oddVectors = new double[halfVectorSize][getProblem().getNumberOfObjectives()];
+    double [][] evenVectors = new double[evenVectorsSize][getProblem().numberOfObjectives()];
+    double [][] oddVectors = new double[halfVectorSize][getProblem().numberOfObjectives()];
 
     int index = 0;
     for (int i = 0; i < super.weights.length; i = i + 2)

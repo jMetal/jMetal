@@ -121,7 +121,7 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 experimentProblem.getProblem(),
                 new SBXCrossover(1.0, 5),
-                new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                new PolynomialMutation(1.0 / experimentProblem.getProblem().numberOfVariables(),
                         10.0),
                 100)
                 .setMaxEvaluations(25000)
@@ -133,7 +133,7 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 experimentProblem.getProblem(),
                 new SBXCrossover(1.0, 20.0),
-                new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                new PolynomialMutation(1.0 / experimentProblem.getProblem().numberOfVariables(),
                         20.0),
                 100)
                 .setMaxEvaluations(25000)
@@ -144,7 +144,7 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 experimentProblem.getProblem(), new SBXCrossover(1.0, 40.0),
-                new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                new PolynomialMutation(1.0 / experimentProblem.getProblem().numberOfVariables(),
                         40.0),
                 100)
                 .setMaxEvaluations(25000)
@@ -155,7 +155,7 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 experimentProblem.getProblem(), new SBXCrossover(1.0, 80.0),
-                new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                new PolynomialMutation(1.0 / experimentProblem.getProblem().numberOfVariables(),
                         80.0),
                 100)
                 .setMaxEvaluations(25000)

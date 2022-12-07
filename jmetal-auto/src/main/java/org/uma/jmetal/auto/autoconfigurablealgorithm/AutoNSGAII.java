@@ -152,7 +152,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
-        problem.getNumberOfVariables());
+        problem.numberOfVariables());
 
     offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1,
         400);

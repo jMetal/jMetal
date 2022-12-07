@@ -22,8 +22,8 @@ public class NIntegerMin extends AbstractIntegerProblem {
   /** Constructor */
   public NIntegerMin(int numberOfVariables, int n, int lowerBound, int upperBound)  {
     valueN = n ;
-    setNumberOfObjectives(1);
-    setName("NIntegerMin");
+    numberOfObjectives(1);
+    name("NIntegerMin");
 
     List<Integer> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Integer> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -33,7 +33,7 @@ public class NIntegerMin extends AbstractIntegerProblem {
       upperLimit.add(upperBound);
     });
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

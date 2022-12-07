@@ -17,9 +17,9 @@ public class CEC2005Problem extends AbstractDoubleProblem {
 
   /** Constructor */
   public CEC2005Problem(int problemID, int numberOfVariables) {
-    setNumberOfObjectives(1);
-    setNumberOfConstraints(0) ;
-    setName("CEC2005");
+    numberOfObjectives(1);
+    numberOfConstraints(0) ;
+    name("CEC2005");
 
     Benchmark cec2005ProblemFactory = new Benchmark();
     testFunction = cec2005ProblemFactory.testFunctionFactory(problemID, numberOfVariables);
@@ -81,18 +81,18 @@ public class CEC2005Problem extends AbstractDoubleProblem {
         throw new JMetalException("Invalid problem value");
     }
 
-    for (int i = 0; i < this.getNumberOfVariables(); i++) {
+    for (int i = 0; i < this.numberOfVariables(); i++) {
       lowerLimit.add(llimit);
       upperLimit.add(ulimit);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables() ;
+    int numberOfVariables = numberOfVariables() ;
 
     double[] x = new double[numberOfVariables] ;
 

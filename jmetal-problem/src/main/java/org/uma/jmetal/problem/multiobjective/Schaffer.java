@@ -12,8 +12,8 @@ public class Schaffer extends AbstractDoubleProblem {
   /** Constructor. Creates a default instance of problem Schaffer */
   public Schaffer() {
     int numberOfVariables = 1;
-    setNumberOfObjectives(2);
-    setName("Schaffer");
+    numberOfObjectives(2);
+    name("Schaffer");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -23,7 +23,7 @@ public class Schaffer extends AbstractDoubleProblem {
       upperLimit.add(100000.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

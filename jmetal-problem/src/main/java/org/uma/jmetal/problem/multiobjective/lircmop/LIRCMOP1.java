@@ -18,9 +18,9 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
   }
   /** Constructor */
   public LIRCMOP1(int numberOfVariables) {
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(2);
-    setName("LIRCMOP1");
+    numberOfObjectives(2);
+    numberOfConstraints(2);
+    name("LIRCMOP1");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -30,14 +30,14 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    double[] x = new double[numberOfVariables()];
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 
@@ -50,8 +50,8 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    double[] x = new double[numberOfVariables()];
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 
@@ -64,7 +64,7 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
 
   protected double g1(double[] x) {
     double result = 0.0;
-    for (int i = 2; i < getNumberOfVariables(); i += 2) {
+    for (int i = 2; i < numberOfVariables(); i += 2) {
       result += Math.pow(x[i] - Math.sin(0.5 * Math.PI * x[0]), 2.0);
     }
     return result;
@@ -72,7 +72,7 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
 
   protected double g2(double[] x) {
     double result = 0.0;
-    for (int i = 1; i < getNumberOfVariables(); i += 2) {
+    for (int i = 1; i < numberOfVariables(); i += 2) {
       result += Math.pow(x[i] - Math.cos(0.5 * Math.PI * x[0]), 2.0);
     }
 

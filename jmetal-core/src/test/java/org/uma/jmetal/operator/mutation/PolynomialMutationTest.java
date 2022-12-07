@@ -44,8 +44,8 @@ public class PolynomialMutationTest {
   @Test
   public void shouldConstructorWithProblemAndDistributionIndexParametersAssignTheCorrectValues() {
     DoubleProblem problem = new FakeDoubleProblem(4, 2, 0) ;
-    PolynomialMutation mutation = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 10.0) ;
-    assertEquals(1.0/problem.getNumberOfVariables(), (Double) ReflectionTestUtils
+    PolynomialMutation mutation = new PolynomialMutation(1.0/problem.numberOfVariables(), 10.0) ;
+    assertEquals(1.0/problem.numberOfVariables(), (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
     assertEquals(10.0, (Double) ReflectionTestUtils
         .getField(mutation, "distributionIndex"), EPSILON) ;

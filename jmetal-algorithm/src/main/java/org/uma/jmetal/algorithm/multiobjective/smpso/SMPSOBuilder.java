@@ -70,7 +70,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
 
     this.dominanceComparator = new DefaultDominanceComparator<>() ;
 
-    mutationOperator = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
+    mutationOperator = new PolynomialMutation(1.0/problem.numberOfVariables(), 20.0) ;
     evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
 
     this.variant = SMPSOVariant.SMPSO ;

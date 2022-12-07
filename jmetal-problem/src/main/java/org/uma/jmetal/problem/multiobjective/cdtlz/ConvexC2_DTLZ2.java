@@ -35,7 +35,7 @@ public class ConvexC2_DTLZ2 extends DTLZ2 {
   public ConvexC2_DTLZ2(int numberOfVariables, int numberOfObjectives) {
     super(numberOfVariables, numberOfObjectives);
 
-    setNumberOfConstraints(1);
+    numberOfConstraints(1);
   }
 
   @Override
@@ -47,7 +47,7 @@ public class ConvexC2_DTLZ2 extends DTLZ2 {
   }
 
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[getNumberOfConstraints()];
+    double[] constraint = new double[numberOfConstraints()];
 
     double sum = 0;
     for (int i = 0; i < solution.objectives().length; i++) {
@@ -63,7 +63,7 @@ public class ConvexC2_DTLZ2 extends DTLZ2 {
 
     constraint[0] = sum - Math.pow(rValue.get(solution.objectives().length), 2.0);
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

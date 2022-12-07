@@ -28,9 +28,9 @@ public class MaF04 extends AbstractDoubleProblem {
    */
   public MaF04(Integer numberOfVariables,
       Integer numberOfObjectives) {
-    setNumberOfObjectives(numberOfObjectives);
-    setNumberOfConstraints(0);
-    setName("MaF04") ;
+    numberOfObjectives(numberOfObjectives);
+    numberOfConstraints(0);
+    name("MaF04") ;
 
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
@@ -40,7 +40,7 @@ public class MaF04 extends AbstractDoubleProblem {
       upper.add(1.0);
     });
 
-    setVariableBounds(lower, upper);
+    variableBounds(lower, upper);
 
     //other constants during the whole process once M&D are defined
     double[] c4 = new double[numberOfObjectives];

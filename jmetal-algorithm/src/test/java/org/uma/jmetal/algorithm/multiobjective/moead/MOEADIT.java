@@ -32,7 +32,7 @@ public class MOEADIT {
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
             DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
         mutationDistributionIndex);
@@ -66,7 +66,7 @@ public class MOEADIT {
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
             DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
         mutationDistributionIndex);
@@ -110,7 +110,7 @@ public class MOEADIT {
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
             DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
             mutationDistributionIndex);

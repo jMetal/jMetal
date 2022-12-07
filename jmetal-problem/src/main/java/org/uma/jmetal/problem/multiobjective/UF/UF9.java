@@ -25,9 +25,9 @@ public class UF9 extends AbstractDoubleProblem {
   * @param numberOfVariables Number of variables.
   */
   public UF9(int numberOfVariables, double epsilon) {
-    setNumberOfObjectives(3) ;
-    setNumberOfConstraints(0) ;
-    setName("UF9") ;
+    numberOfObjectives(3) ;
+    numberOfConstraints(0) ;
+    name("UF9") ;
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -38,18 +38,18 @@ public class UF9 extends AbstractDoubleProblem {
     upperLimit.add(1.0);
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    for (int i = 2; i < getNumberOfVariables(); i++) {
+    for (int i = 2; i < numberOfVariables(); i++) {
       lowerLimit.add(-2.0);
       upperLimit.add(2.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = new double[numberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i) ;
     }
@@ -59,8 +59,8 @@ public class UF9 extends AbstractDoubleProblem {
 		sum1   = sum2 = sum3 = 0.0;
 		count1 = count2 = count3 = 0;
     
-    for (int j = 3 ; j <= getNumberOfVariables(); j++) {
-			yj = x[j-1] - 2.0*x[1]*Math.sin(2.0*Math.PI*x[0]+j*Math.PI/ getNumberOfVariables());
+    for (int j = 3 ; j <= numberOfVariables(); j++) {
+			yj = x[j-1] - 2.0*x[1]*Math.sin(2.0*Math.PI*x[0]+j*Math.PI/ numberOfVariables());
 			if(j % 3 == 1) {
 				sum1  += yj*yj;
 				count1++;

@@ -11,22 +11,22 @@ public class Binh2 extends AbstractDoubleProblem {
 
   /** Constructor Creates a default instance of the Binh2 problem */
   public Binh2() {
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(2);
-    setName("Binh2");
+    numberOfObjectives(2);
+    numberOfConstraints(2);
+    name("Binh2");
 
     List<Double> lowerLimit = Arrays.asList(0.0, 0.0);
     List<Double> upperLimit = Arrays.asList(5.0, 3.0);
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] fx = new double[solution.objectives().length];
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    double[] x = new double[numberOfVariables()];
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 

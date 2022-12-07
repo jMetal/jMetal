@@ -24,22 +24,22 @@ class AbstractDoubleProblemTest {
 
   @Test
   void constructorCreatesADefaultConfiguredProblemInstance() {
-    assertThat(problem.getNumberOfObjectives()).isZero() ;
-    assertThat(problem.getNumberOfConstraints()).isZero() ;
-    assertThatThrownBy(() -> problem.getNumberOfVariables()).isInstanceOf(NullPointerException.class) ;
+    assertThat(problem.numberOfObjectives()).isZero() ;
+    assertThat(problem.numberOfConstraints()).isZero() ;
+    assertThatThrownBy(() -> problem.numberOfVariables()).isInstanceOf(NullPointerException.class) ;
   }
 
   @Test
   void setVariableBoundsWorkProperly() {
-    problem.setVariableBounds(List.of(1.0,2.0,3.0), List.of(2.0,3.0,4.0));
+    problem.variableBounds(List.of(1.0,2.0,3.0), List.of(2.0,3.0,4.0));
 
-    assertThat(problem.getVariableBounds()).hasSize(3) ;
-    assertThat(problem.getNumberOfVariables()).isEqualTo(3) ;
+    assertThat(problem.variableBounds()).hasSize(3) ;
+    assertThat(problem.numberOfVariables()).isEqualTo(3) ;
   }
 
   @Test
   void createSolutionProducesAValidInstance() {
-    problem.setVariableBounds(List.of(1.0,2.0,3.0), List.of(2.0,3.0,4.0));
+    problem.variableBounds(List.of(1.0,2.0,3.0), List.of(2.0,3.0,4.0));
 
     DoubleSolution solution = problem.createSolution() ;
     assertThat(solution.variables()).hasSize(3) ;

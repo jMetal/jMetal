@@ -33,7 +33,7 @@ public class WFG4 extends WFG {
    */
   public WFG4(Integer k, Integer l, Integer m) {
     super(k, l, m);
-    setName("WFG4");
+    name("WFG4");
 
     s = new int[m];
     for (int i = 0; i < m; i++) {
@@ -113,14 +113,14 @@ public class WFG4 extends WFG {
    * @throws JMetalException
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    float[] variables = new float[this.getNumberOfVariables()];
-    double[] x = new double[getNumberOfVariables()];
+    float[] variables = new float[this.numberOfVariables()];
+    double[] x = new double[numberOfVariables()];
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables(); i++) {
       variables[i] = (float) x[i] ;
     }
 

@@ -16,9 +16,9 @@ public class Tanaka extends AbstractDoubleProblem {
    */
   public Tanaka() {
     int numberOfVariables = 2 ;
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(2);
-    setName("Tanaka") ;
+    numberOfObjectives(2);
+    numberOfConstraints(2);
+    name("Tanaka") ;
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -28,7 +28,7 @@ public class Tanaka extends AbstractDoubleProblem {
       upperLimit.add(Math.PI);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   @Override
@@ -42,7 +42,7 @@ public class Tanaka extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution)  {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double[] constraint = new double[this.numberOfConstraints()];
 
     double x1 = solution.variables().get(0) ;
     double x2 = solution.variables().get(1) ;
@@ -50,7 +50,7 @@ public class Tanaka extends AbstractDoubleProblem {
     constraint[0] = (x1 * x1 + x2 * x2 - 1.0 - 0.1 * Math.cos(16.0 * Math.atan(x1 / x2)));
     constraint[1] = -2.0 * ((x1 - 0.5) * (x1 - 0.5) + (x2 - 0.5) * (x2 - 0.5) - 0.5);
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

@@ -36,7 +36,7 @@ public class GenerationalGeneticAlgorithmStringMatchingRunner {
 
     crossover = new NullCrossover<>();
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     mutation = new CharSequenceRandomMutation(mutationProbability, problem.getAlphabet());
 
     selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());

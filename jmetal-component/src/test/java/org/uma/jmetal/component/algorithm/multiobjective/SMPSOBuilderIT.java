@@ -66,7 +66,7 @@ class SMPSOBuilderIT {
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 

@@ -62,14 +62,14 @@ public class MOEADDEBuilder {
 
     WeightVectorNeighborhood<DoubleSolution> neighborhood = null;
 
-    if (problem.getNumberOfObjectives() == 2) {
+    if (problem.numberOfObjectives() == 2) {
       neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
     } else {
       try {
         neighborhood =
             new WeightVectorNeighborhood<>(
                 populationSize,
-                problem.getNumberOfObjectives(),
+                problem.numberOfObjectives(),
                 neighborhoodSize,
                 weightVectorDirectory);
       } catch (FileNotFoundException exception) {

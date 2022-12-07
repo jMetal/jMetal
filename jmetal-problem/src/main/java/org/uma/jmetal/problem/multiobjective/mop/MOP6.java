@@ -28,8 +28,8 @@ public class MOP6 extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables.
    */
   public MOP6(Integer numberOfVariables) {
-    setNumberOfObjectives(3);
-    setName("MOP6");
+    numberOfObjectives(3);
+    name("MOP6");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -39,7 +39,7 @@ public class MOP6 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

@@ -18,8 +18,8 @@ public class Sphere extends AbstractDoubleProblem {
 
   /** Constructor */
   public Sphere(Integer numberOfVariables) {
-    setNumberOfObjectives(1);
-    setName("Sphere");
+    numberOfObjectives(1);
+    name("Sphere");
 
     List<Double> lowerLimit = new ArrayList<>() ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -29,7 +29,7 @@ public class Sphere extends AbstractDoubleProblem {
       upperLimit.add(5.12);
     });
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

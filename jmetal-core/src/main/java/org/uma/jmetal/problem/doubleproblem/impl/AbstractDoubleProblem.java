@@ -21,33 +21,39 @@ public abstract class AbstractDoubleProblem implements DoubleProblem {
   protected int numberOfObjectives ;
   protected int numberOfConstraints;
   protected String name ;
+
   @Override
-  public int getNumberOfVariables() {
+  public int numberOfVariables() {
     return bounds.size() ;
   }
+
   @Override
-  public int getNumberOfObjectives() {
+  public int numberOfObjectives() {
     return numberOfObjectives ;
   }
 
-  public void setNumberOfObjectives(int numberOfObjectives) {
-    this.numberOfObjectives = numberOfObjectives ;
-  }
-  public void setNumberOfConstraints(int numberOfConstraints) {
-    this.numberOfConstraints = numberOfConstraints ;
-  }
   @Override
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
-  }
-  @Override
-  public int getNumberOfConstraints() {
+  public int numberOfConstraints() {
     return numberOfConstraints ;
   }
-  public void setVariableBounds(List<Double> lowerBounds, List<Double> upperBounds) {
+
+  public void numberOfObjectives(int numberOfObjectives) {
+    this.numberOfObjectives = numberOfObjectives ;
+  }
+
+  public void numberOfConstraints(int numberOfConstraints) {
+    this.numberOfConstraints = numberOfConstraints ;
+  }
+
+  @Override
+  public String name() {
+    return name;
+  }
+  public void name(String name) {
+    this.name = name;
+  }
+
+  public void variableBounds(List<Double> lowerBounds, List<Double> upperBounds) {
     Check.notNull(lowerBounds);
     Check.notNull(upperBounds);
     Check.that(
@@ -61,10 +67,10 @@ public abstract class AbstractDoubleProblem implements DoubleProblem {
   }
   @Override
   public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(bounds, getNumberOfObjectives(), getNumberOfConstraints());
+    return new DefaultDoubleSolution(bounds, numberOfObjectives(), numberOfConstraints());
   }
   @Override
-  public List<Bounds<Double>> getVariableBounds() {
+  public List<Bounds<Double>> variableBounds() {
     return bounds;
   }
 }

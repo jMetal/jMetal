@@ -6,17 +6,14 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
-import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
+import org.uma.jmetal.problem.binaryproblem.impl.FakeBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
@@ -57,7 +54,7 @@ public class SinglePointCrossoverTest {
 
   @Test (expected = InvalidConditionException.class)
   public void shouldExecuteFailIfTheListContainsOnlyOneSolution() {
-    MockBinaryProblem problem = new MockBinaryProblem(1) ;
+    var problem = new FakeBinaryProblem(1, BITS_OF_MOCKED_BINARY_PROBLEM) ;
     SinglePointCrossover crossover = new SinglePointCrossover(0.1) ;
     ArrayList<BinarySolution> solutions = new ArrayList<>(1) ;
     solutions.add(problem.createSolution()) ;
@@ -67,7 +64,7 @@ public class SinglePointCrossoverTest {
 
   @Test (expected = InvalidConditionException.class)
   public void shouldExecuteFailIfTheListContainsMoreThanTwoSolutions() {
-    MockBinaryProblem problem = new MockBinaryProblem(1) ;
+    var problem = new FakeBinaryProblem(1, BITS_OF_MOCKED_BINARY_PROBLEM) ;
     SinglePointCrossover crossover = new SinglePointCrossover(0.1) ;
     ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
     solutions.add(problem.createSolution()) ;
@@ -88,7 +85,7 @@ public class SinglePointCrossoverTest {
     Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.02) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
-    BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
+    BinaryProblem problem = new FakeBinaryProblem(numberOfVariables, 4) ;
     ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
@@ -117,7 +114,7 @@ public class SinglePointCrossoverTest {
     Mockito.when(pointRandomGenerator.getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1)).thenReturn(cuttingBit) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
-    BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
+    BinaryProblem problem = new FakeBinaryProblem(numberOfVariables, BITS_OF_MOCKED_BINARY_PROBLEM) ;
     ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
@@ -151,7 +148,7 @@ public class SinglePointCrossoverTest {
         BITS_OF_MOCKED_BINARY_PROBLEM - 1)).thenReturn(cuttingBit) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
-    BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
+    BinaryProblem problem = new FakeBinaryProblem(numberOfVariables, BITS_OF_MOCKED_BINARY_PROBLEM) ;
     ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
@@ -185,7 +182,7 @@ public class SinglePointCrossoverTest {
         BITS_OF_MOCKED_BINARY_PROBLEM - 1)).thenReturn(cuttingBit) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
-    BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
+    BinaryProblem problem = new FakeBinaryProblem(numberOfVariables, BITS_OF_MOCKED_BINARY_PROBLEM) ;
     ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
@@ -224,7 +221,7 @@ public class SinglePointCrossoverTest {
         getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM * numberOfVariables - 1)).thenReturn(cuttingBit) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
-    BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
+    BinaryProblem problem = new FakeBinaryProblem(numberOfVariables, BITS_OF_MOCKED_BINARY_PROBLEM) ;
     ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
@@ -262,7 +259,7 @@ public class SinglePointCrossoverTest {
         .thenReturn(cuttingBit) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
-    BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
+    BinaryProblem problem = new FakeBinaryProblem(numberOfVariables, BITS_OF_MOCKED_BINARY_PROBLEM) ;
     ArrayList<BinarySolution> solutions = new ArrayList<>(3) ;
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
@@ -290,49 +287,5 @@ public class SinglePointCrossoverTest {
     assertEquals(solutions.get(1).variables().get(2), resultSolutions.get(0).variables().get(2)) ;
     verify(crossoverRandomGenerator, times(1)).getRandomValue();
     verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM*3 - 1);
-  }
-
-  /**
-   * Mock class representing a binary problem
-   */
-  @SuppressWarnings("serial")
-  private class MockBinaryProblem extends AbstractBinaryProblem {
-    private int[] bitsPerVariable ;
-
-    /** Constructor */
-    public MockBinaryProblem(Integer numberOfVariables) {
-      setNumberOfVariables(numberOfVariables);
-      setNumberOfObjectives(2);
-
-      bitsPerVariable = new int[numberOfVariables] ;
-
-      for (int var = 0; var < numberOfVariables; var++) {
-        bitsPerVariable[var] = BITS_OF_MOCKED_BINARY_PROBLEM;
-      }
-    }
-
-    @Override
-    public int getBitsFromVariable(int index) {
-      return bitsPerVariable[index] ;
-    }
-
-    @Override
-    public List<Integer> getListOfBitsPerVariable() {
-      return Arrays.stream(bitsPerVariable).boxed().collect(Collectors.toList());
-    }
-
-    @Override
-    public BinarySolution createSolution() {
-      return new DefaultBinarySolution(getListOfBitsPerVariable(), getNumberOfObjectives()) ;
-    }
-
-    /** Evaluate() method */
-    @Override
-    public BinarySolution evaluate(BinarySolution solution) {
-      solution.objectives()[0] = 0;
-      solution.objectives()[1] = 1;
-
-      return solution ;
-    }
   }
 }

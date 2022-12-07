@@ -22,9 +22,9 @@ public class C2_DTLZ2 extends DTLZ2 {
   public C2_DTLZ2(int numberOfVariables, int numberOfObjectives) {
     super(numberOfVariables, numberOfObjectives) ;
 
-    setNumberOfConstraints(1);
+    numberOfConstraints(1);
 
-    if (getNumberOfObjectives() == 3) {
+    if (numberOfObjectives() == 3) {
       rValue = 0.4 ;
     } else {
       rValue = 0.5 ;

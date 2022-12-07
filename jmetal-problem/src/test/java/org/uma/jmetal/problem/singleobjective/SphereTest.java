@@ -12,15 +12,15 @@ class SphereTest {
     int variables = 3 ;
     DoubleProblem problem = new Sphere(3) ;
 
-    assertThat(problem.getNumberOfVariables()).isEqualTo(variables) ;
-    assertThat(problem.getNumberOfObjectives()).isEqualTo(1) ;
-    assertThat(problem.getNumberOfConstraints()).isZero() ;
-    assertThat(problem.getName()).isEqualTo("Sphere") ;
+    assertThat(problem.numberOfVariables()).isEqualTo(variables) ;
+    assertThat(problem.numberOfObjectives()).isEqualTo(1) ;
+    assertThat(problem.numberOfConstraints()).isZero() ;
+    assertThat(problem.name()).isEqualTo("Sphere") ;
 
-    assertThat(problem.getVariableBounds().get(0).getLowerBound()).isEqualTo(-5.12) ;
-    assertThat(problem.getVariableBounds().get(0).getUpperBound()).isEqualTo(5.12) ;
-    assertThat(problem.getVariableBounds().get(problem.getNumberOfVariables()-1).getLowerBound()).isEqualTo(-5.12) ;
-    assertThat(problem.getVariableBounds().get(problem.getNumberOfVariables()-1).getUpperBound()).isEqualTo(5.12) ;
+    assertThat(problem.variableBounds().get(0).getLowerBound()).isEqualTo(-5.12) ;
+    assertThat(problem.variableBounds().get(0).getUpperBound()).isEqualTo(5.12) ;
+    assertThat(problem.variableBounds().get(problem.numberOfVariables()-1).getLowerBound()).isEqualTo(-5.12) ;
+    assertThat(problem.variableBounds().get(problem.numberOfVariables()-1).getUpperBound()).isEqualTo(5.12) ;
   }
 
   @Test

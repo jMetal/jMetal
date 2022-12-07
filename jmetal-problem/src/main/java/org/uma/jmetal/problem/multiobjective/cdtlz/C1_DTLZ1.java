@@ -21,7 +21,7 @@ public class C1_DTLZ1 extends DTLZ1 {
   public C1_DTLZ1(int numberOfVariables, int numberOfObjectives) {
     super(numberOfVariables, numberOfObjectives) ;
 
-    setNumberOfConstraints(1);
+    numberOfConstraints(1);
   }
 
   @Override

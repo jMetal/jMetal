@@ -18,8 +18,8 @@ public class LIRCMOP7 extends LIRCMOP5 {
   /** Constructor */
   public LIRCMOP7(int numberOfVariables) {
     super(numberOfVariables);
-    setNumberOfConstraints(2);
-    setName("LIRCMOP7");
+    numberOfConstraints(2);
+    name("LIRCMOP7");
   }
 
   /** EvaluateConstraints() method */
@@ -32,7 +32,7 @@ public class LIRCMOP7 extends LIRCMOP5 {
     double[] yOffset = new double[] {1.2, 2.25, 3.5};
     double f1 = solution.objectives()[0];
     double f2 = solution.objectives()[1];
-    double[] constraint = new double[getNumberOfConstraints()];
+    double[] constraint = new double[numberOfConstraints()];
     for (int i = 0; i < xOffset.length; i++) {
       constraint[i] =
           Math.pow(

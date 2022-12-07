@@ -27,7 +27,7 @@ public class LSMOP9 extends AbstractLSMOP {
 
   public LSMOP9(int nk, int numberOfVariables, int numberOfObjectives) throws JMetalException {
     super(nk, numberOfVariables, numberOfObjectives);
-    setName("LSMOP9");
+    name("LSMOP9");
   }
 
 
@@ -43,25 +43,25 @@ public class LSMOP9 extends AbstractLSMOP {
 
   @Override
   protected List<Double> evaluate(List<Double> variables) {
-    double[] G = new double[getNumberOfObjectives()];
+    double[] G = new double[numberOfObjectives()];
 
-    for (int i = getNumberOfObjectives(); i <= getNumberOfVariables(); i++) {
-      double aux = (1.0 + Math.cos((double) i / (double) getNumberOfVariables() * Math.PI / 2.0))
+    for (int i = numberOfObjectives(); i <= numberOfVariables(); i++) {
+      double aux = (1.0 + Math.cos((double) i / (double) numberOfVariables() * Math.PI / 2.0))
           * variables.get(i - 1);
       aux = aux - variables.get(0) * 10;
       variables.set(i - 1, aux);
     }
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (int i = 0; i < numberOfObjectives(); i++) {
       G[i] = 0.0;
     }
 
-    for (int i = 1; i <= getNumberOfObjectives(); i += 2) {
+    for (int i = 1; i <= numberOfObjectives(); i += 2) {
       for (int j = 1; j <= this.nk; j++) {
 
-        List<Double> x = new ArrayList<>(getNumberOfVariables());
-        for (int k = len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1;
-            k <= len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1);
+        List<Double> x = new ArrayList<>(numberOfVariables());
+        for (int k = len.get(i - 1) + numberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1;
+            k <= len.get(i - 1) + numberOfObjectives() - 1 + j * subLen.get(i - 1);
             k++) {
           x.add(variables.get(k - 1));
         }
@@ -69,13 +69,13 @@ public class LSMOP9 extends AbstractLSMOP {
       }
     }
 
-    for (int i = 2; i <= getNumberOfObjectives(); i += 2) {
+    for (int i = 2; i <= numberOfObjectives(); i += 2) {
       for (int j = 1; j <= this.nk; j++) {
 
-        List<Double> x = new ArrayList<>(getNumberOfVariables());
+        List<Double> x = new ArrayList<>(numberOfVariables());
 
-        for (int k = len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1;
-            k <= len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1);
+        for (int k = len.get(i - 1) + numberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1;
+            k <= len.get(i - 1) + numberOfObjectives() - 1 + j * subLen.get(i - 1);
             k++) {
           x.add(variables.get(k - 1));
         }
@@ -89,17 +89,17 @@ public class LSMOP9 extends AbstractLSMOP {
     }
     cofficientG = 1 + cofficientG;
 
-    List<Double> y = new ArrayList<>(getNumberOfObjectives());
-    for (int i = 0; i < getNumberOfObjectives() - 1; i++) {
+    List<Double> y = new ArrayList<>(numberOfObjectives());
+    for (int i = 0; i < numberOfObjectives() - 1; i++) {
       y.add(variables.get(i));
     }
 
     double sum = 0.0;
-    for (int i = 1; i <= getNumberOfObjectives() - 1; i++) {
+    for (int i = 1; i <= numberOfObjectives() - 1; i++) {
       sum += y.get(i - 1) / (1.0 + cofficientG) * (1.0 + Math.sin(3.0 * Math.PI * y.get(i - 1)));
     }
 
-    y.add((1.0 + cofficientG) * (getNumberOfObjectives() - sum));
+    y.add((1.0 + cofficientG) * (numberOfObjectives() - sum));
     return y;
   }
 }

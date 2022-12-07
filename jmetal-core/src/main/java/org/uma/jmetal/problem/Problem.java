@@ -11,10 +11,10 @@ import java.io.Serializable;
  * @param <S> Encoding
  */
 public interface Problem<S> extends Serializable {
-  int getNumberOfVariables() ;
-  int getNumberOfObjectives() ;
-  int getNumberOfConstraints() ;
-  String getName() ;
+  int numberOfVariables() ;
+  int numberOfObjectives() ;
+  int numberOfConstraints() ;
+  String name() ;
 
   /**
    * This method receives a solution, evaluates it, and returns the evaluated solution.

@@ -53,7 +53,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     super(problem, algorithm);
     this.considerationProbability = considerationProbability;
     this.tolerance = tolerance;
-    numberOfObjectives=problem.getNumberOfObjectives();
+    numberOfObjectives=problem.numberOfObjectives();
     this.random = JMetalRandom.getInstance();
     this.maxEvaluations = maxEvaluations;
     this.rankingCoeficient = rankingCoeficient;
@@ -73,8 +73,8 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
   private  void  initialiceRankingCoeficient(){
     rankingCoeficient = new ArrayList<>();
-    for (int i = 0; i < problem.getNumberOfObjectives() ; i++) {
-      rankingCoeficient.add(1.0/problem.getNumberOfObjectives());
+    for (int i = 0; i < problem.numberOfObjectives() ; i++) {
+      rankingCoeficient.add(1.0/problem.numberOfObjectives());
     }
   }
 
@@ -89,7 +89,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     if(problem instanceof DoubleProblem){
       DoubleProblem aux =(DoubleProblem) problem;
       for (int i = 0; i < numberOfObjectives ; i++) {
-        Bounds<?> bounds = aux.getVariableBounds().get(i);
+        Bounds<?> bounds = aux.variableBounds().get(i);
         idealOjectiveVector.add(((Number) bounds.getLowerBound()).doubleValue());
         nadirObjectiveVector.add(((Number) bounds.getUpperBound()).doubleValue());
       }

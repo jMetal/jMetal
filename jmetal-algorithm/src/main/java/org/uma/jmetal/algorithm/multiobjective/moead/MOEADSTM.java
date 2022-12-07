@@ -148,13 +148,13 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     List<Integer> selected = new ArrayList<Integer>();
     List<Integer> candidate = new ArrayList<Integer>();
 
-    for (int k = 0; k < problem.getNumberOfObjectives(); k++) {
+    for (int k = 0; k < problem.numberOfObjectives(); k++) {
       // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL
       // (NOT SORTED!!!!)
       selected.add(k);
     }
 
-    for (int n = problem.getNumberOfObjectives(); n < populationSize; n++) {
+    for (int n = problem.numberOfObjectives(); n < populationSize; n++) {
       // set of unselected weights
       candidate.add(n);
     }
@@ -319,17 +319,17 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     double scale;
     double distance;
 
-    double[] vecInd = new double[problem.getNumberOfObjectives()];
-    double[] vecProj = new double[problem.getNumberOfObjectives()];
+    double[] vecInd = new double[problem.numberOfObjectives()];
+    double[] vecProj = new double[problem.numberOfObjectives()];
 
     // vecInd has been normalized to the range [0,1]
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.numberOfObjectives(); i++) {
       vecInd[i] = (individual.objectives()[i] - idealPoint.getValue(i)) /
           (nadirPoint.getValue(i) - idealPoint.getValue(i));
     }
 
     scale = innerproduct(vecInd, lambda) / innerproduct(lambda, lambda);
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.numberOfObjectives(); i++) {
       vecProj[i] = vecInd[i] - scale * lambda[i];
     }
 
@@ -346,16 +346,16 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     double distance;
     double distanceSum = 0.0;
 
-    double[] vecInd = new double[problem.getNumberOfObjectives()];
-    double[] normalizedObj = new double[problem.getNumberOfObjectives()];
+    double[] vecInd = new double[problem.numberOfObjectives()];
+    double[] normalizedObj = new double[problem.numberOfObjectives()];
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.numberOfObjectives(); i++) {
       distanceSum += individual.objectives()[i];
     }
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.numberOfObjectives(); i++) {
       normalizedObj[i] = individual.objectives()[i] / distanceSum;
     }
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.numberOfObjectives(); i++) {
       vecInd[i] = normalizedObj[i] - lambda[i];
     }
 
@@ -370,7 +370,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   public double norm_vector(double[] z) {
     double sum = 0;
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.numberOfObjectives(); i++) {
       sum += z[i] * z[i];
     }
 

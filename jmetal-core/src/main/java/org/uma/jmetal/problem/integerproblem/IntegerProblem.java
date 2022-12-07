@@ -11,5 +11,5 @@ import org.uma.jmetal.util.bounds.Bounds;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface IntegerProblem extends Problem<IntegerSolution> {
-  List<Bounds<Integer>> getVariableBounds() ;
+  List<Bounds<Integer>> variableBounds() ;
 }

@@ -22,7 +22,7 @@ public class ZDT6 extends ZDT1 {
    */
   public ZDT6(Integer numberOfVariables) {
     super(numberOfVariables);
-    setName("ZDT6");
+    name("ZDT6");
   }
 
   /** Evaluate() method */

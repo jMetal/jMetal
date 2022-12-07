@@ -54,7 +54,7 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
     double f = 0.5 ;
     crossover = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 

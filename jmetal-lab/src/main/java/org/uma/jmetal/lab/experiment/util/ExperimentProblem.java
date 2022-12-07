@@ -16,11 +16,11 @@ public class ExperimentProblem<S extends Solution<?>> {
   public ExperimentProblem(Problem<S> problem, String tag) {
     this.problem = problem;
     this.tag = tag;
-    this.referenceFront = this.problem.getName() + ".csv";
+    this.referenceFront = this.problem.name() + ".csv";
   }
 
   public ExperimentProblem(Problem<S> problem) {
-    this(problem,problem.getName());
+    this(problem,problem.name());
   }
 
   public ExperimentProblem<S> setReferenceFront(String referenceFront) {

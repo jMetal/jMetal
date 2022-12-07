@@ -18,21 +18,21 @@ public class RE61 extends AbstractDoubleProblem {
 
   /** Constructor */
   public RE61() {
-    setNumberOfObjectives(6);
-    setNumberOfConstraints(0);
-    setName("RE61");
+    numberOfObjectives(6);
+    numberOfConstraints(0);
+    name("RE61");
 
     List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);
     List<Double> upperLimit = List.of(0.45, 0.10, 0.10);
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) x[i] = solution.variables().get(i);
+    double[] x = new double[numberOfVariables()];
+    for (int i = 0; i < numberOfVariables(); i++) x[i] = solution.variables().get(i);
 
     solution.objectives()[0] = 106780.37 * (x[1] + x[2]) + 61704.67;
     solution.objectives()[1] = 3000 * x[0];

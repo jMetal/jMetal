@@ -54,7 +54,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
       String pathWeights) {
     super(problem, maxIterations, crossover, mutation, selection, evaluator, pathWeights);
 
-    this.history = new MOMBI2History<>(problem.getNumberOfObjectives());
+    this.history = new MOMBI2History<>(problem.numberOfObjectives());
   }
 
   protected void updateMax(List<S> population) {
@@ -76,7 +76,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
   public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
     this.maxs =
         new ArrayList<>(
-            Collections.nCopies(getProblem().getNumberOfObjectives(), Double.NEGATIVE_INFINITY));
+            Collections.nCopies(getProblem().numberOfObjectives(), Double.NEGATIVE_INFINITY));
     this.normalizer = new Normalizer(this.getReferencePoint(), maxs);
     ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(pathWeights);
     aux.setNormalizer(this.normalizer);
@@ -88,7 +88,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
   public void updateReferencePoint(List<S> population) {
     List<Double> iterationMaxs = new ArrayList<>(maxs.size());
 
-    for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {
+    for (int i = 0; i < this.getProblem().numberOfObjectives(); i++) {
       iterationMaxs.add(Double.NEGATIVE_INFINITY);
     }
 
@@ -108,10 +108,10 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 
     if (maxVariance > alpha) {
       Double maxInNadir = this.getMax(this.maxs);
-      for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++)
+      for (int i = 0; i < this.getProblem().numberOfObjectives(); i++)
         this.maxs.set(i, maxInNadir);
     } else {
-      for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {
+      for (int i = 0; i < this.getProblem().numberOfObjectives(); i++) {
         if (Math.abs(maxs.get(i) - this.getReferencePoint().get(i)) < this.epsilon) {
           Double maxInMaxs = this.getMax(this.maxs);
           this.maxs.set(i, maxInMaxs);

@@ -14,13 +14,27 @@ public class StringMatching extends CharSequenceProblem {
   public StringMatching(String targetString, String alphabet) {
     this.targetString = targetString;
     this.alphabet = alphabet.toCharArray();
-
-    setNumberOfVariables(targetString.length());
-    setNumberOfObjectives(1);
-    setNumberOfConstraints(0);
-    setName("String Match");
   }
 
+  @Override
+  public int numberOfVariables() {
+    return targetString.length() ;
+  }
+
+  @Override
+  public int numberOfObjectives() {
+    return 1 ;
+  }
+
+  @Override
+  public int numberOfConstraints() {
+    return 0 ;
+  }
+
+  @Override
+  public String name() {
+    return "String Match" ;
+  }
   public StringMatching(String targetString) {
     this(
         targetString,
@@ -28,7 +42,7 @@ public class StringMatching extends CharSequenceProblem {
   }
 
   @Override
-  public int getLength() {
+  public int length() {
     return targetString.length();
   }
 
@@ -51,7 +65,7 @@ public class StringMatching extends CharSequenceProblem {
 
   @Override
   public CharSequenceSolution createSolution() {
-    CharSequenceSolution solution = new CharSequenceSolution(targetString.length(), getNumberOfObjectives()) ;
+    CharSequenceSolution solution = new CharSequenceSolution(targetString.length(), numberOfObjectives()) ;
     for (int i = 0 ; i < targetString.length(); i++) {
       solution.variables().set(i, alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length-1)]);
     }

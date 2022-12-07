@@ -63,50 +63,50 @@ public class ComposableDoubleProblem implements DoubleProblem {
     return this;
   }
 
-  public ComposableDoubleProblem setName(String name) {
+  public ComposableDoubleProblem name(String name) {
     this.name = name;
 
     return this;
   }
 
   @Override
-  public int getNumberOfVariables() {
+  public int numberOfVariables() {
     return bounds.size();
   }
 
   @Override
-  public int getNumberOfObjectives() {
+  public int numberOfObjectives() {
     return objectiveFunctions.size();
   }
 
   @Override
-  public int getNumberOfConstraints() {
+  public int numberOfConstraints() {
     return constraints.size();
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return name;
   }
 
   @Override
   public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(bounds, getNumberOfObjectives(), getNumberOfConstraints());
+    return new DefaultDoubleSolution(bounds, numberOfObjectives(), numberOfConstraints());
   }
 
   @Override
-  public List<Bounds<Double>> getVariableBounds() {
+  public List<Bounds<Double>> variableBounds() {
     return bounds;
   }
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    Double[] vars = solution.variables().toArray(new Double[getNumberOfVariables()]);
+    Double[] vars = solution.variables().toArray(new Double[numberOfVariables()]);
 
-    IntStream.range(0, getNumberOfObjectives())
+    IntStream.range(0, numberOfObjectives())
         .forEach(i -> solution.objectives()[i] =  objectiveFunctions.get(i).apply(vars));
 
-    IntStream.range(0, getNumberOfConstraints())
+    IntStream.range(0, numberOfConstraints())
         .forEach(i -> solution.constraints()[i] =  constraints.get(i).apply(vars));
 
     return solution ;

@@ -6,14 +6,14 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
- * Implementation of {@link DoubleProblem} that does nothing. Intended to be used in unit tests.
+ * Fake implementation of {@link DoubleProblem} that does nothing. Intended to be used in unit tests.
  */
 @SuppressWarnings("serial")
 public class FakeDoubleProblem extends AbstractDoubleProblem {
   public FakeDoubleProblem(int numberOfVariables, int numberOfObjectives,
       int numberOfConstraints) {
-    setNumberOfObjectives(numberOfObjectives);
-    setNumberOfConstraints(numberOfConstraints);
+    numberOfObjectives(numberOfObjectives);
+    numberOfConstraints(numberOfConstraints);
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -23,7 +23,7 @@ public class FakeDoubleProblem extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   public FakeDoubleProblem() {

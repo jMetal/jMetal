@@ -20,7 +20,7 @@ public class DefaultIntegerPermutationSolutionTest {
     PermutationSolution<Integer> solution = problem.createSolution();
 
     List<Integer> values = new ArrayList<>();
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+    for (int i = 0; i < problem.numberOfVariables(); i++) {
       values.add(solution.variables().get(i));
     }
 
@@ -50,8 +50,8 @@ public class DefaultIntegerPermutationSolutionTest {
     }
 
     @Override
-    public int getLength() {
-      return getNumberOfVariables();
+    public int length() {
+      return numberOfVariables();
     }
   }
 }

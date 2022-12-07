@@ -15,9 +15,9 @@ public class Rosenbrock extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables of the problem
    */
   public Rosenbrock(Integer numberOfVariables) {
-    setNumberOfObjectives(1);
-    setNumberOfConstraints(0) ;
-    setName("Rosenbrock");
+    numberOfObjectives(1);
+    numberOfConstraints(0) ;
+    name("Rosenbrock");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -27,13 +27,13 @@ public class Rosenbrock extends AbstractDoubleProblem {
       upperLimit.add(5.12);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables() ;
+    int numberOfVariables = numberOfVariables() ;
 
     double[] x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i))
         .toArray();

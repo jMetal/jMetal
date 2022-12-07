@@ -18,8 +18,8 @@ public class FDA5 extends FDA implements Serializable {
   public FDA5(Integer numberOfVariables, Integer numberOfObjectives)
       throws JMetalException {
     super();
-    setNumberOfObjectives(numberOfObjectives);
-    setName("FDA5");
+    numberOfObjectives(numberOfObjectives);
+    name("FDA5");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -29,7 +29,7 @@ public class FDA5 extends FDA implements Serializable {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   @Override

@@ -53,7 +53,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
 
     BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<>(100) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationProbability = 1.0 / problem.numberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 

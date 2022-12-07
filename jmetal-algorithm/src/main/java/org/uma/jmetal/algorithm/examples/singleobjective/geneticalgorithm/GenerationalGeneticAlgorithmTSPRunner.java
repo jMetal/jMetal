@@ -39,7 +39,7 @@ public class GenerationalGeneticAlgorithmTSPRunner {
 
     crossover = new PMXCrossover(0.9) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationProbability = 1.0 / problem.numberOfVariables() ;
     mutation = new PermutationSwapMutation<Integer>(mutationProbability) ;
 
     selection = new BinaryTournamentSelection<PermutationSolution<Integer>>(new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());

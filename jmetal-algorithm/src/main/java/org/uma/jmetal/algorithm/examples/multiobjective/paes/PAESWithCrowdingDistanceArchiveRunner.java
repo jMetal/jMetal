@@ -43,7 +43,7 @@ public class PAESWithCrowdingDistanceArchiveRunner extends AbstractAlgorithmRunn
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     MutationOperator<DoubleSolution> mutation =
-        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
+        new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
 
     PAES<DoubleSolution> algorithm =
         new PAES<>(

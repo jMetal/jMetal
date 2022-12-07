@@ -22,9 +22,9 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
 
   /** Constructor */
   public LIRCMOP5(int numberOfVariables) {
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(2);
-    setName("LIRCMOP5");
+    numberOfObjectives(2);
+    numberOfConstraints(2);
+    name("LIRCMOP5");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -34,14 +34,14 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    double[] x = new double[numberOfVariables()];
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 
@@ -61,7 +61,7 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
     double[] yOffset = new double[] {1.6, 2.5};
     double f1 = solution.objectives()[0];
     double f2 = solution.objectives()[1];
-    double[] constraint = new double[getNumberOfConstraints()];
+    double[] constraint = new double[numberOfConstraints()];
     for (int i = 0; i < xOffset.length; i++) {
       constraint[i] =
           Math.pow(

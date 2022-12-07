@@ -34,8 +34,8 @@ public class CF6 extends AbstractDoubleProblem {
    * @param numberOfObjectives Number of objective functions
    */
   public CF6(Integer numberOfVariables, Integer numberOfObjectives) {
-    setNumberOfObjectives(numberOfObjectives);
-    setName("CF6");
+    numberOfObjectives(numberOfObjectives);
+    name("CF6");
 
     if (numberOfObjectives <= 3) {
       k = numberOfObjectives - 1; // k=1,2,...,m-1
@@ -45,7 +45,7 @@ public class CF6 extends AbstractDoubleProblem {
       k = 3;
     }
 
-    setNumberOfConstraints(2 * k + 2);
+    numberOfConstraints(2 * k + 2);
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -53,7 +53,7 @@ public class CF6 extends AbstractDoubleProblem {
     IntStream.range(0, numberOfVariables).forEach(i -> lowerLimit.add(0.0 + 1e-10));
     IntStream.range(0, numberOfVariables).forEach(i -> upperLimit.add(1.0 - 1e-10));
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /**
@@ -63,22 +63,22 @@ public class CF6 extends AbstractDoubleProblem {
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = VectorUtils.toArray(solution.variables());
-    double[] f = new double[getNumberOfObjectives()];
-    double[] constraint = new double[getNumberOfConstraints()];
+    double[] f = new double[numberOfObjectives()];
+    double[] constraint = new double[numberOfConstraints()];
 
     /* ----------------------Evaluate objectives (begin)--------------------------*/
-    double[] sx = new double[getNumberOfObjectives()]; // Cumulative squared sum
+    double[] sx = new double[numberOfObjectives()]; // Cumulative squared sum
 
     // Step 1. Compute squredSum Sx
     double squredSum = 0.0;
-    for (int i = getNumberOfObjectives() - 1; i >= 0; i--) {
+    for (int i = numberOfObjectives() - 1; i >= 0; i--) {
       squredSum = squredSum + x[i] * x[i];
       sx[i] = squredSum;
     }
 
     // Step 2. Compute THETA_
-    double[] theta = new double[getNumberOfObjectives() - 1];
-    for (int i = 0; i < getNumberOfObjectives() - 1; i++) {
+    double[] theta = new double[numberOfObjectives() - 1];
+    for (int i = 0; i < numberOfObjectives() - 1; i++) {
       theta[i] = 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i]);
     }
 
@@ -89,7 +89,7 @@ public class CF6 extends AbstractDoubleProblem {
     // Compute h function. Here is Sphere function
     double optX = 0.2;
     double h = 0.0;
-    for (int i = getNumberOfObjectives(); i < getNumberOfVariables(); i++) {
+    for (int i = numberOfObjectives(); i < numberOfVariables(); i++) {
       h = h + ((x[i] - optX) * (x[i] - optX));
     }
 
@@ -98,8 +98,8 @@ public class CF6 extends AbstractDoubleProblem {
     // Step 4. Specify PF shape: Mixed
     double sumProd = 1.0;
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      if (i != getNumberOfObjectives() - 1) {
+    for (int i = 0; i < numberOfObjectives(); i++) {
+      if (i != numberOfObjectives() - 1) {
         f[i] = 1 - sumProd * Math.cos(Math.PI / 2.0 * theta[i]);
         sumProd *= Math.sin(Math.PI / 2.0 * theta[i]);
       } else {
@@ -112,7 +112,7 @@ public class CF6 extends AbstractDoubleProblem {
     f[0] = theta[0] - (Math.cos(2 * Math.PI * A * theta[0] + Math.PI / 2.0)) / (2 * A * Math.PI);
 
     // Step 5. Set objectives
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (int i = 0; i < numberOfObjectives(); i++) {
       solution.objectives()[i] = (1 + t) * f[i];
     }
     /* ----------------------Evaluate objectives (end)--------------------------*/
@@ -130,7 +130,7 @@ public class CF6 extends AbstractDoubleProblem {
     }
 
     // Set constraints
-    IntStream.range(0, getNumberOfConstraints())
+    IntStream.range(0, numberOfConstraints())
         .forEach(i -> solution.constraints()[i] = constraint[i]);
     /* ----------------------Evaluate constraints (end)--------------------------*/
     return solution;

@@ -34,13 +34,13 @@ public class NSGAIIBuilderTest {
   @SuppressWarnings("unchecked")
   @Before public void startup() {
     problem = mock(Problem.class);
-    when(problem.getNumberOfVariables()).thenReturn(NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM);
+    when(problem.numberOfVariables()).thenReturn(NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationProbability = 1.0 / problem.numberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 

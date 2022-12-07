@@ -29,7 +29,7 @@ public class NSGAIIBinaryProblemExample {
     BinaryProblem problem = new OneZeroMax(256) ;
 
     var  crossover = new SinglePointCrossover(0.9);
-    var mutation = new BitFlipMutation(1.0 / problem.getTotalNumberOfBits());
+    var mutation = new BitFlipMutation(1.0 / problem.totalNumberOfBits());
 
     int populationSize = 100;
     int offspringPopulationSize = 100;

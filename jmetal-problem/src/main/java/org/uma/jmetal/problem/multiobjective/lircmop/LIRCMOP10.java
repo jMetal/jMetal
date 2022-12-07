@@ -20,14 +20,14 @@ public class LIRCMOP10 extends LIRCMOP8 {
   /** Constructor */
   public LIRCMOP10(int numberOfVariables) {
     super(numberOfVariables);
-    setName("LIRCMOP10");
+    name("LIRCMOP10");
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    double[] x = new double[numberOfVariables()];
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 
@@ -44,7 +44,7 @@ public class LIRCMOP10 extends LIRCMOP8 {
     double f0 = solution.objectives()[0];
     double f1 = solution.objectives()[1];
     double N = 4.0, theta = 0.25 * Math.PI;
-    double[] constraint = new double[getNumberOfConstraints()];
+    double[] constraint = new double[numberOfConstraints()];
     constraint[0] =
         f0 * Math.sin(theta)
             + f1 * Math.cos(theta)

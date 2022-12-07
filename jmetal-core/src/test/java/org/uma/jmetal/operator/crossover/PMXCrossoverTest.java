@@ -29,12 +29,12 @@ public class PMXCrossoverTest {
 			}
 			
 			@Override
-			public int getNumberOfVariables() {
+			public int numberOfVariables() {
 				return 10;
 			}
 
 			@Override
-			public int getLength() {
+			public int length() {
 				return 10;
 			}
 

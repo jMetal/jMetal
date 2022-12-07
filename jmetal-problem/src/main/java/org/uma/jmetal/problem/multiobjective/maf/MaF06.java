@@ -27,9 +27,9 @@ public class MaF06 extends AbstractDoubleProblem {
    */
   public MaF06(Integer numberOfVariables,
       Integer numberOfObjectives) {
-    setNumberOfObjectives(numberOfObjectives);
-    setNumberOfConstraints(0);
-    setName("MaF06");
+    numberOfObjectives(numberOfObjectives);
+    numberOfConstraints(0);
+    name("MaF06");
 
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
@@ -39,7 +39,7 @@ public class MaF06 extends AbstractDoubleProblem {
       upper.add(1.0);
     });
 
-    setVariableBounds(lower, upper);
+    variableBounds(lower, upper);
   }
 
   /**

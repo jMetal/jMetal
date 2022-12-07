@@ -221,7 +221,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   private void initializeInternalParameters() {
 
     // number of objective variables/problem dimension
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    int numberOfVariables = getProblem().numberOfVariables();
 
     // objective variables initial point
     // TODO: Initialize the mean in a better way
@@ -324,7 +324,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private void updateInternalParameters() {
 
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    int numberOfVariables = getProblem().numberOfVariables();
 
     double[] oldDistributionMean = new double[numberOfVariables];
     System.arraycopy( distributionMean, 0, oldDistributionMean, 0, numberOfVariables );
@@ -354,7 +354,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private void updateDistributionMean() {
 
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    int numberOfVariables = getProblem().numberOfVariables();
 
     for (int i = 0; i < numberOfVariables; i++) {
       distributionMean[i] = 0.;
@@ -368,7 +368,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private int updateEvolutionPaths(double[] oldDistributionMean) {
 
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    int numberOfVariables = getProblem().numberOfVariables();
 
     double[] artmp = new double[numberOfVariables];
     for (int i = 0; i < numberOfVariables; i++) {
@@ -406,7 +406,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private void adaptCovarianceMatrix(double[] oldDistributionMean, int hsig) {
 
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    int numberOfVariables = getProblem().numberOfVariables();
 
     for (int i = 0; i < numberOfVariables; i++) {
       for (int j = 0; j <= i; j++) {
@@ -433,7 +433,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   private void decomposeCovarianceMatrix() {
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    int numberOfVariables = getProblem().numberOfVariables();
 
     if (evaluations - eigenEval > lambda / (c1 + cmu) / numberOfVariables / 10) {
 
@@ -476,7 +476,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   private void checkEigenCorrectness() {
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    int numberOfVariables = getProblem().numberOfVariables();
 
     if (CMAESUtils.checkEigenSystem(numberOfVariables, c, diagD, b) > 0) {
       evaluations = maxEvaluations;
@@ -498,7 +498,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     DoubleSolution solution = getProblem().createSolution();
 
-    int numberOfVariables = getProblem().getNumberOfVariables();
+    int numberOfVariables = getProblem().numberOfVariables();
     double[] artmp = new double[numberOfVariables];
     double sum;
 
@@ -513,7 +513,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       }
 
       double value = distributionMean[i] + sigma * sum;
-      Bounds<Double> bounds = ((DoubleProblem)getProblem()).getVariableBounds().get(i) ;
+      Bounds<Double> bounds = ((DoubleProblem)getProblem()).variableBounds().get(i) ;
       value = bounds.restrict(value);
 
       solution.variables().set(i, value);

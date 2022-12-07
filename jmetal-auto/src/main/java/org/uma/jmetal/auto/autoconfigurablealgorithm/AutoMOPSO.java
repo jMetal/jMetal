@@ -227,7 +227,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
-        problem.getNumberOfVariables());
+        problem.numberOfVariables());
 
     // TODO: the upper bound  must be the swarm size
     IntegerParameter frequencyOfApplicationParameter = new IntegerParameter(
@@ -321,7 +321,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
 
     if (positionUpdateParameter.getValue().equals("defaultPositionUpdate")) {
       positionUpdateParameter.addNonConfigurableParameter("positionBounds",
-          ((DoubleProblem) problem).getVariableBounds());
+          ((DoubleProblem) problem).variableBounds());
     }
 
     PositionUpdate positionUpdate = positionUpdateParameter.getParameter();

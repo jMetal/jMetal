@@ -61,7 +61,7 @@ public class MOMBI2Runner extends AbstractAlgorithmRunner {
     double crossoverDistributionIndex = 20.0;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 

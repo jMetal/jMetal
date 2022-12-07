@@ -20,33 +20,33 @@ public abstract class AbstractIntegerProblem implements IntegerProblem{
   protected int numberOfConstraints;
   protected String name ;
   @Override
-  public int getNumberOfVariables() {
+  public int numberOfVariables() {
     return bounds.size() ;
   }
   @Override
-  public int getNumberOfObjectives() {
+  public int numberOfObjectives() {
     return numberOfObjectives ;
   }
 
-  public void setNumberOfObjectives(int numberOfObjectives) {
+  public void numberOfObjectives(int numberOfObjectives) {
     this.numberOfObjectives = numberOfObjectives ;
   }
-  public void setNumberOfConstraints(int numberOfConstraints) {
+  public void numberOfConstraints(int numberOfConstraints) {
     this.numberOfConstraints = numberOfConstraints ;
   }
   @Override
-  public String getName() {
+  public String name() {
     return name;
   }
-  public void setName(String name) {
+  public void name(String name) {
     this.name = name;
   }
   @Override
-  public int getNumberOfConstraints() {
+  public int numberOfConstraints() {
     return numberOfConstraints ;
   }
 
-  public void setVariableBounds(List<Integer> lowerBounds, List<Integer> upperBounds) {
+  public void variableBounds(List<Integer> lowerBounds, List<Integer> upperBounds) {
     Check.notNull(lowerBounds);
     Check.notNull(upperBounds);
     Check.that(
@@ -61,11 +61,11 @@ public abstract class AbstractIntegerProblem implements IntegerProblem{
 
   @Override
   public IntegerSolution createSolution() {
-    return new DefaultIntegerSolution(getVariableBounds(), getNumberOfObjectives(), getNumberOfConstraints());
+    return new DefaultIntegerSolution(variableBounds(), numberOfObjectives(), numberOfConstraints());
   }
 
   @Override
-  public List<Bounds<Integer>> getVariableBounds() {
+  public List<Bounds<Integer>> variableBounds() {
     return bounds;
   }
 }

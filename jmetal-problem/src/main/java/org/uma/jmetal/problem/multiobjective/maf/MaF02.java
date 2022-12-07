@@ -29,9 +29,9 @@ public class MaF02 extends AbstractDoubleProblem {
    */
   public MaF02(Integer numberOfVariables,
       Integer numberOfObjectives) {
-    setNumberOfObjectives(numberOfObjectives);
-    setNumberOfConstraints(0);
-    setName("MaF02");
+    numberOfObjectives(numberOfObjectives);
+    numberOfConstraints(0);
+    name("MaF02");
 
     const2 = (int) Math
         .floor((numberOfVariables - numberOfObjectives + 1) / (double) numberOfObjectives);
@@ -44,7 +44,7 @@ public class MaF02 extends AbstractDoubleProblem {
       upper.add(1.0);
     });
 
-    setVariableBounds(lower, upper);
+    variableBounds(lower, upper);
   }
 
   /**

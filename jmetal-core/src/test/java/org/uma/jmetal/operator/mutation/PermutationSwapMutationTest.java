@@ -48,12 +48,12 @@ public class PermutationSwapMutationTest {
 			}
 			
 			@Override
-			public int getNumberOfVariables() {
+			public int numberOfVariables() {
 				return 5;
 			}
 
 			@Override
-			public int getLength() {
+			public int length() {
 				return 5;
 			}
 			

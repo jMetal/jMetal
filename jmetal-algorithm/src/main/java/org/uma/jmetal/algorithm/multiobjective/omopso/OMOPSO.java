@@ -71,7 +71,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
     dominanceComparator = new DominanceWithConstraintsComparator<>();
     crowdingDistanceComparator = crowdingDistance.getComparator();
 
-    speed = new double[swarmSize][problem.getNumberOfVariables()];
+    speed = new double[swarmSize][problem.numberOfVariables()];
 
     randomGenerator = JMetalRandom.getInstance() ;
   }
@@ -180,7 +180,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
       DoubleSolution particle = swarm.get(i);
       for (int var = 0; var < particle.variables().size(); var++) {
         particle.variables().set(var, particle.variables().get(var) + speed[i][var]);
-        Bounds<Double> bounds = problem.getVariableBounds().get(var) ;
+        Bounds<Double> bounds = problem.variableBounds().get(var) ;
         Double lowerBound = bounds.getLowerBound() ;
         Double upperBound = bounds.getUpperBound() ;
         if (particle.variables().get(var) < lowerBound) {
@@ -208,7 +208,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   @Override protected void initializeVelocity(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+      for (int j = 0; j < problem.numberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
     }

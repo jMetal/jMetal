@@ -128,7 +128,7 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
       Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
           experimentProblem.getProblem(),
           new SBXCrossover(1.0, 10.0),
-          new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+          new PolynomialMutation(1.0 / experimentProblem.getProblem().numberOfVariables(),
               20.0))
           .build();
       algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
@@ -141,7 +141,7 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
       Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
           experimentProblem.getProblem(),
           new SBXCrossover(1.0, 20.0),
-          new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+          new PolynomialMutation(1.0 / experimentProblem.getProblem().numberOfVariables(),
               20.0),
           100)
           .build();
@@ -152,7 +152,7 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
   private static void smpso(List<ExperimentProblem<DoubleSolution>> problemList,
       List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run) {
     for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-      double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+      double mutationProbability = 1.0 / experimentProblem.getProblem().numberOfVariables();
       double mutationDistributionIndex = 20.0;
       Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
           (DoubleProblem) experimentProblem.getProblem(),

@@ -67,10 +67,10 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
 
     this.randomGenerator = JMetalRandom.getInstance();
 
-    deltaMax = new double[problem.getNumberOfVariables()];
-    deltaMin = new double[problem.getNumberOfVariables()];
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      Bounds<Double> bounds = problem.getVariableBounds().get(i);
+    deltaMax = new double[problem.numberOfVariables()];
+    deltaMin = new double[problem.numberOfVariables()];
+    for (int i = 0; i < problem.numberOfVariables(); i++) {
+      Bounds<Double> bounds = problem.variableBounds().get(i);
       deltaMax[i] = (bounds.getUpperBound() - bounds.getLowerBound()) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }

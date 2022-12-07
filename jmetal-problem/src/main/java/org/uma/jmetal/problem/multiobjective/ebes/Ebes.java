@@ -677,7 +677,7 @@ public class Ebes extends AbstractDoubleProblem {
     // CONTAR EN PENALIZACIÃƒÂ³N DE LA MATRIZ CA Y NO CN, CON ESTO
     // EVITO RECORRER INNECESARIAMENTE TODOS LOS NUDOS
 
-    setName("Ebes");
+    name("Ebes");
     numberOfEval_ = 1;
 
     try {
@@ -709,10 +709,10 @@ public class Ebes extends AbstractDoubleProblem {
 
     // total restrictions
     numberOfConstraints_ += numberOfConstraintsNodes_;
-    setNumberOfConstraints(numberOfConstraints_);
+    numberOfConstraints(numberOfConstraints_);
 
     // amount objectives
-    setNumberOfObjectives(OF_.length);
+    numberOfObjectives(OF_.length);
 
     // problem data print
     System.out.println("Structure");
@@ -721,9 +721,9 @@ public class Ebes extends AbstractDoubleProblem {
     System.out.println("  Number of Bars: " + numberOfElements_);
     System.out.println("  Number of Groups: " + numberOfGroupElements_);
     System.out.println("Optimization multi-objective: ");
-    System.out.println("  Number of objective function: " + getNumberOfObjectives());
+    System.out.println("  Number of objective function: " + numberOfObjectives());
     String txt = "";
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (int i = 0; i < numberOfObjectives(); i++) {
       txt = txt + OF_[i] + " ";
     }
     System.out.println("  " + txt);
@@ -866,7 +866,7 @@ public class Ebes extends AbstractDoubleProblem {
       } // end if
     } // gr
 
-    setVariableBounds(
+    variableBounds(
         new ArrayList<Double>(Arrays.<Double>asList(lowerLimit_)),
         new ArrayList<Double>(Arrays.<Double>asList(upperLimit_)));
 
@@ -988,10 +988,10 @@ public class Ebes extends AbstractDoubleProblem {
    * @throws JMetalException
    */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
-    double[] x = new double[getNumberOfVariables()];
+    double[] constraint = new double[this.numberOfConstraints()];
+    double[] x = new double[numberOfVariables()];
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 
@@ -1310,7 +1310,7 @@ public class Ebes extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

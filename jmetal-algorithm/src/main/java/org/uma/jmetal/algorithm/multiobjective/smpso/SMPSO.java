@@ -89,12 +89,12 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
     this.dominanceComparator = dominanceComparator;
     localBest = new GenericSolutionAttribute<DoubleSolution, DoubleSolution>();
-    speed = new double[swarmSize][problem.getNumberOfVariables()];
+    speed = new double[swarmSize][problem.numberOfVariables()];
 
-    deltaMax = new double[problem.getNumberOfVariables()];
-    deltaMin = new double[problem.getNumberOfVariables()];
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      Bounds<Double> bounds = problem.getVariableBounds().get(i) ;
+    deltaMax = new double[problem.numberOfVariables()];
+    deltaMin = new double[problem.numberOfVariables()];
+    for (int i = 0; i < problem.numberOfVariables(); i++) {
+      Bounds<Double> bounds = problem.variableBounds().get(i) ;
       deltaMax[i] = (bounds.getUpperBound() - bounds.getLowerBound()) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
@@ -151,7 +151,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   @Override
   protected void initializeVelocity(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+      for (int j = 0; j < problem.numberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
     }
@@ -200,7 +200,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       for (int j = 0; j < particle.variables().size(); j++) {
         particle.variables().set(j, particle.variables().get(j) + speed[i][j]);
 
-        Bounds<Double> bounds = problem.getVariableBounds().get(j) ;
+        Bounds<Double> bounds = problem.variableBounds().get(j) ;
         Double lowerBound = bounds.getLowerBound() ;
         Double upperBound = bounds.getUpperBound() ;
         if (particle.variables().get(j) < lowerBound) {

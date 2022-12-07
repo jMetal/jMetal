@@ -43,8 +43,8 @@ public abstract class WFG extends AbstractDoubleProblem {
     this.m = M;
 
     int numberOfVariables = this.k + this.l ;
-    setNumberOfObjectives(this.m);
-    setNumberOfConstraints(0);
+    numberOfObjectives(this.m);
+    numberOfConstraints(0);
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -54,7 +54,7 @@ public abstract class WFG extends AbstractDoubleProblem {
       upperLimit.add(2.0*(i+1));
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /**

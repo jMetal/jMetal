@@ -13,15 +13,15 @@ public class LIRCMOP2 extends LIRCMOP1 {
   /** Constructor */
   public LIRCMOP2() {
     super();
-    setName("LIRCMOP2");
+    name("LIRCMOP2");
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] fx = new double[solution.objectives().length];
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    double[] x = new double[numberOfVariables()];
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 

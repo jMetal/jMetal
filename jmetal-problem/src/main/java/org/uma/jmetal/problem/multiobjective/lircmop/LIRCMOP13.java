@@ -21,9 +21,9 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
   }
   /** Constructor */
   public LIRCMOP13(int numberOfVariables) {
-    setNumberOfObjectives(3);
-    setNumberOfConstraints(2);
-    setName("LIRCMOP13");
+    numberOfObjectives(3);
+    numberOfConstraints(2);
+    name("LIRCMOP13");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -33,14 +33,14 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    double[] x = new double[numberOfVariables()];
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 
@@ -54,7 +54,7 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[getNumberOfConstraints()];
+    double[] constraint = new double[numberOfConstraints()];
 
     double f = 0;
     for (int i = 0; i < solution.objectives().length; i++) {
@@ -69,7 +69,7 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
 
   protected double g1(double[] x) {
     double result = 0.0;
-    for (int i = 2; i < getNumberOfVariables(); i += 2) {
+    for (int i = 2; i < numberOfVariables(); i += 2) {
       result += 10 * Math.pow(x[i] - 0.5, 2.0);
     }
     return result;

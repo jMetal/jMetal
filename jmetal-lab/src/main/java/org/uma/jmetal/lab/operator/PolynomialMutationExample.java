@@ -78,7 +78,7 @@ public class PolynomialMutationExample {
   }
 
   private static double[][] classify(List<DoubleSolution> solutions, DoubleProblem problem, int granularity) {
-    Bounds<Double> bounds = problem.getVariableBounds().get(0);
+    Bounds<Double> bounds = problem.variableBounds().get(0);
     double grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity ;
     double[][] classifier = new double[granularity][] ;
     for (int i = 0 ; i < granularity; i++) {

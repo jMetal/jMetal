@@ -27,8 +27,8 @@ public class DTLZ1 extends AbstractDoubleProblem {
    * @param numberOfObjectives Number of objective functions
    */
   public DTLZ1(Integer numberOfVariables, Integer numberOfObjectives) throws JMetalException {
-    setNumberOfObjectives(numberOfObjectives);
-    setName("DTLZ1");
+    numberOfObjectives(numberOfObjectives);
+    name("DTLZ1");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -38,20 +38,20 @@ public class DTLZ1 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     });
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /**
    * Evaluate() method
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables();
+    int numberOfVariables = numberOfVariables();
     int numberOfObjectives = solution.objectives().length;
 
     double[] f = new double[numberOfObjectives];
     double[] x = new double[numberOfVariables];
 
-    int k = getNumberOfVariables() - solution.objectives().length + 1;
+    int k = numberOfVariables() - solution.objectives().length + 1;
 
     for (int i = 0; i < numberOfVariables; i++) {
       x[i] = solution.variables().get(i);

@@ -66,7 +66,7 @@ public class CDG extends AbstractCDG<DoubleSolution> {
     int maxGen = (int) (maxEvaluations / populationSize);
     int gen = 0;
     
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     
     double delta;
 
@@ -110,7 +110,7 @@ public class CDG extends AbstractCDG<DoubleSolution> {
       if(gen % 20 == 0)
     	  initializeNadirPoint();
 
-      if(problem.getNumberOfObjectives() == 3){
+      if(problem.numberOfObjectives() == 3){
           updateBorder();
     	  excludeBadSolution3();
     	  chooseSpecialPopulation();

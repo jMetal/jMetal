@@ -2,19 +2,20 @@ package org.uma.jmetal.problem.doubleproblem.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
 /**
- * Implementation of {@link org.uma.jmetal.problem.integerproblem.IntegerProblem} that does nothing. Intended to be used in unit tests.
+ * Fake implementation of {@link IntegerProblem}. Intended to be used in unit tests.
  */
 @SuppressWarnings("serial")
 public class FakeIntegerProblem extends AbstractIntegerProblem {
 
   public FakeIntegerProblem(int numberOfVariables, int numberOfObjectives,
       int numberOfConstraints) {
-    setNumberOfObjectives(numberOfObjectives);
-    setNumberOfConstraints(numberOfConstraints);
+    numberOfObjectives(numberOfObjectives);
+    numberOfConstraints(numberOfConstraints);
 
     List<Integer> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Integer> upperLimit = new ArrayList<>(numberOfVariables);
@@ -24,7 +25,7 @@ public class FakeIntegerProblem extends AbstractIntegerProblem {
       upperLimit.add(10);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   public FakeIntegerProblem() {

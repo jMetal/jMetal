@@ -11,14 +11,14 @@ public class Golinski extends AbstractDoubleProblem {
 
   /** Constructor. Creates a default instance of the Golinski problem. */
   public Golinski() {
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(11);
-    setName("Golinski");
+    numberOfObjectives(2);
+    numberOfConstraints(11);
+    name("Golinski");
 
     List<Double> lowerLimit = Arrays.asList(2.6, 0.7, 17.0, 7.3, 7.3, 2.9, 5.0);
     List<Double> upperLimit = Arrays.asList(3.6, 0.8, 28.0, 8.3, 8.3, 3.9, 5.5);
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -51,7 +51,7 @@ public class Golinski extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double[] constraint = new double[this.numberOfConstraints()];
     double x1, x2, x3, x4, x5, x6, x7;
 
     x1 = solution.variables().get(0);
@@ -79,7 +79,7 @@ public class Golinski extends AbstractDoubleProblem {
     double b = 1.575e8;
     constraint[10] = -(java.lang.Math.sqrt(a * a + b) / (0.1 * x7 * x7 * x7) - 1100.0);
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

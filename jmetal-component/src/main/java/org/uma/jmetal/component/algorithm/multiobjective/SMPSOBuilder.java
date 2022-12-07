@@ -84,10 +84,10 @@ public class SMPSOBuilder {
     double velocityChangeWhenLowerLimitIsReached = -1.0;
     double velocityChangeWhenUpperLimitIsReached = -1.0;
     positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
-        velocityChangeWhenUpperLimitIsReached, problem.getVariableBounds());
+        velocityChangeWhenUpperLimitIsReached, problem.variableBounds());
 
     int frequencyOfMutation = 6;
-    MutationOperator<DoubleSolution> mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
+    MutationOperator<DoubleSolution> mutationOperator = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0) ;
     perturbation = new FrequencySelectionMutationBasedPerturbation(mutationOperator, frequencyOfMutation);
     globalBestUpdate = new DefaultGlobalBestUpdate();
     localBestUpdate = new DefaultLocalBestUpdate(new DefaultDominanceComparator<>());

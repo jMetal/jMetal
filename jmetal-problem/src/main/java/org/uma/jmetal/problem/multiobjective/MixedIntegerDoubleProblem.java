@@ -3,7 +3,7 @@ package org.uma.jmetal.problem.multiobjective;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.uma.jmetal.problem.AbstractGenericProblem;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -20,7 +20,7 @@ import org.uma.jmetal.util.bounds.Bounds;
  * Objective 2: minimizing the sum of the distances of every variable to value M
  */
 @SuppressWarnings("serial")
-public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeSolution> {
+public class MixedIntegerDoubleProblem implements Problem<CompositeSolution> {
   private int valueN;
   private int valueM;
   private List<Bounds<Integer>> integerBounds;
@@ -40,9 +40,6 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
       int upperBound) {
     valueN = n;
     valueM = m;
-    setNumberOfVariables(2);
-    setNumberOfObjectives(2);
-    setName("MixedIntegerDoubleProblem");
 
     integerBounds = new ArrayList<>(numberOfIntegerVariables);
     doubleBounds = new ArrayList<>(numberOfDoubleVariables);
@@ -54,6 +51,26 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
     for (int i = 0; i < numberOfDoubleVariables; i++) {
       doubleBounds.add(Bounds.create((double) lowerBound, (double) upperBound));
     }
+  }
+
+  @Override
+  public int numberOfVariables() {
+    return 2 ;
+  }
+
+  @Override
+  public int numberOfObjectives() {
+    return 2 ;
+  }
+
+  @Override
+  public int numberOfConstraints() {
+    return 0;
+  }
+
+  @Override
+  public String name() {
+    return "MixedIntegerDoubleProblem";
   }
 
   /** Evaluate() method */
@@ -85,8 +102,8 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
 
   @Override
   public CompositeSolution createSolution() {
-    IntegerSolution integerSolution = new DefaultIntegerSolution(integerBounds, getNumberOfObjectives(), getNumberOfConstraints()) ;
-    DoubleSolution doubleSolution = new DefaultDoubleSolution(doubleBounds, getNumberOfObjectives(), getNumberOfConstraints()) ;
+    IntegerSolution integerSolution = new DefaultIntegerSolution(integerBounds, numberOfObjectives(), numberOfConstraints()) ;
+    DoubleSolution doubleSolution = new DefaultDoubleSolution(doubleBounds, numberOfObjectives(), numberOfConstraints()) ;
     return new CompositeSolution(Arrays.asList(integerSolution, doubleSolution));
   }
 }

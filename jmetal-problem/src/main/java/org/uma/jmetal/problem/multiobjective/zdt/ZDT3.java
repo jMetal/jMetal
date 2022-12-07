@@ -18,7 +18,7 @@ public class ZDT3 extends ZDT1 {
    */
   public ZDT3(Integer numberOfVariables) {
     super(numberOfVariables) ;
-    setName("ZDT3");
+    name("ZDT3");
   }
 
   /**

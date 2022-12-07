@@ -12,10 +12,10 @@ class RE31Test {
   public void shouldConstructorCreateAProblemWithTheRightProperties() {
     DoubleProblem problem = new RE31();
 
-    assertEquals(3, problem.getNumberOfVariables());
-    assertEquals(3, problem.getNumberOfObjectives());
-    assertEquals(0, problem.getNumberOfConstraints());
-    assertEquals("RE31", problem.getName());
+    assertEquals(3, problem.numberOfVariables());
+    assertEquals(3, problem.numberOfObjectives());
+    assertEquals(0, problem.numberOfConstraints());
+    assertEquals("RE31", problem.name());
   }
 
   @Test

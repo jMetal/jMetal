@@ -71,7 +71,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
 
     localBest = new DoubleSolution[swarmSize];
     neighborhoodBest = new DoubleSolution[swarmSize];
-    speed = new double[swarmSize][problem.getNumberOfVariables()];
+    speed = new double[swarmSize][problem.numberOfVariables()];
 
     positionInSwarm = new GenericSolutionAttribute<DoubleSolution, Integer>();
 
@@ -147,7 +147,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   public void initializeVelocity(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       DoubleSolution particle = swarm.get(i);
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+      for (int j = 0; j < problem.numberOfVariables(); j++) {
         Bounds<Double> bounds = particle.getBounds(j) ;
         speed[i][j] =
                 (randomGenerator.nextDouble(bounds.getLowerBound(), bounds.getUpperBound())
@@ -190,7 +190,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
       for (int var = 0; var < particle.variables().size(); var++) {
         particle.variables().set(var, particle.variables().get(var) + speed[i][var]);
 
-        Bounds<Double> bounds = problem.getVariableBounds().get(var) ;
+        Bounds<Double> bounds = problem.variableBounds().get(var) ;
         Double lowerBound = bounds.getLowerBound() ;
         Double upperBound = bounds.getUpperBound() ;
         if (particle.variables().get(var) < lowerBound) {

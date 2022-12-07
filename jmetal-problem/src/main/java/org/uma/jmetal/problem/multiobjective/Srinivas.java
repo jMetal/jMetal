@@ -13,9 +13,9 @@ public class Srinivas extends AbstractDoubleProblem {
   /** Constructor */
   public Srinivas() {
     int numberOfVariables = 2 ;
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(2);
-    setName("Srinivas");
+    numberOfObjectives(2);
+    numberOfConstraints(2);
+    name("Srinivas");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -25,7 +25,7 @@ public class Srinivas extends AbstractDoubleProblem {
       upperLimit.add(20.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -47,7 +47,7 @@ public class Srinivas extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double[] constraint = new double[this.numberOfConstraints()];
 
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
@@ -55,7 +55,7 @@ public class Srinivas extends AbstractDoubleProblem {
     constraint[0] = 1.0 - (x1 * x1 + x2 * x2) / 225.0;
     constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;
 
-    IntStream.range(0, getNumberOfConstraints())
+    IntStream.range(0, numberOfConstraints())
         .forEach(i -> solution.constraints()[i] = constraint[i]);
   }
 }

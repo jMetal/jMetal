@@ -29,7 +29,7 @@ public class LSMOP3 extends AbstractLSMOP1_4 {
 
   public LSMOP3(int nk, int numberOfVariables, int numberOfObjectives) throws JMetalException {
     super(nk, numberOfVariables, numberOfObjectives);
-    setName("LSMOP3");
+    name("LSMOP3");
   }
 
   @Override

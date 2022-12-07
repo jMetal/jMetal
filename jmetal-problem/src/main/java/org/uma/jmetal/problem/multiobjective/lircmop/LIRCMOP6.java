@@ -16,15 +16,15 @@ public class LIRCMOP6 extends LIRCMOP5 {
   /** Constructor */
   public LIRCMOP6(int numberOfVariables) {
     super(numberOfVariables);
-    setNumberOfConstraints(2);
-    setName("LIRCMOP6");
+    numberOfConstraints(2);
+    name("LIRCMOP6");
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    double[] x = new double[numberOfVariables()];
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 
@@ -45,7 +45,7 @@ public class LIRCMOP6 extends LIRCMOP5 {
     double[] yOffset = new double[] {1.8, 2.8};
     double f1 = solution.objectives()[0];
     double f2 = solution.objectives()[1];
-    double[] constraint = new double[getNumberOfConstraints()];
+    double[] constraint = new double[numberOfConstraints()];
     for (int i = 0; i < xOffset.length; i++) {
       constraint[i] =
           Math.pow(

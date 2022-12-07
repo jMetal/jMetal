@@ -12,15 +12,15 @@ class ZDT4Test {
     int defaultNumberOfVariables = 10 ;
     DoubleProblem problem = new ZDT4() ;
 
-    assertThat(problem.getNumberOfVariables()).isEqualTo(defaultNumberOfVariables) ;
-    assertThat(problem.getNumberOfObjectives()).isEqualTo(2) ;
-    assertThat(problem.getNumberOfConstraints()).isZero() ;
-    assertThat(problem.getName()).isEqualTo("ZDT4") ;
+    assertThat(problem.numberOfVariables()).isEqualTo(defaultNumberOfVariables) ;
+    assertThat(problem.numberOfObjectives()).isEqualTo(2) ;
+    assertThat(problem.numberOfConstraints()).isZero() ;
+    assertThat(problem.name()).isEqualTo("ZDT4") ;
 
-    assertThat(problem.getVariableBounds().get(0).getLowerBound()).isZero() ;
-    assertThat(problem.getVariableBounds().get(0).getUpperBound()).isEqualTo(1) ;
-    assertThat(problem.getVariableBounds().get(problem.getNumberOfVariables()-1).getLowerBound()).isEqualTo(-5.0) ;
-    assertThat(problem.getVariableBounds().get(problem.getNumberOfVariables()-1).getUpperBound()).isEqualTo(5.0) ;
+    assertThat(problem.variableBounds().get(0).getLowerBound()).isZero() ;
+    assertThat(problem.variableBounds().get(0).getUpperBound()).isEqualTo(1) ;
+    assertThat(problem.variableBounds().get(problem.numberOfVariables()-1).getLowerBound()).isEqualTo(-5.0) ;
+    assertThat(problem.variableBounds().get(problem.numberOfVariables()-1).getUpperBound()).isEqualTo(5.0) ;
   }
 
   @Test
@@ -28,15 +28,15 @@ class ZDT4Test {
     int numberOfVariables = 20 ;
     DoubleProblem problem = new ZDT4(numberOfVariables) ;
 
-    assertThat(problem.getNumberOfVariables()).isEqualTo(numberOfVariables) ;
-    assertThat(problem.getNumberOfObjectives()).isEqualTo(2) ;
-    assertThat(problem.getNumberOfConstraints()).isZero() ;
-    assertThat(problem.getName()).isEqualTo("ZDT4") ;
+    assertThat(problem.numberOfVariables()).isEqualTo(numberOfVariables) ;
+    assertThat(problem.numberOfObjectives()).isEqualTo(2) ;
+    assertThat(problem.numberOfConstraints()).isZero() ;
+    assertThat(problem.name()).isEqualTo("ZDT4") ;
 
-    assertThat(problem.getVariableBounds().get(0).getLowerBound()).isZero() ;
-    assertThat(problem.getVariableBounds().get(0).getUpperBound()).isEqualTo(1) ;
-    assertThat(problem.getVariableBounds().get(problem.getNumberOfVariables()-1).getLowerBound()).isEqualTo(-5.0) ;
-    assertThat(problem.getVariableBounds().get(problem.getNumberOfVariables()-1).getUpperBound()).isEqualTo(5.0) ;
+    assertThat(problem.variableBounds().get(0).getLowerBound()).isZero() ;
+    assertThat(problem.variableBounds().get(0).getUpperBound()).isEqualTo(1) ;
+    assertThat(problem.variableBounds().get(problem.numberOfVariables()-1).getLowerBound()).isEqualTo(-5.0) ;
+    assertThat(problem.variableBounds().get(problem.numberOfVariables()-1).getUpperBound()).isEqualTo(5.0) ;
   }
 
   @Test

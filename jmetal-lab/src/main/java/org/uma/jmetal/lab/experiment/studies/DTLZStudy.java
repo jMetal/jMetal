@@ -120,7 +120,7 @@ public class DTLZStudy {
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
 
       for (int i = 0; i < problemList.size(); i++) {
-        double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
+        double mutationProbability = 1.0 / problemList.get(i).getProblem().numberOfVariables();
         double mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                 (DoubleProblem) problemList.get(i).getProblem(),
@@ -137,7 +137,7 @@ public class DTLZStudy {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+                new PolynomialMutation(1.0 / problemList.get(i).getProblem().numberOfVariables(),
                         20.0),
                 100)
                 .build();
@@ -148,7 +148,7 @@ public class DTLZStudy {
         Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 10.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+                new PolynomialMutation(1.0 / problemList.get(i).getProblem().numberOfVariables(),
                         20.0))
                 .build();
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));

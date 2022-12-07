@@ -35,9 +35,9 @@ public class MaF09 extends AbstractDoubleProblem {
    */
   public MaF09(Integer numberOfVariables,
       Integer numberOfObjectives) {
-    setNumberOfObjectives(numberOfObjectives);
-    setNumberOfConstraints(0);
-    setName("MaF09");
+    numberOfObjectives(numberOfObjectives);
+    numberOfConstraints(0);
+    name("MaF09");
     M9 = numberOfObjectives;
 
     //other constants during the whole process once M&D are defined
@@ -130,7 +130,7 @@ public class MaF09 extends AbstractDoubleProblem {
       lower.add(-10000.0);
       upper.add(10000.0);
     });
-    setVariableBounds(lower, upper);
+    variableBounds(lower, upper);
   }
 
   /**
@@ -156,7 +156,7 @@ public class MaF09 extends AbstractDoubleProblem {
     while (infeasible) {
       //re-generate a random variable
       for (int i = 0; i < numberOfVariables_; i++) {
-        Bounds<Double> bounds = getVariableBounds().get(i) ;
+        Bounds<Double> bounds = variableBounds().get(i) ;
         x[i] = generV(bounds.getLowerBound(), bounds.getUpperBound());
         solution.variables().set(i, x[i]);
       }

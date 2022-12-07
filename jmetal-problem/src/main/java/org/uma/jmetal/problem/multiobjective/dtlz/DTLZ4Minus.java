@@ -22,7 +22,7 @@ public class DTLZ4Minus extends DTLZ4 {
    */
   public DTLZ4Minus(Integer numberOfVariables, Integer numberOfObjectives) {
     super(numberOfVariables, numberOfObjectives) ;
-    setName("DTLZ4Minus");
+    name("DTLZ4Minus");
   }
 
   /** Evaluate() method */

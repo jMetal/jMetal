@@ -13,14 +13,14 @@ public class LIRCMOP3 extends LIRCMOP1 {
   /** Constructor */
   public LIRCMOP3() {
     super();
-    setNumberOfConstraints(3);
-    setName("LIRCMOP3");
+    numberOfConstraints(3);
+    name("LIRCMOP3");
   }
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    double[] x = new double[numberOfVariables()];
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 

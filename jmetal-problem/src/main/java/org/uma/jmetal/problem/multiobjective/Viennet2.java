@@ -12,9 +12,9 @@ public class Viennet2 extends AbstractDoubleProblem {
   /** Constructor. Creates a default instance of the Viennet2 problem */
   public Viennet2() {
     int numberOfVariables = 2 ;
-    setNumberOfObjectives(3);
-    setNumberOfConstraints(0);
-    setName("Viennet2");
+    numberOfObjectives(3);
+    numberOfConstraints(0);
+    name("Viennet2");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -24,13 +24,13 @@ public class Viennet2 extends AbstractDoubleProblem {
       upperLimit.add(4.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables();
+    int numberOfVariables = numberOfVariables();
 
     double[] f = new double[solution.objectives().length];
     double[] x = new double[numberOfVariables];

@@ -19,8 +19,8 @@ public class ZDT1 extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables.
    */
   public ZDT1(Integer numberOfVariables) {
-    setNumberOfObjectives(2);
-    setName("ZDT1");
+    numberOfObjectives(2);
+    name("ZDT1");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -30,7 +30,7 @@ public class ZDT1 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

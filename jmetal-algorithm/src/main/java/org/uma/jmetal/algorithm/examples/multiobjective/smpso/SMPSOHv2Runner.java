@@ -63,7 +63,7 @@ public class SMPSOHv2Runner extends AbstractAlgorithmRunner {
     BoundedArchive<DoubleSolution> archive =
         new HypervolumeArchive<DoubleSolution>(100, new WFGHypervolume<DoubleSolution>()) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationProbability = 1.0 / problem.numberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 

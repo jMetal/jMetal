@@ -31,9 +31,9 @@ public class MOSARunner extends AbstractAlgorithmRunner {
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     MutationOperator<DoubleSolution> mutation =
-            new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
+            new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
 
-    BoundedArchive<DoubleSolution> archive = new GenericBoundedArchive<>(100, new GridDensityEstimator<>(5, problem.getNumberOfObjectives()));
+    BoundedArchive<DoubleSolution> archive = new GenericBoundedArchive<>(100, new GridDensityEstimator<>(5, problem.numberOfObjectives()));
     archive = new GenericBoundedArchive<>(100, new CrowdingDistanceDensityEstimator<>());
 
     MOSA<DoubleSolution> algorithm =

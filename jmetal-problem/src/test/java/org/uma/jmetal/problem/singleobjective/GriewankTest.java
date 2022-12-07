@@ -12,15 +12,15 @@ class GriewankTest {
     int variables = 3 ;
     DoubleProblem problem = new Griewank(3) ;
 
-    assertThat(problem.getNumberOfVariables()).isEqualTo(variables) ;
-    assertThat(problem.getNumberOfObjectives()).isEqualTo(1) ;
-    assertThat(problem.getNumberOfConstraints()).isZero() ;
-    assertThat(problem.getName()).isEqualTo("Griewank") ;
+    assertThat(problem.numberOfVariables()).isEqualTo(variables) ;
+    assertThat(problem.numberOfObjectives()).isEqualTo(1) ;
+    assertThat(problem.numberOfConstraints()).isZero() ;
+    assertThat(problem.name()).isEqualTo("Griewank") ;
 
-    assertThat(problem.getVariableBounds().get(0).getLowerBound()).isEqualTo(-600) ;
-    assertThat(problem.getVariableBounds().get(0).getUpperBound()).isEqualTo(600) ;
-    assertThat(problem.getVariableBounds().get(problem.getNumberOfVariables()-1).getLowerBound()).isEqualTo(-600) ;
-    assertThat(problem.getVariableBounds().get(problem.getNumberOfVariables()-1).getUpperBound()).isEqualTo(600) ;
+    assertThat(problem.variableBounds().get(0).getLowerBound()).isEqualTo(-600) ;
+    assertThat(problem.variableBounds().get(0).getUpperBound()).isEqualTo(600) ;
+    assertThat(problem.variableBounds().get(problem.numberOfVariables()-1).getLowerBound()).isEqualTo(-600) ;
+    assertThat(problem.variableBounds().get(problem.numberOfVariables()-1).getUpperBound()).isEqualTo(600) ;
   }
 
   @Test

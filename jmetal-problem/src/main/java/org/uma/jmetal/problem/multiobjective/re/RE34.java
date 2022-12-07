@@ -17,9 +17,9 @@ public class RE34 extends AbstractDoubleProblem {
   /** Constructor */
   public RE34() {
     int numberOfVariables = 5;
-    setNumberOfObjectives(3);
-    setNumberOfConstraints(0);
-    setName("RE34");
+    numberOfObjectives(3);
+    numberOfConstraints(0);
+    name("RE34");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -29,7 +29,7 @@ public class RE34 extends AbstractDoubleProblem {
       upperLimit.add(3.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

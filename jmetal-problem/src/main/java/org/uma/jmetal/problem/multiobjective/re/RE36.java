@@ -17,14 +17,14 @@ public class RE36 extends AbstractDoubleProblem {
 
   /** Constructor */
   public RE36() {
-    setNumberOfObjectives(3);
-    setNumberOfConstraints(0);
-    setName("RE36");
+    numberOfObjectives(3);
+    numberOfConstraints(0);
+    name("RE36");
 
     List<Double> lowerLimit = List.of(12.0, 12.0, 12.0, 12.0);
     List<Double> upperLimit = List.of(60.0, 60.0, 60.0, 60.0);
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

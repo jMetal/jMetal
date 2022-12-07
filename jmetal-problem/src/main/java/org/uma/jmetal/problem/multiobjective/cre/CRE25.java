@@ -16,14 +16,14 @@ public class CRE25 extends AbstractDoubleProblem {
 
   /** Constructor */
   public CRE25() {
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(1);
-    setName("CRE25");
+    numberOfObjectives(2);
+    numberOfConstraints(1);
+    name("CRE25");
 
     List<Double> lowerLimit = List.of(12.0, 12.0, 12.0, 12.0);
     List<Double> upperLimit = List.of(60.0, 60.0, 60.0, 60.0);
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

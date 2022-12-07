@@ -24,9 +24,9 @@ public class UF3 extends AbstractDoubleProblem {
   * @param numberOfVariables Number of variables.
   */
   public UF3(int numberOfVariables) {
-    setNumberOfObjectives(2) ;
-    setNumberOfConstraints(0) ;
-    setName("UF3") ;
+    numberOfObjectives(2) ;
+    numberOfConstraints(0) ;
+    name("UF3") ;
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -36,13 +36,13 @@ public class UF3 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = new double[numberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i) ;
     }
@@ -55,8 +55,8 @@ public class UF3 extends AbstractDoubleProblem {
  		prod1  = prod2  = 1.0;
 
     
-    for (int j = 2 ; j <= getNumberOfVariables(); j++) {
-			yj = x[j-1]-Math.pow(x[0],0.5*(1.0+3.0*(j-2.0)/(getNumberOfVariables()-2.0)));
+    for (int j = 2 ; j <= numberOfVariables(); j++) {
+			yj = x[j-1]-Math.pow(x[0],0.5*(1.0+3.0*(j-2.0)/(numberOfVariables()-2.0)));
 			pj = Math.cos(20.0*yj*Math.PI/Math.sqrt(j));
 			if (j % 2 == 0) {
 				sum2  += yj*yj;

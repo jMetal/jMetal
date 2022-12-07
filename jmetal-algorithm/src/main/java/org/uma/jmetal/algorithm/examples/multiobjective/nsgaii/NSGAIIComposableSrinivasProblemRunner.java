@@ -33,7 +33,7 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
     String referenceParetoFront = "resources/referenceFrontsCSV/Srinivas.csv" ;
 
     var problem = new ComposableDoubleProblem()
-        .setName("Srinivas")
+        .name("Srinivas")
         .addVariable(-20.0, 20.0)
         .addVariable(-20.0, 20.0)
         .addFunction((x) ->  2.0 + (x[0] - 2.0) * (x[0] - 2.0) + (x[1] - 1.0) * (x[1] - 1.0))
@@ -45,7 +45,7 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
     double crossoverDistributionIndex = 20.0 ;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationProbability = 1.0 / problem.numberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 

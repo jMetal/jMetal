@@ -11,10 +11,10 @@ class CRE22Test {
   public void shouldConstructorCreateAProblemWithTheRightProperties() {
     DoubleProblem problem = new CRE22();
 
-    assertEquals(4, problem.getNumberOfVariables());
-    assertEquals(2, problem.getNumberOfObjectives());
-    assertEquals(4, problem.getNumberOfConstraints());
-    assertEquals("CRE22", problem.getName());
+    assertEquals(4, problem.numberOfVariables());
+    assertEquals(2, problem.numberOfObjectives());
+    assertEquals(4, problem.numberOfConstraints());
+    assertEquals("CRE22", problem.name());
   }
 
   @Test

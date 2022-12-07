@@ -16,22 +16,22 @@ public class CRE51 extends AbstractDoubleProblem {
 
   /** Constructor */
   public CRE51() {
-    setNumberOfObjectives(5);
-    setNumberOfConstraints(7);
-    setName("CRE51");
+    numberOfObjectives(5);
+    numberOfConstraints(7);
+    name("CRE51");
 
     List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);
     List<Double> upperLimit = List.of(0.45, 0.10, 0.10);
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = new double[numberOfVariables()];
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables(); i++) {
       x[i] = solution.variables().get(i);
     }
 
@@ -48,7 +48,7 @@ public class CRE51 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution, double[] x) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double[] constraint = new double[this.numberOfConstraints()];
 
     constraint[0] = 1 - (0.00139 / (x[0] * x[1]) + 4.94 * x[2] - 0.08);
     constraint[1] = 1 - (0.000306 / (x[0] * x[1]) + 1.082 * x[2] - 0.0986);
@@ -58,7 +58,7 @@ public class CRE51 extends AbstractDoubleProblem {
     constraint[5] = 2000 - (0.417 * x[0] * x[1] + 1721.26 * x[2] - 136.54);
     constraint[6] = 550 - (0.164 / (x[0] * x[1]) + 631.13 * x[2] - 54.48);
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       if (constraint[i] < 0.0) {
         constraint[i] = -constraint[i];
       } else {
@@ -66,7 +66,7 @@ public class CRE51 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

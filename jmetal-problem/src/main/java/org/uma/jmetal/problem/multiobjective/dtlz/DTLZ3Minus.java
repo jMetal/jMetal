@@ -22,7 +22,7 @@ public class DTLZ3Minus extends DTLZ3 {
    */
   public DTLZ3Minus(Integer numberOfVariables, Integer numberOfObjectives) {
     super(numberOfVariables, numberOfObjectives) ;
-    setName("DTLZ3Minus");
+    name("DTLZ3Minus");
   }
 
   /** Evaluate() method */

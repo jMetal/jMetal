@@ -16,14 +16,14 @@ public class CRE32 extends AbstractDoubleProblem {
 
   /** Constructor */
   public CRE32() {
-    setNumberOfObjectives(3);
-    setNumberOfConstraints(9);
-    setName("CRE32");
+    numberOfObjectives(3);
+    numberOfConstraints(9);
+    name("CRE32");
 
     List<Double> lowerLimit = List.of(150.0, 20.0, 13.0, 10.0, 14.0, 0.63);
     List<Double> upperLimit = List.of(274.32, 32.31, 25.0, 11.71, 18.0, 0.75);
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -87,7 +87,7 @@ public class CRE32 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution, double DWT, double Fn) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double[] constraint = new double[this.numberOfConstraints()];
 
     double x_L = solution.variables().get(0);
     double x_B = solution.variables().get(1);
@@ -110,7 +110,7 @@ public class CRE32 extends AbstractDoubleProblem {
     double KG = 1.0 + 0.52 * x_D;
     constraint[8] = (KB + BMT - KG) - (0.07 * x_B);
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       if (constraint[i] < 0.0) {
         constraint[i] = -constraint[i];
       } else {
@@ -118,7 +118,7 @@ public class CRE32 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

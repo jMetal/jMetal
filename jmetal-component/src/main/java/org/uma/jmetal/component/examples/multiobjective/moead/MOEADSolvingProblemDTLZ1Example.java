@@ -44,7 +44,7 @@ public class MOEADSolvingProblemDTLZ1Example {
     double crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
@@ -92,7 +92,7 @@ public class MOEADSolvingProblemDTLZ1Example {
         SolutionListUtils.getMatrixWithObjectiveValues(population),
         VectorUtils.readVectors(referenceParetoFront, ","));
 
-    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.getName() + " (MOEA/D)");
+    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.name() + " (MOEA/D)");
     plot.plot();
   }
 }

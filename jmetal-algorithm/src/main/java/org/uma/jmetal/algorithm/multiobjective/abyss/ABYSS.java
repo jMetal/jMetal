@@ -91,10 +91,10 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
 
     randomGenerator = JMetalRandom.getInstance() ;
 
-    sumOfFrequencyValues       = new int[problem.getNumberOfVariables()] ;
-    sumOfReverseFrequencyValues = new int[problem.getNumberOfVariables()] ;
-    frequency       = new int[numberOfSubRanges][problem.getNumberOfVariables()] ;
-    reverseFrequency = new int[numberOfSubRanges][problem.getNumberOfVariables()] ;
+    sumOfFrequencyValues       = new int[problem.numberOfVariables()] ;
+    sumOfReverseFrequencyValues = new int[problem.numberOfVariables()] ;
+    frequency       = new int[numberOfSubRanges][problem.numberOfVariables()] ;
+    reverseFrequency = new int[numberOfSubRanges][problem.numberOfVariables()] ;
 
     densityEstimator = new StrenghtRawFitnessDensityEstimator<>(1) ;
     fitnessComparator = densityEstimator.getComparator();
@@ -129,7 +129,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     double value;
     int range;
 
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+    for (int i = 0; i < problem.numberOfVariables(); i++) {
       sumOfReverseFrequencyValues[i] = 0;
       for (int j = 0; j < numberOfSubRanges; j++) {
         reverseFrequency[j][i] = sumOfFrequencyValues[i] - frequency[j][i];
@@ -150,7 +150,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       frequency[range][i]++;
       sumOfFrequencyValues[i]++;
 
-      Bounds<Double> bounds = ((DoubleProblem)problem).getVariableBounds().get(i) ;
+      Bounds<Double> bounds = ((DoubleProblem)problem).variableBounds().get(i) ;
       Double lowerBound = bounds.getLowerBound() ;
       Double upperBound = bounds.getUpperBound() ;
       double low = lowerBound + range * (upperBound - lowerBound) / numberOfSubRanges ;

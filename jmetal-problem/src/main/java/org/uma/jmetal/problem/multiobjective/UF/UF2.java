@@ -24,9 +24,9 @@ public class UF2 extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables.
    */
   public UF2(int numberOfVariables) {
-    setNumberOfObjectives(2) ;
-    setNumberOfConstraints(0) ;
-    setName("UF2") ;
+    numberOfObjectives(2) ;
+    numberOfConstraints(0) ;
+    name("UF2") ;
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -38,13 +38,13 @@ public class UF2 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = new double[numberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i) ;
     }
@@ -54,18 +54,18 @@ public class UF2 extends AbstractDoubleProblem {
     sum1   = sum2   = 0.0;
     count1 = count2 = 0;
 
-    for (int j = 2 ; j <= getNumberOfVariables(); j++) {
+    for (int j = 2 ; j <= numberOfVariables(); j++) {
       if(j % 2 == 0) {
         yj = x[j-1] -
-            (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / getNumberOfVariables()) + 0.6 * x[0])*
-                Math.sin(6.0 * Math.PI* x[0] + j * Math.PI / getNumberOfVariables());
+            (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables()) + 0.6 * x[0])*
+                Math.sin(6.0 * Math.PI* x[0] + j * Math.PI / numberOfVariables());
         sum2 += yj*yj;
         count2++;
       } else {
 
         yj = x[j-1] -
-            (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / getNumberOfVariables()) + 0.6 * x[0])*
-                Math.cos(6.0 * Math.PI* x[0] + j * Math.PI / getNumberOfVariables());
+            (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables()) + 0.6 * x[0])*
+                Math.cos(6.0 * Math.PI* x[0] + j * Math.PI / numberOfVariables());
 
         sum1 += yj*yj;
         count1++;

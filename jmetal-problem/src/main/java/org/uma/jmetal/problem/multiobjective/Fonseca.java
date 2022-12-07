@@ -16,9 +16,9 @@ public class Fonseca extends AbstractDoubleProblem {
    */
   public Fonseca() {
     int numberOfVariables = 3;
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(0);
-    setName("Fonseca");
+    numberOfObjectives(2);
+    numberOfConstraints(0);
+    name("Fonseca");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -28,7 +28,7 @@ public class Fonseca extends AbstractDoubleProblem {
       upperLimit.add(4.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /**
@@ -36,7 +36,7 @@ public class Fonseca extends AbstractDoubleProblem {
    */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables();
+    int numberOfVariables = numberOfVariables();
 
     double[] f = new double[solution.objectives().length];
     double[] x = new double[numberOfVariables];

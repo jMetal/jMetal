@@ -27,9 +27,9 @@ public class MaF10 extends AbstractDoubleProblem {
    */
   public MaF10(Integer numberOfVariables,
       Integer numberOfObjectives) {
-    setNumberOfObjectives(numberOfObjectives);
-    setNumberOfConstraints(0);
-    setName("MaF10");
+    numberOfObjectives(numberOfObjectives);
+    numberOfConstraints(0);
+    name("MaF10");
     K10 = numberOfObjectives - 1;
 
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
@@ -40,7 +40,7 @@ public class MaF10 extends AbstractDoubleProblem {
       upper.add(2.0 * (i + 1));
     }
 
-    setVariableBounds(lower, upper);
+    variableBounds(lower, upper);
   }
 
   /**

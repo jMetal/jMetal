@@ -87,7 +87,7 @@ public class SPS2011VelocityUpdate implements VelocityUpdate {
 
       double radius = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(gravityCenter, particle);
 
-      double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRandomGenerator()).randSphere(problem.getNumberOfVariables());
+      double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRandomGenerator()).randSphere(problem.numberOfVariables());
 
       DoubleSolution randomParticle = problem.createSolution() ;
       for (int j = 0; j < particle.variables().size(); j++) {

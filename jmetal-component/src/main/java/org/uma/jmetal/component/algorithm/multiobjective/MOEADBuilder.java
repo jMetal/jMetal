@@ -57,14 +57,14 @@ public class MOEADBuilder<S extends Solution<?>> {
     WeightVectorNeighborhood<S> neighborhood = null;
     this.weightVectorDirectory = weightVectorDirectory ;
 
-    if (problem.getNumberOfObjectives() == 2) {
+    if (problem.numberOfObjectives() == 2) {
       neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
     } else {
       try {
         neighborhood =
             new WeightVectorNeighborhood<>(
                 populationSize,
-                problem.getNumberOfObjectives(),
+                problem.numberOfObjectives(),
                 neighborhoodSize,
                 this.weightVectorDirectory);
       } catch (FileNotFoundException exception) {

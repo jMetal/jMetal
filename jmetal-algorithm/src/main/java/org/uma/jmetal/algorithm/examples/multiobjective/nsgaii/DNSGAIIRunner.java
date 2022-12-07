@@ -42,7 +42,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     // mutation
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
@@ -57,7 +57,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
             .setSelectionOperator(selection).build();
 
     // reference vectors
-    double[][] referenceVectors = VectorFileUtils.readVectors("resources/weightVectorFiles/moead/W" + problem.getNumberOfObjectives() + "D_" + populationSize + ".dat");
+    double[][] referenceVectors = VectorFileUtils.readVectors("resources/weightVectorFiles/moead/W" + problem.numberOfObjectives() + "D_" + populationSize + ".dat");
     ((DNSGAII<DoubleSolution>) algorithm).setReferenceVectors(referenceVectors);
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();

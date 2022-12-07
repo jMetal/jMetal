@@ -64,7 +64,7 @@ public class SMPSOWithUnboundedArchiveExample {
         SolutionListUtils.getMatrixWithObjectiveValues(population),
         VectorUtils.readVectors(referenceParetoFront, ","));
 
-    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.getName() + " (NSGA-II)");
+    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.name() + " (NSGA-II)");
     plot.plot();
   }
 }

@@ -49,7 +49,7 @@ public class OMOPSORunner extends AbstractAlgorithmRunner {
 
     problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationProbability = 1.0 / problem.numberOfVariables() ;
 
     algorithm = new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<>())
         .setMaxIterations(250)

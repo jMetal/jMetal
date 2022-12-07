@@ -28,12 +28,12 @@ public class LZ09F7 extends AbstractDoubleProblem {
                 Integer dtype,
                 Integer ltype) throws JMetalException {
     int numberOfVariables = 10;
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(0);
-    setName("LZ09F7");
+    numberOfObjectives(2);
+    numberOfConstraints(0);
+    name("LZ09F7");
 
     lz09 = new LZ09(numberOfVariables,
-            getNumberOfObjectives(),
+            numberOfObjectives(),
             ptype,
             dtype,
             ltype);
@@ -46,15 +46,15 @@ public class LZ09F7 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    List<Double> x = new ArrayList<Double>(getNumberOfVariables());
+    List<Double> x = new ArrayList<Double>(numberOfVariables());
     List<Double> y = new ArrayList<Double>(solution.objectives().length);
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables(); i++) {
       x.add(solution.variables().get(i));
       y.add(0.0);
     }

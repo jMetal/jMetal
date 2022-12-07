@@ -50,7 +50,7 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
 
   /** Constructor */
   public CDGMutation(DoubleProblem problem, double delta) {
-    this(1.0/problem.getNumberOfVariables(), delta) ;
+    this(1.0/problem.numberOfVariables(), delta) ;
   }
 
   /** Constructor */

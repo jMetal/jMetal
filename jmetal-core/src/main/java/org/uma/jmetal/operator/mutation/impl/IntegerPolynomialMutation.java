@@ -39,7 +39,7 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
 
   /** Constructor */
   public IntegerPolynomialMutation(IntegerProblem problem, double distributionIndex) {
-    this(1.0/problem.getNumberOfVariables(), distributionIndex) ;
+    this(1.0/problem.numberOfVariables(), distributionIndex) ;
   }
 
   /** Constructor */

@@ -30,7 +30,7 @@ public class GenerationalGeneticAlgorithmBinaryExample {
     double crossoverProbability = 0.9;
     var crossover = new SinglePointCrossover(crossoverProbability);
 
-    double mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
+    double mutationProbability = 1.0 / problem.totalNumberOfBits() ;
     var mutation = new BitFlipMutation(mutationProbability);
 
     int populationSize = 100;

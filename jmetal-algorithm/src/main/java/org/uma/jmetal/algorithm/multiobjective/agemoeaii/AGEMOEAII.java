@@ -98,7 +98,7 @@ public class AGEMOEAII<S extends Solution<?>> extends AGEMOEA<S> {
 
 
     AGEMOEA2EnvironmentalSelection<S> environmentalSelection;
-    environmentalSelection = new AGEMOEA2EnvironmentalSelection(getProblem().getNumberOfObjectives());
+    environmentalSelection = new AGEMOEA2EnvironmentalSelection(getProblem().numberOfObjectives());
 
     return environmentalSelection.execute(jointPopulation, maxPopulationSize);
   }

@@ -11,5 +11,5 @@ import org.uma.jmetal.util.bounds.Bounds;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface DoubleProblem extends Problem<DoubleSolution> {
-  List<Bounds<Double>> getVariableBounds() ;
+  List<Bounds<Double>> variableBounds() ;
 }

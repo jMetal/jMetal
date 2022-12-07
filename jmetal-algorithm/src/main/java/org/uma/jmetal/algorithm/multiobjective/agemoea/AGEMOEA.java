@@ -100,7 +100,7 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
 
     AGEMOEAEnvironmentalSelection<S> environmentalSelection;
-    environmentalSelection = new AGEMOEAEnvironmentalSelection(getProblem().getNumberOfObjectives());
+    environmentalSelection = new AGEMOEAEnvironmentalSelection(getProblem().numberOfObjectives());
 
     return environmentalSelection.execute(jointPopulation, maxPopulationSize);
   }

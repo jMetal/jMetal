@@ -35,9 +35,9 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     scaling = false;
 
     int numberOfVariables = dTypeG * 256;
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(0);
-    setName("BigOpt2015");
+    numberOfObjectives(2);
+    numberOfConstraints(0);
+    name("BigOpt2015");
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -47,7 +47,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
       upperLimit.add(8.0);
     });
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

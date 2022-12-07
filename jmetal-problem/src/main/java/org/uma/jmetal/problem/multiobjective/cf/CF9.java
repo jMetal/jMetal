@@ -34,8 +34,8 @@ public class CF9 extends AbstractDoubleProblem {
    * @param numberOfObjectives Number of objective functions
    */
   public CF9(Integer numberOfVariables, Integer numberOfObjectives) {
-    setNumberOfObjectives(numberOfObjectives);
-    setName("CF9");
+    numberOfObjectives(numberOfObjectives);
+    name("CF9");
 
     if (numberOfObjectives <= 3) {
       k = numberOfObjectives - 1; // k=1,2,...,m-1
@@ -45,7 +45,7 @@ public class CF9 extends AbstractDoubleProblem {
       k = 3;
     }
 
-    setNumberOfConstraints(2 * k + 1);
+    numberOfConstraints(2 * k + 1);
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -53,7 +53,7 @@ public class CF9 extends AbstractDoubleProblem {
     IntStream.range(0, numberOfVariables).forEach(i -> lowerLimit.add(0.0 + 1e-10));
     IntStream.range(0, numberOfVariables).forEach(i -> upperLimit.add(1.0 - 1e-10));
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /**
@@ -63,22 +63,22 @@ public class CF9 extends AbstractDoubleProblem {
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = VectorUtils.toArray(solution.variables());
-    double[] f = new double[getNumberOfObjectives()];
-    double[] constraint = new double[getNumberOfConstraints()];
+    double[] f = new double[numberOfObjectives()];
+    double[] constraint = new double[numberOfConstraints()];
 
     /* ----------------------Evaluate objectives (begin)--------------------------*/
-    double[] sx = new double[getNumberOfObjectives()]; // Cumulative squared sum
+    double[] sx = new double[numberOfObjectives()]; // Cumulative squared sum
 
     // Step 1. Compute squredSum Sx
     double squredSum = 0.0;
-    for (int i = getNumberOfObjectives() - 1; i >= 0; i--) {
+    for (int i = numberOfObjectives() - 1; i >= 0; i--) {
       squredSum = squredSum + x[i] * x[i];
       sx[i] = squredSum;
     }
 
     // Step 2. Compute THETA_
-    double[] theta = new double[getNumberOfObjectives() - 1];
-    for (int i = 0; i < getNumberOfObjectives() - 1; i++) {
+    double[] theta = new double[numberOfObjectives() - 1];
+    for (int i = 0; i < numberOfObjectives() - 1; i++) {
       theta[i] = 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i]);
     }
 
@@ -90,9 +90,9 @@ public class CF9 extends AbstractDoubleProblem {
     double OptX = 0.2;
     double sum1 = 0.0;
     double sum2 = 0.0;
-    double d = getNumberOfVariables() - getNumberOfObjectives();
+    double d = numberOfVariables() - numberOfObjectives();
 
-    for (int i = getNumberOfObjectives(); i < getNumberOfVariables(); i++) {
+    for (int i = numberOfObjectives(); i < numberOfVariables(); i++) {
       sum1 = sum1 + ((x[i] - OptX) * (x[i] - OptX));
       sum2 = sum2 + Math.cos(2 * Math.PI * (x[i] - OptX));
     }
@@ -107,8 +107,8 @@ public class CF9 extends AbstractDoubleProblem {
     // Step 4. Specify PF shape: Mixed
     double sumProd = 1.0;
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      if (i != getNumberOfObjectives() - 1) {
+    for (int i = 0; i < numberOfObjectives(); i++) {
+      if (i != numberOfObjectives() - 1) {
         f[i] = 1 - sumProd * Math.cos(Math.PI / 2.0 * theta[i]);
         sumProd *= Math.sin(Math.PI / 2.0 * theta[i]);
       } else {
@@ -121,7 +121,7 @@ public class CF9 extends AbstractDoubleProblem {
     f[0] = theta[0] - (Math.cos(2 * Math.PI * A * theta[0] + Math.PI / 2.0)) / (2 * A * Math.PI);
 
     // Step 5. Set objectives
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (int i = 0; i < numberOfObjectives(); i++) {
       solution.objectives()[i] = (1 + t) * f[i];
     }
     /* ----------------------Evaluate objectives (end)--------------------------*/
@@ -137,7 +137,7 @@ public class CF9 extends AbstractDoubleProblem {
     }
 
     // Set constraints
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
 

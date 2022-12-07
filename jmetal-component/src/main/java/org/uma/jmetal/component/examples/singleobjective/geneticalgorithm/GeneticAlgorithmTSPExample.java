@@ -35,7 +35,7 @@ public class GeneticAlgorithmTSPExample extends AbstractAlgorithmRunner {
 
     var crossover = new PMXCrossover(0.9) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationProbability = 1.0 / problem.numberOfVariables() ;
     var mutation = new PermutationSwapMutation<Integer>(mutationProbability) ;
 
     Termination termination = new TerminationByEvaluations(1500000);

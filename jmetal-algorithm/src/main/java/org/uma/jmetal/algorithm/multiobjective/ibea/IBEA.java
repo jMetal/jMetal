@@ -186,10 +186,10 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
         double value;
         if (flag == -1) {
           value =
-              -calculateHypervolumeIndicator(A.get(0), B.get(0), problem.getNumberOfObjectives(),
+              -calculateHypervolumeIndicator(A.get(0), B.get(0), problem.numberOfObjectives(),
                   maximumValues, minimumValues);
         } else {
-          value = calculateHypervolumeIndicator(B.get(0), A.get(0), problem.getNumberOfObjectives(),
+          value = calculateHypervolumeIndicator(B.get(0), A.get(0), problem.numberOfObjectives(),
               maximumValues, minimumValues);
         }
 
@@ -223,16 +223,16 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
    */
   public void calculateFitness(List<S> solutionSet) {
     // Obtains the lower and upper bounds of the population
-    double[] maximumValues = new double[problem.getNumberOfObjectives()];
-    double[] minimumValues = new double[problem.getNumberOfObjectives()];
+    double[] maximumValues = new double[problem.numberOfObjectives()];
+    double[] minimumValues = new double[problem.numberOfObjectives()];
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.numberOfObjectives(); i++) {
       maximumValues[i] = -Double.MAX_VALUE;
       minimumValues[i] = Double.MAX_VALUE;
     }
 
     for (S solution : solutionSet) {
-      for (int obj = 0; obj < problem.getNumberOfObjectives(); obj++) {
+      for (int obj = 0; obj < problem.numberOfObjectives(); obj++) {
         double value = solution.objectives()[obj];
         if (value > maximumValues[obj]) {
           maximumValues[obj] = value;

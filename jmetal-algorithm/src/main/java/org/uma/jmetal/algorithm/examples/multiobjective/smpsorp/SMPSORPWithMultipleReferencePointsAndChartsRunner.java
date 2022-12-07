@@ -63,7 +63,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
     referencePoints.add(Arrays.asList(0.2, 0.3)) ;
     referencePoints.add(Arrays.asList(0.8, 0.2)) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationProbability = 1.0 / problem.numberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 

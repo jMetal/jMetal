@@ -11,14 +11,14 @@ public class Osyczka2 extends AbstractDoubleProblem {
 
   /** Constructor. Creates a default instance of the Osyczka2 problem. */
   public Osyczka2() {
-    setNumberOfObjectives(2);
-    setNumberOfConstraints(6);
-    setName("Osyczka2");
+    numberOfObjectives(2);
+    numberOfConstraints(6);
+    name("Osyczka2");
 
     List<Double> lowerLimit = Arrays.asList(0.0, 0.0, 1.0, 0.0, 1.0, 0.0);
     List<Double> upperLimit = Arrays.asList(10.0, 10.0, 5.0, 6.0, 5.0, 10.0);
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -52,7 +52,7 @@ public class Osyczka2 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+    double[] constraint = new double[this.numberOfConstraints()];
 
     double x1, x2, x3, x4, x5, x6;
     x1 = solution.variables().get(0);
@@ -69,7 +69,7 @@ public class Osyczka2 extends AbstractDoubleProblem {
     constraint[4] = (4.0 - (x3 - 3.0) * (x3 - 3.0) - x4) / 4.0;
     constraint[5] = ((x5 - 3.0) * (x5 - 3.0) + x6 - 4.0) / 4.0;
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

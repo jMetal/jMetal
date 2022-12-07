@@ -120,12 +120,12 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
     List<Integer> selected = new ArrayList<Integer>();
     List<Integer> candidate = new ArrayList<Integer>();
 
-    for (int k = 0; k < problem.getNumberOfObjectives(); k++) {
+    for (int k = 0; k < problem.numberOfObjectives(); k++) {
       // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL (NOT SORTED!!!!)
       selected.add(k);
     }
 
-    for (int n = problem.getNumberOfObjectives(); n < populationSize; n++) {
+    for (int n = problem.numberOfObjectives(); n < populationSize; n++) {
       // set of unselected weights
       candidate.add(n);
     }

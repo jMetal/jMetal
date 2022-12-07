@@ -31,9 +31,9 @@ public class MaF11 extends AbstractDoubleProblem {
     numberOfVariables = ((int) (
         Math.ceil((numberOfVariables - numberOfObjectives + 1) / 2.0) * 2 + numberOfObjectives
             - 1));
-    setNumberOfObjectives(numberOfObjectives);
-    setNumberOfConstraints(0);
-    setName("MaF11");
+    numberOfObjectives(numberOfObjectives);
+    numberOfConstraints(0);
+    name("MaF11");
 
     K11 = numberOfObjectives - 1;
     L11 = numberOfVariables - K11;
@@ -46,7 +46,7 @@ public class MaF11 extends AbstractDoubleProblem {
       upper.add(2.0 * (i + 1));
     }
 
-    setVariableBounds(lower, upper);
+    variableBounds(lower, upper);
   }
 
   /**

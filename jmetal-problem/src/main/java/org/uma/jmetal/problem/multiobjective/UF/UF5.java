@@ -25,9 +25,9 @@ public class UF5 extends AbstractDoubleProblem {
   * @param numberOfVariables Number of variables.
   */
   public UF5(int numberOfVariables, int N, double epsilon) {
-    setNumberOfObjectives(2) ;
-    setNumberOfConstraints(0) ;
-    setName("UF5") ;
+    numberOfObjectives(2) ;
+    numberOfConstraints(0) ;
+    name("UF5") ;
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
@@ -42,13 +42,13 @@ public class UF5 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    variableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
+    double[] x = new double[numberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.variables().get(i) ;
     }
@@ -58,8 +58,8 @@ public class UF5 extends AbstractDoubleProblem {
 		sum1   = sum2   = 0.0;
 		count1 = count2 = 0;
     
-    for (int j = 2 ; j <= getNumberOfVariables(); j++) {
-			yj = x[j-1]-Math.sin(6.0*Math.PI*x[0]+j*Math.PI/ getNumberOfVariables());
+    for (int j = 2 ; j <= numberOfVariables(); j++) {
+			yj = x[j-1]-Math.sin(6.0*Math.PI*x[0]+j*Math.PI/ numberOfVariables());
 			hj = 2.0*yj*yj - Math.cos(4.0*Math.PI*yj) + 1.0;
 			if (j % 2 == 0) {
 				sum2  += hj;

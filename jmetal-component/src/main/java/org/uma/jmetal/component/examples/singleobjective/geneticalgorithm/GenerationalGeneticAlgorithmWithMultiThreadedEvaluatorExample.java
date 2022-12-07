@@ -33,7 +33,7 @@ public class GenerationalGeneticAlgorithmWithMultiThreadedEvaluatorExample {
     double crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
