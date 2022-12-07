@@ -62,8 +62,7 @@ public class PISAHypervolume extends Hypervolume {
   }
 
   /*
-  returns true if 'point1' dominates 'points2' with respect to the
-  to the first 'noObjectives' objectives
+  returns true if 'point1' dominates 'points2' with respect to the first 'noObjectives' objectives
   */
   private boolean dominates(double[] point1, double[] point2, int noObjectives) {
     int i;
