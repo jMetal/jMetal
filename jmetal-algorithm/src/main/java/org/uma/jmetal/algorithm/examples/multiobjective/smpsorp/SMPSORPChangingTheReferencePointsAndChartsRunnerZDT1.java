@@ -8,9 +8,7 @@ import java.util.Scanner;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
@@ -41,13 +39,8 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunnerZDT1 {
    * @author Antonio J. Nebro
    */
   public static void main(String[] args) throws JMetalException, IOException, InterruptedException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
-    String referenceParetoFront ;
+    var problem = new ZDT1() ;
 
-    problem = new ZDT1() ;
-    referenceParetoFront = null ;
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
 
@@ -55,7 +48,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunnerZDT1 {
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int maxIterations = 2500000;
     int swarmSize = 100;
@@ -64,11 +57,11 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunnerZDT1 {
 
     for (int i = 0; i < referencePoints.size(); i++) {
       archivesWithReferencePoints.add(
-              new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
+              new CrowdingDistanceArchiveWithReferencePoint<>(
                       swarmSize/referencePoints.size(), referencePoints.get(i))) ;
     }
 
-    algorithm = new SMPSORP(problem,
+    var algorithm = new SMPSORP(problem,
         swarmSize,
         archivesWithReferencePoints,
         referencePoints,
@@ -92,7 +85,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunnerZDT1 {
         "currentIteration");
 
     ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 300);
-    chart.setFrontChart(0, 1, referenceParetoFront);
+    chart.setFrontChart(0, 1, null);
     chart.setReferencePoint(referencePoints);
     chart.initChart();
 

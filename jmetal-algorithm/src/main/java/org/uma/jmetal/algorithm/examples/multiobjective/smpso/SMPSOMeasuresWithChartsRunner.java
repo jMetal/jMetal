@@ -3,21 +3,18 @@ package org.uma.jmetal.algorithm.examples.multiobjective.smpso;
 import java.io.IOException;
 import java.util.List;
 import org.knowm.xchart.BitmapEncoder;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOMeasures;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
@@ -28,43 +25,26 @@ import org.uma.jmetal.util.measure.impl.CountingMeasure;
  * Class to configure and run the NSGA-II algorithm (variant with measures)
  */
 public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
+
   /**
    * @param args Command line arguments.
-   * @throws SecurityException
-   * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner problemName [referenceFront]
    */
-  public static void main(String[] args)
-          throws JMetalException, InterruptedException, IOException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
+  public static void main(String[] args) throws IOException {
+    String problemName = "org.uma.jmetal.problem.multiobjective.Golinski";
+    String referenceParetoFront = "resources/referenceFrontsCSV/Golinski.csv";
 
-    String referenceParetoFront = "" ;
+    DoubleProblem problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    String problemName ;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.Golinski";
-      referenceParetoFront = "resources/referenceFronts/Golinski.csv" ;
-    }
+    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100);
 
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    double mutationProbability = 1.0 / problem.numberOfVariables();
+    double mutationDistributionIndex = 20.0;
+    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
+    int maxIterations = 3000;
+    int swarmSize = 200;
 
-    double mutationProbability = 1.0 / problem.numberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
-
-    int maxIterations = 3000 ;
-    int swarmSize = 200 ;
-
-    algorithm = new SMPSOBuilder(problem, archive)
+    var algorithm = new SMPSOBuilder(problem, archive)
         .setMutation(mutation)
         .setMaxIterations(maxIterations)
         .setSwarmSize(swarmSize)
@@ -73,11 +53,12 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
         .build();
 
     /* Measure management */
-    MeasureManager measureManager = ((SMPSOMeasures)algorithm).getMeasureManager() ;
+    MeasureManager measureManager = ((SMPSOMeasures) algorithm).getMeasureManager();
 
     BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
-            .<List<DoubleSolution>>getPushMeasure("currentPopulation");
-    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
+        .<List<DoubleSolution>>getPushMeasure("currentPopulation");
+    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure(
+        "currentIteration");
 
     ChartContainer chart = new ChartContainer(algorithm.getName(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
@@ -105,6 +86,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
   }
 
   private static class ChartListener implements MeasureListener<List<DoubleSolution>> {
+
     private ChartContainer chart;
     private int iteration = 0;
 
@@ -129,6 +111,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
   }
 
   private static class IterationListener implements MeasureListener<Long> {
+
     ChartContainer chart;
 
     public IterationListener(ChartContainer chart) {
