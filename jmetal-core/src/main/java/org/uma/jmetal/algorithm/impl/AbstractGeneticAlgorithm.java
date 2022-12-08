@@ -80,7 +80,7 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
   }
 
   /**
-   * This methods iteratively applies a {@link CrossoverOperator} a  {@link MutationOperator} to the population to
+   * This method iteratively applies a {@link CrossoverOperator} a  {@link MutationOperator} to the population to
    * create the offspring population. The population size must be divisible by the number of parents required
    * by the {@link CrossoverOperator}; this way, the needed parents are taken sequentially from the population.
    *

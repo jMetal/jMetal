@@ -34,9 +34,6 @@ public abstract class AbstractParticleSwarmOptimization<S, Result> implements Al
   protected abstract void updateParticlesMemory(List<S> swarm) ;
 
   @Override
-  public abstract Result getResult() ;
-
-  @Override
   public void run() {
     swarm = createInitialSwarm() ;
     swarm = evaluateSwarm(swarm);

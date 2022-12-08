@@ -20,6 +20,9 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 /** This class implements the GDE3 algorithm */
 public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
+  protected DifferentialEvolutionCrossover crossoverOperator ;
+  protected DifferentialEvolutionSelection selectionOperator ;
+
   protected int maxEvaluations;
   protected int evaluations;
   private int maxPopulationSize;
@@ -153,7 +156,6 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
         tmpList.add(population.get(i));
       }
     }
-    Ranking<DoubleSolution> ranking =  new FastNonDominatedSortRanking<>(dominanceComparator);
     ranking.compute(tmpList) ;
 
     RankingAndCrowdingSelection<DoubleSolution> rankingAndCrowdingSelection ;
@@ -179,5 +181,15 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   @Override
   public String getDescription() {
     return "Generalized Differential Evolution version 3";
+  }
+
+  @Override
+  public DifferentialEvolutionCrossover getCrossoverOperator() {
+    return crossoverOperator ;
+  }
+
+  @Override
+  public  DifferentialEvolutionSelection getSelectionOperator() {
+    return selectionOperator ;
   }
 }

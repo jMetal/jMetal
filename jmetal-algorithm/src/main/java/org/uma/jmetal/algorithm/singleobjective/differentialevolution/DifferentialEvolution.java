@@ -17,6 +17,9 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
  */
 @SuppressWarnings("serial")
 public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleSolution> {
+  protected DifferentialEvolutionCrossover crossoverOperator ;
+  protected DifferentialEvolutionSelection selectionOperator ;
+
   private int populationSize;
   private int maxEvaluations;
   private SolutionListEvaluator<DoubleSolution> evaluator;
@@ -131,5 +134,15 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
 
   @Override public String getDescription() {
     return "Differential Evolution Algorithm" ;
+  }
+
+  @Override
+  public DifferentialEvolutionCrossover getCrossoverOperator() {
+    return crossoverOperator ;
+  }
+
+  @Override
+  public  DifferentialEvolutionSelection getSelectionOperator() {
+    return selectionOperator ;
   }
 }
