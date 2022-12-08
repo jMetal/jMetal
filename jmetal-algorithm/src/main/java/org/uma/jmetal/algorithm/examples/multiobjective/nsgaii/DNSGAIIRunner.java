@@ -32,21 +32,17 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
 
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
-    // problem
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
-    // crossover
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 30;
     CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    // mutation
     double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    // selection
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
             new RankingAndDirScoreDistanceComparator<>());
 
@@ -56,7 +52,6 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
             .setVariant(NSGAIIBuilder.NSGAIIVariant.DNSGAII)
             .setSelectionOperator(selection).build();
 
-    // reference vectors
     double[][] referenceVectors = VectorFileUtils.readVectors("resources/weightVectorFiles/moead/W" + problem.numberOfObjectives() + "D_" + populationSize + ".dat");
     ((DNSGAII<DoubleSolution>) algorithm).setReferenceVectors(referenceVectors);
 

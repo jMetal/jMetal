@@ -3,24 +3,18 @@ package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 import java.io.IOException;
 import java.util.List;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
@@ -31,60 +25,47 @@ import org.uma.jmetal.util.measure.impl.CountingMeasure;
  * Class to configure and run the NSGA-II algorithm (variant with measures)
  */
 public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
+
   /**
    * @param args Command line arguments.
-   * @throws SecurityException Invoking command: java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner
-   *                           problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, InterruptedException, IOException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "";
+  public static void main(String[] args) throws IOException {
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    String problemName;
-    if (args.length == 2) {
-      problemName = args[0];
-      referenceParetoFront = args[1];
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
-    }
-
-    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(
-            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    var selection = new BinaryTournamentSelection<>(
+        new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    int maxEvaluations = 25000;
     int populationSize = 100;
+    int maxEvaluations = 25000;
+    var algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
+        .setSelectionOperator(selection)
+        .setMaxEvaluations(maxEvaluations)
+        .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
+        .build();
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
-            .setSelectionOperator(selection)
-            .setMaxEvaluations(maxEvaluations)
-            .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
-            .build();
-
-    ((NSGAIIMeasures<DoubleSolution>) algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
+    ((NSGAIIMeasures<DoubleSolution>) algorithm).setReferenceFront(
+        new ArrayFront(referenceParetoFront));
 
     MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>) algorithm).getMeasureManager();
 
-        /* Measure management */
+    /* Measure management */
     BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
-            .<List<DoubleSolution>>getPushMeasure("currentPopulation");
-    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
+        .<List<DoubleSolution>>getPushMeasure("currentPopulation");
+    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure(
+        "currentEvaluation");
     BasicMeasure<Double> hypervolumeMeasure = (BasicMeasure<Double>) measureManager
-            .<Double>getPushMeasure("hypervolume");
+        .<Double>getPushMeasure("hypervolume");
 
     ChartContainer chart = new ChartContainer(algorithm.getName(), 100);
     chart.setFrontChart(0, 1, referenceParetoFront);
@@ -111,6 +92,7 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
   }
 
   private static class IterationListener implements MeasureListener<Long> {
+
     ChartContainer chart;
 
     public IterationListener(ChartContainer chart) {
@@ -127,6 +109,7 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
   }
 
   private static class IndicatorListener implements MeasureListener<Double> {
+
     ChartContainer chart;
     String indicator;
 
@@ -145,6 +128,7 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
   }
 
   private static class ChartListener implements MeasureListener<List<DoubleSolution>> {
+
     private ChartContainer chart;
     private int iteration = 0;
 

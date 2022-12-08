@@ -21,6 +21,7 @@ import org.uma.jmetal.util.restartstrategy.impl.DefaultRestartStrategy;
 import org.uma.jmetal.util.restartstrategy.impl.RemoveNRandomSolutions;
 
 public class DynamicNSGAIIRunner {
+
   /**
    * main() method to run the algorithm as a process
    *
@@ -37,7 +38,7 @@ public class DynamicNSGAIIRunner {
         new BinaryTournamentSelection<>();
 
     InvertedGenerationalDistance igd = new InvertedGenerationalDistance();
-    CoverageFront coverageFront = new CoverageFront(0.055, igd);
+    CoverageFront<DoubleSolution> coverageFront = new CoverageFront<>(0.055, igd);
     var algorithm =
         new DynamicNSGAII<>(
             problem,
@@ -54,11 +55,9 @@ public class DynamicNSGAIIRunner {
             new DefaultObservable<>("Dynamic NSGA-II"),
             coverageFront);
 
-    // EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeForDynamicProblemsChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeForDynamicProblemsChartObserver<>("Dynamic NSGA-II", 80);
 
-    // algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);
 
     algorithm.run();

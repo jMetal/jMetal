@@ -11,11 +11,12 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
@@ -24,56 +25,46 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIISteadyStateRunner extends AbstractAlgorithmRunner {
+
   /**
    * @param args Command line arguments.
    * @throws JMetalException
-   * @throws FileNotFoundException Invoking command:
-   *                               java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIISteadyStateRunner problemName [referenceFront]
+   * @throws FileNotFoundException Invoking command: java
+   *                               org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIISteadyStateRunner
+   *                               problemName [referenceFront]
    */
 
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    String problemName;
-    String referenceParetoFront = "";
-
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0];
-      referenceParetoFront = args[1];
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
-    }
-
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability,
+        crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
+        mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>();
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
+        new RankingAndCrowdingDistanceComparator<>());
 
-    int populationSize = 100 ;
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
-            .setSelectionOperator(selection)
-            .setMaxEvaluations(25000)
-            .setMatingPoolSize(2)
-            .setOffspringPopulationSize(1)
-            .setVariant(NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
-            .build();
+    int populationSize = 100;
+    Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problem, crossover, mutation,
+        populationSize)
+        .setSelectionOperator(selection)
+        .setMaxEvaluations(25000)
+        .setMatingPoolSize(2)
+        .setOffspringPopulationSize(1)
+        .setVariant(NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
+        .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute();
+        .execute();
 
     List<DoubleSolution> population = algorithm.getResult();
     long computingTime = algorithmRunner.getComputingTime();
@@ -81,8 +72,6 @@ public class NSGAIISteadyStateRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
-    }
+    printQualityIndicators(population, referenceParetoFront);
   }
 }

@@ -24,6 +24,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class MOSARunner extends AbstractAlgorithmRunner {
+
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2_2D";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.2D.csv";
@@ -31,13 +32,14 @@ public class MOSARunner extends AbstractAlgorithmRunner {
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     MutationOperator<DoubleSolution> mutation =
-            new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+        new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
 
-    BoundedArchive<DoubleSolution> archive = new GenericBoundedArchive<>(100, new GridDensityEstimator<>(5, problem.numberOfObjectives()));
+    BoundedArchive<DoubleSolution> archive = new GenericBoundedArchive<>(100,
+        new GridDensityEstimator<>(5, problem.numberOfObjectives()));
     archive = new GenericBoundedArchive<>(100, new CrowdingDistanceDensityEstimator<>());
 
     MOSA<DoubleSolution> algorithm =
-            new MOSA<>(problem, 50000, archive, mutation, 1.0, new Exponential(0.95));
+        new MOSA<>(problem, 50000, archive, mutation, 1.0, new Exponential(0.95));
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
@@ -45,10 +47,10 @@ public class MOSARunner extends AbstractAlgorithmRunner {
     long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-    JMetalLogger.logger.info("Number of non-accepted solutions: " + algorithm.getNumberOfWorstAcceptedSolutions());
+    JMetalLogger.logger.info(
+        "Number of non-accepted solutions: " + algorithm.getNumberOfWorstAcceptedSolutions());
+
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
-    }
+    printQualityIndicators(population, referenceParetoFront);
   }
 }

@@ -33,49 +33,40 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIISolvingConstrainedProblemRunner extends AbstractAlgorithmRunner {
+
   /**
    * @param args Command line arguments.
    * @throws JMetalException
    * @throws FileNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
+   *                               org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner
+   *                               problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "";
+    String problemName = "org.uma.jmetal.problem.multiobjective.Osyczka2";
+    String referenceParetoFront = "resources/referenceFrontsCSV/Osyczka2.csv";
 
-    String problemName;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0];
-      referenceParetoFront = args[1];
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.Osyczka2";
-      referenceParetoFront = "resources/referenceFrontsCSV/Osyczka2.csv";
-    }
-
-    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability,
+        crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
+        mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
+        new RankingAndCrowdingDistanceComparator<>());
 
     int populationSize = 100;
-    algorithm =
+    Algorithm<List<DoubleSolution>> algorithm =
         new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(25000)
-            .setDominanceComparator(new DominanceWithConstraintsComparator<>(new OverallConstraintViolationDegreeComparator<>()))
+            .setDominanceComparator(new DominanceWithConstraintsComparator<>(
+                new OverallConstraintViolationDegreeComparator<>()))
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
@@ -89,10 +80,8 @@ public class NSGAIISolvingConstrainedProblemRunner extends AbstractAlgorithmRunn
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      QualityIndicatorUtils.printQualityIndicators(
-          SolutionListUtils.getMatrixWithObjectiveValues(population),
-          VectorUtils.readVectors(referenceParetoFront, ","));
-    }
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }

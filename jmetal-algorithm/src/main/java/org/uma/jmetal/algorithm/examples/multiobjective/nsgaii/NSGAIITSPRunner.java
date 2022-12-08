@@ -28,35 +28,29 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
+
   /**
    * @param args Command line arguments.
-   * @throws IOException
-   * @throws SecurityException
-   * @throws ClassNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIITSPRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
-    PermutationProblem<PermutationSolution<Integer>> problem;
-    Algorithm<List<PermutationSolution<Integer>>> algorithm;
-    CrossoverOperator<PermutationSolution<Integer>> crossover;
-    MutationOperator<PermutationSolution<Integer>> mutation;
-    SelectionOperator<List<PermutationSolution<Integer>>, PermutationSolution<Integer>> selection;
 
-    problem = new MultiobjectiveTSP("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
+    PermutationProblem<PermutationSolution<Integer>> problem = new MultiobjectiveTSP(
+        "resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
 
-    crossover = new PMXCrossover(0.9);
+    CrossoverOperator<PermutationSolution<Integer>> crossover = new PMXCrossover(0.9);
 
     double mutationProbability = 0.2;
-    mutation = new PermutationSwapMutation<Integer>(mutationProbability);
+    MutationOperator<PermutationSolution<Integer>> mutation = new PermutationSwapMutation<Integer>(
+        mutationProbability);
 
-    selection =
+    SelectionOperator<List<PermutationSolution<Integer>>, PermutationSolution<Integer>> selection =
         new BinaryTournamentSelection<PermutationSolution<Integer>>(
             new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
 
     int populationSize = 100;
-    algorithm =
+    Algorithm<List<PermutationSolution<Integer>>> algorithm =
         new NSGAIIBuilder<PermutationSolution<Integer>>(
-                problem, crossover, mutation, populationSize)
+            problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(10000)
             .build();

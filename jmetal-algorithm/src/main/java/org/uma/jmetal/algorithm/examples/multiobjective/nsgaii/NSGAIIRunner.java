@@ -28,6 +28,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIRunner extends AbstractAlgorithmRunner {
+
   public static void main(String[] args) throws JMetalException, IOException {
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
@@ -63,10 +64,8 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      QualityIndicatorUtils.printQualityIndicators(
-          SolutionListUtils.getMatrixWithObjectiveValues(population),
-          VectorUtils.readVectors(referenceParetoFront, ","));
-    }
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }

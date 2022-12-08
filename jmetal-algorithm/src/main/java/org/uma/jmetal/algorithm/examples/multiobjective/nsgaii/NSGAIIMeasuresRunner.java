@@ -1,24 +1,17 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.impl.BasicMeasure;
@@ -31,47 +24,27 @@ import org.uma.jmetal.util.measure.impl.DurationMeasure;
 public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws SecurityException
-   * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner problemName [referenceFront]
    */
-  public static void main(String[] args)
-      throws JMetalException, InterruptedException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "" ;
+  public static void main(String[] args) throws InterruptedException {
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    String problemName ;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
-    }
+    var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    problem = ProblemFactory.<DoubleSolution> loadProblem(problemName);
+    double crossoverProbability = 0.9;
+    double crossoverDistributionIndex = 20.0;
+    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    double mutationProbability = 1.0 / problem.numberOfVariables();
+    double mutationDistributionIndex = 20.0;
+    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.numberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var selection = new BinaryTournamentSelection<>(
+        new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(
-            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
-
-    int maxEvaluations = 25000 ;
     int populationSize = 100 ;
-
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
+    int maxEvaluations = 25000 ;
+    var algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
         .setSelectionOperator(selection)
         .setMaxEvaluations(maxEvaluations)
         .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
