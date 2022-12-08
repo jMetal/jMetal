@@ -21,8 +21,8 @@ import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 /**
- * @author JuanJo Durillo
  * @param <S>
+ * @author JuanJo Durillo
  */
 @SuppressWarnings("serial")
 public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
