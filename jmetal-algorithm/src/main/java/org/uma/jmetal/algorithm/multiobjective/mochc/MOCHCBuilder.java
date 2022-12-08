@@ -18,6 +18,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  * Builder class
  */
 public class MOCHCBuilder implements AlgorithmBuilder<MOCHC> {
+
   BinaryProblem problem;
   SolutionListEvaluator<BinarySolution> evaluator;
   int populationSize;
@@ -32,12 +33,12 @@ public class MOCHCBuilder implements AlgorithmBuilder<MOCHC> {
 
   public MOCHCBuilder(BinaryProblem problem) {
     this.problem = problem;
-    evaluator = new SequentialSolutionListEvaluator<BinarySolution>() ;
-    populationSize = 100 ;
-    maxEvaluations = 25000 ;
-    convergenceValue = 3 ;
-    preservedPopulation = 0.05 ;
-    initialConvergenceCount = 0.25 ;
+    evaluator = new SequentialSolutionListEvaluator<BinarySolution>();
+    populationSize = 100;
+    maxEvaluations = 25000;
+    convergenceValue = 3;
+    preservedPopulation = 0.05;
+    initialConvergenceCount = 0.25;
   }
 
   /* Getters */
@@ -69,7 +70,7 @@ public class MOCHCBuilder implements AlgorithmBuilder<MOCHC> {
     return cataclysmicMutation;
   }
 
-  public SelectionOperator<List<BinarySolution>,BinarySolution> getParentSelection() {
+  public SelectionOperator<List<BinarySolution>, BinarySolution> getParentSelection() {
     return parentSelection;
   }
 
@@ -124,13 +125,15 @@ public class MOCHCBuilder implements AlgorithmBuilder<MOCHC> {
     return this;
   }
 
-  public MOCHCBuilder setParentSelection(SelectionOperator<List<BinarySolution>, BinarySolution> parentSelection) {
+  public MOCHCBuilder setParentSelection(
+      SelectionOperator<List<BinarySolution>, BinarySolution> parentSelection) {
     this.parentSelection = parentSelection;
 
     return this;
   }
 
-  public MOCHCBuilder setNewGenerationSelection(SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection) {
+  public MOCHCBuilder setNewGenerationSelection(
+      SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection) {
     this.newGenerationSelection = newGenerationSelection;
 
     return this;
@@ -143,11 +146,8 @@ public class MOCHCBuilder implements AlgorithmBuilder<MOCHC> {
   }
 
   public MOCHC build() {
-    MOCHC algorithm =
-        new MOCHC(problem, populationSize, maxEvaluations, convergenceValue, preservedPopulation,
+    return new MOCHC(problem, populationSize, maxEvaluations, convergenceValue, preservedPopulation,
             initialConvergenceCount, crossoverOperator, cataclysmicMutation, newGenerationSelection,
             parentSelection, evaluator);
-
-    return algorithm;
   }
 }

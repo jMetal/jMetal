@@ -162,7 +162,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       crowdingDistance.compute(rank.getSubFront(j));
     }
 
-    Collections.sort(this.currentNeighbors, new RankingAndCrowdingDistanceComparator<S>());
+    this.currentNeighbors.sort(new RankingAndCrowdingDistanceComparator<S>());
     S worst = this.currentNeighbors.get(this.currentNeighbors.size() - 1);
 
     archive.add(offspringPopulation.get(0));

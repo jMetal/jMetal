@@ -19,21 +19,20 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 /**
- * This class executes the MOCHC algorithm described in:
- * A.J. Nebro, E. Alba, G. Molina, F. Chicano, F. Luna, J.J. Durillo
- * "Optimal antenna placement using a new multi-objective chc algorithm".
- * GECCO '07: Proceedings of the 9th annual conference on Genetic and
- * evolutionary computation. London, England. July 2007.
- *
+ * This class executes the MOCHC algorithm described in: A.J. Nebro, E. Alba, G. Molina, F. Chicano,
+ * F. Luna, J.J. Durillo "Optimal antenna placement using a new multi-objective chc algorithm".
+ * GECCO '07: Proceedings of the 9th annual conference on Genetic and evolutionary computation.
+ * London, England. July 2007.
+ * <p>
  * Implementation of MOCHC following the scheme used in jMetal4.5 and former versions, i.e, without
  * implementing the {@link AbstractGeneticAlgorithm} interface.
  */
 @SuppressWarnings("serial")
 public class MOCHC45 implements Algorithm<List<BinarySolution>> {
-  private BinaryProblem problem;
 
-  private List<BinarySolution> population ;
-  private int populationSize ;
+  private BinaryProblem problem;
+  private List<BinarySolution> population;
+  private int populationSize;
   private int maxEvaluations;
   private int convergenceValue;
   private double preservedPopulation;
@@ -50,13 +49,14 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   /**
    * Constructor
    */
-  public MOCHC45(BinaryProblem problem, int populationSize, int maxEvaluations, int convergenceValue,
-                 double preservedPopulation, double initialConvergenceCount,
-                 CrossoverOperator<BinarySolution> crossoverOperator,
-                 MutationOperator<BinarySolution> cataclysmicMutation,
-                 SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection,
-                 SelectionOperator<List<BinarySolution>, BinarySolution> parentSelection,
-                 SolutionListEvaluator<BinarySolution> evaluator) {
+  public MOCHC45(BinaryProblem problem, int populationSize, int maxEvaluations,
+      int convergenceValue,
+      double preservedPopulation, double initialConvergenceCount,
+      CrossoverOperator<BinarySolution> crossoverOperator,
+      MutationOperator<BinarySolution> cataclysmicMutation,
+      SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection,
+      SelectionOperator<List<BinarySolution>, BinarySolution> parentSelection,
+      SolutionListEvaluator<BinarySolution> evaluator) {
     super();
     this.problem = problem;
     this.populationSize = populationSize;
@@ -87,25 +87,25 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
-    comparator = new CrowdingDistanceDensityEstimator<BinarySolution>().getComparator() ;
+    comparator = new CrowdingDistanceDensityEstimator<BinarySolution>().getComparator();
 
-    evaluations = 0 ;
-    population = new ArrayList<>() ;
+    evaluations = 0;
+    population = new ArrayList<>();
     for (int i = 0; i < populationSize; i++) {
       BinarySolution newIndividual = problem.createSolution();
       problem.evaluate(newIndividual);
       population.add(newIndividual);
-      evaluations ++ ;
+      evaluations++;
     }
 
-    boolean finishCondition = false ;
+    boolean finishCondition = false;
 
     while (!finishCondition) {
-      List<BinarySolution> offspringPopulation = new ArrayList<>(populationSize) ;
-      for (int i = 0; i < population.size()/2; i++) {
-        List<BinarySolution> parents = new ArrayList<>(2) ;
-        parents.add(parentSelection.execute(population)) ;
-        parents.add(parentSelection.execute(population)) ;
+      List<BinarySolution> offspringPopulation = new ArrayList<>(populationSize);
+      for (int i = 0; i < population.size() / 2; i++) {
+        List<BinarySolution> parents = new ArrayList<>(2);
+        parents.add(parentSelection.execute(population));
+        parents.add(parentSelection.execute(population));
 
         if (hammingDistance(parents.get(0), parents.get(1)) >= minimumDistance) {
           List<BinarySolution> offspring = crossover.execute(parents);
@@ -114,7 +114,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
           offspringPopulation.add(offspring.get(0));
           offspringPopulation.add(offspring.get(1));
 
-          evaluations += 2 ;
+          evaluations += 2;
         }
       }
 
@@ -143,22 +143,22 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
           problem.evaluate(solution);
           //problem.evaluateConstraints(solution);
           newPopulation.add(solution);
-          evaluations ++ ;
+          evaluations++;
         }
       }
 
-      population = newPopulation ;
+      population = newPopulation;
       if (evaluations >= maxEvaluations) {
-        finishCondition = true ;
+        finishCondition = true;
       }
     }
   }
 
   @Override
   public List<BinarySolution> getResult() {
-    NonDominatedSolutionListArchive<BinarySolution> archive = new NonDominatedSolutionListArchive<>() ;
+    NonDominatedSolutionListArchive<BinarySolution> archive = new NonDominatedSolutionListArchive<>();
     for (BinarySolution solution : population) {
-      archive.add(solution) ;
+      archive.add(solution);
     }
 
     return archive.getSolutionList();
@@ -184,7 +184,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   private int hammingDistance(BinarySet bitSet1, BinarySet bitSet2) {
     if (bitSet1.getBinarySetLength() != bitSet2.getBinarySetLength()) {
       throw new JMetalException("The bitsets have different length: "
-          + bitSet1.getBinarySetLength() +", " + bitSet2.getBinarySetLength()) ;
+          + bitSet1.getBinarySetLength() + ", " + bitSet2.getBinarySetLength());
     }
     int distance = 0;
     int i = 0;
