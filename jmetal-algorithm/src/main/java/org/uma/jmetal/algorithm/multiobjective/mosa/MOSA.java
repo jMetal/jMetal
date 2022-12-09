@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.mosa;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -9,7 +8,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -55,7 +54,7 @@ public class MOSA<S extends Solution<?>> implements Algorithm<List<S>> {
     this.temperature = initialTemperature;
     this.coolingScheme = coolingScheme;
 
-    comparator = new DominanceWithConstraintsComparator<S>();
+    comparator = new DefaultDominanceComparator<>() ;
   }
   /* Getters */
   public BoundedArchive<S> getArchive() {
@@ -82,39 +81,37 @@ public class MOSA<S extends Solution<?>> implements Algorithm<List<S>> {
     return evaluations >= maxEvaluations;
   }
 
-  protected List<S> createInitialPopulation() {
-    List<S> solutionList = new ArrayList<>(1);
-    solutionList.add(problem.createSolution());
-    archive.add(solutionList.get(0));
-
-    return solutionList;
-  }
-
   @Override
   public void run() {
-    S mutatedSolution = (S) currentSolution.copy();
-    problem.evaluate(mutatedSolution) ;
+    initProgress();
+    while (!isStoppingConditionReached()) {
+      S mutatedSolution = mutationOperator.execute((S)currentSolution.copy()) ;
+      problem.evaluate(mutatedSolution);
 
-    int flag = comparator.compare(currentSolution, mutatedSolution);
-    if (flag == 1) {
-      currentSolution = mutatedSolution;
-      archive.add(mutatedSolution);
-    } else if (flag == 0) {
-      if (archive.add(mutatedSolution)) {
-        if (archive.getComparator().compare(currentSolution, mutatedSolution) > 0) {
+      int flag = comparator.compare(currentSolution, mutatedSolution);
+      if (flag == 1) {
+        currentSolution = mutatedSolution;
+        archive.add(mutatedSolution);
+      } else if (flag == 0) {
+        if (archive.add(mutatedSolution)) {
+          if (archive.getComparator().compare(currentSolution, mutatedSolution) > 0) {
+            currentSolution = mutatedSolution;
+          }
+        }
+      } else {
+        double acceptanceProbability = computeAcceptanceProbability(currentSolution,
+            mutatedSolution, temperature);
+
+        if (acceptanceProbability > JMetalRandom.getInstance().nextDouble()) {
           currentSolution = mutatedSolution;
+          numberOfWorstAcceptedSolutions++;
         }
       }
-    } else {
-      double acceptanceProbability = computeAcceptanceProbability(currentSolution, mutatedSolution, temperature);
 
-      if (acceptanceProbability > JMetalRandom.getInstance().nextDouble()) {
-        currentSolution = mutatedSolution;
-        numberOfWorstAcceptedSolutions++;
-      }
+      temperature = coolingScheme.updateTemperature(temperature, evaluations);
+
+      updateProgress();
     }
-
-    temperature = coolingScheme.updateTemperature(temperature, evaluations);
   }
 
   protected double computeAcceptanceProbability(S currentSolution, S mutatedSolution, double temperature) {
