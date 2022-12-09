@@ -13,7 +13,6 @@ import org.uma.jmetal.operator.Operator;
  */
 public interface CrossoverOperator<Source> extends Operator<List<Source>,List<Source>> {
   double getCrossoverProbability() ;
-
   int getNumberOfRequiredParents() ;
   int getNumberOfGeneratedChildren() ;
 }
