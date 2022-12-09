@@ -16,6 +16,7 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
  */
 @SuppressWarnings("serial")
 public class NonElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvolutionStrategy<S, S> {
+  private Problem<S> problem ;
   private int mu;
   private int lambda;
   private int maxEvaluations;
@@ -29,7 +30,7 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
    */
   public NonElitistEvolutionStrategy(Problem<S> problem, int mu, int lambda, int maxEvaluations,
       MutationOperator<S> mutation) {
-    super(problem) ;
+    this.problem = problem ;
     this.mu = mu;
     this.lambda = lambda;
     this.maxEvaluations = maxEvaluations;

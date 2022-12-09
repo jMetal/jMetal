@@ -46,8 +46,6 @@ public abstract class AbstractEvolutionaryAlgorithm<S, R>  implements Algorithm<
 
   protected abstract List<S> replacement(List<S> population, List<S> offspringPopulation);
 
-  @Override public abstract R getResult();
-
   @Override public void run() {
     List<S> offspringPopulation;
     List<S> matingPopulation;

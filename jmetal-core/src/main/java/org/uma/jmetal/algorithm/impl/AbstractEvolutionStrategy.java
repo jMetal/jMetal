@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.problem.Problem;
 /**
  * Abstract class representing an evolution strategy algorithm
  *
@@ -15,13 +14,5 @@ public abstract class AbstractEvolutionStrategy<S, Result> extends AbstractEvolu
   /* Getter */
   public MutationOperator<S> getMutationOperator() {
     return mutationOperator;
-  }
-
-  /**
-   * Constructor
-   * @param problem The problem to solve
-   */
-  public AbstractEvolutionStrategy(Problem<S> problem) {
-    setProblem(problem);
   }
 }

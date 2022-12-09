@@ -23,6 +23,7 @@ import org.uma.jmetal.util.densityestimator.impl.GridDensityEstimator;
  */
 @SuppressWarnings("serial")
 public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, List<S>> {
+  protected Problem<S> problem ;
   protected int maxEvaluations;
   protected int evaluations;
 
@@ -35,7 +36,6 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
       int maxEvaluations,
       BoundedArchive<S> archive,
       MutationOperator<S> mutationOperator) {
-    super(problem);
     setProblem(problem);
     this.maxEvaluations = maxEvaluations;
     this.archive = archive;

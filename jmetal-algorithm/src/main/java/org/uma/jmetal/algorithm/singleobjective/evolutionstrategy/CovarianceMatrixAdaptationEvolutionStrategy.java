@@ -96,7 +96,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   /** Constructor */
   private CovarianceMatrixAdaptationEvolutionStrategy (Builder builder) {
-    super(builder.problem) ;
+    this.problem = builder.problem ;
     this.lambda = builder.lambda ;
     this.maxEvaluations = builder.maxEvaluations ;
     this.typicalX = builder.typicalX;
