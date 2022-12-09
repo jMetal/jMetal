@@ -2,21 +2,17 @@ package org.uma.jmetal.algorithm.examples.multiobjective;
 
 import java.io.FileNotFoundException;
 import java.util.List;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.IntegerSBXCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.IntegerPolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * Class for configuring and running the NSGA-II algorithm (integer encoding)
@@ -25,64 +21,39 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  */
 
 public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
+
   /**
    * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws java.io.IOException
-   * @throws SecurityException
-   * @throws ClassNotFoundException
-   * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIIntegerRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws FileNotFoundException {
-    Problem<IntegerSolution> problem;
-    Algorithm<List<IntegerSolution>> algorithm;
-    CrossoverOperator<IntegerSolution> crossover;
-    MutationOperator<IntegerSolution> mutation;
-    SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
-    
-    String problemName ;
 
-    String referenceParetoFront = "" ;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.NMMin" ;
-      referenceParetoFront = "";
-    }
+    Problem<IntegerSolution> problem = ProblemFactory.<IntegerSolution>loadProblem(
+        "org.uma.jmetal.problem.multiobjective.NMMin");
 
-    problem = ProblemFactory.<IntegerSolution> loadProblem(problemName);
+    double crossoverProbability = 0.9;
+    double crossoverDistributionIndex = 20.0;
+    var crossover = new IntegerSBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new IntegerSBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    double mutationProbability = 1.0 / problem.numberOfVariables();
+    double mutationDistributionIndex = 20.0;
+    var mutation = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.numberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    SelectionOperator<List<IntegerSolution>, IntegerSolution> selection = new BinaryTournamentSelection<IntegerSolution>();
 
-    selection = new BinaryTournamentSelection<IntegerSolution>() ;
-
-    int populationSize = 100 ;
-    algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation, populationSize)
-            .setSelectionOperator(selection)
-            .setMaxEvaluations(25000)
-            .build() ;
+    int populationSize = 100;
+    var algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation, populationSize)
+        .setSelectionOperator(selection)
+        .setMaxEvaluations(25000)
+        .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute();
 
-    List<IntegerSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    List<IntegerSolution> population = algorithm.getResult();
+    long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront) ;
-    }
   }
 }

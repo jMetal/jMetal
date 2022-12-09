@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -13,9 +13,12 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -28,13 +31,8 @@ public class NSGAIISteadyStateRunner extends AbstractAlgorithmRunner {
 
   /**
    * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *                               org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIISteadyStateRunner
-   *                               problemName [referenceFront]
    */
-
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
@@ -72,6 +70,8 @@ public class NSGAIISteadyStateRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    printQualityIndicators(population, referenceParetoFront);
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }

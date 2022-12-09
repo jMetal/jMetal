@@ -13,13 +13,10 @@
 
 package org.uma.jmetal.algorithm.examples.multiobjective;
 
-import java.io.FileNotFoundException;
 import java.util.List;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.cdg.CDGBuilder;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.glt.GLT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -32,37 +29,21 @@ import org.uma.jmetal.util.JMetalLogger;
  * @author Feng Zhang
  */
 public class CDGRunner extends AbstractAlgorithmRunner {
+
   /**
    * @param args Command line arguments.
-   * @throws ClassNotFoundException
-   * @throws SecurityException Invoking command: java org.uma.jmetal.runner.multiobjective.CDGRunner
-   *     problemName [referenceFront]
    */
-  public static void main(String[] args) throws FileNotFoundException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    DifferentialEvolutionCrossover crossover;
+  public static void main(String[] args) {
 
-    String problemName;
-    String referenceParetoFront = "";
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0];
-      referenceParetoFront = args[1];
-    } else {
-      problemName = "(none)";
-    }
-
-    problem = new GLT4(10);
+    var problem = new GLT4(10);
 
     double cr = 1.0;
     double f = 0.5;
-    crossover =
+    var crossover =
         new DifferentialEvolutionCrossover(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
-    algorithm =
+    var algorithm =
         new CDGBuilder(problem)
             .setCrossover(crossover)
             .setMaxEvaluations(300 * 1000)
@@ -79,8 +60,5 @@ public class CDGRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
-    }
   }
 }

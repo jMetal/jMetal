@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,12 +13,12 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
@@ -36,10 +35,6 @@ public class NSGAIISolvingConstrainedProblemRunner extends AbstractAlgorithmRunn
 
   /**
    * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *                               org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner
-   *                               problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.Osyczka2";

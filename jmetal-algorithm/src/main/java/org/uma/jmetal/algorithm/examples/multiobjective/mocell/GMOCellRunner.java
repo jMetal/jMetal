@@ -1,26 +1,25 @@
-package org.uma.jmetal.algorithm.examples.multiobjective;
+package org.uma.jmetal.algorithm.examples.multiobjective.mocell;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiveWithReferencePoint;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * Class to configure and run the MOCell algorithm with DM support applying the concept of
@@ -29,42 +28,26 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GMOCellRunner extends AbstractAlgorithmRunner {
+
   /**
    * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.MOCellRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "";
+  public static void main(String[] args) throws IOException {
 
-    String problemName;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0];
-      referenceParetoFront = args[1];
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
-    }
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    DoubleProblem problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection =
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection =
         new BinaryTournamentSelection<>(
             new RankingAndCrowdingDistanceComparator<>());
 
@@ -73,8 +56,8 @@ public class GMOCellRunner extends AbstractAlgorithmRunner {
     ArchiveWithReferencePoint<DoubleSolution> archive =
         new CrowdingDistanceArchiveWithReferencePoint<>(100, referencePoint);
 
-    algorithm =
-        new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
+    var algorithm =
+        new MOCellBuilder<>(problem, crossover, mutation)
             .setSelectionOperator(selection)
             .setMaxEvaluations(25000)
             .setPopulationSize(100)
@@ -89,8 +72,7 @@ public class GMOCellRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
-    }
-  }
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));  }
 }

@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective;
 
 import java.util.List;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -11,10 +10,11 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -23,35 +23,26 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 public class NSGAIIIRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws java.io.IOException
-   * @throws SecurityException
-   * @throws ClassNotFoundException Usage: three options -
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIIRunner -
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIIRunner problemName -
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
 
-    problem = ProblemFactory.loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 30.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    double crossoverDistributionIndex = 20.0;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(crossoverProbability,
+        crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
+        mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>();
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
+        new RankingAndCrowdingDistanceComparator<>());
 
-    algorithm =
+    var algorithm =
         new NSGAIIIBuilder<>(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)

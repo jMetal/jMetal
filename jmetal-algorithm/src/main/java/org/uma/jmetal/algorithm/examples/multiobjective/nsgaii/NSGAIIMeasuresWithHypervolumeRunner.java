@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
@@ -8,9 +8,12 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
@@ -26,12 +29,9 @@ public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner
 
   /**
    * @param args Command line arguments.
-   * @throws SecurityException Invoking command: java
-   *                           org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner
-   *                           problemName [referenceFront]
    */
   public static void main(String[] args)
-      throws JMetalException, InterruptedException, FileNotFoundException {
+      throws JMetalException, InterruptedException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
@@ -82,9 +82,9 @@ public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
-    }
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 
   private static class Listener implements MeasureListener<Double> {

@@ -1,18 +1,19 @@
-package org.uma.jmetal.algorithm.examples.multiobjective;
+package org.uma.jmetal.algorithm.examples.multiobjective.gde3;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
-import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 
@@ -22,43 +23,27 @@ import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
+
   /**
    * @param args Command line arguments.
-   * @throws SecurityException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.ParallelGDE3Runner problemName [referenceFront]
    */
-  public static void main(String[] args) throws FileNotFoundException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    DifferentialEvolutionSelection selection;
-    DifferentialEvolutionCrossover crossover;
+  public static void main(String[] args) throws IOException {
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    String referenceParetoFront = "";
-
-    String problemName;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0];
-      referenceParetoFront = args[1];
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
-    }
-
-    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    DoubleProblem problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     double cr = 0.5;
     double f = 0.5;
-    crossover =
+    var crossover =
         new DifferentialEvolutionCrossover(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
-    selection = new DifferentialEvolutionSelection();
+    var selection = new DifferentialEvolutionSelection();
 
     SolutionListEvaluator<DoubleSolution> evaluator =
         new MultiThreadedSolutionListEvaluator<DoubleSolution>(0);
 
-    algorithm =
+    var algorithm =
         new GDE3Builder(problem)
             .setCrossover(crossover)
             .setSelection(selection)
@@ -69,7 +54,7 @@ public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = ((GDE3) algorithm).getResult();
+    List<DoubleSolution> population = algorithm.getResult();
     long computingTime = algorithmRunner.getComputingTime();
 
     evaluator.shutdown();
@@ -77,8 +62,7 @@ public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
-    }
-  }
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));  }
 }

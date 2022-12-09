@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.moead;
 
+import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
@@ -9,9 +10,12 @@ import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 
 /**
  * Class for configuring and running the MOEA/D-IEpsilon algorithm, described in: An Improved
@@ -25,7 +29,7 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.lircmop.LIRCMOP2";
     String referenceParetoFront = "resources/referenceFrontsCSV/LIRCMOP2.csv";
 
@@ -61,6 +65,8 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    printQualityIndicators(population, referenceParetoFront);
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }

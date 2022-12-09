@@ -14,6 +14,7 @@
 package org.uma.jmetal.algorithm.examples.multiobjective;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -25,10 +26,13 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.NullMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
@@ -37,44 +41,29 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * @author Alejandro Santiago <aurelio.santiago@upalt.edu.mx>
  */
 public class MicroFAMERunner extends AbstractAlgorithmRunner {
+
   /**
    * @param args Command line arguments.
    * @throws JMetalException
    * @throws FileNotFoundException
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "";
+  public static void main(String[] args) throws JMetalException, IOException {
 
-    int evaluations = 175000; //
+    int evaluations = 175000;
     int archiveSize = 100;
-    String problemName = null;
-    if (args.length == 0) {
-      // problemName = "org.uma.jmetal.problem.multiobjective.cec2009Competition.UF6";
-      // problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      // problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
-      // problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-      evaluations = 175000;
-      referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
-    } else if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 3) {
-      problemName = args[0];
-      archiveSize = Integer.parseInt(args[1]);
-      evaluations = Integer.parseInt(args[2]);
-    }
 
-    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
+    String referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
 
-    crossover = new NullCrossover<>();
-    mutation = new NullMutation<>();
-    selection = new HVTournamentSelection(5);
-    algorithm = new MicroFAME<>(problem, evaluations, archiveSize, crossover, mutation, selection);
+    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+
+    CrossoverOperator<DoubleSolution> crossover = new NullCrossover<>();
+    MutationOperator<DoubleSolution> mutation = new NullMutation<>();
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new HVTournamentSelection(
+        5);
+
+    Algorithm<List<DoubleSolution>> algorithm = new MicroFAME<>(problem, evaluations, archiveSize,
+        crossover, mutation, selection);
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
@@ -84,8 +73,8 @@ public class MicroFAMERunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
-    }
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }

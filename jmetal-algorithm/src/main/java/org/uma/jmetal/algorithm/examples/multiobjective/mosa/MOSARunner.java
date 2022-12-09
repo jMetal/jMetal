@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.mosa;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.mosa.MOSA;
@@ -8,10 +8,13 @@ import org.uma.jmetal.algorithm.multiobjective.mosa.cooling.impl.Exponential;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
@@ -25,7 +28,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  */
 public class MOSARunner extends AbstractAlgorithmRunner {
 
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2_2D";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.2D.csv";
 
@@ -51,6 +54,8 @@ public class MOSARunner extends AbstractAlgorithmRunner {
         "Number of non-accepted solutions: " + algorithm.getNumberOfWorstAcceptedSolutions());
 
     printFinalSolutionSet(population);
-    printQualityIndicators(population, referenceParetoFront);
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }

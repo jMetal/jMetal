@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
+import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -8,9 +9,12 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.doubleproblem.impl.ComposableDoubleProblem;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 
@@ -26,7 +30,7 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
   /**
    * @param args Command line arguments.
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     String referenceParetoFront = "resources/referenceFrontsCSV/Srinivas.csv";
 
     var problem = new ComposableDoubleProblem()
@@ -64,6 +68,8 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    printQualityIndicators(population, referenceParetoFront);
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }

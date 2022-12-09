@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
@@ -13,10 +13,13 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.RankingAndDirScoreDistanceComparator;
 import org.uma.jmetal.util.fileinput.VectorFileUtils;
 
@@ -28,7 +31,7 @@ import org.uma.jmetal.util.fileinput.VectorFileUtils;
  */
 public class DNSGAIIRunner extends AbstractAlgorithmRunner {
 
-  public static void main(String[] args) throws FileNotFoundException {
+  public static void main(String[] args) throws IOException {
 
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
@@ -63,6 +66,8 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
 
     printFinalSolutionSet(population);
 
-    printQualityIndicators(population, referenceParetoFront);
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }

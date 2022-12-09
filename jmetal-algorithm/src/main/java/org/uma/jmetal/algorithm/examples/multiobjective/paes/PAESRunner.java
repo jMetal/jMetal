@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.paes;
 
+import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.paes.PAES;
@@ -7,9 +8,12 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 
 /**
  * Class for configuring and running the PAES algorithm
@@ -21,7 +25,7 @@ public class PAESRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
 
     String problemName = "org.uma.jmetal.problem.multiobjective.Kursawe";
     String referenceParetoFront = "resources/referenceFrontsCSV/Kursawe.csv";
@@ -45,6 +49,8 @@ public class PAESRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    printQualityIndicators(population, referenceParetoFront);
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }

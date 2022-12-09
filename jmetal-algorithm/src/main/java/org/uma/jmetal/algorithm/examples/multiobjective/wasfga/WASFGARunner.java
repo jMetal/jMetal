@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.wasfga;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +13,14 @@ import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 public class WASFGARunner extends AbstractAlgorithmRunner {
 
   /**
    * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *                               org.uma.jmetal.runner.multiobjective.WASFGA.WASFGABinaryRunner
-   *                               problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, IOException {
+  public static void main(String[] args) throws IOException {
     var crossover = new PMXCrossover(0.9);
 
     double mutationProbability = 0.2;
