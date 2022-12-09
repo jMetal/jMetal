@@ -2,9 +2,9 @@ package org.uma.jmetal.util.artificialdecisionmaker.impl;
 
 import java.util.List;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
-import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**

@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.mocell;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;

@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.espea.util;
 
 import java.util.Comparator;
+import org.uma.jmetal.algorithm.multiobjective.espea.ESPEA;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.ScalarizationWrapper.ScalarizationType;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;

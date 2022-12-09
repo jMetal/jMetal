@@ -4,7 +4,7 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
- * Class for running algorithms in a concurrent thread
+ * Class for running algorithms in a thread
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

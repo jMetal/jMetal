@@ -2,7 +2,6 @@ package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -10,6 +9,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.RankingAndPreferenceSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.measure.Measurable;

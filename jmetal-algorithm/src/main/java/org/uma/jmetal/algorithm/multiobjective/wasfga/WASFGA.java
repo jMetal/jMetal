@@ -2,7 +2,6 @@ package org.uma.jmetal.algorithm.multiobjective.wasfga;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.mombi.AbstractMOMBI;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
@@ -14,6 +13,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.fileinput.VectorFileUtils;
