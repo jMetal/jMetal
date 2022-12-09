@@ -62,7 +62,7 @@ public class GroupedPolynomialMutation implements MutationOperator<DoubleSolutio
 
   /* Getters */
   @Override
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return 1.0;
   }
 

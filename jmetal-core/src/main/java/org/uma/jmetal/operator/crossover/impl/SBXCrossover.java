@@ -87,7 +87,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
 
   /* Getters */
   @Override
-  public double getCrossoverProbability() {
+  public double crossoverProbability() {
     return crossoverProbability;
   }
 
@@ -196,12 +196,12 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
   }
 
   @Override
-  public int getNumberOfRequiredParents() {
+  public int numberOfRequiredParents() {
     return 2;
   }
 
   @Override
-  public int getNumberOfGeneratedChildren() {
+  public int numberOfGeneratedChildren() {
     return 2;
   }
 }

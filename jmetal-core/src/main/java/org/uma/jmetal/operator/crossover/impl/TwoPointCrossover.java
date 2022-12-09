@@ -21,17 +21,17 @@ public class TwoPointCrossover<T> implements CrossoverOperator<Solution<T>> {
   }
 
   @Override
-  public double getCrossoverProbability() {
-    return operator.getCrossoverProbability() ;
+  public double crossoverProbability() {
+    return operator.crossoverProbability() ;
   }
 
   @Override
-  public int getNumberOfRequiredParents() {
-    return operator.getNumberOfRequiredParents();
+  public int numberOfRequiredParents() {
+    return operator.numberOfRequiredParents();
   }
 
   @Override
-  public int getNumberOfGeneratedChildren() {
+  public int numberOfGeneratedChildren() {
     return 2;
   }
 }

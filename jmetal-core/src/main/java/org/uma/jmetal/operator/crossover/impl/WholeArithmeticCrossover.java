@@ -43,7 +43,7 @@ public class WholeArithmeticCrossover implements CrossoverOperator<DoubleSolutio
 
   /* Getters */
   @Override
-  public double getCrossoverProbability() {
+  public double crossoverProbability() {
     return crossoverProbability;
   }
 
@@ -97,11 +97,11 @@ public class WholeArithmeticCrossover implements CrossoverOperator<DoubleSolutio
     return offspring;
   }
 
-  public int getNumberOfRequiredParents() {
+  public int numberOfRequiredParents() {
     return 2 ;
   }
 
-  public int getNumberOfGeneratedChildren() {
+  public int numberOfGeneratedChildren() {
     return 2 ;
   }
 }

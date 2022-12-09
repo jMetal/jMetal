@@ -28,17 +28,17 @@ public class NullCrossover<S extends Solution<?>>
     return list ;
   }
 
-  public int getNumberOfRequiredParents() {
+  public int numberOfRequiredParents() {
     return 2 ;
   }
 
   @Override
-  public int getNumberOfGeneratedChildren() {
+  public int numberOfGeneratedChildren() {
     return 2;
   }
 
   @Override
-  public double getCrossoverProbability() {
+  public double crossoverProbability() {
     return 1.0;
   }
 }

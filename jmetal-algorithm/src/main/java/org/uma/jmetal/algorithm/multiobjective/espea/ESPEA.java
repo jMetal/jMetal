@@ -140,9 +140,9 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     // Chosen operator depends on archive size
     CrossoverOperator<S> chosenOperator = archive.isFull() ? fullArchiveCrossoverOperator : crossoverOperator;
 
-    List<S> matingPopulation = new ArrayList<>(chosenOperator.getNumberOfRequiredParents());
+    List<S> matingPopulation = new ArrayList<>(chosenOperator.numberOfRequiredParents());
 
-    for (int i = 0; i < chosenOperator.getNumberOfRequiredParents(); i++) {
+    for (int i = 0; i < chosenOperator.numberOfRequiredParents(); i++) {
       S solution = selectionOperator.execute(population);
       matingPopulation.add(solution);
     }

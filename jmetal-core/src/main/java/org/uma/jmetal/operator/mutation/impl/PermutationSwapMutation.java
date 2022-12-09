@@ -49,7 +49,7 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
 
   /* Getters */
   @Override
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return mutationProbability;
   }
 

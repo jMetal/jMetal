@@ -66,7 +66,7 @@ public class AGEMOEAII<S extends Solution<?>> extends AGEMOEA<S> {
 
   @Override
   protected List<S> reproduction(List<S> matingPool) {
-    int numberOfParents = crossoverOperator.getNumberOfRequiredParents();
+    int numberOfParents = crossoverOperator.numberOfRequiredParents();
 
     checkNumberOfParents(matingPool, numberOfParents);
 

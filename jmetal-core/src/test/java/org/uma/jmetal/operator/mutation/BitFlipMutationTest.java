@@ -44,7 +44,7 @@ public class BitFlipMutationTest {
   public void shouldGetMutationProbabilityReturnTheRightValue() {
     double mutationProbability = 0.1 ;
     BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
-    assertEquals(mutationProbability, mutation.getMutationProbability(), EPSILON) ;
+    assertEquals(mutationProbability, mutation.mutationProbability(), EPSILON) ;
   }
 
   @Test (expected = NullParameterException.class)

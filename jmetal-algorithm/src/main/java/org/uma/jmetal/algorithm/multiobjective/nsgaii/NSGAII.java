@@ -119,7 +119,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
    */
   @Override
   protected List<S> reproduction(List<S> matingPool) {
-    int numberOfParents = crossoverOperator.getNumberOfRequiredParents();
+    int numberOfParents = crossoverOperator.numberOfRequiredParents();
 
     checkNumberOfParents(matingPool, numberOfParents);
 

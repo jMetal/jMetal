@@ -91,7 +91,7 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
    */
   @Override
   protected List<S> reproduction(List<S> population) {
-    int numberOfParents = crossoverOperator.getNumberOfRequiredParents() ;
+    int numberOfParents = crossoverOperator.numberOfRequiredParents() ;
 
     checkNumberOfParents(population, numberOfParents);
 

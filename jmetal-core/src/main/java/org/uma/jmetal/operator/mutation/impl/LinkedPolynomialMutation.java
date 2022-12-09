@@ -82,7 +82,7 @@ public class LinkedPolynomialMutation implements MutationOperator<DoubleSolution
 
   /* Getters */
   @Override
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return mutationProbability;
   }
 

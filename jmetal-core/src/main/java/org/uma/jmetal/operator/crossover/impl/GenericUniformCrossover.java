@@ -36,7 +36,7 @@ public class GenericUniformCrossover<S extends BinarySolution> implements Crosso
 
   /* Getter */
   @Override
-  public double getCrossoverProbability() {
+  public double crossoverProbability() {
     return crossoverProbability;
   }
 
@@ -89,12 +89,12 @@ public class GenericUniformCrossover<S extends BinarySolution> implements Crosso
   }
 
   @Override
-  public int getNumberOfRequiredParents() {
+  public int numberOfRequiredParents() {
     return 2;
   }
 
   @Override
-  public int getNumberOfGeneratedChildren() {
+  public int numberOfGeneratedChildren() {
     return 2;
   }
 }

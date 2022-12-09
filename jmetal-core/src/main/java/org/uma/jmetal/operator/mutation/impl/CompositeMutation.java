@@ -35,7 +35,7 @@ public class CompositeMutation implements MutationOperator<CompositeSolution> {
 
   /* Getters */
   @Override
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return mutationProbability;
   }
 

@@ -24,7 +24,7 @@ public class CharSequenceRandomMutation implements MutationOperator<CharSequence
   }
 
   /* Getters */
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return mutationProbability;
   }
 

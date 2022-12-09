@@ -239,15 +239,15 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     return mutationType;
   }
 
-  public int getNumberOfRequiredParents() {
+  public int numberOfRequiredParents() {
     return 1 + numberOfDifferenceVectors * 2;
   }
 
-  public int getNumberOfGeneratedChildren() {
+  public int numberOfGeneratedChildren() {
     return 1;
   }
 
-  public double getCrossoverProbability() {
+  public double crossoverProbability() {
     return 1.0;
   }
 
@@ -278,9 +278,9 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     int numberOfVariables = parentSolutions.get(0).variables().size();
     int jrand = jRandomGenerator.getRandomValue(0, numberOfVariables - 1);
 
-    Double[][] parent = new Double[getNumberOfRequiredParents()][];
+    Double[][] parent = new Double[numberOfRequiredParents()][];
 
-    IntStream.range(0, getNumberOfRequiredParents())
+    IntStream.range(0, numberOfRequiredParents())
             .forEach(
                     i -> {
                       parent[i] = new Double[numberOfVariables];

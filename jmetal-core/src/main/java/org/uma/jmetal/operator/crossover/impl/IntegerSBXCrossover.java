@@ -44,7 +44,7 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
 
   /* Getters */
   @Override
-  public double getCrossoverProbability() {
+  public double crossoverProbability() {
     return crossoverProbability;
   }
 
@@ -167,11 +167,11 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
     return offspring;
   }
 
-  public int getNumberOfRequiredParents() {
+  public int numberOfRequiredParents() {
     return 2 ;
   }
 
-  public int getNumberOfGeneratedChildren() {
+  public int numberOfGeneratedChildren() {
     return 2 ;
   }
 }

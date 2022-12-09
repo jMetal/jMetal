@@ -62,7 +62,7 @@ public class GroupedAndLinkedPolynomialMutation implements MutationOperator<Doub
 
   /* Getters */
   @Override
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return 1.0;
   }
 

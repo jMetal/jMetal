@@ -64,7 +64,7 @@ public class SBXCrossoverTest {
   @Test
   public void shouldGetProbabilityReturnTheRightValue() {
     SBXCrossover crossover = new SBXCrossover(0.1, 20.0) ;
-    assertEquals(0.1, crossover.getCrossoverProbability(), EPSILON) ;
+    assertEquals(0.1, crossover.crossoverProbability(), EPSILON) ;
   }
 
   @Test

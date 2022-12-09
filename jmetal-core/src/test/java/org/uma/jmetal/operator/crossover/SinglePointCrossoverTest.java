@@ -42,7 +42,7 @@ public class SinglePointCrossoverTest {
   public void shouldGetMutationProbabilityReturnTheRightValue() {
     double crossoverProbability = 0.1 ;
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
-    assertEquals(crossoverProbability, crossover.getCrossoverProbability(), EPSILON) ;
+    assertEquals(crossoverProbability, crossover.crossoverProbability(), EPSILON) ;
   }
 
   @Test (expected = NullParameterException.class)

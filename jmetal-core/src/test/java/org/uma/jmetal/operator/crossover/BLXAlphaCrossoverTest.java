@@ -71,7 +71,7 @@ public class BLXAlphaCrossoverTest {
   @Test
   public void shouldGetProbabilityReturnTheRightValue() {
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(0.1, 0.5) ;
-    assertEquals(0.1, crossover.getCrossoverProbability(), EPSILON) ;
+    assertEquals(0.1, crossover.crossoverProbability(), EPSILON) ;
   }
 
   @Test

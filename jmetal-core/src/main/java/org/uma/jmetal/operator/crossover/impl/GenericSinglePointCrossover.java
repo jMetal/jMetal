@@ -58,7 +58,7 @@ public class GenericSinglePointCrossover<S extends BinarySolution> implements Cr
 
   /* Getter */
   @Override
-  public double getCrossoverProbability() {
+  public double crossoverProbability() {
     return crossoverProbability;
   }
 
@@ -132,12 +132,12 @@ public class GenericSinglePointCrossover<S extends BinarySolution> implements Cr
   }
 
   @Override
-  public int getNumberOfRequiredParents() {
+  public int numberOfRequiredParents() {
     return 2;
   }
 
   @Override
-  public int getNumberOfGeneratedChildren() {
+  public int numberOfGeneratedChildren() {
     return 2;
   }
 }

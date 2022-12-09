@@ -73,7 +73,7 @@ public class IntegerPolynomialMutationTest {
   @Test
   public void shouldGetMutationProbabilityReturnTheRightValue() {
     IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(0.1, 20.0) ;
-    assertEquals(0.1, mutation.getMutationProbability(), EPSILON) ;
+    assertEquals(0.1, mutation.mutationProbability(), EPSILON) ;
   }
 
   @Test

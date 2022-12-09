@@ -54,7 +54,7 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
     return maxIterations;
   }
 
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return mutationProbability;
   }
 

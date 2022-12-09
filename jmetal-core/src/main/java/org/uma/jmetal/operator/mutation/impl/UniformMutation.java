@@ -58,7 +58,7 @@ public class UniformMutation implements MutationOperator<DoubleSolution> {
   }
 
   @Override
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return mutationProbability;
   }
 

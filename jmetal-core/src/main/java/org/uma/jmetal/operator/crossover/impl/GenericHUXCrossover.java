@@ -39,7 +39,7 @@ public class GenericHUXCrossover<S extends BinarySolution> implements CrossoverO
 
   /* Getter */
   @Override
-  public double getCrossoverProbability() {
+  public double crossoverProbability() {
     return crossoverProbability;
   }
 
@@ -89,11 +89,11 @@ public class GenericHUXCrossover<S extends BinarySolution> implements CrossoverO
     return offspring;
   }
 
-  public int getNumberOfRequiredParents() {
+  public int numberOfRequiredParents() {
     return 2;
   }
 
-  public int getNumberOfGeneratedChildren() {
+  public int numberOfGeneratedChildren() {
     return 2;
   }
 }

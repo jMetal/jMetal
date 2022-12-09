@@ -18,7 +18,7 @@ public class NullMutation<S> implements MutationOperator<S> {
   }
 
   @Override
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return 1.0;
   }
 }

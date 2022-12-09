@@ -26,7 +26,7 @@ public class DifferentialEvolutionCrossoverVariation implements Variation<Double
     this.mutation = mutation;
     this.solutionIndexGenerator = solutionIndexGenerator ;
 
-    this.matingPoolSize = offspringPopulationSize * crossover.getNumberOfRequiredParents();
+    this.matingPoolSize = offspringPopulationSize * crossover.numberOfRequiredParents();
   }
 
   public DifferentialEvolutionCrossoverVariation(
@@ -42,7 +42,7 @@ public class DifferentialEvolutionCrossoverVariation implements Variation<Double
     while (offspringPopulation.size() < offspringPopulationSize) {
       crossover.setCurrentSolution(solutionList.get(solutionIndexGenerator.getValue()));
 
-      int numberOfRequiredParentsToCross = crossover.getNumberOfRequiredParents() ;
+      int numberOfRequiredParentsToCross = crossover.numberOfRequiredParents() ;
 
       List<DoubleSolution> parents = new ArrayList<>(numberOfRequiredParentsToCross);
       for (int j = 0; j < numberOfRequiredParentsToCross; j++) {

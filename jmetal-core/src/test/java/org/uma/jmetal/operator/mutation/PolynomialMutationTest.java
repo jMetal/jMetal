@@ -88,7 +88,7 @@ public class PolynomialMutationTest {
   @Test
   public void shouldGetMutationProbabilityReturnTheRightValue() {
     PolynomialMutation mutation = new PolynomialMutation(0.1, 20.0) ;
-    assertEquals(0.1, mutation.getMutationProbability(), EPSILON) ;
+    assertEquals(0.1, mutation.mutationProbability(), EPSILON) ;
   }
 
   @Test

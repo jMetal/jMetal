@@ -29,16 +29,16 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
   }
 
   @Override
-  public double getCrossoverProbability() {
+  public double crossoverProbability() {
     return probability;
   }
 
   @Override
   public List<Solution<T>> execute(List<Solution<T>> s) {
     Check.that(
-        getNumberOfRequiredParents() == s.size(),
+        numberOfRequiredParents() == s.size(),
         "Point Crossover requires + "
-            + getNumberOfRequiredParents()
+            + numberOfRequiredParents()
             + " parents, but got "
             + s.size());
 
@@ -85,12 +85,12 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
   }
 
   @Override
-  public int getNumberOfRequiredParents() {
+  public int numberOfRequiredParents() {
     return 2;
   }
 
   @Override
-  public int getNumberOfGeneratedChildren() {
+  public int numberOfGeneratedChildren() {
     return 2;
   }
 }

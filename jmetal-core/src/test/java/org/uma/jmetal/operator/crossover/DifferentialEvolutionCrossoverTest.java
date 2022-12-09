@@ -38,13 +38,13 @@ public class DifferentialEvolutionCrossoverTest {
   @Test
   public void shouldGetCrossoverProbabilityReturnOne() {
     DifferentialEvolutionCrossover crossover = new DifferentialEvolutionCrossover();
-    assertEquals(1.0, crossover.getCrossoverProbability(), EPSILON);
+    assertEquals(1.0, crossover.crossoverProbability(), EPSILON);
   }
 
   @Test
   public void shouldGetNumberOfGeneratedChildrenReturnOne() {
     DifferentialEvolutionCrossover crossover = new DifferentialEvolutionCrossover();
-    assertEquals(1.0, crossover.getNumberOfGeneratedChildren(), EPSILON);
+    assertEquals(1.0, crossover.numberOfGeneratedChildren(), EPSILON);
   }
 
   @Test

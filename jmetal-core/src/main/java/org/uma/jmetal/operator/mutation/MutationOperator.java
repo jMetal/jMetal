@@ -11,5 +11,5 @@ import org.uma.jmetal.operator.Operator;
  */
 public interface MutationOperator<Source> extends Operator<Source, Source> {
     Source execute(Source solution);
-    double getMutationProbability() ;
+    double mutationProbability() ;
 }

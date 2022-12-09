@@ -75,7 +75,7 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
 
   /* Getters */
   @Override
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return mutationProbability;
   }
 

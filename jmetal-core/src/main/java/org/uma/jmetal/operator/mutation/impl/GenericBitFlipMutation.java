@@ -38,7 +38,7 @@ public class GenericBitFlipMutation<S extends BinarySolution> implements Mutatio
 
   /* Getter */
   @Override
-  public double getMutationProbability() {
+  public double mutationProbability() {
     return mutationProbability;
   }
 
