@@ -18,7 +18,6 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.util.densityestimator.impl.GridDensityEstimator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
@@ -29,20 +28,21 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 public class MOSARunner extends AbstractAlgorithmRunner {
 
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2_2D";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.2D.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     MutationOperator<DoubleSolution> mutation =
         new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
 
-    BoundedArchive<DoubleSolution> archive = new GenericBoundedArchive<>(100,
-        new GridDensityEstimator<>(5, problem.numberOfObjectives()));
+    BoundedArchive<DoubleSolution> archive ; // = new GenericBoundedArchive<>(100, new GridDensityEstimator<>(5, problem.numberOfObjectives()));
     archive = new GenericBoundedArchive<>(100, new CrowdingDistanceDensityEstimator<>());
 
+    DoubleSolution initialSolution = problem.createSolution() ;
+    problem.evaluate(initialSolution) ;
     MOSA<DoubleSolution> algorithm =
-        new MOSA<>(problem, 50000, archive, mutation, 1.0, new Exponential(0.95));
+        new MOSA<>(initialSolution, problem, 25000, archive, mutation, 1.0, new Exponential(0.95));
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
