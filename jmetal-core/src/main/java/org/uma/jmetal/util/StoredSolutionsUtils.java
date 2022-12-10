@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.FileOutputContext;
-import org.uma.jmetal.util.point.PointSolution;
+import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.SolutionTextRepresentation;
 

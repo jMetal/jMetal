@@ -1,4 +1,4 @@
-package org.uma.jmetal.solution.impl;
+package org.uma.jmetal.solution;
 
 import static org.junit.Assert.assertEquals;
 

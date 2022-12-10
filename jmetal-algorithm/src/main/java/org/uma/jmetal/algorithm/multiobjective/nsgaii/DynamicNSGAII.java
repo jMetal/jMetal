@@ -13,7 +13,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.observable.Observable;
-import org.uma.jmetal.util.point.PointSolution;
+import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.restartstrategy.RestartStrategy;
 
 @SuppressWarnings("serial")

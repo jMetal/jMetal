@@ -15,7 +15,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.util.point.PointSolution;
+import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 /**
@@ -137,8 +137,8 @@ public class FrontNormalizerTest {
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point = new ArrayPoint(numberOfDimensions) ;
-    point.setValue(0, 2);
-    point.setValue(1, 4);
+    point.value(0, 2);
+    point.value(1, 4);
 
     front.setPoint(0, point);
 
@@ -148,8 +148,8 @@ public class FrontNormalizerTest {
     FrontNormalizer frontNormalizer = new FrontNormalizer(minimum, maximum) ;
     Front normalizedFront = frontNormalizer.normalize(front) ;
 
-    assertEquals(0.5, normalizedFront.getPoint(0).getValue(0), EPSILON) ;
-    assertEquals(1.0, normalizedFront.getPoint(0).getValue(1), EPSILON) ;
+    assertEquals(0.5, normalizedFront.getPoint(0).value(0), EPSILON) ;
+    assertEquals(1.0, normalizedFront.getPoint(0).value(1), EPSILON) ;
   }
 
   /**
@@ -168,8 +168,8 @@ public class FrontNormalizerTest {
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point = new ArrayPoint(numberOfDimensions) ;
-    point.setValue(0, 2);
-    point.setValue(1, 4);
+    point.value(0, 2);
+    point.value(1, 4);
 
     front.setPoint(0, point);
 
@@ -193,11 +193,11 @@ public class FrontNormalizerTest {
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setValue(0, 2);
-    point1.setValue(1, 4);
+    point1.value(0, 2);
+    point1.value(1, 4);
     Point point2 = new ArrayPoint(numberOfDimensions) ;
-    point2.setValue(0, -2);
-    point2.setValue(1, 3);
+    point2.value(0, -2);
+    point2.value(1, 3);
 
     front.setPoint(0, point1);
     front.setPoint(1, point2);
@@ -208,10 +208,10 @@ public class FrontNormalizerTest {
     FrontNormalizer frontNormalizer = new FrontNormalizer(minimum, maximum) ;
     Front normalizedFront = frontNormalizer.normalize(front) ;
 
-    assertEquals(0.75, normalizedFront.getPoint(0).getValue(0), EPSILON) ;
-    assertEquals(3.0/7.0, normalizedFront.getPoint(0).getValue(1), EPSILON) ;
-    assertEquals(0.5, normalizedFront.getPoint(1).getValue(0), EPSILON) ;
-    assertEquals(2.0 / 7.0, normalizedFront.getPoint(1).getValue(1), EPSILON) ;
+    assertEquals(0.75, normalizedFront.getPoint(0).value(0), EPSILON) ;
+    assertEquals(3.0/7.0, normalizedFront.getPoint(0).value(1), EPSILON) ;
+    assertEquals(0.5, normalizedFront.getPoint(1).value(0), EPSILON) ;
+    assertEquals(2.0 / 7.0, normalizedFront.getPoint(1).value(1), EPSILON) ;
   }
 
   /**
@@ -225,15 +225,15 @@ public class FrontNormalizerTest {
     int numberOfDimensions = 2 ;
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setValue(0, 2);
-    point1.setValue(1, 4);
+    point1.value(0, 2);
+    point1.value(1, 4);
     Point point2 = new ArrayPoint(numberOfDimensions) ;
-    point2.setValue(0, -2);
-    point2.setValue(1, 3);
+    point2.value(0, -2);
+    point2.value(1, 3);
 
     List<PointSolution> solutionList = new ArrayList<PointSolution>() ;
-    solutionList.add(new PointSolution(point1));
-    solutionList.add(new PointSolution(point2));
+    solutionList.add(new PointSolution(point1.values()));
+    solutionList.add(new PointSolution(point2.values()));
 
     double[] minimum = {-10, 1} ;
     double[] maximum = {6, 8} ;

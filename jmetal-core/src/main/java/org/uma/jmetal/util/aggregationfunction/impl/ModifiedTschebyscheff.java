@@ -3,12 +3,11 @@ package org.uma.jmetal.util.aggregationfunction.impl;
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 
-public class Tschebyscheff implements AggregationFunction {
+public class ModifiedTschebyscheff implements AggregationFunction {
+  private IdealPoint idealPoint ;
 
-  private IdealPoint idealPoint;
-
-  public Tschebyscheff() {
-    this.idealPoint = null;
+  public ModifiedTschebyscheff() {
+    this.idealPoint = null ;
   }
 
   @Override
@@ -20,9 +19,9 @@ public class Tschebyscheff implements AggregationFunction {
 
       double feval;
       if (weightVector[n] == 0) {
-        feval = 0.000001 * diff;
+        feval = 0.0000001 * diff;
       } else {
-        feval = diff * weightVector[n];
+        feval = diff * 1.0/weightVector[n];
       }
       if (feval > maxFun) {
         maxFun = feval;
@@ -36,7 +35,7 @@ public class Tschebyscheff implements AggregationFunction {
   @Override
   public void update(double[] vector) {
     if (idealPoint == null) {
-      idealPoint = new IdealPoint(vector.length);
+      idealPoint = new IdealPoint(vector.length) ;
     }
     idealPoint.update(vector);
   }

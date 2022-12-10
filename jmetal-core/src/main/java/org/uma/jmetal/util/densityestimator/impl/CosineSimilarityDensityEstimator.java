@@ -30,7 +30,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
 
   public CosineSimilarityDensityEstimator(Point referencePoint, boolean normalize) {
     this.referencePoint = referencePoint;
-    distance = new CosineSimilarityBetweenVectors(referencePoint.getValues());
+    distance = new CosineSimilarityBetweenVectors(referencePoint.values());
     this.normalize = normalize;
   }
 

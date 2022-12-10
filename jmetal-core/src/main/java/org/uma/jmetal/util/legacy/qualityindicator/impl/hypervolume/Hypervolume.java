@@ -32,9 +32,9 @@ public abstract class Hypervolume<S> extends GenericIndicator<S> {
       for (int j = 0; j < referencePoint.length; j++) {
         if (j == i) {
           double v = referencePoint[i] ;
-          point.setValue(j, v);
+          point.value(j, v);
         } else {
-          point.setValue(j, 0.0);
+          point.value(j, 0.0);
         }
       }
       referenceFront.setPoint(i, point);

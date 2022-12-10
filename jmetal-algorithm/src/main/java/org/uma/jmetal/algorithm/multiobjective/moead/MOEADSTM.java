@@ -324,8 +324,8 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
     // vecInd has been normalized to the range [0,1]
     for (int i = 0; i < problem.numberOfObjectives(); i++) {
-      vecInd[i] = (individual.objectives()[i] - idealPoint.getValue(i)) /
-          (nadirPoint.getValue(i) - idealPoint.getValue(i));
+      vecInd[i] = (individual.objectives()[i] - idealPoint.value(i)) /
+          (nadirPoint.value(i) - idealPoint.value(i));
     }
 
     scale = innerproduct(vecInd, lambda) / innerproduct(lambda, lambda);

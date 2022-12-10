@@ -8,7 +8,7 @@ import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.point.PointSolution;
+import org.uma.jmetal.solution.pointsolution.PointSolution;
 
 /**
  * This utility takes an input file and produces an output file containing only the non-dominated

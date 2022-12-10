@@ -45,10 +45,10 @@ public class ArrayPoint implements Point {
   public ArrayPoint(Point point) {
     Check.notNull(point);
 
-    this.point = new double[point.getDimension()];
+    this.point = new double[point.dimension()];
 
-    for (int i = 0; i < point.getDimension(); i++) {
-      this.point[i] = point.getValue(i);
+    for (int i = 0; i < point.dimension(); i++) {
+      this.point[i] = point.value(i);
     }
   }
 
@@ -94,17 +94,17 @@ public class ArrayPoint implements Point {
   }
 
   @Override
-  public int getDimension() {
+  public int dimension() {
     return point.length;
   }
 
   @Override
-  public double[] getValues() {
+  public double[] values() {
     return point;
   }
 
   @Override
-  public double getValue(int index) {
+  public double value(int index) {
     Check.that((index >= 0) && (index < point.length), "Index value invalid: " + index +
             ". The point length is: " + point.length);
 
@@ -112,7 +112,7 @@ public class ArrayPoint implements Point {
   }
 
   @Override
-  public void setValue(int index, double value) {
+  public void value(int index, double value) {
     Check.that((index >= 0) && (index < point.length), "Index value invalid: " + index +
             ". The point length is: " + point.length);
 
@@ -129,9 +129,7 @@ public class ArrayPoint implements Point {
     Check.that(point.length == this.point.length, "The point to be update have a dimension of " + point.length + " "
             + "while the parameter point has a dimension of " + point.length);
 
-    for (int i = 0; i < point.length; i++) {
-      this.point[i] = point[i] ;
-    }
+    System.arraycopy(point, 0, this.point, 0, point.length);
   }
 
   @Override

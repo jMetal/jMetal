@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.point.impl;
+package org.uma.jmetal.solution;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.util.point.PointSolution;
+import org.uma.jmetal.solution.pointsolution.PointSolution;
 
 /**
  * @author Antonio J. Nebro

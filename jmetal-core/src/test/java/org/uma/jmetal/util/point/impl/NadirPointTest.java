@@ -24,10 +24,10 @@ public class NadirPointTest {
 
     referencePoint = new NadirPoint(numberOfObjectives) ;
 
-    assertEquals(numberOfObjectives, referencePoint.getDimension()) ;
+    assertEquals(numberOfObjectives, referencePoint.dimension()) ;
 
     for (int i = 0 ; i < numberOfObjectives; i++) {
-      assertEquals(DEFAULT_INITIAL_VALUE, referencePoint.getValue(i), EPSILON) ;
+      assertEquals(DEFAULT_INITIAL_VALUE, referencePoint.value(i), EPSILON) ;
     }
   }
 
@@ -44,8 +44,8 @@ public class NadirPointTest {
     solution.objectives()[1] = 2 ;
 
     referencePoint.update(solution.objectives());
-    assertEquals(1, referencePoint.getValue(0), EPSILON) ;
-    assertEquals(2, referencePoint.getValue(1), EPSILON) ;
+    assertEquals(1, referencePoint.value(0), EPSILON) ;
+    assertEquals(2, referencePoint.value(1), EPSILON) ;
   }
 
   @Test
@@ -67,8 +67,8 @@ public class NadirPointTest {
     referencePoint.update(solution1.objectives());
     referencePoint.update(solution2.objectives());
 
-    assertEquals(1.0, referencePoint.getValue(0), EPSILON) ;
-    assertEquals(1.0, referencePoint.getValue(1), EPSILON) ;
+    assertEquals(1.0, referencePoint.value(0), EPSILON) ;
+    assertEquals(1.0, referencePoint.value(1), EPSILON) ;
   }
 
   @Test
@@ -97,9 +97,9 @@ public class NadirPointTest {
     referencePoint.update(solution2.objectives());
     referencePoint.update(solution3.objectives());
 
-    assertEquals(5.0, referencePoint.getValue(0), EPSILON) ;
-    assertEquals(6.0, referencePoint.getValue(1), EPSILON) ;
-    assertEquals(5.5, referencePoint.getValue(2), EPSILON) ;
+    assertEquals(5.0, referencePoint.value(0), EPSILON) ;
+    assertEquals(6.0, referencePoint.value(1), EPSILON) ;
+    assertEquals(5.5, referencePoint.value(2), EPSILON) ;
   }
 
   @Test
@@ -128,9 +128,9 @@ public class NadirPointTest {
 
     referencePoint.update(solutionList);
 
-    assertEquals(5.0, referencePoint.getValue(0), EPSILON) ;
-    assertEquals(6.0, referencePoint.getValue(1), EPSILON) ;
-    assertEquals(5.5, referencePoint.getValue(2), EPSILON) ;
+    assertEquals(5.0, referencePoint.value(0), EPSILON) ;
+    assertEquals(6.0, referencePoint.value(1), EPSILON) ;
+    assertEquals(5.5, referencePoint.value(2), EPSILON) ;
   }
 
   @Test
@@ -138,8 +138,8 @@ public class NadirPointTest {
     Point point = new ArrayPoint(new double[]{2, 3, 3}) ;
 
     point.set(new double[]{5, 6, 7}) ;
-    assertEquals(5, point.getValue(0), EPSILON);
-    assertEquals(6, point.getValue(1), EPSILON);
-    assertEquals(7, point.getValue(2), EPSILON);
+    assertEquals(5, point.value(0), EPSILON);
+    assertEquals(6, point.value(1), EPSILON);
+    assertEquals(7, point.value(2), EPSILON);
   }
 }

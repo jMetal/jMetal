@@ -61,7 +61,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     // initialize the distance
     for (int i = 0; i < populationSize; i++) {
       double distance = calculateDistance2(
-          population.get(i), lambda[i], idealPoint.getValues(), nadirPoint.getValues());
+          population.get(i), lambda[i], idealPoint.values(), nadirPoint.values());
       subregionDist[i][i] = distance;
     }
 
@@ -214,7 +214,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   public void updateArchive(S indiv) {
 
     // find the location of 'indiv'
-    setLocation(indiv, idealPoint.getValues(), nadirPoint.getValues());
+    setLocation(indiv, idealPoint.values(), nadirPoint.values());
     int location = (int) indiv.attributes().get("region");
 
     numRanks = nondominated_sorting_add(indiv);

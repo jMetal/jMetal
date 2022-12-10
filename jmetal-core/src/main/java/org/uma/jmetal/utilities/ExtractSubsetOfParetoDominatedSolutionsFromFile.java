@@ -12,7 +12,7 @@ import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.util.point.PointSolution;
+import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 /**
@@ -45,7 +45,7 @@ public class ExtractSubsetOfParetoDominatedSolutionsFromFile {
     List<PointSolution> solutions = lines
         .filter(line -> !line.equals(""))
         .map(line -> parseLineContainingObjectives(line))
-        .map(vector -> new PointSolution(new ArrayPoint(vector)))
+        .map(vector -> new PointSolution(new ArrayPoint(vector).values()))
         .collect(
             Collectors.toList());
 

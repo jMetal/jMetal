@@ -22,13 +22,13 @@ public class PointDimensionComparatorTest {
 
   @Before public void setup() {
     point1 = new ArrayPoint(2) ;
-    point1.setValue(0, 1.0);
-    point1.setValue(1, -2.0);
+    point1.value(0, 1.0);
+    point1.value(1, -2.0);
 
     point2 = new ArrayPoint(3) ;
-    point2.setValue(0, 1.0);
-    point2.setValue(1, -3.0);
-    point2.setValue(2, 5.0);
+    point2.value(0, 1.0);
+    point2.value(1, -3.0);
+    point2.value(2, 5.0);
   }
 
   @After public void clean() {
@@ -43,14 +43,14 @@ public class PointDimensionComparatorTest {
 
   @Test public void shouldCompareReturnMinusOneIfTheFirstValueIsLower() throws Exception {
     comparator = new PointDimensionComparator(0) ;
-    point1.setValue(0, 0.0);
+    point1.value(0, 0.0);
 
     assertEquals(-1, comparator.compare(point1, point2)) ;
   }
 
   @Test public void shouldCompareReturnPlusOneIfTheFirstValueIsGreater() throws Exception {
     comparator = new PointDimensionComparator(0) ;
-    point1.setValue(0, 3.0);
+    point1.value(0, 3.0);
 
     assertEquals(1, comparator.compare(point1, point2)) ;
   }

@@ -566,7 +566,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     org.uma.jmetal.util.legacy.front.Front invertedFront;
     invertedFront = FrontUtils.getInvertedFront(front);
 
-    int numberOfObjectives = referenceFront.getPoint(0).getDimension();
+    int numberOfObjectives = referenceFront.getPoint(0).dimension();
 
     // STEP4. The hypervolume (control is passed to the Java version of Zitzler
     // code)
@@ -606,8 +606,8 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       for (int i = 0; i < invertedFront.getNumberOfPoints(); i++) {
         org.uma.jmetal.util.point.Point point = invertedFront.getPoint(i);
 
-        for (int j = 0; j < point.getDimension(); j++) {
-          point.setValue(j, point.getValue(j) + offsets[j]);
+        for (int j = 0; j < point.dimension(); j++) {
+          point.value(j, point.value(j) + offsets[j]);
         }
       }
 

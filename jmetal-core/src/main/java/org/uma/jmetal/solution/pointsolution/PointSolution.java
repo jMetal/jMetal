@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.point;
+package org.uma.jmetal.solution.pointsolution;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.point.Point;
 
 /**
  * Solution used to wrap a {@link Point} object. Only objectives are used.
@@ -14,7 +15,7 @@ import org.uma.jmetal.solution.Solution;
  */
 @SuppressWarnings("serial")
 public class PointSolution implements Solution<Double> {
-  private int numberOfObjectives;
+  final private int numberOfObjectives;
   private double[] objectives;
   protected Map<Object, Object> attributes = new HashMap<>();
 
@@ -54,13 +55,11 @@ public class PointSolution implements Solution<Double> {
    *
    * @param point
    */
-  public PointSolution(Point point) {
-    this.numberOfObjectives = point.getDimension();
+  public PointSolution(double[] point) {
+    numberOfObjectives = point.length;
     objectives = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = point.getValue(i);
-    }
+    System.arraycopy(point, 0, this.objectives, 0, numberOfObjectives);
   }
 
   /**
@@ -72,22 +71,7 @@ public class PointSolution implements Solution<Double> {
     this.numberOfObjectives = solution.objectives().length;
     objectives = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = solution.objectives()[i];
-    }
-  }
-
-  /**
-   * Copy constructor
-   *
-   * @param point
-   */
-  public PointSolution(PointSolution point) {
-    this(point.objectives().length);
-
-    for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = point.objectives()[i];
-    }
+    System.arraycopy(solution.objectives(), 0, this.objectives, 0, numberOfObjectives);
   }
 
   @Override

@@ -38,20 +38,20 @@ An example of constrained problem is `Srinivas <https://github.com/jMetal/jMetal
 
     /** Constructor */
     public Srinivas()  {
-      setNumberOfVariables(2);
-      setNumberOfObjectives(2);
-      setNumberOfConstraints(2);
-      setName("Srinivas");
+      int numberOfVariables = 2 ;
+      numberOfObjectives(2);
+      numberOfConstraints(2);
+      name("Srinivas");
 
-      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+      List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+      List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-      for (int i = 0; i < getNumberOfVariables(); i++) {
+      for (int i = 0; i < numberOfVariables; i++) {
         lowerLimit.add(-20.0);
         upperLimit.add(20.0);
       }
 
-      setVariableBounds(lowerLimit, upperLimit);
+      variableBounds(lowerLimit, upperLimit);
     }
 
     /** Evaluate() method */
@@ -175,4 +175,4 @@ Given two, solutions, the `OverallConstraintViolationComparator <https://github.
     }
   }
 
-Note that the violation degree of solution is a negative number, so in the comparisons between solutions the higher the value the better.
+Note that the violation degree of solution is a negative number.

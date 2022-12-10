@@ -37,11 +37,11 @@ public class ArrayPointTest {
   public void shouldConstructAPointFromOtherPointReturnAnIdenticalPoint() {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
-    point.setValue(0, 1.0);
-    point.setValue(1, -2.0);
-    point.setValue(2, 45.5);
-    point.setValue(3, -323.234);
-    point.setValue(4, 2344234.23424);
+    point.value(0, 1.0);
+    point.value(1, -2.0);
+    point.value(2, 45.5);
+    point.value(3, -323.234);
+    point.value(4, 2344234.23424);
 
     Point newPoint = new ArrayPoint(point) ;
 
@@ -101,7 +101,7 @@ public class ArrayPointTest {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
-    assertEquals(dimension, point.getDimension());
+    assertEquals(dimension, point.dimension());
   }
 
   @Test
@@ -112,7 +112,7 @@ public class ArrayPointTest {
     Point point = new ArrayPoint(dimension) ;
     ReflectionTestUtils.setField(point, "point", array);
 
-    assertArrayEquals(array, point.getValues(), EPSILON);
+    assertArrayEquals(array, point.values(), EPSILON);
   }
 
   @Test
@@ -123,11 +123,11 @@ public class ArrayPointTest {
     Point point = new ArrayPoint(dimension) ;
     ReflectionTestUtils.setField(point, "point", array);
 
-    assertEquals(1.0, point.getValue(0), EPSILON) ;
-    assertEquals(-2.0, point.getValue(1), EPSILON) ;
-    assertEquals(45.5, point.getValue(2), EPSILON) ;
-    assertEquals(-323.234, point.getValue(3), EPSILON) ;
-    assertEquals(Double.MAX_VALUE, point.getValue(4), EPSILON) ;
+    assertEquals(1.0, point.value(0), EPSILON) ;
+    assertEquals(-2.0, point.value(1), EPSILON) ;
+    assertEquals(45.5, point.value(2), EPSILON) ;
+    assertEquals(-323.234, point.value(3), EPSILON) ;
+    assertEquals(Double.MAX_VALUE, point.value(4), EPSILON) ;
   }
 
   @Test (expected = InvalidConditionException.class)
@@ -135,19 +135,19 @@ public class ArrayPointTest {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
-    point.getValue(-1) ;
-    point.getValue(5) ;
+    point.value(-1) ;
+    point.value(5) ;
   }
 
   @Test
   public void shouldSetDimensionValueAssignTheCorrectValue() {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
-    point.setValue(0, 1.0);
-    point.setValue(1, -2.0);
-    point.setValue(2, 45.5);
-    point.setValue(3, -323.234);
-    point.setValue(4, Double.MAX_VALUE);
+    point.value(0, 1.0);
+    point.value(1, -2.0);
+    point.value(2, 45.5);
+    point.value(3, -323.234);
+    point.value(4, Double.MAX_VALUE);
 
     double[] array = {1.0, -2.0, 45.5, -323.234, Double.MAX_VALUE} ;
 
@@ -159,19 +159,19 @@ public class ArrayPointTest {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
-    point.setValue(-1, 2.2) ;
-    point.setValue(5, 2.0) ;
+    point.value(-1, 2.2) ;
+    point.value(5, 2.0) ;
   }
 
   @Test
   public void shouldEqualsReturnTrueIfThePointsAreIdentical() {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
-    point.setValue(0, 1.0);
-    point.setValue(1, -2.0);
-    point.setValue(2, 45.5);
-    point.setValue(3, -323.234);
-    point.setValue(4, Double.MAX_VALUE);
+    point.value(0, 1.0);
+    point.value(1, -2.0);
+    point.value(2, 45.5);
+    point.value(3, -323.234);
+    point.value(4, Double.MAX_VALUE);
 
     Point newPoint = new ArrayPoint(point) ;
 
@@ -191,14 +191,14 @@ public class ArrayPointTest {
   public void shouldEqualsReturnFalseIfThePointsAreNotIdentical() {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
-    point.setValue(0, 1.0);
-    point.setValue(1, -2.0);
-    point.setValue(2, 45.5);
-    point.setValue(3, -323.234);
-    point.setValue(4, Double.MAX_VALUE);
+    point.value(0, 1.0);
+    point.value(1, -2.0);
+    point.value(2, 45.5);
+    point.value(3, -323.234);
+    point.value(4, Double.MAX_VALUE);
 
     Point newPoint = new ArrayPoint(point) ;
-    newPoint.setValue(0, -1.0);
+    newPoint.value(0, -1.0);
 
     assertFalse(point.equals(newPoint));
   }
@@ -208,9 +208,9 @@ public class ArrayPointTest {
    Point point = new ArrayPoint(new double[]{2, 3, 3}) ;
 
    point.set(new double[]{5, 6, 7}) ;
-   assertEquals(5, point.getValue(0), EPSILON);
-   assertEquals(6, point.getValue(1), EPSILON);
-   assertEquals(7, point.getValue(2), EPSILON);
+   assertEquals(5, point.value(0), EPSILON);
+   assertEquals(6, point.value(1), EPSILON);
+   assertEquals(7, point.value(2), EPSILON);
  }
 
   @Test
@@ -234,11 +234,11 @@ public class ArrayPointTest {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
-    point.setValue(0, 1.0);
-    point.setValue(1, -2.0);
-    point.setValue(2, 45.5);
-    point.setValue(3, -323.234);
-    point.setValue(4, Double.MAX_VALUE);
+    point.value(0, 1.0);
+    point.value(1, -2.0);
+    point.value(2, 45.5);
+    point.value(3, -323.234);
+    point.value(4, Double.MAX_VALUE);
 
     double[] array = {1.0, -2.0, 45.5, -323.234, Double.MAX_VALUE} ;
 

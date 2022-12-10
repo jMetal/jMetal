@@ -24,10 +24,10 @@ public class IdealPointTest {
 
     referencePoint = new IdealPoint(numberOfObjectives) ;
 
-    assertEquals(numberOfObjectives, referencePoint.getDimension()) ;
+    assertEquals(numberOfObjectives, referencePoint.dimension()) ;
 
     for (int i = 0 ; i < numberOfObjectives; i++) {
-      assertEquals(DEFAULT_INITIAL_VALUE, referencePoint.getValue(i), EPSILON) ;
+      assertEquals(DEFAULT_INITIAL_VALUE, referencePoint.value(i), EPSILON) ;
     }
   }
 
@@ -44,8 +44,8 @@ public class IdealPointTest {
 
     referencePoint.update(solution.objectives());
 
-    assertEquals(1.0, referencePoint.getValue(0), EPSILON) ;
-    assertEquals(2.0, referencePoint.getValue(1), EPSILON) ;
+    assertEquals(1.0, referencePoint.value(0), EPSILON) ;
+    assertEquals(2.0, referencePoint.value(1), EPSILON) ;
     assertArrayEquals(new double[]{1.0, 2.0}, solution.objectives(), EPSILON);
   }
 
@@ -67,8 +67,8 @@ public class IdealPointTest {
     referencePoint.update(solution1.objectives());
     referencePoint.update(solution2.objectives());
 
-    assertEquals(0.0, referencePoint.getValue(0), EPSILON) ;
-    assertEquals(0.0, referencePoint.getValue(1), EPSILON) ;
+    assertEquals(0.0, referencePoint.value(0), EPSILON) ;
+    assertEquals(0.0, referencePoint.value(1), EPSILON) ;
   }
 
   @Test
@@ -97,9 +97,9 @@ public class IdealPointTest {
     referencePoint.update(solution2.objectives());
     referencePoint.update(solution3.objectives());
 
-    assertEquals(0.2, referencePoint.getValue(0), EPSILON) ;
-    assertEquals(1.0, referencePoint.getValue(1), EPSILON) ;
-    assertEquals(1.5, referencePoint.getValue(2), EPSILON) ;
+    assertEquals(0.2, referencePoint.value(0), EPSILON) ;
+    assertEquals(1.0, referencePoint.value(1), EPSILON) ;
+    assertEquals(1.5, referencePoint.value(2), EPSILON) ;
   }
 
   @Test
@@ -107,8 +107,8 @@ public class IdealPointTest {
     Point point = new ArrayPoint(new double[]{2, 3, 3}) ;
 
     point.set(new double[]{5, 6, 7}) ;
-    assertEquals(5, point.getValue(0), EPSILON);
-    assertEquals(6, point.getValue(1), EPSILON);
-    assertEquals(7, point.getValue(2), EPSILON);
+    assertEquals(5, point.value(0), EPSILON);
+    assertEquals(6, point.value(1), EPSILON);
+    assertEquals(7, point.value(2), EPSILON);
   }
 }

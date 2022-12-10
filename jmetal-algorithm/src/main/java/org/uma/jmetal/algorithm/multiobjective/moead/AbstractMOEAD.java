@@ -280,7 +280,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
       double maxFun = -1.0e+30;
 
       for (int n = 0; n < problem.numberOfObjectives(); n++) {
-        double diff = Math.abs(individual.objectives()[n] - idealPoint.getValue(n));
+        double diff = Math.abs(individual.objectives()[n] - idealPoint.value(n));
 
         double feval;
         if (lambda[n] == 0) {
@@ -309,14 +309,14 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
       d1 = d2 = nl = 0.0;
 
       for (int i = 0; i < problem.numberOfObjectives(); i++) {
-        d1 += (individual.objectives()[i] - idealPoint.getValue(i)) * lambda[i];
+        d1 += (individual.objectives()[i] - idealPoint.value(i)) * lambda[i];
         nl += Math.pow(lambda[i], 2.0);
       }
       nl = Math.sqrt(nl);
       d1 = Math.abs(d1) / nl;
 
       for (int i = 0; i < problem.numberOfObjectives(); i++) {
-        d2 += Math.pow((individual.objectives()[i] - idealPoint.getValue(i)) - d1 * (lambda[i] / nl), 2.0);
+        d2 += Math.pow((individual.objectives()[i] - idealPoint.value(i)) - d1 * (lambda[i] / nl), 2.0);
       }
       d2 = Math.sqrt(d2);
 

@@ -31,18 +31,18 @@ public class LexicographicalPointComparator implements Comparator<Point> {
 
     // Determine the first i such as pointOne[i] != pointTwo[i];
     int index = 0;
-    while ((index < pointOne.getDimension())
-        && (index < pointTwo.getDimension())
-        && pointOne.getValue(index) == pointTwo.getValue(index)) {
+    while ((index < pointOne.dimension())
+        && (index < pointTwo.dimension())
+        && pointOne.value(index) == pointTwo.value(index)) {
       index++;
     }
 
     int result = 0 ;
-    if ((index >= pointOne.getDimension()) || (index >= pointTwo.getDimension())) {
+    if ((index >= pointOne.dimension()) || (index >= pointTwo.dimension())) {
       result = 0;
-    } else if (pointOne.getValue(index) < pointTwo.getValue(index)) {
+    } else if (pointOne.value(index) < pointTwo.value(index)) {
       result = -1;
-    } else if (pointOne.getValue(index) > pointTwo.getValue(index)) {
+    } else if (pointOne.value(index) > pointTwo.value(index)) {
       result = 1;
     }
     return result ;
