@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.comparator.LexicographicalPointComparator;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.util.comparator.LexicographicalPointComparator;
 
 /**
  * @author Antonio J. Nebro
@@ -24,14 +24,14 @@ public class LexicographicalPointComparatorTest {
     comparator = new LexicographicalPointComparator() ;
   }
 
-  @Test(expected = JMetalException.class)
+  @Test(expected = NullParameterException.class)
   public void shouldFirstPointToCompareEqualsToNullRaiseAnException() {
     point2 = new ArrayPoint(2) ;
 
     comparator.compare(null, point2);
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = NullParameterException.class)
   public void shouldSecondPointToCompareEqualsToNullRaiseAnException() {
     point1 = new ArrayPoint(2) ;
 

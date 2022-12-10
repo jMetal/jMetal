@@ -1,7 +1,7 @@
-package org.uma.jmetal.util.point.util.comparator;
+package org.uma.jmetal.util.point.comparator;
 
 import java.util.Comparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.point.Point;
 
 /**
@@ -16,15 +16,14 @@ public class PointDimensionComparator implements Comparator<Point> {
   /**
    * Stores the value of the index to compare
    */
-  private int index;
+  private final int index;
 
   /**
    * Constructor
    */
   public PointDimensionComparator(int index) {
-    if (index < 0) {
-      throw new JMetalException("The index value is negative");
-    }
+    Check.valueIsNotNegative(index);
+
     this.index = index;
   }
 
@@ -37,17 +36,13 @@ public class PointDimensionComparator implements Comparator<Point> {
    */
   @Override
   public int compare(Point pointOne, Point pointTwo) {
-    if (pointOne ==  null) {
-      throw new JMetalException("PointOne is null") ;
-    } else if (pointTwo == null) {
-      throw new JMetalException("PointTwo is null") ;
-    } else if (index >= pointOne.dimension()) {
-      throw new JMetalException("The index value " + index
-          + " is out of range (0,  " + (pointOne.dimension()-1) + ")") ;
-    } else if (index >= pointTwo.dimension()) {
-      throw new JMetalException("The index value " + index
+    Check.notNull(pointOne);
+    Check.notNull(pointTwo);
+    Check.that(index < pointOne.dimension(), "The index value " + index
+        + " is out of range (0,  " + (pointOne.dimension()-1) + ")");
+    Check.that(index < pointTwo.dimension(),
+      "The index value " + index
           + " is out of range (0,  " + (pointTwo.dimension()-1) + ")") ;
-    }
 
     return Double.compare(pointOne.value(index), pointTwo.value(index));
   }

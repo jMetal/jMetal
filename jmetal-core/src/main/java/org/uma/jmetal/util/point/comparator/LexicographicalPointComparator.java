@@ -1,7 +1,7 @@
-package org.uma.jmetal.util.point.util.comparator;
+package org.uma.jmetal.util.point.comparator;
 
 import java.util.Comparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.point.Point;
 
 /**
@@ -23,11 +23,8 @@ public class LexicographicalPointComparator implements Comparator<Point> {
    */
   @Override
   public int compare(Point pointOne, Point pointTwo) {
-    if (pointOne ==  null) {
-      throw new JMetalException("PointOne is null") ;
-    } else if (pointTwo == null) {
-      throw new JMetalException("PointTwo is null");
-    }
+    Check.notNull(pointOne);
+    Check.notNull(pointTwo);
 
     // Determine the first i such as pointOne[i] != pointTwo[i];
     int index = 0;

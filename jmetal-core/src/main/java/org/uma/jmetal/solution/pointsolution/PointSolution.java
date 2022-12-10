@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.point.Point;
 
 /**
- * Solution used to wrap a {@link Point} object. Only objectives are used.
+ * Solution used to wrap a point, i.e., an array of double values which are considered as objective
+ * values.
  *
  * @author Antonio J. Nebro
  */

@@ -5,10 +5,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.NegativeValueException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.comparator.PointDimensionComparator;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.util.comparator.PointDimensionComparator;
 
 /**
  * @author Antonio J. Nebro
@@ -55,24 +57,24 @@ public class PointDimensionComparatorTest {
     assertEquals(1, comparator.compare(point1, point2)) ;
   }
 
-  @Test (expected = JMetalException.class)
-  public void shouldIndexLessThanZeroRaiseAnException() throws Exception {
+  @Test (expected = NegativeValueException.class)
+  public void shouldIndexLessThanZeroRaiseAnException()  {
     comparator = new PointDimensionComparator(-1) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = NullParameterException.class)
   public void shouldFirstPointToCompareEqualsToNullRaiseAnException() throws Exception {
     comparator = new PointDimensionComparator(0) ;
     comparator.compare(null, point2);
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = NullParameterException.class)
   public void shouldSecondPointToCompareEqualsToNullRaiseAnException() throws Exception {
     comparator = new PointDimensionComparator(0) ;
     comparator.compare(point1, null);
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = InvalidConditionException.class)
   public void shouldIndexValueGreaterThanFirstPointDimensionsRaiseAnException() throws Exception {
     point1 = new ArrayPoint(3) ;
     point2 = new ArrayPoint(6) ;
@@ -80,7 +82,7 @@ public class PointDimensionComparatorTest {
     comparator.compare(point1, point2);
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = InvalidConditionException.class)
   public void shouldIndexValueGreaterThanSecondPointDimensionsRaiseAnException() throws Exception {
     point1 = new ArrayPoint(6) ;
     point2 = new ArrayPoint(3) ;
