@@ -15,6 +15,5 @@ public interface Solution<T> extends Serializable {
   double[] objectives() ;
   double[] constraints() ;
   Map<Object,Object> attributes() ;
-
   Solution<T> copy() ;
 }

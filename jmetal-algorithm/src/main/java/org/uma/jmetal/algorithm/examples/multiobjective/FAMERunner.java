@@ -47,7 +47,7 @@ public class FAMERunner extends AbstractAlgorithmRunner {
         new SpatialSpreadDeviationSelection<>(5);
 
     int populationSize = 25;
-    int archiveSize = 200;
+    int archiveSize = 100;
     int maxEvaluations = 45000;
 
     Algorithm<List<DoubleSolution>> algorithm =
