@@ -1,4 +1,4 @@
-package org.uma.jmetal.solution.util.repairsolution;
+package org.uma.jmetal.solution.doublesolution.repairsolution;
 
 import java.io.Serializable;
 

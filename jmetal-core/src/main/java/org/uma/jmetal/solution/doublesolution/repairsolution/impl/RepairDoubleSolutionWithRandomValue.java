@@ -1,6 +1,6 @@
-package org.uma.jmetal.solution.util.repairsolution.impl;
+package org.uma.jmetal.solution.doublesolution.repairsolution.impl;
 
-import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
+import org.uma.jmetal.solution.doublesolution.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
