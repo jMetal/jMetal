@@ -10,7 +10,6 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
  *
  * @author Antonio J. Nebro
  */
-@SuppressWarnings("serial")
 public class GenericBoundedArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
   private Comparator<S> comparator;
   private DensityEstimator<S> densityEstimator ;

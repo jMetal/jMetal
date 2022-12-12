@@ -8,7 +8,6 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 /**
  * @author Antonio J. Nebro
  */
-@SuppressWarnings("serial")
 public class MultiThreadedSolutionListEvaluator<S> implements SolutionListEvaluator<S> {
 
   private final int numberOfThreads;
@@ -21,7 +20,8 @@ public class MultiThreadedSolutionListEvaluator<S> implements SolutionListEvalua
       System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism",
           "" + this.numberOfThreads);
     }
-    JMetalLogger.logger.info("Number of cores: " + numberOfThreads);
+    String message = "Number of cores: " + numberOfThreads ;
+    JMetalLogger.logger.info(message);
   }
 
   @Override
@@ -31,7 +31,7 @@ public class MultiThreadedSolutionListEvaluator<S> implements SolutionListEvalua
     return solutionList;
   }
 
-  public int getNumberOfThreads() {
+  public int numberOfThreads() {
     return numberOfThreads;
   }
 
