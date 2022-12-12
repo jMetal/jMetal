@@ -18,7 +18,9 @@ public class PenaltyBoundaryIntersection implements AggregationFunction {
 
   @Override
   public double compute(double[] vector, double[] weightVector) {
-    double d1, d2, nl;
+    double d1;
+    double d2;
+    double nl;
 
     d1 = d2 = nl = 0.0;
 

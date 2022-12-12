@@ -9,7 +9,6 @@ import org.uma.jmetal.util.archive.BoundedArchive;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @param <S>
  */
-@SuppressWarnings("serial")
 public abstract class AbstractBoundedArchive<S extends Solution<?>> implements BoundedArchive<S> {
   protected NonDominatedSolutionListArchive<S> archive;
   protected int maxSize;
