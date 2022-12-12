@@ -7,7 +7,7 @@ Using MNDS in NSGA-II
 :Version: Draft
 :Date: 2020-2-19
 
-Merge Non-Dominated Sorting Algorithm (MNDS) is a dominance ranking method intended to accelerate the running times of Pareto-based multi-objectives metaheuristics such as NSGA-II. The algorithm is described in:  `Javier Moreno, Daniel Rodríguez, Antonio J. Nebro, Jose A. Lozano, "Merge Nondominated Sorting Algorithm for Many-Objective Optimization". IEEE Transactions on Cybernetics. In press (2020) <https://ieeexplore.ieee.org/document/9000950>`_.
+Merge Non-Dominated Sorting Algorithm (MNDS) is a dominance ranking method intended to accelerate the running times of Pareto-based multi-objectives metaheuristics such as NSGA-II. The algorithm is described in:  `Javier Moreno, Daniel Rodríguez, Antonio J. Nebro, Jose A. Lozano, "Merge Nondominated Sorting Algorithm for Many-Objective Optimization". IEEE Transactions on Cybernetics. <https://ieeexplore.ieee.org/document/9000950>`_.
 
 The implementation of NSGA-II in jMetal allows to indicate the dominance ranking algorithm as a parameter. An example is shown in class `NSGAIIWithMNDSRankingExample  <https://github.com/jMetal/jMetal/blob/master/jmetal-experimental/src/main/java/org/uma/jmetal/experimental/componentbasedalgorithm/example/multiobjective/nsgaii/NSGAIIWithMNDSRankingExample.java>`_:
 

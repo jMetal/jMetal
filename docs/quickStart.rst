@@ -77,7 +77,7 @@ The last step is to run NSGA-II, get the result and store the found solutions:
     List<DoubleSolution> population = algorithm.getResult();
     printFinalSolutionSet(population);
 
-By the default, the solutions (Pareto set approximation) and their corresponding function values (Pareto front approximation) are stored in two CSV files called ``VAR.csv`` and ``FUN.csv`` respectively. When plotting the ``FUN.csv``, the result should be similar to this plot:
+By the default, the solutions (Pareto set approximation) and their corresponding function values (Pareto front approximation) are stored in two CSV files called ``VAR.csv`` and ``FUN.csv`` respectively. When plotting the ``FUN.csv``, the result should be similar to this image:
 
 .. image:: resources/figures/KursaweNSGAII.png
    :scale: 50 %

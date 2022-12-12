@@ -5,7 +5,7 @@ Component-based algorithms
 
 :Author: Antonio J. Nebro
 :Version: 1.0
-:Date: 2022-7-11
+:Date: 2022-12-12
 
 The design and architecture of the metaheuristics included in jMetal is probably the feature that has evolved
 the most since the start of the project in 2006. In first versions, the implementation of a metaheuristic required
@@ -27,7 +27,7 @@ at the cost of having to take into account the use of templates,
 which has proved cumbersome for some researchers, and the consequence is that there are still people
 using jMetal 4.5.
 
-Now, in the incoming major release of jMetal (version 6.0), we propose a new architecture for the
+Now, in the current release of jMetal (version 6.0), we propose a new architecture for the
 design and implementation of metaheuristics. The main reason has to do with the fact that we are
 currently interested in using jMetal for the auto-configuration and auto-design of algorithms,
 and the current architecture has limitations for this, as discussed in the paper
@@ -38,10 +38,10 @@ implementing a given algorithm requires to add the proper components to the temp
 architecture allow metaheuristics to be highly configurable without the need of defining sub-clases .
 Furthermore, the templates are observable entities, according to the Observer pattern, so observers entities
 can register into them and be notified when the state of the algorithm changes (e.g., a real chart observer
-can receive the population after each algorithm interation to plot it).
+can receive the population after each algorithm iteration to plot it).
 
 Contrarily to the approach adopted in jMetal 5.0, in jMetal 6.0 the new architecture is not going
-to replace the former one. There are some reasons for this, starting with the aforementioned comment about
+to replace the former one. There are some reasons for taking this decision, starting with the aforementioned comment about
 jMetal users who are comfortable with the current implementation and are probably not interested
 in learning another way of developing or using the algorithms. Another reason is that algorithms
 having tightly related components can be difficult to be implemented with the component-
