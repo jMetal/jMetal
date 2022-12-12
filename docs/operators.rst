@@ -47,5 +47,18 @@ In general, operators are related to the types of solutions to which they apply.
 
   public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution>
 
+The currently implemented operators are included in the next figures:
+
+.. figure:: resources/figures/crossoverOperators.png
+   :scale: 40 %
+   :alt: Crossover operators.
+
+.. figure:: resources/figures/mutationOperators.png
+   :scale: 40 %
+   :alt: Mutation operators.
+
+.. figure:: resources/figures/selectionOperators.png
+   :scale: 40 %
+   :alt: Selection operators.
 
 

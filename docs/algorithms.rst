@@ -7,7 +7,7 @@ Algorithms
 :Version: 1.0
 :Date: 2022-12-1
 
-A metaheuristic in jMetal 5 is an entity that implements the ``Algorithm`` interface (package ``org.uma.jmetal.algorithm``
+A metaheuristic in jMetal is an entity that implements the ``Algorithm`` interface (package ``org.uma.jmetal.algorithm``
 in sub-project ``jmetal-core``:
 
 .. code-block:: java
