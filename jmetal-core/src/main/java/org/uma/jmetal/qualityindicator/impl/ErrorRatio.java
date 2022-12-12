@@ -73,24 +73,22 @@ public class ErrorRatio extends QualityIndicator {
     int numberOfObjectives = referenceFront[0].length ;
     double sum = 0;
 
-    for (int i = 0; i < front.length; i++) {
-      double[] currentPoint = front[i];
+    for (double[] currentPoint : front) {
       boolean thePointIsInTheParetoFront = false;
-      for (int j = 0; j < referenceFront.length; j++) {
-        double[] currentParetoFrontPoint = referenceFront[j];
+      for (double[] currentParetoFrontPoint : referenceFront) {
         boolean found = true;
         for (int k = 0; k < numberOfObjectives; k++) {
-          if(currentPoint[k] != currentParetoFrontPoint[k]){
+          if (currentPoint[k] != currentParetoFrontPoint[k]) {
             found = false;
             break;
           }
         }
-        if(found){
+        if (found) {
           thePointIsInTheParetoFront = true;
           break;
         }
       }
-      if(!thePointIsInTheParetoFront){
+      if (!thePointIsInTheParetoFront) {
         sum++;
       }
     }
@@ -98,6 +96,7 @@ public class ErrorRatio extends QualityIndicator {
     return sum / front.length;
   }
 
+  @Override
   public void setReferenceFront(double[][] referenceFront) {
     this.referenceFront = referenceFront;
   }

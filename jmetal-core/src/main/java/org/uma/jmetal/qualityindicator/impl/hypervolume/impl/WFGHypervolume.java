@@ -16,12 +16,6 @@ import org.uma.jmetal.util.errorchecking.Check;
 public class WFGHypervolume extends Hypervolume {
 
   /**
-   * Default constructor
-   */
-  public WFGHypervolume() {
-  }
-
-  /**
    * Constructor with reference point
    *
    * @param referencePoint

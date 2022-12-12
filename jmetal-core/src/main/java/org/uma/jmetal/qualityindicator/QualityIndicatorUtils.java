@@ -15,6 +15,7 @@ import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
 public class QualityIndicatorUtils {
+
   /**
    * Creates a list with the available indicators (but setCoverage)
    *
@@ -38,15 +39,16 @@ public class QualityIndicatorUtils {
   /**
    * Given an indicator name, finds the indicator in the list of indicator
    *
-   * @param name
-   * @param list
+   * @param indicatorName
+   * @param indicatorList
    * @return
    */
-  public static QualityIndicator getIndicatorFromName(String name, List<QualityIndicator> list) {
+  public static QualityIndicator getIndicatorFromName(String indicatorName,
+      List<QualityIndicator> indicatorList) {
     QualityIndicator result = null;
 
-    for (QualityIndicator indicator : list) {
-      if (indicator.getName().equals(name)) {
+    for (QualityIndicator indicator : indicatorList) {
+      if (indicator.getName().equals(indicatorName)) {
         result = indicator;
         break;
       }
@@ -57,17 +59,18 @@ public class QualityIndicatorUtils {
     return result;
   }
 
-  public static void printQualityIndicators(double[][] front, double[][] referenceFront){
+  public static void printQualityIndicators(double[][] front, double[][] referenceFront) {
     double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
     double[][] normalizedFront =
-            NormalizeUtils.normalize(
-                    front,
-                    NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
-                    NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
+        NormalizeUtils.normalize(
+            front,
+            NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+            NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    List<QualityIndicator> qualityIndicators = getAvailableIndicators(normalizedReferenceFront) ;
-    for (QualityIndicator indicator: qualityIndicators) {
-      JMetalLogger.logger.info(() ->indicator.getName() + ": " + indicator.compute(normalizedFront)) ;
+    List<QualityIndicator> qualityIndicators = getAvailableIndicators(normalizedReferenceFront);
+    for (QualityIndicator indicator : qualityIndicators) {
+      JMetalLogger.logger.info(
+          () -> indicator.getName() + ": " + indicator.compute(normalizedFront));
     }
   }
 }

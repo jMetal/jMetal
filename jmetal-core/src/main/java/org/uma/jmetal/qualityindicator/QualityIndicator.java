@@ -3,23 +3,18 @@ package org.uma.jmetal.qualityindicator;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * Abstract class representing quality indicators. It is assumed that the fronts are normalized
+ * before computing the indicators.
  *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public abstract class QualityIndicator {
-  protected double[][] referenceFront = null;
+  protected double[][] referenceFront ;
 
-  /**
-   * Default constructor
-   */
-  public QualityIndicator() {
+  protected QualityIndicator() {
   }
 
-  /**
-   * Constructor
-   * @param referenceFront
-   */
-  public QualityIndicator(double[][] referenceFront) {
+  protected QualityIndicator(double[][] referenceFront) {
     Check.notNull(referenceFront);
     this.referenceFront = referenceFront;
   }
@@ -31,9 +26,7 @@ public abstract class QualityIndicator {
   }
 
   /**
-   * This method returns true if lower indicator values are preferred and false otherwise
-   *
-   * @return
+   * Returns true if lower indicator values are preferred and false otherwise
    */
   public abstract boolean isTheLowerTheIndicatorValueTheBetter();
 

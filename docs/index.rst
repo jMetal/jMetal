@@ -9,11 +9,7 @@ It includes a wide set of resources, including state-of-the-art multi-objective 
 solution encodings, benchmark problems, quality indicators, and utilities for performing experimental
 studies.
 
-The current stable version is 5.11 (https://github.com/jMetal/jMetal), which is based on the
-description of jMetal 5 included in the paper "Redesigning the jMetal Multi-Objective Optimization
-Framework" (http://dx.doi.org/10.1145/2739482.2768462), presented at GECCO 2015.
-We are currently working on preparing the next major release of jMetal (version 6.0).
-The version in GitHub now is 6.0-SNAPSHOT.
+The current stable version is 6.0 (https://github.com/jMetal/jMetal). The working version in GitHub is 6.1-SNAPSHOT.
 
 jMetal is described in the following papers:
 
@@ -36,7 +32,7 @@ Summary of features:
   - Combinatorial problems: multi-objective TSP
   - Academic problems: OneMax, OneZeroMax
 
-* Quality indicators: hypervolume, spread, generational distance, inverted generational distance, inverted generational distance plus, additive epsilon.
+* Quality indicators: hypervolume, normalized hypervolume, spread, generational distance, inverted generational distance, inverted generational distance plus, additive epsilon.
 * Support for experimental studies
 * Support for automatic algorithm configuration and design
 
@@ -60,6 +56,7 @@ Summary of features:
     problems.rst
     operators.rst
     constraints.rst
+    qualityIndicators.rst
 
 .. toctree::
     :maxdepth: 2
@@ -71,3 +68,4 @@ Summary of features:
     autoconfiguration.rst
     component.rst
     mnds.rst
+    api.rst

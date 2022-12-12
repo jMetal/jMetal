@@ -33,27 +33,25 @@ public class CommandLineQualityIndicatorTool {
    */
   private static void checkArguments(String[] args) {
     if (args.length != 3) {
-      JMetalLogger.logger.info("Invalid arguments");
-      printOptions();
-      throw new JMetalException("Incorrect arguments");
+      printAvailableIndicators();
+      throw new JMetalException("Invalid arguments");
     }
   }
 
   /** Prints the command line options in the screen */
-  private static void printOptions() {
+  private static void printAvailableIndicators() {
     JMetalLogger.logger.info(
         "Parameters: indicatorName referenceFrontFile frontFile \n"
             + "Where indicatorValue can be one of these:\n"
+            + "EP   - Additive epsilon\n"
             + "GD   - Generational distance\n"
-            + "IGD  - Inverted generational distance\n"
             + "IGD  - Inverted generational distance\n"
             + "IGD+ - Inverted generational distance plus \n"
             + "HV   - Hypervolume \n"
             + "ER   - Error ratio \n"
-            + "SPREAD  - Spread (two objectives)\n"
+            + "SP   - Spread (two objectives)\n"
             + "GSPREAD - Generalized Spread (more than two objectives)\n"
-            //+ "ER   - Error ratio\n"
-            // + "R2   - R2\n\n" + "ALL  - prints all the available indicators \n\n"
+            + "SC   - Set coverage\n"
             );
   }
 
@@ -87,9 +85,9 @@ public class CommandLineQualityIndicatorTool {
 
       SetCoverage sc = new SetCoverage();
       JMetalLogger.logger.info(
-          () -> "SC(refPF, front): " + sc.compute(normalizedReferenceFront, normalizedFront));
+          () -> "SC(refFront, front): " + sc.compute(normalizedReferenceFront, normalizedFront));
       JMetalLogger.logger.info(
-          () -> "SC(front, refPF): " + sc.compute(normalizedFront, normalizedReferenceFront));
+          () -> "SC(front, refFront): " + sc.compute(normalizedFront, normalizedReferenceFront));
     }
   }
 }
