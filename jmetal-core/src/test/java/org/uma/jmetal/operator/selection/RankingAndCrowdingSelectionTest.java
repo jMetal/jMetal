@@ -1,6 +1,5 @@
 package org.uma.jmetal.operator.selection;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -12,7 +11,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.selection.impl.RankingAndCrowdingSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**
  * @author Antonio J. Nebro
@@ -24,8 +24,7 @@ public class RankingAndCrowdingSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
+    exception.expect(NullParameterException.class);
 
     RankingAndCrowdingSelection<Solution<?>> selection = new RankingAndCrowdingSelection<Solution<?>>(4) ;
     selection.execute(null) ;
@@ -33,8 +32,7 @@ public class RankingAndCrowdingSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
+    exception.expect(EmptyCollectionException.class);
 
     RankingAndCrowdingSelection<DoubleSolution> selection = new RankingAndCrowdingSelection<DoubleSolution>(4) ;
     List<DoubleSolution> list = new ArrayList<>() ;

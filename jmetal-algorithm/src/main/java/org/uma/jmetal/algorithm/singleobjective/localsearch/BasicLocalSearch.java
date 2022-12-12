@@ -9,20 +9,20 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class BasicLocalSearch<S extends Solution<?>> extends AbstractLocalSearch<S> {
 
-  private S initialSolution ;
-  private int evaluations ;
-  private int maxEvaluations ;
-  private MutationOperator<S> mutationOperator ;
-  private Comparator<S> comparator ;
-  private Problem<S> problem ;
+  private S initialSolution;
+  private int evaluations;
+  private int maxEvaluations;
+  private MutationOperator<S> mutationOperator;
+  private Comparator<S> comparator;
+  private Problem<S> problem;
 
   public BasicLocalSearch(S initialSolution, int maxEvaluations,
       Problem<S> problem, MutationOperator<S> mutationOperator, Comparator<S> comparator) {
-    this.initialSolution = initialSolution ;
-    this.maxEvaluations = maxEvaluations ;
-    this.mutationOperator = mutationOperator ;
-    this.comparator = comparator ;
-    this.problem = problem ;
+    this.initialSolution = initialSolution;
+    this.maxEvaluations = maxEvaluations;
+    this.mutationOperator = mutationOperator;
+    this.comparator = comparator;
+    this.problem = problem;
   }
 
   @Override
@@ -32,12 +32,12 @@ public class BasicLocalSearch<S extends Solution<?>> extends AbstractLocalSearch
 
   @Override
   protected void initProgress() {
-    evaluations = 1 ;
+    evaluations = 1;
   }
 
   @Override
   protected void updateProgress() {
-    evaluations ++ ;
+    evaluations++;
   }
 
   @Override
@@ -47,15 +47,16 @@ public class BasicLocalSearch<S extends Solution<?>> extends AbstractLocalSearch
 
   @Override
   protected S updateCurrentSolution(S currentSolution) {
-    S newSolution = mutationOperator.execute((S)currentSolution.copy()) ;
-    problem.evaluate(newSolution) ;
+    S newSolution = mutationOperator.execute((S) currentSolution.copy());
+    problem.evaluate(newSolution);
 
-    int result = comparator.compare(newSolution, currentSolution) ;
-    if ((result == -1) || ((result == 0) && (JMetalRandom.getInstance().getRandomGenerator().nextDouble() < 0.5))) {
-      currentSolution = newSolution ;
+    int result = comparator.compare(newSolution, currentSolution);
+    if ((result == -1) || ((result == 0) && (
+        JMetalRandom.getInstance().getRandomGenerator().nextDouble() < 0.5))) {
+      currentSolution = newSolution;
     }
 
-    return currentSolution ;
+    return currentSolution;
   }
 
   @Override

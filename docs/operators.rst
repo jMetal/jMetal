@@ -33,3 +33,4 @@ The ``Operator`` interface belongs the ``jmetal-core`` sub-project, and it is de
 According to this interface, an operator is a generic entity providing an ``execute()`` method
 that is applied to a source and returns a result. The source and result are typically a solution
 or a list of solutions, depending on the operator.
+

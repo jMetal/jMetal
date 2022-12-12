@@ -59,7 +59,6 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   protected int[] sumOfReverseFrequencyValues;
   protected int[][] frequency;
   protected int[][] reverseFrequency;
-
   protected StrenghtRawFitnessDensityEstimator<DoubleSolution> densityEstimator ;
   protected Comparator<DoubleSolution> fitnessComparator; //TODO: invert this dependency
   protected DistanceToSolutionListAttribute distanceToSolutionListAttribute;

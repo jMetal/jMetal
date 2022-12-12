@@ -7,6 +7,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
@@ -37,22 +38,18 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
   }
 
   /* Getter */
-  public int getNumberOfSolutionsToSelect() {
+  public int numberOfSolutionsToSelect() {
     return solutionsToSelect;
   }
 
   /** Execute() method */
   public List<S> execute(List<S> solutionList) throws JMetalException {
-    if (null == solutionList) {
-      throw new JMetalException("The solution list is null");
-    } else if (solutionList.isEmpty()) {
-        throw new JMetalException("The solution list is empty") ;
-    }  else if (solutionList.size() < solutionsToSelect) {
-      throw new JMetalException("The population size ("+solutionList.size()+") is smaller than" +
-              "the solutions to selected ("+solutionsToSelect+")")  ;
-    }
+    Check.notNull(solutionList);
+    Check.collectionIsNotEmpty(solutionList);
+    Check.that(solutionList.size() > solutionsToSelect, "The population size ("+solutionList.size()+") is smaller than" +
+        "the solutions to selected ("+solutionsToSelect+")");
 
-    Ranking<S> ranking = new FastNonDominatedSortRanking<S>(dominanceComparator);
+    Ranking<S> ranking = new FastNonDominatedSortRanking<>(dominanceComparator);
     ranking.compute(solutionList) ;
 
     return crowdingDistanceSelection(ranking);
