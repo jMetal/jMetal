@@ -34,11 +34,12 @@ According to this interface, an operator is a generic entity providing an ``exec
 that is applied to a source and returns a result. The source and result are typically a solution
 or a list of solutions, depending on the operator.
 
-Four types of operators are currently included:
+Four classes of operators are currently included:
 
 * ``Crossover``. From a set of parent solutions, recombine them somehow to produce a number of children.
 * ``Mutation``. Mutates a solution.
 * ``Selection``. Select a number of solutions from a list according to some criterion.
 * ``LocalSearchOperator``. Applies a local search method to improve a solution.
 
+In general, operators are related to the types of solutions to which they apply. 
 

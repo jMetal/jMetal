@@ -78,7 +78,7 @@ public class BLXAlphaCrossoverTest {
   public void shouldGetAlphaReturnTheRightValue() {
     double alpha = 0.75 ;
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(0.1, alpha) ;
-    assertEquals(alpha, crossover.getAlpha(), EPSILON) ;
+    assertEquals(alpha, crossover.alpha(), EPSILON) ;
   }
 
   @Test (expected = NullParameterException.class)
