@@ -19,11 +19,9 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
   private Problem<S> problem;
   private int improvementRounds;
   private Comparator<S> comparator;
-
   private MutationOperator<S> mutationOperator;
   private int evaluations;
   private int numberOfImprovements;
-
   private RandomGenerator<Double> randomGenerator;
 
   /**
@@ -67,7 +65,6 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
    * @param solution The solution to improve
    * @return An improved solution
    */
-  @SuppressWarnings("unchecked")
   public S execute(S solution) {
     int best;
     evaluations = 0;
@@ -97,12 +94,12 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
    * Returns the number of evaluations
    */
   @Override
-  public int getNumberOfEvaluations() {
+  public int numberOfEvaluations() {
     return evaluations;
   }
 
   @Override
-  public int getNumberOfImprovements() {
+  public int numberOfImprovements() {
     return numberOfImprovements;
   }
 

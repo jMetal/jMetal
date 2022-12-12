@@ -8,6 +8,6 @@ import org.uma.jmetal.operator.Operator;
  * Created by cbarba on 5/3/15.
  */
 public interface LocalSearchOperator <Source> extends Operator<Source, Source> {
-  int getNumberOfImprovements() ;
-  int getNumberOfEvaluations() ;
+  int numberOfImprovements() ;
+  int numberOfEvaluations() ;
 }

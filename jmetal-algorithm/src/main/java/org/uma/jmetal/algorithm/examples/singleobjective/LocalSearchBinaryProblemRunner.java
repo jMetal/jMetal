@@ -1,14 +1,14 @@
 package org.uma.jmetal.algorithm.examples.singleobjective;
 
 import java.util.Comparator;
-import org.uma.jmetal.algorithm.impl.DefaultLocalSearch;
+import org.uma.jmetal.algorithm.singleobjective.localsearch.BasicLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 /**
  * Class to configure and run a single objective local search. The target problem is OneMax.
@@ -17,17 +17,20 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithCons
  */
 public class LocalSearchBinaryProblemRunner {
   public static void main(String[] args)  {
-    BinaryProblem problem = new OneMax(1024) ;
+    BinaryProblem problem = new OneMax(512) ;
 
     MutationOperator<BinarySolution> mutationOperator =
         new BitFlipMutation(1.0 / problem.bitsFromVariable(0)) ;
 
-    int improvementRounds = 10000 ;
+    int improvementRounds = 5000 ;
 
-    Comparator<BinarySolution> comparator = new DominanceWithConstraintsComparator<>() ;
+    Comparator<BinarySolution> comparator = new ObjectiveComparator<>(0) ;
 
-    DefaultLocalSearch<BinarySolution> localSearch = new DefaultLocalSearch<>(
-            improvementRounds,
+    BinarySolution initialSolution = problem.createSolution() ;
+    problem.evaluate(initialSolution );
+
+    BasicLocalSearch<BinarySolution> localSearch = new BasicLocalSearch<>(initialSolution,
+        improvementRounds,
             problem,
             mutationOperator,
             comparator) ;

@@ -6,7 +6,8 @@ Operators
 :Author: Antonio J. Nebro
 :Date: 2022-12-1
 
-Evolutionary algorithms use selection and variation operators for getting the mating pool and for generate a descendant population from this pool, respectively. In the case of genetic algorithms, variation operators are mutation and crossover. 
+Evolutionary algorithms use selection and variation operators for getting the mating pool and for generate a
+descendant population from this pool, respectively. In the case of genetic algorithms, variation operators are mutation and crossover.
 
 The ``Operator`` interface belongs the ``jmetal-core`` sub-project, and it is defined as follows: 
 

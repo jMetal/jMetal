@@ -114,7 +114,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
 
   @Override public DoubleSolution improvement(DoubleSolution solution) {
     DoubleSolution improvedSolution = localSearch.execute(solution) ;
-    evaluations += localSearch.getNumberOfEvaluations() ;
+    evaluations += localSearch.numberOfEvaluations() ;
 
     return improvedSolution ;
   }
