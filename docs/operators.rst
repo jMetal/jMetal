@@ -9,7 +9,7 @@ Operators
 Evolutionary algorithms use selection and variation operators for getting the mating pool and for generate a
 descendant population from this pool, respectively. In the case of genetic algorithms, variation operators are mutation and crossover.
 
-The ``Operator`` interface belongs the ``jmetal-core`` sub-project, and it is defined as follows: 
+The ``Operator`` interface (package ``org.uma.jmetal.operator``) belongs the ``jmetal-core`` sub-project, and it is defined as follows: 
 
 .. code-block:: java
 
@@ -33,4 +33,12 @@ The ``Operator`` interface belongs the ``jmetal-core`` sub-project, and it is de
 According to this interface, an operator is a generic entity providing an ``execute()`` method
 that is applied to a source and returns a result. The source and result are typically a solution
 or a list of solutions, depending on the operator.
+
+Four types of operators are currently included:
+
+* ``Crossover``. From a set of parent solutions, recombine them somehow to produce a number of children.
+* ``Mutation``. Mutates a solution.
+* ``Selection``. Select a number of solutions from a list according to some criterion.
+* ``LocalSearchOperator``. Applies a local search method to improve a solution.
+
 

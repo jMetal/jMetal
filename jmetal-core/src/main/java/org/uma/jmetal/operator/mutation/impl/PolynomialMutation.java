@@ -152,22 +152,23 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
 
   /** Perform the mutation operation */
   private void doMutation(DoubleSolution solution) {
-    double rnd, delta1, delta2, mutPow, deltaq;
-    double y, yl, yu, val, xy;
 
     for (int i = 0; i < solution.variables().size(); i++) {
       if (randomGenerator.getRandomValue() <= mutationProbability) {
-        y = solution.variables().get(i);
+        double y = solution.variables().get(i);
         Bounds<Double> bounds = solution.getBounds(i);
-        yl = bounds.getLowerBound();
-        yu = bounds.getUpperBound();
+        double yl = bounds.getLowerBound();
+        double yu = bounds.getUpperBound();
         if (yl == yu) {
           y = yl;
         } else {
-          delta1 = (y - yl) / (yu - yl);
-          delta2 = (yu - y) / (yu - yl);
-          rnd = randomGenerator.getRandomValue();
-          mutPow = 1.0 / (distributionIndex + 1.0);
+          double delta1 = (y - yl) / (yu - yl);
+          double delta2 = (yu - y) / (yu - yl);
+          double rnd = randomGenerator.getRandomValue();
+          double mutPow = 1.0 / (distributionIndex + 1.0);
+          double deltaq;
+          double val;
+          double xy;
           if (rnd <= 0.5) {
             xy = 1.0 - delta1;
             val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, distributionIndex + 1.0));
