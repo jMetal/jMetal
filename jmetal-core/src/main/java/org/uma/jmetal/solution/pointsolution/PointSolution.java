@@ -13,7 +13,6 @@ import org.uma.jmetal.solution.Solution;
  *
  * @author Antonio J. Nebro
  */
-@SuppressWarnings("serial")
 public class PointSolution implements Solution<Double> {
   final private int numberOfObjectives;
   private double[] objectives;

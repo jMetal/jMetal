@@ -223,40 +223,6 @@ public class FrontUtils {
    * @param front
    * @return A front as a List<FrontSolution>
    */
-  /*
-  public static List<PointSolution> convertFrontToSolutionList(Front front) {
-    if (front == null) {
-      throw new JMetalException("The front is null");
-    }
-
-    int numberOfObjectives ;
-    int solutionSetSize = front.getNumberOfPoints() ;
-    if (front.getNumberOfPoints() == 0) {
-      numberOfObjectives = 0 ;
-    } else {
-      numberOfObjectives = front.getPoint(0).getDimension();
-    }
-    List<PointSolution> solutionSet = new ArrayList<>(solutionSetSize) ;
-
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      PointSolution solution = new PointSolution(numberOfObjectives);
-      for (int j = 0 ; j < numberOfObjectives; j++) {
-        solution.setObjective(j, front.getPoint(i).getValue(j));
-      }
-
-      solutionSet.add(solution) ;
-    }
-
-    return solutionSet ;
-  }
-*/
-
-  /**
-   * Given a front, converts it to a Solution set of PointSolutions
-   *
-   * @param front
-   * @return A front as a List<FrontSolution>
-   */
 
   public static List<PointSolution> convertFrontToSolutionList(Front front) {
     if (front == null) {
