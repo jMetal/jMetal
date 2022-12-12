@@ -149,7 +149,7 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return fitnessComparator;
   }
 
@@ -163,16 +163,16 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
   @Override
   public void computeDensityEstimator() {
     // Compute scalarization values
-    this.scalWrapper.execute(getSolutionList());
+    this.scalWrapper.execute(solutions());
     scaleToPositive();
 
     // Distance matrix
     double[][] distanceMatrix;
     if (normalizeObjectives) {
-      FrontNormalizer normalizer = new FrontNormalizer(getSolutionList());
-      distanceMatrix = SolutionListUtils.distanceMatrix(normalizer.normalize(getSolutionList()));
+      FrontNormalizer normalizer = new FrontNormalizer(solutions());
+      distanceMatrix = SolutionListUtils.distanceMatrix(normalizer.normalize(solutions()));
     } else
-      distanceMatrix = SolutionListUtils.distanceMatrix(getSolutionList());
+      distanceMatrix = SolutionListUtils.distanceMatrix(solutions());
 
     // Set fitness based on replacement strategy
     double[] energyVector = energyVector(distanceMatrix);
@@ -214,10 +214,10 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
 
   @Override
   public void prune() {
-    if (getSolutionList().size() > getMaxSize()) {
+    if (solutions().size() > maximumSize()) {
       computeDensityEstimator();
-      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), fitnessComparator);
-      getSolutionList().remove(worst);
+      S worst = new SolutionListUtils().findWorstSolution(solutions(), fitnessComparator);
+      solutions().remove(worst);
     }
   }
 
@@ -234,7 +234,7 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
   private void scaleToPositive() {
     // Obtain min value
     double minScalarization = Double.MAX_VALUE;
-    for (S solution : getSolutionList()) {
+    for (S solution : solutions()) {
       if (scalarization.getAttribute(solution) < minScalarization) {
         minScalarization = scalarization.getAttribute(solution);
       }
@@ -242,7 +242,7 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
     if (minScalarization < 0) {
       // Avoid scalarization values of 0
       double eps = 10e-6;
-      for (S solution : getSolutionList()) {
+      for (S solution : solutions()) {
         scalarization.setAttribute(solution, eps + scalarization.getAttribute(solution) + minScalarization);
       }
     }
@@ -302,7 +302,7 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
    * False otherwise.
    */
   public boolean isFull() {
-    return getSolutionList().size() == maxSize;
+    return solutions().size() == maxSize;
   }
 
 }

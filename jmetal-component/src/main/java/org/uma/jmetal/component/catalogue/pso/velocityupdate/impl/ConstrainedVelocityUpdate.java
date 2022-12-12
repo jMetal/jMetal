@@ -103,7 +103,7 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
       DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       DoubleSolution bestParticle = (DoubleSolution) localBest[i].copy();
 
-      bestGlobal = globalBestSelection.select(leaders.getSolutionList()) ;
+      bestGlobal = globalBestSelection.select(leaders.solutions()) ;
 
       r1 = randomGenerator.nextDouble(r1Min, r1Max);
       r2 = randomGenerator.nextDouble(r2Min, r2Max);

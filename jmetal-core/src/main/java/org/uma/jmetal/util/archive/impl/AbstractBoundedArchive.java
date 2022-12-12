@@ -31,12 +31,12 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
 
   @Override
   public S get(int index) {
-    return getSolutionList().get(index);
+    return solutions().get(index);
   }
 
   @Override
-  public List<S> getSolutionList() {
-    return archive.getSolutionList();
+  public List<S> solutions() {
+    return archive.solutions();
   }
 
   @Override
@@ -45,14 +45,14 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
   }
 
   @Override
-  public int getMaxSize() {
+  public int maximumSize() {
     return maxSize;
   }
 
   public abstract void prune();
 
   public Archive<S> join(Archive<S> archive) {
-    archive.getSolutionList().forEach(this::add);
+    archive.solutions().forEach(this::add);
 
     return archive;
   }

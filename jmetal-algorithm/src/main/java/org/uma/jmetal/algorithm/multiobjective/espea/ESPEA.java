@@ -120,12 +120,12 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
     // population and archive are always in sync
     offspringPopulation.forEach(s -> archive.add(s));
-    return archive.getSolutionList();
+    return archive.solutions();
   }
 
   @Override
   public List<S> getResult() {
-    return archive.getSolutionList();
+    return archive.solutions();
   }
 
   /*

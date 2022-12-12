@@ -82,7 +82,7 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
-    attributes.put("BEST_SOLUTIONS", archive.getSolutionList());
+    attributes.put("BEST_SOLUTIONS", archive.solutions());
 
     observable.setChanged();
     observable.notifyObservers(attributes);
@@ -93,7 +93,7 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
-    attributes.put("BEST_SOLUTIONS", archive.getSolutionList());
+    attributes.put("BEST_SOLUTIONS", archive.solutions());
 
     observable.setChanged();
     observable.notifyObservers(attributes);
@@ -104,12 +104,12 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
   }
 
   protected List<S> getBestSolutions() {
-    return archive.getSolutionList() ;
+    return archive.solutions() ;
   }
 
   @Override
   public List<S> getResult() {
-    return archive.getSolutionList();
+    return archive.solutions();
   }
 
   @Override

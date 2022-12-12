@@ -64,7 +64,7 @@ public class NSGAIIWithUnboundedArchiveExample {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = externalArchive.getSolutionList();
+    List<DoubleSolution> population = externalArchive.solutions();
     JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 

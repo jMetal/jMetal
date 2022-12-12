@@ -174,7 +174,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
       }
     }
 
-    return nonDominatedSolutionArchive.getSolutionList();
+    return nonDominatedSolutionArchive.solutions();
   }
 
   /**

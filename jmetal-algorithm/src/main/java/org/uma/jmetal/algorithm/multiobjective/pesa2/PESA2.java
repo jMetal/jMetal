@@ -106,7 +106,7 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override public List<S> getResult() {
-    return archive.getSolutionList();
+    return archive.solutions();
   }
 
   @Override public String getName() {

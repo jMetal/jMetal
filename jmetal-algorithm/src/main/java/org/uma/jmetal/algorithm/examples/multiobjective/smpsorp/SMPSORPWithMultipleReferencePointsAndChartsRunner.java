@@ -110,7 +110,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
         .print();
 
     for (int i = 0; i < archivesWithReferencePoints.size(); i++) {
-      new SolutionListOutput(archivesWithReferencePoints.get(i).getSolutionList())
+      new SolutionListOutput(archivesWithReferencePoints.get(i).solutions())
           .setVarFileOutputContext(new DefaultFileOutputContext("VAR" + i + ".tsv"))
           .setFunFileOutputContext(new DefaultFileOutputContext("FUN" + i + ".tsv"))
           .print();

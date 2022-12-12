@@ -23,20 +23,20 @@ public class GenericBoundedArchive<S extends Solution<?>> extends AbstractBounde
 
   @Override
   public void prune() {
-    if (getSolutionList().size() > getMaxSize()) {
+    if (solutions().size() > maximumSize()) {
       computeDensityEstimator();
-      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), comparator) ;
-      getSolutionList().remove(worst);
+      S worst = new SolutionListUtils().findWorstSolution(solutions(), comparator) ;
+      solutions().remove(worst);
     }
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return comparator ;
   }
 
   @Override
   public void computeDensityEstimator() {
-    densityEstimator.compute(getSolutionList());
+    densityEstimator.compute(solutions());
   }
 }

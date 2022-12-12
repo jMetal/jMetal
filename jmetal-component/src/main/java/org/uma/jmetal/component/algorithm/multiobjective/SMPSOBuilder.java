@@ -65,7 +65,7 @@ public class SMPSOBuilder {
     globalBestInitialization = new DefaultGlobalBestInitialization();
 
     archive = new CrowdingDistanceArchive<>(swarmSize);
-    globalBestSelection = new BinaryTournamentGlobalBestSelection(archive.getComparator()) ;
+    globalBestSelection = new BinaryTournamentGlobalBestSelection(archive.comparator()) ;
 
     double r1Min = 0.0;
     double r1Max = 1.0;

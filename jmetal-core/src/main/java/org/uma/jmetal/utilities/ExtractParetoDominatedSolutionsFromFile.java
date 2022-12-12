@@ -46,6 +46,6 @@ public class ExtractParetoDominatedSolutionsFromFile {
       throw new JMetalException("Error opening file " + inputFileName);
     }
 
-    StoredSolutionsUtils.writeToOutput(archive.getSolutionList(), new DefaultFileOutputContext(outputFileName));
+    StoredSolutionsUtils.writeToOutput(archive.solutions(), new DefaultFileOutputContext(outputFileName));
   }
 }

@@ -127,7 +127,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
       archive.add(mutatedSolution);
     } else if (flag == 0) {
       if (archive.add(mutatedSolution)) {
-        if (archive.getComparator().compare(current, mutatedSolution) > 0) {
+        if (archive.comparator().compare(current, mutatedSolution) > 0) {
           current = mutatedSolution;
         }
       }
@@ -139,7 +139,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
 
   @Override
   public List<S> getResult() {
-    return archive.getSolutionList();
+    return archive.solutions();
   }
 
   @Override

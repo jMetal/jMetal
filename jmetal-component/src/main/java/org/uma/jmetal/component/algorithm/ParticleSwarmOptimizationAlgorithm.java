@@ -147,7 +147,7 @@ public class ParticleSwarmOptimizationAlgorithm
     globalBest.computeDensityEstimator();
 
     attributes.put("EVALUATIONS", evaluations);
-    attributes.put("POPULATION", globalBest.getSolutionList());
+    attributes.put("POPULATION", globalBest.solutions());
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
   }
 
@@ -156,7 +156,7 @@ public class ParticleSwarmOptimizationAlgorithm
     globalBest.computeDensityEstimator();
 
     attributes.put("EVALUATIONS", evaluations);
-    attributes.put("POPULATION", globalBest.getSolutionList());
+    attributes.put("POPULATION", globalBest.solutions());
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
 
     observable.setChanged();
@@ -179,7 +179,7 @@ public class ParticleSwarmOptimizationAlgorithm
 
   @Override
   public List<DoubleSolution> getResult() {
-    return globalBest.getSolutionList();
+    return globalBest.solutions();
   }
 
   public List<DoubleSolution> getSwarm() {

@@ -71,11 +71,11 @@ public class GenerateReferenceParetoFront implements ExperimentComponent {
       }
       String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".csv" ;
       referenceFrontFileNames.add(problem.getTag() + ".csv");
-      new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
+      new SolutionListOutput(nonDominatedSolutionArchive.solutions())
           .printObjectivesToFile(referenceSetFileName, ",");
 
       writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem,
-          nonDominatedSolutionArchive.getSolutionList()) ;
+          nonDominatedSolutionArchive.solutions()) ;
     }
 
   }

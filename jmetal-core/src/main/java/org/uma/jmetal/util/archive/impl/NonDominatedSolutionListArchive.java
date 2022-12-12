@@ -85,7 +85,7 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
   }
 
   public Archive<S> join(Archive<S> archive) {
-    return this.addAll(archive.getSolutionList());
+    return this.addAll(archive.solutions());
   }
 
   public Archive<S> addAll(List<S> list) {
@@ -98,7 +98,7 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
 
 
   @Override
-  public List<S> getSolutionList() {
+  public List<S> solutions() {
     return solutionList;
   }
 

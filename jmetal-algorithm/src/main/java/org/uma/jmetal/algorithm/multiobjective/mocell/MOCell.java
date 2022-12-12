@@ -107,7 +107,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
     parents.add(selectionOperator.execute(currentNeighbors));
     if (archive.size() > 1) {
-      parents.add(selectionOperator.execute(archive.getSolutionList()));
+      parents.add(selectionOperator.execute(archive.solutions()));
     } else {
       parents.add(selectionOperator.execute(currentNeighbors));
     }
@@ -139,7 +139,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   public List<S> getResult() {
-    return archive.getSolutionList();
+    return archive.solutions();
   }
 
   private List<S> insertNewIndividualWhenItDominatesTheCurrentOne(

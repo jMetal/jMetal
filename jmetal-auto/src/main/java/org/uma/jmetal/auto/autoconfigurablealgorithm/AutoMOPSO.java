@@ -309,7 +309,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter();
     GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter();
     GlobalBestSelection globalBestSelection = globalBestSelectionParameter.getParameter(
-        leaderArchive.getComparator());
+        leaderArchive.comparator());
 
     if (mutationParameter.getValue().equals("nonUniform")) {
       mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
@@ -378,7 +378,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
 
       @Override
       public List<DoubleSolution> getResult() {
-        return unboundedArchive.getSolutionList();
+        return unboundedArchive.solutions();
       }
     }
 

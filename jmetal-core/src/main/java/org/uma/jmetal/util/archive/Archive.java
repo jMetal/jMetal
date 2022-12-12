@@ -11,6 +11,6 @@ import java.util.List;
 public interface Archive<S> extends Serializable {
   boolean add(S solution) ;
   S get(int index) ;
-  List<S> getSolutionList() ;
+  List<S> solutions() ;
   int size() ;
 }

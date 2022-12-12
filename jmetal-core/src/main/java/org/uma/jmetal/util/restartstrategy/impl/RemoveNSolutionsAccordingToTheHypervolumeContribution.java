@@ -35,7 +35,7 @@ public class RemoveNSolutionsAccordingToTheHypervolumeContribution<S extends Sol
     }
     solutionList.clear();
 
-    for (S solution: archive.getSolutionList()) {
+    for (S solution: archive.solutions()) {
       solutionList.add(solution) ;
     }
 

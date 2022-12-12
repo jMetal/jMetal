@@ -39,7 +39,7 @@ public class HypervolumeArchiveWithReferencePoint<S extends Solution<?>> extends
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return comparator;
   }
 
@@ -47,7 +47,7 @@ public class HypervolumeArchiveWithReferencePoint<S extends Solution<?>> extends
   public void computeDensityEstimator() {
     if (archive.size() > 3) {
       hypervolume
-          .computeHypervolumeContribution(archive.getSolutionList(), archive.getSolutionList());
+          .computeHypervolumeContribution(archive.solutions(), archive.solutions());
     }
   }
 }

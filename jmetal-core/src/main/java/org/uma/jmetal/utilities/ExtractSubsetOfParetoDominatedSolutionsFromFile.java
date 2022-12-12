@@ -53,7 +53,7 @@ public class ExtractSubsetOfParetoDominatedSolutionsFromFile {
         new NonDominatedSolutionListArchive<>(), numberOfSolutions);
     solutions.forEach(archive::add);
 
-    new SolutionListOutput(archive.getSolutionList()).printObjectivesToFile(outputFileName, ",");
+    new SolutionListOutput(archive.solutions()).printObjectivesToFile(outputFileName, ",");
   }
 
   private static double[] parseLineContainingObjectives(String line) {

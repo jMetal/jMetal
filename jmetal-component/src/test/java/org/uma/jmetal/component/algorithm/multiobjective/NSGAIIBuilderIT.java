@@ -164,7 +164,7 @@ class NSGAIIBuilderIT {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = archive.getSolutionList();
+    List<DoubleSolution> population = archive.solutions();
 
     String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 

@@ -27,7 +27,7 @@ public class SolutionListUtils {
     Archive<S> nonDominatedSolutionArchive = new NonDominatedSolutionListArchive<>();
     solutionList.forEach(nonDominatedSolutionArchive::add);
 
-    return nonDominatedSolutionArchive.getSolutionList();
+    return nonDominatedSolutionArchive.solutions();
   }
 
   public <S> S findWorstSolution(Collection<S> solutionList, Comparator<S> comparator) {
@@ -355,7 +355,7 @@ public class SolutionListUtils {
       Archive<S> archive = new CrowdingDistanceArchive<>(finalListSize);
       originalSolutionList.forEach(archive::add);
 
-      return archive.getSolutionList();
+      return archive.solutions();
     }
 
     for (int i = 0; i < originalSolutionList.size(); i++) {

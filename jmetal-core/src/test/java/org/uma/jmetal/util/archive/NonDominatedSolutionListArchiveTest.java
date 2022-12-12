@@ -25,7 +25,7 @@ public class NonDominatedSolutionListArchiveTest {
     NonDominatedSolutionListArchive<IntegerSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
-    assertEquals(0, archive.getSolutionList().size()) ;
+    assertEquals(0, archive.solutions().size()) ;
   }
 
   @Test
@@ -57,7 +57,7 @@ public class NonDominatedSolutionListArchiveTest {
     IntegerSolution solution = mock(IntegerSolution.class) ;
     archive.add(solution) ;
 
-    assertSame(solution, archive.getSolutionList().get(0)) ;
+    assertSame(solution, archive.solutions().get(0)) ;
   }
 
   @Test
@@ -184,8 +184,8 @@ public class NonDominatedSolutionListArchiveTest {
 
     assertEquals(2, archive.size()) ;
     assertFalse(result) ;
-    assertTrue(archive.getSolutionList().contains(solution1) ||
-            archive.getSolutionList().contains(equalSolution)) ;
+    assertTrue(archive.solutions().contains(solution1) ||
+            archive.solutions().contains(equalSolution)) ;
   }
 
   @Test
@@ -198,7 +198,7 @@ public class NonDominatedSolutionListArchiveTest {
 
     archive1.join(archive2) ;
 
-    assertEquals(0.0, archive1.getSolutionList().size(), EPSILON);
+    assertEquals(0.0, archive1.solutions().size(), EPSILON);
   }
 
   @Test
@@ -217,7 +217,7 @@ public class NonDominatedSolutionListArchiveTest {
 
     archive1.join(archive2) ;
 
-    assertEquals(1, archive1.getSolutionList().size(), EPSILON);
+    assertEquals(1, archive1.solutions().size(), EPSILON);
   }
 
   @Test
@@ -241,6 +241,6 @@ public class NonDominatedSolutionListArchiveTest {
 
     archive1.join(archive2) ;
 
-    assertEquals(2, archive1.getSolutionList().size(), EPSILON);
+    assertEquals(2, archive1.solutions().size(), EPSILON);
   }
 }

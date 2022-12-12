@@ -87,7 +87,7 @@ class SMPSOBuilderIT {
 
     smpso.run();
 
-    List<DoubleSolution> obtainedSolutions = archive.getSolutionList();
+    List<DoubleSolution> obtainedSolutions = archive.solutions();
 
     String referenceFrontFile = "../resources/referenceFrontsCSV/" + referenceFrontFileName;
 

@@ -308,7 +308,7 @@ public class SMPSORP
   public List<DoubleSolution> getResult() {
     List<DoubleSolution> resultList = new ArrayList<>();
     for (BoundedArchive<DoubleSolution> leader : leaders) {
-      for (DoubleSolution solution : leader.getSolutionList()) {
+      for (DoubleSolution solution : leader.solutions()) {
         resultList.add(solution);
       }
     }
@@ -324,13 +324,13 @@ public class SMPSORP
 
     DoubleSolution one, two;
     DoubleSolution bestGlobal;
-    int pos1 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
-    int pos2 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
+    int pos1 = randomGenerator.nextInt(0, selectedSwarm.solutions().size() - 1);
+    int pos2 = randomGenerator.nextInt(0, selectedSwarm.solutions().size() - 1);
 
-    one = selectedSwarm.getSolutionList().get(pos1);
-    two = selectedSwarm.getSolutionList().get(pos2);
+    one = selectedSwarm.solutions().get(pos1);
+    two = selectedSwarm.solutions().get(pos2);
 
-    if (selectedSwarm.getComparator().compare(one, two) < 1) {
+    if (selectedSwarm.comparator().compare(one, two) < 1) {
       bestGlobal = (DoubleSolution) one.copy();
     } else {
       bestGlobal = (DoubleSolution) two.copy();
@@ -391,16 +391,16 @@ public class SMPSORP
   public void removeDominatedSolutionsInArchives() {
     for (ArchiveWithReferencePoint<DoubleSolution> archive : leaders) {
       int i = 0;
-      while (i < archive.getSolutionList().size()) {
+      while (i < archive.solutions().size()) {
         boolean dominated = false;
         for (DoubleSolution referencePoint : referencePointSolutions) {
-          if (dominanceComparator.compare(archive.getSolutionList().get(i), referencePoint) == 0) {
+          if (dominanceComparator.compare(archive.solutions().get(i), referencePoint) == 0) {
             dominated = true;
           }
         }
 
         if (dominated) {
-          archive.getSolutionList().remove(i);
+          archive.solutions().remove(i);
         } else {
           i++;
         }

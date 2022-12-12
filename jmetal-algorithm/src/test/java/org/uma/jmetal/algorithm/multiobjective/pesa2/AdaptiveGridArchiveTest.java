@@ -17,7 +17,7 @@ public class AdaptiveGridArchiveTest {
     int capacity = 100 ;
     archive = new AdaptiveGridArchive<>(100, 2, 2) ;
 
-    assertEquals(capacity, archive.getMaxSize()) ;
+    assertEquals(capacity, archive.maximumSize()) ;
   }
 
   @Test

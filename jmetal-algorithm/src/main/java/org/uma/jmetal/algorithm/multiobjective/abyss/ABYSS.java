@@ -120,7 +120,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   }
 
   @Override public List<DoubleSolution> getResult() {
-    return archive.getSolutionList();
+    return archive.solutions();
   }
 
   @Override public DoubleSolution diversificationGeneration() {
@@ -452,18 +452,18 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     crowdingArchive = (CrowdingDistanceArchive<DoubleSolution>)archive ;
     crowdingArchive.computeDensityEstimator();
 
-    crowdingArchive.getSolutionList().sort(crowdingDistanceComparator);
+    crowdingArchive.solutions().sort(crowdingDistanceComparator);
 
     int insert = getPopulationSize() / 2;
 
-    if (insert > crowdingArchive.getSolutionList().size())
-      insert = crowdingArchive.getSolutionList().size();
+    if (insert > crowdingArchive.solutions().size())
+      insert = crowdingArchive.solutions().size();
 
     if (insert > (getPopulationSize() - getPopulation().size()))
       insert = getPopulationSize() - getPopulation().size();
 
     for (int i = 0; i < insert; i++) {
-      DoubleSolution solution = (DoubleSolution) crowdingArchive.getSolutionList().get(i).copy();
+      DoubleSolution solution = (DoubleSolution) crowdingArchive.solutions().get(i).copy();
       solution.attributes().put(SOLUTION_IS_MARKED, false);
       getPopulation().add(solution);
     }

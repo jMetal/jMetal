@@ -94,7 +94,7 @@ public class MOSA<S extends Solution<?>> implements Algorithm<List<S>> {
         archive.add(mutatedSolution);
       } else if (flag == 0) {
         if (archive.add(mutatedSolution)) {
-          if (archive.getComparator().compare(currentSolution, mutatedSolution) > 0) {
+          if (archive.comparator().compare(currentSolution, mutatedSolution) > 0) {
             currentSolution = mutatedSolution;
           }
         }
@@ -133,7 +133,7 @@ public class MOSA<S extends Solution<?>> implements Algorithm<List<S>> {
 
   @Override
   public List<S> getResult() {
-    return archive.getSolutionList();
+    return archive.solutions();
   }
 
   @Override

@@ -43,11 +43,11 @@ class DefaultGlobalBestInitializationTest {
 
     BoundedArchive<DoubleSolution> archive = Mockito.mock(BoundedArchive.class) ;
     List<DoubleSolution> archiveList = List.of(particle) ;
-    Mockito.when(archive.getSolutionList()).thenReturn(archiveList) ;
+    Mockito.when(archive.solutions()).thenReturn(archiveList) ;
 
     BoundedArchive<DoubleSolution> globalBest = new DefaultGlobalBestInitialization().initialize(swarm, archive) ;
 
-    assertEquals(1, globalBest.getSolutionList().size());
-    assertSame(particle, globalBest.getSolutionList().get(0));
+    assertEquals(1, globalBest.solutions().size());
+    assertSame(particle, globalBest.solutions().get(0));
   }
 }

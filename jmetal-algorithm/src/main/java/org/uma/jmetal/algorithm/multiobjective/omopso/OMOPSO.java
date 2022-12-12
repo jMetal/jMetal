@@ -79,12 +79,12 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   @Override protected void initProgress() {
     currentIteration = 1;
-    crowdingDistance.compute(leaderArchive.getSolutionList());
+    crowdingDistance.compute(leaderArchive.solutions());
   }
 
   @Override protected void updateProgress() {
     currentIteration += 1;
-    crowdingDistance.compute(leaderArchive.getSolutionList());
+    crowdingDistance.compute(leaderArchive.solutions());
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -112,7 +112,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   @Override public List<DoubleSolution> getResult() {
     //return this.leaderArchive.getSolutionList();
-      return this.epsilonArchive.getSolutionList();
+      return this.epsilonArchive.solutions();
   }
 
   @Override
@@ -145,10 +145,10 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
       //Select a global localBest for calculate the speed of particle i, bestGlobal
       DoubleSolution one ;
       DoubleSolution two;
-      int pos1 = randomGenerator.nextInt(0, leaderArchive.getSolutionList().size() - 1);
-      int pos2 = randomGenerator.nextInt(0, leaderArchive.getSolutionList().size() - 1);
-      one = leaderArchive.getSolutionList().get(pos1);
-      two = leaderArchive.getSolutionList().get(pos2);
+      int pos1 = randomGenerator.nextInt(0, leaderArchive.solutions().size() - 1);
+      int pos2 = randomGenerator.nextInt(0, leaderArchive.solutions().size() - 1);
+      one = leaderArchive.solutions().get(pos1);
+      two = leaderArchive.solutions().get(pos2);
 
       if (crowdingDistanceComparator.compare(one, two) < 1) {
         bestGlobal = one ;

@@ -38,7 +38,7 @@ public class RandomSearch<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   @Override public List<S> getResult() {
-    return nonDominatedArchive.getSolutionList();
+    return nonDominatedArchive.solutions();
   }
 
   @Override public String getName() {

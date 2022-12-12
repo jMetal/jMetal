@@ -49,7 +49,7 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
   @Override
   public boolean add(S solution) {
     //Iterator of individuals over the list
-    Iterator<S> iterator = getSolutionList().iterator();
+    Iterator<S> iterator = solutions().iterator();
 
     while (iterator.hasNext()) {
       S element = iterator.next();
@@ -61,7 +61,7 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
         if (grid.getLocationDensity(location) > 1) {//The hypercube contains
           grid.removeSolution(location);            //more than one individual
         } else {
-          grid.updateGrid(getSolutionList());
+          grid.updateGrid(solutions());
         }
       }
       else if (flag == 1) { // An Individual into the file dominates the
@@ -72,22 +72,22 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
 
     // At this point, the solution may be inserted
     if (this.size() == 0) { //The setArchive is empty
-      this.getSolutionList().add(solution);
-      grid.updateGrid(getSolutionList());
+      this.solutions().add(solution);
+      grid.updateGrid(solutions());
       return true;
     }
 
-    if (this.getSolutionList().size() < this.getMaxSize()) { //The setArchive is not full
-      grid.updateGrid(solution, getSolutionList()); // Update the grid if applicable
+    if (this.solutions().size() < this.maximumSize()) { //The setArchive is not full
+      grid.updateGrid(solution, solutions()); // Update the grid if applicable
       int location;
       location = grid.location(solution); // Get the location of the solution
       grid.addSolution(location); // Increment the density of the hypercube
-      getSolutionList().add(solution); // Add the solution to the list
+      solutions().add(solution); // Add the solution to the list
       return true;
     }
 
     // At this point, the solution has to be inserted and the setArchive is full
-    grid.updateGrid(solution, getSolutionList());
+    grid.updateGrid(solution, solutions());
     int location = grid.location(solution);
     if (location == grid.getMostPopulatedHypercube()) { // The solution is in the
       // most populated hypercube
@@ -98,7 +98,7 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
       // A solution from most populated hypercube has been removed,
       // insert now the solution
       grid.addSolution(location);
-      getSolutionList().add(solution);
+      solutions().add(solution);
     }
     return true;
   }
@@ -108,7 +108,7 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
   }
   
   public void prune() {
-    Iterator<S> iterator = getSolutionList().iterator();
+    Iterator<S> iterator = solutions().iterator();
     while (iterator.hasNext()) {
       S element = iterator.next();
       int location = grid.location(element);
@@ -121,7 +121,7 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return null ; // TODO
   }
 

@@ -47,7 +47,7 @@ public class SMPSOWithUnboundedArchiveExample {
 
     smpso.run();
 
-    List<DoubleSolution> population = externalUnboundedArchive.getSolutionList();
+    List<DoubleSolution> population = externalUnboundedArchive.solutions();
     JMetalLogger.logger.info("Total execution time : " + smpso.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + smpso.getEvaluation());
 

@@ -46,7 +46,7 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
     S dominatedSolution = null ;
 
     if (dominanceTest(solution, referencePointSolution) == 0) {
-      if (getSolutionList().size() == 0) {
+      if (solutions().size() == 0) {
         result = true ;
       } else {
         if (JMetalRandom.getInstance().nextDouble() < 0.05) {
@@ -64,8 +64,8 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
       result = super.add(solution);
     }
 
-    if (result && (dominatedSolution != null) && (getSolutionList().size() > 1)) {
-      getSolutionList().remove(dominatedSolution) ;
+    if (result && (dominatedSolution != null) && (solutions().size() > 1)) {
+      solutions().remove(dominatedSolution) ;
     }
 
     return result;
@@ -73,12 +73,12 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
 
   @Override
   public synchronized void prune() {
-    if (getSolutionList().size() > getMaxSize()) {
+    if (solutions().size() > maximumSize()) {
 
       computeDensityEstimator();
 
-      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), comparator);
-      getSolutionList().remove(worst);
+      S worst = new SolutionListUtils().findWorstSolution(solutions(), comparator);
+      solutions().remove(worst);
     }
   }
 
@@ -89,9 +89,9 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
     }
 
     int i = 0 ;
-    while (i < getSolutionList().size()) {
-      if (dominanceTest(getSolutionList().get(i), referencePointSolution) == 0) {
-        getSolutionList().remove(i) ;
+    while (i < solutions().size()) {
+      if (dominanceTest(solutions().get(i), referencePointSolution) == 0) {
+        solutions().remove(i) ;
       } else {
         i++;
       }

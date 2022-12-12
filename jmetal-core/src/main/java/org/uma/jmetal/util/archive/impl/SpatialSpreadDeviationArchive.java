@@ -37,20 +37,20 @@ public class SpatialSpreadDeviationArchive<S extends Solution<?>> extends
 
   @Override
   public void prune() {
-    if (getSolutionList().size() > getMaxSize()) {
+    if (solutions().size() > maximumSize()) {
       computeDensityEstimator();
-      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), crowdingDistanceComparator) ;
-      getSolutionList().remove(worst);
+      S worst = new SolutionListUtils().findWorstSolution(solutions(), crowdingDistanceComparator) ;
+      solutions().remove(worst);
     }
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return crowdingDistanceComparator ;
   }
 
   @Override
   public void computeDensityEstimator() {
-    crowdingDistance.computeDensityEstimator(getSolutionList());
+    crowdingDistance.computeDensityEstimator(solutions());
   }
 }

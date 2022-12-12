@@ -67,7 +67,7 @@ public class SPS2011VelocityUpdate implements VelocityUpdate {
 
     for (int i = 0; i < swarm.size(); i++) {
       DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-      DoubleSolution globalBestParticle = globalBestSelection.select(leaders.getSolutionList()) ;
+      DoubleSolution globalBestParticle = globalBestSelection.select(leaders.solutions()) ;
 
       r1 = randomGenerator.nextDouble(0, 1);
       r2 = randomGenerator.nextDouble(0, 1);

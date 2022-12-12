@@ -35,12 +35,12 @@ public class CrowdingDistanceArchiveWithReferencePoint<S extends Solution<?>> ex
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return comparator;
   }
 
   @Override
   public void computeDensityEstimator() {
-    densityEstimator.compute(getSolutionList());
+    densityEstimator.compute(solutions());
   }
 }

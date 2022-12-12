@@ -65,7 +65,7 @@ public class MOEADWithUnboundedArchiveExample {
 
     moead.run();
 
-    List<DoubleSolution> population = externalArchive.getSolutionList();
+    List<DoubleSolution> population = externalArchive.solutions();
     JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
 

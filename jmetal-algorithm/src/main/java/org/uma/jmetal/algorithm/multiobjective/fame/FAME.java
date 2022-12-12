@@ -168,7 +168,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
       if (aleat <= 0.1) // 0.1 n_n wiiii (0.1 lo hace parecido a measo1 (0.05 asco))
       matingPopulation.add((S) selectionOperator.execute(population));
       else {
-        matingPopulation.add((S) selectionOperator.execute(archiveSSD.getSolutionList()));
+        matingPopulation.add((S) selectionOperator.execute(archiveSSD.solutions()));
       }
     }
 
@@ -317,7 +317,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
 
   @Override
   public List<S> getResult() {
-    return SolutionListUtils.getNonDominatedSolutions(archiveSSD.getSolutionList());
+    return SolutionListUtils.getNonDominatedSolutions(archiveSSD.solutions());
   }
 
   @Override

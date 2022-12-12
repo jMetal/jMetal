@@ -8,7 +8,7 @@ import java.util.Comparator;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface BoundedArchive<S> extends Archive<S> {
-  int getMaxSize() ;
-  Comparator<S> getComparator() ;
+  int maximumSize() ;
+  Comparator<S> comparator() ;
   void computeDensityEstimator() ;
 }

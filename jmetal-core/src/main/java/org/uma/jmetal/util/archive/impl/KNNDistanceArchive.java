@@ -23,20 +23,20 @@ public class KNNDistanceArchive<S extends Solution<?>> extends AbstractBoundedAr
 
   @Override
   public void prune() {
-    if (getSolutionList().size() > getMaxSize()) {
+    if (solutions().size() > maximumSize()) {
       computeDensityEstimator();
-      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), knnDistanceComparator) ;
-      getSolutionList().remove(worst);
+      S worst = new SolutionListUtils().findWorstSolution(solutions(), knnDistanceComparator) ;
+      solutions().remove(worst);
     }
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return knnDistanceComparator ;
   }
 
   @Override
   public void computeDensityEstimator() {
-    knnDensityEstimator.compute(getSolutionList());
+    knnDensityEstimator.compute(solutions());
   }
 }

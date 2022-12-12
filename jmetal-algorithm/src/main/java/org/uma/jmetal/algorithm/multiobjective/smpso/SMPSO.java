@@ -244,18 +244,18 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override
   public List<DoubleSolution> getResult() {
-    return leaders.getSolutionList();
+    return leaders.solutions();
   }
 
   protected DoubleSolution selectGlobalBest() {
     DoubleSolution one, two;
     DoubleSolution bestGlobal;
-    int pos1 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
-    int pos2 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
-    one = leaders.getSolutionList().get(pos1);
-    two = leaders.getSolutionList().get(pos2);
+    int pos1 = randomGenerator.nextInt(0, leaders.solutions().size() - 1);
+    int pos2 = randomGenerator.nextInt(0, leaders.solutions().size() - 1);
+    one = leaders.solutions().get(pos1);
+    two = leaders.solutions().get(pos2);
 
-    if (leaders.getComparator().compare(one, two) < 1) {
+    if (leaders.comparator().compare(one, two) < 1) {
       bestGlobal = (DoubleSolution) one.copy();
     } else {
       bestGlobal = (DoubleSolution) two.copy();

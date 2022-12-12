@@ -162,7 +162,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
   protected List<S> selection(List<S> population) {
     List<S> matingPopulation = new ArrayList<>(3);
     for (int x = 0; x < 3; x++) {
-      matingPopulation.add((S) selectionOperator.execute(archive_hv.getSolutionList()));
+      matingPopulation.add((S) selectionOperator.execute(archive_hv.solutions()));
     }
 
     return matingPopulation;
@@ -294,13 +294,13 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
   @Override
   protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(archive_hv.getMaxSize());
-    for (int i = 0; i < archive_hv.getMaxSize(); i++) {
+    List<S> population = new ArrayList<>(archive_hv.maximumSize());
+    for (int i = 0; i < archive_hv.maximumSize(); i++) {
       S newIndividual = getProblem().createSolution();
       population.add(newIndividual);
     }
     evaluator.evaluate(population, getProblem());
-    for (int i = 0; i < archive_hv.getMaxSize(); i++) {
+    for (int i = 0; i < archive_hv.maximumSize(); i++) {
       archive_hv.add(population.get(i));
     }
     return null;
@@ -308,7 +308,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
   @Override
   public List<S> getResult() {
-    return getNonDominatedSolutions(archive_hv.getSolutionList());
+    return getNonDominatedSolutions(archive_hv.solutions());
   }
 
   protected List<S> getNonDominatedSolutions(List<S> solutionList) {

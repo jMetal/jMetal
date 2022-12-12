@@ -161,7 +161,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
       archive.add(solution);
     }
 
-    return archive.getSolutionList();
+    return archive.solutions();
   }
 
   /**

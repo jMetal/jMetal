@@ -31,8 +31,8 @@ public class BestSolutionsArchive<S extends Solution<?>> implements Archive<S> {
   }
 
   @Override
-  public List<S> getSolutionList() {
-    return SolutionListUtils.distanceBasedSubsetSelection(archive.getSolutionList(), numberOfSolutionsToSelect);
+  public List<S> solutions() {
+    return SolutionListUtils.distanceBasedSubsetSelection(archive.solutions(), numberOfSolutionsToSelect);
   }
 
   @Override

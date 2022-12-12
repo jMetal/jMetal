@@ -186,7 +186,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
       archive.add(solution);
     }
 
-    return archive.getSolutionList();
+    return archive.solutions();
   }
 
   /**

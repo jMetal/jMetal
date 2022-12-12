@@ -174,7 +174,7 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
       }
     }
 
-    return nonDominatedSolutionArchive.getSolutionList();
+    return nonDominatedSolutionArchive.solutions();
   }
 
   /**
