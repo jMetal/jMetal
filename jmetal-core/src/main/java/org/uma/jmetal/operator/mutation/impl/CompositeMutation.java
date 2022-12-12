@@ -25,11 +25,11 @@ public class CompositeMutation implements MutationOperator<CompositeSolution> {
     Check.collectionIsNotEmpty(operators);
 
     this.operators = new ArrayList<>();
-    for (int i = 0; i < operators.size(); i++) {
+    for (Object operator : operators) {
       Check.that(
-          operators.get(i) instanceof MutationOperator,
+          operator instanceof MutationOperator,
           "The operator list does not contain an object implementing class CrossoverOperator");
-      this.operators.add((MutationOperator<Solution<?>>) operators.get(i));
+      this.operators.add((MutationOperator<Solution<?>>) operator);
     }
   }
 

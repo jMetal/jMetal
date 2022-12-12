@@ -41,5 +41,11 @@ Four classes of operators are currently included:
 * ``Selection``. Select a number of solutions from a list according to some criterion.
 * ``LocalSearchOperator``. Applies a local search method to improve a solution.
 
-In general, operators are related to the types of solutions to which they apply. 
+In general, operators are related to the types of solutions to which they apply. For example, ``BLXAlphaCrossover`` is applied to ``DoubleSolution`` objects and its declaration is as follows:
+
+.. code-block:: java
+
+  public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution>
+
+
 
