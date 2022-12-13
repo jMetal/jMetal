@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About jMetal &mdash; jmetal 6.0-SNAPSHOT documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="jMetal project documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> jmetal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">About jMetal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickStart.html">Quick Start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodings.html">Solutions (encodings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraint handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qualityIndicators.html">Quality indicators</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="experimentation.html">Experimental studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallel.html">Sub-module jmetal-parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoconfiguration.html">Automatic design and configuration of multi-objective metaheuristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component.html">Component-based algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mnds.html">Using MNDS in NSGA-II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jmetal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">About jMetal</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/about.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="about-jmetal">
+<h1>About jMetal<a class="headerlink" href="#about-jmetal" title="Permalink to this headline"></a></h1>
+<p>jMetal is a Java-based framework for multi-objective optimisation with metaheuristics, designed and
+developed by computer science engineers for their own use in research in this area. The origin
+of the tool was motivated by our interest in working on multi-objective optimization about 20 years
+ago; in particular, we wanted to apply our background in parallelism to multi-objective metaheuristics.
+In that time, the available software tools were the implementation of NSGA-II in C and the PISA
+framework, also in C. On examination, we were not comfortable with the available source codes;
+they lacked an object-oriented design and, in general, we found it difficult to read and understand
+them. What we needed was an easy-to-use, flexible, extensible, and portable framework for our own
+research. Our approach was to write our own framework from scratch for our research, resulting in jMetal.</p>
+<p>The figure below summarizes the chronology of jMetal releases over time, including related projects:</p>
+<figure class="align-default" id="id1">
+<img alt="_images/jMetalTimeline.png" src="_images/jMetalTimeline.png" />
+<figcaption>
+<p><span class="caption-text">Timeline of the development of jMetal and related projects.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The evolving of jMetal has been mainly addressed by major design changes related to the architecture
+of the algorithms and the project. The first public version (jMetal 4), described in the paper
+<a class="reference external" href="https://doi.org/10.1016/j.advengsoft.2011.05.014">jMetal: A Java framework for multi-objective optimization</a>,
+published in 2011, is based on single Java package. the algorithms were implemented in a <code class="docutils literal notranslate"><span class="pre">execute()</span></code>
+method (i.e., a monolithic architecture). The second version (jMetal 5), presented in
+<a class="reference external" href="https://doi.org/10.1145/2739482.2768462">Redesigning the jMetal Multi-Objective Optimization Framework</a> in
+2015, is a Maven Java project, containing unit tests, and the algorithms are implemented by inheriting from
+algorithm templates. The most recent release, jMetal 6.0, is an extension of jMetal 5.0, adding a package for developing
+algorithms from <a class="reference internal" href="component.html"><span class="doc">component-based templates</span></a> and another package for <a class="reference internal" href="autoconfiguration.html"><span class="doc">automatic algorithm configuration and design</span></a>.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="jMetal project documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Antonio J. Nebro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project structure &mdash; jmetal 6.0-SNAPSHOT documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Solutions (encodings)" href="encodings.html" />
+    <link rel="prev" title="Quick Start" href="quickStart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> jmetal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About jMetal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickStart.html">Quick Start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodings.html">Solutions (encodings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraint handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qualityIndicators.html">Quality indicators</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="experimentation.html">Experimental studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallel.html">Sub-module jmetal-parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoconfiguration.html">Automatic design and configuration of multi-objective metaheuristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component.html">Component-based algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mnds.html">Using MNDS in NSGA-II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jmetal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Project structure</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/structure.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="project-structure">
+<span id="structure"></span><h1>Project structure<a class="headerlink" href="#project-structure" title="Permalink to this headline"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Antonio J. Nebro</p>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>2022-11-30</p>
+</dd>
+</dl>
+<p>The jMetal project is a Maven project structured in the following sub-projects:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Sub-project</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>jmetal-core</p></td>
+<td><p>Core classes</p></td>
+</tr>
+<tr class="row-odd"><td><p>jmetal-solution</p></td>
+<td><p>Solution encodings</p></td>
+</tr>
+<tr class="row-even"><td><p>jmetal-algorithm</p></td>
+<td><p>Algorithm implementations</p></td>
+</tr>
+<tr class="row-odd"><td><p>jmetal-problem</p></td>
+<td><p>Benchmark problems</p></td>
+</tr>
+<tr class="row-even"><td><p>jmetal-lab</p></td>
+<td><p>Experimentation and visualization</p></td>
+</tr>
+<tr class="row-odd"><td><p>jmetal-parallel</p></td>
+<td><p>Parallel extensions</p></td>
+</tr>
+<tr class="row-even"><td><p>jmetal-auto</p></td>
+<td><p>Auto-design and configuration</p></td>
+</tr>
+<tr class="row-odd"><td><p>jmetal-component</p></td>
+<td><p>Component-based algorithms</p></td>
+</tr>
+</tbody>
+</table>
+<p>If you intend to use jMetal as dependence of your project, you do not need to import all the
+sub-projects. For example, if you are only interested in using some of the provided algorithms, then
+<code class="docutils literal notranslate"><span class="pre">jmetal-algorithm</span></code> or <code class="docutils literal notranslate"><span class="pre">jmetal-component</span></code> should be required. The dependencies section of the <code class="docutils literal notranslate"><span class="pre">pom.xml</span></code>
+file of your project would contain then:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;dependencies&gt;</span>
+ <span class="nt">&lt;dependency&gt;</span>
+   <span class="nt">&lt;groupId&gt;</span>org.uma.jmetal<span class="nt">&lt;/groupId&gt;</span>
+   <span class="nt">&lt;artifactId&gt;</span>jmetal-algorithm<span class="nt">&lt;/artifactId&gt;</span>
+   <span class="nt">&lt;version&gt;</span>6.0<span class="nt">&lt;/version&gt;</span>
+ <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickStart.html" class="btn btn-neutral float-left" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="encodings.html" class="btn btn-neutral float-right" title="Solutions (encodings)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Antonio J. Nebro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

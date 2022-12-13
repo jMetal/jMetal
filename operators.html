@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operators &mdash; jmetal 6.0-SNAPSHOT documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Constraint handling" href="constraints.html" />
+    <link rel="prev" title="Problems" href="problems.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> jmetal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About jMetal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickStart.html">Quick Start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodings.html">Solutions (encodings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Problems</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraint handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qualityIndicators.html">Quality indicators</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="experimentation.html">Experimental studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallel.html">Sub-module jmetal-parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoconfiguration.html">Automatic design and configuration of multi-objective metaheuristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component.html">Component-based algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mnds.html">Using MNDS in NSGA-II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jmetal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Operators</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/operators.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="operators">
+<span id="id1"></span><h1>Operators<a class="headerlink" href="#operators" title="Permalink to this headline"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Antonio J. Nebro</p>
+</dd>
+<dt class="field-even">Date</dt>
+<dd class="field-even"><p>2022-12-1</p>
+</dd>
+</dl>
+<p>Evolutionary algorithms use selection and variation operators for getting the mating pool and for generate a
+descendant population from this pool, respectively. In the case of genetic algorithms, variation operators are mutation and crossover.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Operator</span></code> interface (package <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.operator</span></code>) belongs the <code class="docutils literal notranslate"><span class="pre">jmetal-core</span></code> sub-project, and it is defined as follows:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.uma.jmetal.operator</span><span class="p">;</span>
+
+<span class="cm">/** Interface representing an operator</span>
+<span class="cm"> *</span>
+<span class="cm"> * @author Antonio J. Nebro &lt;antonio@lcc.uma.es&gt;</span>
+<span class="cm"> * @version 1.0</span>
+
+<span class="cm"> * @param &lt;Source&gt; Source Class of the object to be operated with</span>
+<span class="cm"> * @param &lt;Result&gt; Result Class of the result obtained after applying the operator</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Operator</span><span class="o">&lt;</span><span class="n">Source</span><span class="p">,</span> <span class="n">Result</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Serializable</span> <span class="p">{</span>
+  <span class="cm">/**</span>
+<span class="cm">   * @param source The data to process</span>
+<span class="cm">   */</span>
+  <span class="n">Result</span> <span class="nf">execute</span><span class="p">(</span><span class="n">Source</span> <span class="n">source</span><span class="p">)</span> <span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>According to this interface, an operator is a generic entity providing an <code class="docutils literal notranslate"><span class="pre">execute()</span></code> method
+that is applied to a source and returns a result. The source and result are typically a solution
+or a list of solutions, depending on the operator.</p>
+<p>Four classes of operators are currently included:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Crossover</span></code>. From a set of parent solutions, recombine them somehow to produce a number of children.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Mutation</span></code>. Mutates a solution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Selection</span></code>. Select a number of solutions from a list according to some criterion.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LocalSearchOperator</span></code>. Applies a local search method to improve a solution.</p></li>
+</ul>
+<p>In general, operators are related to the types of solutions to which they apply. For example, <code class="docutils literal notranslate"><span class="pre">BLXAlphaCrossover</span></code> is applied to <code class="docutils literal notranslate"><span class="pre">DoubleSolution</span></code> objects and its declaration is as follows:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BLXAlphaCrossover</span> <span class="kd">implements</span> <span class="n">CrossoverOperator</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The currently implemented operators are included in the next figures:</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="_images/crossoverOperators.png"><img alt="Crossover operators." src="_images/crossoverOperators.png" style="width: 314.40000000000003px; height: 388.8px;" /></a>
+</figure>
+<figure class="align-default">
+<a class="reference internal image-reference" href="_images/mutationOperators.png"><img alt="Mutation operators." src="_images/mutationOperators.png" style="width: 307.20000000000005px; height: 404.0px;" /></a>
+</figure>
+<figure class="align-default">
+<a class="reference internal image-reference" href="_images/selectionOperators.png"><img alt="Selection operators." src="_images/selectionOperators.png" style="width: 316.8px; height: 330.40000000000003px;" /></a>
+</figure>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="problems.html" class="btn btn-neutral float-left" title="Problems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="constraints.html" class="btn btn-neutral float-right" title="Constraint handling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Antonio J. Nebro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

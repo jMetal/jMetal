@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Constraint handling &mdash; jmetal 6.0-SNAPSHOT documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quality indicators" href="qualityIndicators.html" />
+    <link rel="prev" title="Operators" href="operators.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> jmetal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About jMetal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickStart.html">Quick Start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodings.html">Solutions (encodings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Constraint handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qualityIndicators.html">Quality indicators</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="experimentation.html">Experimental studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallel.html">Sub-module jmetal-parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoconfiguration.html">Automatic design and configuration of multi-objective metaheuristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component.html">Component-based algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mnds.html">Using MNDS in NSGA-II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jmetal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Constraint handling</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/constraints.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="constraint-handling">
+<span id="constraints"></span><h1>Constraint handling<a class="headerlink" href="#constraint-handling" title="Permalink to this headline"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Antonio J. Nebro</p>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>1.1</p>
+</dd>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>2022-3-28</p>
+</dd>
+</dl>
+<p>Constraint handling in jMetal involves solutions, problems, and comparators. Currently, two constraint handling mechanisms are provided:</p>
+<ul class="simple">
+<li><p>Number of violated constraints</p></li>
+<li><p>Overall constraint violation degree, which is based on the scheme used in NSGA-II (described in <a class="reference external" href="https://doi.org/10.1109/4235.996017">[DPA02]</a>).</p></li>
+</ul>
+<p>If we take a look to the <cite>Solution</cite> interface:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.uma.jmetal.solution</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Solution</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Serializable</span> <span class="p">{</span>
+  <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">variables</span><span class="p">()</span> <span class="p">;</span>
+  <span class="kt">double</span><span class="o">[]</span> <span class="nf">objectives</span><span class="p">()</span> <span class="p">;</span>
+  <span class="kt">double</span><span class="o">[]</span> <span class="nf">constraints</span><span class="p">()</span> <span class="p">;</span>
+  <span class="n">Map</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span> <span class="nf">attributes</span><span class="p">()</span> <span class="p">;</span>
+
+  <span class="n">Solution</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">copy</span><span class="p">()</span> <span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>the method <cite>constraints()</cite> returns an array of double values, where each element represents some kind of potential violation degree. These values are usually assigned when a solution is evaluated by a constrained problem; if the problem has no constraints, that method will return an empty array.</p>
+<p>An example of constrained problem is <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/multiobjective/Srinivas.java">Srinivas</a>, defined in <a class="reference external" href="https://doi.org/10.1109/4235.996017">[DPA02]</a>:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Srinivas</span> <span class="kd">extends</span> <span class="n">AbstractDoubleProblem</span> <span class="p">{</span>
+
+  <span class="cm">/** Constructor */</span>
+  <span class="kd">public</span> <span class="nf">Srinivas</span><span class="p">()</span>  <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">numberOfVariables</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">;</span>
+    <span class="n">numberOfObjectives</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="n">numberOfConstraints</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="n">name</span><span class="p">(</span><span class="s">&quot;Srinivas&quot;</span><span class="p">);</span>
+
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Double</span><span class="o">&gt;</span> <span class="n">lowerLimit</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">numberOfVariables</span><span class="p">);</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Double</span><span class="o">&gt;</span> <span class="n">upperLimit</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">numberOfVariables</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfVariables</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">lowerLimit</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="o">-</span><span class="mf">20.0</span><span class="p">);</span>
+      <span class="n">upperLimit</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mf">20.0</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">variableBounds</span><span class="p">(</span><span class="n">lowerLimit</span><span class="p">,</span> <span class="n">upperLimit</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/** Evaluate() method */</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">DoubleSolution</span> <span class="n">solution</span><span class="p">)</span>  <span class="p">{</span>
+    <span class="kt">double</span><span class="o">[]</span> <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="o">[</span><span class="n">solution</span><span class="p">.</span><span class="na">getNumberOfVariables</span><span class="p">()</span><span class="o">]</span><span class="p">;</span>
+
+    <span class="kt">double</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">solution</span><span class="p">.</span><span class="na">getVariable</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="kt">double</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">solution</span><span class="p">.</span><span class="na">getVariable</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">f</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">);</span>
+    <span class="n">f</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mf">9.0</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">-</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">);</span>
+
+    <span class="n">solution</span><span class="p">.</span><span class="na">setObjective</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">f</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">);</span>
+    <span class="n">solution</span><span class="p">.</span><span class="na">setObjective</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">f</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">);</span>
+
+    <span class="n">evaluateConstraints</span><span class="p">(</span><span class="n">solution</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/** EvaluateConstraints() method  */</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">evaluateConstraints</span><span class="p">(</span><span class="n">DoubleSolution</span> <span class="n">solution</span><span class="p">)</span>  <span class="p">{</span>
+    <span class="kt">double</span><span class="o">[]</span> <span class="n">constraint</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="o">[</span><span class="k">this</span><span class="p">.</span><span class="na">getNumberOfConstraints</span><span class="p">()</span><span class="o">]</span><span class="p">;</span>
+
+    <span class="kt">double</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">solution</span><span class="p">.</span><span class="na">getVariable</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">;</span>
+    <span class="kt">double</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">solution</span><span class="p">.</span><span class="na">getVariable</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">;</span>
+
+    <span class="n">constraint</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">x1</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span> <span class="o">*</span> <span class="n">x2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">225.0</span><span class="p">;</span>
+    <span class="n">constraint</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">10.0</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">;</span>
+
+    <span class="n">IntStream</span><span class="p">.</span><span class="na">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">getNumberOfConstraints</span><span class="p">())</span>
+        <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="n">solution</span><span class="p">.</span><span class="na">constraints</span><span class="p">()</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">constraint</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We can observe that the problem formulation includes two constraints, which are defined in the <code class="docutils literal notranslate"><span class="pre">evaluateConstraints()</span></code> method that is called after a solution is evaluated. According to the NSGA-II constraint handling scheme, the requirement to work with constraints is that every constraint must be expressed as an inequality of type <cite>expression &gt;=0.0</cite>. This way, when <cite>expression &lt; 0.0</cite> then it is considered as a constraint violation, and the overall constraint violation degree will the sum of the values of the constraints array. If that value is negative, then the solution is infeasible.</p>
+<p>To facilitate the use of constraints, jMetal provides the utility <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/ConstraintHandling.java">ConstraintHandling</a> class, which provides the following static methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">isFeasible(Solution</span> <span class="pre">solution)</span></code>: returns true if the solution has no constraints or the number of violated constraints is zero.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numberOfViolatedConstraints(Solution</span> <span class="pre">solution)</span></code>: returns the number of violated constraints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">overallConstraintViolationDegree(Solution</span> <span class="pre">solution)</span></code>: returns the overall constraint violation degree of a solution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">feasibilityRatio(List&lt;Solution&gt;</span> <span class="pre">solutions)</span></code>:  computes the ratio of feasible solutions in a solution list.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numberOfViolatedConstraints(Solution</span> <span class="pre">solution,</span> <span class="pre">int</span> <span class="pre">number)</span></code>: sets the number of violated constraints of a solution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">overallConstraintViolationDegree(Solution</span> <span class="pre">solution,</span> <span class="pre">double</span> <span class="pre">value)</span></code>: sets the overall constraint violation degree of a solution.</p></li>
+</ul>
+<p>The last two methods are included to allow the adoption of adhoc mechanisms to compute both the number of violated constraints and the overall constraint violation degree. To cope with this possibility, the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/ConstraintHandling.java">ConstraintHandling</a> class includes the following enum type:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">enum</span> <span class="n">PRECOMPUTED</span> <span class="p">{</span>
+  <span class="n">OVERALL_CONSTRAINT_VIOLATION</span><span class="p">,</span>
+  <span class="n">NUMBER_OF_VIOLATED_CONSTRAINTS</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It is assumed that a solution may have an attribute whose key value is <code class="docutils literal notranslate"><span class="pre">OVERALL_CONSTRAINT_VIOLATION</span></code> or <code class="docutils literal notranslate"><span class="pre">NUMBER_OF_VIOLATED_CONSTRAINTS</span></code>. If so, the associated values are returned when querying the constraint properties of the solution; otherwise, the constraints are computed using the default scheme. This is illustrated in the <code class="docutils literal notranslate"><span class="pre">numberOfViolatedConstraints(Solution</span> <span class="pre">solution)</span></code> and <code class="docutils literal notranslate"><span class="pre">overallConstraintViolationDegree(Solution</span> <span class="pre">solution)</span></code> methods:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">S</span> <span class="kd">extends</span> <span class="n">Solution</span><span class="o">&lt;?&gt;&gt;</span> <span class="kt">int</span> <span class="nf">numberOfViolatedConstraints</span><span class="p">(</span><span class="n">S</span> <span class="n">solution</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">solution</span><span class="p">.</span><span class="na">attributes</span><span class="p">().</span><span class="na">getOrDefault</span><span class="p">(</span>
+      <span class="n">PRECOMPUTED</span><span class="p">.</span><span class="na">NUMBER_OF_VIOLATED_CONSTRAINTS</span><span class="p">,</span>
+      <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">IntStream</span><span class="p">.</span><span class="na">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">solution</span><span class="p">.</span><span class="na">constraints</span><span class="p">().</span><span class="na">length</span><span class="p">)</span>
+          <span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="n">solution</span><span class="p">.</span><span class="na">constraints</span><span class="p">()</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+          <span class="p">.</span><span class="na">count</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">S</span> <span class="kd">extends</span> <span class="n">Solution</span><span class="o">&lt;?&gt;&gt;</span> <span class="kt">double</span> <span class="nf">overallConstraintViolationDegree</span><span class="p">(</span><span class="n">S</span> <span class="n">solution</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">overallConstraintViolation</span> <span class="o">=</span>
+      <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="n">solution</span><span class="p">.</span><span class="na">attributes</span><span class="p">().</span><span class="na">getOrDefault</span><span class="p">(</span>
+          <span class="n">PRECOMPUTED</span><span class="p">.</span><span class="na">OVERALL_CONSTRAINT_VIOLATION</span><span class="p">,</span>
+          <span class="mf">0.0</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">overallConstraintViolation</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">overallConstraintViolation</span> <span class="o">=</span> <span class="n">IntStream</span><span class="p">.</span><span class="na">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">solution</span><span class="p">.</span><span class="na">constraints</span><span class="p">().</span><span class="na">length</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="n">solution</span><span class="p">.</span><span class="na">constraints</span><span class="p">()</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">).</span><span class="na">mapToDouble</span><span class="p">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="n">solution</span><span class="p">.</span><span class="na">constraints</span><span class="p">()</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">sum</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">overallConstraintViolation</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Given two, solutions, the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/comparator/impl/OverallConstraintViolationComparator.java">OverallConstraintViolationComparator</a> and <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/comparator/impl/NumberOfViolatedConstraintsComparator.java">NumberOfViolatedConstraintsComparator</a> classes can be used to compare then according the constraints. The implementation of the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/comparator/impl/OverallConstraintViolationComparator.java">OverallConstraintViolationComparator</a> class is included next:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OverallConstraintViolationComparator</span><span class="o">&lt;</span><span class="n">S</span> <span class="kd">extends</span> <span class="n">Solution</span><span class="o">&lt;?&gt;&gt;</span>
+  <span class="kd">implements</span> <span class="n">ConstraintViolationComparator</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="cm">/**</span>
+<span class="cm">   * Compares two solutions. If the solutions has no constraints the method return 0</span>
+<span class="cm">   *</span>
+<span class="cm">   * @param solution1 Object representing the first &lt;code&gt;Solution&lt;/code&gt;.</span>
+<span class="cm">   * @param solution2 Object representing the second &lt;code&gt;Solution&lt;/code&gt;.</span>
+<span class="cm">   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,</span>
+<span class="cm">   * respectively.</span>
+<span class="cm">   */</span>
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="p">(</span><span class="n">S</span> <span class="n">solution1</span><span class="p">,</span> <span class="n">S</span> <span class="n">solution2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">double</span> <span class="n">violationDegreeSolution1</span> <span class="p">;</span>
+    <span class="kt">double</span> <span class="n">violationDegreeSolution2</span><span class="p">;</span>
+
+    <span class="n">violationDegreeSolution1</span> <span class="o">=</span> <span class="n">ConstraintHandling</span><span class="p">.</span><span class="na">overallConstraintViolationDegree</span><span class="p">(</span><span class="n">solution1</span><span class="p">);</span>
+    <span class="n">violationDegreeSolution2</span> <span class="o">=</span> <span class="n">ConstraintHandling</span><span class="p">.</span><span class="na">overallConstraintViolationDegree</span><span class="p">(</span><span class="n">solution2</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">violationDegreeSolution1</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">violationDegreeSolution2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">violationDegreeSolution1</span> <span class="o">&gt;</span> <span class="n">violationDegreeSolution2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">violationDegreeSolution2</span> <span class="o">&gt;</span> <span class="n">violationDegreeSolution1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">violationDegreeSolution1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">violationDegreeSolution2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">violationDegreeSolution1</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">violationDegreeSolution2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that the violation degree of solution is a negative number.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="operators.html" class="btn btn-neutral float-left" title="Operators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="qualityIndicators.html" class="btn btn-neutral float-right" title="Quality indicators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Antonio J. Nebro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

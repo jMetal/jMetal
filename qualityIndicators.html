@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quality indicators &mdash; jmetal 6.0-SNAPSHOT documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Experimental studies" href="experimentation.html" />
+    <link rel="prev" title="Constraint handling" href="constraints.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> jmetal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About jMetal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickStart.html">Quick Start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodings.html">Solutions (encodings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraint handling</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quality indicators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-of-use">Example of use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#computing-quality-indicators-from-the-command-line">Computing quality indicators from the command line</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="experimentation.html">Experimental studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallel.html">Sub-module jmetal-parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoconfiguration.html">Automatic design and configuration of multi-objective metaheuristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component.html">Component-based algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mnds.html">Using MNDS in NSGA-II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jmetal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Quality indicators</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/qualityIndicators.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quality-indicators">
+<span id="qualityindicators"></span><h1>Quality indicators<a class="headerlink" href="#quality-indicators" title="Permalink to this headline"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Antonio J. Nebro</p>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>2022-12-12</p>
+</dd>
+</dl>
+<p>Quality indicators are entities that typically measure the convergence and/or the diversity Pareto front approximations, and most of
+them require a reference Pareto front to be applied. These indicators are located in package <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.qualityindicator</span></code> (sub-project <code class="docutils literal notranslate"><span class="pre">jmetal-core</span></code>), and all of them implement the <code class="docutils literal notranslate"><span class="pre">QualityIndicator</span></code> abstract class:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">QualityIndicator</span> <span class="p">{</span>
+  <span class="kd">protected</span> <span class="kt">double</span><span class="o">[][]</span> <span class="n">referenceFront</span> <span class="p">;</span>
+
+  <span class="kd">protected</span> <span class="nf">QualityIndicator</span><span class="p">(</span><span class="kt">double</span><span class="o">[][]</span> <span class="n">referenceFront</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Check</span><span class="p">.</span><span class="na">notNull</span><span class="p">(</span><span class="n">referenceFront</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">referenceFront</span> <span class="o">=</span> <span class="n">referenceFront</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">double</span> <span class="nf">compute</span><span class="p">(</span><span class="kt">double</span><span class="o">[][]</span> <span class="n">front</span><span class="p">)</span> <span class="p">;</span>
+  <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">boolean</span> <span class="nf">isTheLowerTheIndicatorValueTheBetter</span><span class="p">();</span>
+
+  <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It is worth noticing than both the fronts are represented as matrices, which will contain objectives values, and the code implementing the indicators does not use any jMetal dependence, and it is assumed that the fronts are normalized before computing the indicators. All the quality indicators have to implement the <code class="docutils literal notranslate"><span class="pre">isTheLowerTheIndicatorValueTheBetter()</span></code> method, which is required to compare the indicator values of two or more fronts.</p>
+<p>The list of available quality indicators is the following:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">EP</span></code>: Additive epsilon</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ER</span></code>: Error ratio</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SPREAD</span></code>: Spread (two objectives)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GSPREAD</span></code>: Generalized spread (more than two objectives)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GD</span></code>: Generational distance</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IGD</span></code>: Inverted generational distance</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IGD+</span></code>: Inverted generational distance plus</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SC</span></code>: Set coverage</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HV</span></code>: Hypervolume</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NHV</span></code>: Normalized hypervolume</p></li>
+</ul>
+<section id="example-of-use">
+<h2>Example of use<a class="headerlink" href="#example-of-use" title="Permalink to this headline"></a></h2>
+<p>The following code snippet shows the typical way of computing a quality indicator (we use the additive epsilon as an example):</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="o">[][]</span> <span class="n">normalizedReferenceFront</span> <span class="o">=</span> <span class="n">NormalizeUtils</span><span class="p">.</span><span class="na">normalize</span><span class="p">(</span><span class="n">referenceFront</span><span class="p">);</span>
+<span class="kt">double</span><span class="o">[][]</span> <span class="n">normalizedFront</span> <span class="o">=</span>
+          <span class="n">NormalizeUtils</span><span class="p">.</span><span class="na">normalize</span><span class="p">(</span>
+                  <span class="n">front</span><span class="p">,</span>
+                  <span class="n">NormalizeUtils</span><span class="p">.</span><span class="na">getMinValuesOfTheColumnsOfAMatrix</span><span class="p">(</span><span class="n">referenceFront</span><span class="p">),</span>
+                  <span class="n">NormalizeUtils</span><span class="p">.</span><span class="na">getMaxValuesOfTheColumnsOfAMatrix</span><span class="p">(</span><span class="n">referenceFront</span><span class="p">));</span>
+
+<span class="n">Epsilon</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Epsilon</span><span class="p">(</span><span class="n">normalizedReferenceFront</span><span class="p">)</span> <span class="p">;</span>
+<span class="kt">double</span> <span class="n">indicatorValue</span> <span class="o">=</span> <span class="n">epsilon</span><span class="p">.</span><span class="na">compute</span><span class="p">(</span><span class="n">normalizedFront</span><span class="p">)</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p>A typical scenario involves finding a Pareto front approximation and compute a quality indicator but the reference front is stored in a file. In this case, an utility function is <code class="docutils literal notranslate"><span class="pre">readVectors()</span></code>:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="o">[][]</span><span class="n">referenceFront</span> <span class="o">=</span>  <span class="n">VectorUtils</span><span class="p">.</span><span class="na">readVectors</span><span class="p">(</span><span class="n">referenceParetoFront</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this code, we assume the file containing the front has a CSV format.</p>
+</section>
+<section id="computing-quality-indicators-from-the-command-line">
+<h2>Computing quality indicators from the command line<a class="headerlink" href="#computing-quality-indicators-from-the-command-line" title="Permalink to this headline"></a></h2>
+<p>If you need to compute the value of a quality indicator of a front of solutions from the command line you can use the
+<code class="docutils literal notranslate"><span class="pre">CommandLineQualityIndicatorTool</span></code>. We assume the following:</p>
+<ul class="simple">
+<li><p>The current working directory is the root of jMetal.</p></li>
+<li><p>The obtained front is stored in a file calle <code class="docutils literal notranslate"><span class="pre">FUN.csv</span></code>.</p></li>
+<li><p>The solved problem is ZDT1, whose reference front is in <code class="docutils literal notranslate"><span class="pre">resources/referenceFrontsCSV/ZDT1.csv</span></code>.</p></li>
+<li><p>The instruction <code class="docutils literal notranslate"><span class="pre">mvn</span> <span class="pre">package</span></code> (or <code class="docutils literal notranslate"><span class="pre">mvn</span> <span class="pre">package</span> <span class="pre">-DskipTests=True</span></code>) has been executed.</p></li>
+</ul>
+<p>The list of available quality indicators can be obtained by calling the class without parameters:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> % java -cp jmetal-core/target/jmetal-core-6.0-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool
+
+ INFO: Loggers configured with null <span class="o">[</span>org.uma.jmetal.util.JMetalLogger configureLoggers<span class="o">]</span>
+ INFO: Parameters: indicatorName referenceFrontFile frontFile
+ Where indicatorValue can be one of these:
+ EP   - Additive epsilon
+ GD   - Generational distance
+ IGD  - Inverted generational distance
+ IGD+ - Inverted generational distance plus
+ HV   - Hypervolume
+ NHV  - Normalized hypervolume
+ ER   - Error ratio
+ SP   - Spread <span class="o">(</span>two objectives<span class="o">)</span>
+ GSPREAD - Generalized Spread <span class="o">(</span>more than two objectives<span class="o">)</span>
+ SC   - Set coverage
+<span class="o">[</span> org.uma.jmetal.utilities.CommandLineQualityIndicatorTool printAvailableIndicators<span class="o">]</span>
+ Exception <span class="k">in</span> thread <span class="s2">&quot;main&quot;</span> org.uma.jmetal.util.errorchecking.JMetalException: Invalid arguments
+</pre></div>
+</div>
+<p>We can compute a single indicator, as the inverted generational distance:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>% java -cp jmetal-core/target/jmetal-core-6.0-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool IGD FUN.csv resources/referenceFrontsCSV/ZDT1.csv
+
+ INFO: Loggers configured with null <span class="o">[</span>org.uma.jmetal.util.JMetalLogger configureLoggers<span class="o">]</span>
+ INFO: The fronts are normalized before computing the indicators <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+ INFO: <span class="m">2</span>.2536457240826101E-4 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+</pre></div>
+</div>
+<p>Or all the quality indicators if we use <code class="docutils literal notranslate"><span class="pre">ALL</span></code> as indicator:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>% java -cp jmetal-core/target/jmetal-core-6.0-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool ALL FUN.csv resources/referenceFrontsCSV/ZDT1.csv
+
+INFO: Loggers configured with null <span class="o">[</span>org.uma.jmetal.util.JMetalLogger configureLoggers<span class="o">]</span>
+INFO: The fronts are normalized before computing the indicators <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+INFO: EP: <span class="m">7</span>.098510362065962E-4 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+INFO: HV: <span class="m">0</span>.6665198715008906 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+INFO: NHV: -0.009962058513842686 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+INFO: GD: <span class="m">1</span>.933259493087464E-4 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+INFO: IGD: <span class="m">2</span>.2536457240826101E-4 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+INFO: IGD+: <span class="m">2</span>.3576944009587076E-5 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+INFO: SP: <span class="m">0</span>.27852463257758625 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+INFO: GSPREAD: <span class="m">0</span>.2780440568993888 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+INFO: SC<span class="o">(</span>refFront, front<span class="o">)</span>: <span class="m">0</span>.0 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+INFO: SC<span class="o">(</span>front, refFront<span class="o">)</span>: <span class="m">0</span>.9090909090909091 <span class="o">[</span>org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="constraints.html" class="btn btn-neutral float-left" title="Constraint handling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="experimentation.html" class="btn btn-neutral float-right" title="Experimental studies" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Antonio J. Nebro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

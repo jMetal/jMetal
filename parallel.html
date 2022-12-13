@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sub-module jmetal-parallel &mdash; jmetal 6.0-SNAPSHOT documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Automatic design and configuration of multi-objective metaheuristics" href="autoconfiguration.html" />
+    <link rel="prev" title="Experimental studies" href="experimentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> jmetal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About jMetal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickStart.html">Quick Start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodings.html">Solutions (encodings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraint handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qualityIndicators.html">Quality indicators</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Advanced</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="experimentation.html">Experimental studies</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sub-module jmetal-parallel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#synchronous-parallelism">Synchronous parallelism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asynchronous-parallelism">Asynchronous parallelism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="autoconfiguration.html">Automatic design and configuration of multi-objective metaheuristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component.html">Component-based algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mnds.html">Using MNDS in NSGA-II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jmetal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Sub-module jmetal-parallel</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/parallel.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sub-module-jmetal-parallel">
+<span id="parallel"></span><h1>Sub-module jmetal-parallel<a class="headerlink" href="#sub-module-jmetal-parallel" title="Permalink to this headline"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Antonio J. Nebro</p>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>2020-14-09</p>
+</dd>
+</dl>
+<p>This section describes the contents of the <cite>jmetal-parallel</cite> submodule.</p>
+<section id="synchronous-parallelism">
+<h2>Synchronous parallelism<a class="headerlink" href="#synchronous-parallelism" title="Permalink to this headline"></a></h2>
+<p>Traditionally, jMetal has provided basic support for evaluating list of solutions (i.e., populations and swarms) in parallel by using the processor cores. The adopted strategy is to include classes implementing the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/evaluator/SolutionListEvaluator.java">SolutionListEvaluator</a> interface:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SolutionListEvaluator</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Serializable</span> <span class="p">{</span>
+  <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">solutionList</span><span class="p">,</span> <span class="n">Problem</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">problem</span><span class="p">)</span> <span class="p">;</span>
+  <span class="kt">void</span> <span class="nf">shutdown</span><span class="p">()</span> <span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <cite>evaluate()</cite> method receives the list of solutions to be evaluated by a problem, and returns the list of evaluated solutions. Two evaluators are included:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/evaluator/impl/SequentialSolutionListEvaluator.java">SequentialSolutionListEvaluator</a>: the solutions are evaluated sequentially.</p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/evaluator/impl/MultiThreadedSolutionListEvaluator.java">MultiThreadedSolutionListEvaluator</a>: the solutions are evaluated in parallel, by using the processor cores.</p></li>
+</ul>
+<p>An example is shown in the following code snippet:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SolutionListEvaluator</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span> <span class="n">evaluator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MultiThreadedSolutionListEvaluator</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span>
+
+<span class="n">NSGAIIBuilder</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span> <span class="n">builder</span> <span class="o">=</span>
+    <span class="k">new</span> <span class="n">NSGAIIBuilder</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">crossover</span><span class="p">,</span> <span class="n">mutation</span><span class="p">,</span> <span class="n">populationSize</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">setSelectionOperator</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">setMaxEvaluations</span><span class="p">(</span><span class="mi">25000</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">setSolutionListEvaluator</span><span class="p">(</span><span class="n">evaluator</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The resulting parallel model when using the <cite>MultiThreadedSolutionListEvaluator</cite> is <strong>synchronous</strong>, which implies that the behavior of the parallel algorithm is the same as the sequential one, but performance is affected by the fact that the algorithm alternates parallel (the solutions evaluation) and sequential codes (the rest of the algorithm code), so this model does not scale well.</p>
+<p>An evaluator missing in jMetal is one based on Apache Spark, which was described in the paper <a class="reference external" href="http://dx.doi.org/10.1007/978-3-319-54157-0_2">C. Barba-González, J. García-Nieto, Antonio J. Nebro, J.F.Aldana-Montes: Multi-objective Big Data Optimization with jMetal and Spark . EMO 2017</a>. However, including this evaluator in the core jMetal sub-module would require to include the dependency to the Spark Maven package in the <cite>pom.xml</cite> file of the <cite>jmetal-core</cite> sub-module. So, we decided to create the <cite>jmetal-parallel</cite> sub-module to include not only the dependencies of the Spark packages but also others that will be eventually be added in the future.</p>
+<p>The use of the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/synchronous/SparkSolutionListEvaluator.java">SparkSolutionListEvaluator</a> class is include in the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/example/SynchronousNSGAIIWithSparkExample.java">SynchronousNSGAIIWithSparkExample</a>:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SparkConf</span> <span class="n">sparkConf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SparkConf</span><span class="p">()</span>
+        <span class="p">.</span><span class="na">setMaster</span><span class="p">(</span><span class="s">&quot;local[8]&quot;</span><span class="p">)</span> <span class="c1">// 8 cores</span>
+        <span class="p">.</span><span class="na">setAppName</span><span class="p">(</span><span class="s">&quot;NSGA-II with Spark&quot;</span><span class="p">);</span>
+
+<span class="n">JavaSparkContext</span> <span class="n">sparkContext</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JavaSparkContext</span><span class="p">(</span><span class="n">sparkConf</span><span class="p">);</span>
+<span class="n">SolutionListEvaluator</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span> <span class="n">evaluator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SparkSolutionListEvaluator</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">sparkContext</span><span class="p">)</span> <span class="p">;</span>
+
+<span class="n">algorithm</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NSGAIIBuilder</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">crossover</span><span class="p">,</span> <span class="n">mutation</span><span class="p">,</span> <span class="n">populationSize</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">setSelectionOperator</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">setMaxEvaluations</span><span class="p">(</span><span class="n">maxEvaluations</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">setSolutionListEvaluator</span><span class="p">(</span><span class="k">new</span> <span class="n">SparkSolutionListEvaluator</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">sparkContext</span><span class="p">))</span>
+        <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+
+<span class="n">algorithm</span><span class="p">.</span><span class="na">run</span><span class="p">();</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span> <span class="n">population</span> <span class="o">=</span> <span class="n">algorithm</span><span class="p">.</span><span class="na">getResult</span><span class="p">();</span>
+
+<span class="n">evaluator</span><span class="p">.</span><span class="na">shutdown</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Currently, besides the <cite>SparkSolutionListEvaluator</cite>, we provide also a <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/synchronous/SparkEvaluation.java">SparkEvaluation</a> class, which implements the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-experimental/src/main/java/org/uma/jmetal/experimental/componentbasedalgorithm/catalogue/evaluation/Evaluation.java">Evaluation</a> interface.</p>
+</section>
+<section id="asynchronous-parallelism">
+<h2>Asynchronous parallelism<a class="headerlink" href="#asynchronous-parallelism" title="Permalink to this headline"></a></h2>
+<p>An advantage of synchronous parallelism is that it does not require to modify the code of the metaheuristic using it. The only caveat is to ensure that the <cite>evaluate()</cite> method of the problem is thread-safe.</p>
+<p>As mentioned before, a drawback of synchronous parallelism is that it can find difficulties to scale when the number of cores/processors is high. An alternative is to use an <strong>asynchronous</strong> parallel model, which basically consists in that, whenever a new solution has to evaluated, it is submitted immediately for evaluation asynchronously, without having to wait. Therefore, this model can scale better than the synchronous one, but the metaheuristic has to be modified to adopt it, and the resulting algorithm does not behave exactly as the sequential one.
+We studied this issue in: <a class="reference external" href="http://dx.doi.org/10.1109/IPDPS.2008.4536375">J.J. Durillo, A.J. Nebro, F. Luna, E. Alba A Study of Master-Slave Approaches to Parallelize NSGA-II. 11th International Workshop on Nature Inspired Distributed Computing (NIDISC) 2008.</a>.</p>
+<p>The <cite>jmetal-parallel</cite> sub-module contains an <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/asynchronous/algorithm/AsynchronousParallelAlgorithm.java">AsynchronousParallelAlgorithm</a> interface and a multi-threaded implementation of it based on the master-worker scheme, which is applied in two classes: <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/asynchronous/algorithm/impl/AsynchronousMultiThreadedGeneticAlgorithm.java">AsynchronousMultiThreadedGeneticAlgorithm</a> and <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/asynchronous/algorithm/impl/AsynchronousMultiThreadedNSGAII.java">AsynchronousMultiThreadedNSGAII</a>.</p>
+</section>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline"></a></h2>
+<p>The current structure of the <cite>jmetal-parallel</cite> sub-module is the following:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>└── jmetal-parallel: org.uma.jmetal.parallel
+    ├── asynchronous
+        ├── algorithm
+            ├── impl
+                ├── AsynchronousMultiThreadedGeneticAlgorithm
+                └── AsynchronousMultiThreadedNSGAII
+        ├── multithreaded
+            ├── Master
+            └── Worker
+        └── task
+    ├── synchronous
+        ├── SparkEvaluation
+        └── SparkSolutionListEvaluator
+    └── example
+        ├── AsynchronousMasterWorkerBasedNSGAIIExample
+        ├── AsynchronousMultiThreadedGeneticAlgorithmExample
+        ├── SynchronousNSGAIIWithSparkExample
+        └── SynchronousComponentBasedNSGAIIWithSparkExample
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="experimentation.html" class="btn btn-neutral float-left" title="Experimental studies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autoconfiguration.html" class="btn btn-neutral float-right" title="Automatic design and configuration of multi-objective metaheuristics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Antonio J. Nebro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experimental studies &mdash; jmetal 6.0-SNAPSHOT documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sub-module jmetal-parallel" href="parallel.html" />
+    <link rel="prev" title="Quality indicators" href="qualityIndicators.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> jmetal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About jMetal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickStart.html">Quick Start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodings.html">Solutions (encodings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraint handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qualityIndicators.html">Quality indicators</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Advanced</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Experimental studies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#experimental-studies-in-jmetal">Experimental studies in jMetal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#class-zdtstudy">Class <cite>ZDTStudy</cite></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-configuration">Experiment configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#algorithm-execution">Algorithm execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quality-indicator-computing">Quality Indicator Computing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generation-of-latex-tables-and-r-files">Generation of Latex Tables and R Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generation-of-html-pages">Generation of HTML Pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#final-result-folder-structure">Final Result Folder Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#class-nsgaiicomputingreferenceparetofrontsstudy">Class <cite>NSGAIIComputingReferenceParetoFrontsStudy</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parallel.html">Sub-module jmetal-parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoconfiguration.html">Automatic design and configuration of multi-objective metaheuristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component.html">Component-based algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mnds.html">Using MNDS in NSGA-II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jmetal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Experimental studies</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/experimentation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="experimental-studies">
+<span id="experimentation"></span><h1>Experimental studies<a class="headerlink" href="#experimental-studies" title="Permalink to this headline"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Antonio J. Nebro</p>
+</dd>
+<dt class="field-even">Author</dt>
+<dd class="field-even"><p>Javier Pérez Abad</p>
+</dd>
+<dt class="field-odd">Version</dt>
+<dd class="field-odd"><p>1.0</p>
+</dd>
+<dt class="field-even">Date</dt>
+<dd class="field-even"><p>2020-15-07</p>
+</dd>
+</dl>
+<p>This section describes the features included in jMetal for performing experimental studies related to assessing and comparing the performance of multi-objective algorithms on a set of problems.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
+<p>Any multi-objective algorithm in jMetal is aimed at finding a Pareto front approximation of a problem, which is returned at the end of the search as a list of solutions. Given an algorithm solving a continuous problem, the result of the optimization can be obtained with the <cite>getResult()</cite> method as follows:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">DoubleProblem</span> <span class="n">problem</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ZDT1</span><span class="p">()</span> <span class="p">;</span>
+<span class="n">Algorithm</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span> <span class="n">algorithm</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NSGAII</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="p">...)</span> <span class="p">;</span>
+
+<span class="n">algorithm</span><span class="p">.</span><span class="na">run</span><span class="p">()</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span> <span class="n">solutionList</span> <span class="o">=</span> <span class="n">algorithm</span><span class="p">.</span><span class="na">getResult</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>To store the results in files, we use an utility, as illustrated below:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">SolutionListOutput</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">setVarFileOutputContext</span><span class="p">(</span><span class="k">new</span> <span class="n">DefaultFileOutputContext</span><span class="p">(</span><span class="s">&quot;VAR.csv&quot;</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">))</span>
+    <span class="p">.</span><span class="na">setFunFileOutputContext</span><span class="p">(</span><span class="k">new</span> <span class="n">DefaultFileOutputContext</span><span class="p">(</span><span class="s">&quot;FUN.csv&quot;</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">))</span>
+    <span class="p">.</span><span class="na">print</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The “VAR.csv” and “FUN.csv” file contains the values of the solutions (variables) and the functions, respectively, using a comma as a separator. Thus, if the list has five solutions of problem whose formulation requires four decision variables, the contents of a “VAR.tsv” file would look like this:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>0.5679977855389655,0.8716238660402919,0.499987060282603,0.5000004457944675
+0.1768906260178687,0.0 0.500115617879,0.500053493354661,0.5000260921344895
+0.3496133983640447,0.8800155625845776,0.499998935060059,0.4999598389448909
+0.7985363650851307,0.0811579657919492,0.502342224234442,0.5
+0.7910160252541719,0.7866813061969048,0.499988329455465,0.5000170172595391
+</pre></div>
+</div>
+<p>The corresponding function values will we stored in the “FUN.csv” file (assuming a bi-objective problem):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>0.5,0.1
+0.4,0.2
+0.3,0.3
+0.2,0.4
+0.5,0.1
+</pre></div>
+</div>
+<p>The reason to separate the output results in two files is that the “FUN.csv” can be directly plotted with GnuPlot, R, etc.</p>
+</section>
+<section id="experimental-studies-in-jmetal">
+<h2>Experimental studies in jMetal<a class="headerlink" href="#experimental-studies-in-jmetal" title="Permalink to this headline"></a></h2>
+<p>An experimental study is used to make a comparison of a number of algorithms when solving a set of problems. It involves the execution and subsequent analysis of the results of <em>R</em> independent runs of <em>A</em> algorithms, each of will solve <em>P</em> problems. This process is carried out in three steps:</p>
+<ol class="arabic simple">
+<li><p>Execution of all the configurations (i.e., all the combinations of <em>A</em>, <em>P</em>, and <em>R</em>)</p></li>
+<li><p>Apply quality indicators to the obtained fronts</p></li>
+<li><p>Performance assessment by using statistical tests and generating stuff summarizing the results (e.g., Latex tables, charts)</p></li>
+</ol>
+<p>These steps are supported by a set of classes included in the <cite>jmetal-lab</cite> sub-project, package <cite>org.uma.jmetal.lab.experiment</cite>.</p>
+<p>This package has the following structure:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>└── jmetal-lab: org.uma.jmetal.lab.experiment
+    ├── Experiment
+    ├── ExperimentBuilder
+    ├── component
+        ├── experimentComponent
+        ├── impl
+            ├── ExecuteAlgorithms
+            ├── ComputeQualityIndicators
+            ├── GenerateLatexTablesWithStatistics
+            ├── GenerateHtmlPages (NEW)
+            ├── GenerateReferenceParetoFront
+            ├── GenerateReferenceParetoSetAndFrontFromDoubleSolutions
+            ├── GenerateFriedmanHolmTestTables (NEW)
+            ├── GenerateBoxplotsWithR
+            └── GenerateWilcoxonTestTablesWithR
+    ├── studies
+        ├── ZDTStudy
+        ├── ZDTComputingReferenceParetoFrontsStudy
+        ├── NSGAIIStudy
+        ├── NSGAIIComputingReferenceParetoFrontsStudy
+        ├── ...
+        └── BinaryProblemsStudy
+</pre></div>
+</div>
+<p>We can observe that there is a class called <cite>Experiment</cite> (which has an associated <cite>ExperimentBuilder</cite> class), which can be populated with a number of components. The mentioned steps are performed by <cite>ExecuteAlgorithms</cite> (step 1), <cite>ComputeQualityIndicators</cite> (step 2), and the rest of components can be selected to produce a variety of elements to analyze the results, such as Latex tables, figures (boxplots), and HTML pages (a new feature in jMetal). To compute quality indicators, it is necessary to have a reference front per problem; when solving benchmark problems, these fronts are usually known (there are located by default in the <cite>resources</cite> folder of the jMetal project), but this is not the case when dealing with real-world problems. To cope with this issue, we include the  <cite>GenerateReferenceParetoFront</cite> class, which produces reference Pareto fronts from all the results yielded by all the runs of all the algorithms after executing the <cite>ExecuteAlgorithms</cite> component, and the related <cite>GenerateReferenceParetoSetAndFrontFromDoubleSolutions</cite>, which does the same if the problems to solve are continuous; in this case, a reference Pareto set is also generated, as well as files with the contributed solutions of each algorithm to this set.</p>
+<p>To show how these components can be used in an experiment, we have included a number of examples in the <cite>studies</cite> package. We explain next the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/studies/ZDTStudy.java">ZDTStudy</a> and the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/studies/NSGAIIComputingReferenceParetoFrontsStudy.java">NSGAIIComputingReferenceParetoFrontsStudy</a> classes.</p>
+</section>
+<section id="class-zdtstudy">
+<h2>Class <cite>ZDTStudy</cite><a class="headerlink" href="#class-zdtstudy" title="Permalink to this headline"></a></h2>
+<p>This class is intended to cope with the following scenario: we want to compare three algorithms (NSGA-II, SMPSO, and MOEA/D) when solving the five continuous ZDT problems (ZDT1-4, 6), and to apply the quality indicators hypervolume (<em>HV</em>) and additive epsilon (<em>EP</em>) (for the sake of simplicity, we take these two indicators here; the class contains five quality indicators). We explore the contents of the <cite>ZDTStudy</cite> class next.</p>
+<section id="experiment-configuration">
+<h3>Experiment configuration<a class="headerlink" href="#experiment-configuration" title="Permalink to this headline"></a></h3>
+<p>After the import section, the code of the class starts in line 52:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">52</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ZDTStudy</span> <span class="p">{</span>
+<span class="linenos">53</span>  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">INDEPENDENT_RUNS</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+<span class="linenos">54</span>
+<span class="linenos">55</span>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+<span class="linenos">56</span>    <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="na">length</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">57</span>      <span class="k">throw</span> <span class="k">new</span> <span class="n">JMetalException</span><span class="p">(</span><span class="s">&quot;Missing argument: experimentBaseDirectory&quot;</span><span class="p">);</span>
+<span class="linenos">58</span>    <span class="p">}</span>
+<span class="linenos">59</span>    <span class="n">String</span> <span class="n">experimentBaseDirectory</span> <span class="o">=</span> <span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>We can observe that the number of independent runs is set to 25. When an experiment is going to be executed, it will generate a lot of files, so a directory to store all the experiment data is required.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">61</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">ExperimentProblem</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;&gt;</span> <span class="n">problemList</span> <span class="o">=</span> <span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
+<span class="linenos">62</span>         <span class="k">new</span> <span class="n">ExperimentProblem</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">ZDT1</span><span class="p">()),</span>
+<span class="linenos">63</span>         <span class="c1">// new ExperimentProblem&lt;&gt;(new ZDT1().setReferenceFront(&quot;front.csv&quot;))</span>
+<span class="linenos">64</span>         <span class="k">new</span> <span class="n">ExperimentProblem</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">ZDT2</span><span class="p">()),</span>
+<span class="linenos">65</span>         <span class="k">new</span> <span class="n">ExperimentProblem</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">ZDT3</span><span class="p">()),</span>
+<span class="linenos">66</span>         <span class="k">new</span> <span class="n">ExperimentProblem</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">ZDT4</span><span class="p">()),</span>
+<span class="linenos">67</span>         <span class="k">new</span> <span class="n">ExperimentProblem</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">ZDT6</span><span class="p">()));</span>
+</pre></div>
+</div>
+<p>The list of problems to be solved is configured by default as shown in lines 61-67. The commented line 63 illustrates the case where the default file name containing the reference Pareto front is not named <cite>ZDT1.csv</cite> (the assumed default name) but <cite>front.csv</cite>.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">69</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">ExperimentAlgorithm</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;&gt;&gt;</span> <span class="n">algorithmList</span> <span class="o">=</span>
+<span class="linenos">70</span>         <span class="n">configureAlgorithmList</span><span class="p">(</span><span class="n">problemList</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>A list with the algorithms already configured to be executed is created in a method called <cite>configureAlgorithmList()</cite>, which is included between lines 99-150 in the class. An example of how this list is updated with the SMPSO algorithm is shown next:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 99</span><span class="cm">/**</span>
+<span class="linenos">100</span><span class="cm"> * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of</span>
+<span class="linenos">101</span><span class="cm"> * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.</span>
+<span class="linenos">102</span><span class="cm"> */</span>
+<span class="linenos">103</span><span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">ExperimentAlgorithm</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;&gt;&gt;</span> <span class="nf">configureAlgorithmList</span><span class="p">(</span>
+<span class="linenos">104</span>       <span class="n">List</span><span class="o">&lt;</span><span class="n">ExperimentProblem</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;&gt;</span> <span class="n">problemList</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">105</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">ExperimentAlgorithm</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;&gt;&gt;</span> <span class="n">algorithms</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="linenos">106</span> <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">run</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">run</span> <span class="o">&lt;</span> <span class="n">INDEPENDENT_RUNS</span><span class="p">;</span> <span class="n">run</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">107</span>   <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="n">experimentProblem</span> <span class="p">:</span> <span class="n">problemList</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">108</span>     <span class="kt">double</span> <span class="n">mutationProbability</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">experimentProblem</span><span class="p">.</span><span class="na">getProblem</span><span class="p">().</span><span class="na">getNumberOfVariables</span><span class="p">();</span>
+<span class="linenos">109</span>     <span class="kt">double</span> <span class="n">mutationDistributionIndex</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">;</span>
+<span class="linenos">110</span>     <span class="n">Algorithm</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;&gt;</span> <span class="n">algorithm</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SMPSOBuilder</span><span class="p">(</span>
+<span class="linenos">111</span>             <span class="p">(</span><span class="n">DoubleProblem</span><span class="p">)</span> <span class="n">experimentProblem</span><span class="p">.</span><span class="na">getProblem</span><span class="p">(),</span>
+<span class="linenos">112</span>             <span class="k">new</span> <span class="n">CrowdingDistanceArchive</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="linenos">113</span>             <span class="p">.</span><span class="na">setMutation</span><span class="p">(</span><span class="k">new</span> <span class="n">PolynomialMutation</span><span class="p">(</span><span class="n">mutationProbability</span><span class="p">,</span> <span class="n">mutationDistributionIndex</span><span class="p">))</span>
+<span class="linenos">114</span>             <span class="p">.</span><span class="na">setMaxIterations</span><span class="p">(</span><span class="mi">250</span><span class="p">)</span>
+<span class="linenos">115</span>             <span class="p">.</span><span class="na">setSwarmSize</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="linenos">116</span>             <span class="p">.</span><span class="na">setSolutionListEvaluator</span><span class="p">(</span><span class="k">new</span> <span class="n">SequentialSolutionListEvaluator</span><span class="o">&lt;&gt;</span><span class="p">())</span>
+<span class="linenos">117</span>             <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="linenos">118</span>     <span class="n">algorithms</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">ExperimentAlgorithm</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">experimentProblem</span><span class="p">,</span> <span class="n">run</span><span class="p">));</span>
+<span class="linenos">119</span>   <span class="p">}</span>
+<span class="linenos">120</span>
+<span class="linenos">121</span>   <span class="p">...</span> <span class="c1">// Configuration of the rest of algorithms</span>
+</pre></div>
+</div>
+<p>We can observe that there is an outer loop (line 106) and a inner loop (line 107) to create an instance of SMPSO per independent run and problem. The configured algorithm is added to the list in line 118, by creating an instance of class <cite>ExperimentAlgorithm</cite>.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">72</span> <span class="n">Experiment</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;&gt;</span> <span class="n">experiment</span> <span class="o">=</span>
+<span class="linenos">73</span>         <span class="k">new</span> <span class="n">ExperimentBuilder</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;ZDTStudy&quot;</span><span class="p">)</span>
+<span class="linenos">74</span>                 <span class="p">.</span><span class="na">setExperimentBaseDirectory</span><span class="p">(</span><span class="n">experimentBaseDirectory</span><span class="p">)</span>
+<span class="linenos">75</span>                 <span class="p">.</span><span class="na">setAlgorithmList</span><span class="p">(</span><span class="n">algorithmList</span><span class="p">)</span>
+<span class="linenos">76</span>                 <span class="p">.</span><span class="na">setProblemList</span><span class="p">(</span><span class="n">problemList</span><span class="p">)</span>
+<span class="linenos">77</span>                 <span class="p">.</span><span class="na">setReferenceFrontDirectory</span><span class="p">(</span><span class="s">&quot;resources/referenceFrontsCSV&quot;</span><span class="p">)</span>
+<span class="linenos">78</span>                 <span class="p">.</span><span class="na">setOutputParetoFrontFileName</span><span class="p">(</span><span class="s">&quot;FUN&quot;</span><span class="p">)</span>
+<span class="linenos">79</span>                 <span class="p">.</span><span class="na">setOutputParetoSetFileName</span><span class="p">(</span><span class="s">&quot;VAR&quot;</span><span class="p">)</span>
+<span class="linenos">80</span>                 <span class="p">.</span><span class="na">setIndicatorList</span><span class="p">(</span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
+<span class="linenos">81</span>                         <span class="k">new</span> <span class="n">Epsilon</span><span class="o">&lt;&gt;</span><span class="p">(),</span>
+<span class="linenos">82</span>                         <span class="k">new</span> <span class="n">Spread</span><span class="o">&lt;&gt;</span><span class="p">(),</span>
+<span class="linenos">83</span>                         <span class="k">new</span> <span class="n">GenerationalDistance</span><span class="o">&lt;&gt;</span><span class="p">(),</span>
+<span class="linenos">84</span>                         <span class="k">new</span> <span class="n">PISAHypervolume</span><span class="o">&lt;&gt;</span><span class="p">(),</span>
+<span class="linenos">85</span>                         <span class="k">new</span> <span class="n">InvertedGenerationalDistancePlus</span><span class="o">&lt;&gt;</span><span class="p">()))</span>
+<span class="linenos">86</span>                 <span class="p">.</span><span class="na">setIndependentRuns</span><span class="p">(</span><span class="n">INDEPENDENT_RUNS</span><span class="p">)</span>
+<span class="linenos">87</span>                 <span class="p">.</span><span class="na">setNumberOfCores</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="linenos">88</span>                 <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The experiment is configured using the <cite>ExperimentBuilder</cite> class as shown in lines 72-88. The settings include:</p>
+<ol class="arabic simple">
+<li><p>The experiment base directory (line 73).</p></li>
+<li><p>Output directory name (line 74). A directory called <cite>ZDTStudy</cite> will be created in the experiment base directory.</p></li>
+<li><p>The algorithm and problem lists (lines 75, 76).</p></li>
+<li><p>The directory containing the reference fronts of the problems (line 77).</p></li>
+<li><p>The default prefix of the names of the output files containing the solutions (<cite>VAR</cite>) and objectives (<cite>FUN</cite>). For each combination of algorithm and problem, the output files will be <cite>FUN0.csv</cite>, <cite>FUN1.csv</cite>, … , <cite>FUN24.csv</cite>, and <cite>VAR0.csv</cite>, <cite>VAR.csv</cite>, … ,`VAR24.csv`.</p></li>
+<li><p>A list with the quality indicators (lines 80-85).</p></li>
+<li><p>The number of independent runs (line 86).</p></li>
+<li><p>The number of cores (line 8). An experiment can require a large computing time. This parameter indicates the number of cores that can be used to run the configurations in parallel.</p></li>
+</ol>
+</section>
+<section id="algorithm-execution">
+<h3>Algorithm execution<a class="headerlink" href="#algorithm-execution" title="Permalink to this headline"></a></h3>
+<p>Once the experiment class is created and configured, we are ready to execute the algorithms:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">90</span><span class="k">new</span> <span class="n">ExecuteAlgorithms</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">experiment</span><span class="p">).</span><span class="na">run</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>As a result, the following folder directory will be generated:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>└── data
+    ├── NSGAII
+      ├── ZDT1
+        ├── FUN0.csv
+        ├── FUN1.csv
+        ├── FUN2.csv
+        ├── ...
+        └── FUN24.csv
+      ├── ZDT2
+        ├── FUN0.csv
+        ├── FUN1.csv
+        ├── FUN2.csv
+        ├── ...
+        └── FUN24.csv
+      ├── ZDT3
+      ├── ZDT4
+      └── ZDT6
+    ├── SMPSO
+      ├── ZDT1
+      ...
+    └── MOEAD
+</pre></div>
+</div>
+<p>A directory called <cite>data</cite> contains a folder per algorithm, each of which stores a sub-folder per problem. The contents of each sub-folder is composed of the files named <cite>FUNx.csv</cite> and <cite>VARx.csv</cite>, where <cite>x</cite> takes values in the range (0, 24), as mentioned before (let’s remind that the number of independent runs was set to 25).</p>
+</section>
+<section id="quality-indicator-computing">
+<h3>Quality Indicator Computing<a class="headerlink" href="#quality-indicator-computing" title="Permalink to this headline"></a></h3>
+<p>When the execution of all the algorithms has finished, the quality indicators are computed next:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">91</span><span class="k">new</span> <span class="n">ComputeQualityIndicators</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">experiment</span><span class="p">).</span><span class="na">run</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>To illustrate the output of this step, let’s us consider the hypervolume. The results of calculating this indicator for every <cite>FUNx.csv</cite> file are stored in a file named <cite>HV</cite> (the short name of the indicator), which contains a line per indicator value (in our example, this file contains 25 lines). Furthermore, as sometimes is convenient to know which fronts have the best or median indicator values, the following files are also created: <cite>BEST_HV_FUN.csv</cite>, <cite>BEST_HV_VAR</cite>, <cite>MEDIAN_HV_FUN.csv</cite>, and <cite>MEDIAN_HV_VAR.csv</cite>. The same process is repeated for the rest of quality indicators.</p>
+<p>Consequently, after the computing of the quality indicators, the output directory structure will looks this way:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>└── data
+    ├── QualityIndicatorSummary.csv
+    ├── NSGAII
+      ├── ZDT1
+        ├── FUN0.tsv
+        ├── FUN1.tsv
+        ├── FUN2.tsv
+        ...
+        ├── HV
+        ├── BEST_HV_FUN.tsv
+        ├── BEST_HV_VAR.tsv
+        ├── MEDIAN_HV_FUN.tsv
+        ├── MEDIAN_HV_VAR.tsv
+        ├── EP
+        ...
+        ├── VAR0.tsv
+        ├── VAR1.tsv
+        ├── VAR2.tsv
+        ...
+      ├── ZDT2
+        ...
+      ...
+    ...
+</pre></div>
+</div>
+<p>We observe that another result of this step is a CSV file called <cite>QualityIndicatorSummary.csv</cite>, which contains a summary of all the quality indicator values. The header contains these fields: algorithm name, problem name, indicator name (<em>HV</em>, <em>EP</em>, etc.), execution id (from 0 to the number of independent runs minus 1), and indicator value. The first lines of this file would look like this:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Algorithm,Problem,IndicatorName,ExecutionId,IndicatorValue
+NSGAII,ZDT1,EP,0,0.015705992620067832
+NSGAII,ZDT1,EP,1,0.012832504015918067
+NSGAII,ZDT1,EP,2,0.01071189935186434
+NSGAII,ZDT1,EP,3,0.011465571289007992
+NSGAII,ZDT1,EP,4,0.010279387564947617
+...
+</pre></div>
+</div>
+<p>The interesting point of generating the <em>QualityIndicatorSummary.csv</em> it that it can be analyzed outside jMetal. For example, you can use Pandas or the analysis features of jMetalPy (<a class="reference external" href="https://github.com/jMetal/jMetalPy">https://github.com/jMetal/jMetalPy</a>), the Python version of jMetal.</p>
+</section>
+<section id="generation-of-latex-tables-and-r-files">
+<h3>Generation of Latex Tables and R Files<a class="headerlink" href="#generation-of-latex-tables-and-r-files" title="Permalink to this headline"></a></h3>
+<p>The next step after getting the indicator values of the fronts obtained by all the algorithms on the selected problems is to conduct an statistical analysis. To support this analysis, the experiment package of jMetal includes components to  generate Latex files containing statistical data (mean/median and standard deviation/IQR,  Friedman ranking) and R scripts producing boxplots and Latex tables containing information about the Wilcoxon rank sum test. The available components include:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">92</span><span class="k">new</span> <span class="n">GenerateLatexTablesWithStatistics</span><span class="p">(</span><span class="n">experiment</span><span class="p">).</span><span class="na">run</span><span class="p">();</span>
+<span class="linenos">93</span><span class="k">new</span> <span class="n">GenerateFriedmanHolmTestTables</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">experiment</span><span class="p">).</span><span class="na">run</span><span class="p">();</span>
+<span class="linenos">94</span><span class="k">new</span> <span class="n">GenerateWilcoxonTestTablesWithR</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">experiment</span><span class="p">).</span><span class="na">run</span><span class="p">();</span>
+<span class="linenos">95</span><span class="k">new</span> <span class="n">GenerateBoxplotsWithR</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">experiment</span><span class="p">).</span><span class="na">setRows</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="na">setColumns</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="na">run</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="generation-of-html-pages">
+<h3>Generation of HTML Pages<a class="headerlink" href="#generation-of-html-pages" title="Permalink to this headline"></a></h3>
+<p>Obtaining Latex files containing tables with statistical data resulting from an experimental study is interesting because those tables can be included in research papers. Still, it is a bit cumbersome to analyze them because all the information is distributed among many files. A new feature included in jMetal 6 is the automatic generation of HTML pages including all these information:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">96</span><span class="k">new</span> <span class="n">GenerateHtmlPages</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">experiment</span><span class="p">,</span> <span class="n">StudyVisualizer</span><span class="p">.</span><span class="na">TYPE_OF_FRONT_TO_SHOW</span><span class="p">.</span><span class="na">MEDIAN</span><span class="p">).</span><span class="na">run</span><span class="p">()</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p>This component creates a directory called <cite>html</cite> and generates an HTML file per quality indicator (i.e., <cite>EP.html</cite>, <cite>HV.html</cite>, etc.). Each page contains the following:</p>
+<ol class="arabic simple">
+<li><p>Table with median values.</p></li>
+<li><p>Table with the results of the Wilcoxon rank-sum test.</p></li>
+<li><p>Table with the ranking obtained after applying the Friedman test and the post hoc Holm test.</p></li>
+<li><p>A boxplot per problem.</p></li>
+<li><p>Optionally, a chart with the front having the best or median indicator value.</p></li>
+</ol>
+<p>The interesting point is that all this information is included in a single page that can be visualized in a browser. Just take a look to the generated files:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="_static/html/EP.html">EP.html</a></p></li>
+<li><p><a class="reference external" href="_static/html/HV.html">HV.html</a></p></li>
+<li><p><a class="reference external" href="_static/html/SPREAD.html">SPREAD.html</a></p></li>
+<li><p><a class="reference external" href="_static/html/IGDPlus.html">IGDPlus.html</a></p></li>
+</ul>
+</section>
+<section id="final-result-folder-structure">
+<h3>Final Result Folder Structure<a class="headerlink" href="#final-result-folder-structure" title="Permalink to this headline"></a></h3>
+<p>After the execution of the experiment, the output directory will contain the following folders:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>├── QualityIndicatorSummary.csv
+├── html
+├── R
+├── data
+└── latex
+</pre></div>
+</div>
+</section>
+</section>
+<section id="class-nsgaiicomputingreferenceparetofrontsstudy">
+<h2>Class <cite>NSGAIIComputingReferenceParetoFrontsStudy</cite><a class="headerlink" href="#class-nsgaiicomputingreferenceparetofrontsstudy" title="Permalink to this headline"></a></h2>
+<p>The <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/studies/NSGAIIComputingReferenceParetoFrontsStudy.java">NSGAIIComputingReferenceParetoFrontsStudy</a> class contains an example of study where it is assumed that the reference fronts of the problems are unknown and, instead of comparing different algorithms, a number of versions of a single one (NSGA-II) are used; in particular, the idea is to analyze the effect of using different crossover probabilities when using NSGA-II to solve the ZDT problems.</p>
+<p>Compared with the <cite>ZDTStudy</cite>, the main differences are:</p>
+<ol class="arabic simple">
+<li><p>The reference front directory must be empty, and all the generated files will stored into it.</p></li>
+<li><p>Before computing the quality indicators, the reference fronts must be computed:</p></li>
+</ol>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">83</span><span class="k">new</span> <span class="n">ExecuteAlgorithms</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">experiment</span><span class="p">).</span><span class="na">run</span><span class="p">();</span>
+<span class="linenos">84</span><span class="k">new</span> <span class="n">GenerateReferenceParetoSetAndFrontFromDoubleSolutions</span><span class="p">(</span><span class="n">experiment</span><span class="p">).</span><span class="na">run</span><span class="p">();</span>
+<span class="linenos">85</span><span class="k">new</span> <span class="n">ComputeQualityIndicators</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">experiment</span><span class="p">).</span><span class="na">run</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>In this case, as we are solving again the ZDT problems, we use the component <cite>GenerateReferenceParetoSetAndFrontFromDoubleSolutions</cite>.</p>
+<ol class="arabic simple" start="3">
+<li><p>The name of an algorithm is used by default in all the generated tables and charts, but as we intend to use only NSGA-II, we add a tag when the algorithm is added to the algorithm list (see line 112):</p></li>
+</ol>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">102</span> <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">run</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">run</span> <span class="o">&lt;</span> <span class="n">INDEPENDENT_RUNS</span><span class="p">;</span> <span class="n">run</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">103</span>   <span class="k">for</span> <span class="p">(</span><span class="n">ExperimentProblem</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span> <span class="n">experimentProblem</span> <span class="p">:</span> <span class="n">problemList</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">104</span>     <span class="n">Algorithm</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;&gt;</span> <span class="n">algorithm</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NSGAIIBuilder</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos">105</span>             <span class="n">experimentProblem</span><span class="p">.</span><span class="na">getProblem</span><span class="p">(),</span>
+<span class="linenos">106</span>             <span class="k">new</span> <span class="n">SBXCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<span class="linenos">107</span>             <span class="k">new</span> <span class="n">PolynomialMutation</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">experimentProblem</span><span class="p">.</span><span class="na">getProblem</span><span class="p">().</span><span class="na">getNumberOfVariables</span><span class="p">(),</span>
+<span class="linenos">108</span>                     <span class="mf">10.0</span><span class="p">),</span>
+<span class="linenos">109</span>             <span class="mi">100</span><span class="p">)</span>
+<span class="linenos">110</span>             <span class="p">.</span><span class="na">setMaxEvaluations</span><span class="p">(</span><span class="mi">25000</span><span class="p">)</span>
+<span class="linenos">111</span>             <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="linenos">112</span>     <span class="n">algorithms</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">ExperimentAlgorithm</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="s">&quot;NSGAIIa&quot;</span><span class="p">,</span> <span class="n">experimentProblem</span><span class="p">,</span> <span class="n">run</span><span class="p">));</span>
+<span class="linenos">113</span>   <span class="p">}</span>
+<span class="linenos">114</span>
+<span class="linenos">115</span> <span class="p">...</span>  <span class="c1">// Rest of NSGA-II configurations</span>
+</pre></div>
+</div>
+<p>The NSGA-II variants will be named <em>NSGAIIa</em>, <em>NSGAIIb</em>, <em>NSGAIIc</em>, and <em>NSGAIId</em>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="qualityIndicators.html" class="btn btn-neutral float-left" title="Quality indicators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="parallel.html" class="btn btn-neutral float-right" title="Sub-module jmetal-parallel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Antonio J. Nebro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

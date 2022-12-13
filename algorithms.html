@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algorithms &mdash; jmetal 6.0-SNAPSHOT documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Problems" href="problems.html" />
+    <link rel="prev" title="Solutions (encodings)" href="encodings.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> jmetal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About jMetal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickStart.html">Quick Start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodings.html">Solutions (encodings)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#direct-extension-nsga-ii-in-jmetal-4-5">Direct extension: NSGA-II in jMetal 4.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inheritance-based-template-nsga-ii-in-jmetal-5-0">Inheritance-based template: NSGA-II in jMetal 5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#component-based-template-nsga-ii-in-jmetal-6-0">Component-based template: NSGA-II in jMetal 6.0</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraint handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qualityIndicators.html">Quality indicators</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="experimentation.html">Experimental studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallel.html">Sub-module jmetal-parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoconfiguration.html">Automatic design and configuration of multi-objective metaheuristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component.html">Component-based algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mnds.html">Using MNDS in NSGA-II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jmetal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Algorithms</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/algorithms.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="algorithms">
+<span id="id1"></span><h1>Algorithms<a class="headerlink" href="#algorithms" title="Permalink to this headline"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Antonio J. Nebro</p>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>2022-12-1</p>
+</dd>
+</dl>
+<p>A metaheuristic in jMetal is an entity that implements the <code class="docutils literal notranslate"><span class="pre">Algorithm</span></code> interface (package <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.algorithm</span></code>
+in sub-project <code class="docutils literal notranslate"><span class="pre">jmetal-core</span></code>:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.uma.jmetal.algorithm</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm">  * Interface representing an algorithm</span>
+<span class="cm">  * @author Antonio J. Nebro</span>
+<span class="cm">  * @version 1.0</span>
+<span class="cm">  * @param &lt;Result&gt; Result</span>
+<span class="cm">  */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Algorithm</span><span class="o">&lt;</span><span class="n">Result</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Runnable</span><span class="p">,</span> <span class="n">Serializable</span><span class="p">,</span> <span class="n">DescribedEntity</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">;</span>
+  <span class="n">Result</span> <span class="nf">getResult</span><span class="p">()</span> <span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This interface is very generic: it specifies that an algorithm must have a <code class="docutils literal notranslate"><span class="pre">run()</span></code> method and return a result by invoking the <code class="docutils literal notranslate"><span class="pre">getResult()</span></code> method. As it extends Runnable, any algorithm can be executed in a thread. The simplicity of the interface offers plenty of freedom to implement a metaheuristic. We explore three alternatives next by taking NSGA-II as the target algorithm.</p>
+<section id="direct-extension-nsga-ii-in-jmetal-4-5">
+<h2>Direct extension: NSGA-II in jMetal 4.5<a class="headerlink" href="#direct-extension-nsga-ii-in-jmetal-4-5" title="Permalink to this headline"></a></h2>
+<p>The implementation of NSGA-II in the former versions of jMetal (prior to jMetal 5) was based
+on a single class containing the behavior the algorithm. We include a revised implementation of this
+approach in class <code class="docutils literal notranslate"><span class="pre">NSGA45</span></code>. (package <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.algorithm.multiobjective.nsgaii</span></code>, subproject
+<code class="docutils literal notranslate"><span class="pre">jmetal-algorithm</span></code>). An extract of the code is the following:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.uma.jmetal.algorithm.multiobjective.nsgaii</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm">  * Implementation of NSGA-II following the scheme used in jMetal4.5 and former versions</span>
+<span class="cm">  *</span>
+<span class="cm">  * @author Antonio J. Nebro &lt;antonio@lcc.uma.es&gt;</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NSGAII45</span><span class="o">&lt;</span><span class="n">S</span> <span class="kd">extends</span> <span class="n">Solution</span><span class="o">&lt;?&gt;&gt;</span> <span class="kd">implements</span> <span class="n">Algorithm</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+
+  <span class="cm">/** Constructor */</span>
+  <span class="kd">public</span> <span class="nf">NSGAII45</span><span class="p">(</span>
+      <span class="n">Problem</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">problem</span><span class="p">,</span>
+      <span class="kt">int</span> <span class="n">maxEvaluations</span><span class="p">,</span>
+      <span class="kt">int</span> <span class="n">populationSize</span><span class="p">,</span>
+      <span class="n">CrossoverOperator</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">crossoverOperator</span><span class="p">,</span>
+      <span class="n">MutationOperator</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">mutationOperator</span><span class="p">,</span>
+      <span class="n">SelectionOperator</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">S</span><span class="o">&gt;</span> <span class="n">selectionOperator</span><span class="p">,</span>
+      <span class="n">SolutionListEvaluator</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">evaluator</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">}</span>
+
+  <span class="cm">/** Run method */</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">createInitialPopulation</span><span class="p">();</span>
+    <span class="n">evaluatePopulation</span><span class="p">(</span><span class="n">population</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">evaluations</span> <span class="o">&lt;</span> <span class="n">maxEvaluations</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Evolutionary steps: selection, variation, replacement</span>
+      <span class="p">...</span>
+
+      <span class="c1">// Ranking</span>
+      <span class="n">Ranking</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">ranking</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FastNonDominatedSortRanking</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+      <span class="n">ranking</span><span class="p">.</span><span class="na">compute</span><span class="p">(</span><span class="n">jointPopulation</span><span class="p">);</span>
+
+      <span class="c1">// Crowding distance calculation</span>
+      <span class="n">rankingAndCrowdingSelection</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RankingAndCrowdingSelection</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">populationSize</span><span class="p">);</span>
+
+      <span class="c1">// Ranking and crowding replacement</span>
+      <span class="n">population</span> <span class="o">=</span> <span class="n">rankingAndCrowdingSelection</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">jointPopulation</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="nf">getResult</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">getNonDominatedSolutions</span><span class="p">(</span><span class="n">population</span><span class="p">);</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>An advantage of this method is that, as all the logic of NSGA-II is in the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method, it is easy to modify if we would like, for example, to change the stopping condition to finish after a number of seconds of computation or to store the population at the end of each iterations.</p>
+<p>A drawback is that, if we want to go back to the original code, we will have to undo all the changes and, in the end, the simplest strategy will be to copy the original code into another class and apply the changes to it. As a result, we will end up with several classes that implement variants of NSGA-II. This results in a poor code reuse and, in case of fixing a bug in the original code, we should fix manually all the copies.</p>
+<p>Another disadvantage has to do with software testing. Therefore, testing the steps of the algorithm (selection, variation, etc.) is difficult, as everything is mixed inside the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method.</p>
+<p>An example of the use of this class can be found in class <a class="reference external" href="https://github.com/jMetal/jMetal/blob/main/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/examples/multiobjective/nsgaii/NSGAII45Runner.java">NSGAII45Runner</a>.</p>
+</section>
+<section id="inheritance-based-template-nsga-ii-in-jmetal-5-0">
+<h2>Inheritance-based template: NSGA-II in jMetal 5.0<a class="headerlink" href="#inheritance-based-template-nsga-ii-in-jmetal-5-0" title="Permalink to this headline"></a></h2>
+<p>Addressing the drawbacks of the previous scheme was one of the reasons for redesigning jMetal from scratch, resulting in version 5.0 of the framework. In this release, we propose
+the use of algorithm templates which contain the behavior of the algorithms, and implementing a given technique consists of filling in the template. In the case of evolutionary algorithms, the template is <code class="docutils literal notranslate"><span class="pre">AbstractEvolutionaryAlgorithm</span></code> abstract class (package <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.algorithm.impl</span></code>, sub-project <code class="docutils literal notranslate"><span class="pre">jmetal-core</span></code>), which is included next:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AbstractEvolutionaryAlgorithm</span><span class="o">&lt;</span><span class="n">S</span><span class="p">,</span> <span class="n">R</span><span class="o">&gt;</span>  <span class="kd">implements</span> <span class="n">Algorithm</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span><span class="p">{</span>
+  <span class="kd">protected</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">initProgress</span><span class="p">();</span>
+  <span class="kd">protected</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">updateProgress</span><span class="p">();</span>
+  <span class="kd">protected</span> <span class="kd">abstract</span> <span class="kt">boolean</span> <span class="nf">isStoppingConditionReached</span><span class="p">();</span>
+  <span class="kd">protected</span> <span class="kd">abstract</span>  <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="nf">createInitialPopulation</span><span class="p">()</span> <span class="p">;</span>
+  <span class="kd">protected</span> <span class="kd">abstract</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="nf">evaluatePopulation</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">population</span><span class="p">);</span>
+  <span class="kd">protected</span> <span class="kd">abstract</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="nf">selection</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">population</span><span class="p">);</span>
+  <span class="kd">protected</span> <span class="kd">abstract</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="nf">reproduction</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">population</span><span class="p">);</span>
+  <span class="kd">protected</span> <span class="kd">abstract</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="nf">replacement</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">population</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">offspringPopulation</span><span class="p">);</span>
+  <span class="nd">@Override</span> <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">R</span> <span class="nf">getResult</span><span class="p">();</span>
+
+  <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">offspringPopulation</span><span class="p">;</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">matingPopulation</span><span class="p">;</span>
+
+    <span class="n">population</span> <span class="o">=</span> <span class="n">createInitialPopulation</span><span class="p">();</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">evaluatePopulation</span><span class="p">(</span><span class="n">population</span><span class="p">);</span>
+    <span class="n">initProgress</span><span class="p">();</span>
+    <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">isStoppingConditionReached</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">matingPopulation</span> <span class="o">=</span> <span class="n">selection</span><span class="p">(</span><span class="n">population</span><span class="p">);</span>
+      <span class="n">offspringPopulation</span> <span class="o">=</span> <span class="n">reproduction</span><span class="p">(</span><span class="n">matingPopulation</span><span class="p">);</span>
+      <span class="n">offspringPopulation</span> <span class="o">=</span> <span class="n">evaluatePopulation</span><span class="p">(</span><span class="n">offspringPopulation</span><span class="p">);</span>
+      <span class="n">population</span> <span class="o">=</span> <span class="n">replacement</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">offspringPopulation</span><span class="p">);</span>
+      <span class="n">updateProgress</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The template inherits from <code class="docutils literal notranslate"><span class="pre">Algorithm</span></code> and we can observe that the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method closely mimics the behavior of a generic evolutionary algorithm, where each step has the form of an abstract method. This way, implementing an evolutionary algorithm requires to extended the template and provide the code for all the methods. In the case of NSGA-II (class <code class="docutils literal notranslate"><span class="pre">NSGAII</span></code>, package <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.algorithm.multiobjective.nsgaii</span></code>, sub-project <code class="docutils literal notranslate"><span class="pre">jmetal-algorithm</span></code>), the selection and replacement methods are the following:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="nf">selection</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">population</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">matingPopulation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">population</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">matingPoolSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">S</span> <span class="n">solution</span> <span class="o">=</span> <span class="n">selectionOperator</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">population</span><span class="p">);</span>
+    <span class="n">matingPopulation</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">solution</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">matingPopulation</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="nf">replacement</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">population</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">offspringPopulation</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">jointPopulation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+  <span class="n">jointPopulation</span><span class="p">.</span><span class="na">addAll</span><span class="p">(</span><span class="n">population</span><span class="p">);</span>
+  <span class="n">jointPopulation</span><span class="p">.</span><span class="na">addAll</span><span class="p">(</span><span class="n">offspringPopulation</span><span class="p">);</span>
+
+  <span class="n">RankingAndCrowdingSelection</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">rankingAndCrowdingSelection</span><span class="p">;</span>
+  <span class="n">rankingAndCrowdingSelection</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RankingAndCrowdingSelection</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span><span class="p">(</span><span class="n">getMaxPopulationSize</span><span class="p">(),</span>
+    <span class="n">dominanceComparator</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="n">rankingAndCrowdingSelection</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">jointPopulation</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">initProgress()</span></code> and <code class="docutils literal notranslate"><span class="pre">updateProgress()</span></code> are intended to, respectively, initialize and update some status information of the algorithm. Concretely, in the case of NSGA-II, they are used to update the evaluation counter:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">initProgress</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">evaluations</span> <span class="o">=</span> <span class="n">getMaxPopulationSize</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">updateProgress</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">evaluations</span> <span class="o">+=</span> <span class="n">offspringPopulationSize</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We can see that the methods are small and, in case of be interested, for example, in a version with a different selection scheme, we only need to extend class <code class="docutils literal notranslate"><span class="pre">NSGAII</span></code> and to redefine (override) the <code class="docutils literal notranslate"><span class="pre">selection()</span></code> method. Most of the algorithms in jMetal, included in the <code class="docutils literal notranslate"><span class="pre">jmetal-algorithm</span></code> sub-project, are based on templates that are extended by using inheritance.</p>
+<p>Using templates can be complicated for some users, as the implementations of metaheuristics are divided into the templates and the classes extending them. If we consider to add a code to store the population after the end of every iteration, it cannot be clear how to do it; two alternatives are:</p>
+<ol class="arabic simple">
+<li><p>Modify the template to add the code at the end of the main loop. In the case of <code class="docutils literal notranslate"><span class="pre">AbstractEvolutionaryAlgorithm</span></code>, this code would be after the <code class="docutils literal notranslate"><span class="pre">updateProgress()</span></code> method. This approach has the negative effect of that all the algorithms inheriting from the template will execute that code, which probably it not desirable.</p></li>
+<li><p>Create a new subclass redefining the  <code class="docutils literal notranslate"><span class="pre">updateProgress()</span></code> method as follows:</p></li>
+</ol>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">updateProgress</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// code to write the population in a file</span>
+
+  <span class="kd">super</span><span class="p">.</span><span class="na">updateProgress</span><span class="p">()</span> <span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A consequence of the algorithm template strategy is that, whenever we need some algorithm variant, a new class must be created, what could result in a high number of sub-classes.
+Anyway, its main drawback from our point of view is that it lacks the required flexibility to create algorithms in a simple way. We found this limitation when starting to work on automatic algorithm design, where we needed to configure metaheuristics from a string composed of pairs &lt;element, value&gt;, where the elements can be parameters (such as the population size) or components (such particular crossover or mutation operators). An example is: <code class="docutils literal notranslate"><span class="pre">&quot;--populationSize</span> <span class="pre">100</span> <span class="pre">--crossover</span> <span class="pre">SBXCrossover</span> <span class="pre">--crossoverProbability</span> <span class="pre">0.9</span> <span class="pre">...&quot;</span></code>.</p>
+<p>You can find many examples of metaheuristics that use this approach in the <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.algorithm.examples</span></code> package located in <code class="docutils literal notranslate"><span class="pre">jmetal-algorithm</span></code>.</p>
+</section>
+<section id="component-based-template-nsga-ii-in-jmetal-6-0">
+<h2>Component-based template: NSGA-II in jMetal 6.0<a class="headerlink" href="#component-based-template-nsga-ii-in-jmetal-6-0" title="Permalink to this headline"></a></h2>
+<p>The idea of using a component-based template is to use delegation instead of inheritance, so that the template is not an abstract class but a concrete class where the algorithm steps are implemented with objects instead of methods. In the case of evolutionary algorithms, the template is included in class <code class="docutils literal notranslate"><span class="pre">EvolutionaryAlgorithm</span></code> (package <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.component.algorithm</span></code>, sub-project <code class="docutils literal notranslate"><span class="pre">jmetal-component</span></code>). We show a code snippet of this class next:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EvolutionaryAlgorithm</span><span class="o">&lt;</span><span class="n">S</span> <span class="kd">extends</span> <span class="n">Solution</span><span class="o">&lt;?&gt;&gt;</span> <span class="kd">implements</span> <span class="n">Algorithm</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;&gt;</span><span class="p">{</span>
+
+<span class="kd">private</span> <span class="n">Evaluation</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">evaluation</span><span class="p">;</span>
+<span class="kd">private</span> <span class="n">SolutionsCreation</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">createInitialPopulation</span><span class="p">;</span>
+<span class="kd">private</span> <span class="n">Termination</span> <span class="n">termination</span><span class="p">;</span>
+<span class="kd">private</span> <span class="n">Selection</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">selection</span><span class="p">;</span>
+<span class="kd">private</span> <span class="n">Variation</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">variation</span><span class="p">;</span>
+<span class="kd">private</span> <span class="n">Replacement</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">replacement</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="nf">EvolutionaryAlgorithm</span><span class="p">(</span>
+    <span class="n">String</span> <span class="n">name</span><span class="p">,</span>
+    <span class="n">SolutionsCreation</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">initialPopulationCreation</span><span class="p">,</span>
+    <span class="n">Evaluation</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">evaluation</span><span class="p">,</span>
+    <span class="n">Termination</span> <span class="n">termination</span><span class="p">,</span>
+    <span class="n">Selection</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">selection</span><span class="p">,</span>
+    <span class="n">Variation</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">variation</span><span class="p">,</span>
+    <span class="n">Replacement</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">replacement</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="na">createInitialPopulation</span> <span class="o">=</span> <span class="n">initialPopulationCreation</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="na">evaluation</span> <span class="o">=</span> <span class="n">evaluation</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="na">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="na">selection</span> <span class="o">=</span> <span class="n">selection</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="na">variation</span> <span class="o">=</span> <span class="n">variation</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="na">replacement</span> <span class="o">=</span> <span class="n">replacement</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">population</span> <span class="o">=</span> <span class="n">createInitialPopulation</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
+  <span class="n">population</span> <span class="o">=</span> <span class="n">evaluation</span><span class="p">.</span><span class="na">evaluate</span><span class="p">(</span><span class="n">population</span><span class="p">);</span>
+  <span class="n">initProgress</span><span class="p">();</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">termination</span><span class="p">.</span><span class="na">isMet</span><span class="p">(</span><span class="n">attributes</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">matingPopulation</span> <span class="o">=</span> <span class="n">selection</span><span class="p">.</span><span class="na">select</span><span class="p">(</span><span class="n">population</span><span class="p">);</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">offspringPopulation</span> <span class="o">=</span> <span class="n">variation</span><span class="p">.</span><span class="na">variate</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">matingPopulation</span><span class="p">);</span>
+    <span class="n">offspringPopulation</span> <span class="o">=</span> <span class="n">evaluation</span><span class="p">.</span><span class="na">evaluate</span><span class="p">(</span><span class="n">offspringPopulation</span><span class="p">);</span>
+
+    <span class="n">population</span> <span class="o">=</span> <span class="n">replacement</span><span class="p">.</span><span class="na">replace</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">offspringPopulation</span><span class="p">);</span>
+    <span class="n">updateProgress</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We can observe that the <code class="docutils literal notranslate"><span class="pre">run()</span></code> is very similar to the one included in class <code class="docutils literal notranslate"><span class="pre">AbstractEvolutionaryAlgorithm</span></code>, but now the algorithm steps are objects. This way, if we focus on the selection, <code class="docutils literal notranslate"><span class="pre">Selection</span></code> is a class (i.e., a component) providing a <code class="docutils literal notranslate"><span class="pre">select()</span></code> method; the other components are defined in similar way. The complement of this template is to have a catalogue for each of the component types, so creating a particular algorithm consists of adding the proper components to the template.</p>
+<p>The implementation of NSGA-II using components is included in the <code class="docutils literal notranslate"><span class="pre">NSGAIIBuilder</span></code> class (package: <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.component.algorithm.multiobjective</span></code>, sub-project: <code class="docutils literal notranslate"><span class="pre">jmetal-component</span></code>):</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NSGAIIBuilder</span><span class="o">&lt;</span><span class="n">S</span> <span class="kd">extends</span> <span class="n">Solution</span><span class="o">&lt;?&gt;&gt;</span> <span class="p">{</span>
+
+  <span class="kd">public</span> <span class="nf">NSGAIIBuilder</span><span class="p">(</span><span class="n">Problem</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">problem</span><span class="p">,</span> <span class="kt">int</span> <span class="n">populationSize</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offspringPopulationSize</span><span class="p">,</span>
+    <span class="n">CrossoverOperator</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">crossover</span><span class="p">,</span> <span class="n">MutationOperator</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="n">mutation</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;NSGAII&quot;</span><span class="p">;</span>
+
+  <span class="n">densityEstimator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CrowdingDistanceDensityEstimator</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+  <span class="n">ranking</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FastNonDominatedSortRanking</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="na">createInitialPopulation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RandomSolutionsCreation</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">populationSize</span><span class="p">);</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="na">replacement</span> <span class="o">=</span>
+      <span class="k">new</span> <span class="n">RankingAndDensityEstimatorReplacement</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+          <span class="n">ranking</span><span class="p">,</span> <span class="n">densityEstimator</span><span class="p">,</span> <span class="n">Replacement</span><span class="p">.</span><span class="na">RemovalPolicy</span><span class="p">.</span><span class="na">ONE_SHOT</span><span class="p">);</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="na">variation</span> <span class="o">=</span>
+      <span class="k">new</span> <span class="n">CrossoverAndMutationVariation</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+          <span class="n">offspringPopulationSize</span><span class="p">,</span> <span class="n">crossover</span><span class="p">,</span> <span class="n">mutation</span><span class="p">);</span>
+
+  <span class="kt">int</span> <span class="n">tournamentSize</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">;</span>
+  <span class="c1">// int tournamentSize = 8 ;</span>
+  <span class="k">this</span><span class="p">.</span><span class="na">selection</span> <span class="o">=</span>
+      <span class="k">new</span> <span class="n">NaryTournamentSelection</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+          <span class="n">tournamentSize</span><span class="p">,</span>
+          <span class="n">variation</span><span class="p">.</span><span class="na">getMatingPoolSize</span><span class="p">(),</span>
+          <span class="k">new</span> <span class="n">MultiComparator</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+              <span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span>
+                  <span class="n">Comparator</span><span class="p">.</span><span class="na">comparing</span><span class="p">(</span><span class="n">ranking</span><span class="p">::</span><span class="n">getRank</span><span class="p">),</span>
+                  <span class="n">Comparator</span><span class="p">.</span><span class="na">comparing</span><span class="p">(</span><span class="n">densityEstimator</span><span class="p">::</span><span class="n">getValue</span><span class="p">).</span><span class="na">reversed</span><span class="p">())));</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="na">termination</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TerminationByEvaluations</span><span class="p">(</span><span class="mi">25000</span><span class="p">);</span>
+  <span class="c1">// this.termination = new TerminationByKeyboard();</span>
+  <span class="c1">// this.termination = new TerminationByComputingTime(5000);</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="na">evaluation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SequentialEvaluation</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">problem</span><span class="p">);</span>
+  <span class="c1">// this.evaluation = new MultiThreadedEvaluation&lt;&gt;(8, problem);</span>
+
+<span class="p">}</span>
+
+  <span class="kd">public</span> <span class="n">EvolutionaryAlgorithm</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">EvolutionaryAlgorithm</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">createInitialPopulation</span><span class="p">,</span> <span class="n">evaluation</span><span class="p">,</span> <span class="n">termination</span><span class="p">,</span>
+        <span class="n">selection</span><span class="p">,</span> <span class="n">variation</span><span class="p">,</span> <span class="n">replacement</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We can see as the constructor of the class instantiates all the components characterizing NSGA-II, and the algorithm is set up by creating a instance of <code class="docutils literal notranslate"><span class="pre">EvolutionaryAlgorithm</span></code> in the <code class="docutils literal notranslate"><span class="pre">build()</span></code> method. We have included in the code snippet some comments indicating alternatives to the currently used components.</p>
+<p>More information about the component-based template can be found in the <a class="reference internal" href="component.html"><span class="doc">component-based algorithms</span></a> section of this documentation. Examples of using component based algorithms are located in the <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.component.examples</span></code> package in the <code class="docutils literal notranslate"><span class="pre">jmetal-component</span></code> sub-project.</p>
+<p>As in the case of the inheritance-based template, some users can find this approach difficult to understand. Furthermore, algorithm designers will find that this scheme cannot be applied to those metaheuristics whose internal logic is tightly coupled, so that it can be very difficult to define independent components to be used with the template.</p>
+<p>The flexibility of this approach as allowed us to solve the aforementioned issue of having a way to instantiate NSGA-II (and other algorithms) from a parameter string. We have defined a class named <code class="docutils literal notranslate"><span class="pre">AutoNSGAII</span></code> (package: <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.auto.autoconfigurablealgorithm</span></code>, sub-project: <code class="docutils literal notranslate"><span class="pre">jmetal-auto</span></code>) that can be used in illustrated by this example (see class <a class="reference external" href="https://github.com/jMetal/jMetal/blob/main/jmetal-auto/src/main/java/org/uma/jmetal/auto/autoconfigurablealgorithm/examples/NSGAIIConfiguredFromAParameterString.java">NSGAIIConfiguredFromAParameterString.java</a>):</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>  <span class="n">String</span> <span class="n">referenceFrontFileName</span> <span class="o">=</span> <span class="s">&quot;ZDT1.csv&quot;</span> <span class="p">;</span>
+
+<span class="n">String</span><span class="o">[]</span> <span class="n">parameters</span> <span class="o">=</span>
+    <span class="p">(</span><span class="s">&quot;--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 &quot;</span>
+        <span class="o">+</span> <span class="s">&quot;--randomGeneratorSeed 12 &quot;</span>
+        <span class="o">+</span> <span class="s">&quot;--referenceFrontFileName &quot;</span><span class="o">+</span> <span class="n">referenceFrontFileName</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--maximumNumberOfEvaluations 25000 &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--algorithmResult population &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--populationSize 100 &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--offspringPopulationSize 100 &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--createInitialSolutions random &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--variation crossoverAndMutationVariation &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--selection tournament &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--selectionTournamentSize 2 &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--rankingForSelection dominanceRanking &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--densityEstimatorForSelection crowdingDistance &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--crossover SBX &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--crossoverProbability 0.9 &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--crossoverRepairStrategy bounds &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--sbxDistributionIndex 20.0 &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--mutation polynomial &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--mutationProbabilityFactor 1.0 &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--mutationRepairStrategy bounds &quot;</span>
+            <span class="o">+</span> <span class="s">&quot;--polynomialMutationDistributionIndex 20.0 &quot;</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;\\s+&quot;</span><span class="p">);</span>
+
+<span class="n">AutoNSGAII</span> <span class="n">autoNSGAII</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AutoNSGAII</span><span class="p">();</span>
+<span class="n">autoNSGAII</span><span class="p">.</span><span class="na">parseAndCheckParameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">);</span>
+
+<span class="n">EvolutionaryAlgorithm</span><span class="o">&lt;</span><span class="n">DoubleSolution</span><span class="o">&gt;</span> <span class="n">nsgaII</span> <span class="o">=</span> <span class="n">autoNSGAII</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
+
+<span class="k">new</span> <span class="n">SolutionListOutput</span><span class="p">(</span><span class="n">nsgaII</span><span class="p">.</span><span class="na">getResult</span><span class="p">())</span>
+    <span class="p">.</span><span class="na">setVarFileOutputContext</span><span class="p">(</span><span class="k">new</span> <span class="n">DefaultFileOutputContext</span><span class="p">(</span><span class="s">&quot;VAR.csv&quot;</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">))</span>
+    <span class="p">.</span><span class="na">setFunFileOutputContext</span><span class="p">(</span><span class="k">new</span> <span class="n">DefaultFileOutputContext</span><span class="p">(</span><span class="s">&quot;FUN.csv&quot;</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">))</span>
+    <span class="p">.</span><span class="na">print</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="encodings.html" class="btn btn-neutral float-left" title="Solutions (encodings)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="problems.html" class="btn btn-neutral float-right" title="Problems" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Antonio J. Nebro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

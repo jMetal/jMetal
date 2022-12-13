@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solutions (encodings) &mdash; jmetal 6.0-SNAPSHOT documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Algorithms" href="algorithms.html" />
+    <link rel="prev" title="Project structure" href="structure.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> jmetal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About jMetal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickStart.html">Quick Start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Project structure</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Solutions (encodings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraint handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qualityIndicators.html">Quality indicators</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="experimentation.html">Experimental studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallel.html">Sub-module jmetal-parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoconfiguration.html">Automatic design and configuration of multi-objective metaheuristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component.html">Component-based algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mnds.html">Using MNDS in NSGA-II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jmetal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Solutions (encodings)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/encodings.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="solutions-encodings">
+<span id="encodings"></span><h1>Solutions (encodings)<a class="headerlink" href="#solutions-encodings" title="Permalink to this headline"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Antonio J. Nebro</p>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>2022-11-30</p>
+</dd>
+</dl>
+<p>One of the first decisions that have to be taken when using metaheuristics is to define how to encode
+or represent the tentative solutions of the problem to solve. Representations strongly depend on
+the problem (e.g., continuous, binary, permutation, etc.) and they may restrict, on the one hand,
+the algorithms that can be used (for example, particle swarm optimization and differential evolution are designed to solve
+continuous problems) and, on the other hand, the specific operators that can be applied, as
+the crossover and mutation operators in the case of evolutionary algorithms.</p>
+<p>The base class of all the solution encodings in jMetal is
+the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java">Solution</a> interface,
+which located in the <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.solution</span></code> package (<code class="docutils literal notranslate"><span class="pre">jmetal-auto</span></code> sub-project):</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.uma.jmetal.solution</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Interface representing a Solution</span>
+<span class="cm"> *</span>
+<span class="cm"> * @author Antonio J. Nebro &lt;antonio@lcc.uma.es&gt;</span>
+<span class="cm"> * @param &lt;T&gt; Type (Double, Integer, etc.)</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Solution</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Serializable</span> <span class="p">{</span>
+  <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">variables</span><span class="p">()</span> <span class="p">;</span>
+  <span class="kt">double</span><span class="o">[]</span> <span class="nf">objectives</span><span class="p">()</span> <span class="p">;</span>
+  <span class="kt">double</span><span class="o">[]</span> <span class="nf">constraints</span><span class="p">()</span> <span class="p">;</span>
+  <span class="n">Map</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span> <span class="nf">attributes</span><span class="p">()</span> <span class="p">;</span>
+
+  <span class="n">Solution</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">copy</span><span class="p">()</span> <span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Any solution contains a list of decision variables, an array of objective values, and array of constraint values
+(i.e., the constraint violation degree per each of the problem side constraints), and a map of attributes
+(e.g., to assign properties such as ranking, strength, etc., which are usually algorithm dependant).
+The variable values are assigned when a solution is created (typically, when invoking the <code class="docutils literal notranslate"><span class="pre">createSolution()</span></code> method of a problem),
+whereas the objective and constraint values are usually assigned when evaluating a solution.</p>
+<p>jMetal provides currently the following interfaces representing encodings (all of them extending <cite>Solution</cite>):</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/solution/binarysolution/BinarySolution.java">BinarySolution</a></p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/solution/integersolution/IntegerSolution.java">IntegerSolution</a></p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/doublesolution/DoubleSolution.java">DoubleSolution</a></p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/solution/permutationsolution">PermutationSolution</a></p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/solution/sequencesolution">SequenceSolution</a></p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/compositesolution/CompositeSolution.java">CompositeSolution</a></p></li>
+</ul>
+<p>These interfaces are intended to allow different implementations of a given encoding, although we currently provide a default implementation for most of them:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/binarysolution/impl/DefaultBinarySolution.java">DefaultBinarySolution</a>: The solution chromosome is a list of binary strings. The number of solution variables is the number of strings.</p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/integersolution/impl/DefaultIntegerSolution.java">DefaultIntegerSolution</a>: The solution chromosome is a list of integer values bounded by a lower and upper bound. Each integer value is stored in a solution variable.</p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/doublesolution/impl/DefaultDoubleSolution.java">DefaultDoubleSolution</a>: The solution chromosome is a list of double values bounded by a lower and upper bound. Each double value is stored in a solution variable.</p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/permutationsolution/impl/IntegerPermutationSolution.java">IntegerPermutationSolution</a>: The encoding is a list of N integer numbers with are arrange as a permutation of size N. Each value of the permutation is stored in a solution variable.</p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/sequencesolution/impl/CharSequenceSolution.java">CharSequenceSolution</a>: The encoding a list of N char values.</p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/compositesolution/CompositeSolution.java">CompositeSolution</a>: A solution is composed of list of solutions, thus allowing to mix different types of encodings in a single solution. Each solution variable contains a solution.</p></li>
+</ul>
+<p>Of course, you can define your own encodings if none of the available ones suit your needs.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="structure.html" class="btn btn-neutral float-left" title="Project structure" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="algorithms.html" class="btn btn-neutral float-right" title="Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Antonio J. Nebro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

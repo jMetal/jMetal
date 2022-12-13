@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Problems &mdash; jmetal 6.0-SNAPSHOT documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Operators" href="operators.html" />
+    <link rel="prev" title="Algorithms" href="algorithms.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> jmetal
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About jMetal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickStart.html">Quick Start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Project structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodings.html">Solutions (encodings)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraint handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qualityIndicators.html">Quality indicators</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="experimentation.html">Experimental studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallel.html">Sub-module jmetal-parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoconfiguration.html">Automatic design and configuration of multi-objective metaheuristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="component.html">Component-based algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mnds.html">Using MNDS in NSGA-II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jmetal</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Problems</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/problems.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="problems">
+<span id="id1"></span><h1>Problems<a class="headerlink" href="#problems" title="Permalink to this headline"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Antonio J. Nebro</p>
+</dd>
+<dt class="field-even">Date</dt>
+<dd class="field-even"><p>2022-12-1</p>
+</dd>
+</dl>
+<p>All the problems in jMetal implement the <a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/Problem.java">Problem</a> interface:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">org.uma.jmetal.problem</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Interface representing a multi-objective optimization problem</span>
+<span class="cm"> *</span>
+<span class="cm"> * @author Antonio J. Nebro &lt;antonio@lcc.uma.es&gt;</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param &lt;S&gt; Encoding</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Problem</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Serializable</span> <span class="p">{</span>
+  <span class="cm">/* Getters */</span>
+  <span class="kt">int</span> <span class="nf">getNumberOfVariables</span><span class="p">()</span> <span class="p">;</span>
+  <span class="kt">int</span> <span class="nf">objectives</span><span class="p">().</span><span class="na">length</span> <span class="p">;</span>
+  <span class="kt">int</span> <span class="nf">getNumberOfConstraints</span><span class="p">()</span> <span class="p">;</span>
+  <span class="n">String</span> <span class="nf">getName</span><span class="p">()</span> <span class="p">;</span>
+
+  <span class="cm">/* Methods */</span>
+  <span class="kt">void</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">S</span> <span class="n">solution</span><span class="p">)</span> <span class="p">;</span>
+  <span class="n">S</span> <span class="nf">createSolution</span><span class="p">()</span> <span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Every problem is characterized by the number of decision variables, the number of objective functions and the number of constraints, so getter methods for returning those values have to be defined. The genetic type <cite>S</cite> allows to determine the encoding of the solutions of the problem. This way, a problem must include a method for evaluating any solution of class <cite>S</cite> as well as providing a <cite>createSolution()</cite> method for creating a new solution. A class named
+<a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/AbstractGenericProblem.java">AbstractGenericProblem</a> containing setter and getter method implementations for the problem fields is provided.</p>
+<p>If a problem has side constraints, it is assumed that the overall constraint degree of a given solution is computed inside the <code class="docutils literal notranslate"><span class="pre">evaluate()</span></code> method.</p>
+<p>jMetal provides currently the following interfaces representing types of problems (all of them extending <code class="docutils literal notranslate"><span class="pre">Problem</span></code>), and the available implementations of them:</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/problem/binaryproblem/BinaryProblem.java">BinaryProblem</a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/binaryproblem/impl/AbstractBinaryProblem.java">AbstractBinaryProblem</a>: Each problem variable is a bit string, and the class includes methods such as <code class="docutils literal notranslate"><span class="pre">getBitsFromVariable(int</span> <span class="pre">index)</span></code> and <code class="docutils literal notranslate"><span class="pre">getTotalNumberOfBits()</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/problem/integerproblem/IntegerProblem.java">IntegerProblem</a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/integerproblem/impl/AbstractIntegerProblem.java">AbstractIntegerProblem</a>: The problem variables are integer values in a given range defined by a lower and upperbound. This means that this class is not adequate for combinatorial problems based on integer values.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/doubleproblem/DoubleProblem.java">DoubleProblem</a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/doubleproblem/impl/AbstractDoubleProblem.java">AbstractDoubleProblem</a>: The problem variables are double values in a given range defined by a lower and upperbound.</p></li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/doubleproblem/impl/ComposableDoubleProblem.java">ComposableDoubleProblem</a>: This class allows to define a double problem in a dynamic way, as shown in this code snippet:</p></li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">ComposableDoubleProblem</span> <span class="n">problem</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ComposableDoubleProblem</span><span class="p">()</span>
+<span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;Srinivas&quot;</span><span class="p">)</span>
+<span class="p">.</span><span class="na">addVariable</span><span class="p">(</span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">)</span>
+<span class="p">.</span><span class="na">addVariable</span><span class="p">(</span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">)</span>
+<span class="p">.</span><span class="na">addFunction</span><span class="p">((</span><span class="n">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span>  <span class="p">(</span><span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="p">.</span><span class="na">addFunction</span><span class="p">((</span><span class="n">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="mf">9.0</span> <span class="o">*</span> <span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="p">.</span><span class="na">addConstraint</span><span class="p">((</span><span class="n">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">*</span> <span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">*</span> <span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span> <span class="o">/</span> <span class="mf">225.0</span><span class="p">)</span>
+<span class="p">.</span><span class="na">addConstraint</span><span class="p">((</span><span class="n">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">-</span> <span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span> <span class="o">/</span> <span class="mf">10.0</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">))</span> <span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/doubleproblem/impl/DummyDoubleProblem.java">DummyDoubleProblem</a>: This class is intended to be used in unit testing code (to avoid having to define it many times).</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/problem/permutationproblem/PermutationProblem.java">PermutationProblem</a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/permutationproblem/impl/AbstractIntegerPermutationProblem.java">AbstractIntegerPermutationProblem</a>: The problem variables are permutations of integer values.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/problem/sequenceproblem/SequenceProblem.java">SequenceProblem</a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/sequenceproblem/impl/CharSequenceProblem.java">CharSequenceProblem</a>: The problem variables are sequences of chars.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>All the problems provided by jMetal are included in the <code class="docutils literal notranslate"><span class="pre">org.uma.jmetal.problem</span></code> package located in the <code class="docutils literal notranslate"><span class="pre">jmetal-problem</span></code> sub-project. The package includes the sub-packages <code class="docutils literal notranslate"><span class="pre">multiobjective</span></code> and <code class="docutils literal notranslate"><span class="pre">singleobjective</span></code>, which contains the codes of the problems. You can find both individual
+problems (e.g., <em>Kursawe</em>, <em>Sphere</em>, etc.) and benchmarks suites (such as <em>ZDT</em>, <em>DTLZ</em> or <em>LZ09</em>).</p>
+<p>The lists of single- and multi-objective problems are included in the next figures:</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="_images/singleObjectiveProblems.png"><img alt="Single-objective problems." src="_images/singleObjectiveProblems.png" style="width: 267.3px; height: 232.20000000000002px;" /></a>
+</figure>
+<figure class="align-default">
+<a class="reference internal image-reference" href="_images/multiObjectiveProblems.png"><img alt="Multi-objective problems." src="_images/multiObjectiveProblems.png" style="width: 336.6px; height: 672.3000000000001px;" /></a>
+</figure>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="algorithms.html" class="btn btn-neutral float-left" title="Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="operators.html" class="btn btn-neutral float-right" title="Operators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Antonio J. Nebro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
