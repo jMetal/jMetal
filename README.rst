@@ -17,7 +17,11 @@ jMetal project Web site
    :alt: Documentation Status
    :target: https://jmetal.readthedocs.io/?badge=latest
 
-jMetal is a Java-based framework for multi-objective optimization with metaheuristics. The last stable version is 6.0.
+jMetal is a Java-based framework for multi-objective optimization with metaheuristics.
+The last stable version is 6.0.
+The most recent documentation is hosted in https://jmetal.readthedocs.io.
+(the old documentation site is located in https://github.com/jMetal/jMetalDocumentation).
+
 
 The current development version (6.1-SNAPSHOT) is a Maven project structured in the following sub-projects:
 
@@ -41,9 +45,7 @@ The current development version (6.1-SNAPSHOT) is a Maven project structured in 
 | jmetal-component    |  Component-based algorithms        |
 +---------------------+------------------------------------+
 
-The most recent documentation is hosted in https://jmetal.readthedocs.io  (the old documentation site is located in https://github.com/jMetal/jMetalDocumentation).
-
-Comments and suggestions are very welcome.
+Comments and suggestions are welcome.
 
 Changelog
 ---------
