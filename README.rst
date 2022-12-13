@@ -49,7 +49,7 @@ Comments and suggestions are welcome.
 
 Changelog
 ---------
-* [12/12/2022] jMetal 6.0 is released.
+* [12/13/2022] jMetal 6.0 is released.
 
 * [9/12/2022] The master branch has been renamed main.
 
