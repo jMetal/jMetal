@@ -6,7 +6,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /** Created by FlapKap on 23-03-2017. */
@@ -17,8 +16,8 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
   private final int crossovers;
 
   public NPointCrossover(double probability, int crossovers) {
-    if (probability < 0.0) throw new JMetalException("Probability can't be negative");
-    if (crossovers < 1) throw new JMetalException("Number of crossovers is less than one");
+    Check.probabilityIsValid(probability);
+    Check.that(crossovers >=  1, "Number of crossovers is less than one");
     this.probability = probability;
     this.crossovers = crossovers;
   }

@@ -91,16 +91,16 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
     return crossoverProbability;
   }
 
-  public double getDistributionIndex() {
+  public double distributionIndex() {
     return distributionIndex;
   }
 
   /* Setters */
-  public void setCrossoverProbability(double probability) {
+  public void crossoverProbability(double probability) {
     this.crossoverProbability = probability;
   }
 
-  public void setDistributionIndex(double distributionIndex) {
+  public void distributionIndex(double distributionIndex) {
     this.distributionIndex = distributionIndex;
   }
 

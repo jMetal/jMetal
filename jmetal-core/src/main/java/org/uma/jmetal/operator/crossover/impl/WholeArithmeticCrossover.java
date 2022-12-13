@@ -49,7 +49,7 @@ public class WholeArithmeticCrossover implements CrossoverOperator<DoubleSolutio
 
 
   /* Setters */
-  public void setCrossoverProbability(double crossoverProbability) {
+  public void crossoverProbability(double crossoverProbability) {
     this.crossoverProbability = crossoverProbability;
   }
 

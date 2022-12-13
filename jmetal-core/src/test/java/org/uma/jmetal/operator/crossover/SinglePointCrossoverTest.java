@@ -14,8 +14,8 @@ import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.binaryproblem.impl.FakeBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -32,7 +32,7 @@ public class SinglePointCrossoverTest {
         .getField(crossover, "crossoverProbability"), EPSILON) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = InvalidProbabilityValueException.class)
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
     double crossoverProbability = -0.1 ;
     new SinglePointCrossover(crossoverProbability) ;

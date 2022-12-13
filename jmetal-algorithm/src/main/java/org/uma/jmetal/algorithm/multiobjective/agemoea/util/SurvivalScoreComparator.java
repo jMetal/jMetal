@@ -2,6 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.agemoea.util;
 
 import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 /**
@@ -13,7 +14,7 @@ public class SurvivalScoreComparator<S extends Solution<?>> implements Comparato
     private FastNonDominatedSortRanking ranking;
 
     public SurvivalScoreComparator() {
-        ranking = new FastNonDominatedSortRanking();
+        ranking = new FastNonDominatedSortRanking(new DominanceWithConstraintsComparator());
     }
 
     /**

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
@@ -28,7 +29,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     }
 
     public List execute(List<S> solutionList, int solutionsToSelect) throws JMetalException {
-        Ranking<S> ranking = new FastNonDominatedSortRanking<>() ;
+        Ranking<S> ranking = new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator()) ;
         ranking.compute(solutionList) ;
         return selectFromFronts(ranking, solutionsToSelect);
     }

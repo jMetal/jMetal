@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -40,9 +40,8 @@ public class PMXCrossover implements
    * Constructor
    */
   public PMXCrossover(double crossoverProbability, RandomGenerator<Double> crossoverRandomGenerator, BoundedRandomGenerator<Integer> cuttingPointRandomGenerator) {
-    if ((crossoverProbability < 0) || (crossoverProbability > 1)) {
-      throw new JMetalException("Crossover probability value invalid: " + crossoverProbability) ;
-    }
+    Check.probabilityIsValid(crossoverProbability );
+
     this.crossoverProbability = crossoverProbability;
     this.crossoverRandomGenerator = crossoverRandomGenerator ;
     this.cuttingPointRandomGenerator = cuttingPointRandomGenerator ;
@@ -55,7 +54,7 @@ public class PMXCrossover implements
   }
 
   /* Setters */
-  public void setCrossoverProbability(double crossoverProbability) {
+  public void crossoverProbability(double crossoverProbability) {
     this.crossoverProbability = crossoverProbability;
   }
 
@@ -65,11 +64,8 @@ public class PMXCrossover implements
    * @param parents An object containing an array of two solutions
    */
   public List<PermutationSolution<Integer>> execute(List<PermutationSolution<Integer>> parents) {
-    if (null == parents) {
-      throw new JMetalException("Null parameter") ;
-    } else if (parents.size() != 2) {
-      throw new JMetalException("There must be two parents instead of " + parents.size()) ;
-    }
+    Check.notNull(parents);
+    Check.that(parents.size() == 2, "There must be two parents instead of " + parents.size());
 
     return doCrossover(crossoverProbability, parents) ;
   }

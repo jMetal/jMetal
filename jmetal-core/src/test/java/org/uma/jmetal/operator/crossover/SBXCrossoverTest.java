@@ -70,7 +70,7 @@ public class SBXCrossoverTest {
   @Test
   public void shouldGetDistributionIndexReturnTheRightValue() {
     SBXCrossover crossover = new SBXCrossover(0.1, 30.0) ;
-    assertEquals(30.0, crossover.getDistributionIndex(), EPSILON) ;
+    assertEquals(30.0, crossover.distributionIndex(), EPSILON) ;
   }
 
   @Test (expected = NullParameterException.class)

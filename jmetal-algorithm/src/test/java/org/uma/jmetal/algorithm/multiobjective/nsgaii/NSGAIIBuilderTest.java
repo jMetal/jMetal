@@ -68,7 +68,7 @@ public class NSGAIIBuilderTest {
 
     SBXCrossover crossover = (SBXCrossover) builder.getCrossoverOperator();
     assertEquals(0.9, crossover.crossoverProbability(), EPSILON);
-    assertEquals(20.0, crossover.getDistributionIndex(), EPSILON);
+    assertEquals(20.0, crossover.distributionIndex(), EPSILON);
 
     PolynomialMutation mutation = (PolynomialMutation) builder.getMutationOperator();
     assertEquals(1.0 / NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM, mutation.mutationProbability(),

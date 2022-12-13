@@ -5,6 +5,7 @@ import java.util.List;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -31,11 +32,8 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
 
   /** Constructor */
   public IntegerSBXCrossover(double crossoverProbability, double distributionIndex, RandomGenerator<Double> randomGenerator) {
-    if (crossoverProbability < 0) {
-      throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
-    } else if (distributionIndex < 0) {
-      throw new JMetalException("Distribution index is negative: " + distributionIndex);
-    }
+    Check.probabilityIsValid(crossoverProbability);
+    Check.valueIsNotNegative(distributionIndex);
 
     this.crossoverProbability = crossoverProbability ;
     this.distributionIndex = distributionIndex ;
