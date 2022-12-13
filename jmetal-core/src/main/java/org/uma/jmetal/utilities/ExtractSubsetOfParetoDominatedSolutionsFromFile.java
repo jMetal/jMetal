@@ -7,12 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 /**

@@ -8,11 +8,11 @@ import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 /**

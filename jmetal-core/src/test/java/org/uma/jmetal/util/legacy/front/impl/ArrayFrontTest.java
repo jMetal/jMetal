@@ -31,8 +31,8 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.comparator.LexicographicalPointComparator;
+import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 /**
  * @author Antonio J. Nebro

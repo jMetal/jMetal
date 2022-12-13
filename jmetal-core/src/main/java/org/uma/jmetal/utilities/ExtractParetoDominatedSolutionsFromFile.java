@@ -3,12 +3,12 @@ package org.uma.jmetal.utilities;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.StoredSolutionsUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.solution.pointsolution.PointSolution;
 
 /**
  * This utility takes an input file and produces an output file containing only the non-dominated

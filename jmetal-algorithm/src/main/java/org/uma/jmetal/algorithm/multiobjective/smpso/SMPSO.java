@@ -304,7 +304,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override
   public String getDescription() {
-    return "Speed contrained Multiobjective PSO";
+    return "Speed constrained Multiobjective PSO";
   }
 
   /* Getters */
