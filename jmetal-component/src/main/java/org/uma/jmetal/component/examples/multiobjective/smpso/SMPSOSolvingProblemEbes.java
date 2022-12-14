@@ -8,29 +8,25 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
+import org.uma.jmetal.problem.multiobjective.ebes.Ebes;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-public class SMPSOSolvingConstrainedProblemExample {
+public class SMPSOSolvingProblemEbes {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.Tanaka";
-    String referenceParetoFront = "resources/referenceFrontsCSV/Tanaka.csv";
-
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    Problem<DoubleSolution> problem = new Ebes(
+        "resources/ebes/Mobile_Bridge_25N_35B_8G_16OrdZXY.ebe", new String[]{"W", "D"});
 
     int swarmSize = 100 ;
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(250000);
 
     ParticleSwarmOptimizationAlgorithm smpso = new SMPSOBuilder(
         (DoubleProblem) problem,
@@ -39,6 +35,8 @@ public class SMPSOSolvingConstrainedProblemExample {
         .setLocalBestUpdate(new DefaultLocalBestUpdate(new DominanceWithConstraintsComparator<>()))
         .setArchive(new CrowdingDistanceArchive<>(swarmSize, new DominanceWithConstraintsComparator<>()))
         .build();
+
+    smpso.getObservable().register(new RunTimeChartObserver<>("SMPSO", 80, 1000, null));
 
     smpso.run();
 
@@ -54,9 +52,5 @@ public class SMPSOSolvingConstrainedProblemExample {
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
-
-    QualityIndicatorUtils.printQualityIndicators(
-        SolutionListUtils.getMatrixWithObjectiveValues(population),
-        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }
