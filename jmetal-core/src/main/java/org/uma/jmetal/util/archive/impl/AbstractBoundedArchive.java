@@ -4,6 +4,8 @@ import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -13,9 +15,13 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
   protected NonDominatedSolutionListArchive<S> archive;
   protected int maxSize;
 
-  public AbstractBoundedArchive(int maxSize) {
+  protected AbstractBoundedArchive(int maxSize, DominanceComparator<S> dominanceComparator) {
     this.maxSize = maxSize;
-    this.archive = new NonDominatedSolutionListArchive<>();
+    this.archive = new NonDominatedSolutionListArchive<>(dominanceComparator);
+  }
+
+  protected AbstractBoundedArchive(int maxSize) {
+    this(maxSize, new DefaultDominanceComparator<>()) ;
   }
 
   @Override

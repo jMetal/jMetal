@@ -3,6 +3,8 @@ package org.uma.jmetal.util.archive.impl;
 import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 
@@ -15,10 +17,14 @@ public class CrowdingDistanceArchive<S extends Solution<?>> extends AbstractBoun
   private Comparator<S> crowdingDistanceComparator;
   private DensityEstimator<S> crowdingDistance ;
 
-  public CrowdingDistanceArchive(int maxSize) {
-    super(maxSize);
-    crowdingDistance = new CrowdingDistanceDensityEstimator<S>();
+  public CrowdingDistanceArchive(int maxSize, DominanceComparator<S> dominanceComparator) {
+    super(maxSize, dominanceComparator);
+    crowdingDistance = new CrowdingDistanceDensityEstimator<>();
     crowdingDistanceComparator = Comparator.comparing(crowdingDistance::getValue).reversed() ;
+  }
+
+  public CrowdingDistanceArchive(int maxSize) {
+    this(maxSize, new DefaultDominanceComparator<>()) ;
   }
 
   @Override
