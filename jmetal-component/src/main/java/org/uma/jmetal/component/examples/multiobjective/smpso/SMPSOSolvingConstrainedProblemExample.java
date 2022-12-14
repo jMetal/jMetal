@@ -6,6 +6,7 @@ import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.SMPSOBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.component.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -14,15 +15,17 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-public class SMPSODefaultConfigurationExample {
+public class SMPSOSolvingConstrainedProblemExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.Tanaka";
+    String referenceParetoFront = "resources/referenceFrontsCSV/Tanaka.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -33,6 +36,8 @@ public class SMPSODefaultConfigurationExample {
         (DoubleProblem) problem,
         swarmSize)
         .setTermination(termination)
+        .setLocalBestUpdate(new DefaultLocalBestUpdate(new DominanceWithConstraintsComparator<>()))
+        .setArchive(new CrowdingDistanceArchive<>(swarmSize, new DominanceWithConstraintsComparator<>()))
         .build();
 
     smpso.run();
