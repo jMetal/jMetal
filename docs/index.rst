@@ -13,10 +13,10 @@ The current stable version is 6.0 (https://github.com/jMetal/jMetal). The workin
 
 jMetal is described in the following papers:
 
-* `jMetal: A Java framework for multi-objective optimization <https://doi.org/10.1016/j.advengsoft.2011.05.014>`_. jMetal 4.x
-* `Redesigning the jMetal Multi-Objective Optimization Framework <https://doi.org/10.1145/2739482.2768462>`_. jMetal 5.x
-* `Automatic configuration of NSGA-II with jMetal and irace <https://dl.acm.org/doi/abs/10.1145/3319619.3326832>`_. jMetal pre-6.0
-* `Evolving a Multi-objective Optimization Framework <https://doi.org/10.1007/978-981-16-0662-5_9>`_. jMetal pre-6.0
+* `jMetal: A Java framework for multi-objective optimization <https://doi.org/10.1016/j.advengsoft.2011.05.014>`_. jMetal 4
+* `Redesigning the jMetal Multi-Objective Optimization Framework <https://doi.org/10.1145/2739482.2768462>`_. jMetal 5
+* `Automatic configuration of NSGA-II with jMetal and irace <https://dl.acm.org/doi/abs/10.1145/3319619.3326832>`_. jMetal 6
+* `Evolving a Multi-objective Optimization Framework <https://doi.org/10.1007/978-981-16-0662-5_9>`_. jMetal 6
 
 Summary of features:
 
