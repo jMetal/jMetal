@@ -65,7 +65,7 @@ Summary of features:
 
     experimentation.rst
     parallel.rst
-    autoconfiguration.rst
     component.rst
+    autoconfiguration.rst
     mnds.rst
     api.rst

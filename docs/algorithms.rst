@@ -299,7 +299,7 @@ The flexibility of this approach as allowed us to solve the aforementioned issue
 
 .. code-block:: java
 
-      String referenceFrontFileName = "ZDT1.csv" ;
+    String referenceFrontFileName = "ZDT1.csv" ;
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "

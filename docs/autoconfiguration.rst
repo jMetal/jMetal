@@ -117,7 +117,10 @@ Similarly, there are several mutation operators to choose from, including *polyn
 
 Finally, the *selection* operator be *random* or *tournament*; this last one can take a value between 2 (i.e., binary tournament) and 10.
 
-As we want to use irace as auto-tuning package, it requires a text file containing information about the parameters, the values they can take, an their relationships. We have created then a file called ``parameters-NSGAII.txt`` containing the parameter space::
+As we want to use irace as auto-tuning package, it requires a text file containing information about the parameters, the values they can take, an their relationships.
+We have created then a file called ``parameters-NSGAII.txt`` containing the parameter space:
+
+.. code-block:: text
 
   populationSize                           "--populationSize "                      o       (100)                                              
   #
@@ -151,7 +154,12 @@ To know about the syntax of irace configuration files, please refer to the irace
 The ``AutoNSGAII`` class
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Without entering into implementation details, the auto-configuration of NSGA-II is based on the ``AutoNSGAII`` class located in the ``org.uma.jmetal.auto.autoconfigurablealgorithm`` package. This class can parse a string defining a particular NSGA-II configuration and create an instance of the algorithm. Each parameter in the string is defined as a pair "--parameterName parameterValue ". An example can be found in the ``NSGAIIConfiguredFromAParameterString`` class (located in the ``examples`` sub-directory):
+Without entering into implementation details, the auto-configuration of NSGA-II is based on
+the ``AutoNSGAII`` class located in the ``org.uma.jmetal.auto.autoconfigurablealgorithm`` package.
+This class can parse a string defining a particular NSGA-II configuration and create an instance of
+the algorithm. Each parameter in the string is defined as a pair "--parameterName parameterValue ".
+An example can be found in the ``NSGAIIConfiguredFromAParameterString`` class
+(located in the ``examples`` sub-directory):
 
 .. code-block:: java
 
@@ -225,13 +233,13 @@ The first step is to create a directory for the experiment. Let us called is, fo
   4. ``instances-list-ZDT.txt``: the problems to be solved (we are assuming the ZDT suite), their reference Pareto fronts, the maximum number of evaluations to be computed are included here:
 
   .. code-block:: text
-  
-org.uma.jmetal.problem.multiobjective.zdt.ZDT1 --referenceFrontFileName ZDT1.csv --maximumNumberOfEvaluations 10000
-org.uma.jmetal.problem.multiobjective.zdt.ZDT2 --referenceFrontFileName ZDT2.csv --maximumNumberOfEvaluations 10000
-org.uma.jmetal.problem.multiobjective.zdt.ZDT3 --referenceFrontFileName ZDT3.csv --maximumNumberOfEvaluations 10000
-org.uma.jmetal.problem.multiobjective.zdt.ZDT4 --referenceFrontFileName ZDT4.csv --maximumNumberOfEvaluations 10000
-org.uma.jmetal.problem.multiobjective.zdt.ZDT6 --referenceFrontFileName ZDT6.csv --maximumNumberOfEvaluations 10000
-and the stopping condition of the algorithm (i.e., the maximum number of evaluations of the algorithm).
+
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT1 --referenceFrontFileName ZDT1.csv --maximumNumberOfEvaluations 10000
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT2 --referenceFrontFileName ZDT2.csv --maximumNumberOfEvaluations 10000
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT3 --referenceFrontFileName ZDT3.csv --maximumNumberOfEvaluations 10000
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT4 --referenceFrontFileName ZDT4.csv --maximumNumberOfEvaluations 10000
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT6 --referenceFrontFileName ZDT6.csv --maximumNumberOfEvaluations 10000
+
 
   5. ``target-runner-AutoNSGAIIIraceHV``. Bash script which is executed in every run of irace. This file must have execution rights (if not, just type ``chmod +x target-runner-AutoNSGAIIIraceHV`` in a terminal)
   6. ``run.sh``. Bash script to run irace. IMPORTANT: the number of cores to be used by irace are indicated in the ``IRACE_PARAMS`` variable (the default value is 24).
@@ -268,7 +276,8 @@ The second file contains a lot of information about the run of irace, including 
   # Best configurations as command lines (first number is the configuration ID; same order as above):
   4646  --algorithmResult externalArchive --populationSize 100 --populationSizeWithArchive 20 --maximumNumberOfEvaluations 25000 --createInitialSolutions random --variation crossoverAndMutationVariation --offspringPopulationSize 1 --crossover BLX_ALPHA --crossoverProbability 0.876 --crossoverRepairStrategy random --blxAlphaCrossoverAlphaValue 0.5729 --mutation uniform --mutationProbability 0.0439 --mutationRepairStrategy bounds --uniformMutationPerturbation 0.9957 --selection tournament --selectionTournamentSize 8
 
-This configuration can be used in the ``NSGAIIConfiguredFromAParameterString`` program, replacing the existing one, to run NSGA-II with those settings.
+This configuration can be used in the ``NSGAIIConfiguredFromAParameterString`` program,
+replacing the existing one, to run NSGA-II with those settings.
 
 AutoMOPSO
 ---------
@@ -356,7 +365,9 @@ The selection of the global best consists in taking solutions from the external 
 
 Finally, the default position update also applies the classical strategy, but if the resulting position of a particle is lower than the lower bound of the allowed position values, the position of the particle is set to the lower bound value and the velocity is changed by multiplying if by value in the range [-1, 1]. The same applies in the case of the upper bound.
 
-As with *AutoNSGAII*, we have created then a file called ``parameters-MOPSO.txt`` containing the required information::
+As with *AutoNSGAII*, we have created then a file called ``parameters-MOPSO.txt`` containing the required information:
+
+.. code-block:: text
 
   swarmSize                                "--swarmSize "                           i       (10, 200)
   #
@@ -495,7 +506,7 @@ When irace finishes, the best found configuration can be found by typing:
 
 .. code-block:: bash
   
-  cat autoMOPSOZDT/execdir-1/irace.stderr.out
+  cat autoMOPSOZDT/execdir-1/irace.stdout.out
 
 At the end of the output file, we can find something similar to this piece of text:
 
