@@ -135,6 +135,12 @@ public class SMPSOBuilder {
     return this ;
   }
 
+  public SMPSOBuilder setLocalBestUpdate(LocalBestUpdate localBestUpdate) {
+    this.localBestInitialization = localBestInitialization ;
+
+    return this ;
+  }
+
   public ParticleSwarmOptimizationAlgorithm build() {
     return new ParticleSwarmOptimizationAlgorithm(name, swarmInitialization, evaluation, termination,
         velocityInitialization,
