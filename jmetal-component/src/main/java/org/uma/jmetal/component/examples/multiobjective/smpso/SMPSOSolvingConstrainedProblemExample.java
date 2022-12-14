@@ -7,11 +7,11 @@ import org.uma.jmetal.component.algorithm.multiobjective.SMPSOBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -19,10 +19,10 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-public class SMPSODefaultConfigurationExample {
+public class SMPSOSolvingConstrainedProblemExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.Tanaka";
+    String referenceParetoFront = "resources/referenceFrontsCSV/Tanaka.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
