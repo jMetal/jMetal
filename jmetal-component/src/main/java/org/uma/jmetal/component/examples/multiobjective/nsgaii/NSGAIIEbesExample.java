@@ -12,12 +12,16 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.ebes.Ebes;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 /**
  * Class to configure and run the NSGA-II algorithm showing the population while the algorithm is running
@@ -41,6 +45,10 @@ public class NSGAIIEbesExample {
 
     Termination termination = new TerminationByEvaluations(50000);
 
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(
+        new DominanceWithConstraintsComparator<>(
+            new OverallConstraintViolationDegreeComparator<>()));
+
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
                     problem,
                     populationSize,
@@ -48,6 +56,7 @@ public class NSGAIIEbesExample {
                     crossover,
                     mutation)
         .setTermination(termination)
+        .setRanking(ranking)
         .build();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);

@@ -52,7 +52,7 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
     chart.initChart();
   }
 
-  public void setReferencePoins(List<List<Double>> referencePoins) {
+  public void setReferencePoints(List<List<Double>> referencePoins) {
     chart.setReferencePoint(referencePoins);
   }
 
@@ -66,7 +66,7 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
   }
 
   /**
-   * This methods displays a front (population)
+   * This method displays a front (population)
    * @param data Map of pairs (key, value)
    */
   @Override
