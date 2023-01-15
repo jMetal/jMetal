@@ -41,12 +41,15 @@ public class MOEADBuilder<S extends Solution<?>> {
   private int maximumNumberOfReplacedSolutions = 2;
   private String weightVectorDirectory ;
   private AggregationFunction aggregativeFunction = new PenaltyBoundaryIntersection() ;
+  private SequenceGenerator<Integer> sequenceGenerator ;
+  private WeightVectorNeighborhood<S> neighborhood ;
 
   public MOEADBuilder(Problem<S> problem, int populationSize,
       CrossoverOperator<S> crossover, MutationOperator<S> mutation, String weightVectorDirectory,
       SequenceGenerator<Integer> sequenceGenerator) {
     name = "MOEAD";
 
+    this.sequenceGenerator = sequenceGenerator ;
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     int offspringPopulationSize = 1;
@@ -54,7 +57,6 @@ public class MOEADBuilder<S extends Solution<?>> {
         new CrossoverAndMutationVariation<>(
             offspringPopulationSize, crossover, mutation);
 
-    WeightVectorNeighborhood<S> neighborhood = null;
     this.weightVectorDirectory = weightVectorDirectory ;
 
     if (problem.getNumberOfObjectives() == 2) {
@@ -126,6 +128,13 @@ public class MOEADBuilder<S extends Solution<?>> {
   public MOEADBuilder<S> setAggregativeFunction(AggregationFunction aggregativeFunction) {
     this.aggregativeFunction = aggregativeFunction;
 
+    this.replacement =
+        new MOEADReplacement<>(
+            (PopulationAndNeighborhoodSelection<S>) selection,
+            neighborhood,
+            aggregativeFunction,
+            sequenceGenerator,
+            maximumNumberOfReplacedSolutions);
     return this;
   }
 

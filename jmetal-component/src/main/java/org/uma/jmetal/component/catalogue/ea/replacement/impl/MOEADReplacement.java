@@ -11,11 +11,14 @@ import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
 public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
+
   private final PopulationAndNeighborhoodSelection<S> matingPoolSelection;
   private final WeightVectorNeighborhood<S> weightVectorNeighborhood;
   private final AggregationFunction aggregativeFunction;
   private final SequenceGenerator<Integer> sequenceGenerator;
   private final int maximumNumberOfReplacedSolutions;
+  private boolean normalize;
+  boolean firstTime = true;
 
   public MOEADReplacement(
       PopulationAndNeighborhoodSelection<S> matingPoolSelection,
@@ -28,12 +31,19 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
     this.aggregativeFunction = aggregativeFunction;
     this.sequenceGenerator = sequenceGenerator;
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
+
+    normalize = true;
   }
 
   @Override
   public List<S> replace(
       List<S> population, List<S> offspringPopulation) {
     S newSolution = offspringPopulation.get(0);
+    aggregativeFunction.reset();
+    for (S solution : population) {
+      aggregativeFunction.update(solution.objectives());
+    }
+
     aggregativeFunction.update(newSolution.objectives());
 
     Neighborhood.NeighborType neighborType = matingPoolSelection.getNeighborType();
@@ -59,10 +69,13 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
       }
       randomPermutation.generateNext();
 
-      double f1 =
+      double f1;
+      double f2;
+
+      f1 =
           aggregativeFunction.compute(
               population.get(k).objectives(), weightVectorNeighborhood.getWeightVector()[k]);
-      double f2 =
+      f2 =
           aggregativeFunction.compute(
               newSolution.objectives(), weightVectorNeighborhood.getWeightVector()[k]);
 
@@ -76,3 +89,4 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
     return population;
   }
 }
+
