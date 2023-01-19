@@ -15,7 +15,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class MOEADConfiguredDForDTLZString {
+public class MOEADDEConfiguredForDTLZ1 {
   public static void main(String[] args) {
     String referenceFrontFileName = "DTLZ1.3D.csv" ;
 

@@ -43,28 +43,15 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
     this.normalize = normalize;
   }
 
+
+
   @Override
   public List<S> replace(
       List<S> population, List<S> offspringPopulation) {
     S newSolution = offspringPopulation.get(0);
-    if (firstReplacement) {
-      idealPoint = new IdealPoint(population.get(0).objectives().length);
-      if (normalize) {
-        nonDominatedSolutionListArchive = new NonDominatedSolutionListArchive<>() ;
-        nonDominatedSolutionListArchive.addAll(population);
-        nonDominatedSolutionListArchive.add(newSolution);
-      }
-      firstReplacement = false;
-    }
-    idealPoint.update(newSolution.objectives());
 
-    if (normalize) {
-      nadirPoint = new NadirPoint(population.get(0).objectives().length);
-      nonDominatedSolutionListArchive.add(newSolution);
-      for (S solution : nonDominatedSolutionListArchive.getSolutionList()) {
-        nadirPoint.update(solution.objectives());
-      }
-    }
+    updateIdealPoint(population, newSolution);
+    updateNadirPoint(population, newSolution);
 
     Neighborhood.NeighborType neighborType = matingPoolSelection.getNeighborType();
     IntegerPermutationGenerator randomPermutation =
@@ -109,6 +96,29 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
 
     sequenceGenerator.generateNext();
     return population;
+  }
+
+  private void updateIdealPoint(List<S> population, S newSolution) {
+    if (firstReplacement) {
+      idealPoint = new IdealPoint(population.get(0).objectives().length);
+      if (normalize) {
+        nonDominatedSolutionListArchive = new NonDominatedSolutionListArchive<>() ;
+        nonDominatedSolutionListArchive.addAll(population);
+        nonDominatedSolutionListArchive.add(newSolution);
+      }
+      firstReplacement = false;
+    }
+    idealPoint.update(newSolution.objectives());
+  }
+
+  private void updateNadirPoint(List<S> population, S newSolution) {
+    if (normalize) {
+      nadirPoint = new NadirPoint(population.get(0).objectives().length);
+      nonDominatedSolutionListArchive.add(newSolution);
+      for (S solution : nonDominatedSolutionListArchive.getSolutionList()) {
+        nadirPoint.update(solution.objectives());
+      }
+    }
   }
 }
 
