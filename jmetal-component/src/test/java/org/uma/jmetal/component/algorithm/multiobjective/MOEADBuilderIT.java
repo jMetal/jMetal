@@ -53,7 +53,7 @@ class MOEADBuilderIT {
         crossover,
         mutation,
         weightVectorDirectory,
-        sequenceGenerator)
+        sequenceGenerator, false)
         .setTermination(termination)
         .setMaximumNumberOfReplacedSolutionsy(2)
         .setNeighborhoodSelectionProbability(0.9)
