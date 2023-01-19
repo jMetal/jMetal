@@ -7,16 +7,13 @@ import org.uma.jmetal.component.algorithm.multiobjective.MOEADBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
-import org.uma.jmetal.lab.visualization.plot.impl.Plot3D;
+import org.uma.jmetal.lab.visualization.plot.impl.Plot2D;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -32,11 +29,10 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADSolvingProblemDTLZ1Example {
+public class MOEADSolvingProblemZDT110F2Example {
 
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT110F2";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -48,29 +44,31 @@ public class MOEADSolvingProblemDTLZ1Example {
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 91;
+    int populationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(40000);
+    Termination termination = new TerminationByEvaluations(35000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
 
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
+    boolean normalizeObjectives = true ;
+
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
         populationSize,
         crossover,
         mutation,
         weightVectorDirectory,
-        sequenceGenerator)
+        sequenceGenerator, normalizeObjectives)
         .setTermination(termination)
         .setMaximumNumberOfReplacedSolutionsy(2)
         .setNeighborhoodSelectionProbability(0.9)
         .setNeighborhoodSize(20)
-        .setAggregativeFunction(new PenaltyBoundaryIntersection())
+        .setAggregationFunction(new PenaltyBoundaryIntersection(5.0, normalizeObjectives))
         .build();
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("MOEA/D", 80, 100, referenceParetoFront);
+        new RunTimeChartObserver<>("MOEA/D", 80, 500, null);
 
     moead.getObservable().register(runTimeChartObserver);
     moead.run();
@@ -88,11 +86,7 @@ public class MOEADSolvingProblemDTLZ1Example {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
-    QualityIndicatorUtils.printQualityIndicators(
-        SolutionListUtils.getMatrixWithObjectiveValues(population),
-        VectorUtils.readVectors(referenceParetoFront, ","));
-
-    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.getName() + " (MOEA/D)");
+    PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix(), problem.getName() + " (MOEA/D)");
     plot.plot();
   }
 }

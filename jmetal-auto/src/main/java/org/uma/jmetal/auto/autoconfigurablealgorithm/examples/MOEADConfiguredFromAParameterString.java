@@ -28,6 +28,7 @@ public class MOEADConfiguredFromAParameterString {
             + "--populationSize 91 "
             + "--offspringPopulationSize 1 "
             + "--createInitialSolutions random "
+            + "--normalizeObjectives false "
             + "--neighborhoodSize 20 "
             + "--maximumNumberOfReplacedSolutions 2 "
             + "--aggregationFunction penaltyBoundaryIntersection "

@@ -5,27 +5,30 @@ import org.uma.jmetal.util.point.impl.IdealPoint;
 import org.uma.jmetal.util.point.impl.NadirPoint;
 
 public class WeightedSum implements AggregationFunction {
-  private IdealPoint idealPoint ;
-  private NadirPoint nadirPoint ;
+  private boolean normalizeObjectives ;
+
+  public WeightedSum(boolean normalizeObjectives) {
+    this.normalizeObjectives = normalizeObjectives ;
+  }
 
   @Override
-  public double compute(double[] vector, double[] weightVector) {
+  public double compute(double[] vector, double[] weightVector, IdealPoint idealPoint, NadirPoint nadirPoint) {
     double sum = 0.0;
     for (int n = 0; n < vector.length; n++) {
-      sum += weightVector[n] * vector[n];
+      double value ;
+      if (normalizeObjectives) {
+        value = (vector[n] - idealPoint.getValue(n))/(nadirPoint.getValue(n)-idealPoint.getValue(n)) ;
+      } else {
+        value = vector[n] ;
+      }
+      sum += weightVector[n] * value;
     }
 
     return sum;
   }
 
   @Override
-  public void update(double[] vector) {
-
-  }
-
-  @Override
-  public void reset() {
-    idealPoint = null ;
-    nadirPoint = null ;
+  public boolean normalizeObjectives() {
+    return this.normalizeObjectives ;
   }
 }

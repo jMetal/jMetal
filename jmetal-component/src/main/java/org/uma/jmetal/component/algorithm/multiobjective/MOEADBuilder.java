@@ -40,14 +40,18 @@ public class MOEADBuilder<S extends Solution<?>> {
   private double neighborhoodSelectionProbability = 0.9 ;
   private int maximumNumberOfReplacedSolutions = 2;
   private String weightVectorDirectory ;
-  private AggregationFunction aggregativeFunction = new PenaltyBoundaryIntersection() ;
+  private AggregationFunction aggregationFunction ;
   private SequenceGenerator<Integer> sequenceGenerator ;
   private WeightVectorNeighborhood<S> neighborhood ;
+  private boolean normalize ;
 
   public MOEADBuilder(Problem<S> problem, int populationSize,
       CrossoverOperator<S> crossover, MutationOperator<S> mutation, String weightVectorDirectory,
-      SequenceGenerator<Integer> sequenceGenerator) {
+      SequenceGenerator<Integer> sequenceGenerator, boolean normalize) {
     name = "MOEAD";
+
+    this.normalize = normalize ;
+    this.aggregationFunction = new PenaltyBoundaryIntersection(5.0, normalize) ;
 
     this.sequenceGenerator = sequenceGenerator ;
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
@@ -86,9 +90,9 @@ public class MOEADBuilder<S extends Solution<?>> {
         new MOEADReplacement<>(
             (PopulationAndNeighborhoodSelection<S>) selection,
             neighborhood,
-            aggregativeFunction,
+            aggregationFunction,
             sequenceGenerator,
-            maximumNumberOfReplacedSolutions);
+            maximumNumberOfReplacedSolutions, this.normalize);
 
     this.termination = new TerminationByEvaluations(25000);
 
@@ -125,16 +129,17 @@ public class MOEADBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public MOEADBuilder<S> setAggregativeFunction(AggregationFunction aggregativeFunction) {
-    this.aggregativeFunction = aggregativeFunction;
+  public MOEADBuilder<S> setAggregationFunction(AggregationFunction aggregationFunction) {
+    this.aggregationFunction = aggregationFunction;
 
     this.replacement =
         new MOEADReplacement<>(
             (PopulationAndNeighborhoodSelection<S>) selection,
             neighborhood,
-            aggregativeFunction,
+            this.aggregationFunction,
             sequenceGenerator,
-            maximumNumberOfReplacedSolutions);
+            maximumNumberOfReplacedSolutions,
+            aggregationFunction.normalizeObjectives());
     return this;
   }
 

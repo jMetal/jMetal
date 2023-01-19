@@ -58,7 +58,7 @@ class MOEADBuilderIT {
         .setMaximumNumberOfReplacedSolutionsy(2)
         .setNeighborhoodSelectionProbability(0.9)
         .setNeighborhoodSize(20)
-        .setAggregativeFunction(new PenaltyBoundaryIntersection())
+        .setAggregationFunction(new PenaltyBoundaryIntersection(5.0, false))
         .build();
 
     moead.run();
@@ -115,7 +115,7 @@ class MOEADBuilderIT {
         .setMaximumNumberOfReplacedSolutionsy(2)
         .setNeighborhoodSelectionProbability(0.9)
         .setNeighborhoodSize(20)
-        .setAggregativeFunction(new Tschebyscheff())
+        .setAggregationFunction(new Tschebyscheff(false))
         .build() ;
 
     moead.run();

@@ -8,13 +8,13 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
+import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -50,6 +50,7 @@ public class MOEADDEDefaultConfigurationExample {
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
 
+    boolean normalizeObjectives = false ;
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADDEBuilder(
         problem,
         populationSize,
@@ -57,12 +58,12 @@ public class MOEADDEDefaultConfigurationExample {
         f,
         mutation,
         weightVectorDirectory,
-        sequenceGenerator)
+        sequenceGenerator, normalizeObjectives)
         .setTermination(termination)
         .setMaximumNumberOfReplacedSolutionsy(2)
         .setNeighborhoodSelectionProbability(0.9)
         .setNeighborhoodSize(20)
-        .setAggregativeFunction(new Tschebyscheff())
+        .setAggregationFunction(new PenaltyBoundaryIntersection(5.0, normalizeObjectives))
         .build() ;
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =

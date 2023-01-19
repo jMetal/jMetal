@@ -51,6 +51,7 @@ public class MOEADWithUnboundedArchiveExample {
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
 
     Archive<DoubleSolution> externalArchive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), populationSize) ;
+    boolean normalizeObjectives = false ;
 
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
@@ -58,7 +59,8 @@ public class MOEADWithUnboundedArchiveExample {
         crossover,
         mutation,
         weightVectorDirectory,
-        sequenceGenerator)
+        sequenceGenerator,
+        normalizeObjectives)
         .setTermination(termination)
         .setEvaluation(new SequentialEvaluationWithArchive<DoubleSolution>(problem, externalArchive))
         .build();

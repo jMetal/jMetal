@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.uma.jmetal.auto.parameter.BooleanParameter;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
@@ -67,6 +68,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   private IntegerParameter neighborhoodSizeParameter;
   private IntegerParameter maximumNumberOfReplacedSolutionsParameter;
   private AggregationFunctionParameter aggregativeFunctionParameter;
+  private BooleanParameter normalizeObjectivesParameter ;
 
   @Override
   public List<Parameter<?>> getAutoConfigurableParameterList() {
@@ -91,6 +93,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     }
     populationSizeParameter = new PositiveIntegerValue("populationSize", args);
 
+    normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives", args) ;
+
     neighborhoodSizeParameter = new IntegerParameter("neighborhoodSize", args,5, 50);
     neighborhoodSelectionProbabilityParameter =
         new ProbabilityParameter("neighborhoodSelectionProbability", args);
@@ -111,6 +115,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     autoConfigurableParameterList.add(neighborhoodSizeParameter);
     autoConfigurableParameterList.add(maximumNumberOfReplacedSolutionsParameter);
     autoConfigurableParameterList.add(aggregativeFunctionParameter);
+    autoConfigurableParameterList.add(normalizeObjectivesParameter);
 
     autoConfigurableParameterList.add(algorithmResultParameter);
     autoConfigurableParameterList.add(createInitialSolutionsParameter);
@@ -283,6 +288,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
             selectionParameter.getParameter(variation.getMatingPoolSize(), null);
 
     int maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutionsParameter.getValue();
+
+    aggregativeFunctionParameter.normalizedObjectives(normalizeObjectivesParameter.getValue());
     AggregationFunction aggregativeFunction = aggregativeFunctionParameter.getParameter();
     var replacement =
         new MOEADReplacement<>(
@@ -290,7 +297,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
             (WeightVectorNeighborhood<DoubleSolution>) neighborhood,
             aggregativeFunction,
             subProblemIdGenerator,
-            maximumNumberOfReplacedSolutions);
+            maximumNumberOfReplacedSolutions, normalizeObjectivesParameter.getValue());
 
     class EvolutionaryAlgorithmWithArchive extends EvolutionaryAlgorithm<DoubleSolution> {
       private Archive<DoubleSolution> archive ;

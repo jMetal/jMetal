@@ -15,35 +15,35 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class MOEADConfiguredDForDTLZString {
+public class MOEADConfiguredToSolveProblemZDT110F2 {
   public static void main(String[] args) {
-    String referenceFrontFileName = "DTLZ1.3D.csv" ;
+    String referenceFrontFileName = "ZDT1.csv" ;
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1 "
-            + "--referenceFrontFileName DTLZ1.3D.csv "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT110F2 "
+            + "--referenceFrontFileName ZDT1.csv "
             + "--randomGeneratorSeed 124 "
             + "--maximumNumberOfEvaluations 50000 "
-            + "--algorithmResult externalArchive "
-            + "--externalArchive unboundedArchive "
-            + "--normalizeObjectives false "
-            + "--populationSize 91 "
+            + "--algorithmResult population "
+            + "--populationSize 100 "
             + "--offspringPopulationSize 1 "
             + "--createInitialSolutions random "
-            + "--neighborhoodSize 30 "
-            + "--maximumNumberOfReplacedSolutions 5 "
+            + "--normalizeObjectives true "
+            + "--neighborhoodSize 20 "
+            + "--maximumNumberOfReplacedSolutions 2 "
             + "--aggregationFunction penaltyBoundaryIntersection "
             + "--pbiTheta 5.0 "
-            + "--variation differentialEvolutionVariation "
-            + "--differentialEvolutionCrossover RAND_2_BIN "
-            + "--CR 0.1199 "
-            + "--F 0.6261 "
-            + "--neighborhoodSelectionProbability 0.0016 "
+            + "--neighborhoodSelectionProbability 0.9 "
+            + "--variation crossoverAndMutationVariation "
             + "--selection populationAndNeighborhoodMatingPoolSelection "
-            + "--nonUniformMutationPerturbation 0.8439 "
-            + "--mutation nonUniform "
-            + "--mutationProbabilityFactor 0.7089 "
-            + "--mutationRepairStrategy round ")
+            + "--crossover SBX "
+            + "--crossoverProbability 0.9 "
+            + "--crossoverRepairStrategy bounds "
+            + "--sbxDistributionIndex 20.0 "
+            + "--mutation polynomial "
+            + "--mutationProbabilityFactor 1.0 "
+            + "--mutationRepairStrategy bounds "
+            + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
     AutoMOEAD autoNSGAII = new AutoMOEAD();
