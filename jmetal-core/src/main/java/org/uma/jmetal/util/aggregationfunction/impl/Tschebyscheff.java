@@ -2,25 +2,33 @@ package org.uma.jmetal.util.aggregationfunction.impl;
 
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
 import org.uma.jmetal.util.point.impl.IdealPoint;
+import org.uma.jmetal.util.point.impl.NadirPoint;
 
 public class Tschebyscheff implements AggregationFunction {
 
-  private IdealPoint idealPoint;
+  private boolean normalizeObjectives;
 
-  public Tschebyscheff() {
-    this.idealPoint = null;
+  public Tschebyscheff(boolean normalizeObjectives) {
+    this.normalizeObjectives = normalizeObjectives;
   }
 
   @Override
-  public double compute(double[] vector, double[] weightVector) {
+  public double compute(double[] vector, double[] weightVector, IdealPoint idealPoint,
+      NadirPoint nadirPoint) {
     double maxFun = -1.0e+30;
 
     for (int n = 0; n < vector.length; n++) {
-      double diff = Math.abs(vector[n] - idealPoint.value(n));
+      double diff;
+      if (normalizeObjectives) {
+        diff = Math.abs(
+            (vector[n] - idealPoint.value(n)) / (nadirPoint.value(n) - idealPoint.value(n)));
+      } else {
+        diff = Math.abs(vector[n] - idealPoint.value(n));
+      }
 
       double feval;
       if (weightVector[n] == 0) {
-        feval = 0.000001 * diff;
+        feval = 0.0001 * diff;
       } else {
         feval = diff * weightVector[n];
       }
@@ -32,12 +40,8 @@ public class Tschebyscheff implements AggregationFunction {
     return maxFun;
   }
 
-
   @Override
-  public void update(double[] vector) {
-    if (idealPoint == null) {
-      idealPoint = new IdealPoint(vector.length);
-    }
-    idealPoint.update(vector);
+  public boolean normalizeObjectives() {
+    return this.normalizeObjectives;
   }
 }

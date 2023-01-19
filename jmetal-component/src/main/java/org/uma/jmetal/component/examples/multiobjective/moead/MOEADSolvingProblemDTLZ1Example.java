@@ -55,18 +55,21 @@ public class MOEADSolvingProblemDTLZ1Example {
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
 
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
+    boolean normalizeObjectives = false ;
+
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
         populationSize,
         crossover,
         mutation,
         weightVectorDirectory,
-        sequenceGenerator)
+        sequenceGenerator,
+        normalizeObjectives)
         .setTermination(termination)
         .setMaximumNumberOfReplacedSolutionsy(2)
         .setNeighborhoodSelectionProbability(0.9)
         .setNeighborhoodSize(20)
-        .setAggregativeFunction(new PenaltyBoundaryIntersection())
+        .setAggregationFunction(new PenaltyBoundaryIntersection(5.0, normalizeObjectives))
         .build();
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
