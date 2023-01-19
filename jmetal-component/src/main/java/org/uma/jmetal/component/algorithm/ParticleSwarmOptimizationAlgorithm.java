@@ -30,7 +30,7 @@ import org.uma.jmetal.util.observer.Observer;
  * - The algorithms are {@link ObservableEntity}, which can be observed by {@link Observer} objects.
  * - The {@link #observable} element is a map of  pairs (String, Object), which is initialized and
  *   updated by the {@link #initProgress()} and {@link #updateProgress()} methods.
- * - Is is assumed than an external archive is used to store the global best particles
+ * - It is assumed than an external archive is used to store the global best particles
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
@@ -129,9 +129,9 @@ public class ParticleSwarmOptimizationAlgorithm
 
     initProgress();
     while (!termination.isMet(attributes)) {
-      velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection,
+      speed = velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection,
           inertiaWeightComputingStrategy);
-      positionUpdate.update(swarm, speed);
+      swarm = positionUpdate.update(swarm, speed);
       swarm = perturbation.perturb(swarm);
       swarm = evaluation.evaluate(swarm);
       globalBest = globalBestUpdate.update(swarm, globalBest);
