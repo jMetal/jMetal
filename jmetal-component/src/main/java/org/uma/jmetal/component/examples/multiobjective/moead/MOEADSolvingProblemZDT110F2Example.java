@@ -51,7 +51,7 @@ public class MOEADSolvingProblemZDT110F2Example {
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
 
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
-    boolean normalizeObjectives = true ;
+    boolean normalizeObjectives = false ;
 
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
@@ -59,7 +59,8 @@ public class MOEADSolvingProblemZDT110F2Example {
         crossover,
         mutation,
         weightVectorDirectory,
-        sequenceGenerator, normalizeObjectives)
+        sequenceGenerator,
+        normalizeObjectives)
         .setTermination(termination)
         .setMaximumNumberOfReplacedSolutionsy(2)
         .setNeighborhoodSelectionProbability(0.9)

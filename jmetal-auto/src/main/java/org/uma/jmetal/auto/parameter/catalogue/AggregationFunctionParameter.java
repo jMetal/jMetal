@@ -13,6 +13,7 @@ public class AggregationFunctionParameter extends CategoricalParameter {
   private boolean normalizedObjectives ;
   public AggregationFunctionParameter(List<String> aggregationFunctions,  String[] args) {
     super("aggregationFunction", args, aggregationFunctions);
+
     normalizedObjectives = false ;
   }
 

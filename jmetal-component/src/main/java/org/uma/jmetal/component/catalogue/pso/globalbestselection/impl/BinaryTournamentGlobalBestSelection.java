@@ -44,6 +44,5 @@ public class BinaryTournamentGlobalBestSelection implements GlobalBestSelection 
     }
 
     return bestGlobal;
-
   }
 }

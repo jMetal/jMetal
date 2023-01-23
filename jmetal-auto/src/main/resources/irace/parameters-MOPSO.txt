@@ -11,10 +11,11 @@ swarmInitialization                      "--swarmInitialization "               
 velocityInitialization                   "--velocityInitialization "              c       (defaultVelocityInitialization, SPSO2007VelocityInitialization, SPSO2011VelocityInitialization)
 #
 perturbation                             "--perturbation "                        c       (frequencySelectionMutationBasedPerturbation)
-mutation                                 "--mutation "                            c       (uniform, polynomial, nonUniform) | perturbation %in% c("frequencySelectionMutationBasedPerturbation")
+mutation                                 "--mutation "                            c       (uniform, polynomial, nonUniform, linkedPolynomial) | perturbation %in% c("frequencySelectionMutationBasedPerturbation")
 mutationProbabilityFactor                "--mutationProbabilityFactor "           r       (0.0, 2.0)                     | mutation %in% c("uniform","polynomial","nonUniform")
 mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random, round, bounds)        | mutation %in% c("uniform","polynomial","nonUniform")
 polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("polynomial")
+linkedPolynomialMutationDistributionIndex "--linkedPolynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("linkedPolynomial")
 uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
 nonUniformMutationPerturbation           "--nonUniformMutationPerturbation "      r       (0.0, 1.0)                     | mutation %in% c("nonUniform")
 frequencyOfApplicationOfMutationOperator "--frequencyOfApplicationOfMutationOperator " i      (1, 10)                        | perturbation %in% c("frequencySelectionMutationBasedPerturbation")
@@ -34,7 +35,8 @@ localBestInitialization                  "--localBestInitialization "           
 #
 globalBestInitialization                 "--globalBestInitialization "            c       (defaultGlobalBestInitialization)
 #
-globalBestSelection                      "--globalBestSelection "                 c       (binaryTournament, random)
+globalBestSelection                      "--globalBestSelection "                 c       (tournament, random)
+selectionTournamentSize                  "--selectionTournamentSize "             i       (2, 10)                        | globalBestSelection %in% c("tournament")
 #
 globalBestUpdate                         "--globalBestUpdate "                    c       (defaultGlobalBestUpdate)
 #

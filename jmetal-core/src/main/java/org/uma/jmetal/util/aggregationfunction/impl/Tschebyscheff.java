@@ -5,7 +5,6 @@ import org.uma.jmetal.util.point.impl.IdealPoint;
 import org.uma.jmetal.util.point.impl.NadirPoint;
 
 public class Tschebyscheff implements AggregationFunction {
-
   private boolean normalizeObjectives;
 
   public Tschebyscheff(boolean normalizeObjectives) {

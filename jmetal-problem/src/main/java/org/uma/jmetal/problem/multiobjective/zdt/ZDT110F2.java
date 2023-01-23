@@ -58,6 +58,7 @@ public class ZDT110F2 extends AbstractDoubleProblem {
   protected double evalG(DoubleSolution solution) {
     double g = IntStream.range(1, solution.variables().size())
         .mapToDouble(i -> solution.variables().get(i)).sum();
+
     double constant = 9.0 / (solution.variables().size() - 1);
 
     return constant * g + 1.0;

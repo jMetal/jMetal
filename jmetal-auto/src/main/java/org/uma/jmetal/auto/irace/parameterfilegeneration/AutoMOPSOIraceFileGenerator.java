@@ -28,7 +28,7 @@ public class AutoMOPSOIraceFileGenerator {
             + "--leaderArchive crowdingDistanceArchive "
             + "--localBestInitialization defaultLocalBestInitialization "
             + "--globalBestInitialization defaultGlobalBestInitialization "
-            + "--globalBestSelection binaryTournament "
+            + "--globalBestSelection random "
             + "--perturbation frequencySelectionMutationBasedPerturbation "
             + "--frequencyOfApplicationOfMutationOperator 6 "
             + "--mutation polynomial "

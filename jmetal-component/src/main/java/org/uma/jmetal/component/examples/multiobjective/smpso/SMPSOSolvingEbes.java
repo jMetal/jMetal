@@ -1,30 +1,30 @@
 package org.uma.jmetal.component.examples.multiobjective.smpso;
 
-import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.SMPSOBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
+import org.uma.jmetal.problem.multiobjective.ebes.Ebes;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-public class SMPSODefaultConfigurationExample {
-  public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+/**
+ * Class for configuring and running the SMPSO algorithm
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ */
+public class SMPSOSolvingEbes extends AbstractAlgorithmRunner {
+  public static void main(String[] args) throws Exception {
+    String referenceParetoFront = null;
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    DoubleProblem problem = new Ebes("resources/ebes/Mobile_Bridge_25N_35B_8G_16OrdZXY.ebe", new String[]{"W", "D"}) ;
 
     int swarmSize = 100 ;
     Termination termination = new TerminationByEvaluations(25000);
@@ -33,7 +33,10 @@ public class SMPSODefaultConfigurationExample {
         (DoubleProblem) problem,
         swarmSize)
         .setTermination(termination)
+        //.setDominanceComparator(new DominanceWithConstraintsComparator<>(new OverallConstraintViolationDegreeComparator<>()))
         .build();
+
+    smpso.getObservable().register(new RunTimeChartObserver<>("SMPSO", 80, 1000, referenceParetoFront));
 
     smpso.run();
 
@@ -50,8 +53,5 @@ public class SMPSODefaultConfigurationExample {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
-    QualityIndicatorUtils.printQualityIndicators(
-        SolutionListUtils.getMatrixWithObjectiveValues(population),
-        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }

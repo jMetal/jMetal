@@ -137,9 +137,11 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     globalBestInitializationParameter = new GlobalBestInitializationParameter(args,
         List.of("defaultGlobalBestInitialization"));
     globalBestSelectionParameter = new GlobalBestSelectionParameter(args,
-        List.of("binaryTournament", "random"));
-    globalBestSelectionParameter = new GlobalBestSelectionParameter(args,
-        Arrays.asList("binaryTournament", "random"));
+        List.of("tournament", "random"));
+    IntegerParameter selectionTournamentSize =
+        new IntegerParameter("selectionTournamentSize", args, 2, 10);
+    globalBestSelectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
+
     globalBestUpdateParameter = new GlobalBestUpdateParameter(args,
         Arrays.asList("defaultGlobalBestUpdate"));
 
