@@ -3,6 +3,7 @@ package org.uma.jmetal.auto.parameter.catalogue;
 import java.util.List;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
+import org.uma.jmetal.util.aggregationfunction.impl.ModifiedTschebyscheff;
 import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.aggregationfunction.impl.WeightedSum;
@@ -10,8 +11,8 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class AggregationFunctionParameter extends CategoricalParameter {
   private boolean normalizedObjectives ;
-  public AggregationFunctionParameter(List<String> aggregativeFunctions,  String[] args) {
-    super("aggregationFunction", args, aggregativeFunctions);
+  public AggregationFunctionParameter(List<String> aggregationFunctions,  String[] args) {
+    super("aggregationFunction", args, aggregationFunctions);
     normalizedObjectives = false ;
   }
 
@@ -25,6 +26,9 @@ public class AggregationFunctionParameter extends CategoricalParameter {
     switch (getValue()) {
       case "tschebyscheff":
         result =  new Tschebyscheff(normalizedObjectives) ;
+        break;
+      case "modifiedTschebyscheff":
+        result =  new ModifiedTschebyscheff(normalizedObjectives) ;
         break;
       case "weightedSum":
         result = new WeightedSum(normalizedObjectives) ;

@@ -29,6 +29,7 @@ import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
  * @param <S>
  */
 public class MOEADBuilder<S extends Solution<?>> {
+
   private String name;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
@@ -36,24 +37,24 @@ public class MOEADBuilder<S extends Solution<?>> {
   private Selection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
-  private int neighborhoodSize = 20 ;
-  private double neighborhoodSelectionProbability = 0.9 ;
+  private int neighborhoodSize = 20;
+  private double neighborhoodSelectionProbability = 0.9;
   private int maximumNumberOfReplacedSolutions = 2;
-  private String weightVectorDirectory ;
-  private AggregationFunction aggregationFunction ;
-  private SequenceGenerator<Integer> sequenceGenerator ;
-  private WeightVectorNeighborhood<S> neighborhood ;
-  private boolean normalize ;
+  private String weightVectorDirectory;
+  private AggregationFunction aggregationFunction;
+  private SequenceGenerator<Integer> sequenceGenerator;
+  private WeightVectorNeighborhood<S> neighborhood;
+  private boolean normalize;
 
   public MOEADBuilder(Problem<S> problem, int populationSize,
       CrossoverOperator<S> crossover, MutationOperator<S> mutation, String weightVectorDirectory,
       SequenceGenerator<Integer> sequenceGenerator, boolean normalize) {
     name = "MOEAD";
 
-    this.normalize = normalize ;
-    this.aggregationFunction = new PenaltyBoundaryIntersection(5.0, normalize) ;
+    this.normalize = normalize;
+    this.aggregationFunction = new PenaltyBoundaryIntersection(5.0, normalize);
 
-    this.sequenceGenerator = sequenceGenerator ;
+    this.sequenceGenerator = sequenceGenerator;
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     int offspringPopulationSize = 1;
@@ -61,7 +62,7 @@ public class MOEADBuilder<S extends Solution<?>> {
         new CrossoverAndMutationVariation<>(
             offspringPopulationSize, crossover, mutation);
 
-    this.weightVectorDirectory = weightVectorDirectory ;
+    this.weightVectorDirectory = weightVectorDirectory;
 
     if (problem.numberOfObjectives() == 2) {
       neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
@@ -92,7 +93,8 @@ public class MOEADBuilder<S extends Solution<?>> {
             neighborhood,
             aggregationFunction,
             sequenceGenerator,
-            maximumNumberOfReplacedSolutions, this.normalize);
+            maximumNumberOfReplacedSolutions,
+            this.normalize);
 
     this.termination = new TerminationByEvaluations(25000);
 
@@ -111,13 +113,15 @@ public class MOEADBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public MOEADBuilder<S> setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
+  public MOEADBuilder<S> setNeighborhoodSelectionProbability(
+      double neighborhoodSelectionProbability) {
     this.neighborhoodSelectionProbability = neighborhoodSelectionProbability;
 
     return this;
   }
 
-  public MOEADBuilder<S> setMaximumNumberOfReplacedSolutionsy(int maximumNumberOfReplacedSolutions) {
+  public MOEADBuilder<S> setMaximumNumberOfReplacedSolutionsy(
+      int maximumNumberOfReplacedSolutions) {
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
 
     return this;
