@@ -17,7 +17,7 @@ public class AutoMOEADIraceParameterFileGenerator {
             + "--randomGeneratorSeed 124 "
             + "--maximumNumberOfEvaluations 25000 "
             + "--algorithmResult population "
-            + "--normalizeObjectives false "
+            + "--normalizeObjectives FALSE "
             + "--populationSize 91 "
             + "--offspringPopulationSize 1 "
             + "--createInitialSolutions random "

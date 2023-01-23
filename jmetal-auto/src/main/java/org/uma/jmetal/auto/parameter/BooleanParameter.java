@@ -1,5 +1,6 @@
 package org.uma.jmetal.auto.parameter;
 
+import java.util.List;
 import org.uma.jmetal.util.errorchecking.Check;
 
 public class BooleanParameter extends Parameter<Boolean> {
@@ -12,6 +13,10 @@ public class BooleanParameter extends Parameter<Boolean> {
   public void check() {
     Check.that(!getName().equals(""), "The parameter name cannot be the empty string");
     Check.notNull(getName());
+  }
+
+  public List<String> getValidValues() {
+    return List.of("TRUE", "FALSE");
   }
 
   @Override
