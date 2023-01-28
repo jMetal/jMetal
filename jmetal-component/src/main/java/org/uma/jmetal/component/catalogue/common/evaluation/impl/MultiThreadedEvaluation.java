@@ -43,15 +43,16 @@ public class MultiThreadedEvaluation<S extends Solution<?>> implements Evaluatio
   }
 
   @Override
-  public int getComputedEvaluations() {
+  public int computedEvaluations() {
     return computedEvaluations;
   }
 
-  public int getNumberOfThreads() {
+  public int numberOfThreads() {
     return numberOfThreads ;
   }
 
-  public Problem<S> getProblem() {
+  @Override
+  public Problem<S> problem() {
     return problem ;
   }
 }

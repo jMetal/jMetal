@@ -27,7 +27,12 @@ public class SequentialEvaluationWithArchive<S extends Solution<?>> extends Sequ
     return solutions ;
   }
 
-  public Archive<S> getArchive() {
+  public Archive<S> archive() {
     return archive ;
+  }
+
+  @Override
+  public Problem<S> problem() {
+    return super.problem() ;
   }
 }

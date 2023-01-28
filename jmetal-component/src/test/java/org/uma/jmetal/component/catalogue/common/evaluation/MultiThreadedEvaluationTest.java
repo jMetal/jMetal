@@ -2,6 +2,8 @@ package org.uma.jmetal.component.catalogue.common.evaluation;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -30,7 +32,7 @@ class MultiThreadedEvaluationTest {
   void invokeTheConstructorWithANegativeNumberOfThreadsRaisesAnExceptioin() {
     assertThatThrownBy(
         () -> new MultiThreadedEvaluation<>(-1, new FakeDoubleProblem(1, 1, 1))).isInstanceOf(
-        InvalidConditionException.class).
+            InvalidConditionException.class).
         hasMessageContaining("The number of threads is a negative value: -1");
   }
 
@@ -39,8 +41,8 @@ class MultiThreadedEvaluationTest {
     DoubleProblem problem = mock(DoubleProblem.class);
     MultiThreadedEvaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(1, problem);
 
-    assertThat(evaluation.getComputedEvaluations()).isZero();
-    assertThat(evaluation.getNumberOfThreads()).isEqualTo(1) ;
+    assertThat(evaluation.computedEvaluations()).isZero();
+    assertThat(evaluation.numberOfThreads()).isEqualTo(1) ;
   }
 
   @Test
@@ -49,7 +51,7 @@ class MultiThreadedEvaluationTest {
     DoubleProblem problem = mock(DoubleProblem.class);
     MultiThreadedEvaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(numberOfThreads, problem);
 
-    assertThat(evaluation.getNumberOfThreads()).isEqualTo(numberOfThreads) ;
+    assertThat(evaluation.numberOfThreads()).isEqualTo(numberOfThreads) ;
   }
 
   @Test
@@ -58,7 +60,7 @@ class MultiThreadedEvaluationTest {
     DoubleProblem problem = mock(DoubleProblem.class);
     MultiThreadedEvaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(numberOfThreads, problem);
 
-    assertThat(evaluation.getNumberOfThreads()).isEqualTo(Runtime.getRuntime().availableProcessors()) ;
+    assertThat(evaluation.numberOfThreads()).isEqualTo(Runtime.getRuntime().availableProcessors()) ;
   }
 
   @Test
@@ -76,7 +78,7 @@ class MultiThreadedEvaluationTest {
 
     evaluation.evaluate(new ArrayList<>());
 
-    assertThat(evaluation.getComputedEvaluations()).isZero();
+    assertThat(evaluation.computedEvaluations()).isZero();
   }
 
   @Test
@@ -86,7 +88,7 @@ class MultiThreadedEvaluationTest {
 
     evaluation.evaluate(List.of(mock(DoubleSolution.class)));
 
-    assertThat(evaluation.getComputedEvaluations()).isEqualTo(1);
+    assertThat(evaluation.computedEvaluations()).isEqualTo(1);
     verify(problem, times(1)).evaluate(Mockito.any());
   }
 
@@ -101,7 +103,16 @@ class MultiThreadedEvaluationTest {
 
     evaluation.evaluate(solutions);
 
-    assertThat(evaluation.getComputedEvaluations()).isEqualTo(numberOfSolutions);
+    assertThat(evaluation.computedEvaluations()).isEqualTo(numberOfSolutions);
     verify(problem, times(numberOfSolutions)).evaluate(Mockito.any());
+  }
+
+  @Test
+  void theProblemMethodReturnsTheProblem() {
+    DoubleProblem problem = mock(DoubleProblem.class) ;
+    var evaluation = new MultiThreadedEvaluation<>(8, problem) ;
+
+    assertSame(problem, evaluation.problem()) ;
+    assertEquals(8, evaluation.numberOfThreads()) ;
   }
 }

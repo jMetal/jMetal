@@ -14,29 +14,32 @@ import org.uma.jmetal.util.errorchecking.Check;
  * @param <S>
  */
 public class SequentialEvaluation<S extends Solution<?>> implements Evaluation<S> {
-  private int computedEvaluations ;
-  private final Problem<S> problem ;
+
+  private int computedEvaluations;
+  private final Problem<S> problem;
 
   public SequentialEvaluation(Problem<S> problem) {
     Check.notNull(problem);
-    this.problem = problem ;
-    computedEvaluations = 0 ;
+    this.problem = problem;
+    computedEvaluations = 0;
   }
+
   @Override
   public List<S> evaluate(List<S> solutionList) {
     Check.notNull(solutionList);
     solutionList.forEach(problem::evaluate);
-    computedEvaluations = solutionList.size() ;
+    computedEvaluations = solutionList.size();
 
     return solutionList;
   }
 
   @Override
-  public int getComputedEvaluations() {
+  public int computedEvaluations() {
     return computedEvaluations;
   }
 
-  public Problem<S> getProblem() {
-    return problem ;
+  @Override
+  public Problem<S> problem() {
+    return problem;
   }
 }
