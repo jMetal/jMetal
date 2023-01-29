@@ -2,6 +2,7 @@ package org.uma.jmetal.component.catalogue.common.evaluation;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -24,11 +25,11 @@ class SequentialEvaluationTest {
   }
 
   @Test
-  void TheConstructorInitializesTheNumberOfComputedEvaluations() {
+  void theConstructorInitializesTheNumberOfComputedEvaluations() {
     DoubleProblem problem = mock(DoubleProblem.class) ;
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
 
-    assertThat(evaluation.getComputedEvaluations()).isZero() ;
+    assertThat(evaluation.computedEvaluations()).isZero() ;
   }
 
   @Test
@@ -46,7 +47,7 @@ class SequentialEvaluationTest {
 
     evaluation.evaluate(new ArrayList<>()) ;
 
-    assertThat(evaluation.getComputedEvaluations()).isZero() ;
+    assertThat(evaluation.computedEvaluations()).isZero() ;
   }
 
   @Test
@@ -56,7 +57,7 @@ class SequentialEvaluationTest {
 
     evaluation.evaluate(List.of(mock(DoubleSolution.class))) ;
 
-    assertThat(evaluation.getComputedEvaluations()).isEqualTo(1) ;
+    assertThat(evaluation.computedEvaluations()).isEqualTo(1) ;
     verify(problem, times(1)).evaluate(Mockito.any()) ;
   }
 
@@ -71,7 +72,15 @@ class SequentialEvaluationTest {
 
     evaluation.evaluate(solutions) ;
 
-    assertThat(evaluation.getComputedEvaluations()).isEqualTo(numberOfSolutions) ;
+    assertThat(evaluation.computedEvaluations()).isEqualTo(numberOfSolutions) ;
     verify(problem, times(numberOfSolutions)).evaluate(Mockito.any()) ;
+  }
+
+  @Test
+  void theProblemMethodReturnsTheProblem() {
+    DoubleProblem problem = mock(DoubleProblem.class) ;
+    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
+
+    assertSame(problem, evaluation.problem()) ;
   }
 }
