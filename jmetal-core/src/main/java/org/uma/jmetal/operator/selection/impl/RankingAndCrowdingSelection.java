@@ -88,7 +88,7 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S>population) {
     List<S> currentRankedFront = ranking.getSubFront(rank) ;
 
-    currentRankedFront.sort(new CrowdingDistanceDensityEstimator<>().getComparator());
+    currentRankedFront.sort(new CrowdingDistanceDensityEstimator<>().comparator());
 
     int i = 0 ;
     while (population.size() < solutionsToSelect) {

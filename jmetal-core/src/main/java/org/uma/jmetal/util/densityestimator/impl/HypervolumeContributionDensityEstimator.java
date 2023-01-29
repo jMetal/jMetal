@@ -56,7 +56,7 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return Comparator.comparing(this::value) ;
   }
 }

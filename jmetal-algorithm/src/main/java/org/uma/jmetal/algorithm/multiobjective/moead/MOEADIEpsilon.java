@@ -238,7 +238,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         CrowdingDistanceDensityEstimator<DoubleSolution> crowdingDistance = new CrowdingDistanceDensityEstimator<>() ;
         while (firstRankSolutions.size() > populationSize) {
           crowdingDistance.compute(firstRankSolutions);
-          firstRankSolutions.sort(crowdingDistance.getComparator());
+          firstRankSolutions.sort(crowdingDistance.comparator());
           firstRankSolutions.remove(firstRankSolutions.size() - 1) ;
         }
 

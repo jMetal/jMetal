@@ -87,7 +87,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
-    comparator = new CrowdingDistanceDensityEstimator<BinarySolution>().getComparator();
+    comparator = new CrowdingDistanceDensityEstimator<BinarySolution>().comparator();
 
     evaluations = 0;
     population = new ArrayList<>();

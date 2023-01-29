@@ -91,7 +91,7 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return Comparator.comparing(this::value).reversed() ;
   }
 }

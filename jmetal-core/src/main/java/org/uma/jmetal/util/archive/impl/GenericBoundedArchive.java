@@ -17,7 +17,7 @@ public class GenericBoundedArchive<S extends Solution<?>> extends AbstractBounde
   public GenericBoundedArchive(int maxSize, DensityEstimator<S> densityEstimator) {
     super(maxSize);
     this.densityEstimator = densityEstimator ;
-    comparator = densityEstimator.getComparator() ;
+    comparator = densityEstimator.comparator() ;
   }
 
   @Override

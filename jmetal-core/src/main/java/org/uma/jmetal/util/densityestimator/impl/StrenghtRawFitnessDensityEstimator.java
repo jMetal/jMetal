@@ -79,7 +79,7 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return Comparator.comparing(this::value);
   }
 }

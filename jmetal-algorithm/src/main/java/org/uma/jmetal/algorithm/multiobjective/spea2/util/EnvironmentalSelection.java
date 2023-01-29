@@ -52,7 +52,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
     }
 
     if (aux.size() < size){
-      Comparator<S> comparator = densityEstimator.getComparator() ;
+      Comparator<S> comparator = densityEstimator.comparator() ;
       source.sort(comparator);
       int remain = size - aux.size();
       for (i = 0; i < remain; i++){

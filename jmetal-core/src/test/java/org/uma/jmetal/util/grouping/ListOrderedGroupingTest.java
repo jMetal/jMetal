@@ -20,13 +20,13 @@ class ListOrderedGroupingTest {
   @Test
   public void shouldGetGroupWithANegativeParameterValueThrowAnException() {
     assertThrows(
-        InvalidConditionException.class, () -> new ListOrderedGrouping<Integer>(4).getGroup(-1));
+        InvalidConditionException.class, () -> new ListOrderedGrouping<Integer>(4).group(-1));
   }
 
   @Test
   public void shouldGetGroupWithParameterValueHigherThanTheNumberOfGropusThrowAnException() {
     assertThrows(
-        InvalidConditionException.class, () -> new ListOrderedGrouping<Integer>(4).getGroup(4));
+        InvalidConditionException.class, () -> new ListOrderedGrouping<Integer>(4).group(4));
   }
 
   @Test
@@ -39,13 +39,13 @@ class ListOrderedGroupingTest {
 
     assertEquals(numberOfGroups, grouping.numberOfGroups());
     List<Integer> firstGroup = List.of(0, 1, 2);
-    assertEquals(firstGroup, grouping.getGroup(0));
+    assertEquals(firstGroup, grouping.group(0));
     List<Integer> secondGroup = List.of(3, 4, 5);
-    assertEquals(secondGroup, grouping.getGroup(1));
+    assertEquals(secondGroup, grouping.group(1));
     List<Integer> thirdGroup = List.of(6, 7, 8);
-    assertEquals(thirdGroup, grouping.getGroup(2));
+    assertEquals(thirdGroup, grouping.group(2));
     List<Integer> fourthGroup = List.of(9, 10, 11);
-    assertEquals(fourthGroup, grouping.getGroup(3));
+    assertEquals(fourthGroup, grouping.group(3));
   }
 
   @Test
@@ -58,13 +58,13 @@ class ListOrderedGroupingTest {
 
     assertEquals(numberOfGroups, grouping.numberOfGroups());
     List<Integer> firstGroup = List.of(11, 10, 9);
-    assertEquals(firstGroup, grouping.getGroup(0));
+    assertEquals(firstGroup, grouping.group(0));
     List<Integer> secondGroup = List.of(8, 7, 6);
-    assertEquals(secondGroup, grouping.getGroup(1));
+    assertEquals(secondGroup, grouping.group(1));
     List<Integer> thirdGroup = List.of(5, 4, 3);
-    assertEquals(thirdGroup, grouping.getGroup(2));
+    assertEquals(thirdGroup, grouping.group(2));
     List<Integer> fourthGroup = List.of(2, 1, 0);
-    assertEquals(fourthGroup, grouping.getGroup(3));
+    assertEquals(fourthGroup, grouping.group(3));
   }
 
   @Test
@@ -77,11 +77,11 @@ class ListOrderedGroupingTest {
 
     assertEquals(numberOfGroups, grouping.numberOfGroups());
     List<Integer> firstGroup = List.of(0);
-    assertEquals(firstGroup, grouping.getGroup(0));
+    assertEquals(firstGroup, grouping.group(0));
     List<Integer> secondGroup = List.of(4);
-    assertEquals(secondGroup, grouping.getGroup(1));
+    assertEquals(secondGroup, grouping.group(1));
     List<Integer> thirdGroup = List.of(3, 2, 1);
-    assertEquals(thirdGroup, grouping.getGroup(2));
+    assertEquals(thirdGroup, grouping.group(2));
   }
 
   @Test
@@ -94,12 +94,12 @@ class ListOrderedGroupingTest {
 
     assertEquals(numberOfGroups, grouping.numberOfGroups());
     List<Integer> firstGroup = List.of(6, 3);
-    assertEquals(firstGroup, grouping.getGroup(0));
+    assertEquals(firstGroup, grouping.group(0));
     List<Integer> secondGroup = List.of(0, 1);
-    assertEquals(secondGroup, grouping.getGroup(1));
+    assertEquals(secondGroup, grouping.group(1));
     List<Integer> thirdGroup = List.of(5, 4);
-    assertEquals(thirdGroup, grouping.getGroup(2));
+    assertEquals(thirdGroup, grouping.group(2));
     List<Integer> fourthGroup = List.of(8, 7, 2);
-    assertEquals(fourthGroup, grouping.getGroup(3));
+    assertEquals(fourthGroup, grouping.group(3));
   }
 }

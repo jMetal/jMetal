@@ -57,7 +57,7 @@ public class GridDensityEstimator<S extends Solution<?>> implements DensityEstim
   }
 
   @Override
-  public Comparator<S> getComparator() {
+  public Comparator<S> comparator() {
     return Comparator.comparing(this::value) ;
   }
 }

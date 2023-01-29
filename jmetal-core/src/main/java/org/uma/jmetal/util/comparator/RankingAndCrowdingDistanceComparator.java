@@ -22,7 +22,7 @@ public class RankingAndCrowdingDistanceComparator<S extends Solution<?>>
     rankComparator = Comparator.comparing(ranking::getRank);
     CrowdingDistanceDensityEstimator<S> crowdingDistanceDensityEstimator =
         new CrowdingDistanceDensityEstimator<>();
-    crowdingDistanceComparator = crowdingDistanceDensityEstimator.getComparator();
+    crowdingDistanceComparator = crowdingDistanceDensityEstimator.comparator();
   }
 
   public RankingAndCrowdingDistanceComparator() {

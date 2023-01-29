@@ -69,7 +69,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
     crowdingDistance = new CrowdingDistanceDensityEstimator<>();
 
     dominanceComparator = new DominanceWithConstraintsComparator<>();
-    crowdingDistanceComparator = crowdingDistance.getComparator();
+    crowdingDistanceComparator = crowdingDistance.comparator();
 
     speed = new double[swarmSize][problem.numberOfVariables()];
 

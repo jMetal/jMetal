@@ -71,7 +71,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
-    comparator = new CrowdingDistanceDensityEstimator<BinarySolution>().getComparator();
+    comparator = new CrowdingDistanceDensityEstimator<BinarySolution>().comparator();
   }
 
   public void setMaxPopulationSize(int maxPopulationSize) {

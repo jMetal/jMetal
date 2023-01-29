@@ -15,5 +15,5 @@ public interface DensityEstimator<S> extends Serializable {
 
   Double value(S solution);
 
-  Comparator<S> getComparator();
+  Comparator<S> comparator();
 }

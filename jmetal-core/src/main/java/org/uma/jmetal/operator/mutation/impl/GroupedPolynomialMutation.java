@@ -91,7 +91,7 @@ public class GroupedPolynomialMutation implements MutationOperator<DoubleSolutio
 
     variableGrouping.computeGroups(solution.variables());
     int groupIndex = randomGenerator.nextInt(0, variableGrouping.numberOfGroups() - 1);
-    List<Integer> variableIndex = variableGrouping.getGroup(groupIndex);
+    List<Integer> variableIndex = variableGrouping.group(groupIndex);
 
     for (int i = 0; i < variableIndex.size(); i++) {
       y = solution.variables().get(variableIndex.get(i));
