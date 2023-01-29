@@ -81,7 +81,7 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
     evaluations = 0 ;
 
     attributes.put("EVALUATIONS", evaluations);
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("COMPUTING_TIME", currentComputingTime());
     attributes.put("BEST_SOLUTIONS", archive.solutions());
 
     observable.setChanged();
@@ -92,7 +92,7 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
     evaluations += evaluatedSolutions;
 
     attributes.put("EVALUATIONS", evaluations);
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("COMPUTING_TIME", currentComputingTime());
     attributes.put("BEST_SOLUTIONS", archive.solutions());
 
     observable.setChanged();
@@ -103,10 +103,9 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
     solutions.forEach(solution -> archive.add(solution));
   }
 
-  protected List<S> getBestSolutions() {
+  protected List<S> bestSolutions() {
     return archive.solutions() ;
   }
-
   @Override
   public List<S> result() {
     return archive.solutions();
@@ -122,28 +121,25 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
     return name;
   }
 
-  public int getEvaluations() {
+  public int evaluations() {
     return evaluations;
   }
 
-  public Archive<S> getArchive() {
+  public Archive<S> archive() {
     return archive;
   }
-
 
   public Observable<Map<String, Object>> getObservable() {
     return observable;
   }
-
-  public Map<String, Object> getAttributes() {
+  public Map<String, Object> attributes() {
     return attributes;
   }
 
-  public long getTotalComputingTime() {
+  public long totalComputingTime() {
     return totalComputingTime;
   }
-
-  public long getCurrentComputingTime() {
+  public long currentComputingTime() {
     return System.currentTimeMillis() - initTime;
   }
 }
