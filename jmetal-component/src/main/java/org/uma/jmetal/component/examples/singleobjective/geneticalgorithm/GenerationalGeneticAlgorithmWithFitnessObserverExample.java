@@ -51,7 +51,7 @@ public class GenerationalGeneticAlgorithmWithFitnessObserverExample {
         .setTermination(termination)
         .build();
 
-    geneticAlgorithm.getObservable().register(new FitnessObserver(5000));
+    geneticAlgorithm.observable().register(new FitnessObserver(5000));
 
     geneticAlgorithm.run();
 

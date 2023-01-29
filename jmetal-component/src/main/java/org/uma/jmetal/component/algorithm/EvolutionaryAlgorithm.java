@@ -155,7 +155,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   }
 
   @Override
-  public Observable<Map<String, Object>> getObservable() {
+  public Observable<Map<String, Object>> observable() {
     return observable;
   }
 
@@ -174,5 +174,4 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   public Evaluation<S> evaluation() {
     return evaluation;
   }
-
 }

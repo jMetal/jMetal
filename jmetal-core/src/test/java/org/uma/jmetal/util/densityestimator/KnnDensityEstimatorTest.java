@@ -50,13 +50,13 @@ class KnnDensityEstimatorTest {
     densityEstimator.compute(solutionList);
 
     assertEquals(
-        Math.sqrt(2), densityEstimator.getValue(solution1), EPSILON);
+        Math.sqrt(2), densityEstimator.value(solution1), EPSILON);
     assertEquals(
-        Math.sqrt(2), densityEstimator.getValue(solution2), EPSILON);
+        Math.sqrt(2), densityEstimator.value(solution2), EPSILON);
     assertEquals(
-        Math.sqrt(2), densityEstimator.getValue(solution3), EPSILON);
+        Math.sqrt(2), densityEstimator.value(solution3), EPSILON);
     assertEquals(
-        Math.sqrt(2 * 2 + 2 * 2), densityEstimator.getValue(solution4), EPSILON);
+        Math.sqrt(2 * 2 + 2 * 2), densityEstimator.value(solution4), EPSILON);
   }
 
   @Test
@@ -101,7 +101,7 @@ class KnnDensityEstimatorTest {
         Arrays.asList(solution1, solution2, solution4, solution3, solution5);
 
     densityEstimator.compute(solutionList);
-    solutionList.sort(Comparator.comparing(densityEstimator::getValue).reversed());
+    solutionList.sort(Comparator.comparing(densityEstimator::value).reversed());
 
     assertEquals(solutionList.get(0), solution4);
     assertTrue((solutionList.get(1) == solution1) || (solutionList.get(1) == solution2)); ;

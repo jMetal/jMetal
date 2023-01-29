@@ -6,5 +6,5 @@ package org.uma.jmetal.util.observable;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface ObservableEntity<T> {
-  Observable<T> getObservable();
+  Observable<T> observable();
 }

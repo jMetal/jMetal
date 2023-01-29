@@ -67,7 +67,7 @@ public class DefaultObservable<D> implements Observable<D> {
   }
 
   @Override
-  public Collection<Observer<D>> getObservers() {
+  public Collection<Observer<D>> observers() {
     return observers;
   }
 }

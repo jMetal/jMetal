@@ -60,8 +60,8 @@ public class NSGAIIWithRealTimeChartExample {
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("NSGA-II", 80, 100, referenceParetoFront);
 
-    nsgaii.getObservable().register(evaluationObserver);
-    nsgaii.getObservable().register(runTimeChartObserver);
+    nsgaii.observable().register(evaluationObserver);
+    nsgaii.observable().register(runTimeChartObserver);
 
     nsgaii.run();
 

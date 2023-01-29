@@ -68,7 +68,7 @@ public class MOEADDEDefaultConfigurationExample {
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("MOEA/D-DE", 80, 1000, referenceParetoFront);
-    moead.getObservable().register(runTimeChartObserver);
+    moead.observable().register(runTimeChartObserver);
 
     moead.run();
 

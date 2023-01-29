@@ -216,7 +216,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
         new MultiComparator<>(
             Arrays.asList(
                 Comparator.comparing(ranking::getRank),
-                Comparator.comparing(densityEstimator::getValue).reversed()));
+                Comparator.comparing(densityEstimator::value).reversed()));
 
     var initialSolutionsCreation =
         (SolutionsCreation<DoubleSolution>) createInitialSolutionsParameter.getParameter((DoubleProblem) problem,

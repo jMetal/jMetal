@@ -53,7 +53,7 @@ public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
         .setTermination(termination)
         .build();
 
-    algorithm.getObservable().register(new RunTimeChartObserver<>("SMS-EMOA", 80, 100, referenceParetoFront));
+    algorithm.observable().register(new RunTimeChartObserver<>("SMS-EMOA", 80, 100, referenceParetoFront));
 
     algorithm.run();
 

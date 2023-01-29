@@ -59,8 +59,8 @@ public class MOEADConfiguredFromAParameterString {
         new RunTimeChartObserver<>(
             "MOEAD", 80, 1000,"resources/referenceFrontsCSV/" + referenceFrontFileName);
 
-    nsgaII.getObservable().register(evaluationObserver);
-    nsgaII.getObservable().register(runTimeChartObserver);
+    nsgaII.observable().register(evaluationObserver);
+    nsgaII.observable().register(runTimeChartObserver);
 
     nsgaII.run();
 

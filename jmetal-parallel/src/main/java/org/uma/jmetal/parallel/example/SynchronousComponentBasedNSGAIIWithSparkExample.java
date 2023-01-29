@@ -77,7 +77,7 @@ public class SynchronousComponentBasedNSGAIIWithSparkExample extends AbstractAlg
                     "NSGA-II",
                     80, 10, "resources/referenceFrontsCSV/ZDT2.csv");
 
-    nsgaii.getObservable().register(runTimeChartObserver);
+    nsgaii.observable().register(runTimeChartObserver);
 
     nsgaii.run();
 

@@ -61,8 +61,8 @@ public class NSGAIISteadyStateWithRealTimeChartExample {
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("NSGA-II", 80, 500, referenceParetoFront);
 
-    nsgaii.getObservable().register(evaluationObserver);
-    nsgaii.getObservable().register(runTimeChartObserver);
+    nsgaii.observable().register(evaluationObserver);
+    nsgaii.observable().register(runTimeChartObserver);
 
     nsgaii.run();
 

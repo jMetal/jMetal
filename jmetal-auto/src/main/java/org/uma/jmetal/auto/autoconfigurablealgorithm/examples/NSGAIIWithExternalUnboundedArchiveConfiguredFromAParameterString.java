@@ -54,7 +54,7 @@ public class NSGAIIWithExternalUnboundedArchiveConfiguredFromAParameterString {
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    nsgaII.getObservable().register(evaluationObserver);
+    nsgaII.observable().register(evaluationObserver);
 
     nsgaII.run();
 

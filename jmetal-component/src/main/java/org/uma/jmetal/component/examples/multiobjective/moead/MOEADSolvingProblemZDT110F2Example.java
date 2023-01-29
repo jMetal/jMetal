@@ -71,7 +71,7 @@ public class MOEADSolvingProblemZDT110F2Example {
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("MOEA/D", 80, 500, null);
 
-    moead.getObservable().register(runTimeChartObserver);
+    moead.observable().register(runTimeChartObserver);
     moead.run();
 
     List<DoubleSolution> population = moead.result();

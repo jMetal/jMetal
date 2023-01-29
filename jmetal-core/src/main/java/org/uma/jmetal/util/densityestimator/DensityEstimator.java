@@ -13,7 +13,7 @@ public interface DensityEstimator<S> extends Serializable {
 
   void compute(List<S> solutionSet);
 
-  Double getValue(S solution);
+  Double value(S solution);
 
   Comparator<S> getComparator();
 }

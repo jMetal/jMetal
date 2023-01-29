@@ -75,7 +75,7 @@ public class AsynchronousCellularGeneticAlgorithmBinaryExample {
         .setSelection(selection)
         .build();
 
-    geneticAlgorithm.getObservable().register(new FitnessObserver(1000));
+    geneticAlgorithm.observable().register(new FitnessObserver(1000));
 
     geneticAlgorithm.run();
 

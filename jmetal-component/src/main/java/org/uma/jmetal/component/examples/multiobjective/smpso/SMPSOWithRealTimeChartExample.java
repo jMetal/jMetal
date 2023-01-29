@@ -40,7 +40,7 @@ public class SMPSOWithRealTimeChartExample extends AbstractAlgorithmRunner {
         .setTermination(termination)
         .build();
 
-    smpso.getObservable().register(new RunTimeChartObserver<>("SMPSO", 80, 100, referenceParetoFront));
+    smpso.observable().register(new RunTimeChartObserver<>("SMPSO", 80, 100, referenceParetoFront));
 
     smpso.run();
 

@@ -42,7 +42,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 
     int i = 0;
     while (i < source.size()){
-      double fitness = densityEstimator.getValue(source.get(i)) ;
+      double fitness = densityEstimator.value(source.get(i)) ;
       if (fitness<1.0){
         aux.add(source.get(i));
         source.remove(i);

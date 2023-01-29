@@ -36,7 +36,7 @@ public class SMPSOSolvingProblemEbes {
         .setArchive(new CrowdingDistanceArchive<>(swarmSize, new DominanceWithConstraintsComparator<>()))
         .build();
 
-    smpso.getObservable().register(new RunTimeChartObserver<>("SMPSO", 80, 1000, null));
+    smpso.observable().register(new RunTimeChartObserver<>("SMPSO", 80, 1000, null));
 
     smpso.run();
 

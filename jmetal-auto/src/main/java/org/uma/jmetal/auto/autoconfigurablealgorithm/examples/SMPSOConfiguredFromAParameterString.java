@@ -69,7 +69,7 @@ public class SMPSOConfiguredFromAParameterString {
         new RunTimeChartObserver<>(
             "SMPSO", 80, 500, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 
-    smpso.getObservable().register(runTimeChartObserver);
+    smpso.observable().register(runTimeChartObserver);
 
     smpso.run();
 

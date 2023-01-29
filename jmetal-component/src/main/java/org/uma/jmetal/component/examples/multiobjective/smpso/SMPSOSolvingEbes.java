@@ -36,7 +36,7 @@ public class SMPSOSolvingEbes extends AbstractAlgorithmRunner {
         //.setDominanceComparator(new DominanceWithConstraintsComparator<>(new OverallConstraintViolationDegreeComparator<>()))
         .build();
 
-    smpso.getObservable().register(new RunTimeChartObserver<>("SMPSO", 80, 1000, referenceParetoFront));
+    smpso.observable().register(new RunTimeChartObserver<>("SMPSO", 80, 1000, referenceParetoFront));
 
     smpso.run();
 

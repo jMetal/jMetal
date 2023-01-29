@@ -201,7 +201,7 @@ public class ParticleSwarmOptimizationAlgorithm
   }
 
   @Override
-  public Observable<Map<String, Object>> getObservable() {
+  public Observable<Map<String, Object>> observable() {
     return observable;
   }
 

@@ -116,7 +116,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
   }
 
   @Override
-  public Double getValue(S solution) {
+  public Double value(S solution) {
     Check.notNull(solution);
 
     Double result = 0.0 ;
@@ -128,6 +128,6 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
 
   @Override
   public Comparator<S> getComparator() {
-    return Comparator.comparing(this::getValue) ;
+    return Comparator.comparing(this::value) ;
   }
 }

@@ -60,8 +60,8 @@ public class MOEADWithUnboundedArchiveConfiguredFromAParameterString {
         new RunTimeChartObserver<>(
             "MOEAD", 80, 1000,"resources/referenceFrontsCSV/" + referenceFrontFileName);
 
-    moead.getObservable().register(evaluationObserver);
-    moead.getObservable().register(runTimeChartObserver);
+    moead.observable().register(evaluationObserver);
+    moead.observable().register(runTimeChartObserver);
 
     moead.run();
 

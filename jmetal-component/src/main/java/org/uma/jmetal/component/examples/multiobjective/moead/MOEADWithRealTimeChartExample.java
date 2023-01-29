@@ -68,7 +68,7 @@ public class MOEADWithRealTimeChartExample {
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("MOEA/D", 80, 100, referenceParetoFront);
 
-    moead.getObservable().register(runTimeChartObserver);
+    moead.observable().register(runTimeChartObserver);
 
     moead.run();
 

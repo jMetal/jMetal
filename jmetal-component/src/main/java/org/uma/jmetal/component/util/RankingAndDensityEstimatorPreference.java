@@ -78,6 +78,6 @@ public class RankingAndDensityEstimatorPreference<S> {
   public Comparator<S> getComparator() {
     return new MultiComparator<>(
         List.of(
-            Comparator.comparing(getRanking()::getRank), Comparator.comparing(getDensityEstimator()::getValue).reversed()));
+            Comparator.comparing(getRanking()::getRank), Comparator.comparing(getDensityEstimator()::value).reversed()));
   }
 }

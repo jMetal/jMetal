@@ -48,7 +48,7 @@ public class GenerationalGeneticAlgorithmBinaryExample {
         .setTermination(termination)
         .build();
 
-    geneticAlgorithm.getObservable().register(new FitnessObserver(1000));
+    geneticAlgorithm.observable().register(new FitnessObserver(1000));
 
     geneticAlgorithm.run();
 

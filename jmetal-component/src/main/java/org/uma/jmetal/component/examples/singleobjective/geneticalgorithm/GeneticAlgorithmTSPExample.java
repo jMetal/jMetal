@@ -50,7 +50,7 @@ public class GeneticAlgorithmTSPExample extends AbstractAlgorithmRunner {
         .setTermination(termination)
         .build();
 
-    geneticAlgorithm.getObservable().register(new FitnessObserver(20000));
+    geneticAlgorithm.observable().register(new FitnessObserver(20000));
 
     geneticAlgorithm.run();
 
