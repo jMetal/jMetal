@@ -54,7 +54,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
-  public StringParameter referenceFrontFilename;
+  public StringParameter referenceFrontFilenameParameter;
   private PositiveIntegerValue randomGeneratorSeedParameter;
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
@@ -79,12 +79,13 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new StringParameter("problemName", args);
     randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed", args) ;
-    referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
         new PositiveIntegerValue("maximumNumberOfEvaluations", args);
 
+    referenceFrontFilenameParameter = new StringParameter("referenceFrontFileName", args);
+
     fixedParameterList.add(problemNameParameter);
-    fixedParameterList.add(referenceFrontFilename);
+    fixedParameterList.add(referenceFrontFilenameParameter);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter) ;
 
@@ -177,13 +178,13 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
         problem.numberOfVariables());
 
-    DifferentialEvolutionCrossoverParameter deCrossover =
-        new DifferentialEvolutionCrossoverParameter(args, List.of("RAND_1_BIN", "RAND_1_EXP", "RAND_2_BIN", "RAND_2_EXP"));
+    DifferentialEvolutionCrossoverParameter deCrossoverParameter =
+        new DifferentialEvolutionCrossoverParameter(args, List.of("RAND_1_BIN", "RAND_1_EXP", "RAND_2_BIN"));
 
     RealParameter crParameter = new RealParameter("CR", args, 0.0, 1.0);
     RealParameter fParameter = new RealParameter("F", args, 0.0, 1.0);
-    deCrossover.addGlobalParameter(crParameter);
-    deCrossover.addGlobalParameter(fParameter);
+    deCrossoverParameter.addGlobalParameter(crParameter);
+    deCrossoverParameter.addGlobalParameter(fParameter);
 
     offspringPopulationSizeParameter = new PositiveIntegerValue("offspringPopulationSize", args) ;
 
@@ -192,9 +193,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", offspringPopulationSizeParameter);
-
     variationParameter.addSpecificParameter("differentialEvolutionVariation", mutationParameter);
-    variationParameter.addSpecificParameter("differentialEvolutionVariation", deCrossover);
+    variationParameter.addSpecificParameter("differentialEvolutionVariation", deCrossoverParameter);
   }
 
   private void selection(String[] args) {
