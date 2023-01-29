@@ -190,7 +190,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 		return (population.size()+ranking.getSubFront(index).size() < this.getPopulationSize());
 	}
 
-	@Override public List<S> getResult() {
+	@Override public List<S> result() {
 		return getNonDominatedSolutions(getPopulation());
 	}
 
@@ -198,11 +198,11 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 		return SolutionListUtils.getNonDominatedSolutions(solutionList);
 	}
 
-	@Override public String getName() {
+	@Override public String name() {
 		return "WASFGA" ;
 	}
 
-	@Override public String getDescription() {
+	@Override public String description() {
 		return "Weighting Achievement Scalarizing Function Genetic Algorithm" ;
 	}
 }

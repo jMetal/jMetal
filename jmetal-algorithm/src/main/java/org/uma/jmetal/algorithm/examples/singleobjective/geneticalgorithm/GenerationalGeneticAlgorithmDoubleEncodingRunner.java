@@ -46,7 +46,7 @@ public class GenerationalGeneticAlgorithmDoubleEncodingRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    DoubleSolution solution = algorithm.getResult() ;
+    DoubleSolution solution = algorithm.result() ;
     List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 

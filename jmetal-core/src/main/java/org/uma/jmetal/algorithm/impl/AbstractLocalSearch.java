@@ -29,7 +29,7 @@ public abstract class AbstractLocalSearch<S> implements Algorithm<S> {
   }
 
   @Override
-  public S getResult() {
+  public S result() {
     return currentSolution;
   }
 

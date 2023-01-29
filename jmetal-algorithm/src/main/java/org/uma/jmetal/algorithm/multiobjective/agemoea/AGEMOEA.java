@@ -106,7 +106,7 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return getNonDominatedSolutions(getPopulation()) ;
   }
 
@@ -114,11 +114,11 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     return SolutionListUtils.getNonDominatedSolutions(solutionList) ;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "AGE-MOEA" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Adaptive Geometry Estimation based MOEA" ;
   }
 

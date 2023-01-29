@@ -114,12 +114,12 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S> {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "MOMBI";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Many-Objective Metaheuristic Based on the R2 Indicator";
   }
 }

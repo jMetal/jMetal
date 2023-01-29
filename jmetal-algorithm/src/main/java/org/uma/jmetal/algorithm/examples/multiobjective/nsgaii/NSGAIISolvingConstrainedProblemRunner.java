@@ -66,7 +66,7 @@ public class NSGAIISolvingConstrainedProblemRunner extends AbstractAlgorithmRunn
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult().stream().filter(
+    List<DoubleSolution> population = algorithm.result().stream().filter(
         ConstraintHandling::isFeasible).collect(
         Collectors.toList());
 

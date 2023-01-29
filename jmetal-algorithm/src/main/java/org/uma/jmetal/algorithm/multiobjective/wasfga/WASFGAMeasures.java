@@ -90,7 +90,7 @@ public class WASFGAMeasures<S extends Solution<?>> extends WASFGA<S> implements 
 	@Override
 	protected void updateProgress() {
 		this.iterations.increment();
-		solutionListMeasure.push(getResult());
+		solutionListMeasure.push(this.result());
 	}
 	
 	@Override
@@ -121,12 +121,12 @@ public class WASFGAMeasures<S extends Solution<?>> extends WASFGA<S> implements 
 	}
 	
 	@Override
-	public String getName() {
+	public String name() {
 		return "WASFGA";
 	}
 	
 	@Override
-	public String getDescription() {
+	public String description() {
 		return "Weighting Achievement Scalarizing Function Genetic Algorithm. Version using Measures";
 	}
 	

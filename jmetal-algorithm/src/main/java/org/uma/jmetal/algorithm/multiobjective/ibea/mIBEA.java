@@ -95,12 +95,12 @@ public class mIBEA<S extends Solution<?>> extends IBEA<S> {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "mIBEA";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Modificated Indicator based Evolutionary Algorithm";
   }
 }

@@ -51,7 +51,7 @@ class AutoNSGAIIIT {
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.getResult() ;
+    List<DoubleSolution> population  = nsgaII.result() ;
 
     String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
@@ -106,7 +106,7 @@ class AutoNSGAIIIT {
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.getResult() ;
+    List<DoubleSolution> population  = nsgaII.result() ;
 
     String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
@@ -165,7 +165,7 @@ class AutoNSGAIIIT {
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.getResult() ;
+    List<DoubleSolution> population  = nsgaII.result() ;
 
     String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
@@ -222,7 +222,7 @@ class AutoNSGAIIIT {
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.getResult() ;
+    List<DoubleSolution> population  = nsgaII.result() ;
 
     String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 

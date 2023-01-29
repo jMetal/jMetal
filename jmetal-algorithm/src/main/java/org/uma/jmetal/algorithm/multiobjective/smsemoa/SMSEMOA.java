@@ -115,15 +115,15 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     return resultPopulation ;
   }
 
-  @Override public List<S> getResult() {
+  @Override public List<S> result() {
     return getPopulation();
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "SMSEMOA" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "S metric selection EMOA" ;
   }
 }

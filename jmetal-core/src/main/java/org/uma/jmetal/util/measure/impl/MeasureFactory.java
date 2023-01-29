@@ -55,13 +55,13 @@ public class MeasureFactory {
 		return new PullMeasure<Value>() {
 
 			@Override
-			public String getName() {
-				return push.getName();
+			public String name() {
+				return push.name();
 			}
 
 			@Override
-			public String getDescription() {
-				return push.getDescription();
+			public String description() {
+				return push.description();
 			}
 
 			@SuppressWarnings("unchecked")
@@ -102,8 +102,8 @@ public class MeasureFactory {
 	 */
 	public <Value> PushMeasure<Value> createPushFromPull(
 			PullMeasure<Value> pull, final long period) {
-		SimplePushMeasure<Value> push = new SimplePushMeasure<>(pull.getName(),
-				pull.getDescription());
+		SimplePushMeasure<Value> push = new SimplePushMeasure<>(pull.name(),
+				pull.description());
 		final WeakReference<PullMeasure<Value>> weakPull = new WeakReference<PullMeasure<Value>>(
 				pull);
 		final WeakReference<SimplePushMeasure<Value>> weakPush = new WeakReference<SimplePushMeasure<Value>>(

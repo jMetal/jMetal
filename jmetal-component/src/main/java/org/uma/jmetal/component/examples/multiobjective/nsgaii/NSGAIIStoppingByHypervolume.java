@@ -64,9 +64,9 @@ public class NSGAIIStoppingByHypervolume  {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = nsgaii.getResult();
-    JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations() + "\n");
+    List<DoubleSolution> population = nsgaii.result();
+    JMetalLogger.logger.info("Total execution time : " + nsgaii.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.numberOfEvaluations() + "\n");
     JMetalLogger.logger.info("Successful termination: " + !termination.evaluationsLimitReached()) ;
     JMetalLogger.logger.info("Last quality indicator value: " + termination.getComputedIndicatorValue()) ;
     JMetalLogger.logger.info("Reference front indicator value: " + termination.getReferenceFrontIndicatorValue()) ;

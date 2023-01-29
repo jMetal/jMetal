@@ -263,7 +263,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   }
 
   @Override
-  public DoubleSolution getResult() {
+  public DoubleSolution result() {
     return bestFoundParticle;
   }
 
@@ -290,11 +290,11 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
     return localBest ;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "SPSO11" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Standard PSO 2011" ;
   }
 }

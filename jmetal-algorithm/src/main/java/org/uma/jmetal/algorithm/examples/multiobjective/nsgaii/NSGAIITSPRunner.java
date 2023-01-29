@@ -57,7 +57,7 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<PermutationSolution<Integer>> population = algorithm.getResult();
+    List<PermutationSolution<Integer>> population = algorithm.result();
     long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionListOutput(population)

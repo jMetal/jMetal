@@ -114,7 +114,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	}
 
 	@Override
-	public List<S> getResult() {
+	public List<S> result() {
 		this.setPopulation(evaluator.evaluate(this.getPopulation(), getProblem()));
 
 		return this.getPopulation();

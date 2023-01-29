@@ -59,7 +59,7 @@ public abstract class Hypervolume<S> extends GenericIndicator<S> {
   public abstract void setOffset(double offset);
 
   @Override
-  public String getName() {
+  public String name() {
     return "HV";
   }
 

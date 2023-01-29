@@ -119,11 +119,11 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     return evaluations;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "NSGAIIM" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Nondominated Sorting Genetic Algorithm version II. Version using measures" ;
   }
 

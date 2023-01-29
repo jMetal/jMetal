@@ -64,7 +64,7 @@ class MOEADBuilderIT {
 
     moead.run();
 
-    List<DoubleSolution> population = moead.getResult();
+    List<DoubleSolution> population = moead.result();
 
     String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 
@@ -122,7 +122,7 @@ class MOEADBuilderIT {
 
     moead.run();
 
-    List<DoubleSolution> population = moead.getResult();
+    List<DoubleSolution> population = moead.result();
 
     String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 

@@ -110,7 +110,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
     return swarm ;
   }
 
-  @Override public List<DoubleSolution> getResult() {
+  @Override public List<DoubleSolution> result() {
     //return this.leaderArchive.getSolutionList();
       return this.epsilonArchive.solutions();
   }
@@ -241,11 +241,11 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
     }
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "OMOPSO" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Optimized MOPSO" ;
   }
 

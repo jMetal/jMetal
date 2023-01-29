@@ -83,12 +83,12 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "ESPEA";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Electrostatic Potential Energy Evolutionary Algorithms";
   }
 
@@ -124,7 +124,7 @@ public class ESPEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return archive.solutions();
   }
 

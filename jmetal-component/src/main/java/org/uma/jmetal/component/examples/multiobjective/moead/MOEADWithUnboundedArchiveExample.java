@@ -68,8 +68,8 @@ public class MOEADWithUnboundedArchiveExample {
     moead.run();
 
     List<DoubleSolution> population = externalArchive.solutions();
-    JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
+    JMetalLogger.logger.info("Total execution time : " + moead.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + moead.numberOfEvaluations());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

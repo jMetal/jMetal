@@ -45,7 +45,7 @@ public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
 
     new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<BinarySolution> population = algorithm.getResult();
+    List<BinarySolution> population = algorithm.result();
 
     printFinalSolutionSet(population);
   }

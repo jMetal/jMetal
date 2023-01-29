@@ -283,12 +283,12 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "Micro-FAME";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Micro-FAME last version";
   }
 
@@ -307,7 +307,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return getNonDominatedSolutions(archive_hv.solutions());
   }
 

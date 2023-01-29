@@ -83,11 +83,11 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
     }
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "MOEAD" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Multi-Objective Evolutionary Algorithm based on Decomposition" ;
   }
 }

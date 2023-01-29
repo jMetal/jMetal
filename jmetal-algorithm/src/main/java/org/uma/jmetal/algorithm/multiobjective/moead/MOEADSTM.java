@@ -124,7 +124,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   }
 
   @Override
-  public List<DoubleSolution> getResult() {
+  public List<DoubleSolution> result() {
     return population;
   }
 
@@ -391,12 +391,12 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "MOEADSTM";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Multi-Objective Evolutionary Algorithm based on Decomposition. Version with Stable Matching Model";
   }
 }

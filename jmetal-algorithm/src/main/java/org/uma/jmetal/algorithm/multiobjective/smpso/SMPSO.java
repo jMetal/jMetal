@@ -243,7 +243,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override
-  public List<DoubleSolution> getResult() {
+  public List<DoubleSolution> result() {
     return leaders.solutions();
   }
 
@@ -298,12 +298,12 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "SMPSO";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Speed constrained Multiobjective PSO";
   }
 

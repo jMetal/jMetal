@@ -44,7 +44,7 @@ public class NSGAIIIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.result() ;
 
     /*
     Rationale: the default problem is Kursawe, and usually NSGA-II, configured with standard
@@ -73,7 +73,7 @@ public class NSGAIIIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
@@ -109,7 +109,7 @@ public class NSGAIIIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.result() ;
 
     String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
 

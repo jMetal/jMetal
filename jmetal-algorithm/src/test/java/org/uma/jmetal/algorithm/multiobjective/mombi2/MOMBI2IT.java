@@ -49,7 +49,7 @@ public class MOMBI2IT {
         "../resources/weightVectorFiles/mombi2/weight_03D_12.sld");
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.result() ;
 
     /*
     Rationale: the default problem is DTLZ1, and MOMBI2, configured with standard
@@ -84,7 +84,7 @@ public class MOMBI2IT {
         "../resources/weightVectorFiles/mombi2/weight_03D_12.sld");
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.result() ;
 
     /*
     Rationale: the default problem is DTLZ1, and MOMBI2, configured with standard

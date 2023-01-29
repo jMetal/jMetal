@@ -290,12 +290,12 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "FAME";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "FAME ultima version";
   }
 
@@ -316,7 +316,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return SolutionListUtils.getNonDominatedSolutions(archiveSSD.solutions());
   }
 

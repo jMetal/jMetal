@@ -19,7 +19,7 @@ import org.uma.jmetal.solution.Solution;
 public class SparkEvaluation<S extends Solution<?>> implements Evaluation<S>, Serializable {
   private int numberOfComputedEvaluations ;
   private Problem<S> problem ;
-  static private JavaSparkContext sparkContext ;
+  private JavaSparkContext sparkContext ;
 
   public SparkEvaluation(JavaSparkContext sparkContext, Problem<S> problem) {
     this.numberOfComputedEvaluations = 0 ;
@@ -35,7 +35,13 @@ public class SparkEvaluation<S extends Solution<?>> implements Evaluation<S>, Se
     return evaluatedSolutions.collect() ;
   }
 
-  public int getComputedEvaluations() {
-    return numberOfComputedEvaluations ;
+  @Override
+  public int computedEvaluations() {
+    return numberOfComputedEvaluations;
+  }
+
+  @Override
+  public Problem<S> problem() {
+    return problem;
   }
 }

@@ -99,7 +99,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("COMPUTING_TIME", currentComputingTime());
   }
 
   protected void updateProgress() {
@@ -107,28 +107,28 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("COMPUTING_TIME", currentComputingTime());
 
     observable.setChanged();
     observable.notifyObservers(attributes);
 
-    totalComputingTime = getCurrentComputingTime();
+    totalComputingTime = currentComputingTime();
   }
 
-  public long getCurrentComputingTime() {
+  public long currentComputingTime() {
     return System.currentTimeMillis() - initTime;
   }
 
-  public int getNumberOfEvaluations() {
+  public int numberOfEvaluations() {
     return evaluations;
   }
 
-  public long getTotalComputingTime() {
+  public long totalComputingTime() {
     return totalComputingTime;
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return population;
   }
 
@@ -137,20 +137,20 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return name;
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Evolutionary algorithm";
   }
 
-  public Map<String, Object> getAttributes() {
+  public Map<String, Object> attributes() {
     return attributes ;
   }
 
-  public List<S> getPopulation() {
+  public List<S> population() {
     return population ;
   }
 
@@ -159,19 +159,19 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     return observable;
   }
 
-  public void setTermination(Termination termination) {
+  public void termination(Termination termination) {
     this.termination = termination ;
   }
 
-  public Termination getTermination() {
+  public Termination termination() {
     return termination ;
   }
 
-  public void setEvaluation(Evaluation<S> evaluation) {
+  public void evaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation ;
   }
 
-  public Evaluation<S> getEvaluation() {
+  public Evaluation<S> evaluation() {
     return evaluation;
   }
 

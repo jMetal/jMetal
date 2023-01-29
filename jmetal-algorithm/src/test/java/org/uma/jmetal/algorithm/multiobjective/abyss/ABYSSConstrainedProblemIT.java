@@ -80,7 +80,7 @@ public class ABYSSConstrainedProblemIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     /*
     Rationale: the default problem is Tanaka, and AbYSS, configured with standard settings, should
@@ -111,7 +111,7 @@ public class ABYSSConstrainedProblemIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     QualityIndicator hypervolume =
         new PISAHypervolume(

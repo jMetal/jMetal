@@ -138,7 +138,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return archive.solutions();
   }
 
@@ -173,12 +173,12 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "MOCell";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Multi-Objective Cellular evolutionary algorithm";
   }
 }

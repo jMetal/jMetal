@@ -108,17 +108,17 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return archive.solutions();
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return name;
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return name;
   }
 

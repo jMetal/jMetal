@@ -205,18 +205,18 @@ public class CoralReefsOptimization<S>
 	}
 
 	@Override
-	public List<S> getResult() {
+	public List<S> result() {
 		Collections.sort(getPopulation(), comparator) ;
 		return getPopulation();
 	}
 
 	@Override
-	public String getName() {
+	public String name() {
 		return "CRO";
 	}
 
 	@Override
-	public String getDescription() {
+	public String description() {
 		return "Coral Reefs Optimizatoin";
 	}
 

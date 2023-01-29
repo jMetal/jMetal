@@ -115,13 +115,13 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 				wrapper = new PushMeasure<Value>() {
 
 					@Override
-					public String getName() {
-						return wrapped.getName();
+					public String name() {
+						return wrapped.name();
 					}
 
 					@Override
-					public String getDescription() {
-						return wrapped.getDescription();
+					public String description() {
+						return wrapped.description();
 					}
 
 					@Override

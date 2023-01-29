@@ -50,7 +50,7 @@ public abstract class AbstractScatterSearch<S, R>  implements Algorithm<R>{
 
   public abstract List<S> solutionCombination(List<List<S>> population);
 
-  @Override public abstract R getResult();
+  @Override public abstract R result();
 
   @Override public void run() {
     initializationPhase() ;

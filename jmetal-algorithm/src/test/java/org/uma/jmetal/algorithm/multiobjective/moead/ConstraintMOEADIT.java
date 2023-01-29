@@ -47,7 +47,7 @@ public class ConstraintMOEADIT {
         .build();
 
     algorithm.run() ;
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     assertTrue(population.size() == 100);
   }
@@ -83,7 +83,7 @@ public class ConstraintMOEADIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
         new PISAHypervolume<>("../resources/referenceFrontsCSV/Tanaka.csv");

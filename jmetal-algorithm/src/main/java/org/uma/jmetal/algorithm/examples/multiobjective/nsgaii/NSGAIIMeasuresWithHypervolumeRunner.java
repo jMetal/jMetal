@@ -76,7 +76,7 @@ public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner
 
     algorithmThread.join();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
     long computingTime = currentComputingTime.get();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

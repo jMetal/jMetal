@@ -60,12 +60,12 @@ public class BasicLocalSearch<S extends Solution<?>> extends AbstractLocalSearch
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "Basic local search";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Basic local search";
   }
 }

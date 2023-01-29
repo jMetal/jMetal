@@ -39,7 +39,7 @@ public abstract class ArtificialDecisionMaker<S, R> implements Algorithm<R> {
     while (!isStoppingConditionReached()) {
       this.algorithm.updatePointOfInterest(interestingPoint);
       this.algorithm.run();
-      front=this.algorithm.getResult();
+      front=this.algorithm.result();
       updateParetoOptimal(front,paretoOptimalSolutions);
       indexOfRelevantObjectiveFunctions=relevantObjectiveFunctions(front);
       interestingPoint = calculateReferencePoints(indexOfRelevantObjectiveFunctions,front,paretoOptimalSolutions);
@@ -48,17 +48,17 @@ public abstract class ArtificialDecisionMaker<S, R> implements Algorithm<R> {
   }
 
   @Override
-  public R getResult() {
-    return this.algorithm.getResult();
+  public R result() {
+    return this.algorithm.result();
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "ArtificialDecisionMaker";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "ArtificialDecisionMaker";
   }
 }

@@ -67,7 +67,7 @@ public class NSGAIIWithMixedSolutionEncodingExample {
 
     nsgaii.run();
 
-    new SolutionListOutput(nsgaii.getResult())
+    new SolutionListOutput(nsgaii.result())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
         .print();

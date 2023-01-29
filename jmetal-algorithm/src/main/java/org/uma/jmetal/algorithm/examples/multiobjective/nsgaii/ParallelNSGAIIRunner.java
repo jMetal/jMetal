@@ -68,7 +68,7 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
 
     builder.getSolutionListEvaluator().shutdown();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
     long computingTime = algorithmRunner.getComputingTime();
 
     evaluator.shutdown();

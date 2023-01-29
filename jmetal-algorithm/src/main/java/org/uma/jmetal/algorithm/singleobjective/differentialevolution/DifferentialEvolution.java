@@ -122,17 +122,17 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
   /**
    * Returns the best individual
    */
-  @Override public DoubleSolution getResult() {
+  @Override public DoubleSolution result() {
     getPopulation().sort(comparator);
 
     return getPopulation().get(0);
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "DE" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Differential Evolution Algorithm" ;
   }
 

@@ -63,7 +63,7 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
 
     builder.getEvaluator().shutdown();
 
-    BinarySolution solution = algorithm.getResult();
+    BinarySolution solution = algorithm.result();
     List<BinarySolution> population = new ArrayList<>(1);
     population.add(solution);
 

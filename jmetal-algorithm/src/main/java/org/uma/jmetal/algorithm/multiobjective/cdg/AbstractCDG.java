@@ -962,7 +962,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return population;
   }
 }

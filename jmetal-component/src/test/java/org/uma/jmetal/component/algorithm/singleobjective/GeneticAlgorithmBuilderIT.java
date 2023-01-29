@@ -44,7 +44,7 @@ class GeneticAlgorithmBuilderIT {
     geneticAlgorithm.run();
 
 
-    BinarySolution solution = geneticAlgorithm.getResult().get(0) ;
+    BinarySolution solution = geneticAlgorithm.result().get(0) ;
     assertEquals(number_of_bits, -1 * (int)solution.objectives()[0]) ;
   }
 
@@ -78,7 +78,7 @@ class GeneticAlgorithmBuilderIT {
     geneticAlgorithm.run();
 
 
-    BinarySolution solution = geneticAlgorithm.getResult().get(0) ;
+    BinarySolution solution = geneticAlgorithm.result().get(0) ;
     assertEquals(number_of_bits, -1 * (int)solution.objectives()[0]) ;
   }
 }

@@ -65,9 +65,9 @@ public class MOEADWithUnboundedArchiveConfiguredFromAParameterString {
 
     moead.run();
 
-    JMetalLogger.logger.info("Total computing time: " + moead.getTotalComputingTime()); ;
+    JMetalLogger.logger.info("Total computing time: " + moead.totalComputingTime()); ;
 
-    new SolutionListOutput(moead.getResult())
+    new SolutionListOutput(moead.result())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
         .print();

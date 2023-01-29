@@ -41,7 +41,7 @@ public class LocalSearchContinuousProblemRunner {
     localSearch.run();
     long endTime = System.currentTimeMillis() ;
 
-    DoubleSolution foundSolution = localSearch.getResult() ;
+    DoubleSolution foundSolution = localSearch.result() ;
 
     String fitnessMessage = "Fitness: " + foundSolution.objectives()[0] ;
     JMetalLogger.logger.info(fitnessMessage) ;

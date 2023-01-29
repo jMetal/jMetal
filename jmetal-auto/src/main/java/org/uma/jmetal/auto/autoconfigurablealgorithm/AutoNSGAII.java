@@ -277,7 +277,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
       }
 
       @Override
-      public List<DoubleSolution> getResult() {
+      public List<DoubleSolution> result() {
         return archive.solutions() ;
       }
     }

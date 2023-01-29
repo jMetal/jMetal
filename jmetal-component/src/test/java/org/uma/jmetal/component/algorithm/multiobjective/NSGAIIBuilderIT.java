@@ -57,7 +57,7 @@ class NSGAIIBuilderIT {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = nsgaii.getResult();
+    List<DoubleSolution> population = nsgaii.result();
 
     double[][] referenceFront = new double[][]{{0.0, 1.0}, {1.0, 0.0}} ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
@@ -109,7 +109,7 @@ class NSGAIIBuilderIT {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = nsgaii.getResult();
+    List<DoubleSolution> population = nsgaii.result();
 
     double[][] referenceFront = new double[][]{{0.0, 1.0}, {1.0, 0.0}} ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);

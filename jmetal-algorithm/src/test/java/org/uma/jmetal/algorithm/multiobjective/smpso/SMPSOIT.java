@@ -31,7 +31,7 @@ public class SMPSOIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     /*
     Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
@@ -47,7 +47,7 @@ public class SMPSOIT {
     algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<>(100)).build();
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
@@ -69,7 +69,7 @@ public class SMPSOIT {
     algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build();
 
     algorithm.run();
-    List<DoubleSolution> population = algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.result() ;
 
     String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
 

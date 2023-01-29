@@ -31,7 +31,7 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
 
   public ExperimentAlgorithm(Algorithm<Result> algorithm, ExperimentProblem<S> problem, int runId) {
 
-    this(algorithm, algorithm.getName(), problem, runId);
+    this(algorithm, algorithm.name(), problem, runId);
   }
 
   public void runAlgorithm(Experiment<?, ?> experimentData) {
@@ -64,7 +64,7 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
 
     try {
       algorithm.run();
-      Result population = algorithm.getResult();
+      Result population = algorithm.result();
 
       new SolutionListOutput(population)
           .setVarFileOutputContext(new DefaultFileOutputContext(varFile, ","))

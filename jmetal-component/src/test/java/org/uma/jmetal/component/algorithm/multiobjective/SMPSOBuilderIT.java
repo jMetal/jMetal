@@ -48,13 +48,13 @@ class SMPSOBuilderIT {
 
     double[][] normalizedFront =
         NormalizeUtils.normalize(
-            SolutionListUtils.getMatrixWithObjectiveValues(smpso.getResult()),
+            SolutionListUtils.getMatrixWithObjectiveValues(smpso.result()),
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
     double hv = hypervolume.compute(normalizedFront);
 
-    assertThat(smpso.getResult()).hasSizeGreaterThan(95);
+    assertThat(smpso.result()).hasSizeGreaterThan(95);
     assertThat(hv).isGreaterThan(0.65);
   }
 

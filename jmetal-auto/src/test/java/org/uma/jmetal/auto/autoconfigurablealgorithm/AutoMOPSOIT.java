@@ -62,7 +62,7 @@ class AutoMOPSOIT {
 
     smpso.run();
 
-    List<DoubleSolution> population  = smpso.getResult() ;
+    List<DoubleSolution> population  = smpso.result() ;
 
     String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
 

@@ -40,7 +40,7 @@ public class RandomSearchSingleObjectiveBinaryEncodingExample extends AbstractAl
 
     algorithm.run();
 
-    List<BinarySolution> population = algorithm.getResult();
+    List<BinarySolution> population = algorithm.result();
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 

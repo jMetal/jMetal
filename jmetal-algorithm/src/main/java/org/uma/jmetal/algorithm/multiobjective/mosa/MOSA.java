@@ -132,17 +132,17 @@ public class MOSA<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return archive.solutions();
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "MOSA";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Multi-objective Simulated Annealing";
   }
 }

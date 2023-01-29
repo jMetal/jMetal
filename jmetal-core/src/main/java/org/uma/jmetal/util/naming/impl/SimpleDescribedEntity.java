@@ -50,7 +50,7 @@ public class SimpleDescribedEntity implements DescribedEntity {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return name;
   }
 
@@ -60,12 +60,12 @@ public class SimpleDescribedEntity implements DescribedEntity {
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return description;
   }
 
   @Override
   public String toString() {
-    return getName();
+    return name();
   }
 }

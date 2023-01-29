@@ -575,7 +575,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "PISA implementation of the hypervolume quality indicator";
   }
 

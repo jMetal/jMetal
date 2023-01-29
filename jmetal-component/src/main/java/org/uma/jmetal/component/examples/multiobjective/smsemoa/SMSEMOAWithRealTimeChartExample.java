@@ -57,9 +57,9 @@ public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + algorithm.getNumberOfEvaluations());
+    List<DoubleSolution> population = algorithm.result();
+    JMetalLogger.logger.info("Total execution time : " + algorithm.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + algorithm.numberOfEvaluations());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

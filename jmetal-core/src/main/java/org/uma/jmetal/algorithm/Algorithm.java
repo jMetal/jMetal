@@ -9,7 +9,7 @@ import org.uma.jmetal.util.naming.DescribedEntity;
  * @version 1.0
  * @param <Result> Result
  */
-public interface Algorithm<Result> extends Runnable, Serializable, DescribedEntity {
+public interface Algorithm<R> extends Runnable, Serializable, DescribedEntity {
   void run() ;
-  Result getResult() ;
+  R result() ;
 }

@@ -72,9 +72,9 @@ public class MOEADDEDefaultConfigurationExample {
 
     moead.run();
 
-    List<DoubleSolution> population = moead.getResult();
-    JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
+    List<DoubleSolution> population = moead.result();
+    JMetalLogger.logger.info("Total execution time : " + moead.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + moead.numberOfEvaluations());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

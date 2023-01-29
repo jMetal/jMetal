@@ -75,7 +75,7 @@ public class SMPSOWithUnboundedArchiveConfiguredFromAParameterString {
 
     JMetalLogger.logger.info("Total computing time: " + smpso.getTotalComputingTime()); ;
 
-    new SolutionListOutput(smpso.getResult())
+    new SolutionListOutput(smpso.result())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
         .print();

@@ -199,18 +199,18 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
   }
 
   @Override
-  public List<DoubleSolution> getResult() {
+  public List<DoubleSolution> result() {
     return archive ;
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "MOEA/D IEpsilon";
   }
 
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "MOEA/D with improved epsilon constraint handling method";
   }
 

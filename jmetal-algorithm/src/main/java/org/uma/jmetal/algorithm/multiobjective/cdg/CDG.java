@@ -141,11 +141,11 @@ public class CDG extends AbstractCDG<DoubleSolution> {
     }
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "CDG" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
 	return "A Constrained Decomposition Approach with Grids for Evolutionary Multiobjective Optimization";
   }
 }
