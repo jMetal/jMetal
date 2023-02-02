@@ -35,7 +35,13 @@ public class SparkEvaluation<S extends Solution<?>> implements Evaluation<S>, Se
     return evaluatedSolutions.collect() ;
   }
 
-  public int getComputedEvaluations() {
+  @Override
+  public int computedEvaluations() {
     return numberOfComputedEvaluations ;
+  }
+
+  @Override
+  public Problem<S> problem() {
+    return problem;
   }
 }

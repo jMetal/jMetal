@@ -32,7 +32,7 @@
         <connection>scm:git://git@github.com:jMetal/jMetal.git</connection>
         <developerConnection>scm:git:https://github.com/jMetal/jMetal.git</developerConnection>
         <url>https://github.com/jMetal/jMetal.git</url>
-        <tag>jmetal-5.11</tag>
+        <tag>jmetal-6</tag>
     </scm>
 
     <distributionManagement>
@@ -260,11 +260,6 @@
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-lab</artifactId>
                 <version>6.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.uma.jmetal</groupId>
-                <artifactId>jmetal-experimental</artifactId>
-                <version>6.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
