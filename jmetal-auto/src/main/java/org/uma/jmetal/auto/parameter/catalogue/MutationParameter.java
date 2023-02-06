@@ -68,7 +68,7 @@ public class MutationParameter extends CategoricalParameter {
         "mutationProbabilityFactor").getValue() / numberOfBitsInASolution;
 
     if ("bitFlip".equals(getValue())) {
-      result = new BitFlipMutation(mutationProbability);
+      result = new BitFlipMutation<>(mutationProbability);
     } else {
       throw new JMetalException("Mutation operator does not exist: " + getName());
     }

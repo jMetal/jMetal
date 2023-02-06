@@ -57,13 +57,13 @@ public class CrossoverParameter extends CategoricalParameter {
     CrossoverOperator<BinarySolution> result;
     switch (getValue()) {
       case "HUX":
-        result = new HUXCrossover(crossoverProbability);
+        result = new HUXCrossover<>(crossoverProbability);
         break;
       case "uniform":
-        result = new UniformCrossover(crossoverProbability);
+        result = new UniformCrossover<>(crossoverProbability);
         break;
       case "singlePoint":
-        result = new SinglePointCrossover(crossoverProbability);
+        result = new SinglePointCrossover<>(crossoverProbability);
         break;
       default:
         throw new JMetalException("Crossover operator does not exist: " + getName());
