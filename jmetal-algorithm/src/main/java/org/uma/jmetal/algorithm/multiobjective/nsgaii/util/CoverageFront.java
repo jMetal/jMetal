@@ -54,7 +54,7 @@ public class CoverageFront<S extends Solution<?>> {
 
   public void updateFront(double[][] front) {
     try {
-      this.indicator.setReferenceFront(front);
+      this.indicator.referenceFront(front);
     } catch (Exception ex) {
       ex.printStackTrace();
     }

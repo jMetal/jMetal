@@ -15,13 +15,13 @@ public class PISAHypervolumeTest {
   public void shouldConstructorWithReferencePointCreateAValidInstance() {
     PISAHypervolume hypervolume = new PISAHypervolume(new double[] {1.0, 1.0});
 
-    double[][] referenceFront = hypervolume.getReferenceFront();
+    double[][] referenceFront = hypervolume.referenceFront();
     assertEquals(2, referenceFront.length);
     assertEquals(2, referenceFront[0].length);
-    assertEquals(1.0, hypervolume.getReferenceFront()[0][0], EPSILON);
-    assertEquals(0.0, hypervolume.getReferenceFront()[0][1], EPSILON);
-    assertEquals(0.0, hypervolume.getReferenceFront()[1][0], EPSILON);
-    assertEquals(1.0, hypervolume.getReferenceFront()[1][1], EPSILON);
+    assertEquals(1.0, hypervolume.referenceFront()[0][0], EPSILON);
+    assertEquals(0.0, hypervolume.referenceFront()[0][1], EPSILON);
+    assertEquals(0.0, hypervolume.referenceFront()[1][0], EPSILON);
+    assertEquals(1.0, hypervolume.referenceFront()[1][1], EPSILON);
   }
 
   /**

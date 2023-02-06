@@ -66,7 +66,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
           double[][] referenceFront = VectorUtils.readVectors(referenceFrontName, ",");
           double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
 
-          indicator.setReferenceFront(normalizedReferenceFront);
+          indicator.referenceFront(normalizedReferenceFront);
 
 
           //Front referenceFront = new ArrayFront(referenceFrontName, ",");

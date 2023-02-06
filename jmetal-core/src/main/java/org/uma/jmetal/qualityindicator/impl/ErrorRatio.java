@@ -97,7 +97,7 @@ public class ErrorRatio extends QualityIndicator {
   }
 
   @Override
-  public void setReferenceFront(double[][] referenceFront) {
+  public void referenceFront(double[][] referenceFront) {
     this.referenceFront = referenceFront;
   }
 

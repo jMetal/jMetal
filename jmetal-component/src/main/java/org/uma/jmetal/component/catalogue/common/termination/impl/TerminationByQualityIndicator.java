@@ -43,7 +43,7 @@ public class TerminationByQualityIndicator implements Termination {
     evaluationsLimitReached = false;
 
     double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
-    qualityIndicator.setReferenceFront(normalizedReferenceFront);
+    qualityIndicator.referenceFront(normalizedReferenceFront);
     referenceFrontIndicatorValue = qualityIndicator.compute(normalizedReferenceFront);
   }
 

@@ -21,7 +21,7 @@ public abstract class QualityIndicator {
 
   public abstract double compute(double[][] front) ;
 
-  public void setReferenceFront(double[][] referenceFront) {
+  public void referenceFront(double[][] referenceFront) {
     this.referenceFront = referenceFront;
   }
 
@@ -30,7 +30,7 @@ public abstract class QualityIndicator {
    */
   public abstract boolean isTheLowerTheIndicatorValueTheBetter();
 
-  public double[][] getReferenceFront() {
+  public double[][] referenceFront() {
     return referenceFront;
   }
 
