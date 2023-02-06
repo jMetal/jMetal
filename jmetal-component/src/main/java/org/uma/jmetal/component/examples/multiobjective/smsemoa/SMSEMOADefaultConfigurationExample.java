@@ -54,7 +54,7 @@ public class SMSEMOADefaultConfigurationExample extends AbstractAlgorithmRunner 
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getNumberOfEvaluations());
 

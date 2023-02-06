@@ -178,7 +178,7 @@ public class ParticleSwarmOptimizationAlgorithm
   }
 
   @Override
-  public List<DoubleSolution> getResult() {
+  public List<DoubleSolution> result() {
     return globalBest.solutions();
   }
 
@@ -187,12 +187,12 @@ public class ParticleSwarmOptimizationAlgorithm
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return name;
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Particle Swarm Optimization";
   }
 

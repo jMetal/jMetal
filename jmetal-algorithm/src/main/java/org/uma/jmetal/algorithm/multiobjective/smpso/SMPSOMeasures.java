@@ -88,7 +88,7 @@ public class SMPSOMeasures extends SMPSO implements Measurable {
     ;
     updateLeadersDensityEstimator();
 
-    solutionListMeasure.push(super.getResult());
+    solutionListMeasure.push(super.result());
   }
 
   @Override
@@ -111,12 +111,12 @@ public class SMPSOMeasures extends SMPSO implements Measurable {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "SMPSOMeasures";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "SMPSO. Version using measures";
   }
 }

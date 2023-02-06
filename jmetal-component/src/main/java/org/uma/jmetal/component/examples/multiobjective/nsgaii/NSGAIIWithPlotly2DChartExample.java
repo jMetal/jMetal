@@ -60,7 +60,7 @@ public class NSGAIIWithPlotly2DChartExample {
 
     nsgaii.run();
 
-    List<DoubleSolution> population = nsgaii.getResult();
+    List<DoubleSolution> population = nsgaii.result();
     JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 

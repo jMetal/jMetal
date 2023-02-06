@@ -54,7 +54,7 @@ public class GeneticAlgorithmTSPExample extends AbstractAlgorithmRunner {
 
     geneticAlgorithm.run();
 
-    List<PermutationSolution<Integer>> population = geneticAlgorithm.getResult();
+    List<PermutationSolution<Integer>> population = geneticAlgorithm.result();
     JMetalLogger.logger.info("Total execution time : " + geneticAlgorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + geneticAlgorithm.getNumberOfEvaluations());
     JMetalLogger.logger.info("Best found solution: " + population.get(0).objectives()[0]) ;

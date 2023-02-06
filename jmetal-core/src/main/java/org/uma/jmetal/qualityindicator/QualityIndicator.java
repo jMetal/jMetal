@@ -34,6 +34,6 @@ public abstract class QualityIndicator {
     return referenceFront;
   }
 
-  public abstract String getName() ;
-  public abstract String getDescription() ;
+  public abstract String name() ;
+  public abstract String description() ;
 }

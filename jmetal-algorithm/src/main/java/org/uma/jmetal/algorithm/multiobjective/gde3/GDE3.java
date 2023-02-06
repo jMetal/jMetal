@@ -165,7 +165,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   }
 
   @Override
-  public List<DoubleSolution> getResult() {
+  public List<DoubleSolution> result() {
     return getNonDominatedSolutions(getPopulation());
   }
 
@@ -174,12 +174,12 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "GDE3";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Generalized Differential Evolution version 3";
   }
 

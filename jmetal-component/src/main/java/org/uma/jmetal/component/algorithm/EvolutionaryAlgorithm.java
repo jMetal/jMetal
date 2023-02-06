@@ -128,7 +128,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return population;
   }
 
@@ -137,12 +137,12 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return name;
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Evolutionary algorithm";
   }
 

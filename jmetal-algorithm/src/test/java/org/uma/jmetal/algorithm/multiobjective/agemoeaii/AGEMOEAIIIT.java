@@ -56,7 +56,7 @@ public class AGEMOEAIIIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     /*
     Rationale: the default problem is Kursawe, and usually AGE-MOEA-II, configured with standard
@@ -92,7 +92,7 @@ public class AGEMOEAIIIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     QualityIndicator hypervolume =
         new PISAHypervolume(
@@ -132,7 +132,7 @@ public class AGEMOEAIIIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv";
 

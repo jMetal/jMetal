@@ -214,7 +214,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     return offspringPopulation;
   }
 
-  @Override public DoubleSolution getResult() {
+  @Override public DoubleSolution result() {
     return bestSolutionEver;
   }
 
@@ -529,11 +529,11 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     }
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "CMAES" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Covariance Matrix Adaptation Evolution Strategy" ;
   }
 

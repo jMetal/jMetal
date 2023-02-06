@@ -27,8 +27,8 @@ class EvolutionaryAlgorithmTest {
     EvolutionaryAlgorithm<DoubleSolution> evolutionaryAlgorithm = new EvolutionaryAlgorithm<>(
         "EA", solutionsCreation, evaluation, termination, selection, variation, replacement) ;
 
-    assertThat(evolutionaryAlgorithm.getResult()).isNullOrEmpty();
-    assertThat(evolutionaryAlgorithm.getName()).isEqualTo("EA") ;
+    assertThat(evolutionaryAlgorithm.result()).isNullOrEmpty();
+    assertThat(evolutionaryAlgorithm.name()).isEqualTo("EA") ;
     assertThat(evolutionaryAlgorithm.getAttributes()).isEmpty();
 
     assertThat(solutionsCreation).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "createInitialPopulation")) ;

@@ -42,12 +42,12 @@ public class NormalizedHypervolume extends QualityIndicator {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "NHV";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Normalized hypervolume";
   }
 

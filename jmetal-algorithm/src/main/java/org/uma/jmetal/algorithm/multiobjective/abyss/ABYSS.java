@@ -118,7 +118,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     return improvedSolution ;
   }
 
-  @Override public List<DoubleSolution> getResult() {
+  @Override public List<DoubleSolution> result() {
     return archive.solutions();
   }
 
@@ -481,11 +481,11 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     }
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "AbYSS" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Archived based hYbrid Scatter Search Algorithm" ;
   }
 }

@@ -70,6 +70,6 @@ public class ErrorRatioTest {
 
   @Test
   public void shouldGetNameReturnTheCorrectValue() {
-    Assertions.assertEquals("ER", new ErrorRatio().getName());
+    Assertions.assertEquals("ER", new ErrorRatio().name());
   }
 }

@@ -23,7 +23,7 @@ public class AutoMOPSOIraceNHVIGDPlus {
         + mopsoWithParameters.referenceFrontFilenameParameter.getValue();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
-    double[][] front = getMatrixWithObjectiveValues(mopso.getResult());
+    double[][] front = getMatrixWithObjectiveValues(mopso.result());
 
     double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
     double[][] normalizedFront =

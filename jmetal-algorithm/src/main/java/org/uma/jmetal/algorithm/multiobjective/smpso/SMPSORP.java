@@ -171,7 +171,7 @@ public class SMPSORP
     currentIteration.increment(1);
     updateLeadersDensityEstimator();
 
-    solutionListMeasure.push(getResult());
+    solutionListMeasure.push(result());
   }
 
   @Override
@@ -305,7 +305,7 @@ public class SMPSORP
   }
 
   @Override
-  public List<DoubleSolution> getResult() {
+  public List<DoubleSolution> result() {
     List<DoubleSolution> resultList = new ArrayList<>();
     for (BoundedArchive<DoubleSolution> leader : leaders) {
       for (DoubleSolution solution : leader.solutions()) {
@@ -374,12 +374,12 @@ public class SMPSORP
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "SMPSO/RP";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Speed contrained Multiobjective PSO";
   }
 

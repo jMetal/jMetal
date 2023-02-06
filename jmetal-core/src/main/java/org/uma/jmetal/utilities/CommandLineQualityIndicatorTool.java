@@ -80,7 +80,7 @@ public class CommandLineQualityIndicatorTool {
       JMetalLogger.logger.info(() -> "" + indicator.compute(normalizedFront));
     } else {
       for (QualityIndicator indicator : indicatorList) {
-        JMetalLogger.logger.info(() -> indicator.getName() + ": " + indicator.compute(normalizedFront));
+        JMetalLogger.logger.info(() -> indicator.name() + ": " + indicator.compute(normalizedFront));
       }
 
       SetCoverage sc = new SetCoverage();

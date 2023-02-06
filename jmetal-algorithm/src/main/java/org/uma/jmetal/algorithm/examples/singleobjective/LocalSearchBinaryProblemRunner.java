@@ -37,7 +37,7 @@ public class LocalSearchBinaryProblemRunner {
 
     localSearch.run();
 
-    BinarySolution foundSolution = localSearch.getResult() ;
+    BinarySolution foundSolution = localSearch.result() ;
 
     String fitnessMessage = "Fitness: " + foundSolution.objectives()[0] ;
     JMetalLogger.logger.info(fitnessMessage) ;

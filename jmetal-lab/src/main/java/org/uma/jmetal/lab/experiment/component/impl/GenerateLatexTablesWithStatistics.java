@@ -73,7 +73,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
           directory += "/data/";
           directory += "/" + experiment.getAlgorithmList().get(algorithm).getAlgorithmTag();
           directory += "/" + experiment.getProblemList().get(problem).getTag();
-          directory += "/" + experiment.getIndicatorList().get(indicator).getName();
+          directory += "/" + experiment.getIndicatorList().get(indicator).name();
           // Read values from data files
           FileInputStream fis = new FileInputStream(directory);
           InputStreamReader isr = new InputStreamReader(fis);
@@ -207,8 +207,8 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     try(FileWriter os = new FileWriter(latexFile, true)){
     os.write("\n");
     os.write("\\begin{table}" + "\n");
-    os.write("\\caption{" + experiment.getIndicatorList().get(indicatorIndex).getName() + ". " + caption + "}" + "\n");
-    os.write("\\label{table: " + experiment.getIndicatorList().get(indicatorIndex).getName() + "}" + "\n");
+    os.write("\\caption{" + experiment.getIndicatorList().get(indicatorIndex).name() + ". " + caption + "}" + "\n");
+    os.write("\\label{table: " + experiment.getIndicatorList().get(indicatorIndex).name() + "}" + "\n");
     os.write("\\centering" + "\n");
     os.write("\\begin{scriptsize}" + "\n");
     os.write("\\begin{tabular}{l");

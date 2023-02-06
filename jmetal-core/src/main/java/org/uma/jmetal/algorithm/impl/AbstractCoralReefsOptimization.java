@@ -303,6 +303,6 @@ public abstract class AbstractCoralReefsOptimization<S, R>
 	}
 
 	@Override
-	public abstract R getResult();
+	public abstract R result();
 
 }

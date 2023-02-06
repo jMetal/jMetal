@@ -63,12 +63,12 @@ public class DNSGAII<S extends Solution<?>> extends NSGAII<S> {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "D-NSGA-II";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "DIR based NSGA-II";
   }
 }

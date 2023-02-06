@@ -114,7 +114,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
     }
   }
 
-  @Override public List<S> getResult() {
+  @Override public List<S> result() {
     return SolutionListUtils.getNonDominatedSolutions(archive);
   }
 
@@ -284,11 +284,11 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
     solutionSet.remove(worstIndex);
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "IBEA" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Indicator based Evolutionary Algorithm" ;
   }
 }

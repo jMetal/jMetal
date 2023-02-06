@@ -72,11 +72,11 @@ public class SetCoverage extends QualityIndicator {
     return result ;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "SC";
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Set coverage";
   }
 }

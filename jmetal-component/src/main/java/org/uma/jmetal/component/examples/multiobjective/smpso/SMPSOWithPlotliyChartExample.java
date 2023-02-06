@@ -44,7 +44,7 @@ public class SMPSOWithPlotliyChartExample extends AbstractAlgorithmRunner {
 
     smpso.run();
 
-    List<DoubleSolution> population = smpso.getResult();
+    List<DoubleSolution> population = smpso.result();
     JMetalLogger.logger.info("Total execution time : " + smpso.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + smpso.getEvaluation());
 

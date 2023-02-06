@@ -64,8 +64,8 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     boolean minimizar = true;
 
     for (QualityIndicator indicator : experiment.getIndicatorList()) {
-      Table tableFilteredByIndicator = filterTableByIndicator(table, indicator.getName());
-      if (indicator.getName().equals("HV")) minimizar = false;
+      Table tableFilteredByIndicator = filterTableByIndicator(table, indicator.name());
+      if (indicator.name().equals("HV")) minimizar = false;
       Table results = computeFriedmanAndHolmTests(tableFilteredByIndicator, minimizar);
       createLatexFile(results, indicator);
     }
@@ -80,7 +80,7 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
   }
 
   private void createLatexFile(Table results, QualityIndicator indicator) {
-    String outputFile = latexDirectoryName + "/FriedmanTestWithHolm" + indicator.getName() + ".tex";
+    String outputFile = latexDirectoryName + "/FriedmanTestWithHolm" + indicator.name() + ".tex";
 
     File latexOutput;
     latexOutput = new File(latexDirectoryName);

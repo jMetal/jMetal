@@ -53,7 +53,7 @@ public class GenerationalGeneticAlgorithmTSPRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    PermutationSolution<Integer> solution = algorithm.getResult() ;
+    PermutationSolution<Integer> solution = algorithm.result() ;
     List<PermutationSolution<Integer>> population = new ArrayList<>(1) ;
     population.add(solution) ;
 

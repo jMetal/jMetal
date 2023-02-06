@@ -70,7 +70,7 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     BasicMeasure<Double> hypervolumeMeasure = (BasicMeasure<Double>) measureManager
         .<Double>getPushMeasure("hypervolume");
 
-    ChartContainer chart = new ChartContainer(algorithm.getName(), 100);
+    ChartContainer chart = new ChartContainer(algorithm.name(), 100);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.addIndicatorChart("Hypervolume");
     chart.initChart();
@@ -83,7 +83,7 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
     chart.saveChart("./chart", BitmapFormat.PNG);
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
     long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

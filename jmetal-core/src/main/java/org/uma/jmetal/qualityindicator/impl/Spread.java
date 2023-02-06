@@ -86,11 +86,11 @@ public class Spread extends QualityIndicator {
     }
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "SP" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Spread quality indicator" ;
   }
 

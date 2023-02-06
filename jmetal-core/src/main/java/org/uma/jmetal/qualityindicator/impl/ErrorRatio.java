@@ -101,11 +101,11 @@ public class ErrorRatio extends QualityIndicator {
     this.referenceFront = referenceFront;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Error ratio" ;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "ER" ;
   }
 

@@ -70,7 +70,7 @@ public class MOEADWithRealTimeChartExample {
 
     moead.run();
 
-    List<DoubleSolution> population = moead.getResult();
+    List<DoubleSolution> population = moead.result();
     JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
 

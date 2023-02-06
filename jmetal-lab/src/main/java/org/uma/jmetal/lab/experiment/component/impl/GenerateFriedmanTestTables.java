@@ -79,7 +79,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
 
       for (int problem = 0; problem < experiment.getProblemList().size(); problem++) {
         String path = algorithmPath + experiment.getProblemList().get(problem).getTag() +
-            "/" + indicator.getName();
+            "/" + indicator.name();
 
         readDataFromFile(path, data, algorithm) ;
       }
@@ -219,7 +219,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
    * @param fileContents
    */
   private void writeLatexFile(QualityIndicator indicator, String fileContents) {
-    String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
+    String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.name()+".tex";
 
     File latexOutput;
     latexOutput = new File(latexDirectoryName);

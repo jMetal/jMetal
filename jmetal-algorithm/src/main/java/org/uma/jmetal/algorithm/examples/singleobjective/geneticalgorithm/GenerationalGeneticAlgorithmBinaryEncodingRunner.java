@@ -52,7 +52,7 @@ public class GenerationalGeneticAlgorithmBinaryEncodingRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    BinarySolution solution = algorithm.getResult() ;
+    BinarySolution solution = algorithm.result() ;
     List<BinarySolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 

@@ -118,6 +118,6 @@ public class EpsilonTest {
 */
   @Test
   public void shouldGetNameReturnTheCorrectValue() {
-    Assertions.assertEquals("EP", new Epsilon().getName());
+    Assertions.assertEquals("EP", new Epsilon().name());
   }
 }

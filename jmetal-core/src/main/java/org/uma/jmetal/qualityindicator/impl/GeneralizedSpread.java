@@ -103,11 +103,11 @@ public class GeneralizedSpread extends QualityIndicator {
     }
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Generalized Spread quality indicator" ;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "GSPREAD" ;
   }
 

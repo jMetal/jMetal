@@ -61,7 +61,7 @@ public class MOMBIRunner extends AbstractAlgorithmRunner {
             "resources/weightVectorFiles/mombi2/weight_02D_152.sld");
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
     long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

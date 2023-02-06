@@ -1398,12 +1398,12 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "MOEADD";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "An Evolutionary Many-Objective Optimization Algorithm Based on Dominance and Decomposition";
   }
 

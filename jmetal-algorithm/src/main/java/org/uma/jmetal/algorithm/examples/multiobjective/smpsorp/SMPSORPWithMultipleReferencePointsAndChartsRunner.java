@@ -85,7 +85,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
         "currentIteration");
 
     ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(
-        algorithm.getName(), 80);
+        algorithm.name(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.setReferencePoint(referencePoints);
     chart.initChart();
@@ -99,7 +99,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
         .execute();
 
     chart.saveChart("SMPSORP", BitmapEncoder.BitmapFormat.PNG);
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
     long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

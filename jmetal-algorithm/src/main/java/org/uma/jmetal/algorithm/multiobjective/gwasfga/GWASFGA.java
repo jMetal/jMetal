@@ -69,11 +69,11 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
     return ranking;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "GWASFGA" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Global Weighting Achievement Scalarizing Function Genetic Algorithm" ;
   }
 }

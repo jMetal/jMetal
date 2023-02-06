@@ -42,7 +42,7 @@ public class MicroFAMEIT {
     Rationale: the default problem is ZDT1, and MicroFAME, configured with standard settings, should
     return 100 solutions
     */
-    assertTrue(algorithm.getResult().size() >= 98);
+    assertTrue(algorithm.result().size() >= 98);
     JMetalRandom.getInstance().setSeed(System.currentTimeMillis());
   }
 
@@ -71,7 +71,7 @@ public class MicroFAMEIT {
     // Rationale: the default problem is ZDT1, and AbYSS, configured with standard settings,
     // should return find a front with a hypervolume value higher than 0.22
 
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(algorithm.getResult()));
+    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(algorithm.result()));
 
     assertTrue(hv > 0.65);
 

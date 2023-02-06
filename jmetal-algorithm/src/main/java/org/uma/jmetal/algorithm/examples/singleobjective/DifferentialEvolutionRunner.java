@@ -67,7 +67,7 @@ public class DifferentialEvolutionRunner {
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    DoubleSolution solution = algorithm.getResult();
+    DoubleSolution solution = algorithm.result();
     long computingTime = algorithmRunner.getComputingTime();
 
     List<DoubleSolution> population = new ArrayList<>(1);

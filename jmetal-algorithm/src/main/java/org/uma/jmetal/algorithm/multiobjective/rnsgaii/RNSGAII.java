@@ -108,11 +108,11 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> implements
     return rankingAndCrowdingSelection.execute(jointPopulation) ;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "RNSGAII" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Reference Point Based Nondominated Sorting Genetic Algorithm version II" ;
   }
 }

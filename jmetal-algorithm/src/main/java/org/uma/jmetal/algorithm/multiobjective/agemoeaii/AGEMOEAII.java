@@ -104,7 +104,7 @@ public class AGEMOEAII<S extends Solution<?>> extends AGEMOEA<S> {
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return getNonDominatedSolutions(getPopulation()) ;
   }
 
@@ -112,11 +112,11 @@ public class AGEMOEAII<S extends Solution<?>> extends AGEMOEA<S> {
     return SolutionListUtils.getNonDominatedSolutions(solutionList) ;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "AGE-MOEA-II" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Adaptive Geometry Estimation based MOEA II" ;
   }
 

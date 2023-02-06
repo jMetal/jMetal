@@ -180,7 +180,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   }
 
   @Override
-  public List<BinarySolution> getResult() {
+  public List<BinarySolution> result() {
     NonDominatedSolutionListArchive<BinarySolution> archive = new NonDominatedSolutionListArchive<>();
     for (BinarySolution solution : getPopulation()) {
       archive.add(solution);
@@ -224,12 +224,12 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "MOCHC";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Multiobjective CHC algorithm";
   }
 }

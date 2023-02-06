@@ -50,7 +50,7 @@ public class GenerationalGeneticAlgorithmStringMatchingRunner {
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    CharSequenceSolution solution = algorithm.getResult();
+    CharSequenceSolution solution = algorithm.result();
     List<CharSequenceSolution> population = new ArrayList<>(1);
     population.add(solution);
 

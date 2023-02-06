@@ -57,10 +57,10 @@ public class GenerationalGeneticAlgorithmWithMultiThreadedEvaluatorExample {
 
     geneticAlgorithm.run();
 
-    List<DoubleSolution> population = geneticAlgorithm.getResult();
+    List<DoubleSolution> population = geneticAlgorithm.result();
     JMetalLogger.logger.info("Total execution time : " + geneticAlgorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + geneticAlgorithm.getNumberOfEvaluations());
-    JMetalLogger.logger.info("Best fitness: " + geneticAlgorithm.getResult().get(0).objectives()[0]);
+    JMetalLogger.logger.info("Best fitness: " + geneticAlgorithm.result().get(0).objectives()[0]);
 
     new SolutionListOutput(population)
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

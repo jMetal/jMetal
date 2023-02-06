@@ -44,7 +44,7 @@ public class GDE3BigDataRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();
 
-    List<DoubleSolution> population = ((GDE3) algorithm).getResult();
+    List<DoubleSolution> population = ((GDE3) algorithm).result();
     long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionListOutput(population)

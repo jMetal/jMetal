@@ -48,7 +48,7 @@ public class QualityIndicatorUtils {
     QualityIndicator result = null;
 
     for (QualityIndicator indicator : indicatorList) {
-      if (indicator.getName().equals(indicatorName)) {
+      if (indicator.name().equals(indicatorName)) {
         result = indicator;
         break;
       }
@@ -70,7 +70,7 @@ public class QualityIndicatorUtils {
     List<QualityIndicator> qualityIndicators = getAvailableIndicators(normalizedReferenceFront);
     for (QualityIndicator indicator : qualityIndicators) {
       JMetalLogger.logger.info(
-          () -> indicator.getName() + ": " + indicator.compute(normalizedFront));
+          () -> indicator.name() + ": " + indicator.compute(normalizedFront));
     }
   }
 }

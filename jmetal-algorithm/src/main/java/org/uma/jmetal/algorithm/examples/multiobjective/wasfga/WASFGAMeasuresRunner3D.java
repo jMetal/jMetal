@@ -75,7 +75,7 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
     CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure(
         "currentEvaluation");
 
-    ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
+    ChartContainer chart = new ChartContainer(algorithm.name(), 200);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.setReferencePoint(referencePoint);
     chart.setVarChart(0, 1);
@@ -90,7 +90,7 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
         .execute();
 
     chart.saveChart("WASFGA", BitmapFormat.PNG);
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
     long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

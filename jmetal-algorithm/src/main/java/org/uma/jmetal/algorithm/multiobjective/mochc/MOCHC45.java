@@ -71,12 +71,12 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "MOCHC45";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Multiobjective CHC algorithm";
   }
 
@@ -155,7 +155,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   }
 
   @Override
-  public List<BinarySolution> getResult() {
+  public List<BinarySolution> result() {
     NonDominatedSolutionListArchive<BinarySolution> archive = new NonDominatedSolutionListArchive<>();
     for (BinarySolution solution : population) {
       archive.add(solution);

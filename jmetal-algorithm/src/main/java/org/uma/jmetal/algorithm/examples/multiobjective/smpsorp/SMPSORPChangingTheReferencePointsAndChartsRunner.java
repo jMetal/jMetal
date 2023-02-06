@@ -87,7 +87,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
         "currentIteration");
 
     ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(
-        algorithm.getName(), 300);
+        algorithm.name(), 300);
     chart.setFrontChart(0, 1, null);
     chart.setReferencePoint(referencePoints);
     chart.initChart();
@@ -109,7 +109,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
     algorithmThread.join();
 
     chart.saveChart("RSMPSO", BitmapEncoder.BitmapFormat.PNG);
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))

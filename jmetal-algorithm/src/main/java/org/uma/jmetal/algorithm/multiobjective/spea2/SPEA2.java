@@ -100,15 +100,15 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return archive;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "SPEA2" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Strength Pareto. Evolutionary Algorithm" ;
   }
 }

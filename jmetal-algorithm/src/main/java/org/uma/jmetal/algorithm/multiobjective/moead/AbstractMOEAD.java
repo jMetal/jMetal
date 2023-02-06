@@ -328,7 +328,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     if (populationSize > resultPopulationSize) {
       return MOEADUtils.getSubsetOfEvenlyDistributedSolutions(population, resultPopulationSize) ;
     } else {

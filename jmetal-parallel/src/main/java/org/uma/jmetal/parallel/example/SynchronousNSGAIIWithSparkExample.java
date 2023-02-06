@@ -89,7 +89,7 @@ public class SynchronousNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
             .build();
 
     algorithm.run();
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     evaluator.shutdown();
 

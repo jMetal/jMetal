@@ -84,7 +84,7 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
     return population;
   }
 
-  @Override public S getResult() {
+  @Override public S result() {
     getPopulation().sort(comparator);
     return getPopulation().get(0);
   }
@@ -97,11 +97,11 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
     evaluations++;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "ssGA" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Steady-State Genetic Algorithm" ;
   }
 }

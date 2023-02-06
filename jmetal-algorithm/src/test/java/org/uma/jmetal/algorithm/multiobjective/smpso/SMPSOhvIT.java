@@ -35,7 +35,7 @@ public class SMPSOhvIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     /*
     Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
@@ -51,7 +51,7 @@ public class SMPSOhvIT {
     algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<>(100)).build();
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     QualityIndicator hypervolume =
             new org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume(

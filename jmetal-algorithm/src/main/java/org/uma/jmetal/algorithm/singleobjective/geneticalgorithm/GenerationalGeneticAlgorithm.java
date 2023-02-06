@@ -62,7 +62,7 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
     return population;
   }
 
-  @Override public S getResult() {
+  @Override public S result() {
     getPopulation().sort(comparator);
     return getPopulation().get(0);
   }
@@ -75,11 +75,11 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
     evaluations += getMaxPopulationSize();
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "gGA" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Generational Genetic Algorithm" ;
   }
 }

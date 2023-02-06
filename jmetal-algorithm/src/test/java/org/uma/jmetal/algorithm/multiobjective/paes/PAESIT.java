@@ -40,7 +40,7 @@ public class PAESIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     /*
     Rationale: the default problem is Kursawe, and usually PAES, configured with standard
@@ -62,7 +62,7 @@ public class PAESIT {
     algorithm = new PAES<>(problem, 25000, 100, 5, mutation);
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     org.uma.jmetal.qualityindicator.QualityIndicator hypervolume =
             new org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume(
@@ -94,7 +94,7 @@ public class PAESIT {
             mutation);
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.result();
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
@@ -123,7 +123,7 @@ public class PAESIT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.result() ;
 
     String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
 

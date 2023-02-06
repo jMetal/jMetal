@@ -377,7 +377,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
       }
 
       @Override
-      public List<DoubleSolution> getResult() {
+      public List<DoubleSolution> result() {
         return unboundedArchive.solutions();
       }
     }
