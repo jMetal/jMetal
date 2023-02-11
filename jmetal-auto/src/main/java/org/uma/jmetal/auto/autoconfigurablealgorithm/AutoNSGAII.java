@@ -73,8 +73,11 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     return fixedParameterList;
   }
 
-  @Override
-  public void configure() {
+  public AutoNSGAII() {
+    this.configure();
+  }
+
+  private void configure() {
     problemNameParameter = new StringParameter("problemName");
     randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed");
     referenceFrontFilename = new StringParameter("referenceFrontFileName");

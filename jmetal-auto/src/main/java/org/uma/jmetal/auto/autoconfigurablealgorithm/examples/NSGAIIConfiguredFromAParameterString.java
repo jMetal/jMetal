@@ -43,7 +43,6 @@ public class NSGAIIConfiguredFromAParameterString {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.configure();
     autoNSGAII.parse(parameters);
 
     AutoNSGAII.print(autoNSGAII.fixedParameterList);

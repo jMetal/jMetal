@@ -55,7 +55,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * Class to configure a generic MOPSO with an argument string using class
  * {@link ParticleSwarmOptimizationAlgorithm}
  *
- * @autor Daniel Doblas
+ * @autor Antonio J. Nebro
  */
 public class AutoMOPSO implements AutoConfigurableAlgorithm {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
@@ -86,9 +86,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
   private RealParameter wMaxParameter;
   private RealParameter weightParameter;
   private MutationParameter mutationParameter;
-
   private InertiaWeightComputingParameter inertiaWeightComputingParameter;
-
 
   @Override
   public List<Parameter<?>> configurableParameterList() {
@@ -98,6 +96,10 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
   @Override
   public List<Parameter<?>> fixedParameterList() {
     return fixedParameterList;
+  }
+
+  public AutoMOPSO() {
+    this.configure();
   }
 
   @Override
@@ -110,8 +112,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     }
   }
 
-  @Override
-  public void configure() {
+  private void configure() {
     problemNameParameter = new StringParameter("problemName");
     randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed");
 

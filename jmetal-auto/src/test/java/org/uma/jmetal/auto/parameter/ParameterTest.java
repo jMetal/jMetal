@@ -37,9 +37,9 @@ class ParameterTest {
 
   @Test
   void theConstructorCreatesEmptySubParameterStructures() {
-    assertThat(parameter.getGlobalParameters()).isEmpty();
-    assertThat(parameter.getSpecificParameters()).isEmpty();
-    assertThat(parameter.getNonConfigurableParameters()).isEmpty();
+    assertThat(parameter.globalParameters()).isEmpty();
+    assertThat(parameter.specificParameters()).isEmpty();
+    assertThat(parameter.nonConfigurableParameters()).isEmpty();
   }
 
   @Test
@@ -47,7 +47,7 @@ class ParameterTest {
     FakeParameter globalParameter = new FakeParameter("globalParameter") ;
     parameter.addGlobalParameter(globalParameter);
 
-    assertThat(parameter.getGlobalParameters()).hasSize(1) ;
+    assertThat(parameter.globalParameters()).hasSize(1) ;
     assertThat(parameter.findGlobalParameter("globalParameter")).isSameAs(globalParameter) ;
   }
 
@@ -56,7 +56,7 @@ class ParameterTest {
     FakeParameter specificParameter = new FakeParameter("specificParameter") ;
     parameter.addSpecificParameter(""+parameterValue, specificParameter);
 
-    assertThat(parameter.getSpecificParameters()).hasSize(1) ;
+    assertThat(parameter.specificParameters()).hasSize(1) ;
     assertThat(parameter.findSpecificParameter("specificParameter")).isSameAs(specificParameter) ;
   }
 

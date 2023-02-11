@@ -57,7 +57,6 @@ public class SMPSOWithUnboundedArchiveConfiguredFromAParameterString {
             .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.configure();
     autoMOPSO.parse(parameters);
 
     AutoMOPSO.print(autoMOPSO.fixedParameterList);

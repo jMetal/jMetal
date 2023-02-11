@@ -13,7 +13,6 @@ import org.uma.jmetal.util.VectorUtils;
 public class AutoNSGAIIIraceNHV {
   public static void main(String[] args) throws IOException {
     AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
-    nsgaiiWithParameters.configure();
     nsgaiiWithParameters.parse(args);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();

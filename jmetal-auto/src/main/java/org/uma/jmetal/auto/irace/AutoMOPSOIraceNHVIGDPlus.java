@@ -14,7 +14,6 @@ public class AutoMOPSOIraceNHVIGDPlus {
 
   public static void main(String[] args) throws IOException {
     AutoMOPSO mopsoWithParameters = new AutoMOPSO();
-    mopsoWithParameters.configure();
     mopsoWithParameters.parse(args);
 
     ParticleSwarmOptimizationAlgorithm mopso = mopsoWithParameters.create();

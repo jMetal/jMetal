@@ -46,7 +46,6 @@ public class NSGAIIWithExternalUnboundedArchiveConfiguredFromAParameterString {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.configure();
     autoNSGAII.parse(parameters);
 
     AutoNSGAII.print(autoNSGAII.fixedParameterList);

@@ -32,10 +32,10 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
   public String toString() {
     StringBuilder result =
             new StringBuilder("Name: " + name() + ": " + "Value: " + value() + ". Valid values: " + validValues);
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (Parameter<?> parameter : globalParameters()) {
       result.append(" -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (Pair<String, Parameter<?>> parameter : specificParameters()) {
       result.append("\n  -> ").append(parameter.getRight().toString());
     }
     return result.toString();

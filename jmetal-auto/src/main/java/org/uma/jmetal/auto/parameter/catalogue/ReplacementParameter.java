@@ -1,12 +1,10 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
-import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
@@ -20,7 +18,7 @@ public class ReplacementParameter extends CategoricalParameter {
     super("replacement", selectionStrategies);
   }
 
-  public Replacement<?> getParameter(Comparator<DoubleSolution> comparator) {
+  public Replacement<?> getParameter() {
     String removalPolicy = (String) findGlobalParameter("removalPolicy").value();
     Replacement<?> result;
     switch (value()) {

@@ -12,7 +12,6 @@ import org.uma.jmetal.util.VectorUtils;
 public class AutoMOPSOIraceHV {
   public static void main(String[] args) throws IOException {
     AutoMOPSO mopsoWithParameters = new AutoMOPSO();
-    mopsoWithParameters.configure();
     mopsoWithParameters.parse(args);
 
     ParticleSwarmOptimizationAlgorithm mopso = mopsoWithParameters.create();

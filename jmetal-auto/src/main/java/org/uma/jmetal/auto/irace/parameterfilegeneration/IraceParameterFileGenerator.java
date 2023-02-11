@@ -13,8 +13,6 @@ public class IraceParameterFileGenerator {
   private static String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
 
   public void generateConfigurationFile(AutoConfigurableAlgorithm autoConfigurableAlgorithm) {
-    autoConfigurableAlgorithm.configure();
-
     List<Parameter<?>> parameterList = autoConfigurableAlgorithm.configurableParameterList() ;
 
     StringBuilder stringBuilder = new StringBuilder();
@@ -37,11 +35,11 @@ public class IraceParameterFileGenerator {
                     decodeValidValues(parameter),
                     ""));
 
-    for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
+    for (Parameter<?> globalParameter : parameter.globalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
     }
 
-    for (Pair<String, Parameter<?>> specificParameter : parameter.getSpecificParameters()) {
+    for (Pair<String, Parameter<?>> specificParameter : parameter.specificParameters()) {
       decodeParameterSpecific(specificParameter, stringBuilder, parameter);
     }
   }
@@ -66,11 +64,11 @@ public class IraceParameterFileGenerator {
                     decodeValidValues(parameter),
                     "| " + parentParameter.name() + " %in% c(" + dependenceString + ")"));
 
-    for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
+    for (Parameter<?> globalParameter : parameter.globalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
     }
 
-    for (Pair<String, Parameter<?>> specificParameter : parameter.getSpecificParameters()) {
+    for (Pair<String, Parameter<?>> specificParameter : parameter.specificParameters()) {
       decodeParameterSpecific(specificParameter, stringBuilder, parameter);
     }
   }
@@ -87,11 +85,11 @@ public class IraceParameterFileGenerator {
                     decodeValidValues(pair.getRight()),
                     "| " + parentParameter.name() + " %in% c(\"" + pair.getLeft() + "\")"));
 
-    for (Parameter<?> globalParameter : pair.getValue().getGlobalParameters()) {
+    for (Parameter<?> globalParameter : pair.getValue().globalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, pair.getValue());
     }
 
-    for (Pair<String, Parameter<?>> specificParameter : pair.getValue().getSpecificParameters()) {
+    for (Pair<String, Parameter<?>> specificParameter : pair.getValue().specificParameters()) {
       decodeParameterSpecific(specificParameter, stringBuilder, pair.getValue());
     }
   }

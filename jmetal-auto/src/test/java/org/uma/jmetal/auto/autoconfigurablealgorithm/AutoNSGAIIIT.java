@@ -15,6 +15,28 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 
 class AutoNSGAIIIT {
+
+  @Test
+  void AutoNSGAIIHasFiveFirstLevelConfigurableParameters() {
+    var autoNSGAII = new AutoNSGAII() ;
+
+    assertThat(autoNSGAII.autoConfigurableParameterList).hasSize(5) ;
+  }
+
+  @Test
+  void AutoNSGAIIHasFiveFourFixedParameters() {
+    var autoNSGAII = new AutoNSGAII() ;
+
+    assertThat(autoNSGAII.fixedParameterList()).hasSize(4) ;
+  }
+
+  @Test
+  void AutoNSGAIIHas21Parameters() {
+    var autoNSGAII = new AutoNSGAII() ;
+
+    assertThat(AutoConfigurableAlgorithm.parameterNames(autoNSGAII.configurableParameterList())).hasSize(21) ;
+  }
+
   @Test
   void AutoNSGAIIWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT1()
       throws IOException {
@@ -45,7 +67,6 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.configure();
     autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
@@ -101,7 +122,6 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.configure();
     autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
@@ -161,7 +181,6 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.configure();
     autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
@@ -219,7 +238,6 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.configure();
     autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();

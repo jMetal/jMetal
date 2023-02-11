@@ -63,10 +63,10 @@ public class RealParameter extends Parameter<Double> {
             + lowerBound
             + ". Upper bound: "
             + upperBound);
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (Parameter<?> parameter : globalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (Pair<String, Parameter<?>> parameter : specificParameters()) {
       result.append("\n  -> ").append(parameter.getRight().toString());
     }
     return result.toString();

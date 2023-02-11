@@ -15,12 +15,11 @@ import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Abstract class representing generic parameters. Any parameter has a name and a value that is
- * assigned by parsing an array called {@link Parameter#args} which contains sequences of pairs
- * [key, value]. For example, the args field could contain these values:
+ * assigned by parsing an array which contains sequences of pairs [key, value], as for example:,
  * ["--populationSize", "100", "--offspringPopulationSize", "100", "--createInitialSolutions", "random"]
  *
  * Every parameter has a {@link Parameter#name} (such as "populationSize" or "offpspringPopulationSize")
- * and a {@link Parameter#value} that is obtained after invoking the {@link Parameter#parse()} and
+ * and a {@link Parameter#value} that is obtained after invoking the {@link Parameter#parse(String[])} and
  * {@link Parameter#check()} methods.
  *
  * Parameters can be seen a factories of any kind of objects, from single values (e.g., {@link RealParameter}
@@ -36,8 +35,8 @@ import org.uma.jmetal.util.errorchecking.Check;
  * - {@link Parameter#addGlobalParameter(Parameter)}
  * - {@link Parameter#addSpecificParameter(String, Parameter)}}
  * - {@link Parameter#addNonConfigurableParameter(String, Object)}
- * - {@link Parameter#getGlobalParameters()}
- * - {@link Parameter#getSpecificParameters()}
+ * - {@link Parameter#globalParameters()}
+ * - {@link Parameter#specificParameters()}
  * - {@link Parameter#getNonConfigurableParameter(String)}
  * - {@link Parameter#findGlobalParameter(String)}
  * - {@link Parameter#findSpecificParameter(String)}
@@ -79,11 +78,11 @@ public abstract class Parameter<T> {
   public Parameter<T> parse(Function<String, T> parseFunction, String[] args) {
     value(on("--" + name(), args, parseFunction));
 
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (Parameter<?> parameter : globalParameters()) {
       parameter.parse(args).check();
     }
 
-    getSpecificParameters()
+    specificParameters()
         .forEach(
             pair -> {
               if (pair.getKey().equals(value())) {
@@ -98,7 +97,7 @@ public abstract class Parameter<T> {
     return name;
   }
 
-  public List<Pair<String, Parameter<?>>> getSpecificParameters() {
+  public List<Pair<String, Parameter<?>>> specificParameters() {
     return specificParameters;
   }
 
@@ -106,7 +105,7 @@ public abstract class Parameter<T> {
     specificParameters.add(new ImmutablePair<>(dependsOn, parameter));
   }
 
-  public List<Parameter<?>> getGlobalParameters() {
+  public List<Parameter<?>> globalParameters() {
     return globalParameters;
   }
 
@@ -122,7 +121,7 @@ public abstract class Parameter<T> {
     return nonConfigurableParameters.get(parameterName) ;
   }
 
-  public  Map<String, Object> getNonConfigurableParameters() {
+  public  Map<String, Object> nonConfigurableParameters() {
     return nonConfigurableParameters ;
   }
 
@@ -135,14 +134,14 @@ public abstract class Parameter<T> {
   }
 
   public Parameter<?> findGlobalParameter(String parameterName) {
-    return getGlobalParameters().stream()
+    return globalParameters().stream()
         .filter(parameter -> parameter.name().equals(parameterName))
         .findFirst()
         .orElse(null);
   }
 
   public Parameter<?> findSpecificParameter(String parameterName) {
-    return Objects.requireNonNull(getSpecificParameters().stream()
+    return Objects.requireNonNull(specificParameters().stream()
             .filter(pair -> pair.getRight().name().equals(parameterName))
             .findFirst()
             .orElse(null))
