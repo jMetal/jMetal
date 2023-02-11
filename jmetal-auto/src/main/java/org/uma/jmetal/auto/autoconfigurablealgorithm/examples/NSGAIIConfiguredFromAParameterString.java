@@ -53,7 +53,8 @@ public class NSGAIIConfiguredFromAParameterString {
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "NSGA-II", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
+            "NSGA-II", 80, 100,
+            "resources/referenceFrontsCSV/" + referenceFrontFileName, "F1", "F2");
 
     nsgaII.getObservable().register(evaluationObserver);
     nsgaII.getObservable().register(runTimeChartObserver);
