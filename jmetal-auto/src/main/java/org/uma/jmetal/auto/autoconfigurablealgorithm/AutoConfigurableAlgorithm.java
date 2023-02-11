@@ -11,6 +11,13 @@ public interface AutoConfigurableAlgorithm {
   List<Parameter<?>> configurableParameterList() ;
   List<Parameter<?>> fixedParameterList() ;
 
+  /**
+   * Given a list of parameters, returns a list with the names of all of them and the names
+   * of their sub-parameters.
+   *
+   * @param parameters
+   * @return A list of parameter names
+   */
   static List<String> parameterNames(List<Parameter<?>> parameters) {
     List<String> parameterList = new ArrayList<>();
     for (Parameter<?> parameter : parameters) {
