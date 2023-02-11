@@ -48,8 +48,8 @@ public class NSGAIIWithExternalUnboundedArchiveConfiguredFromAParameterString {
     AutoNSGAII autoNSGAII = new AutoNSGAII();
     autoNSGAII.parse(parameters);
 
-    AutoNSGAII.print(autoNSGAII.fixedParameterList);
-    AutoNSGAII.print(autoNSGAII.autoConfigurableParameterList);
+    AutoNSGAII.print(autoNSGAII.fixedParameterList());
+    AutoNSGAII.print(autoNSGAII.configurableParameterList());
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 

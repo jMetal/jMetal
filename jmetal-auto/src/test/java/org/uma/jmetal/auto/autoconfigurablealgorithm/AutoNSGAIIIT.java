@@ -28,7 +28,7 @@ class AutoNSGAIIIT {
 
   @Test
   void AutoNSGAIIHas21Parameters() {
-    assertThat(AutoConfigurableAlgorithm.parameterNames(
+    assertThat(AutoConfigurableAlgorithm.parameterFlattening(
         new AutoNSGAII().configurableParameterList())).hasSize(21);
   }
 

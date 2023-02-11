@@ -49,8 +49,8 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
  * @autor Antonio J. Nebro
  */
 public class AutoNSGAII implements AutoConfigurableAlgorithm {
-  public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
-  public List<Parameter<?>> fixedParameterList = new ArrayList<>();
+  private List<Parameter<?>> configurableParameterList = new ArrayList<>();
+  private List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
   public StringParameter referenceFrontFilename;
   private PositiveIntegerValue randomGeneratorSeedParameter;
@@ -66,7 +66,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
 
   @Override
   public List<Parameter<?>> configurableParameterList() {
-    return autoConfigurableParameterList;
+    return configurableParameterList;
   }
   @Override
   public List<Parameter<?>> fixedParameterList() {
@@ -96,11 +96,11 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     selection();
     variation();
 
-    autoConfigurableParameterList.add(populationSizeParameter);
-    autoConfigurableParameterList.add(algorithmResultParameter);
-    autoConfigurableParameterList.add(createInitialSolutionsParameter);
-    autoConfigurableParameterList.add(variationParameter);
-    autoConfigurableParameterList.add(selectionParameter);
+    configurableParameterList.add(populationSizeParameter);
+    configurableParameterList.add(algorithmResultParameter);
+    configurableParameterList.add(createInitialSolutionsParameter);
+    configurableParameterList.add(variationParameter);
+    configurableParameterList.add(selectionParameter);
   }
 
   private void variation() {

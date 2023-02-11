@@ -12,24 +12,21 @@ public interface AutoConfigurableAlgorithm {
   List<Parameter<?>> fixedParameterList() ;
 
   /**
-   * Given a list of parameters, returns a list with the names of all of them and the names
-   * of their sub-parameters.
+   * Given a list of parameters, returns a list with of all of them and all of their sub-parameters
    *
    * @param parameters
-   * @return A list of parameter names
+   * @return A list of parameters
    */
-  static List<String> parameterNames(List<Parameter<?>> parameters) {
-    List<String> parameterList = new ArrayList<>();
-    for (Parameter<?> parameter : parameters) {
-      parameterList.add(parameter.name());
-      parameterList.addAll(parameterNames(parameter.globalParameters()));
+  static List<Parameter<?>> parameterFlattening(List<Parameter<?>> parameters) {
+    List<Parameter<?>> parameterList = new ArrayList<>() ;
+    parameters.forEach(parameter -> {
+      parameterList.add(parameter);
+      parameterList.addAll(parameterFlattening(parameter.globalParameters()));
       List<Parameter<?>> specificParameters = parameter.specificParameters().stream().map(
           Pair::getRight).collect(
           Collectors.toList());
-
-      parameterList.addAll(parameterNames(specificParameters));
-    }
-
-    return parameterList;
+      parameterList.addAll(parameterFlattening(specificParameters));
+    });
+    return parameterList ;
   }
 }

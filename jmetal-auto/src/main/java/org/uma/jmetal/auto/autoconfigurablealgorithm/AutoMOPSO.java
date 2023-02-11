@@ -58,8 +58,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @autor Antonio J. Nebro
  */
 public class AutoMOPSO implements AutoConfigurableAlgorithm {
-  public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
-  public List<Parameter<?>> fixedParameterList = new ArrayList<>();
+  private List<Parameter<?>> configurableParameterList = new ArrayList<>();
+  private List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
   public StringParameter referenceFrontFilenameParameter;
   public ExternalArchiveParameter<DoubleSolution> leaderArchiveParameter;
@@ -90,7 +90,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
 
   @Override
   public List<Parameter<?>> configurableParameterList() {
-    return autoConfigurableParameterList;
+    return configurableParameterList;
   }
 
   @Override
@@ -186,21 +186,21 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     inertiaWeightComputingParameter.addSpecificParameter("linearDecreasingValue", wMinParameter);
     inertiaWeightComputingParameter.addSpecificParameter("linearDecreasingValue", wMaxParameter);
 
-    autoConfigurableParameterList.add(swarmSizeParameter);
-    autoConfigurableParameterList.add(archiveSizeParameter);
-    autoConfigurableParameterList.add(leaderArchiveParameter);
-    autoConfigurableParameterList.add(algorithmResultParameter);
-    autoConfigurableParameterList.add(swarmInitializationParameter);
-    autoConfigurableParameterList.add(velocityInitializationParameter);
-    autoConfigurableParameterList.add(perturbationParameter);
-    autoConfigurableParameterList.add(inertiaWeightComputingParameter);
-    autoConfigurableParameterList.add(velocityUpdateParameter);
-    autoConfigurableParameterList.add(localBestInitializationParameter);
-    autoConfigurableParameterList.add(globalBestInitializationParameter);
-    autoConfigurableParameterList.add(globalBestSelectionParameter);
-    autoConfigurableParameterList.add(globalBestUpdateParameter);
-    autoConfigurableParameterList.add(localBestUpdateParameter);
-    autoConfigurableParameterList.add(positionUpdateParameter);
+    configurableParameterList.add(swarmSizeParameter);
+    configurableParameterList.add(archiveSizeParameter);
+    configurableParameterList.add(leaderArchiveParameter);
+    configurableParameterList.add(algorithmResultParameter);
+    configurableParameterList.add(swarmInitializationParameter);
+    configurableParameterList.add(velocityInitializationParameter);
+    configurableParameterList.add(perturbationParameter);
+    configurableParameterList.add(inertiaWeightComputingParameter);
+    configurableParameterList.add(velocityUpdateParameter);
+    configurableParameterList.add(localBestInitializationParameter);
+    configurableParameterList.add(globalBestInitializationParameter);
+    configurableParameterList.add(globalBestSelectionParameter);
+    configurableParameterList.add(globalBestUpdateParameter);
+    configurableParameterList.add(localBestUpdateParameter);
+    configurableParameterList.add(positionUpdateParameter);
   }
 
   private PerturbationParameter configurePerturbation() {

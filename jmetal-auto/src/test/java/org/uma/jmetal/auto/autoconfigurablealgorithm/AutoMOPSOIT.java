@@ -27,7 +27,7 @@ class AutoMOPSOIT {
 
   @Test
   void AutoMOPSOHas36Parameters() {
-    assertThat(AutoConfigurableAlgorithm.parameterNames(
+    assertThat(AutoConfigurableAlgorithm.parameterFlattening(
         new AutoMOPSO().configurableParameterList())).hasSize(36);
   }
 
