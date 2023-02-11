@@ -181,6 +181,9 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse(arguments).check();
     }
+    for (Parameter<?> parameter : configurableParameterList()) {
+      parameter.parse(arguments).check();
+    }
   }
 
   /**

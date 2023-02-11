@@ -8,34 +8,31 @@ import org.junit.jupiter.api.Test;
 class ParameterTest {
   class FakeParameter extends Parameter<Double> {
 
-    public FakeParameter(String name, String[] args) {
-      super(name, args);
+    public FakeParameter(String name) {
+      super(name);
     }
 
     @Override
     public void check() {
 
     }
-
     @Override
-    public Parameter<Double> parse() {
+    public Parameter<Double> parse(String[] arguments) {
       return null;
     }
   }
-
 
   private Parameter<Double> parameter ;
   private String parameterName = "doubleParameter" ;
   private String parameterValue = "6.1" ;
   @BeforeEach
   void setup() {
-    parameter = new FakeParameter(parameterName, new String[]{"--"+parameterName, parameterValue}) ;
+    parameter = new FakeParameter(parameterName) ;
   }
 
   @Test
   void theConstructorSetsProperlyTheNameAndArgsArguments() {
     assertThat(parameter.name()).isEqualTo(parameterName) ;
-    assertThat(parameter.args()).containsExactly("--"+parameterName, parameterValue) ;
   }
 
   @Test
@@ -47,7 +44,7 @@ class ParameterTest {
 
   @Test
   void addAGlobalParameterWorksProperly() {
-    FakeParameter globalParameter = new FakeParameter("globalParameter", new String[]{"--globalParameter", "-234.5"}) ;
+    FakeParameter globalParameter = new FakeParameter("globalParameter") ;
     parameter.addGlobalParameter(globalParameter);
 
     assertThat(parameter.getGlobalParameters()).hasSize(1) ;
@@ -56,7 +53,7 @@ class ParameterTest {
 
   @Test
   void addSpecificParameterWorksProperly() {
-    FakeParameter specificParameter = new FakeParameter("specificParameter", new String[]{"--specificParameter", "-234.5"}) ;
+    FakeParameter specificParameter = new FakeParameter("specificParameter") ;
     parameter.addSpecificParameter(""+parameterValue, specificParameter);
 
     assertThat(parameter.getSpecificParameters()).hasSize(1) ;

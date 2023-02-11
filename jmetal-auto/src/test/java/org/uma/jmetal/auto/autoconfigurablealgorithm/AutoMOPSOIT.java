@@ -56,7 +56,8 @@ class AutoMOPSOIT {
             .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parseAndCheckParameters(parameters);
+    autoMOPSO.configure();
+    autoMOPSO.parse(parameters);
 
     ParticleSwarmOptimizationAlgorithm smpso = autoMOPSO.create() ;
 

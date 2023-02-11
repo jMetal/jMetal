@@ -45,7 +45,8 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.configure();
+    autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
@@ -100,7 +101,8 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.configure();
+    autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
@@ -159,7 +161,8 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.configure();
+    autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
@@ -192,7 +195,7 @@ class AutoNSGAIIIT {
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
             + "--referenceFrontFileName "+ referenceFrontFileName + " "
-            + "--maximumNumberOfEvaluations 50000 "
+            + "--maximumNumberOfEvaluations 30000 "
             + "--algorithmResult externalArchive "
             + "--externalArchive unboundedArchive "
             + "--populationSizeWithArchive 100 "
@@ -216,7 +219,8 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.configure();
+    autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
