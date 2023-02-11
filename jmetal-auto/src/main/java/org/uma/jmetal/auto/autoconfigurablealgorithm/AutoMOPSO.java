@@ -58,6 +58,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @autor Daniel Doblas
  */
 public class AutoMOPSO implements AutoConfigurableAlgorithm {
+
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
@@ -126,7 +127,8 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     archiveSizeParameter = new PositiveIntegerValue("archiveSize");
 
     swarmInitializationParameter =
-        new CreateInitialSolutionsParameter("swarmInitialization", Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
+        new CreateInitialSolutionsParameter("swarmInitialization",
+            Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
 
     velocityInitializationParameter = new VelocityInitializationParameter(
         List.of("defaultVelocityInitialization",
@@ -152,7 +154,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     var velocityChangeWhenLowerLimitIsReachedParameter = new RealParameter(
         "velocityChangeWhenLowerLimitIsReached", -1.0, 1.0);
     var velocityChangeWhenUpperLimitIsReachedParameter = new RealParameter(
-        "velocityChangeWhenUpperLimitIsReached",-1.0, 1.0);
+        "velocityChangeWhenUpperLimitIsReached", -1.0, 1.0);
     positionUpdateParameter.addSpecificParameter("defaultPositionUpdate",
         velocityChangeWhenLowerLimitIsReachedParameter);
     positionUpdateParameter.addSpecificParameter("defaultPositionUpdate",
@@ -163,7 +165,8 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     leaderArchiveParameter = new ExternalArchiveParameter("leaderArchive",
         List.of("crowdingDistanceArchive", "hypervolumeArchive", "spatialSpreadDeviationArchive"));
 
-    inertiaWeightComputingParameter = new InertiaWeightComputingParameter(List.of("constantValue", "randomSelectedValue", "linearIncreasingValue",
+    inertiaWeightComputingParameter = new InertiaWeightComputingParameter(
+        List.of("constantValue", "randomSelectedValue", "linearIncreasingValue",
             "linearDecreasingValue"));
 
     weightParameter = new RealParameter("weight", 0.1, 1.0);
@@ -196,10 +199,12 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
 
   private PerturbationParameter configurePerturbation() {
     mutationParameter =
-        new MutationParameter(Arrays.asList("uniform", "polynomial", "nonUniform", "linkedPolynomial"));
+        new MutationParameter(
+            Arrays.asList("uniform", "polynomial", "nonUniform", "linkedPolynomial"));
     //ProbabilityParameter mutationProbability =
     //    new ProbabilityParameter("mutationProbability", args);
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor",0.0, 2.0);
+    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", 0.0,
+        2.0);
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
@@ -207,26 +212,27 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     mutationParameter.addGlobalParameter(mutationRepairStrategy);
 
     RealParameter distributionIndexForPolynomialMutation =
-        new RealParameter("polynomialMutationDistributionIndex",5.0, 400.0);
+        new RealParameter("polynomialMutationDistributionIndex", 5.0, 400.0);
     mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
     RealParameter distributionIndexForLinkedPolynomialMutation =
-        new RealParameter("linkedPolynomialMutationDistributionIndex",5.0, 400.0);
+        new RealParameter("linkedPolynomialMutationDistributionIndex", 5.0, 400.0);
     mutationParameter.addSpecificParameter("linkedPolynomial",
         distributionIndexForLinkedPolynomialMutation);
     RealParameter uniformMutationPerturbation =
-        new RealParameter("uniformMutationPerturbation",0.0, 1.0);
+        new RealParameter("uniformMutationPerturbation", 0.0, 1.0);
     mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
     RealParameter nonUniformMutationPerturbation =
-        new RealParameter("nonUniformMutationPerturbation",0.0, 1.0);
+        new RealParameter("nonUniformMutationPerturbation", 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
     // TODO: the upper bound  must be the swarm size
     IntegerParameter frequencyOfApplicationParameter = new IntegerParameter(
-        "frequencyOfApplicationOfMutationOperator",1, 10);
+        "frequencyOfApplicationOfMutationOperator", 1, 10);
 
-    perturbationParameter = new PerturbationParameter(List.of("frequencySelectionMutationBasedPerturbation"));
+    perturbationParameter = new PerturbationParameter(
+        List.of("frequencySelectionMutationBasedPerturbation"));
     perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation",
         mutationParameter);
     perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation",
@@ -236,12 +242,13 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
   }
 
   private VelocityUpdateParameter configureVelocityUpdate() {
-    c1MinParameter = new RealParameter("c1Min",1.0, 2.0);
-    c1MaxParameter = new RealParameter("c1Max",2.0, 3.0);
-    c2MinParameter = new RealParameter("c2Min",1.0, 2.0);
-    c2MaxParameter = new RealParameter("c2Max",2.0, 3.0);
+    c1MinParameter = new RealParameter("c1Min", 1.0, 2.0);
+    c1MaxParameter = new RealParameter("c1Max", 2.0, 3.0);
+    c2MinParameter = new RealParameter("c2Min", 1.0, 2.0);
+    c2MaxParameter = new RealParameter("c2Max", 2.0, 3.0);
 
-    velocityUpdateParameter = new VelocityUpdateParameter(List.of("defaultVelocityUpdate", "constrainedVelocityUpdate", "SPSO2011VelocityUpdate"));
+    velocityUpdateParameter = new VelocityUpdateParameter(
+        List.of("defaultVelocityUpdate", "constrainedVelocityUpdate", "SPSO2011VelocityUpdate"));
     velocityUpdateParameter.addGlobalParameter(c1MinParameter);
     velocityUpdateParameter.addGlobalParameter(c1MaxParameter);
     velocityUpdateParameter.addGlobalParameter(c2MinParameter);
