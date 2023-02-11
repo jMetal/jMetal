@@ -49,7 +49,6 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
  * @autor Antonio J. Nebro
  */
 public class AutoNSGAII implements AutoConfigurableAlgorithm {
-
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
@@ -68,6 +67,10 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   @Override
   public List<Parameter<?>> configurableParameterList() {
     return autoConfigurableParameterList;
+  }
+  @Override
+  public List<Parameter<?>> fixedParameterList() {
+    return fixedParameterList;
   }
 
   @Override

@@ -58,7 +58,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @autor Daniel Doblas
  */
 public class AutoMOPSO implements AutoConfigurableAlgorithm {
-
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
@@ -90,9 +89,15 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
 
   private InertiaWeightComputingParameter inertiaWeightComputingParameter;
 
+
   @Override
   public List<Parameter<?>> configurableParameterList() {
     return autoConfigurableParameterList;
+  }
+
+  @Override
+  public List<Parameter<?>> fixedParameterList() {
+    return fixedParameterList;
   }
 
   @Override

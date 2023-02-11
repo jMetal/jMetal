@@ -24,7 +24,7 @@ public class IraceParameterFileGenerator {
       stringBuilder.append("#\n");
     }
 
-    System.out.println(stringBuilder.toString());
+    System.out.println(stringBuilder);
   }
 
   private void decodeParameter(Parameter<?> parameter, StringBuilder stringBuilder) {
@@ -106,7 +106,7 @@ public class IraceParameterFileGenerator {
       result = "i";
     } else if (parameter instanceof RealParameter) {
       result = "r";
-    } else if (parameter instanceof Parameter) {
+    } else if (parameter != null) {
       result = "o";
     }
 
@@ -132,7 +132,7 @@ public class IraceParameterFileGenerator {
       result = ((RealParameter) parameter).getValidValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
-    } else if (parameter instanceof Parameter) {
+    } else if (parameter != null) {
       result = "(" + parameter.value() + ")";
     }
 
