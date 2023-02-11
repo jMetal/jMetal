@@ -10,13 +10,13 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class GlobalBestSelectionParameter extends CategoricalParameter {
-  public GlobalBestSelectionParameter(String args[], List<String> selectionStrategies) {
-    super("globalBestSelection", args, selectionStrategies) ;
+  public GlobalBestSelectionParameter(List<String> selectionStrategies) {
+    super("globalBestSelection", selectionStrategies) ;
   }
 
   public GlobalBestSelection getParameter(Comparator<DoubleSolution> comparator) {
     GlobalBestSelection result ;
-    switch(getValue()) {
+    switch(value()) {
       case "binaryTournament":
         result = new BinaryTournamentGlobalBestSelection(comparator) ;
         break ;
@@ -24,7 +24,7 @@ public class GlobalBestSelectionParameter extends CategoricalParameter {
         result = new RandomGlobalBestSelection();
         break ;
       default:
-        throw new JMetalException("Global Best Selection component unknown: " + getValue()) ;
+        throw new JMetalException("Global Best Selection component unknown: " + value()) ;
     }
 
     return result ;

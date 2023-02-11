@@ -9,32 +9,32 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class  PerturbationParameter extends CategoricalParameter {
-  public PerturbationParameter(String[] args, List<String> perturbationStrategies) {
-    super("perturbation", args, perturbationStrategies);
+  public PerturbationParameter(List<String> perturbationStrategies) {
+    super("perturbation", perturbationStrategies);
   }
 
   public Perturbation getParameter() {
     Perturbation result;
 
-    if ("frequencySelectionMutationBasedPerturbation".equals(getValue())) {
+    if ("frequencySelectionMutationBasedPerturbation".equals(value())) {
       MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
       MutationOperator<DoubleSolution> mutationOperator =
           mutationParameter.getDoubleSolutionParameter();
 
       int frequencyOfApplication = (int) findSpecificParameter(
-          "frequencyOfApplicationOfMutationOperator").getValue();
+          "frequencyOfApplicationOfMutationOperator").value();
 
       result =
           new FrequencySelectionMutationBasedPerturbation(mutationOperator, frequencyOfApplication);
     } else {
-      throw new JMetalException("Perturbation component unknown: " + getValue());
+      throw new JMetalException("Perturbation component unknown: " + value());
     }
 
     return result;
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "perturbation";
   }
 }

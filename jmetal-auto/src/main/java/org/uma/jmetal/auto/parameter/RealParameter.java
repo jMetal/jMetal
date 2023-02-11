@@ -15,8 +15,8 @@ public class RealParameter extends Parameter<Double> {
   private final double lowerBound;
   private final double upperBound;
 
-  public RealParameter(String name, String[] args, double lowerBound, double upperBound) {
-    super(name, args);
+  public RealParameter(String name, double lowerBound, double upperBound) {
+    super(name);
     Check.that(lowerBound < upperBound, "The lower bound " + lowerBound + " "
         + "is not higher that the upper bound " + upperBound);
     this.lowerBound = lowerBound;
@@ -24,18 +24,19 @@ public class RealParameter extends Parameter<Double> {
   }
 
   @Override
-  public RealParameter parse() {
-    return (RealParameter) parse(Double::parseDouble);
+  public RealParameter parse(String[] arguments) {
+    return (RealParameter) parse(Double::parseDouble, arguments);
   }
+
 
   @Override
   public void check() {
-    if ((getValue() < lowerBound) || (getValue() > upperBound)) {
+    if ((value() < lowerBound) || (value() > upperBound)) {
       throw new JMetalException(
           "Parameter "
-              + getName()
+              + name()
               + ": Invalid value: "
-              + getValue()
+              + value()
               + ". Range: "
               + lowerBound
               + ", "
@@ -54,10 +55,10 @@ public class RealParameter extends Parameter<Double> {
   public String toString() {
     StringBuilder result =
         new StringBuilder("Name: "
-            + getName()
+            + name()
             + ": "
             + "Value: "
-            + getValue()
+            + value()
             + ". Lower bound: "
             + lowerBound
             + ". Upper bound: "

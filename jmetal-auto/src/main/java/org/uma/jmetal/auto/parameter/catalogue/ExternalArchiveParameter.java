@@ -14,18 +14,18 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.WFGHype
 
 public class ExternalArchiveParameter<S extends Solution<?>> extends CategoricalParameter {
   private int size ;
-  public ExternalArchiveParameter(String parameterName, String[] args, List<String> archiveTypes) {
-    super(parameterName, args, archiveTypes);
+  public ExternalArchiveParameter(String parameterName, List<String> archiveTypes) {
+    super(parameterName, archiveTypes);
   }
 
-  public ExternalArchiveParameter(String[] args, List<String> archiveTypes) {
-    this("externalArchive", args, archiveTypes);
+  public ExternalArchiveParameter(List<String> archiveTypes) {
+    this("externalArchive", archiveTypes);
   }
 
   public Archive<S> getParameter() {
     Archive<S> archive;
 
-    switch (getValue()) {
+    switch (value()) {
       case "crowdingDistanceArchive":
         archive = new CrowdingDistanceArchive<>(size) ;
         break;
@@ -39,7 +39,7 @@ public class ExternalArchiveParameter<S extends Solution<?>> extends Categorical
         archive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), size) ;
         break;
       default:
-        throw new JMetalException("Archive type does not exist: " + getName());
+        throw new JMetalException("Archive type does not exist: " + name());
     }
     return archive;
   }

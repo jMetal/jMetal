@@ -18,26 +18,26 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  */
 public class CrossoverParameter extends CategoricalParameter {
 
-  public CrossoverParameter(String[] args, List<String> crossoverOperators) {
-    super("crossover", args, crossoverOperators);
+  public CrossoverParameter(List<String> crossoverOperators) {
+    super("crossover", crossoverOperators);
   }
 
   public CrossoverOperator<DoubleSolution> getDoubleSolutionParameter() {
-    Double crossoverProbability = (Double) findGlobalParameter("crossoverProbability").getValue();
+    Double crossoverProbability = (Double) findGlobalParameter("crossoverProbability").value();
     RepairDoubleSolutionStrategyParameter repairDoubleSolution =
         (RepairDoubleSolutionStrategyParameter) findGlobalParameter("crossoverRepairStrategy");
 
     CrossoverOperator<DoubleSolution> result;
-    switch (getValue()) {
+    switch (value()) {
       case "SBX":
         Double distributionIndex =
-            (Double) findSpecificParameter("sbxDistributionIndex").getValue();
+            (Double) findSpecificParameter("sbxDistributionIndex").value();
         result =
             new SBXCrossover(
                 crossoverProbability, distributionIndex, repairDoubleSolution.getParameter());
         break;
       case "BLX_ALPHA":
-        Double alpha = (Double) findSpecificParameter("blxAlphaCrossoverAlphaValue").getValue();
+        Double alpha = (Double) findSpecificParameter("blxAlphaCrossoverAlphaValue").value();
         result =
             new BLXAlphaCrossover(crossoverProbability, alpha, repairDoubleSolution.getParameter());
         break;
@@ -46,16 +46,16 @@ public class CrossoverParameter extends CategoricalParameter {
             new WholeArithmeticCrossover(crossoverProbability, repairDoubleSolution.getParameter());
         break;
       default:
-        throw new JMetalException("Crossover operator does not exist: " + getName());
+        throw new JMetalException("Crossover operator does not exist: " + name());
     }
     return result;
   }
 
   public CrossoverOperator<BinarySolution> getBinarySolutionParameter() {
-    Double crossoverProbability = (Double) findGlobalParameter("crossoverProbability").getValue();
+    Double crossoverProbability = (Double) findGlobalParameter("crossoverProbability").value();
 
     CrossoverOperator<BinarySolution> result;
-    switch (getValue()) {
+    switch (value()) {
       case "HUX":
         result = new HUXCrossover<>(crossoverProbability);
         break;
@@ -66,7 +66,7 @@ public class CrossoverParameter extends CategoricalParameter {
         result = new SinglePointCrossover<>(crossoverProbability);
         break;
       default:
-        throw new JMetalException("Crossover operator does not exist: " + getName());
+        throw new JMetalException("Crossover operator does not exist: " + name());
     }
     return result;
   }

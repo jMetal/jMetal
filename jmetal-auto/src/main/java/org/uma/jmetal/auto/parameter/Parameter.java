@@ -48,14 +48,12 @@ import org.uma.jmetal.util.errorchecking.Check;
 public abstract class Parameter<T> {
   private T value;
   private final String name;
-  private final String[] args;
   private final List<Pair<String, Parameter<?>>> specificParameters = new ArrayList<>() ;
   private final List<Parameter<?>> globalParameters = new ArrayList<>();
   private final Map<String, Object> nonConfigurableParameters = new HashMap<>();
 
-  public Parameter(String name, String[] args) {
-    this.name = name;
-    this.args = args;
+  protected Parameter(String name) {
+    this.name = name ;
   }
 
   private T on(String key, String[] args, Function<String, T> parser) {
@@ -70,7 +68,7 @@ public abstract class Parameter<T> {
 
   public abstract void check();
 
-  public abstract Parameter<T> parse();
+  public abstract Parameter<T> parse(String[] arguments) ;
 
   /**
    * Parsing a parameter implies to parse and check its global and specific parameters
@@ -78,25 +76,25 @@ public abstract class Parameter<T> {
    * @param parseFunction
    * @return
    */
-  public Parameter<T> parse(Function<String, T> parseFunction) {
-    setValue(on("--" + getName(), getArgs(), parseFunction));
+  public Parameter<T> parse(Function<String, T> parseFunction, String[] args) {
+    value(on("--" + name(), args, parseFunction));
 
     for (Parameter<?> parameter : getGlobalParameters()) {
-      parameter.parse().check();
+      parameter.parse(args).check();
     }
 
     getSpecificParameters()
-            .forEach(
-                    pair -> {
-                      if (pair.getKey().equals(getValue())) {
-                        pair.getValue().parse().check();
-                      }
-                    });
+        .forEach(
+            pair -> {
+              if (pair.getKey().equals(value())) {
+                pair.getValue().parse(args).check();
+              }
+            });
 
     return this;
   }
 
-  public String getName() {
+  public String name() {
     return name;
   }
 
@@ -128,28 +126,24 @@ public abstract class Parameter<T> {
     return nonConfigurableParameters ;
   }
 
-  public T getValue() {
+  public T value() {
     return value;
   }
 
-  public void setValue(T value) {
+  public void value(T value) {
     this.value = value;
-  }
-
-  public String[] getArgs() {
-    return args;
   }
 
   public Parameter<?> findGlobalParameter(String parameterName) {
     return getGlobalParameters().stream()
-        .filter(parameter -> parameter.getName().equals(parameterName))
+        .filter(parameter -> parameter.name().equals(parameterName))
         .findFirst()
         .orElse(null);
   }
 
   public Parameter<?> findSpecificParameter(String parameterName) {
     return Objects.requireNonNull(getSpecificParameters().stream()
-            .filter(pair -> pair.getRight().getName().equals(parameterName))
+            .filter(pair -> pair.getRight().name().equals(parameterName))
             .findFirst()
             .orElse(null))
         .getValue();
@@ -157,7 +151,7 @@ public abstract class Parameter<T> {
 
   @Override
   public String toString() {
-    StringBuilder result = new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue());
+    StringBuilder result = new StringBuilder("Name: " + name() + ": " + "Value: " + value());
     if (!globalParameters.isEmpty()) {
       result.append("\n\t");
       for (Parameter<?> parameter : globalParameters) {

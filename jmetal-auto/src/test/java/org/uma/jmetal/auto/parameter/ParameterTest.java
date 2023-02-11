@@ -34,8 +34,8 @@ class ParameterTest {
 
   @Test
   void theConstructorSetsProperlyTheNameAndArgsArguments() {
-    assertThat(parameter.getName()).isEqualTo(parameterName) ;
-    assertThat(parameter.getArgs()).containsExactly("--"+parameterName, parameterValue) ;
+    assertThat(parameter.name()).isEqualTo(parameterName) ;
+    assertThat(parameter.args()).containsExactly("--"+parameterName, parameterValue) ;
   }
 
   @Test
@@ -65,7 +65,7 @@ class ParameterTest {
 
   @Test
   void setANewValueWorksProperly() {
-    parameter.setValue(-2345.0);
-    assertThat(parameter.getValue()).isEqualTo(-2345.0) ;
+    parameter.value(-2345.0);
+    assertThat(parameter.value()).isEqualTo(-2345.0) ;
   }
 }

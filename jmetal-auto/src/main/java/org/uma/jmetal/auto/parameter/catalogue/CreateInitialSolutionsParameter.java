@@ -14,17 +14,17 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class CreateInitialSolutionsParameter extends CategoricalParameter {
 
-  public CreateInitialSolutionsParameter(String[] args, List<String> validValues) {
-    this("createInitialSolutions", args, validValues);
+  public CreateInitialSolutionsParameter(List<String> validValues) {
+    this("createInitialSolutions", validValues);
   }
 
-  public CreateInitialSolutionsParameter(String parameterName, String[] args,
+  public CreateInitialSolutionsParameter(String parameterName,
       List<String> validValues) {
-    super(parameterName, args, validValues);
+    super(parameterName, validValues);
   }
 
   public SolutionsCreation<? extends DoubleSolution> getParameter(DoubleProblem problem, int populationSize) {
-    switch (getValue()) {
+    switch (value()) {
       case "random":
         return new RandomSolutionsCreation<>(problem, populationSize);
       case "scatterSearch":
@@ -33,17 +33,15 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter {
         return new LatinHypercubeSamplingSolutionsCreation(problem, populationSize);
       default:
         throw new JMetalException(
-            getValue() + " is not a valid initialization strategy");
+            value() + " is not a valid initialization strategy");
     }
   }
 
   public SolutionsCreation<? extends BinarySolution> getParameter(BinaryProblem problem, int populationSize) {
-    switch (getValue()) {
-      case "random":
-        return new RandomSolutionsCreation<>(problem, populationSize);
-      default:
-        throw new JMetalException(
-            getValue() + " is not a valid initialization strategy");
+    if (value().equals("random")) {
+      return new RandomSolutionsCreation<>(problem, populationSize);
     }
+    throw new JMetalException(
+        value() + " is not a valid initialization strategy");
   }
 }

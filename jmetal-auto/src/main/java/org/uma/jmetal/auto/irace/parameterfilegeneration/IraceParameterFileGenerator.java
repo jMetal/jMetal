@@ -12,10 +12,10 @@ import org.uma.jmetal.auto.parameter.RealParameter;
 public class IraceParameterFileGenerator {
   private static String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
 
-  public void generateConfigurationFile(AutoConfigurableAlgorithm autoConfigurableAlgorithm, String[] parameters) {
-    autoConfigurableAlgorithm.parseAndCheckParameters(parameters) ;
+  public void generateConfigurationFile(AutoConfigurableAlgorithm autoConfigurableAlgorithm) {
+    autoConfigurableAlgorithm.configure();
 
-    List<Parameter<?>> parameterList = autoConfigurableAlgorithm.getAutoConfigurableParameterList() ;
+    List<Parameter<?>> parameterList = autoConfigurableAlgorithm.configurableParameterList() ;
 
     StringBuilder stringBuilder = new StringBuilder();
 
@@ -31,8 +31,8 @@ public class IraceParameterFileGenerator {
     stringBuilder.append(
             String.format(
                     formatString,
-                    parameter.getName(),
-                    "\"" + "--" + parameter.getName() + " \"",
+                    parameter.name(),
+                    "\"" + "--" + parameter.name() + " \"",
                     decodeType(parameter),
                     decodeValidValues(parameter),
                     ""));
@@ -47,7 +47,7 @@ public class IraceParameterFileGenerator {
   }
 
   private void decodeParameterGlobal(Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
-    StringBuilder dependenceString = new StringBuilder("\"" + parameter.getName() + "\"");
+    StringBuilder dependenceString = new StringBuilder("\"" + parameter.name() + "\"");
     if (parentParameter instanceof CategoricalParameter) {
       var validValues = ((CategoricalParameter) parentParameter).getValidValues();
       dependenceString = new StringBuilder();
@@ -60,11 +60,11 @@ public class IraceParameterFileGenerator {
     stringBuilder.append(
             String.format(
                     formatString,
-                    parameter.getName(),
-                    "\"" + "--" + parameter.getName() + " \"",
+                    parameter.name(),
+                    "\"" + "--" + parameter.name() + " \"",
                     decodeType(parameter),
                     decodeValidValues(parameter),
-                    "| " + parentParameter.getName() + " %in% c(" + dependenceString + ")"));
+                    "| " + parentParameter.name() + " %in% c(" + dependenceString + ")"));
 
     for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
@@ -81,11 +81,11 @@ public class IraceParameterFileGenerator {
     stringBuilder.append(
             String.format(
                     formatString,
-                    pair.getRight().getName(),
-                    "\"" + "--" + pair.getRight().getName() + " \"",
+                    pair.getRight().name(),
+                    "\"" + "--" + pair.getRight().name() + " \"",
                     decodeType(pair.getRight()),
                     decodeValidValues(pair.getRight()),
-                    "| " + parentParameter.getName() + " %in% c(\"" + pair.getLeft() + "\")"));
+                    "| " + parentParameter.name() + " %in% c(\"" + pair.getLeft() + "\")"));
 
     for (Parameter<?> globalParameter : pair.getValue().getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, pair.getValue());
@@ -133,7 +133,7 @@ public class IraceParameterFileGenerator {
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof Parameter) {
-      result = "(" + parameter.getValue() + ")";
+      result = "(" + parameter.value() + ")";
     }
 
     return result;

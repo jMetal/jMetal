@@ -9,13 +9,13 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 
 public class RankingParameter <S extends Solution<?>> extends CategoricalParameter {
-  public RankingParameter(String name, String[] args, List<String> validRankings) {
-    super(name, args, validRankings);
+  public RankingParameter(String name,List<String> validRankings) {
+    super(name, validRankings);
   }
 
   public Ranking<S> getParameter() {
     Ranking<S> result ;
-    switch (getValue()) {
+    switch (value()) {
       case "dominanceRanking":
         result = new FastNonDominatedSortRanking<>() ;
         break;
@@ -23,7 +23,7 @@ public class RankingParameter <S extends Solution<?>> extends CategoricalParamet
         result = new StrengthRanking<>() ;
         break;
       default:
-        throw new JMetalException("Ranking does not exist: " + getName());
+        throw new JMetalException("Ranking does not exist: " + name());
     }
     return result;
   }

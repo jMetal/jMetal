@@ -16,18 +16,18 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 
 public class ReplacementParameter extends CategoricalParameter {
-  public ReplacementParameter(String args[], List<String> selectionStrategies) {
-    super("replacement", args, selectionStrategies);
+  public ReplacementParameter(List<String> selectionStrategies) {
+    super("replacement", selectionStrategies);
   }
 
   public Replacement<?> getParameter(Comparator<DoubleSolution> comparator) {
-    String removalPolicy = (String) findGlobalParameter("removalPolicy").getValue();
+    String removalPolicy = (String) findGlobalParameter("removalPolicy").value();
     Replacement<?> result;
-    switch (getValue()) {
+    switch (value()) {
       case "rankingAndDensityEstimatorReplacement":
-        String rankingName = (String) findSpecificParameter("rankingForReplacement").getValue();
+        String rankingName = (String) findSpecificParameter("rankingForReplacement").value();
         String densityEstimatorName =
-            (String) findSpecificParameter("densityEstimatorForReplacement").getValue();
+            (String) findSpecificParameter("densityEstimatorForReplacement").value();
 
         Ranking<Solution<?>> ranking;
         if (rankingName.equals("dominanceRanking")) {
@@ -55,7 +55,7 @@ public class ReplacementParameter extends CategoricalParameter {
 
         break;
       default:
-        throw new JMetalException("Replacement component unknown: " + getValue());
+        throw new JMetalException("Replacement component unknown: " + value());
     }
 
     return result;

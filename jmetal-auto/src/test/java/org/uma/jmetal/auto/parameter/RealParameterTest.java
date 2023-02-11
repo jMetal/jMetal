@@ -17,7 +17,7 @@ class RealParameterTest {
     RealParameter realParameter = new RealParameter("realParameter", parameterString, lowerBound,
         upperBound);
 
-    assertThat(realParameter.getName()).isEqualTo("realParameter", "5");
+    assertThat(realParameter.name()).isEqualTo("realParameter", "5");
     assertThat(realParameter.getValidValues()).containsExactly(lowerBound, upperBound);
   }
 
@@ -52,7 +52,7 @@ class RealParameterTest {
     RealParameter realParameter = new RealParameter("realParameter", parameterString, lowerBound,
         upperBound);
 
-    assertThat(realParameter.parse().getValue()).isEqualTo(15) ;
+    assertThat(realParameter.parse().value()).isEqualTo(15) ;
   }
 
   @Test

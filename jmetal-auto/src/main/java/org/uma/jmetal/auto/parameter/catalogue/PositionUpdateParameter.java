@@ -9,26 +9,26 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class PositionUpdateParameter extends CategoricalParameter {
 
-  public PositionUpdateParameter(String[] args, List<String> positionUpdateStrategies) {
-    super("positionUpdate", args, positionUpdateStrategies);
+  public PositionUpdateParameter(List<String> positionUpdateStrategies) {
+    super("positionUpdate", positionUpdateStrategies);
   }
 
   public PositionUpdate getParameter() {
     PositionUpdate result;
-    switch (getValue()) {
+    switch (value()) {
       case "defaultPositionUpdate":
         List<Bounds<Double>> positionBounds = (List<Bounds<Double>>) getNonConfigurableParameter(
             "positionBounds");
         double velocityChangeWhenLowerLimitIsReached = (double) findSpecificParameter(
-            "velocityChangeWhenLowerLimitIsReached").getValue();
+            "velocityChangeWhenLowerLimitIsReached").value();
         double velocityChangeWhenUpperLimitIsReached = (double) findSpecificParameter(
-            "velocityChangeWhenUpperLimitIsReached").getValue();
+            "velocityChangeWhenUpperLimitIsReached").value();
 
         result = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
             velocityChangeWhenUpperLimitIsReached, positionBounds);
         break;
       default:
-        throw new JMetalException("Position update component unknown: " + getValue());
+        throw new JMetalException("Position update component unknown: " + value());
     }
     return result;
   }

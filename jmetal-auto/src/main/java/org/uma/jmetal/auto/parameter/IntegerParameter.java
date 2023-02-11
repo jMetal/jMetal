@@ -9,20 +9,20 @@ public class IntegerParameter extends Parameter<Integer> {
   private final Integer lowerBound;
   private final Integer upperBound;
 
-  public IntegerParameter(String name, String[] args, Integer lowerBound, Integer upperBound) {
-    super(name, args);
+  public IntegerParameter(String name, Integer lowerBound, Integer upperBound) {
+    super(name);
     this.lowerBound = lowerBound;
     this.upperBound = upperBound;
   }
 
   @Override
   public void check() {
-    if ((getValue() < lowerBound) || (getValue() > upperBound)) {
+    if ((value() < lowerBound) || (value() > upperBound)) {
       throw new JMetalException(
           "Parameter "
-              + getName()
+              + name()
               + ": Invalid value: "
-              + getValue()
+              + value()
               + ". Range: "
               + lowerBound
               + ", "
@@ -31,8 +31,8 @@ public class IntegerParameter extends Parameter<Integer> {
   }
 
   @Override
-  public IntegerParameter parse() {
-    return (IntegerParameter) parse(Integer::parseInt);
+  public IntegerParameter parse(String[] arguments) {
+    return (IntegerParameter) parse(Integer::parseInt, arguments);
   }
 
   public List<Integer> getValidValues() {
@@ -43,10 +43,10 @@ public class IntegerParameter extends Parameter<Integer> {
   public String toString() {
     StringBuilder result =
             new StringBuilder("Name: "
-                    + getName()
+                    + name()
                     + ": "
                     + "Value: "
-                    + getValue()
+                    + value()
                     + ". Lower bound: "
                     + lowerBound
                     + ". Upper bound: "

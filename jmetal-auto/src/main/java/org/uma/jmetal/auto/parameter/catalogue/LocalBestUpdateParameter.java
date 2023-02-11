@@ -8,17 +8,17 @@ import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class LocalBestUpdateParameter extends CategoricalParameter {
-  public LocalBestUpdateParameter(String[] args, List<String> localBestUpdateStrategies) {
-    super("localBestUpdate", args, localBestUpdateStrategies);
+  public LocalBestUpdateParameter(List<String> localBestUpdateStrategies) {
+    super("localBestUpdate", localBestUpdateStrategies);
   }
 
   public LocalBestUpdate getParameter(DominanceComparator comparator) {
     LocalBestUpdate result;
 
-    if ("defaultLocalBestUpdate".equals(getValue())) {
+    if ("defaultLocalBestUpdate".equals(value())) {
       result = new DefaultLocalBestUpdate(comparator);
     } else {
-      throw new JMetalException("Local best update component unknown: " + getValue());
+      throw new JMetalException("Local best update component unknown: " + value());
     }
 
     return result;

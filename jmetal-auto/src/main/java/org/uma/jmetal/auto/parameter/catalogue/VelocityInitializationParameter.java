@@ -10,28 +10,28 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class VelocityInitializationParameter extends CategoricalParameter {
 
-  public VelocityInitializationParameter(String[] args, List<String> variationStrategies) {
-    super("velocityInitialization", args, variationStrategies);
+  public VelocityInitializationParameter(List<String> variationStrategies) {
+    super("velocityInitialization", variationStrategies);
   }
 
   public VelocityInitialization getParameter() {
     VelocityInitialization result;
 
-    if ("defaultVelocityInitialization".equals(getValue())) {
+    if ("defaultVelocityInitialization".equals(value())) {
       result = new DefaultVelocityInitialization();
-    } else if ("SPSO2007VelocityInitialization".equals(getValue())) {
+    } else if ("SPSO2007VelocityInitialization".equals(value())) {
       result = new SPSO2007VelocityInitialization();
-    } else if ("SPSO2011VelocityInitialization".equals(getValue())) {
+    } else if ("SPSO2011VelocityInitialization".equals(value())) {
       result = new SPSO2011VelocityInitialization();
     } else {
-      throw new JMetalException("Velocity initialization component unknown: " + getValue());
+      throw new JMetalException("Velocity initialization component unknown: " + value());
     }
 
     return result;
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "velocityInitialization";
   }
 }

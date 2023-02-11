@@ -10,39 +10,39 @@ import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.imp
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class InertiaWeightComputingParameter extends CategoricalParameter {
-  public InertiaWeightComputingParameter(String[] args, List<String> mutationOperators) {
-    super("inertiaWeightComputingStrategy", args, mutationOperators);
+  public InertiaWeightComputingParameter(List<String> mutationOperators) {
+    super("inertiaWeightComputingStrategy", mutationOperators);
   }
 
   public InertiaWeightComputingStrategy getParameter() {
     InertiaWeightComputingStrategy result;
 
-    switch (getValue()) {
+    switch (value()) {
       case "constantValue":
-        Double weight = (Double) findSpecificParameter("weight").getValue();
+        Double weight = (Double) findSpecificParameter("weight").value();
         result = new ConstantValueStrategy(weight) ;
         break;
       case "randomSelectedValue":
-        Double weightMin = (Double) findSpecificParameter("weightMin").getValue();
-        Double weightMax = (Double) findSpecificParameter("weightMax").getValue();
+        Double weightMin = (Double) findSpecificParameter("weightMin").value();
+        Double weightMax = (Double) findSpecificParameter("weightMax").value();
         result = new RandomSelectedValueStrategy(weightMin, weightMax) ;
         break;
       case "linearDecreasingValue":
-        weightMin = (Double) findSpecificParameter("weightMin").getValue();
-        weightMax = (Double) findSpecificParameter("weightMax").getValue();
+        weightMin = (Double) findSpecificParameter("weightMin").value();
+        weightMax = (Double) findSpecificParameter("weightMax").value();
         int iterations = (Integer) getNonConfigurableParameter("maxIterations") ;
         int swarmSize = (Integer) getNonConfigurableParameter("swarmSize") ;
         result = new LinearDecreasingStrategy(weightMin, weightMax, iterations, swarmSize) ;
         break;
       case "linearIncreasingValue":
-        weightMin = (Double) findSpecificParameter("weightMin").getValue();
-        weightMax = (Double) findSpecificParameter("weightMax").getValue();
+        weightMin = (Double) findSpecificParameter("weightMin").value();
+        weightMax = (Double) findSpecificParameter("weightMax").value();
         iterations = (Integer) getNonConfigurableParameter("maxIterations");
         swarmSize = (Integer) getNonConfigurableParameter("swarmSize");
         result =new LinearIncreasingStrategy(weightMin, weightMax, iterations, swarmSize) ;
         break;
       default:
-        throw new JMetalException("Inertia weight computing strategy does not exist: " + getName());
+        throw new JMetalException("Inertia weight computing strategy does not exist: " + name());
     }
     return result;
   }

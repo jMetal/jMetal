@@ -7,24 +7,24 @@ import org.apache.commons.lang3.tuple.Pair;
 public class CategoricalParameter extends Parameter<String> {
   private final List<String> validValues;
 
-  public CategoricalParameter(String name, String[] args, List<String> validValues) {
-    super(name, args);
+  public CategoricalParameter(String name, List<String> validValues) {
+    super(name);
     this.validValues = validValues;
   }
 
   @Override
-  public CategoricalParameter parse() {
-    return (CategoricalParameter) parse(Function.identity());
+  public CategoricalParameter parse(String[] arguments) {
+    return (CategoricalParameter) parse(Function.identity(), arguments);
   }
 
   @Override
   public void check() {
-    if (!validValues.contains(getValue())) {
+    if (!validValues.contains(value())) {
       throw new RuntimeException(
           "Parameter "
-              + getName()
+              + name()
               + ": Invalid value: "
-              + getValue()
+              + value()
               + ". Valid values: "
               + validValues);
     }
@@ -37,7 +37,7 @@ public class CategoricalParameter extends Parameter<String> {
   @Override
   public String toString() {
     StringBuilder result =
-            new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues);
+            new StringBuilder("Name: " + name() + ": " + "Value: " + value() + ". Valid values: " + validValues);
     for (Parameter<?> parameter : getGlobalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }

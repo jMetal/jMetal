@@ -15,16 +15,16 @@ import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
 public class SelectionParameter<S extends Solution<?>> extends CategoricalParameter {
 
-  public SelectionParameter(String args[], List<String> selectionStrategies) {
-    super("selection", args, selectionStrategies);
+  public SelectionParameter(List<String> selectionStrategies) {
+    super("selection", selectionStrategies);
   }
 
   public Selection<S> getParameter(int matingPoolSize, Comparator<S> comparator) {
     Selection<S> result;
-    switch (getValue()) {
+    switch (value()) {
       case "tournament":
         int tournamentSize =
-            (Integer) findSpecificParameter("selectionTournamentSize").getValue();
+            (Integer) findSpecificParameter("selectionTournamentSize").value();
 
         result = new NaryTournamentSelection<>(
             tournamentSize, matingPoolSize, comparator);
@@ -35,7 +35,7 @@ public class SelectionParameter<S extends Solution<?>> extends CategoricalParame
         break;
       case "populationAndNeighborhoodMatingPoolSelection":
         double neighborhoodSelectionProbability =
-            (double) findSpecificParameter("neighborhoodSelectionProbability").getValue();
+            (double) findSpecificParameter("neighborhoodSelectionProbability").value();
         var neighborhood = (Neighborhood<S>) getNonConfigurableParameter("neighborhood");
         Check.notNull(neighborhood);
 
@@ -52,7 +52,7 @@ public class SelectionParameter<S extends Solution<?>> extends CategoricalParame
                 false);
         break;
       default:
-        throw new JMetalException("Selection component unknown: " + getValue());
+        throw new JMetalException("Selection component unknown: " + value());
     }
 
     return result;
