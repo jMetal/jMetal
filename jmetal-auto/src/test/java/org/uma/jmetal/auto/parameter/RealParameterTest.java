@@ -10,18 +10,18 @@ import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 class RealParameterTest {
 
   @Test
-  void theConstructorMustInitializeTheFieldsCorrectly() {
+  void constructorMustInitializeTheFieldsCorrectly() {
     double lowerBound = 1.0;
     double upperBound = 10.0;
     RealParameter realParameter = new RealParameter("realParameter", lowerBound,
         upperBound);
 
     assertThat(realParameter.name()).isEqualTo("realParameter");
-    assertThat(realParameter.getValidValues()).containsExactly(lowerBound, upperBound);
+    assertThat(realParameter.validValues()).containsExactly(lowerBound, upperBound);
   }
 
   @Test
-  void theConstructorMustRaiseAnExceptionInTheLowerBoundIsNotLowerThanTheUpperBound() {
+  void constructorMustRaiseAnExceptionInTheLowerBoundIsNotLowerThanTheUpperBound() {
     double lowerBound = 10.0;
     double upperBound = 10.0;
 

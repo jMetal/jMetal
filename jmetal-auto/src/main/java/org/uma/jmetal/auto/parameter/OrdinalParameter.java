@@ -24,7 +24,7 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
     }
   }
 
-  public List<T> getValidValues() {
+  public List<T> validValues() {
     return validValues;
   }
 

@@ -3,6 +3,7 @@ package org.uma.jmetal.auto.parameter;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class IntegerParameter extends Parameter<Integer> {
@@ -11,6 +12,8 @@ public class IntegerParameter extends Parameter<Integer> {
 
   public IntegerParameter(String name, Integer lowerBound, Integer upperBound) {
     super(name);
+    Check.that(lowerBound < upperBound, "The lower bound " + lowerBound + " "
+        + "is not higher that the upper bound " + upperBound);
     this.lowerBound = lowerBound;
     this.upperBound = upperBound;
   }
@@ -35,7 +38,10 @@ public class IntegerParameter extends Parameter<Integer> {
     return (IntegerParameter) parse(Integer::parseInt, arguments);
   }
 
-  public List<Integer> getValidValues() {
+  /**
+   * @return A list with the lower and upper bounds delimiting the valid values
+   */
+  public List<Integer> validValues() {
     return Arrays.asList(lowerBound, upperBound);
   }
 

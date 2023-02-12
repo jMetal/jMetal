@@ -28,7 +28,6 @@ public class RealParameter extends Parameter<Double> {
     return (RealParameter) parse(Double::parseDouble, arguments);
   }
 
-
   @Override
   public void check() {
     if ((value() < lowerBound) || (value() > upperBound)) {
@@ -47,7 +46,7 @@ public class RealParameter extends Parameter<Double> {
   /**
    * @return A list with the lower and upper bounds delimiting the valid values
    */
-  public List<Double> getValidValues() {
+  public List<Double> validValues() {
     return List.of(lowerBound, upperBound);
   }
 

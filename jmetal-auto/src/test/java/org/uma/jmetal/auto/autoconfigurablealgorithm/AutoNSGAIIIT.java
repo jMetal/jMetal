@@ -18,7 +18,7 @@ class AutoNSGAIIIT {
 
   @Test
   void AutoNSGAIIHasFiveFirstLevelConfigurableParameters() {
-    assertThat(new AutoNSGAII().autoConfigurableParameterList).hasSize(5);
+    assertThat(new AutoNSGAII().configurableParameterList()).hasSize(5);
   }
 
   @Test

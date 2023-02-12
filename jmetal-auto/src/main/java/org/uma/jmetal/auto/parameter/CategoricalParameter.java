@@ -30,7 +30,7 @@ public class CategoricalParameter extends Parameter<String> {
     }
   }
 
-  public List<String> getValidValues() {
+  public List<String> validValues() {
     return validValues;
   }
 

@@ -17,7 +17,7 @@ import org.uma.jmetal.util.VectorUtils;
 class AutoMOPSOIT {
   @Test
   void AutoMOPSOHas15FirstLevelConfigurableParameters() {
-    assertThat(new AutoMOPSO().autoConfigurableParameterList).hasSize(15);
+    assertThat(new AutoMOPSO().configurableParameterList()).hasSize(15);
   }
 
   @Test

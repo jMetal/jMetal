@@ -47,7 +47,7 @@ public class IraceParameterFileGenerator {
   private void decodeParameterGlobal(Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
     StringBuilder dependenceString = new StringBuilder("\"" + parameter.name() + "\"");
     if (parentParameter instanceof CategoricalParameter) {
-      var validValues = ((CategoricalParameter) parentParameter).getValidValues();
+      var validValues = ((CategoricalParameter) parentParameter).validValues();
       dependenceString = new StringBuilder();
       for (String value : validValues) {
         dependenceString.append("\"").append(value).append("\"").append(",");
@@ -115,19 +115,19 @@ public class IraceParameterFileGenerator {
     String result = " ";
 
     if (parameter instanceof CategoricalParameter) {
-      result = ((CategoricalParameter) parameter).getValidValues().toString();
+      result = ((CategoricalParameter) parameter).validValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof OrdinalParameter) {
-      result = ((OrdinalParameter<?>) parameter).getValidValues().toString();
+      result = ((OrdinalParameter<?>) parameter).validValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof IntegerParameter) {
-      result = ((IntegerParameter) parameter).getValidValues().toString();
+      result = ((IntegerParameter) parameter).validValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof RealParameter) {
-      result = ((RealParameter) parameter).getValidValues().toString();
+      result = ((RealParameter) parameter).validValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter != null) {
