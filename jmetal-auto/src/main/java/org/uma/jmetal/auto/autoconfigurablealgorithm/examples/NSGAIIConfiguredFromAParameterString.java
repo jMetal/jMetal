@@ -64,7 +64,6 @@ public class NSGAIIConfiguredFromAParameterString {
     nsgaII.run();
 
     JMetalLogger.logger.info("Total computing time: " + nsgaII.getTotalComputingTime());
-    ;
 
     new SolutionListOutput(nsgaII.result())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
