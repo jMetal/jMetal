@@ -268,7 +268,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     return velocityUpdateParameter;
   }
 
-  protected Problem<DoubleSolution> getProblem() {
+  protected Problem<DoubleSolution> problem() {
     return ProblemFactory.loadProblem(problemNameParameter.value());
   }
 
@@ -278,7 +278,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
   public ParticleSwarmOptimizationAlgorithm create() {
     JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.value());
 
-    Problem<DoubleSolution> problem = getProblem();
+    Problem<DoubleSolution> problem = problem();
     int swarmSize = swarmSizeParameter.value();
     int maximumNumberOfEvaluations = maximumNumberOfEvaluationsParameter.value();
 

@@ -172,10 +172,6 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
         new RealParameter("nonUniformMutationPerturbation", 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.value());
-    mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
-        problem.numberOfVariables());
-
     DifferentialEvolutionCrossoverParameter deCrossoverParameter =
         new DifferentialEvolutionCrossoverParameter(List.of("RAND_1_BIN", "RAND_1_EXP", "RAND_2_BIN"));
 
@@ -227,6 +223,10 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     }
   }
 
+  protected Problem<DoubleSolution> problem() {
+    return ProblemFactory.loadProblem(problemNameParameter.value());
+  }
+
   /**
    * Creates an instance of NSGA-II from the parsed parameters
    *
@@ -235,7 +235,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   public EvolutionaryAlgorithm<DoubleSolution> create() {
     JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.value());
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.value());
+    Problem<DoubleSolution> problem = problem() ;
 
     Archive<DoubleSolution> archive = null;
     Evaluation<DoubleSolution> evaluation ;
@@ -256,7 +256,10 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter(
         "mutation");
-    if (mutationParameter.validValues().equals("nonUniform")) {
+    mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
+        problem.numberOfVariables());
+
+    if (mutationParameter.value().equals("nonUniform")) {
       mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
       mutationParameter.addNonConfigurableParameter("maxIterations",
           maximumNumberOfEvaluationsParameter.value() / populationSizeParameter.value());

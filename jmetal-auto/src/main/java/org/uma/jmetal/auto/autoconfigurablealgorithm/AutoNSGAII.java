@@ -197,6 +197,11 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     }
   }
 
+
+  protected Problem<DoubleSolution> problem() {
+    return ProblemFactory.loadProblem(problemNameParameter.value());
+  }
+
   /**
    * Creates an instance of NSGA-II from the parsed parameters
    *
