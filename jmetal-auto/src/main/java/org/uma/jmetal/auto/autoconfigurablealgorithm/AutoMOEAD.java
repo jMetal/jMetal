@@ -91,12 +91,13 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     referenceFrontFilenameParameter = new StringParameter("referenceFrontFileName");
 
+    populationSizeParameter = new PositiveIntegerValue("populationSize");
+
+    fixedParameterList.add(populationSizeParameter);
     fixedParameterList.add(problemNameParameter);
     fixedParameterList.add(referenceFrontFilenameParameter);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter) ;
-
-    populationSizeParameter = new PositiveIntegerValue("populationSize");
 
     normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives") ;
 
@@ -116,7 +117,6 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     selection();
     variation();
 
-    autoConfigurableParameterList.add(populationSizeParameter);
     autoConfigurableParameterList.add(neighborhoodSizeParameter);
     autoConfigurableParameterList.add(maximumNumberOfReplacedSolutionsParameter);
     autoConfigurableParameterList.add(aggregativeFunctionParameter);

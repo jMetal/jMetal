@@ -83,20 +83,21 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     referenceFrontFilename = new StringParameter("referenceFrontFileName");
     maximumNumberOfEvaluationsParameter =
         new PositiveIntegerValue("maximumNumberOfEvaluations");
+    populationSizeParameter = new PositiveIntegerValue("populationSize");
 
+    fixedParameterList.add(populationSizeParameter);
     fixedParameterList.add(problemNameParameter);
     fixedParameterList.add(referenceFrontFilename);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter);
 
-    populationSizeParameter = new PositiveIntegerValue("populationSize");
 
     algorithmResult();
     createInitialSolution();
     selection();
     variation();
 
-    configurableParameterList.add(populationSizeParameter);
+    //configurableParameterList.add(populationSizeParameter);
     configurableParameterList.add(algorithmResultParameter);
     configurableParameterList.add(createInitialSolutionsParameter);
     configurableParameterList.add(variationParameter);

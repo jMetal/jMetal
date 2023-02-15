@@ -124,13 +124,15 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     maximumNumberOfEvaluationsParameter =
         new PositiveIntegerValue("maximumNumberOfEvaluations");
 
+    archiveSizeParameter = new PositiveIntegerValue("archiveSize");
+
     fixedParameterList.add(problemNameParameter);
+    fixedParameterList.add(archiveSizeParameter);
     fixedParameterList.add(referenceFrontFilenameParameter);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter);
 
     swarmSizeParameter = new IntegerParameter("swarmSize", 10, 200);
-    archiveSizeParameter = new PositiveIntegerValue("archiveSize");
 
     swarmInitializationParameter =
         new CreateInitialSolutionsParameter("swarmInitialization",
@@ -192,7 +194,6 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm {
     inertiaWeightComputingParameter.addSpecificParameter("linearDecreasingValue", wMaxParameter);
 
     configurableParameterList.add(swarmSizeParameter);
-    configurableParameterList.add(archiveSizeParameter);
     configurableParameterList.add(leaderArchiveParameter);
     configurableParameterList.add(algorithmResultParameter);
     configurableParameterList.add(swarmInitializationParameter);
