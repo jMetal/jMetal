@@ -15,7 +15,6 @@ import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOPSO;
 public class AutoMOPSOIraceFileGenerator {
 
   public static void main(String[] args) {
-
     IraceParameterFileGenerator parameterFileGenerator = new IraceParameterFileGenerator();
     parameterFileGenerator.generateConfigurationFile(new AutoMOPSO());
   }

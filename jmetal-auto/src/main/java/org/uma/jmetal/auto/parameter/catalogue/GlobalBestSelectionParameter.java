@@ -24,9 +24,6 @@ public class GlobalBestSelectionParameter extends CategoricalParameter {
 
         result = new NaryTournamentGlobalBestSelection(tournamentSize, comparator) ;
         break ;
-      case "binaryTournament":
-        result = new BinaryTournamentGlobalBestSelection(comparator) ;
-        break ;
       case "random":
         result = new RandomGlobalBestSelection();
         break ;
