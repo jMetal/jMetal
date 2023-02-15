@@ -18,5 +18,5 @@ public interface Observable<D> {
 	boolean hasChanged() ;
 	void clearChanged() ;
 
-	Collection<Observer<D>> getObservers() ;
+	Collection<Observer<D>> observers() ;
 }

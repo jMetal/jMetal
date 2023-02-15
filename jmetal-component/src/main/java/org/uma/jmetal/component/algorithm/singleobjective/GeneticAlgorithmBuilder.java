@@ -95,8 +95,8 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
         selection, variation, replacement) {
       @Override
       public void updateProgress() {
-        S bestFitnessSolution = getPopulation().stream().min(new ObjectiveComparator<>(0)).get();
-        getAttributes().put("BEST_SOLUTION", bestFitnessSolution);
+        S bestFitnessSolution = population().stream().min(new ObjectiveComparator<>(0)).get();
+        attributes().put("BEST_SOLUTION", bestFitnessSolution);
 
         super.updateProgress();
       }

@@ -20,7 +20,7 @@ public class CrowdingDistanceArchive<S extends Solution<?>> extends AbstractBoun
   public CrowdingDistanceArchive(int maxSize, DominanceComparator<S> dominanceComparator) {
     super(maxSize, dominanceComparator);
     crowdingDistance = new CrowdingDistanceDensityEstimator<>();
-    crowdingDistanceComparator = Comparator.comparing(crowdingDistance::getValue).reversed() ;
+    crowdingDistanceComparator = Comparator.comparing(crowdingDistance::value).reversed() ;
   }
 
   public CrowdingDistanceArchive(int maxSize) {

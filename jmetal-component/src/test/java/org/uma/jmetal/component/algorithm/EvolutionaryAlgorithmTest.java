@@ -29,7 +29,7 @@ class EvolutionaryAlgorithmTest {
 
     assertThat(evolutionaryAlgorithm.result()).isNullOrEmpty();
     assertThat(evolutionaryAlgorithm.name()).isEqualTo("EA") ;
-    assertThat(evolutionaryAlgorithm.getAttributes()).isEmpty();
+    assertThat(evolutionaryAlgorithm.attributes()).isEmpty();
 
     assertThat(solutionsCreation).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "createInitialPopulation")) ;
     assertThat(evaluation).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "evaluation")) ;

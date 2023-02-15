@@ -10,9 +10,9 @@ import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByE
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
@@ -51,6 +51,7 @@ public class MOEADWithUnboundedArchiveExample {
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
 
     Archive<DoubleSolution> externalArchive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), populationSize) ;
+    boolean normalizeObjectives = false ;
 
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
@@ -58,7 +59,8 @@ public class MOEADWithUnboundedArchiveExample {
         crossover,
         mutation,
         weightVectorDirectory,
-        sequenceGenerator)
+        sequenceGenerator,
+        normalizeObjectives)
         .setTermination(termination)
         .setEvaluation(new SequentialEvaluationWithArchive<DoubleSolution>(problem, externalArchive))
         .build();
@@ -66,8 +68,8 @@ public class MOEADWithUnboundedArchiveExample {
     moead.run();
 
     List<DoubleSolution> population = externalArchive.solutions();
-    JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
+    JMetalLogger.logger.info("Total execution time : " + moead.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + moead.numberOfEvaluations());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

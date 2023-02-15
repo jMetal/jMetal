@@ -12,5 +12,5 @@ import java.util.List;
 public interface CollectionGrouping<S> {
   int numberOfGroups();
   void computeGroups(S itemsToGroup) ;
-  List<Integer> getGroup(int groupIndex);
+  List<Integer> group(int groupIndex);
 }

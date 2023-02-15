@@ -48,8 +48,8 @@ public class SMPSOWithUnboundedArchiveExample {
     smpso.run();
 
     List<DoubleSolution> population = externalUnboundedArchive.solutions();
-    JMetalLogger.logger.info("Total execution time : " + smpso.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + smpso.getEvaluation());
+    JMetalLogger.logger.info("Total execution time : " + smpso.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + smpso.evaluation());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

@@ -123,6 +123,12 @@ public class SMPSOBuilder {
     return this ;
   }
 
+  public SMPSOBuilder setGlobalBestSelection(GlobalBestSelection globalBestSelection) {
+    this.globalBestSelection = globalBestSelection ;
+
+    return this ;
+  }
+
   public SMPSOBuilder setGlobalBestInitialization(GlobalBestInitialization globalBestInitialization) {
     this.globalBestInitialization = globalBestInitialization ;
 

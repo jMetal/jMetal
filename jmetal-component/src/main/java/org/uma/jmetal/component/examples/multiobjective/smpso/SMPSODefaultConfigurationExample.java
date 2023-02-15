@@ -21,8 +21,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class SMPSODefaultConfigurationExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -38,8 +38,8 @@ public class SMPSODefaultConfigurationExample {
     smpso.run();
 
     List<DoubleSolution> population = smpso.result();
-    JMetalLogger.logger.info("Total execution time : " + smpso.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + smpso.getEvaluation());
+    JMetalLogger.logger.info("Total execution time : " + smpso.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + smpso.evaluation());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

@@ -595,7 +595,7 @@ static double hv(FRONT ps)
         invertedFront.getNumberOfPoints(), numberOfObjectives);
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "PISA implementation of the hypervolume quality indicator" ;
   }
 

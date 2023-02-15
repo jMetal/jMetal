@@ -58,12 +58,12 @@ public class NSGAIIConfiguredFromAParameterString {
             "NSGA-II", 80, 100,
             "resources/referenceFrontsCSV/" + referenceFrontFileName, "F1", "F2");
 
-    nsgaII.getObservable().register(evaluationObserver);
-    nsgaII.getObservable().register(runTimeChartObserver);
+    nsgaII.observable().register(evaluationObserver);
+    nsgaII.observable().register(runTimeChartObserver);
 
     nsgaII.run();
 
-    JMetalLogger.logger.info("Total computing time: " + nsgaII.getTotalComputingTime());
+    JMetalLogger.logger.info("Total computing time: " + nsgaII.totalComputingTime()); ;
 
     new SolutionListOutput(nsgaII.result())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

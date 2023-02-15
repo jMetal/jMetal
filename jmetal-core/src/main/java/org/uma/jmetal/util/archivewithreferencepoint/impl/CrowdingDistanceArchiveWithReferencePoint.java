@@ -29,7 +29,7 @@ public class CrowdingDistanceArchiveWithReferencePoint<S extends Solution<?>> ex
   private final DensityEstimator<S> densityEstimator ;
 
   public CrowdingDistanceArchiveWithReferencePoint(int maxSize, List<Double> refPointDM) {
-    super(maxSize, refPointDM, new CrowdingDistanceDensityEstimator<S>().getComparator());
+    super(maxSize, refPointDM, new CrowdingDistanceDensityEstimator<S>().comparator());
 
     densityEstimator = new CrowdingDistanceDensityEstimator<>() ;
   }

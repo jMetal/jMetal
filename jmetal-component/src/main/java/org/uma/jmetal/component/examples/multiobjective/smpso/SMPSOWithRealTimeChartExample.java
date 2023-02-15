@@ -40,13 +40,13 @@ public class SMPSOWithRealTimeChartExample extends AbstractAlgorithmRunner {
         .setTermination(termination)
         .build();
 
-    smpso.getObservable().register(new RunTimeChartObserver<>("SMPSO", 80, 100, referenceParetoFront));
+    smpso.observable().register(new RunTimeChartObserver<>("SMPSO", 80, 100, referenceParetoFront));
 
     smpso.run();
 
     List<DoubleSolution> population = smpso.result();
-    JMetalLogger.logger.info("Total execution time : " + smpso.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + smpso.getEvaluation());
+    JMetalLogger.logger.info("Total execution time : " + smpso.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + smpso.evaluation());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

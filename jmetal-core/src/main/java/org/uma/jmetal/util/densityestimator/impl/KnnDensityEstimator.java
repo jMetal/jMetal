@@ -104,7 +104,7 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
   }
 
   @Override
-  public Double getValue(S solution) {
+  public Double value(S solution) {
     Check.notNull(solution);
 
     Double result = 0.0;
@@ -115,7 +115,7 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
   }
 
   @Override
-  public Comparator<S> getComparator() {
-    return Comparator.comparing(this::getValue);
+  public Comparator<S> comparator() {
+    return Comparator.comparing(this::value);
   }
 }

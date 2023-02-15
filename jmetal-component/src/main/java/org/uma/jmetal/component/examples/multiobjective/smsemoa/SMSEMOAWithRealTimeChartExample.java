@@ -53,13 +53,13 @@ public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
         .setTermination(termination)
         .build();
 
-    algorithm.getObservable().register(new RunTimeChartObserver<>("SMS-EMOA", 80, 100, referenceParetoFront));
+    algorithm.observable().register(new RunTimeChartObserver<>("SMS-EMOA", 80, 100, referenceParetoFront));
 
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.result();
-    JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + algorithm.getNumberOfEvaluations());
+    JMetalLogger.logger.info("Total execution time : " + algorithm.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + algorithm.numberOfEvaluations());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

@@ -18,7 +18,7 @@ public class KNNDistanceArchive<S extends Solution<?>> extends AbstractBoundedAr
   public KNNDistanceArchive(int maxSize, int k) {
     super(maxSize);
     knnDensityEstimator = new KnnDensityEstimator<S>(k);
-    knnDistanceComparator = Comparator.comparing(knnDensityEstimator::getValue).reversed() ;
+    knnDistanceComparator = Comparator.comparing(knnDensityEstimator::value).reversed() ;
   }
 
   @Override

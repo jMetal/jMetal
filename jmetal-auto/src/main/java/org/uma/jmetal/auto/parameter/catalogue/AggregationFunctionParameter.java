@@ -3,14 +3,22 @@ package org.uma.jmetal.auto.parameter.catalogue;
 import java.util.List;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
+import org.uma.jmetal.util.aggregationfunction.impl.ModifiedTschebyscheff;
 import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.aggregationfunction.impl.WeightedSum;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class AggregationFunctionParameter extends CategoricalParameter {
-  public AggregationFunctionParameter(List<String> aggregativeFunctions) {
-    super("aggregationFunction", aggregativeFunctions);
+  private boolean normalizedObjectives ;
+  public AggregationFunctionParameter(List<String> aggregationFunctions) {
+    super("aggregationFunction", aggregationFunctions);
+
+    normalizedObjectives = false ;
+  }
+
+  public void normalizedObjectives(boolean normalizedObjectives) {
+    this.normalizedObjectives = normalizedObjectives ;
   }
 
   public AggregationFunction getParameter() {
@@ -18,14 +26,17 @@ public class AggregationFunctionParameter extends CategoricalParameter {
 
     switch (value()) {
       case "tschebyscheff":
-        result =  new Tschebyscheff() ;
+        result =  new Tschebyscheff(normalizedObjectives) ;
+        break;
+      case "modifiedTschebyscheff":
+        result =  new ModifiedTschebyscheff(normalizedObjectives) ;
         break;
       case "weightedSum":
-        result = new WeightedSum() ;
+        result = new WeightedSum(normalizedObjectives) ;
         break;
       case "penaltyBoundaryIntersection":
         double theta = (double) findSpecificParameter("pbiTheta").value();
-        result = new PenaltyBoundaryIntersection(theta) ;
+        result = new PenaltyBoundaryIntersection(theta, normalizedObjectives) ;
         break;
       default:
         throw new JMetalException("Aggregation function does not exist: " + name());

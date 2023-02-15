@@ -48,13 +48,13 @@ public class GenerationalGeneticAlgorithmBinaryExample {
         .setTermination(termination)
         .build();
 
-    geneticAlgorithm.getObservable().register(new FitnessObserver(1000));
+    geneticAlgorithm.observable().register(new FitnessObserver(1000));
 
     geneticAlgorithm.run();
 
     List<BinarySolution> population = geneticAlgorithm.result();
-    JMetalLogger.logger.info("Total execution time : " + geneticAlgorithm.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + geneticAlgorithm.getNumberOfEvaluations());
+    JMetalLogger.logger.info("Total execution time : " + geneticAlgorithm.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + geneticAlgorithm.numberOfEvaluations());
     JMetalLogger.logger.info("Best fitness: " + geneticAlgorithm.result().get(0).objectives()[0]);
 
     new SolutionListOutput(population)

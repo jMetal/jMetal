@@ -63,7 +63,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
           oneShotTruncation(
               rankingId + 1, sizeOfTheResultingSolutionList - currentRankSolutions.size()));
     } else {
-      currentRankSolutions.sort(Comparator.comparing(densityEstimator::getValue).reversed());
+      currentRankSolutions.sort(Comparator.comparing(densityEstimator::value).reversed());
       int i = 0;
       while (resultList.size() < sizeOfTheResultingSolutionList) {
         resultList.add(currentRankSolutions.get(i));
@@ -90,7 +90,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
         resultList.add(solution);
       }
       while (resultList.size() > sizeOfTheResultingSolutionList) {
-        resultList.sort(Comparator.comparing(densityEstimator::getValue).reversed());
+        resultList.sort(Comparator.comparing(densityEstimator::value).reversed());
 
         resultList.remove(resultList.size() - 1);
         densityEstimator.compute(resultList);

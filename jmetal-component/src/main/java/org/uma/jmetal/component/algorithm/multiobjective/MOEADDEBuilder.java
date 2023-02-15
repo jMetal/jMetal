@@ -40,14 +40,21 @@ public class MOEADDEBuilder {
   private int neighborhoodSize = 20;
   private double neighborhoodSelectionProbability = 0.9;
   private int maximumNumberOfReplacedSolutions = 2;
+  private SequenceGenerator<Integer> sequenceGenerator ;
+  private WeightVectorNeighborhood<DoubleSolution> neighborhood ;
+  private AggregationFunction aggregationFunction = new Tschebyscheff(true);
+  private boolean normalize ;
 
-  private AggregationFunction aggregativeFunction = new Tschebyscheff();
 
   public MOEADDEBuilder(Problem<DoubleSolution> problem, int populationSize, double cr, double f,
       MutationOperator<DoubleSolution> mutation, String weightVectorDirectory,
-      SequenceGenerator<Integer> sequenceGenerator) {
+      SequenceGenerator<Integer> sequenceGenerator, boolean normalize) {
+    this.normalize = normalize ;
+    aggregationFunction = new Tschebyscheff(normalize);
+
     name = "MOEADDE";
 
+    this.sequenceGenerator = sequenceGenerator ;
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     int offspringPopulationSize = 1;
@@ -59,8 +66,6 @@ public class MOEADDEBuilder {
     this.variation =
         new DifferentialEvolutionCrossoverVariation(
             offspringPopulationSize, crossover, mutation, sequenceGenerator);
-
-    WeightVectorNeighborhood<DoubleSolution> neighborhood = null;
 
     if (problem.numberOfObjectives() == 2) {
       neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
@@ -89,9 +94,9 @@ public class MOEADDEBuilder {
         new MOEADReplacement<>(
             (PopulationAndNeighborhoodSelection<DoubleSolution>) selection,
             neighborhood,
-            aggregativeFunction,
+            aggregationFunction,
             sequenceGenerator,
-            maximumNumberOfReplacedSolutions);
+            maximumNumberOfReplacedSolutions, this.normalize);
 
     this.termination = new TerminationByEvaluations(25000);
 
@@ -135,8 +140,16 @@ public class MOEADDEBuilder {
     return this;
   }
 
-  public MOEADDEBuilder setAggregativeFunction(AggregationFunction aggregativeFunction) {
-    this.aggregativeFunction = aggregativeFunction;
+  public MOEADDEBuilder setAggregationFunction(AggregationFunction aggregationFunction) {
+    this.aggregationFunction = aggregationFunction;
+
+    this.replacement =
+        new MOEADReplacement<>(
+            (PopulationAndNeighborhoodSelection<DoubleSolution>) selection,
+            neighborhood,
+            this.aggregationFunction,
+            sequenceGenerator,
+            maximumNumberOfReplacedSolutions, aggregationFunction.normalizeObjectives());
 
     return this;
   }

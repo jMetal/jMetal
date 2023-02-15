@@ -68,7 +68,7 @@ class AutoNSGAIIIT {
 
     nsgaII.run();
 
-    List<DoubleSolution> population = nsgaII.result();
+    List<DoubleSolution> population  = nsgaII.result() ;
 
     String referenceFrontFile = "../resources/referenceFrontsCSV/" + referenceFrontFileName;
 

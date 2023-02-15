@@ -96,10 +96,10 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     reverseFrequency = new int[numberOfSubRanges][problem.numberOfVariables()] ;
 
     densityEstimator = new StrenghtRawFitnessDensityEstimator<>(1) ;
-    fitnessComparator = densityEstimator.getComparator();
+    fitnessComparator = densityEstimator.comparator();
     distanceToSolutionListAttribute = new DistanceToSolutionListAttribute();
 
-    crowdingDistanceComparator = new CrowdingDistanceDensityEstimator<DoubleSolution>().getComparator() ;
+    crowdingDistanceComparator = new CrowdingDistanceDensityEstimator<DoubleSolution>().comparator() ;
 
     dominanceComparator = new DominanceWithConstraintsComparator<>();
     equalComparator = new EqualSolutionsComparator<>();

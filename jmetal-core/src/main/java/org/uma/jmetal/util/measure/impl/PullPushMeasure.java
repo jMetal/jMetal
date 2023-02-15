@@ -34,8 +34,8 @@ public class PullPushMeasure<Value> implements PullMeasure<Value>,
 	 */
 	private final PushMeasure<Value> pusher;
 	/**
-	 * The entity responsible of the {@link #getName()} and
-	 * {@link #getDescription()} methods, potentially the same than
+	 * The entity responsible of the {@link #name()} and
+	 * {@link #description()} methods, potentially the same than
 	 * {@link #puller} or {@link #pusher}.
 	 */
 	private final DescribedEntity reference;
@@ -48,8 +48,8 @@ public class PullPushMeasure<Value> implements PullMeasure<Value>,
 	 * this way allows to merge them easily without creating a completely new
 	 * measure. Don't use this constructor to merge two different
 	 * {@link Measure}s. The last parameter is generally used to specify which
-	 * of the two {@link Measure}s should be used for {@link #getName()} and
-	 * {@link #getDescription()}, but you can also provide a completely new
+	 * of the two {@link Measure}s should be used for {@link #name()} and
+	 * {@link #description()}, but you can also provide a completely new
 	 * instance to change them.
 	 * 
 	 * @param pull
@@ -142,12 +142,12 @@ public class PullPushMeasure<Value> implements PullMeasure<Value>,
 	}
 
 	@Override
-	public String getName() {
-		return reference.getName();
+	public String name() {
+		return reference.name();
 	}
 
 	@Override
-	public String getDescription() {
-		return reference.getDescription();
+	public String description() {
+		return reference.description();
 	}
 }

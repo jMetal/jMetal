@@ -34,7 +34,8 @@ public class SMPSOWithUnboundedArchiveConfiguredFromAParameterString {
             + "--leaderArchive crowdingDistanceArchive "
             + "--localBestInitialization defaultLocalBestInitialization "
             + "--globalBestInitialization defaultGlobalBestInitialization "
-            + "--globalBestSelection binaryTournament "
+            + "--globalBestSelection tournament "
+            + "--selectionTournamentSize 2 "
             + "--perturbation frequencySelectionMutationBasedPerturbation "
             + "--frequencyOfApplicationOfMutationOperator 7 "
             + "--mutation polynomial "
@@ -68,11 +69,11 @@ public class SMPSOWithUnboundedArchiveConfiguredFromAParameterString {
         new RunTimeChartObserver<>(
             "SMPSO", 80, 500, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 
-    smpso.getObservable().register(runTimeChartObserver);
+    smpso.observable().register(runTimeChartObserver);
 
     smpso.run();
 
-    JMetalLogger.logger.info("Total computing time: " + smpso.getTotalComputingTime()); ;
+    JMetalLogger.logger.info("Total computing time: " + smpso.totalComputingTime()); ;
 
     new SolutionListOutput(smpso.result())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

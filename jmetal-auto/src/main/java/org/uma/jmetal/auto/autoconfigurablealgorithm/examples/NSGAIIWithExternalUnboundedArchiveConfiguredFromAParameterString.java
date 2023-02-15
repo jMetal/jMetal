@@ -54,11 +54,11 @@ public class NSGAIIWithExternalUnboundedArchiveConfiguredFromAParameterString {
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    nsgaII.getObservable().register(evaluationObserver);
+    nsgaII.observable().register(evaluationObserver);
 
     nsgaII.run();
 
-    JMetalLogger.logger.info("Total computing time: " + nsgaII.getTotalComputingTime());
+    JMetalLogger.logger.info("Total computing time: " + nsgaII.totalComputingTime());
 
     new SolutionListOutput(nsgaII.result())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

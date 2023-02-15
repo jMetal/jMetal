@@ -48,8 +48,8 @@ public class NSGAIIBinaryProblemExample {
     nsgaii.run();
 
     List<BinarySolution> population = nsgaii.result();
-    JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
+    JMetalLogger.logger.info("Total execution time : " + nsgaii.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.numberOfEvaluations());
 
     new SolutionListOutput(population)
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

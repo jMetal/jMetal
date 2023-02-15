@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 import org.uma.jmetal.util.VectorUtils;
@@ -67,7 +68,7 @@ public class PISAHypervolumeTest {
      */
     @Test
     public void shouldEvaluateWorkProperlyCase3()  {
-        double[][] referenceFront = new double[][] {{1.0, 0.1}, {0.0, 1.0}};
+        double[][] referenceFront = {{1.0, 0.1}, {0.0, 1.0}};
 
         double[][] front = new double[][] {{1.0, 0.0},{0.0, 1.0}} ;
 

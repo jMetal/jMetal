@@ -12,10 +12,10 @@ public class SimpleDescribedEntityTest {
 		SimpleDescribedEntity entity = new SimpleDescribedEntity();
 
 		entity.setName("test");
-		assertEquals("test", entity.getName());
+		assertEquals("test", entity.name());
 
 		entity.setName("abc");
-		assertEquals("abc", entity.getName());
+		assertEquals("abc", entity.name());
 	}
 
 	@Test
@@ -23,10 +23,10 @@ public class SimpleDescribedEntityTest {
 		SimpleDescribedEntity entity = new SimpleDescribedEntity();
 
 		entity.setDescription("test");
-		assertEquals("test", entity.getDescription());
+		assertEquals("test", entity.description());
 
 		entity.setDescription("abc");
-		assertEquals("abc", entity.getDescription());
+		assertEquals("abc", entity.description());
 	}
 
 	class TestedClass extends SimpleDescribedEntity {
@@ -35,28 +35,28 @@ public class SimpleDescribedEntityTest {
 	@Test
 	public void testClassNameWhenNoName() {
 		assertEquals(TestedClass.class.getSimpleName(),
-				new TestedClass().getName());
+				new TestedClass().name());
 	}
 
 	@Test
 	public void testNullDescriptionWhenNoDescription() {
-		assertNull(new SimpleDescribedEntity().getDescription());
-		assertNull(new SimpleDescribedEntity("name").getDescription());
+		assertNull(new SimpleDescribedEntity().description());
+		assertNull(new SimpleDescribedEntity("name").description());
 	}
 
 	@Test
 	public void testCorrectNameWhenProvided() {
 		String name = "named measure";
-		assertEquals(name, new SimpleDescribedEntity(name).getName());
+		assertEquals(name, new SimpleDescribedEntity(name).name());
 		assertEquals(name,
-				new SimpleDescribedEntity(name, "description").getName());
+				new SimpleDescribedEntity(name, "description").name());
 	}
 
 	@Test
 	public void testCorrectDescriptionWhenProvided() {
 		String description = "My measure description is awesome!";
 		assertEquals(description, new SimpleDescribedEntity("measure",
-				description).getDescription());
+				description).description());
 	}
 
 }

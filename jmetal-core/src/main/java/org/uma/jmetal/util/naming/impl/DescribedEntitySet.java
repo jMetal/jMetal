@@ -15,9 +15,9 @@ public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<E
 
   @Override
   public boolean add(Entity e) {
-    Entity stored = map.get(e.getName());
+    Entity stored = map.get(e.name());
     if (stored == null) {
-      map.put(e.getName(), e);
+      map.put(e.name(), e);
       return true;
     } else if (stored.equals(e)) {
       return false;

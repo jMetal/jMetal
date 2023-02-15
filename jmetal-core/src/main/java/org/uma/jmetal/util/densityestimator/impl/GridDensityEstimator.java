@@ -46,7 +46,7 @@ public class GridDensityEstimator<S extends Solution<?>> implements DensityEstim
   }
 
   @Override
-  public Double getValue(S solution) {
+  public Double value(S solution) {
     Check.notNull(solution);
 
     int result = 0 ;
@@ -57,7 +57,7 @@ public class GridDensityEstimator<S extends Solution<?>> implements DensityEstim
   }
 
   @Override
-  public Comparator<S> getComparator() {
-    return Comparator.comparing(this::getValue) ;
+  public Comparator<S> comparator() {
+    return Comparator.comparing(this::value) ;
   }
 }

@@ -60,14 +60,14 @@ public class NSGAIIWithRealTimeChartExample {
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("NSGA-II", 80, 100, referenceParetoFront);
 
-    nsgaii.getObservable().register(evaluationObserver);
-    nsgaii.getObservable().register(runTimeChartObserver);
+    nsgaii.observable().register(evaluationObserver);
+    nsgaii.observable().register(runTimeChartObserver);
 
     nsgaii.run();
 
     List<DoubleSolution> population = nsgaii.result();
-    JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
+    JMetalLogger.logger.info("Total execution time : " + nsgaii.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.numberOfEvaluations());
 
     new SolutionListOutput(population)
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

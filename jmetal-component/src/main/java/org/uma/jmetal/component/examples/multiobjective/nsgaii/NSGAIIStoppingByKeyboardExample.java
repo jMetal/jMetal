@@ -57,8 +57,8 @@ public class NSGAIIStoppingByKeyboardExample {
     nsgaii.run();
 
     List<DoubleSolution> population = nsgaii.result();
-    JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations() + "\n");
+    JMetalLogger.logger.info("Total execution time : " + nsgaii.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.numberOfEvaluations() + "\n");
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

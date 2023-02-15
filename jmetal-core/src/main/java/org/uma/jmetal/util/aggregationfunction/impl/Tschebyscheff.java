@@ -2,22 +2,13 @@ package org.uma.jmetal.util.aggregationfunction.impl;
 
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
 import org.uma.jmetal.util.point.impl.IdealPoint;
+import org.uma.jmetal.util.point.impl.NadirPoint;
 
-/**
- * Class that implements the Tschebyscheff aggregation function for multi-objective optimization problems.
- *
- * @author Antonio J. Nebro
- */
+public class Tschebyscheff implements AggregationFunction {
+  private boolean normalizeObjectives;
 
- public class Tschebyscheff implements AggregationFunction {
-
-  private IdealPoint idealPoint;
-
-  /**
-   * Constructor for the Tschebyscheff class, initializing the idealPoint property to null.
-   */
-  public Tschebyscheff() {
-    this.idealPoint = null;
+  public Tschebyscheff(boolean normalizeObjectives) {
+    this.normalizeObjectives = normalizeObjectives;
   }
 
   /**
@@ -30,15 +21,22 @@ import org.uma.jmetal.util.point.impl.IdealPoint;
    * @return The result of the Tschebyscheff aggregation function.
    */
   @Override
-  public double compute(double[] vector, double[] weightVector) {
+  public double compute(double[] vector, double[] weightVector, IdealPoint idealPoint,
+      NadirPoint nadirPoint) {
     double maxFun = -1.0e+30;
 
     for (int n = 0; n < vector.length; n++) {
-      double diff = Math.abs(vector[n] - idealPoint.value(n));
+      double diff;
+      if (normalizeObjectives) {
+        diff = Math.abs(
+            (vector[n] - idealPoint.value(n)) / (nadirPoint.value(n) - idealPoint.value(n)));
+      } else {
+        diff = Math.abs(vector[n] - idealPoint.value(n));
+      }
 
       double feval;
       if (weightVector[n] == 0) {
-        feval = 0.000001 * diff;
+        feval = 0.0001 * diff;
       } else {
         feval = diff * weightVector[n];
       }
@@ -50,17 +48,9 @@ import org.uma.jmetal.util.point.impl.IdealPoint;
     return maxFun;
   }
 
-  /**
-   * Updates the idealPoint property with the values in the input vector.
-   * If idealPoint is null, a new IdealPoint instance is created with the length of the vector input.
-   *
-   * @param vector The input vector to be used for updating the idealPoint.
-   */
+
   @Override
-  public void update(double[] vector) {
-    if (idealPoint == null) {
-      idealPoint = new IdealPoint(vector.length);
-    }
-    idealPoint.update(vector);
+  public boolean normalizeObjectives() {
+    return this.normalizeObjectives;
   }
 }

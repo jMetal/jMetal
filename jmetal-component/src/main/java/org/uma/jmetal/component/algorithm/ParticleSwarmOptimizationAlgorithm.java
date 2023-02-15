@@ -148,7 +148,7 @@ public class ParticleSwarmOptimizationAlgorithm
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", globalBest.solutions());
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("COMPUTING_TIME", currentComputingTime());
   }
 
   protected void updateProgress() {
@@ -157,23 +157,23 @@ public class ParticleSwarmOptimizationAlgorithm
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", globalBest.solutions());
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("COMPUTING_TIME", currentComputingTime());
 
     observable.setChanged();
     observable.notifyObservers(attributes);
 
-    totalComputingTime = getCurrentComputingTime();
+    totalComputingTime = currentComputingTime();
   }
 
-  public long getCurrentComputingTime() {
+  public long currentComputingTime() {
     return System.currentTimeMillis() - initTime;
   }
 
-  public int getNumberOfEvaluations() {
+  public int numberOfEvaluations() {
     return evaluations;
   }
 
-  public long getTotalComputingTime() {
+  public long totalComputingTime() {
     return totalComputingTime;
   }
 
@@ -182,7 +182,7 @@ public class ParticleSwarmOptimizationAlgorithm
     return globalBest.solutions();
   }
 
-  public List<DoubleSolution> getSwarm() {
+  public List<DoubleSolution> swarm() {
     return swarm ;
   }
 
@@ -196,19 +196,19 @@ public class ParticleSwarmOptimizationAlgorithm
     return "Particle Swarm Optimization";
   }
 
-  public Evaluation<DoubleSolution> getEvaluation() {
+  public Evaluation<DoubleSolution> evaluation() {
     return evaluation;
   }
 
   @Override
-  public Observable<Map<String, Object>> getObservable() {
+  public Observable<Map<String, Object>> observable() {
     return observable;
   }
 
-  public void setTermination(Termination termination) {
+  public void termination(Termination termination) {
     this.termination = termination ;
   }
 
-  public void setEvaluation(Evaluation<DoubleSolution> evaluation) {
+  public void evaluation(Evaluation<DoubleSolution> evaluation) {
     this.evaluation = evaluation ;
   }}

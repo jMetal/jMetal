@@ -7,7 +7,7 @@ import org.uma.jmetal.component.algorithm.multiobjective.MOEADBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
-import org.uma.jmetal.lab.visualization.plot.impl.Plot3D;
+import org.uma.jmetal.lab.visualization.plot.impl.Plot2D;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -47,32 +47,34 @@ public class MOEADWithRealTimeChartExample {
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 300;
+    int populationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(35000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
+    boolean normalizeObjectives = false ;
+
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
         populationSize,
         crossover,
         mutation,
         weightVectorDirectory,
-        sequenceGenerator)
+        sequenceGenerator, normalizeObjectives)
         .setTermination(termination)
         .build();
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("MOEA/D", 80, 100, referenceParetoFront);
 
-    moead.getObservable().register(runTimeChartObserver);
+    moead.observable().register(runTimeChartObserver);
 
     moead.run();
 
     List<DoubleSolution> population = moead.result();
-    JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
+    JMetalLogger.logger.info("Total execution time : " + moead.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + moead.numberOfEvaluations());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
@@ -87,7 +89,7 @@ public class MOEADWithRealTimeChartExample {
         SolutionListUtils.getMatrixWithObjectiveValues(population),
         VectorUtils.readVectors(referenceParetoFront, ","));
 
-    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.name() + " (MOEA/D)");
+    PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix(), problem.name() + " (MOEA/D)");
     plot.plot();
   }
 }

@@ -91,7 +91,7 @@ public class GroupedAndLinkedPolynomialMutation implements MutationOperator<Doub
 
     variableGrouping.computeGroups(solution.variables());
     int groupIndex = randomGenerator.nextInt(0, variableGrouping.numberOfGroups() - 1);
-    List<Integer> variableIndex = variableGrouping.getGroup(groupIndex);
+    List<Integer> variableIndex = variableGrouping.group(groupIndex);
 
     rnd = randomGenerator.nextDouble();
     for (int i = 0; i < variableIndex.size(); i++) {
