@@ -9,7 +9,6 @@ import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
 public class AutoMOEADIraceParameterFileGenerator {
-
   public static void main(String[] args) {
     IraceParameterFileGenerator parameterFileGenerator = new IraceParameterFileGenerator() ;
     parameterFileGenerator.generateConfigurationFile(new AutoMOEAD()) ;
