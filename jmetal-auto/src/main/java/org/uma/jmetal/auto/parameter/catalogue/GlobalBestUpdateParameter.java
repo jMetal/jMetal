@@ -7,16 +7,16 @@ import org.uma.jmetal.component.catalogue.pso.globalbestupdate.impl.DefaultGloba
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class GlobalBestUpdateParameter extends CategoricalParameter {
-  public GlobalBestUpdateParameter(String[] args, List<String> updateStrategies) {
-    super("globalBestUpdate", args, updateStrategies);
+  public GlobalBestUpdateParameter(List<String> updateStrategies) {
+    super("globalBestUpdate", updateStrategies);
   }
 
   public GlobalBestUpdate getParameter() {
     GlobalBestUpdate result;
-    if ("defaultGlobalBestUpdate".equals(getValue())) {
+    if ("defaultGlobalBestUpdate".equals(value())) {
       result = new DefaultGlobalBestUpdate();
     } else {
-      throw new JMetalException("Global Best Update component unknown: " + getValue());
+      throw new JMetalException("Global Best Update component unknown: " + value());
     }
     return result;
   }

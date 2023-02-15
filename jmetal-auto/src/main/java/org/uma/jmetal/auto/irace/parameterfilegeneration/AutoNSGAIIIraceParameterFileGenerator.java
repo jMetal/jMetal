@@ -10,29 +10,7 @@ import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 public class AutoNSGAIIIraceParameterFileGenerator {
 
   public static void main(String[] args) {
-    String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-            + "--referenceFrontFileName ZDT1.csv "
-            + "--randomGeneratorSeed 124 "
-            + "--maximumNumberOfEvaluations 25000 "
-            + "--algorithmResult population "
-            + "--populationSize 100 "
-            + "--offspringPopulationSize 100 "
-            + "--createInitialSolutions random "
-            + "--variation crossoverAndMutationVariation "
-            + "--selection tournament "
-            + "--selectionTournamentSize 2 "
-            + "--crossover SBX "
-            + "--crossoverProbability 0.9 "
-            + "--crossoverRepairStrategy bounds "
-            + "--sbxDistributionIndex 20.0 "
-            + "--mutation polynomial "
-            + "--mutationProbabilityFactor 1.0 "
-            + "--mutationRepairStrategy bounds "
-            + "--polynomialMutationDistributionIndex 20.0 ")
-            .split("\\s+");
-
     IraceParameterFileGenerator parameterFileGenerator = new IraceParameterFileGenerator() ;
-    parameterFileGenerator.generateConfigurationFile(new AutoNSGAII(), parameters) ;
+    parameterFileGenerator.generateConfigurationFile(new AutoNSGAII()) ;
   }
 }

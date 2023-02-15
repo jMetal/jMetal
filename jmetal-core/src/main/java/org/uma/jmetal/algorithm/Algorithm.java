@@ -1,15 +1,18 @@
 package org.uma.jmetal.algorithm;
 
 import java.io.Serializable;
-import org.uma.jmetal.util.naming.DescribedEntity;
 
 /**
  * Interface representing an algorithm
  * @author Antonio J. Nebro
  * @version 1.0
- * @param <Result> Result
+ * @param <R> Result
  */
-public interface Algorithm<R> extends Runnable, Serializable, DescribedEntity {
+
+public interface Algorithm<R> extends Runnable, Serializable {
   void run() ;
   R result() ;
+
+  String name();
+  String description();
 }

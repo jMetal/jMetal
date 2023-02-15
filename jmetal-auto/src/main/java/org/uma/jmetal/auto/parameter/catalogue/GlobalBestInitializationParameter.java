@@ -7,24 +7,24 @@ import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl.Defa
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class GlobalBestInitializationParameter extends CategoricalParameter {
-  public GlobalBestInitializationParameter(String[] args, List<String> globalBestInitializationStrategies) {
-    super("globalBestInitialization", args, globalBestInitializationStrategies);
+  public GlobalBestInitializationParameter(List<String> globalBestInitializationStrategies) {
+    super("globalBestInitialization", globalBestInitializationStrategies);
   }
 
   public GlobalBestInitialization getParameter() {
     GlobalBestInitialization result;
 
-    if ("defaultGlobalBestInitialization".equals(getValue())) {
+    if ("defaultGlobalBestInitialization".equals(value())) {
       result = new DefaultGlobalBestInitialization();
     } else {
-      throw new JMetalException("Global best initialization component unknown: " + getValue());
+      throw new JMetalException("Global best initialization component unknown: " + value());
     }
 
     return result;
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "globalBestInitialization";
   }
 }

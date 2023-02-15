@@ -14,49 +14,49 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class MutationParameter extends CategoricalParameter {
 
-  public MutationParameter(String[] args, List<String> mutationOperators) {
-    super("mutation", args, mutationOperators);
+  public MutationParameter(List<String> mutationOperators) {
+    super("mutation", mutationOperators);
   }
 
   public MutationOperator<DoubleSolution> getDoubleSolutionParameter() {
     MutationOperator<DoubleSolution> result;
     int numberOfProblemVariables = (int) getNonConfigurableParameter("numberOfProblemVariables");
     double mutationProbability = (double) findGlobalParameter(
-        "mutationProbabilityFactor").getValue() / numberOfProblemVariables;
+        "mutationProbabilityFactor").value() / numberOfProblemVariables;
     RepairDoubleSolutionStrategyParameter repairDoubleSolution =
         (RepairDoubleSolutionStrategyParameter) findGlobalParameter("mutationRepairStrategy");
 
-    switch (getValue()) {
+    switch (value()) {
       case "polynomial":
         Double distributionIndex =
-            (Double) findSpecificParameter("polynomialMutationDistributionIndex").getValue();
+            (Double) findSpecificParameter("polynomialMutationDistributionIndex").value();
         result =
             new PolynomialMutation(
                 mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
         break;
       case "linkedPolynomial":
         distributionIndex =
-            (Double) findSpecificParameter("linkedPolynomialMutationDistributionIndex").getValue();
+            (Double) findSpecificParameter("linkedPolynomialMutationDistributionIndex").value();
         result =
             new LinkedPolynomialMutation(
                 mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
         break;
       case "uniform":
         Double perturbation = (Double) findSpecificParameter(
-            "uniformMutationPerturbation").getValue();
+            "uniformMutationPerturbation").value();
         result =
             new UniformMutation(mutationProbability, perturbation,
                 repairDoubleSolution.getParameter());
         break;
       case "nonUniform":
-        perturbation = (Double) findSpecificParameter("nonUniformMutationPerturbation").getValue();
+        perturbation = (Double) findSpecificParameter("nonUniformMutationPerturbation").value();
         int maxIterations = (Integer) getNonConfigurableParameter("maxIterations");
         result =
             new NonUniformMutation(mutationProbability, perturbation, maxIterations,
                 repairDoubleSolution.getParameter());
         break;
       default:
-        throw new JMetalException("Mutation operator does not exist: " + getName());
+        throw new JMetalException("Mutation operator does not exist: " + name());
     }
     return result;
   }
@@ -65,18 +65,18 @@ public class MutationParameter extends CategoricalParameter {
     MutationOperator<BinarySolution> result;
     int numberOfBitsInASolution = (int) getNonConfigurableParameter("numberOfBitsInASolution");
     double mutationProbability = (double) findGlobalParameter(
-        "mutationProbabilityFactor").getValue() / numberOfBitsInASolution;
+        "mutationProbabilityFactor").value() / numberOfBitsInASolution;
 
-    if ("bitFlip".equals(getValue())) {
-      result = new BitFlipMutation(mutationProbability);
+    if ("bitFlip".equals(value())) {
+      result = new BitFlipMutation<>(mutationProbability);
     } else {
-      throw new JMetalException("Mutation operator does not exist: " + getName());
+      throw new JMetalException("Mutation operator does not exist: " + name());
     }
     return result;
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "mutation";
   }
 }

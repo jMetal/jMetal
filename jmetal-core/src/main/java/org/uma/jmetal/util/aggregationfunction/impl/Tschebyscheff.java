@@ -11,6 +11,15 @@ public class Tschebyscheff implements AggregationFunction {
     this.normalizeObjectives = normalizeObjectives;
   }
 
+  /**
+   * Computes the Tschebyscheff aggregation function using the formula:
+   * max(|vector[n] - idealPoint.value(n)| * weightVector[n]).
+   * If weightVector[n] is equal to 0, feval is set to 0.000001 * diff.
+   *
+   * @param vector The input vector to be aggregated.
+   * @param weightVector The weight vector to be used in the aggregation.
+   * @return The result of the Tschebyscheff aggregation function.
+   */
   @Override
   public double compute(double[] vector, double[] weightVector, IdealPoint idealPoint,
       NadirPoint nadirPoint) {
@@ -38,6 +47,7 @@ public class Tschebyscheff implements AggregationFunction {
 
     return maxFun;
   }
+
 
   @Override
   public boolean normalizeObjectives() {

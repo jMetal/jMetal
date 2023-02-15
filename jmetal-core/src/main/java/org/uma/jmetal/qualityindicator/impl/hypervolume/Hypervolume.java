@@ -35,7 +35,7 @@ public abstract class Hypervolume extends QualityIndicator {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "HV";
   }
 

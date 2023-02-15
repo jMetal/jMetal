@@ -37,7 +37,7 @@ public class SparkEvaluation<S extends Solution<?>> implements Evaluation<S>, Se
 
   @Override
   public int computedEvaluations() {
-    return numberOfComputedEvaluations;
+    return numberOfComputedEvaluations ;
   }
 
   @Override

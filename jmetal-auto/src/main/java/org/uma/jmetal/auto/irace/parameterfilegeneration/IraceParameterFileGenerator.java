@@ -13,10 +13,8 @@ import org.uma.jmetal.auto.parameter.RealParameter;
 public class IraceParameterFileGenerator {
   private static String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
 
-  public void generateConfigurationFile(AutoConfigurableAlgorithm autoConfigurableAlgorithm, String[] parameters) {
-    autoConfigurableAlgorithm.parseAndCheckParameters(parameters) ;
-
-    List<Parameter<?>> parameterList = autoConfigurableAlgorithm.getAutoConfigurableParameterList() ;
+  public void generateConfigurationFile(AutoConfigurableAlgorithm autoConfigurableAlgorithm) {
+    List<Parameter<?>> parameterList = autoConfigurableAlgorithm.configurableParameterList() ;
 
     StringBuilder stringBuilder = new StringBuilder();
 
@@ -25,32 +23,32 @@ public class IraceParameterFileGenerator {
       stringBuilder.append("#\n");
     }
 
-    System.out.println(stringBuilder.toString());
+    System.out.println(stringBuilder);
   }
 
   private void decodeParameter(Parameter<?> parameter, StringBuilder stringBuilder) {
     stringBuilder.append(
             String.format(
                     formatString,
-                    parameter.getName(),
-                    "\"" + "--" + parameter.getName() + " \"",
+                    parameter.name(),
+                    "\"" + "--" + parameter.name() + " \"",
                     decodeType(parameter),
                     decodeValidValues(parameter),
                     ""));
 
-    for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
+    for (Parameter<?> globalParameter : parameter.globalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
     }
 
-    for (Pair<String, Parameter<?>> specificParameter : parameter.getSpecificParameters()) {
+    for (Pair<String, Parameter<?>> specificParameter : parameter.specificParameters()) {
       decodeParameterSpecific(specificParameter, stringBuilder, parameter);
     }
   }
 
   private void decodeParameterGlobal(Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
-    StringBuilder dependenceString = new StringBuilder("\"" + parameter.getName() + "\"");
+    StringBuilder dependenceString = new StringBuilder("\"" + parameter.name() + "\"");
     if (parentParameter instanceof CategoricalParameter) {
-      var validValues = ((CategoricalParameter) parentParameter).getValidValues();
+      var validValues = ((CategoricalParameter) parentParameter).validValues();
       dependenceString = new StringBuilder();
       for (String value : validValues) {
         dependenceString.append("\"").append(value).append("\"").append(",");
@@ -61,17 +59,17 @@ public class IraceParameterFileGenerator {
     stringBuilder.append(
             String.format(
                     formatString,
-                    parameter.getName(),
-                    "\"" + "--" + parameter.getName() + " \"",
+                    parameter.name(),
+                    "\"" + "--" + parameter.name() + " \"",
                     decodeType(parameter),
                     decodeValidValues(parameter),
-                    "| " + parentParameter.getName() + " %in% c(" + dependenceString + ")"));
+                    "| " + parentParameter.name() + " %in% c(" + dependenceString + ")"));
 
-    for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
+    for (Parameter<?> globalParameter : parameter.globalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
     }
 
-    for (Pair<String, Parameter<?>> specificParameter : parameter.getSpecificParameters()) {
+    for (Pair<String, Parameter<?>> specificParameter : parameter.specificParameters()) {
       decodeParameterSpecific(specificParameter, stringBuilder, parameter);
     }
   }
@@ -82,17 +80,17 @@ public class IraceParameterFileGenerator {
     stringBuilder.append(
             String.format(
                     formatString,
-                    pair.getRight().getName(),
-                    "\"" + "--" + pair.getRight().getName() + " \"",
+                    pair.getRight().name(),
+                    "\"" + "--" + pair.getRight().name() + " \"",
                     decodeType(pair.getRight()),
                     decodeValidValues(pair.getRight()),
-                    "| " + parentParameter.getName() + " %in% c(\"" + pair.getLeft() + "\")"));
+                    "| " + parentParameter.name() + " %in% c(\"" + pair.getLeft() + "\")"));
 
-    for (Parameter<?> globalParameter : pair.getValue().getGlobalParameters()) {
+    for (Parameter<?> globalParameter : pair.getValue().globalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, pair.getValue());
     }
 
-    for (Pair<String, Parameter<?>> specificParameter : pair.getValue().getSpecificParameters()) {
+    for (Pair<String, Parameter<?>> specificParameter : pair.getValue().specificParameters()) {
       decodeParameterSpecific(specificParameter, stringBuilder, pair.getValue());
     }
   }
@@ -109,7 +107,7 @@ public class IraceParameterFileGenerator {
       result = "i";
     } else if (parameter instanceof RealParameter) {
       result = "r";
-    } else if (parameter instanceof Parameter) {
+    } else if (parameter != null) {
       result = "o";
     }
 
@@ -120,7 +118,7 @@ public class IraceParameterFileGenerator {
     String result = " ";
 
     if (parameter instanceof CategoricalParameter) {
-      result = ((CategoricalParameter) parameter).getValidValues().toString();
+      result = ((CategoricalParameter) parameter).validValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof BooleanParameter) {
@@ -128,19 +126,19 @@ public class IraceParameterFileGenerator {
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof OrdinalParameter) {
-      result = ((OrdinalParameter<?>) parameter).getValidValues().toString();
+      result = ((OrdinalParameter<?>) parameter).validValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof IntegerParameter) {
-      result = ((IntegerParameter) parameter).getValidValues().toString();
+      result = ((IntegerParameter) parameter).validValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof RealParameter) {
-      result = ((RealParameter) parameter).getValidValues().toString();
+      result = ((RealParameter) parameter).validValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
-    } else if (parameter instanceof Parameter) {
-      result = "(" + parameter.getValue() + ")";
+    } else if (parameter != null) {
+      result = "(" + parameter.value() + ")";
     }
 
     return result;

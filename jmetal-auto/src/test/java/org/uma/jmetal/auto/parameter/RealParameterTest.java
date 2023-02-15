@@ -10,61 +10,55 @@ import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 class RealParameterTest {
 
   @Test
-  void theConstructorMustInitializeTheFieldsCorrectly() {
-    String[] parameterString = new String[]{"--realParameter", "5"};
+  void constructorMustInitializeTheFieldsCorrectly() {
     double lowerBound = 1.0;
     double upperBound = 10.0;
-    RealParameter realParameter = new RealParameter("realParameter", parameterString, lowerBound,
+    RealParameter realParameter = new RealParameter("realParameter", lowerBound,
         upperBound);
 
-    assertThat(realParameter.getName()).isEqualTo("realParameter", "5");
-    assertThat(realParameter.getValidValues()).containsExactly(lowerBound, upperBound);
+    assertThat(realParameter.name()).isEqualTo("realParameter");
+    assertThat(realParameter.validValues()).containsExactly(lowerBound, upperBound);
   }
 
   @Test
-  void theConstructorMustRaiseAnExceptionInTheLowerBoundIsNotLowerThanTheUpperBound() {
-    String[] parameterString = new String[]{"--realParameter", "5"};
+  void constructorMustRaiseAnExceptionInTheLowerBoundIsNotLowerThanTheUpperBound() {
     double lowerBound = 10.0;
     double upperBound = 10.0;
 
-    assertThatThrownBy(() -> new RealParameter("realParameter", parameterString, lowerBound,
+    assertThatThrownBy(() -> new RealParameter("realParameter", lowerBound,
         upperBound)).isInstanceOf(InvalidConditionException.class);
   }
 
   @Test
   void parseRaisesAnExceptionIfTheValueIsNotADouble() {
-    String[] parameterString = new String[]{"--realParameter", "hello"};
     double lowerBound = 10.0;
     double upperBound = 20.0;
 
-    RealParameter realParameter = new RealParameter("realParameter", parameterString, lowerBound,
+    RealParameter realParameter = new RealParameter("realParameter", lowerBound,
         upperBound);
-
-    assertThatThrownBy(realParameter::parse).isInstanceOf(NumberFormatException.class);
+    String[] parameterString = new String[]{"--realParameter", "hellow"};
+    assertThatThrownBy(() -> realParameter.parse(parameterString)).isInstanceOf(NumberFormatException.class);
   }
 
   @Test
   void parseGetsTheRightValue() {
-    String[] parameterString = new String[]{"--realParameter", "15"};
     double lowerBound = 10.0;
     double upperBound = 20.0;
 
-    RealParameter realParameter = new RealParameter("realParameter", parameterString, lowerBound,
-        upperBound);
-
-    assertThat(realParameter.parse().getValue()).isEqualTo(15) ;
+    RealParameter realParameter = new RealParameter("realParameter",  lowerBound, upperBound);
+    assertThat(realParameter.parse(new String[]{"--realParameter", "2.4"}).value()).isEqualTo(2.4) ;
   }
 
   @Test
   void checkRaisesAnExceptionIfTheValueIsLowerThanTheLowerBound() {
-    String[] parameterString = new String[]{"--realParameter", "5"};
     double lowerBound = 10.0;
     double upperBound = 20.0;
 
-    RealParameter realParameter = new RealParameter("realParameter", parameterString, lowerBound,
+    RealParameter realParameter = new RealParameter("realParameter", lowerBound,
         upperBound);
 
-    realParameter.parse();
+    String[] parameterString = new String[]{"--realParameter", "5"};
+    realParameter.parse(parameterString);
     assertThatThrownBy(realParameter::check).isInstanceOf(JMetalException.class);
   }
 }

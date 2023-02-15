@@ -47,7 +47,7 @@ public class MOEADConfiguredFromAParameterString {
             .split("\\s+");
 
     AutoMOEAD autoNSGAII = new AutoMOEAD();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.parse(parameters);
 
     AutoNSGAII.print(autoNSGAII.fixedParameterList);
     AutoNSGAII.print(autoNSGAII.autoConfigurableParameterList);

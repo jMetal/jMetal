@@ -58,10 +58,10 @@ public class SMPSOWithUnboundedArchiveConfiguredFromAParameterString {
             .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parseAndCheckParameters(parameters);
+    autoMOPSO.parse(parameters);
 
-    AutoMOPSO.print(autoMOPSO.fixedParameterList);
-    AutoMOPSO.print(autoMOPSO.autoConfigurableParameterList);
+    AutoMOPSO.print(autoMOPSO.fixedParameterList());
+    AutoMOPSO.print(autoMOPSO.configurableParameterList());
 
     ParticleSwarmOptimizationAlgorithm smpso = autoMOPSO.create();
 

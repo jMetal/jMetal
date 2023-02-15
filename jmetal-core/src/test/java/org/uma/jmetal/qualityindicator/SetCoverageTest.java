@@ -143,6 +143,6 @@ public class SetCoverageTest {
 */
   @Test
   public void shouldGetNameReturnTheCorrectValue() {
-    Assertions.assertEquals("SC", setCoverage.getName());
+    Assertions.assertEquals("SC", setCoverage.name());
   }
 }

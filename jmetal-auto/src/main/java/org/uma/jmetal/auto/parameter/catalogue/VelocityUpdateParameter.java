@@ -10,36 +10,36 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class VelocityUpdateParameter extends CategoricalParameter {
-  public VelocityUpdateParameter(String[] args, List<String> validValues) {
-    super("velocityUpdate", args, validValues);
+  public VelocityUpdateParameter(List<String> validValues) {
+    super("velocityUpdate", validValues);
   }
 
   public VelocityUpdate getParameter() {
-    switch (getValue()) {
+    switch (value()) {
       case "defaultVelocityUpdate":
-        double c1Min = (double) findGlobalParameter("c1Min").getValue();
-        double c1Max = (double) findGlobalParameter("c1Max").getValue();
-        double c2Min = (double) findGlobalParameter("c2Min").getValue();
-        double c2Max = (double) findGlobalParameter("c2Max").getValue();
+        double c1Min = (double) findGlobalParameter("c1Min").value();
+        double c1Max = (double) findGlobalParameter("c1Max").value();
+        double c2Min = (double) findGlobalParameter("c2Min").value();
+        double c2Max = (double) findGlobalParameter("c2Max").value();
         return new DefaultVelocityUpdate(c1Min, c1Max, c2Min, c2Max);
       case "constrainedVelocityUpdate":
-        c1Min = (double) findGlobalParameter("c1Min").getValue();
-        c1Max = (double) findGlobalParameter("c1Max").getValue();
-        c2Min = (double) findGlobalParameter("c2Min").getValue();
-        c2Max = (double) findGlobalParameter("c2Max").getValue();
+        c1Min = (double) findGlobalParameter("c1Min").value();
+        c1Max = (double) findGlobalParameter("c1Max").value();
+        c2Min = (double) findGlobalParameter("c2Min").value();
+        c2Max = (double) findGlobalParameter("c2Max").value();
         DoubleProblem problem = (DoubleProblem) getNonConfigurableParameter("problem");
         return new ConstrainedVelocityUpdate(c1Min, c1Max, c2Min, c2Max, problem) {
         };
       case "SPSO2011VelocityUpdate":
-        c1Min = (double) findGlobalParameter("c1Min").getValue();
-        c1Max = (double) findGlobalParameter("c1Max").getValue();
-        c2Min = (double) findGlobalParameter("c2Min").getValue();
-        c2Max = (double) findGlobalParameter("c2Max").getValue();
+        c1Min = (double) findGlobalParameter("c1Min").value();
+        c1Max = (double) findGlobalParameter("c1Max").value();
+        c2Min = (double) findGlobalParameter("c2Min").value();
+        c2Max = (double) findGlobalParameter("c2Max").value();
         problem = (DoubleProblem) getNonConfigurableParameter("problem");
         return new SPS2011VelocityUpdate(c1Min, c1Max, c2Min, c2Max, problem) {
         };
       default:
-        throw new JMetalException(getValue() + " is not a valid velocity update strategy");
+        throw new JMetalException(value() + " is not a valid velocity update strategy");
     }
   }
 }

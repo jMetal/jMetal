@@ -100,7 +100,7 @@ public class GenerationalDistanceTest {
 
   @Test
   public void shouldGetNameReturnTheCorrectValue() {
-    Assertions.assertEquals("GD", new GenerationalDistance().getName());
+    Assertions.assertEquals("GD", new GenerationalDistance().name());
   }
 
 }

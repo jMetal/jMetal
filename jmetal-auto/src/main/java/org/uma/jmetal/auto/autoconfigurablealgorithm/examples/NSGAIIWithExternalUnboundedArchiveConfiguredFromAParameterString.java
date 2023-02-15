@@ -46,10 +46,10 @@ public class NSGAIIWithExternalUnboundedArchiveConfiguredFromAParameterString {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.parse(parameters);
 
-    AutoNSGAII.print(autoNSGAII.fixedParameterList);
-    AutoNSGAII.print(autoNSGAII.autoConfigurableParameterList);
+    AutoNSGAII.print(autoNSGAII.fixedParameterList());
+    AutoNSGAII.print(autoNSGAII.configurableParameterList());
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 

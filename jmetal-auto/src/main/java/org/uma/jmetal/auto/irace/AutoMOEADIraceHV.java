@@ -13,13 +13,13 @@ import org.uma.jmetal.util.VectorUtils;
 public class AutoMOEADIraceHV {
   public static void main(String[] args) throws IOException {
     AutoMOEAD autoMOEAD = new AutoMOEAD();
-    autoMOEAD.parseAndCheckParameters(args);
+    autoMOEAD.parse(args);
 
     EvolutionaryAlgorithm<DoubleSolution> mopso = autoMOEAD.create();
     mopso.run();
 
     String referenceFrontFile = "resources/referenceFrontsCSV/"
-        + autoMOEAD.referenceFrontFilenameParameter.getValue();
+        + autoMOEAD.referenceFrontFilenameParameter.value();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     double[][] front = getMatrixWithObjectiveValues(mopso.result()) ;

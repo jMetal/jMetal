@@ -35,7 +35,7 @@ public class WFGHypervolume extends Hypervolume {
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "WFG Hypervolume quality indicator" ;
   }
 
@@ -535,7 +535,7 @@ public class WFGHypervolume extends Hypervolume {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "HV";
   }
 }

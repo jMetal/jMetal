@@ -57,7 +57,7 @@ public class PISAHypervolume extends Hypervolume {
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "PISA Hypervolume quality indicator" ;
   }
 
@@ -202,7 +202,7 @@ public class PISAHypervolume extends Hypervolume {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "HV";
   }
 }

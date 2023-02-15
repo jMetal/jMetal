@@ -12,13 +12,13 @@ import org.uma.jmetal.util.VectorUtils;
 public class AutoMOPSOIraceHV {
   public static void main(String[] args) throws IOException {
     AutoMOPSO mopsoWithParameters = new AutoMOPSO();
-    mopsoWithParameters.parseAndCheckParameters(args);
+    mopsoWithParameters.parse(args);
 
     ParticleSwarmOptimizationAlgorithm mopso = mopsoWithParameters.create();
     mopso.run();
 
     String referenceFrontFile = "resources/referenceFrontsCSV/"
-        + mopsoWithParameters.referenceFrontFilenameParameter.getValue();
+        + mopsoWithParameters.referenceFrontFilenameParameter.value();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     double[][] front = getMatrixWithObjectiveValues(mopso.result()) ;

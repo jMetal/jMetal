@@ -14,16 +14,16 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
 public class VariationParameter extends CategoricalParameter {
-  public VariationParameter(String[] args, List<String> variationStrategies) {
-    super("variation", args, variationStrategies);
+  public VariationParameter(List<String> variationStrategies) {
+    super("variation", variationStrategies);
   }
 
   public Variation<? extends DoubleSolution> getDoubleSolutionParameter() {
     Variation<DoubleSolution> result;
 
-    switch (getValue()) {
+    switch (value()) {
       case "crossoverAndMutationVariation":
-        int offspringPopulationSize = (Integer)findSpecificParameter("offspringPopulationSize").getValue() ;
+        int offspringPopulationSize = (Integer)findSpecificParameter("offspringPopulationSize").value() ;
         CrossoverParameter crossoverParameter =
             (CrossoverParameter) findSpecificParameter("crossover");
         MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
@@ -57,7 +57,7 @@ public class VariationParameter extends CategoricalParameter {
                 subProblemIdGenerator);
         break;
       default:
-        throw new JMetalException("Variation component unknown: " + getValue());
+        throw new JMetalException("Variation component unknown: " + value());
     }
 
     return result;
@@ -65,9 +65,9 @@ public class VariationParameter extends CategoricalParameter {
 
   public Variation<? extends BinarySolution> getBinarySolutionParameter() {
     Variation<BinarySolution> result;
-    int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").getValue() ;
+    int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").value() ;
 
-    if ("crossoverAndMutationVariation".equals(getValue())) {
+    if ("crossoverAndMutationVariation".equals(value())) {
       CrossoverParameter crossoverParameter =
           (CrossoverParameter) findSpecificParameter("crossover");
       MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
@@ -80,14 +80,14 @@ public class VariationParameter extends CategoricalParameter {
           new CrossoverAndMutationVariation<>(
               offspringPopulationSize, crossoverOperator, mutationOperatorOperator);
     } else {
-      throw new JMetalException("Variation component unknown: " + getValue());
+      throw new JMetalException("Variation component unknown: " + value());
     }
 
     return result;
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "variation";
   }
 }

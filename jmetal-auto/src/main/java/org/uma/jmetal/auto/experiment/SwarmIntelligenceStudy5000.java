@@ -173,7 +173,7 @@ public class SwarmIntelligenceStudy5000 {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> algorithm = autoNSGAII.create();
 
@@ -218,7 +218,7 @@ public class SwarmIntelligenceStudy5000 {
             .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parseAndCheckParameters(parameters);
+    autoMOPSO.parse(parameters);
 
     ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
 
@@ -264,7 +264,7 @@ public class SwarmIntelligenceStudy5000 {
             .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parseAndCheckParameters(parameters);
+    autoMOPSO.parse(parameters);
 
     ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
 
@@ -311,7 +311,7 @@ public class SwarmIntelligenceStudy5000 {
             .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parseAndCheckParameters(parameters);
+    autoMOPSO.parse(parameters);
 
     ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
 
@@ -358,7 +358,7 @@ public class SwarmIntelligenceStudy5000 {
             .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parseAndCheckParameters(parameters);
+    autoMOPSO.parse(parameters);
 
     ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
 
@@ -405,7 +405,7 @@ public class SwarmIntelligenceStudy5000 {
             .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parseAndCheckParameters(parameters);
+    autoMOPSO.parse(parameters);
 
     ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
 
@@ -450,7 +450,7 @@ public class SwarmIntelligenceStudy5000 {
             .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parseAndCheckParameters(parameters);
+    autoMOPSO.parse(parameters);
 
     ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
 

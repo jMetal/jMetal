@@ -61,12 +61,12 @@ public class GenerationalDistance extends QualityIndicator {
     return sum / front.length;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "GD" ;
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Generational distance quality indicator" ;
   }
 

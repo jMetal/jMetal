@@ -13,13 +13,13 @@ import org.uma.jmetal.util.VectorUtils;
 public class AutoNSGAIIIraceHV {
   public static void main(String[] args) throws IOException {
     AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
-    nsgaiiWithParameters.parseAndCheckParameters(args);
+    nsgaiiWithParameters.parse(args);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
     nsgaII.run();
 
     String referenceFrontFile =
-        "resources/referenceFrontsCSV/" + nsgaiiWithParameters.referenceFrontFilename.getValue();
+        "resources/referenceFrontsCSV/" + nsgaiiWithParameters.referenceFrontFilename.value();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     double[][] front = getMatrixWithObjectiveValues(nsgaII.result()) ;

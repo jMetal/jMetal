@@ -9,13 +9,13 @@ import org.uma.jmetal.solution.doublesolution.repairsolution.impl.RepairDoubleSo
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter {
-  public RepairDoubleSolutionStrategyParameter(String name, String args[], List<String> strategies) {
-    super(name, args, strategies) ;
+  public RepairDoubleSolutionStrategyParameter(String name, List<String> strategies) {
+    super(name, strategies) ;
   }
 
   public RepairDoubleSolution getParameter() {
     RepairDoubleSolution result ;
-    switch (getValue()) {
+    switch (value()) {
       case "random":
         result = new RepairDoubleSolutionWithRandomValue() ;
         break ;
@@ -26,7 +26,7 @@ public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter 
         result = new RepairDoubleSolutionWithOppositeBoundValue() ;
         break ;
       default:
-        throw new JMetalException("Repair strategy unknown: " + getName()) ;
+        throw new JMetalException("Repair strategy unknown: " + name()) ;
     }
 
     return result ;

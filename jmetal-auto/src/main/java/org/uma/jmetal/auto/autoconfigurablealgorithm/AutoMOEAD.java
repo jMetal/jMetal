@@ -50,7 +50,6 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
  * @autor Antonio J. Nebro
  */
 public class AutoMOEAD implements AutoConfigurableAlgorithm {
-
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
@@ -71,46 +70,51 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   private BooleanParameter normalizeObjectivesParameter ;
 
   @Override
-  public List<Parameter<?>> getAutoConfigurableParameterList() {
+  public List<Parameter<?>> configurableParameterList() {
     return autoConfigurableParameterList;
   }
 
   @Override
-  public void parseAndCheckParameters(String[] args) {
-    problemNameParameter = new StringParameter("problemName", args);
-    randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed", args) ;
-    maximumNumberOfEvaluationsParameter =
-        new PositiveIntegerValue("maximumNumberOfEvaluations", args);
+  public List<Parameter<?>> fixedParameterList() {
+    return fixedParameterList;
+  }
 
-    referenceFrontFilenameParameter = new StringParameter("referenceFrontFileName", args);
+  public AutoMOEAD() {
+    this.configure() ;
+  }
+
+  public void configure() {
+    problemNameParameter = new StringParameter("problemName");
+    randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed") ;
+    maximumNumberOfEvaluationsParameter =
+        new PositiveIntegerValue("maximumNumberOfEvaluations");
+
+    referenceFrontFilenameParameter = new StringParameter("referenceFrontFileName");
 
     fixedParameterList.add(problemNameParameter);
     fixedParameterList.add(referenceFrontFilenameParameter);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter) ;
 
-    for (Parameter<?> parameter : fixedParameterList) {
-      parameter.parse().check();
-    }
-    populationSizeParameter = new PositiveIntegerValue("populationSize", args);
+    populationSizeParameter = new PositiveIntegerValue("populationSize");
 
-    normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives", args) ;
+    normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives") ;
 
-    neighborhoodSizeParameter = new IntegerParameter("neighborhoodSize", args,5, 50);
+    neighborhoodSizeParameter = new IntegerParameter("neighborhoodSize",5, 50);
     neighborhoodSelectionProbabilityParameter =
-        new ProbabilityParameter("neighborhoodSelectionProbability", args);
+        new ProbabilityParameter("neighborhoodSelectionProbability");
     maximumNumberOfReplacedSolutionsParameter =
-        new IntegerParameter("maximumNumberOfReplacedSolutions", args,1, 5);
+        new IntegerParameter("maximumNumberOfReplacedSolutions",1, 5);
     aggregativeFunctionParameter =
         new AggregationFunctionParameter(
-            List.of("tschebyscheff", "weightedSum", "penaltyBoundaryIntersection"), args);
-    RealParameter pbiTheta = new RealParameter("pbiTheta", args,1.0, 200);
+            List.of("tschebyscheff", "weightedSum", "penaltyBoundaryIntersection"));
+    RealParameter pbiTheta = new RealParameter("pbiTheta",1.0, 200);
     aggregativeFunctionParameter.addSpecificParameter("penaltyBoundaryIntersection", pbiTheta);
 
-    algorithmResult(args);
-    createInitialSolution(args);
-    selection(args);
-    variation(args);
+    algorithmResult();
+    createInitialSolution();
+    selection();
+    variation();
 
     autoConfigurableParameterList.add(populationSizeParameter);
     autoConfigurableParameterList.add(neighborhoodSizeParameter);
@@ -122,74 +126,68 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     autoConfigurableParameterList.add(createInitialSolutionsParameter);
     autoConfigurableParameterList.add(variationParameter);
     autoConfigurableParameterList.add(selectionParameter);
-
-    for (Parameter<?> parameter : autoConfigurableParameterList) {
-      parameter.parse().check();
-    }
   }
 
-  private void variation(String[] args) {
-    CrossoverParameter crossoverParameter = new CrossoverParameter(args,
-        List.of("SBX", "BLX_ALPHA", "wholeArithmetic"));
+  private void variation() {
+    CrossoverParameter crossoverParameter = new CrossoverParameter(List.of("SBX", "BLX_ALPHA", "wholeArithmetic"));
     ProbabilityParameter crossoverProbability =
-        new ProbabilityParameter("crossoverProbability", args);
+        new ProbabilityParameter("crossoverProbability");
     crossoverParameter.addGlobalParameter(crossoverProbability);
     RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
-            "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
+            "crossoverRepairStrategy", Arrays.asList("random", "round", "bounds"));
     crossoverParameter.addGlobalParameter(crossoverRepairStrategy);
 
-    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
+    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex",5.0, 400.0);
     crossoverParameter.addSpecificParameter("SBX", distributionIndex);
 
-    RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
+    RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue",0.0, 1.0);
     crossoverParameter.addSpecificParameter("BLX_ALPHA", alpha);
 
     MutationParameter mutationParameter =
-        new MutationParameter(args,
-            Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
+        new MutationParameter(Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
 
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args,
+    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor",
         0.0, 2.0);
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
-            "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
+            "mutationRepairStrategy", Arrays.asList("random", "round", "bounds"));
     mutationParameter.addGlobalParameter(mutationRepairStrategy);
 
     RealParameter distributionIndexForPolynomialMutation =
-        new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
+        new RealParameter("polynomialMutationDistributionIndex", 5.0, 400.0);
     mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
     RealParameter distributionIndexForLinkedPolynomialMutation =
-        new RealParameter("linkedPolynomialMutationDistributionIndex", args, 5.0, 400.0);
+        new RealParameter("linkedPolynomialMutationDistributionIndex",5.0, 400.0);
     mutationParameter.addSpecificParameter("linkedPolynomial",
         distributionIndexForLinkedPolynomialMutation);
 
     RealParameter uniformMutationPerturbation =
-        new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
+        new RealParameter("uniformMutationPerturbation",0.0, 1.0);
     mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
     RealParameter nonUniformMutationPerturbation =
-        new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
+        new RealParameter("nonUniformMutationPerturbation", 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.value());
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
         problem.numberOfVariables());
 
     DifferentialEvolutionCrossoverParameter deCrossoverParameter =
-        new DifferentialEvolutionCrossoverParameter(args, List.of("RAND_1_BIN", "RAND_1_EXP", "RAND_2_BIN"));
+        new DifferentialEvolutionCrossoverParameter(List.of("RAND_1_BIN", "RAND_1_EXP", "RAND_2_BIN"));
 
-    RealParameter crParameter = new RealParameter("CR", args, 0.0, 1.0);
-    RealParameter fParameter = new RealParameter("F", args, 0.0, 1.0);
+    RealParameter crParameter = new RealParameter("CR", 0.0, 1.0);
+    RealParameter fParameter = new RealParameter("F", 0.0, 1.0);
     deCrossoverParameter.addGlobalParameter(crParameter);
     deCrossoverParameter.addGlobalParameter(fParameter);
 
-    offspringPopulationSizeParameter = new PositiveIntegerValue("offspringPopulationSize", args) ;
+    offspringPopulationSizeParameter = new PositiveIntegerValue("offspringPopulationSize") ;
 
     variationParameter =
-        new VariationParameter(args, List.of("crossoverAndMutationVariation", "differentialEvolutionVariation"));
+        new VariationParameter(List.of("crossoverAndMutationVariation", "differentialEvolutionVariation"));
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", offspringPopulationSizeParameter);
@@ -197,28 +195,36 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     variationParameter.addSpecificParameter("differentialEvolutionVariation", deCrossoverParameter);
   }
 
-  private void selection(String[] args) {
-    selectionParameter = new SelectionParameter<>(args, Arrays.asList("populationAndNeighborhoodMatingPoolSelection"));
+  private void selection() {
+    selectionParameter = new SelectionParameter<>(Arrays.asList("populationAndNeighborhoodMatingPoolSelection"));
     neighborhoodSelectionProbabilityParameter =
-        new ProbabilityParameter("neighborhoodSelectionProbability", args);
+        new ProbabilityParameter("neighborhoodSelectionProbability");
     selectionParameter.addSpecificParameter(
         "populationAndNeighborhoodMatingPoolSelection", neighborhoodSelectionProbabilityParameter);
   }
 
-  private void createInitialSolution(String[] args) {
+  private void createInitialSolution() {
     createInitialSolutionsParameter =
-        new CreateInitialSolutionsParameter(
-            args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
+        new CreateInitialSolutionsParameter(Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
   }
 
-  private void algorithmResult(String[] args) {
+  private void algorithmResult() {
     algorithmResultParameter =
-        new CategoricalParameter("algorithmResult", args, List.of("externalArchive", "population"));
-    externalArchiveParameter = new ExternalArchiveParameter(args,
-        List.of("crowdingDistanceArchive", "unboundedArchive"));
+        new CategoricalParameter("algorithmResult", List.of("externalArchive", "population"));
+    externalArchiveParameter = new ExternalArchiveParameter(List.of("crowdingDistanceArchive", "unboundedArchive"));
 
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", externalArchiveParameter);
+  }
+
+  @Override
+  public void parse(String[] arguments) {
+    for (Parameter<?> parameter : fixedParameterList) {
+      parameter.parse(arguments).check();
+    }
+    for (Parameter<?> parameter : configurableParameterList()) {
+      parameter.parse(arguments).check();
+    }
   }
 
   /**
@@ -227,14 +233,14 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
    * @return
    */
   public EvolutionaryAlgorithm<DoubleSolution> create() {
-    JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.getValue());
+    JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.value());
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.value());
 
     Archive<DoubleSolution> archive = null;
     Evaluation<DoubleSolution> evaluation ;
-    if (algorithmResultParameter.getValue().equals("externalArchive")) {
-      externalArchiveParameter.setSize(populationSizeParameter.getValue());
+    if (algorithmResultParameter.validValues().equals("externalArchive")) {
+      externalArchiveParameter.setSize(populationSizeParameter.value());
       archive = externalArchiveParameter.getParameter();
       evaluation = new SequentialEvaluationWithArchive<>(problem, archive);
     } else {
@@ -243,17 +249,17 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     var initialSolutionsCreation =
         (SolutionsCreation<DoubleSolution>) createInitialSolutionsParameter.getParameter((DoubleProblem) problem,
-            populationSizeParameter.getValue());
+            populationSizeParameter.value());
 
     Termination termination =
-        new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
+        new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.value());
 
     MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter(
         "mutation");
-    if (mutationParameter.getValue().equals("nonUniform")) {
+    if (mutationParameter.validValues().equals("nonUniform")) {
       mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
       mutationParameter.addNonConfigurableParameter("maxIterations",
-          maximumNumberOfEvaluationsParameter.getValue() / populationSizeParameter.getValue());
+          maximumNumberOfEvaluationsParameter.value() / populationSizeParameter.value());
     }
 
     Neighborhood<DoubleSolution> neighborhood = null ;
@@ -261,21 +267,21 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     if (problem.numberOfObjectives() == 2) {
       neighborhood =
           new WeightVectorNeighborhood<>(
-              populationSizeParameter.getValue(), neighborhoodSizeParameter.getValue());
+              populationSizeParameter.value(), neighborhoodSizeParameter.value());
     } else {
       try {
         neighborhood =
             new WeightVectorNeighborhood<>(
-                populationSizeParameter.getValue(),
+                populationSizeParameter.value(),
                 problem.numberOfObjectives(),
-                neighborhoodSizeParameter.getValue(),
+                neighborhoodSizeParameter.value(),
                 "resources/weightVectorFiles/moead");
       } catch (FileNotFoundException exception) {
         exception.printStackTrace();
       }
     }
 
-    var subProblemIdGenerator = new IntegerPermutationGenerator(populationSizeParameter.getValue());
+    var subProblemIdGenerator = new IntegerPermutationGenerator(populationSizeParameter.value());
     selectionParameter.addNonConfigurableParameter("neighborhood", neighborhood);
     selectionParameter.addNonConfigurableParameter("subProblemIdGenerator", subProblemIdGenerator);
 
@@ -287,9 +293,9 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
         (PopulationAndNeighborhoodSelection<DoubleSolution>)
             selectionParameter.getParameter(variation.getMatingPoolSize(), null);
 
-    int maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutionsParameter.getValue();
+    int maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutionsParameter.value();
 
-    aggregativeFunctionParameter.normalizedObjectives(normalizeObjectivesParameter.getValue());
+    aggregativeFunctionParameter.normalizedObjectives(normalizeObjectivesParameter.value());
     AggregationFunction aggregativeFunction = aggregativeFunctionParameter.getParameter();
     var replacement =
         new MOEADReplacement<>(
@@ -297,7 +303,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
             (WeightVectorNeighborhood<DoubleSolution>) neighborhood,
             aggregativeFunction,
             subProblemIdGenerator,
-            maximumNumberOfReplacedSolutions, normalizeObjectivesParameter.getValue());
+            maximumNumberOfReplacedSolutions, normalizeObjectivesParameter.value());
 
     class EvolutionaryAlgorithmWithArchive extends EvolutionaryAlgorithm<DoubleSolution> {
       private Archive<DoubleSolution> archive ;
@@ -329,7 +335,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
       }
     }
 
-    if (algorithmResultParameter.getValue().equals("externalArchive")) {
+    if (algorithmResultParameter.value().equals("externalArchive")) {
       return new EvolutionaryAlgorithmWithArchive(
           "MOEAD",
           initialSolutionsCreation,

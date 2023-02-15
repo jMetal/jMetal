@@ -60,11 +60,11 @@ public class InvertedGenerationalDistancePlus extends QualityIndicator {
     return sum / referenceFront.length;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "IGD+" ;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Inverted Generational Distance+" ;
   }
 

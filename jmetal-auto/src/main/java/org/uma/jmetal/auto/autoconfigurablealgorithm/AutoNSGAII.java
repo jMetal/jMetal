@@ -49,9 +49,8 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
  * @autor Antonio J. Nebro
  */
 public class AutoNSGAII implements AutoConfigurableAlgorithm {
-
-  public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
-  public List<Parameter<?>> fixedParameterList = new ArrayList<>();
+  private List<Parameter<?>> configurableParameterList = new ArrayList<>();
+  private List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
   public StringParameter referenceFrontFilename;
   private PositiveIntegerValue randomGeneratorSeedParameter;
@@ -66,123 +65,120 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   private VariationParameter variationParameter;
 
   @Override
-  public List<Parameter<?>> getAutoConfigurableParameterList() {
-    return autoConfigurableParameterList;
+  public List<Parameter<?>> configurableParameterList() {
+    return configurableParameterList;
+  }
+  @Override
+  public List<Parameter<?>> fixedParameterList() {
+    return fixedParameterList;
   }
 
-  @Override
-  public void parseAndCheckParameters(String[] args) {
-    problemNameParameter = new StringParameter("problemName", args);
-    randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed", args) ;
-    referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
+  public AutoNSGAII() {
+    this.configure();
+  }
+
+  private void configure() {
+    problemNameParameter = new StringParameter("problemName");
+    randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed");
+    referenceFrontFilename = new StringParameter("referenceFrontFileName");
     maximumNumberOfEvaluationsParameter =
-        new PositiveIntegerValue("maximumNumberOfEvaluations", args);
+        new PositiveIntegerValue("maximumNumberOfEvaluations");
 
     fixedParameterList.add(problemNameParameter);
     fixedParameterList.add(referenceFrontFilename);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
-    fixedParameterList.add(randomGeneratorSeedParameter) ;
+    fixedParameterList.add(randomGeneratorSeedParameter);
 
-    for (Parameter<?> parameter : fixedParameterList) {
-      parameter.parse().check();
-    }
-    populationSizeParameter = new PositiveIntegerValue("populationSize", args);
+    populationSizeParameter = new PositiveIntegerValue("populationSize");
 
-    algorithmResult(args);
-    createInitialSolution(args);
-    selection(args);
-    variation(args);
+    algorithmResult();
+    createInitialSolution();
+    selection();
+    variation();
 
-    autoConfigurableParameterList.add(populationSizeParameter);
-    autoConfigurableParameterList.add(algorithmResultParameter);
-    autoConfigurableParameterList.add(createInitialSolutionsParameter);
-    autoConfigurableParameterList.add(variationParameter);
-    autoConfigurableParameterList.add(selectionParameter);
-
-    for (Parameter<?> parameter : autoConfigurableParameterList) {
-      parameter.parse().check();
-    }
+    configurableParameterList.add(populationSizeParameter);
+    configurableParameterList.add(algorithmResultParameter);
+    configurableParameterList.add(createInitialSolutionsParameter);
+    configurableParameterList.add(variationParameter);
+    configurableParameterList.add(selectionParameter);
   }
 
-  private void variation(String[] args) {
-    CrossoverParameter crossoverParameter = new CrossoverParameter(args,
+  private void variation() {
+    CrossoverParameter crossoverParameter = new CrossoverParameter(
         List.of("SBX", "BLX_ALPHA", "wholeArithmetic"));
     ProbabilityParameter crossoverProbability =
-        new ProbabilityParameter("crossoverProbability", args);
+        new ProbabilityParameter("crossoverProbability");
     crossoverParameter.addGlobalParameter(crossoverProbability);
     RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
-            "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
+            "crossoverRepairStrategy", Arrays.asList("random", "round", "bounds"));
     crossoverParameter.addGlobalParameter(crossoverRepairStrategy);
 
-    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
+    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", 5.0, 400.0);
     crossoverParameter.addSpecificParameter("SBX", distributionIndex);
 
-    RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
+    RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", 0.0, 1.0);
     crossoverParameter.addSpecificParameter("BLX_ALPHA", alpha);
 
     MutationParameter mutationParameter =
-        new MutationParameter(args,
+        new MutationParameter(
             Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
 
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args,
+    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor",
         0.0, 2.0);
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
-            "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
+            "mutationRepairStrategy", Arrays.asList("random", "round", "bounds"));
     mutationParameter.addGlobalParameter(mutationRepairStrategy);
 
     RealParameter distributionIndexForPolynomialMutation =
-        new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
+        new RealParameter("polynomialMutationDistributionIndex", 5.0, 400.0);
     mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
     RealParameter distributionIndexForLinkedPolynomialMutation =
-        new RealParameter("linkedPolynomialMutationDistributionIndex", args, 5.0, 400.0);
+        new RealParameter("linkedPolynomialMutationDistributionIndex", 5.0, 400.0);
     mutationParameter.addSpecificParameter("linkedPolynomial",
         distributionIndexForLinkedPolynomialMutation);
 
     RealParameter uniformMutationPerturbation =
-        new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
+        new RealParameter("uniformMutationPerturbation", 0.0, 1.0);
     mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
     RealParameter nonUniformMutationPerturbation =
-        new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
+        new RealParameter("nonUniformMutationPerturbation", 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
-    mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
-        problem.numberOfVariables());
-
-    offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1,
+    offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", 1,
         400);
 
     variationParameter =
-        new VariationParameter(args, List.of("crossoverAndMutationVariation"));
-    variationParameter.addSpecificParameter("crossoverAndMutationVariation", offspringPopulationSizeParameter);
+        new VariationParameter(List.of("crossoverAndMutationVariation"));
+    variationParameter.addSpecificParameter("crossoverAndMutationVariation",
+        offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
   }
 
-  private void selection(String[] args) {
-    selectionParameter = new SelectionParameter<>(args, Arrays.asList("tournament", "random"));
+  private void selection() {
+    selectionParameter = new SelectionParameter<>(Arrays.asList("tournament", "random"));
     IntegerParameter selectionTournamentSize =
-        new IntegerParameter("selectionTournamentSize", args, 2, 10);
+        new IntegerParameter("selectionTournamentSize", 2, 10);
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
   }
 
-  private void createInitialSolution(String[] args) {
+  private void createInitialSolution() {
     createInitialSolutionsParameter =
         new CreateInitialSolutionsParameter(
-            args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
+            Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
   }
 
-  private void algorithmResult(String[] args) {
+  private void algorithmResult() {
     algorithmResultParameter =
-        new CategoricalParameter("algorithmResult", args, List.of("externalArchive", "population"));
-    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", args, 10,
+        new CategoricalParameter("algorithmResult", List.of("externalArchive", "population"));
+    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", 10,
         200);
-    externalArchiveParameter = new ExternalArchiveParameter(args,
+    externalArchiveParameter = new ExternalArchiveParameter(
         List.of("crowdingDistanceArchive", "unboundedArchive"));
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
@@ -191,22 +187,32 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
         "externalArchive", externalArchiveParameter);
   }
 
+  @Override
+  public void parse(String[] arguments) {
+    for (Parameter<?> parameter : fixedParameterList) {
+      parameter.parse(arguments).check();
+    }
+    for (Parameter<?> parameter : configurableParameterList()) {
+      parameter.parse(arguments).check();
+    }
+  }
+
   /**
    * Creates an instance of NSGA-II from the parsed parameters
    *
    * @return
    */
   public EvolutionaryAlgorithm<DoubleSolution> create() {
-    JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.getValue());
+    JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.value());
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.value());
 
     Archive<DoubleSolution> archive = null;
 
-    if (algorithmResultParameter.getValue().equals("externalArchive")) {
-      externalArchiveParameter.setSize(populationSizeParameter.getValue());
+    if (algorithmResultParameter.value().equals("externalArchive")) {
+      externalArchiveParameter.setSize(populationSizeParameter.value());
       archive = externalArchiveParameter.getParameter();
-      populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
+      populationSizeParameter.value(populationSizeWithArchiveParameter.value());
     }
 
     Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(
@@ -219,15 +225,19 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
                 Comparator.comparing(densityEstimator::value).reversed()));
 
     var initialSolutionsCreation =
-        (SolutionsCreation<DoubleSolution>) createInitialSolutionsParameter.getParameter((DoubleProblem) problem,
-            populationSizeParameter.getValue());
+        (SolutionsCreation<DoubleSolution>) createInitialSolutionsParameter.getParameter(
+            (DoubleProblem) problem,
+            populationSizeParameter.value());
 
     MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter(
         "mutation");
-    if (mutationParameter.getValue().equals("nonUniform")) {
+    mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
+        problem.numberOfVariables());
+
+    if (mutationParameter.value().equals("nonUniform")) {
       mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
       mutationParameter.addNonConfigurableParameter("maxIterations",
-          maximumNumberOfEvaluationsParameter.getValue() / populationSizeParameter.getValue());
+          maximumNumberOfEvaluationsParameter.value() / populationSizeParameter.value());
     }
 
     var variation = (Variation<DoubleSolution>) variationParameter.getDoubleSolutionParameter();
@@ -236,8 +246,8 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
         selectionParameter.getParameter(
             variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 
-    Evaluation<DoubleSolution> evaluation ;
-    if (algorithmResultParameter.getValue().equals("externalArchive")) {
+    Evaluation<DoubleSolution> evaluation;
+    if (algorithmResultParameter.value().equals("externalArchive")) {
       evaluation = new SequentialEvaluationWithArchive<>(problem, archive);
     } else {
       evaluation = new SequentialEvaluation<>(problem);
@@ -250,10 +260,12 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
             Replacement.RemovalPolicy.ONE_SHOT);
 
     Termination termination =
-        new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
+        new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.value());
 
     class EvolutionaryAlgorithmWithArchive extends EvolutionaryAlgorithm<DoubleSolution> {
-      private Archive<DoubleSolution> archive ;
+
+      private Archive<DoubleSolution> archive;
+
       /**
        * Constructor
        *
@@ -273,7 +285,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
           Archive<DoubleSolution> archive) {
         super(name, initialPopulationCreation, evaluation, termination, selection, variation,
             replacement);
-        this.archive = archive ;
+        this.archive = archive;
       }
 
       @Override
@@ -282,7 +294,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
       }
     }
 
-    if (algorithmResultParameter.getValue().equals("externalArchive")) {
+    if (algorithmResultParameter.value().equals("externalArchive")) {
       return new EvolutionaryAlgorithmWithArchive(
           "NSGA-II",
           initialSolutionsCreation,
@@ -291,7 +303,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
           selection,
           variation,
           replacement,
-          archive) ;
+          archive);
     } else {
       return new EvolutionaryAlgorithm<>(
           "NSGA-II",

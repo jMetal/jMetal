@@ -11,34 +11,7 @@ import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 public class AutoMOEADIraceParameterFileGenerator {
 
   public static void main(String[] args) {
-    String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1 "
-            + "--referenceFrontFileName DTLZ1.3D.csv "
-            + "--randomGeneratorSeed 124 "
-            + "--maximumNumberOfEvaluations 25000 "
-            + "--algorithmResult population "
-            + "--normalizeObjectives FALSE "
-            + "--populationSize 91 "
-            + "--offspringPopulationSize 1 "
-            + "--createInitialSolutions random "
-            + "--neighborhoodSize 20 "
-            + "--maximumNumberOfReplacedSolutions 2 "
-            + "--aggregationFunction penaltyBoundaryIntersection "
-            + "--pbiTheta 5.0 "
-            + "--neighborhoodSelectionProbability 0.9 "
-            + "--variation crossoverAndMutationVariation "
-            + "--selection populationAndNeighborhoodMatingPoolSelection "
-            + "--crossover SBX "
-            + "--crossoverProbability 0.9 "
-            + "--crossoverRepairStrategy bounds "
-            + "--sbxDistributionIndex 20.0 "
-            + "--mutation polynomial "
-            + "--mutationProbabilityFactor 1.0 "
-            + "--mutationRepairStrategy bounds "
-            + "--polynomialMutationDistributionIndex 20.0 ")
-            .split("\\s+");
-
     IraceParameterFileGenerator parameterFileGenerator = new IraceParameterFileGenerator() ;
-    parameterFileGenerator.generateConfigurationFile(new AutoMOEAD(), parameters) ;
+    parameterFileGenerator.generateConfigurationFile(new AutoMOEAD()) ;
   }
 }

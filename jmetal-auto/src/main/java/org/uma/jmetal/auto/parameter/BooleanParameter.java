@@ -5,14 +5,14 @@ import org.uma.jmetal.util.errorchecking.Check;
 
 public class BooleanParameter extends Parameter<Boolean> {
 
-  public BooleanParameter(String name, String[] args) {
-    super(name, args);
+  public BooleanParameter(String name) {
+    super(name);
   }
 
   @Override
   public void check() {
-    Check.that(!getName().equals(""), "The parameter name cannot be the empty string");
-    Check.notNull(getName());
+    Check.that(!name().equals(""), "The parameter name cannot be the empty string");
+    Check.notNull(name());
   }
 
   public List<String> getValidValues() {
@@ -20,7 +20,7 @@ public class BooleanParameter extends Parameter<Boolean> {
   }
 
   @Override
-  public Parameter<Boolean> parse() {
-    return super.parse(Boolean::parseBoolean);
+  public Parameter<Boolean> parse(String[] args) {
+    return super.parse(Boolean::parseBoolean, args);
   }
 }

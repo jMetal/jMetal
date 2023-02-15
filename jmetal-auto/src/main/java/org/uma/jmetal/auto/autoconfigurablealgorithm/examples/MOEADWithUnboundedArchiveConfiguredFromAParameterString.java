@@ -48,7 +48,7 @@ public class MOEADWithUnboundedArchiveConfiguredFromAParameterString {
             .split("\\s+");
 
     AutoMOEAD autoMOEAD = new AutoMOEAD();
-    autoMOEAD.parseAndCheckParameters(parameters);
+    autoMOEAD.parse(parameters);
 
     AutoNSGAII.print(autoMOEAD.fixedParameterList);
     AutoNSGAII.print(autoMOEAD.autoConfigurableParameterList);

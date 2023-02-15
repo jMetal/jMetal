@@ -90,11 +90,11 @@ public class Epsilon extends QualityIndicator {
     return eps;
   }
 
-  @Override public String getDescription() {
+  @Override public String description() {
     return "Additive Epsilon quality indicator" ;
   }
 
-  @Override public String getName() {
+  @Override public String name() {
     return "EP" ;
   }
 }

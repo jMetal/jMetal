@@ -1,5 +1,6 @@
 package org.uma.jmetal.auto.autoconfigurablealgorithm;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -14,6 +15,22 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 
 class AutoMOPSOIT {
+  @Test
+  void AutoMOPSOHas15FirstLevelConfigurableParameters() {
+    assertThat(new AutoMOPSO().configurableParameterList()).hasSize(15);
+  }
+
+  @Test
+  void AutoMOPSOHasFourFourFixedParameters() {
+    assertThat(new AutoMOPSO().fixedParameterList()).hasSize(4);
+  }
+
+  @Test
+  void AutoMOPSOHas36Parameters() {
+    assertThat(AutoConfigurableAlgorithm.parameterFlattening(
+        new AutoMOPSO().configurableParameterList())).hasSize(36);
+  }
+
   @Test
   void AutoMOPSOWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT4() throws IOException {
     String referenceFrontFileName = "ZDT4.csv";
@@ -56,7 +73,7 @@ class AutoMOPSOIT {
             .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parseAndCheckParameters(parameters);
+    autoMOPSO.parse(parameters);
 
     ParticleSwarmOptimizationAlgorithm smpso = autoMOPSO.create() ;
 

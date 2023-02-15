@@ -15,8 +15,8 @@ public class RealParameter extends Parameter<Double> {
   private final double lowerBound;
   private final double upperBound;
 
-  public RealParameter(String name, String[] args, double lowerBound, double upperBound) {
-    super(name, args);
+  public RealParameter(String name, double lowerBound, double upperBound) {
+    super(name);
     Check.that(lowerBound < upperBound, "The lower bound " + lowerBound + " "
         + "is not higher that the upper bound " + upperBound);
     this.lowerBound = lowerBound;
@@ -24,18 +24,18 @@ public class RealParameter extends Parameter<Double> {
   }
 
   @Override
-  public RealParameter parse() {
-    return (RealParameter) parse(Double::parseDouble);
+  public RealParameter parse(String[] arguments) {
+    return (RealParameter) parse(Double::parseDouble, arguments);
   }
 
   @Override
   public void check() {
-    if ((getValue() < lowerBound) || (getValue() > upperBound)) {
+    if ((value() < lowerBound) || (value() > upperBound)) {
       throw new JMetalException(
           "Parameter "
-              + getName()
+              + name()
               + ": Invalid value: "
-              + getValue()
+              + value()
               + ". Range: "
               + lowerBound
               + ", "
@@ -46,7 +46,7 @@ public class RealParameter extends Parameter<Double> {
   /**
    * @return A list with the lower and upper bounds delimiting the valid values
    */
-  public List<Double> getValidValues() {
+  public List<Double> validValues() {
     return List.of(lowerBound, upperBound);
   }
 
@@ -54,18 +54,18 @@ public class RealParameter extends Parameter<Double> {
   public String toString() {
     StringBuilder result =
         new StringBuilder("Name: "
-            + getName()
+            + name()
             + ": "
             + "Value: "
-            + getValue()
+            + value()
             + ". Lower bound: "
             + lowerBound
             + ". Upper bound: "
             + upperBound);
-    for (Parameter<?> parameter : getGlobalParameters()) {
+    for (Parameter<?> parameter : globalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (Pair<String, Parameter<?>> parameter : specificParameters()) {
       result.append("\n  -> ").append(parameter.getRight().toString());
     }
     return result.toString();

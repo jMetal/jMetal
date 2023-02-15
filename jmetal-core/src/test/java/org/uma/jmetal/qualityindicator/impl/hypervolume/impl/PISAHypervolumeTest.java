@@ -16,13 +16,13 @@ public class PISAHypervolumeTest {
   public void shouldConstructorWithReferencePointCreateAValidInstance() {
     PISAHypervolume hypervolume = new PISAHypervolume(new double[] {1.0, 1.0});
 
-    double[][] referenceFront = hypervolume.getReferenceFront();
+    double[][] referenceFront = hypervolume.referenceFront();
     assertEquals(2, referenceFront.length);
     assertEquals(2, referenceFront[0].length);
-    assertEquals(1.0, hypervolume.getReferenceFront()[0][0], EPSILON);
-    assertEquals(0.0, hypervolume.getReferenceFront()[0][1], EPSILON);
-    assertEquals(0.0, hypervolume.getReferenceFront()[1][0], EPSILON);
-    assertEquals(1.0, hypervolume.getReferenceFront()[1][1], EPSILON);
+    assertEquals(1.0, hypervolume.referenceFront()[0][0], EPSILON);
+    assertEquals(0.0, hypervolume.referenceFront()[0][1], EPSILON);
+    assertEquals(0.0, hypervolume.referenceFront()[1][0], EPSILON);
+    assertEquals(1.0, hypervolume.referenceFront()[1][1], EPSILON);
   }
 
   /**
@@ -59,61 +59,6 @@ public class PISAHypervolumeTest {
         double result = hypervolume.compute(storedFront);
 
         Assert.assertEquals(0.6661, result, 0.0001);
-    }
-
-
-    @Test
-    public void chatgptCodeTest() throws IOException {
-
-      class Hypervolume {
-        private final int numberOfObjectives;
-        private final double[] referencePoint;
-
-        public Hypervolume(int numberOfObjectives, double[] referencePoint) {
-          this.numberOfObjectives = numberOfObjectives;
-          this.referencePoint = referencePoint;
-        }
-
-        public double calculate(double[][] solutions) {
-          double hypervolume = 0.0;
-
-          int numberOfSolutions = solutions.length;
-          double[][] normalizedSolutions = new double[numberOfSolutions][numberOfObjectives];
-          for (int i = 0; i < numberOfSolutions; i++) {
-            for (int j = 0; j < numberOfObjectives; j++) {
-              normalizedSolutions[i][j] = (solutions[i][j] - referencePoint[j]) / (1.0 - referencePoint[j]);
-            }
-          }
-
-          Arrays.sort(normalizedSolutions, (a, b) -> {
-            for (int i = 0; i < numberOfObjectives; i++) {
-              int comparison = Double.compare(b[i], a[i]);
-              if (comparison != 0) {
-                return comparison;
-              }
-            }
-            return 0;
-          });
-
-          for (int i = 0; i < numberOfSolutions; i++) {
-            double volume = 1.0;
-            for (int j = 0; j < numberOfObjectives; j++) {
-              volume *= normalizedSolutions[i][j];
-            }
-            hypervolume += volume;
-          }
-
-          return hypervolume;
-        }
-      }
-
-      double[][] storedFront =
-          VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
-
-      var hv = new Hypervolume(2, new double[]{1.1, 1.1}) ;
-      double result = hv.calculate(storedFront) ;
-
-      Assert.assertEquals(0.6661, result, 0.0001);
     }
 
     /**

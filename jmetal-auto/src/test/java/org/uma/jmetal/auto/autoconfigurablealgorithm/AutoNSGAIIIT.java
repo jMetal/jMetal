@@ -15,15 +15,32 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 
 class AutoNSGAIIIT {
+
+  @Test
+  void AutoNSGAIIHasFiveFirstLevelConfigurableParameters() {
+    assertThat(new AutoNSGAII().configurableParameterList()).hasSize(5);
+  }
+
+  @Test
+  void AutoNSGAIIHasFiveFourFixedParameters() {
+    assertThat(new AutoNSGAII().fixedParameterList()).hasSize(4);
+  }
+
+  @Test
+  void AutoNSGAIIHas21Parameters() {
+    assertThat(AutoConfigurableAlgorithm.parameterFlattening(
+        new AutoNSGAII().configurableParameterList())).hasSize(21);
+  }
+
   @Test
   void AutoNSGAIIWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT1()
       throws IOException {
-    String referenceFrontFileName = "ZDT1.csv" ;
+    String referenceFrontFileName = "ZDT1.csv";
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--randomGeneratorSeed 12 "
-            + "--referenceFrontFileName "+ referenceFrontFileName + " "
+            + "--referenceFrontFileName " + referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
             + "--algorithmResult population "
             + "--populationSize 100 "
@@ -45,7 +62,7 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
@@ -53,9 +70,9 @@ class AutoNSGAIIIT {
 
     List<DoubleSolution> population  = nsgaII.result() ;
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    String referenceFrontFile = "../resources/referenceFrontsCSV/" + referenceFrontFileName;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
     double[][] normalizedFront =
@@ -66,19 +83,19 @@ class AutoNSGAIIIT {
 
     double hv = hypervolume.compute(normalizedFront);
 
-    assertTrue(population.size() >= 95) ;
-    assertTrue(hv > 0.65) ;
+    assertTrue(population.size() >= 95);
+    assertTrue(hv > 0.65);
   }
 
   @Test
   void AutoNSGAIIExternalUnboundedArchiveReturnsAFrontWithHVHigherThanZeroPointSixtyFourOnProblemZDT4()
       throws IOException {
-    String referenceFrontFileName = "ZDT4.csv" ;
+    String referenceFrontFileName = "ZDT4.csv";
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--randomGeneratorSeed 12 "
-            + "--referenceFrontFileName "+ referenceFrontFileName + " "
+            + "--referenceFrontFileName " + referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
             + "--algorithmResult population "
             + "--populationSize 100 "
@@ -100,17 +117,17 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.result() ;
+    List<DoubleSolution> population = nsgaII.result();
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    String referenceFrontFile = "../resources/referenceFrontsCSV/" + referenceFrontFileName;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
     double[][] normalizedFront =
@@ -121,19 +138,19 @@ class AutoNSGAIIIT {
 
     double hv = hypervolume.compute(normalizedFront);
 
-    assertTrue(population.size() >= 92) ;
-    assertTrue(hv > 0.64) ;
+    assertTrue(population.size() >= 92);
+    assertTrue(hv > 0.64);
   }
 
 
   @Test
   void AutoNSGAIIExternalCrowdingArchiveReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT4()
       throws IOException {
-    String referenceFrontFileName = "ZDT4.csv" ;
+    String referenceFrontFileName = "ZDT4.csv";
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
-            + "--referenceFrontFileName "+ referenceFrontFileName + " "
+            + "--referenceFrontFileName " + referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
             + "--algorithmResult population "
             + "--randomGeneratorSeed 12 "
@@ -159,17 +176,17 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.result() ;
+    List<DoubleSolution> population = nsgaII.result();
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    String referenceFrontFile = "../resources/referenceFrontsCSV/" + referenceFrontFileName;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
     double[][] normalizedFront =
@@ -180,19 +197,19 @@ class AutoNSGAIIIT {
 
     double hv = hypervolume.compute(normalizedFront);
 
-    assertThat(population).hasSizeGreaterThan(95) ;
-    assertThat(hv).isGreaterThan(0.64) ;
+    assertThat(population).hasSizeGreaterThan(95);
+    assertThat(hv).isGreaterThan(0.64);
   }
 
   @Test
   void AutoNSGAIIExternalUnboundedArchiveReturnsAFrontWithHVHigherThanZeroPointFourOnProblemDTLZ2()
       throws IOException {
-    String referenceFrontFileName = "DTLZ2.3D.csv" ;
+    String referenceFrontFileName = "DTLZ2.3D.csv";
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
-            + "--referenceFrontFileName "+ referenceFrontFileName + " "
-            + "--maximumNumberOfEvaluations 50000 "
+            + "--referenceFrontFileName " + referenceFrontFileName + " "
+            + "--maximumNumberOfEvaluations 30000 "
             + "--algorithmResult externalArchive "
             + "--externalArchive unboundedArchive "
             + "--populationSizeWithArchive 100 "
@@ -216,17 +233,17 @@ class AutoNSGAIIIT {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseAndCheckParameters(parameters);
+    autoNSGAII.parse(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
     nsgaII.run();
 
-    List<DoubleSolution> population  = nsgaII.result() ;
+    List<DoubleSolution> population = nsgaII.result();
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+    String referenceFrontFile = "../resources/referenceFrontsCSV/" + referenceFrontFileName;
 
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
     double[][] normalizedFront =
@@ -237,7 +254,7 @@ class AutoNSGAIIIT {
 
     double hv = hypervolume.compute(normalizedFront);
 
-    assertTrue(population.size() >= 95) ;
-    assertTrue(hv > 0.40) ;
+    assertTrue(population.size() >= 95);
+    assertTrue(hv > 0.40);
   }
 }

@@ -68,11 +68,11 @@ public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> i
       System.out.println("Creating " + rDirectoryName + " directory");
     }
     for (QualityIndicator indicator : experiment.getIndicatorList()) {
-     String rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
+     String rFileName = rDirectoryName + "/" + indicator.name() + ".Boxplot" + ".R";
 
      try(FileWriter os = new FileWriter(rFileName, false)){
       os.write("postscript(\"" +
-               indicator.getName() +
+               indicator.name() +
               ".Boxplot.eps\", horizontal=FALSE, onefile=FALSE, height=8, width=12, pointsize=10)" +
               "\n");
 
@@ -111,7 +111,7 @@ public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> i
 
       os.write("par(mfrow=c(" + numberOfRows + "," + numberOfColumns + "))" + "\n");
 
-      os.write("indicator<-\"" +  indicator.getName() + "\"" + "\n");
+      os.write("indicator<-\"" +  indicator.name() + "\"" + "\n");
 
       for (ExperimentProblem<?> problem : experiment.getProblemList()) {
         os.write("qIndicator(indicator, \"" + problem.getTag() + "\")" + "\n");

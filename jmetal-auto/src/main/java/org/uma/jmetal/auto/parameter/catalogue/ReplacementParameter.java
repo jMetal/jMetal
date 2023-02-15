@@ -1,12 +1,10 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
-import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
@@ -16,18 +14,18 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 
 public class ReplacementParameter extends CategoricalParameter {
-  public ReplacementParameter(String args[], List<String> selectionStrategies) {
-    super("replacement", args, selectionStrategies);
+  public ReplacementParameter(List<String> selectionStrategies) {
+    super("replacement", selectionStrategies);
   }
 
-  public Replacement<?> getParameter(Comparator<DoubleSolution> comparator) {
-    String removalPolicy = (String) findGlobalParameter("removalPolicy").getValue();
+  public Replacement<?> getParameter() {
+    String removalPolicy = (String) findGlobalParameter("removalPolicy").value();
     Replacement<?> result;
-    switch (getValue()) {
+    switch (value()) {
       case "rankingAndDensityEstimatorReplacement":
-        String rankingName = (String) findSpecificParameter("rankingForReplacement").getValue();
+        String rankingName = (String) findSpecificParameter("rankingForReplacement").value();
         String densityEstimatorName =
-            (String) findSpecificParameter("densityEstimatorForReplacement").getValue();
+            (String) findSpecificParameter("densityEstimatorForReplacement").value();
 
         Ranking<Solution<?>> ranking;
         if (rankingName.equals("dominanceRanking")) {
@@ -55,7 +53,7 @@ public class ReplacementParameter extends CategoricalParameter {
 
         break;
       default:
-        throw new JMetalException("Replacement component unknown: " + getValue());
+        throw new JMetalException("Replacement component unknown: " + value());
     }
 
     return result;

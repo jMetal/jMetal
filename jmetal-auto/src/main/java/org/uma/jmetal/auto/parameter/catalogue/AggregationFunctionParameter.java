@@ -11,8 +11,8 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class AggregationFunctionParameter extends CategoricalParameter {
   private boolean normalizedObjectives ;
-  public AggregationFunctionParameter(List<String> aggregationFunctions,  String[] args) {
-    super("aggregationFunction", args, aggregationFunctions);
+  public AggregationFunctionParameter(List<String> aggregationFunctions) {
+    super("aggregationFunction", aggregationFunctions);
 
     normalizedObjectives = false ;
   }
@@ -24,7 +24,7 @@ public class AggregationFunctionParameter extends CategoricalParameter {
   public AggregationFunction getParameter() {
     AggregationFunction result;
 
-    switch (getValue()) {
+    switch (value()) {
       case "tschebyscheff":
         result =  new Tschebyscheff(normalizedObjectives) ;
         break;
@@ -35,11 +35,11 @@ public class AggregationFunctionParameter extends CategoricalParameter {
         result = new WeightedSum(normalizedObjectives) ;
         break;
       case "penaltyBoundaryIntersection":
-        double theta = (double) findSpecificParameter("pbiTheta").getValue();
+        double theta = (double) findSpecificParameter("pbiTheta").value();
         result = new PenaltyBoundaryIntersection(theta, normalizedObjectives) ;
         break;
       default:
-        throw new JMetalException("Aggregation function does not exist: " + getName());
+        throw new JMetalException("Aggregation function does not exist: " + name());
     }
     return result;
   }

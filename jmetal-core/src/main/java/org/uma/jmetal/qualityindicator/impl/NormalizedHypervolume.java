@@ -34,20 +34,20 @@ public class NormalizedHypervolume extends QualityIndicator {
   }
 
   @Override
-  public void setReferenceFront(double[][] referenceFront) {
-    super.setReferenceFront(referenceFront);
+  public void referenceFront(double[][] referenceFront) {
+    super.referenceFront(referenceFront);
 
     hypervolume = new PISAHypervolume(referenceFront);
     referenceFrontHypervolume = hypervolume.compute(referenceFront);
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "NHV";
   }
 
   @Override
-  public String getDescription() {
+  public String description() {
     return "Normalized hypervolume";
   }
 

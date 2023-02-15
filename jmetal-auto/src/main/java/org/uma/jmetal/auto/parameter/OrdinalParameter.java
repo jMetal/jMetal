@@ -6,36 +6,36 @@ import org.apache.commons.lang3.tuple.Pair;
 public abstract class OrdinalParameter<T> extends Parameter<T> {
   private final List<T> validValues;
 
-  public OrdinalParameter(String name, String[] args, List<T> validValues) {
-    super(name, args);
+  public OrdinalParameter(String name, List<T> validValues) {
+    super(name);
     this.validValues = validValues;
   }
 
   @Override
   public void check() {
-    if (!validValues.contains(getValue())) {
+    if (!validValues.contains(value())) {
       throw new RuntimeException(
           "Parameter "
-              + getName()
+              + name()
               + ": Invalid value: "
-              + getValue()
+              + value()
               + ". Valid values: "
               + validValues);
     }
   }
 
-  public List<T> getValidValues() {
+  public List<T> validValues() {
     return validValues;
   }
 
   @Override
   public String toString() {
     StringBuilder result =
-            new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues);
-    for (Parameter<?> parameter : getGlobalParameters()) {
+            new StringBuilder("Name: " + name() + ": " + "Value: " + value() + ". Valid values: " + validValues);
+    for (Parameter<?> parameter : globalParameters()) {
       result.append(" -> ").append(parameter.toString());
     }
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+    for (Pair<String, Parameter<?>> parameter : specificParameters()) {
       result.append("\n  -> ").append(parameter.getRight().toString());
     }
     return result.toString();

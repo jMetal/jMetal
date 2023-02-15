@@ -4,18 +4,18 @@ import org.uma.jmetal.util.errorchecking.Check;
 
 public class PositiveIntegerValue extends Parameter<Integer> {
 
-  public PositiveIntegerValue(String name, String[] args) {
-    super(name, args);
+  public PositiveIntegerValue(String name) {
+    super(name);
   }
 
   @Override
   public void check() {
-    Check.that(getValue() > 0, "The " + getName() + " value " + getValue() + " " +
+    Check.that(value() > 0, "The " + name() + " value " + value() + " " +
         "cannot not be <= 0");
   }
 
   @Override
-  public Parameter<Integer> parse() {
-    return super.parse(Integer::parseInt);
+  public Parameter<Integer> parse(String[] arguments) {
+    return super.parse(Integer::parseInt, arguments);
   }
 }
