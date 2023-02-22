@@ -17,9 +17,6 @@ import org.uma.jmetal.util.errorchecking.Check;
 @SuppressWarnings("serial")
 public class PISAHypervolume extends Hypervolume {
 
-  private static final double DEFAULT_OFFSET = 100.0;
-  private double offset = DEFAULT_OFFSET;
-
   /**
    * Default constructor
    */

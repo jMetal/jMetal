@@ -18,7 +18,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class NSGAIIConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "ZDT1.csv";
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
@@ -56,7 +56,7 @@ public class NSGAIIConfiguredFromAParameterString {
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "NSGA-II", 80, 100,
-            "resources/referenceFrontsCSV/" + referenceFrontFileName, "F1", "F2");
+            referenceFrontFileName, "F1", "F2");
 
     nsgaII.observable().register(evaluationObserver);
     nsgaII.observable().register(runTimeChartObserver);

@@ -30,20 +30,20 @@ public class NormalizedHypervolumeTest {
   }
 
   @Test
-  public void shouldConstructorWithReferencePointCreateAValidInstance() {
+  void shouldConstructorWithReferencePointCreateAValidInstance() {
     var normalizedHypervolume = new NormalizedHypervolume(new double[] {1.0, 1.0});
 
     Assertions.assertNotNull(normalizedHypervolume);
   }
 
   @Test
-  public void shouldEvaluateReturnZeroIfTheReferenceFrontIsEvaluatedWithItself()
+  void shouldEvaluateReturnZeroIfTheReferenceFrontIsEvaluatedWithItself()
       throws IOException {
-    var relativeHypervolume =
+    var normalizedHypervolume =
         new NormalizedHypervolume(
             VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ","));
     double[][] front = VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
 
-    Assertions.assertEquals(0.0, relativeHypervolume.compute(front), EPSILON);
+    Assertions.assertEquals(0.0, normalizedHypervolume.compute(front), EPSILON);
   }
 }
