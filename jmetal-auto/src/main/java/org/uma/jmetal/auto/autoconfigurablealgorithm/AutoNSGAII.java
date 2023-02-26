@@ -97,7 +97,6 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     selection();
     variation();
 
-    //configurableParameterList.add(populationSizeParameter);
     configurableParameterList.add(algorithmResultParameter);
     configurableParameterList.add(createInitialSolutionsParameter);
     configurableParameterList.add(variationParameter);

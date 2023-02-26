@@ -92,7 +92,7 @@ public abstract class AbstractCoralReefsOptimization<S, R>
 		/**
 		 * Sets Coordinate's y-position to a new value
 		 * 
-		 * @param x
+		 * @param y
 		 *            new value for Coordinate's y-position
 		 */
 		public void setY(int y) {

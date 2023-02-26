@@ -103,8 +103,8 @@ public class PMXCrossover implements
       }
 
       // STEP 2: Get the subchains to interchange
-      int replacement1[] = new int[permutationLength];
-      int replacement2[] = new int[permutationLength];
+      int []replacement1 = new int[permutationLength];
+      int []replacement2 = new int[permutationLength];
       for (int i = 0; i < permutationLength; i++)
         replacement1[i] = replacement2[i] = -1;
 

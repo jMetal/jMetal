@@ -9,7 +9,7 @@ import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
- * Defines an implementation of the {@Link IntegerSolution} interface
+ * Defines an implementation of the {@link IntegerSolution} interface
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

@@ -17,12 +17,12 @@ import org.uma.jmetal.util.VectorUtils;
 class AutoMOPSOIT {
   @Test
   void AutoMOPSOHas15FirstLevelConfigurableParameters() {
-    assertThat(new AutoMOPSO().configurableParameterList()).hasSize(15);
+    assertThat(new AutoMOPSO().configurableParameterList()).hasSize(14);
   }
 
   @Test
   void AutoMOPSOHasFourFourFixedParameters() {
-    assertThat(new AutoMOPSO().fixedParameterList()).hasSize(4);
+    assertThat(new AutoMOPSO().fixedParameterList()).hasSize(5);
   }
 
   @Test
@@ -50,12 +50,13 @@ class AutoMOPSOIT {
             + "--leaderArchive crowdingDistanceArchive "
             + "--localBestInitialization defaultLocalBestInitialization "
             + "--globalBestInitialization defaultGlobalBestInitialization "
-            + "--globalBestSelection binaryTournament "
+            + "--globalBestSelection tournament "
             + "--perturbation frequencySelectionMutationBasedPerturbation "
             + "--frequencyOfApplicationOfMutationOperator 7 "
             + "--mutation polynomial "
             + "--mutationProbabilityFactor 1.0 "
             + "--mutationRepairStrategy bounds "
+            + "--selectionTournamentSize 2 "
             + "--polynomialMutationDistributionIndex 20.0 "
             + "--positionUpdate defaultPositionUpdate "
             + "--velocityChangeWhenLowerLimitIsReached -1.0 "

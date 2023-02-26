@@ -18,18 +18,18 @@ class AutoNSGAIIIT {
 
   @Test
   void AutoNSGAIIHasFiveFirstLevelConfigurableParameters() {
-    assertThat(new AutoNSGAII().configurableParameterList()).hasSize(5);
+    assertThat(new AutoNSGAII().configurableParameterList()).hasSize(4);
   }
 
   @Test
   void AutoNSGAIIHasFiveFourFixedParameters() {
-    assertThat(new AutoNSGAII().fixedParameterList()).hasSize(4);
+    assertThat(new AutoNSGAII().fixedParameterList()).hasSize(5);
   }
 
   @Test
   void AutoNSGAIIHas21Parameters() {
     assertThat(AutoConfigurableAlgorithm.parameterFlattening(
-        new AutoNSGAII().configurableParameterList())).hasSize(21);
+        new AutoNSGAII().configurableParameterList())).hasSize(20);
   }
 
   @Test

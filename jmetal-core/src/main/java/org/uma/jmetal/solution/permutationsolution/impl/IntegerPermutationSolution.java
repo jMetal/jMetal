@@ -48,7 +48,7 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
 
     Arrays.setAll(constraints(), i -> solution.constraints()[i]);
 
-    attributes = new HashMap<Object, Object>(solution.attributes);
+    attributes = new HashMap<>(solution.attributes);
   }
 
   @Override

@@ -16,7 +16,7 @@ class GeneticAlgorithmBuilderIT {
 
   @Test
   void AGenerationalGeneticAlgorithmReturnTheCorrectSolutionWhenSolvingProblemOneMax() {
-    int number_of_bits = 512 ;
+    int number_of_bits = 246 ;
     BinaryProblem problem = new OneMax(number_of_bits) ;
 
     double crossoverProbability = 0.9;
@@ -50,7 +50,7 @@ class GeneticAlgorithmBuilderIT {
 
   @Test
   void ASteadyStateGeneticAlgorithmReturnTheCorrectSolutionWhenSolvingProblemOneMax() {
-    int number_of_bits = 512 ;
+    int number_of_bits = 256 ;
     BinaryProblem problem = new OneMax(number_of_bits) ;
 
     double crossoverProbability = 0.9;

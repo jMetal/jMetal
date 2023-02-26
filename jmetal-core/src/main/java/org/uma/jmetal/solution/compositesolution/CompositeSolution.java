@@ -60,7 +60,7 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
     IntStream.range(0, solution.objectives().length).forEach(i -> objectives()[i] = solution.objectives()[i]);
     IntStream.range(0, solution.constraints().length).forEach(i -> constraints()[i] = solution.constraints()[i]);
 
-    attributes = new HashMap<Object, Object>(solution.attributes) ;
+    attributes = new HashMap<>(solution.attributes) ;
   }
 
   @Override

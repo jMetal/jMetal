@@ -107,12 +107,11 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
         if (rand <= 0.5) {
           tmp = delta(bounds.getUpperBound() - solution.variables().get(i),
               perturbation);
-          tmp += solution.variables().get(i);
         } else {
           tmp = delta(bounds.getLowerBound() - solution.variables().get(i),
               perturbation);
-          tmp += solution.variables().get(i);
         }
+        tmp += solution.variables().get(i);
 
         tmp = solutionRepair.repairSolutionVariableValue(
                         tmp, bounds.getLowerBound(), bounds.getUpperBound());
