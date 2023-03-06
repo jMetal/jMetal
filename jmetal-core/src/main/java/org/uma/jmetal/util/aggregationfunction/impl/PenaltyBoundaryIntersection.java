@@ -5,7 +5,7 @@ import org.uma.jmetal.util.point.impl.IdealPoint;
 import org.uma.jmetal.util.point.impl.NadirPoint;
 
 public class PenaltyBoundaryIntersection implements AggregationFunction {
-  private double EPSILON = 0.000001 ;
+  private double epsilon = 0.000001 ;
   private boolean normalizeObjectives ;
 
   private final double theta ;
@@ -28,7 +28,7 @@ public class PenaltyBoundaryIntersection implements AggregationFunction {
     for (int i = 0; i < vector.length; i++) {
       double value ;
       if (normalizeObjectives) {
-        value = (vector[i] - idealPoint.value(i))/(nadirPoint.value(i)-idealPoint.value(i)+EPSILON) ;
+        value = (vector[i] - idealPoint.value(i))/(nadirPoint.value(i)-idealPoint.value(i)+epsilon) ;
       } else {
         value = vector[i] - idealPoint.value(i) ;
       }
@@ -50,6 +50,11 @@ public class PenaltyBoundaryIntersection implements AggregationFunction {
     d2 = Math.sqrt(d2);
 
     return (d1 + theta * d2) ;
+  }
+
+  @Override
+  public void epsilon(double epsilon) {
+    this.epsilon = epsilon ;
   }
 
   @Override

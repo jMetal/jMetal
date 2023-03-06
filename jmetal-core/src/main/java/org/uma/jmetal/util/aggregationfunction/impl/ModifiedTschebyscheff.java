@@ -6,6 +6,8 @@ import org.uma.jmetal.util.point.impl.NadirPoint;
 
 public class ModifiedTschebyscheff implements AggregationFunction {
   private boolean normalizeObjectives ;
+  private double epsilon = 0.000001 ;
+
 
   public ModifiedTschebyscheff(boolean normalizeObjectives) {
     this.normalizeObjectives = normalizeObjectives ;
@@ -18,7 +20,7 @@ public class ModifiedTschebyscheff implements AggregationFunction {
     for (int n = 0; n < vector.length; n++) {
       double diff ;
       if (normalizeObjectives) {
-        diff = Math.abs((vector[n] - idealPoint.value(n))/(nadirPoint.value(n)-idealPoint.value(n)));
+        diff = Math.abs((vector[n] - idealPoint.value(n))/(nadirPoint.value(n)-idealPoint.value(n)+epsilon));
       } else {
         diff = Math.abs(vector[n] - idealPoint.value(n));
       }
@@ -35,6 +37,11 @@ public class ModifiedTschebyscheff implements AggregationFunction {
     }
 
     return maxFun;
+  }
+
+  @Override
+  public void epsilon(double epsilon) {
+    this.epsilon = epsilon ;
   }
 
   @Override

@@ -100,6 +100,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     fixedParameterList.add(randomGeneratorSeedParameter) ;
 
     normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives") ;
+    RealParameter normalizeEpsilonParameter = new RealParameter("normalizedEpsilonParameter", 0.0000001, 25.0) ;
+    normalizeObjectivesParameter.addSpecificParameter("TRUE", normalizeEpsilonParameter);
 
     neighborhoodSizeParameter = new IntegerParameter("neighborhoodSize",5, 50);
     neighborhoodSelectionProbabilityParameter =
@@ -112,6 +114,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     RealParameter pbiTheta = new RealParameter("pbiTheta",1.0, 200);
     aggregativeFunctionParameter.addSpecificParameter("penaltyBoundaryIntersection", pbiTheta);
 
+    aggregativeFunctionParameter.addGlobalParameter(normalizeObjectivesParameter);
+
     algorithmResult();
     createInitialSolution();
     selection();
@@ -120,7 +124,6 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     autoConfigurableParameterList.add(neighborhoodSizeParameter);
     autoConfigurableParameterList.add(maximumNumberOfReplacedSolutionsParameter);
     autoConfigurableParameterList.add(aggregativeFunctionParameter);
-    autoConfigurableParameterList.add(normalizeObjectivesParameter);
 
     autoConfigurableParameterList.add(algorithmResultParameter);
     autoConfigurableParameterList.add(createInitialSolutionsParameter);

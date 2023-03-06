@@ -1,7 +1,9 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+import org.uma.jmetal.auto.parameter.BooleanParameter;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
 import org.uma.jmetal.util.aggregationfunction.impl.ModifiedTschebyscheff;
 import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
@@ -22,25 +24,35 @@ public class AggregationFunctionParameter extends CategoricalParameter {
   }
 
   public AggregationFunction getParameter() {
-    AggregationFunction result;
+    AggregationFunction aggregationFunction;
+
+    boolean normalizeObjectives = ((BooleanParameter) findSpecificParameter("normalizeObjectives")).value() ;
+    double epsilon = 0.00000001 ;
+    if (normalizeObjectives) {
+      epsilon =((RealParameter) findGlobalParameter("normalizedEpsilonParameter")).value() ;
+    }
 
     switch (value()) {
       case "tschebyscheff":
-        result =  new Tschebyscheff(normalizedObjectives) ;
+        aggregationFunction =  new Tschebyscheff(normalizedObjectives) ;
         break;
       case "modifiedTschebyscheff":
-        result =  new ModifiedTschebyscheff(normalizedObjectives) ;
+        aggregationFunction =  new ModifiedTschebyscheff(normalizedObjectives) ;
         break;
       case "weightedSum":
-        result = new WeightedSum(normalizedObjectives) ;
+        aggregationFunction = new WeightedSum(normalizedObjectives) ;
         break;
       case "penaltyBoundaryIntersection":
         double theta = (double) findSpecificParameter("pbiTheta").value();
-        result = new PenaltyBoundaryIntersection(theta, normalizedObjectives) ;
+        aggregationFunction = new PenaltyBoundaryIntersection(theta, normalizedObjectives) ;
         break;
       default:
         throw new JMetalException("Aggregation function does not exist: " + name());
     }
-    return result;
+
+    if (normalizeObjectives) {
+      aggregationFunction.epsilon(epsilon);
+    }
+    return aggregationFunction;
   }
 }
