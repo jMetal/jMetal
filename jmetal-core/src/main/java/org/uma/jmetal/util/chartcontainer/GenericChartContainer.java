@@ -61,6 +61,28 @@ public class GenericChartContainer<S extends Solution<?>> {
         "Objective " + objective2);
   }
 
+  public void setSingleValueChart
+      (String xLabel, String yLabel)
+      throws FileNotFoundException {
+    this.frontChart =
+        new XYChartBuilder()
+            .xAxisTitle(xLabel)
+            .yAxisTitle(yLabel)
+            .build();
+    this.frontChart
+        .getStyler()
+        .setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter)
+        .setMarkerSize(5);
+
+    double[] xData = new double[]{0};
+    double[] yData = new double[]{0};
+    XYSeries frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
+    frontChartSeries.setMarkerColor(Color.RED);
+
+    this.charts.put("Front", this.frontChart);
+  }
+
+
   public void setFrontChart
       (int objective1,
           int objective2, String referenceFrontFileName,

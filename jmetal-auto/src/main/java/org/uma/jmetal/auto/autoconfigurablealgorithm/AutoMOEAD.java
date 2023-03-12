@@ -66,7 +66,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   private ProbabilityParameter neighborhoodSelectionProbabilityParameter;
   private IntegerParameter neighborhoodSizeParameter;
   private IntegerParameter maximumNumberOfReplacedSolutionsParameter;
-  private AggregationFunctionParameter aggregativeFunctionParameter;
+  private AggregationFunctionParameter aggregationFunctionParameter;
   private BooleanParameter normalizeObjectivesParameter ;
 
   @Override
@@ -99,22 +99,22 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter) ;
 
-    normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives") ;
-    RealParameter normalizeEpsilonParameter = new RealParameter("normalizedEpsilonParameter", 0.0000001, 25.0) ;
-    normalizeObjectivesParameter.addSpecificParameter("TRUE", normalizeEpsilonParameter);
-
     neighborhoodSizeParameter = new IntegerParameter("neighborhoodSize",5, 50);
     neighborhoodSelectionProbabilityParameter =
         new ProbabilityParameter("neighborhoodSelectionProbability");
     maximumNumberOfReplacedSolutionsParameter =
         new IntegerParameter("maximumNumberOfReplacedSolutions",1, 5);
-    aggregativeFunctionParameter =
+
+    normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives") ;
+    RealParameter epsilonParameterForNormalizing = new RealParameter("epsilonParameterForNormalizing", 0.0000001, 25.0) ;
+    normalizeObjectivesParameter.addGlobalParameter(epsilonParameterForNormalizing);
+
+    aggregationFunctionParameter =
         new AggregationFunctionParameter(
             List.of("tschebyscheff", "weightedSum", "penaltyBoundaryIntersection"));
     RealParameter pbiTheta = new RealParameter("pbiTheta",1.0, 200);
-    aggregativeFunctionParameter.addSpecificParameter("penaltyBoundaryIntersection", pbiTheta);
-
-    aggregativeFunctionParameter.addGlobalParameter(normalizeObjectivesParameter);
+    aggregationFunctionParameter.addSpecificParameter("penaltyBoundaryIntersection", pbiTheta);
+    aggregationFunctionParameter.addGlobalParameter(normalizeObjectivesParameter);
 
     algorithmResult();
     createInitialSolution();
@@ -123,7 +123,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     autoConfigurableParameterList.add(neighborhoodSizeParameter);
     autoConfigurableParameterList.add(maximumNumberOfReplacedSolutionsParameter);
-    autoConfigurableParameterList.add(aggregativeFunctionParameter);
+    autoConfigurableParameterList.add(normalizeObjectivesParameter);
+    autoConfigurableParameterList.add(aggregationFunctionParameter);
 
     autoConfigurableParameterList.add(algorithmResultParameter);
     autoConfigurableParameterList.add(createInitialSolutionsParameter);
@@ -231,7 +232,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   }
 
   /**
-   * Creates an instance of NSGA-II from the parsed parameters
+   * Creates an instance of MOEA/D from the parsed parameters
    *
    * @return
    */
@@ -301,8 +302,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     int maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutionsParameter.value();
 
-    aggregativeFunctionParameter.normalizedObjectives(normalizeObjectivesParameter.value());
-    AggregationFunction aggregativeFunction = aggregativeFunctionParameter.getParameter();
+    aggregationFunctionParameter.normalizedObjectives(normalizeObjectivesParameter.value());
+    AggregationFunction aggregativeFunction = aggregationFunctionParameter.getParameter();
     var replacement =
         new MOEADReplacement<>(
             selection,

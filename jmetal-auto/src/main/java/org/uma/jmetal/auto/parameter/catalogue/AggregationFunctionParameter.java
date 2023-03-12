@@ -12,39 +12,53 @@ import org.uma.jmetal.util.aggregationfunction.impl.WeightedSum;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class AggregationFunctionParameter extends CategoricalParameter {
-  private boolean normalizedObjectives ;
+
+  private boolean normalizedObjectives;
+
   public AggregationFunctionParameter(List<String> aggregationFunctions) {
     super("aggregationFunction", aggregationFunctions);
 
-    normalizedObjectives = false ;
+    normalizedObjectives = false;
   }
 
   public void normalizedObjectives(boolean normalizedObjectives) {
-    this.normalizedObjectives = normalizedObjectives ;
+    this.normalizedObjectives = normalizedObjectives;
   }
 
   public AggregationFunction getParameter() {
     AggregationFunction aggregationFunction;
 
-    boolean normalizeObjectives = ((BooleanParameter) findSpecificParameter("normalizeObjectives")).value() ;
-    double epsilon = 0.00000001 ;
+    BooleanParameter normalizeObjectivesParameter = ((BooleanParameter) findGlobalParameter(
+        "normalizeObjectives"));
+    boolean normalizeObjectives = normalizeObjectivesParameter.value();
+    double epsilon = 0.00000001;
+
+    /*
     if (normalizeObjectives) {
-      epsilon =((RealParameter) findGlobalParameter("normalizedEpsilonParameter")).value() ;
+      var epsilonParameterForNormalizing = (RealParameter) normalizeObjectivesParameter.findSpecificParameter(
+          "epsilonParameterForNormalizing") ;
+      epsilon = epsilonParameterForNormalizing.value() ;
     }
+
+*/
+    var epsilonParameterForNormalizing = (RealParameter) normalizeObjectivesParameter.findGlobalParameter(
+        "epsilonParameterForNormalizing") ;
+    epsilon = epsilonParameterForNormalizing.value() ;
+
 
     switch (value()) {
       case "tschebyscheff":
-        aggregationFunction =  new Tschebyscheff(normalizedObjectives) ;
+        aggregationFunction = new Tschebyscheff(normalizedObjectives);
         break;
       case "modifiedTschebyscheff":
-        aggregationFunction =  new ModifiedTschebyscheff(normalizedObjectives) ;
+        aggregationFunction = new ModifiedTschebyscheff(normalizedObjectives);
         break;
       case "weightedSum":
-        aggregationFunction = new WeightedSum(normalizedObjectives) ;
+        aggregationFunction = new WeightedSum(normalizedObjectives);
         break;
       case "penaltyBoundaryIntersection":
         double theta = (double) findSpecificParameter("pbiTheta").value();
-        aggregationFunction = new PenaltyBoundaryIntersection(theta, normalizedObjectives) ;
+        aggregationFunction = new PenaltyBoundaryIntersection(theta, normalizedObjectives);
         break;
       default:
         throw new JMetalException("Aggregation function does not exist: " + name());
