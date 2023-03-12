@@ -71,9 +71,4 @@ public class RunTimeForDynamicProblemsChartObserver<S extends Solution<?>> imple
   public String getName() {
     return "Runtime chart observer";
   }
-
-  @Override
-  public String toString() {
-    return getName() ;
-  }
 }

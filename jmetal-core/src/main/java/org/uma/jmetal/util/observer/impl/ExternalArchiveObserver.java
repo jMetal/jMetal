@@ -34,9 +34,4 @@ public class ExternalArchiveObserver<S extends Solution<?>> implements Observer<
   public String getName() {
     return "External archive observer";
   }
-
-  @Override
-  public String toString() {
-    return getName() ;
-  }
 }

@@ -3,6 +3,7 @@ package org.uma.jmetal.util.observer.impl;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.knowm.xchart.XYChart;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.plot.FrontChart;
@@ -44,11 +45,10 @@ public class FrontChartObserver<S extends Solution<?>> implements Observer<Map<S
     evaluations = (Integer)data.get("EVALUATIONS") ;
     List<S> population = (List<S>) data.get("POPULATION");
 
-    List<Double> objective1 = population.stream().map(s -> s.objectives()[0]).collect(Collectors.toList()) ;
-    List<Double> objective2 = population.stream().map(s -> s.objectives()[1]).collect(Collectors.toList()) ;
-
     if (evaluations!=null && population!=null) {
       if (evaluations%plotUpdateFrequency == 0){
+        List<Double> objective1 = population.stream().map(s -> s.objectives()[0]).collect(Collectors.toList()) ;
+        List<Double> objective2 = population.stream().map(s -> s.objectives()[1]).collect(Collectors.toList()) ;
         chart.updateChart(objective1, objective2);
       }
     } else {
@@ -56,5 +56,9 @@ public class FrontChartObserver<S extends Solution<?>> implements Observer<Map<S
         " : insufficient for generating real time information." +
         " Either EVALUATIONS or POPULATION keys have not been registered yet by the algorithm");
     }
+  }
+
+  public XYChart chart() {
+    return chart.chart() ;
   }
 }

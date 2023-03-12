@@ -43,7 +43,7 @@ public class FitnessChartObserver<S extends Solution<?>> implements Observer<Map
     } else {
       JMetalLogger.logger.warning(getClass().getName()+
         " : insufficient for generating real time information." +
-        " Either EVALUATIONS or POPULATION keys have not been registered yet by the algorithm");
+        " Either EVALUATIONS or BEST_SOLUTION keys have not been registered yet by the algorithm");
     }
   }
 

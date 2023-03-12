@@ -13,14 +13,15 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
+import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
+import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.EvaluationObserver;
-import org.uma.jmetal.util.observer.impl.FrontChartObserver;
+import org.uma.jmetal.util.observer.impl.IndicatorChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -28,7 +29,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIWithRealTimeChartExampleV2 {
+public class NSGAIIWithTwoIndicatorsChartExample {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
@@ -57,16 +58,15 @@ public class NSGAIIWithRealTimeChartExampleV2 {
         .setTermination(termination)
         .build();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    var chartObserver =
-        new FrontChartObserver("NSGA-II", "F1", "F2", problem.name(), 500);
+    var indicatorObserver1 =
+        new IndicatorChartObserver<>("NSGA-II: " + problem.name(), new NormalizedHypervolume(), referenceParetoFront, 800);
+    nsgaii.observable().register(indicatorObserver1);
 
-    chartObserver.setFront(readVectors(referenceParetoFront, ","), "Reference front");
-    chartObserver.setPoint(0.5, 0.5, "ReferencePoint1");
-    chartObserver.setPoint(0.2, 0.2, "ReferencePoint2");
+    var indicatorObserver2 =
+        new IndicatorChartObserver<>("NSGA-II: " + problem.name(), new InvertedGenerationalDistancePlus(), referenceParetoFront, 800);
+    nsgaii.observable().register(indicatorObserver2);
 
-    nsgaii.observable().register(evaluationObserver);
-    nsgaii.observable().register(chartObserver);
+    //new ChartMatrix(List.of(indicatorObserver1.chart(), indicatorObserver2.chart())) ;
 
     nsgaii.run();
 

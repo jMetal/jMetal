@@ -48,9 +48,4 @@ public class EvaluationObserver implements Observer<Map<String, Object>> {
   public String getName() {
     return "Evaluation observer";
   }
-
-  @Override
-  public String toString() {
-    return getName() ;
-  }
 }

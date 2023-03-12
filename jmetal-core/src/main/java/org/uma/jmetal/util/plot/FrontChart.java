@@ -86,4 +86,8 @@ public class FrontChart {
       swingWrapper.repaintChart();
     }
   }
+
+  public XYChart chart()  {
+    return chart ;
+  }
 }

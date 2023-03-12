@@ -5,6 +5,7 @@ import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import org.knowm.xchart.XYChart;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
@@ -64,5 +65,9 @@ public class IndicatorChartObserver<S extends Solution<?>> implements Observer<M
         " : insufficient for generating real time information." +
         " Either EVALUATIONS or POPULATION keys have not been registered yet by the algorithm");
     }
+  }
+
+  public XYChart chart() {
+    return chart.chart() ;
   }
 }

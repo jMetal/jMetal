@@ -64,4 +64,8 @@ public class SingleValueChart {
       swingWrapper.repaintChart();
     }
   }
+
+  public XYChart chart()  {
+    return chart ;
+  }
 }

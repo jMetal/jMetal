@@ -13,7 +13,7 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -30,8 +30,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class NSGAIIWithIndicatorChartExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT3.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -58,7 +58,7 @@ public class NSGAIIWithIndicatorChartExample {
         .build();
 
     var indicatorObserver =
-        new IndicatorChartObserver<>("NSGA-II", new PISAHypervolume(), referenceParetoFront, 500);
+        new IndicatorChartObserver<>("NSGA-II: " + problem.name(), new NormalizedHypervolume(), referenceParetoFront, 800);
     nsgaii.observable().register(indicatorObserver);
 
     nsgaii.run();
