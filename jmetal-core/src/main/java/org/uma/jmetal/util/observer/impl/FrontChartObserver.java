@@ -33,7 +33,7 @@ public class FrontChartObserver<S extends Solution<?>> implements Observer<Map<S
   }
 
   public void setPoint(double x, double y, String pointName) {
-    chart.setPoint(x, y, pointName);
+    chart.addPoint(x, y, pointName);
   }
 
   /**

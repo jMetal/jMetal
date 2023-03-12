@@ -14,7 +14,6 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 public class FrontChart {
-
   private final XYChart chart;
   private SwingWrapper<XYChart> swingWrapper;
   private final String legend;
@@ -36,23 +35,19 @@ public class FrontChart {
     chart.getStyler().setMarkerSize(5);
   }
 
-  private double[] getObjectiveValues(double[][] data, int obj) {
-    double[] values = new double[data.length];
-    for (int i = 0; i < data.length; i++) {
-      values[i] = data[i][obj];
-    }
-    return values;
+  private double[] objectiveValues(double[][] data, int obj) {
+    return Arrays.stream(data).mapToDouble(v -> v[obj]).toArray();
   }
 
   public void setFront(double[][] front, String frontName) {
-    double[] x = getObjectiveValues(front, 0);
-    double[] y = getObjectiveValues(front, 1);
+    double[] x = objectiveValues(front, 0);
+    double[] y = objectiveValues(front, 1);
     var series = chart.addSeries(frontName, x, y);
     series.setMarkerColor(Color.blue);
     series.setMarker(SeriesMarkers.CIRCLE);
   }
 
-  public void setPoint(double x, double y, String pointName) {
+  public void addPoint(double x, double y, String pointName) {
     XYSeries pointSeries = chart.addSeries(pointName,
         new double[]{x},
         new double[]{y});
@@ -78,7 +73,6 @@ public class FrontChart {
       try {
         TimeUnit.MILLISECONDS.sleep(500);
       } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
 

@@ -26,7 +26,6 @@ public class LexicographicalPointComparator implements Comparator<Point> {
     Check.notNull(pointOne);
     Check.notNull(pointTwo);
 
-    // Determine the first i such as pointOne[i] != pointTwo[i];
     int index = 0;
     while ((index < pointOne.dimension())
         && (index < pointTwo.dimension())

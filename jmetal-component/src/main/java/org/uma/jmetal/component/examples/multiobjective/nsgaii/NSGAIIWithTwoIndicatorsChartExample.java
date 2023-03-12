@@ -60,13 +60,11 @@ public class NSGAIIWithTwoIndicatorsChartExample {
 
     var indicatorObserver1 =
         new IndicatorChartObserver<>("NSGA-II: " + problem.name(), new NormalizedHypervolume(), referenceParetoFront, 800);
-    nsgaii.observable().register(indicatorObserver1);
-
     var indicatorObserver2 =
         new IndicatorChartObserver<>("NSGA-II: " + problem.name(), new InvertedGenerationalDistancePlus(), referenceParetoFront, 800);
-    nsgaii.observable().register(indicatorObserver2);
 
-    //new ChartMatrix(List.of(indicatorObserver1.chart(), indicatorObserver2.chart())) ;
+    nsgaii.observable().register(indicatorObserver1);
+    nsgaii.observable().register(indicatorObserver2);
 
     nsgaii.run();
 
