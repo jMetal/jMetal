@@ -3,7 +3,7 @@ package org.uma.jmetal.util.observer.impl;
 import java.util.Map;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.plot.SingleValueChart;
+import org.uma.jmetal.util.plot.SingleValueScatterPlot;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
 
@@ -11,8 +11,8 @@ import org.uma.jmetal.util.observer.Observer;
 
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class FitnessChartObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
-  private final SingleValueChart chart;
+public class FitnessPlotObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
+  private final SingleValueScatterPlot chart;
   private Integer evaluations ;
   private final int plotUpdateFrequency ;
   private String valueName ;
@@ -20,9 +20,9 @@ public class FitnessChartObserver<S extends Solution<?>> implements Observer<Map
   /**
    * Constructor
    */
-  public FitnessChartObserver(String title, String xAxisTitle, String yAxisTitle, String valueName,
+  public FitnessPlotObserver(String title, String xAxisTitle, String yAxisTitle, String valueName,
   int plotUpdateFrequency) {
-    chart = new SingleValueChart(title, xAxisTitle, yAxisTitle, valueName) ;
+    chart = new SingleValueScatterPlot(title, xAxisTitle, yAxisTitle, valueName) ;
     this.plotUpdateFrequency = plotUpdateFrequency ;
     this.valueName = valueName ;
   }

@@ -9,7 +9,7 @@ import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
-public class SingleValueChart {
+public class SingleValueScatterPlot {
 
   private final XYChart chart;
   private SwingWrapper<XYChart> swingWrapper ;
@@ -21,7 +21,7 @@ public class SingleValueChart {
   private boolean firstUpdate = true ;
   private long delay = 1000 ;
 
-  public SingleValueChart(String title, String xAxisTitle, String yAxisTitle, String legend) {
+  public SingleValueScatterPlot(String title, String xAxisTitle, String yAxisTitle, String legend) {
     chart = new XYChartBuilder()
         .width(800)
         .height(600)

@@ -11,7 +11,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.plot.SingleValueChart;
+import org.uma.jmetal.util.plot.SingleValueScatterPlot;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
 
@@ -19,8 +19,8 @@ import org.uma.jmetal.util.observer.Observer;
 
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class IndicatorChartObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
-  private final SingleValueChart chart;
+public class IndicatorPlotObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
+  private final SingleValueScatterPlot chart;
   private Integer evaluations ;
   private final int plotUpdateFrequency ;
   double[][] referenceFront ;
@@ -29,9 +29,9 @@ public class IndicatorChartObserver<S extends Solution<?>> implements Observer<M
   /**
    * Constructor
    */
-  public IndicatorChartObserver(String title, QualityIndicator qualityIndicator,
+  public IndicatorPlotObserver(String title, QualityIndicator qualityIndicator,
       String referenceFrontFileName, int plotUpdateFrequency) throws IOException {
-    chart = new SingleValueChart(title, "Evaluations", qualityIndicator.name(), qualityIndicator.name()) ;
+    chart = new SingleValueScatterPlot(title, "Evaluations", qualityIndicator.name(), qualityIndicator.name()) ;
     chart.delay(200) ;
     this.plotUpdateFrequency = plotUpdateFrequency ;
     this.qualityIndicator = qualityIndicator ;

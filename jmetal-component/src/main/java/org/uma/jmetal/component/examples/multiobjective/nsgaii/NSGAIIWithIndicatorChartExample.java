@@ -20,7 +20,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.IndicatorChartObserver;
+import org.uma.jmetal.util.observer.impl.IndicatorPlotObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -58,7 +58,7 @@ public class NSGAIIWithIndicatorChartExample {
         .build();
 
     var indicatorObserver =
-        new IndicatorChartObserver<>("NSGA-II: " + problem.name(), new NormalizedHypervolume(), referenceParetoFront, 800);
+        new IndicatorPlotObserver<>("NSGA-II: " + problem.name(), new NormalizedHypervolume(), referenceParetoFront, 800);
     nsgaii.observable().register(indicatorObserver);
 
     nsgaii.run();

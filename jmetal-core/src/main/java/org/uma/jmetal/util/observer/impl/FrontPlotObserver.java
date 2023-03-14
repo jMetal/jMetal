@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.knowm.xchart.XYChart;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.plot.FrontChart;
+import org.uma.jmetal.util.plot.FrontScatterPlot;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
 
@@ -14,17 +14,17 @@ import org.uma.jmetal.util.observer.Observer;
 
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class FrontChartObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
-  private final FrontChart chart;
+public class FrontPlotObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
+  private final FrontScatterPlot chart;
   private Integer evaluations ;
   private final int plotUpdateFrequency ;
 
   /**
    * Constructor
    */
-  public FrontChartObserver(String title, String xAxisTitle, String yAxisTitle, String legend,
+  public FrontPlotObserver(String title, String xAxisTitle, String yAxisTitle, String legend,
   int plotUpdateFrequency) {
-    chart = new FrontChart(title, xAxisTitle, yAxisTitle, legend) ;
+    chart = new FrontScatterPlot(title, xAxisTitle, yAxisTitle, legend) ;
     this.plotUpdateFrequency = plotUpdateFrequency ;
   }
 

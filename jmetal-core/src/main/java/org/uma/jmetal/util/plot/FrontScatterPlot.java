@@ -13,13 +13,13 @@ import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-public class FrontChart {
+public class FrontScatterPlot {
   private final XYChart chart;
   private SwingWrapper<XYChart> swingWrapper;
   private final String legend;
   private boolean firstUpdate = true;
 
-  public FrontChart(String title, String xAxisTitle, String yAxisTitle, String legend) {
+  public FrontScatterPlot(String title, String xAxisTitle, String yAxisTitle, String legend) {
     chart = new XYChartBuilder()
         .width(800)
         .height(600)
@@ -52,7 +52,14 @@ public class FrontChart {
         new double[]{x},
         new double[]{y});
     pointSeries.setMarker(SeriesMarkers.CIRCLE);
-    //referencePointSeries.setMarkerColor(Color.green);
+  }
+
+  public void addPoint(double x, double y, String pointName, Color color) {
+    XYSeries pointSeries = chart.addSeries(pointName,
+        new double[]{x},
+        new double[]{y});
+    pointSeries.setMarker(SeriesMarkers.CIRCLE);
+    pointSeries.setMarkerColor(color);
   }
 
   public void updateChart(double[] x, double[] y) {

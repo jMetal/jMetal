@@ -21,15 +21,17 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.IndicatorChartObserver;
+import org.uma.jmetal.util.observer.impl.IndicatorPlotObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
- * Class to configure and run the NSGA-II algorithm showing the population while the algorithm is running
+ * Class to configure and run the NSGA-II algorithm showing the population while the algorithm is
+ * running
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIWithTwoIndicatorsChartExample {
+
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
@@ -50,18 +52,20 @@ public class NSGAIIWithTwoIndicatorsChartExample {
     Termination termination = new TerminationByEvaluations(25000);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
-                    problem,
-                    populationSize,
-                    offspringPopulationSize,
-                    crossover,
-                    mutation)
+        problem,
+        populationSize,
+        offspringPopulationSize,
+        crossover,
+        mutation)
         .setTermination(termination)
         .build();
 
     var indicatorObserver1 =
-        new IndicatorChartObserver<>("NSGA-II: " + problem.name(), new NormalizedHypervolume(), referenceParetoFront, 800);
+        new IndicatorPlotObserver<>("NSGA-II: " + problem.name(), new NormalizedHypervolume(),
+            referenceParetoFront, 800);
     var indicatorObserver2 =
-        new IndicatorChartObserver<>("NSGA-II: " + problem.name(), new InvertedGenerationalDistancePlus(), referenceParetoFront, 800);
+        new IndicatorPlotObserver<>("NSGA-II: " + problem.name(),
+            new InvertedGenerationalDistancePlus(), referenceParetoFront, 800);
 
     nsgaii.observable().register(indicatorObserver1);
     nsgaii.observable().register(indicatorObserver2);
@@ -73,9 +77,9 @@ public class NSGAIIWithTwoIndicatorsChartExample {
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.numberOfEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
-            .print();
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
