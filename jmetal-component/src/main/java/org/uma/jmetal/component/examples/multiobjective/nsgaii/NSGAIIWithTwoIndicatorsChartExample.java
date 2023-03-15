@@ -14,7 +14,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
-import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -61,7 +61,7 @@ public class NSGAIIWithTwoIndicatorsChartExample {
         .build();
 
     var indicatorObserver1 =
-        new IndicatorPlotObserver<>("NSGA-II: " + problem.name(), new NormalizedHypervolume(),
+        new IndicatorPlotObserver<>("NSGA-II: " + problem.name(), new PISAHypervolume(),
             referenceParetoFront, 800);
     var indicatorObserver2 =
         new IndicatorPlotObserver<>("NSGA-II: " + problem.name(),

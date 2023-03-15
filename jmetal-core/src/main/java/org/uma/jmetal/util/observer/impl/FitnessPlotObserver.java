@@ -16,6 +16,7 @@ public class FitnessPlotObserver<S extends Solution<?>> implements Observer<Map<
   private Integer evaluations ;
   private final int plotUpdateFrequency ;
   private String valueName ;
+  private String plotTitle ;
 
   /**
    * Constructor
@@ -25,6 +26,7 @@ public class FitnessPlotObserver<S extends Solution<?>> implements Observer<Map<
     chart = new SingleValueScatterPlot(title, xAxisTitle, yAxisTitle, valueName) ;
     this.plotUpdateFrequency = plotUpdateFrequency ;
     this.valueName = valueName ;
+    this.plotTitle = title ;
   }
 
   /**
@@ -39,6 +41,9 @@ public class FitnessPlotObserver<S extends Solution<?>> implements Observer<Map<
     if (evaluations!=null && solution!=null) {
       if (evaluations%plotUpdateFrequency == 0){
         chart.updateChart(evaluations, solution.objectives()[0]);
+        String plotTitle = this.plotTitle + ". Current fitness: " +
+            String.format("%.5e", solution.objectives()[0]) ;
+        chart.chartTitle(plotTitle);
       }
     } else {
       JMetalLogger.logger.warning(getClass().getName()+

@@ -26,6 +26,7 @@ public class IndicatorPlotObserver<S extends Solution<?>> implements Observer<Ma
   double[][] referenceFront ;
   double[][] normalizedReferenceFront ;
   private QualityIndicator qualityIndicator ;
+  private String plotTitle ;
   /**
    * Constructor
    */
@@ -35,6 +36,7 @@ public class IndicatorPlotObserver<S extends Solution<?>> implements Observer<Ma
     chart.delay(200) ;
     this.plotUpdateFrequency = plotUpdateFrequency ;
     this.qualityIndicator = qualityIndicator ;
+    this.plotTitle = title ;
 
     referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",");
     normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
@@ -58,7 +60,12 @@ public class IndicatorPlotObserver<S extends Solution<?>> implements Observer<Ma
                 NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
                 NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-        chart.updateChart(evaluations, qualityIndicator.compute(normalizedFront));
+        double indicatorValue = qualityIndicator.compute(normalizedFront) ;
+        chart.updateChart(evaluations, indicatorValue);
+
+        String plotTitle = this.plotTitle + ". "  + qualityIndicator.name()+ ": " +
+            String.format("%.5e", indicatorValue) ;
+        chart.chartTitle(plotTitle);
       }
     } else {
       JMetalLogger.logger.warning(getClass().getName()+

@@ -16,7 +16,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.FitnessObserver;
+import org.uma.jmetal.util.observer.impl.FitnessPlotObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -51,7 +51,8 @@ public class GenerationalGeneticAlgorithmWithFitnessObserverExample {
         .setTermination(termination)
         .build();
 
-    geneticAlgorithm.observable().register(new FitnessObserver(5000));
+    geneticAlgorithm.observable().register(new FitnessPlotObserver("Genetic algorithm",
+        "Evaluations", "Fitness", "Fitness", 500));
 
     geneticAlgorithm.run();
 

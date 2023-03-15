@@ -54,6 +54,10 @@ public class FrontScatterPlot {
     pointSeries.setMarker(SeriesMarkers.CIRCLE);
   }
 
+  public void chartTitle(String newTitle) {
+    chart.setTitle(newTitle);
+  }
+
   public void addPoint(double x, double y, String pointName, Color color) {
     XYSeries pointSeries = chart.addSeries(pointName,
         new double[]{x},

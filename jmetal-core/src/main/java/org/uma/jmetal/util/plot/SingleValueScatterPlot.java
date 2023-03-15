@@ -41,6 +41,10 @@ public class SingleValueScatterPlot {
     this.delay = delay ;
   }
 
+  public void chartTitle(String newTitle) {
+    chart.setTitle(newTitle);
+  }
+
   public void updateChart(double x, double y) {
     if (firstUpdate) {
       firstUpdate = false ;

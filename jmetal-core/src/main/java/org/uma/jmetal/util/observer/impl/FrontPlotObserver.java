@@ -19,6 +19,7 @@ public class FrontPlotObserver<S extends Solution<?>> implements Observer<Map<St
   private Integer evaluations ;
   private final int plotUpdateFrequency ;
 
+  private String plotTitle ;
   /**
    * Constructor
    */
@@ -26,6 +27,7 @@ public class FrontPlotObserver<S extends Solution<?>> implements Observer<Map<St
   int plotUpdateFrequency) {
     chart = new FrontScatterPlot(title, xAxisTitle, yAxisTitle, legend) ;
     this.plotUpdateFrequency = plotUpdateFrequency ;
+    this.plotTitle = title ;
   }
 
   public void setFront(double[][] front, String frontName) {
@@ -49,6 +51,7 @@ public class FrontPlotObserver<S extends Solution<?>> implements Observer<Map<St
       if (evaluations%plotUpdateFrequency == 0){
         List<Double> objective1 = population.stream().map(s -> s.objectives()[0]).collect(Collectors.toList()) ;
         List<Double> objective2 = population.stream().map(s -> s.objectives()[1]).collect(Collectors.toList()) ;
+        chart.chartTitle(plotTitle + ". Evaluations: " + evaluations);
         chart.updateChart(objective1, objective2);
       }
     } else {
