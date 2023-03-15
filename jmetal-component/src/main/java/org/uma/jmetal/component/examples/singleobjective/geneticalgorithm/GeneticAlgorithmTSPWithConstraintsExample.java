@@ -3,11 +3,12 @@ package org.uma.jmetal.component.examples.singleobjective.geneticalgorithm;
 import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
-import org.uma.jmetal.component.catalogue.common.termination.Termination;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.MuPlusLambdaReplacement;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentSelection;
+import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.impl.PMXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
@@ -21,7 +22,6 @@ import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstrain
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.FitnessObserver;
 import org.uma.jmetal.util.observer.impl.FitnessPlotObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -61,30 +61,49 @@ public class GeneticAlgorithmTSPWithConstraintsExample extends AbstractAlgorithm
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
+    var createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
+
+    var comparator = new MultiComparator<PermutationSolution<Integer>>(
+        List.of(new OverallConstraintViolationDegreeComparator<>(),
+            new ObjectiveComparator<>(0)));
+
+    var replacement =
+        new MuPlusLambdaReplacement<>(comparator);
+
     var crossover = new PMXCrossover(0.9);
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
     var mutation = new PermutationSwapMutation<Integer>(mutationProbability);
+    var variation =
+        new CrossoverAndMutationVariation<>(
+            offspringPopulationSize, crossover, mutation);
 
-    Termination termination = new TerminationByEvaluations(150000);
+    var selection =
+        new NaryTournamentSelection<PermutationSolution<Integer>>(
+            2,
+            variation.getMatingPoolSize(),
+            new ObjectiveComparator<>(0));
 
-    Replacement<PermutationSolution<Integer>> replacement = new MuPlusLambdaReplacement<>(
-        new MultiComparator<>(List.of(new OverallConstraintViolationDegreeComparator<>(),
-            new ObjectiveComparator<>(0))));
+    var termination = new TerminationByEvaluations(250000);
 
-    EvolutionaryAlgorithm<PermutationSolution<Integer>> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
+    var evaluation = new SequentialEvaluation<>(problem);
+
+    EvolutionaryAlgorithm<PermutationSolution<Integer>> geneticAlgorithm = new EvolutionaryAlgorithm<>(
         "GGA",
-        problem,
-        populationSize,
-        offspringPopulationSize,
-        crossover,
-        mutation)
-        .setTermination(termination)
-        .setReplacement(replacement)
-        .build();
+        createInitialPopulation, evaluation, termination, selection, variation, replacement) {
 
-    geneticAlgorithm.observable().register(new FitnessObserver(10000));
-    var chartObserver = new FitnessPlotObserver("Genetic algorithm", "Evaluations", "Fitness",
+      @Override
+      public void updateProgress() {
+        PermutationSolution<Integer> bestFitnessSolution = population().stream()
+            .min(new MultiComparator<>(List.of(new OverallConstraintViolationDegreeComparator<>(),
+                new ObjectiveComparator<>(0)))).get();
+        attributes().put("BEST_SOLUTION", bestFitnessSolution);
+
+        super.updateProgress();
+      }
+    };
+
+    var chartObserver = new FitnessPlotObserver<>("Genetic algorithm", "Evaluations", "Fitness",
         "fitness", 10000);
     geneticAlgorithm.observable().register(chartObserver);
 
