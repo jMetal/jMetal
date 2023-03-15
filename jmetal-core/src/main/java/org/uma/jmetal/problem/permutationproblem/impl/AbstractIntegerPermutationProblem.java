@@ -10,7 +10,7 @@ public abstract class AbstractIntegerPermutationProblem
 
   @Override
   public PermutationSolution<Integer> createSolution() {
-    return new IntegerPermutationSolution(length(), numberOfObjectives()) ;
+    return new IntegerPermutationSolution(length(), numberOfObjectives(), numberOfConstraints()) ;
   }
 
   @Override

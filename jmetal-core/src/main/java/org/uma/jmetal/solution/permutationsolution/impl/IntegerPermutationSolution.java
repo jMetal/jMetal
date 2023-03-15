@@ -1,7 +1,6 @@
 package org.uma.jmetal.solution.permutationsolution.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -20,8 +19,8 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
   /**
    * Constructor
    */
-  public IntegerPermutationSolution(int permutationLength, int numberOfObjectives) {
-    super(permutationLength, numberOfObjectives);
+  public IntegerPermutationSolution(int permutationLength, int numberOfObjectives, int numberOfConstraints) {
+    super(permutationLength, numberOfObjectives, numberOfConstraints);
 
     List<Integer> randomSequence = new ArrayList<>(permutationLength);
 
@@ -38,15 +37,11 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
    * Copy Constructor
    */
   public IntegerPermutationSolution(IntegerPermutationSolution solution) {
-    super(solution.getLength(), solution.objectives().length);
+    super(solution.getLength(), solution.objectives().length, solution.constraints().length);
 
-    Arrays.setAll(objectives(), i -> solution.objectives()[i]);
-
-    for (int i = 0; i < variables().size(); i++) {
-      variables().set(i, solution.variables().get(i));
-    }
-
-    Arrays.setAll(constraints(), i -> solution.constraints()[i]);
+    IntStream.range(0, solution.variables().size()).forEach(i -> variables().set(i, solution.variables().get(i)));
+    IntStream.range(0, solution.objectives().length).forEach(i -> objectives()[i] = solution.objectives()[i]);
+    IntStream.range(0, solution.constraints().length).forEach(i -> constraints()[i] = solution.constraints()[i]);
 
     attributes = new HashMap<>(solution.attributes);
   }
