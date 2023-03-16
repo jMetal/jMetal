@@ -84,7 +84,7 @@ public class GeneticAlgorithmTSPWithConstraintsExample extends AbstractAlgorithm
             variation.getMatingPoolSize(),
             new ObjectiveComparator<>(0));
 
-    var termination = new TerminationByEvaluations(250000);
+    var termination = new TerminationByEvaluations(500000);
 
     var evaluation = new SequentialEvaluation<>(problem);
 
