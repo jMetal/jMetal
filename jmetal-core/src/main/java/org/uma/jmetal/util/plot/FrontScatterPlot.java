@@ -18,6 +18,7 @@ public class FrontScatterPlot {
   private SwingWrapper<XYChart> swingWrapper;
   private final String legend;
   private boolean firstUpdate = true;
+  private long delay = 500 ;
 
   public FrontScatterPlot(String title, String xAxisTitle, String yAxisTitle, String legend) {
     chart = new XYChartBuilder()
@@ -32,26 +33,34 @@ public class FrontScatterPlot {
 
     chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
-    chart.getStyler().setMarkerSize(5);
+    chart.getStyler().setMarkerSize(6);
+    chart.getStyler().setShowWithinAreaPoint(true) ;
+    chart.getStyler().setCursorEnabled(true) ;
   }
 
   private double[] objectiveValues(double[][] data, int obj) {
     return Arrays.stream(data).mapToDouble(v -> v[obj]).toArray();
   }
 
+  public void delay(long delay) {
+    this.delay = delay ;
+  }
+
   public void setFront(double[][] front, String frontName) {
     double[] x = objectiveValues(front, 0);
     double[] y = objectiveValues(front, 1);
-    var series = chart.addSeries(frontName, x, y);
+    XYSeries series = chart.addSeries(frontName, x, y);
     series.setMarkerColor(Color.blue);
     series.setMarker(SeriesMarkers.CIRCLE);
   }
+
 
   public void addPoint(double x, double y, String pointName) {
     XYSeries pointSeries = chart.addSeries(pointName,
         new double[]{x},
         new double[]{y});
-    pointSeries.setMarker(SeriesMarkers.CIRCLE);
+    pointSeries.setMarker(SeriesMarkers.DIAMOND);
+    pointSeries.setXYSeriesRenderStyle(XYSeriesRenderStyle.Line) ;
   }
 
   public void chartTitle(String newTitle) {
@@ -64,6 +73,12 @@ public class FrontScatterPlot {
         new double[]{y});
     pointSeries.setMarker(SeriesMarkers.CIRCLE);
     pointSeries.setMarkerColor(color);
+  }
+
+  public void updatePoint(double x, double y, String pointName) {
+    chart.updateXYSeries(pointName,
+        new double[]{x},
+        new double[]{y}, null);
   }
 
   public void updateChart(double[] x, double[] y) {
@@ -82,7 +97,7 @@ public class FrontScatterPlot {
       series.setMarker(SeriesMarkers.CIRCLE);
     } else {
       try {
-        TimeUnit.MILLISECONDS.sleep(500);
+        TimeUnit.MILLISECONDS.sleep(delay);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
