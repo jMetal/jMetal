@@ -30,7 +30,8 @@ public class JMetalLogger implements Serializable {
 
 	static {
 		/*
-		 * Configure the loggers with the default configuration. If the
+		 * Configure the loggers with the default configuration and the
+		 * `java.util.logging.config.file` JVM property, if provided. If the
 		 * configuration method is called manually, this default configuration
 		 * will be called before anyway, leading to 2 configuration calls,
 		 * although only the last one is considered. This is a trade off to
@@ -39,7 +40,11 @@ public class JMetalLogger implements Serializable {
 		 * have at least the default configuration.
 		 */
 		try {
-			configureLoggers(null);
+			var value = System.getProperty("java.util.logging.config.file");
+			if (value != null)
+				configureLoggers(new File(value));
+			else
+				configureLoggers(null);
 		} catch (IOException e) {
 			throw new RuntimeException(
 					"Impossible to configure the loggers in a static way", e);
