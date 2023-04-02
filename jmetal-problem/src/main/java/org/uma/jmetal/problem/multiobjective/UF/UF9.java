@@ -38,7 +38,7 @@ public class UF9 extends AbstractDoubleProblem {
     upperLimit.add(1.0);
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    for (int i = 2; i < numberOfVariables(); i++) {
+    for (int i = 2; i < numberOfVariables; i++) {
       lowerLimit.add(-2.0);
       upperLimit.add(2.0);
     }
