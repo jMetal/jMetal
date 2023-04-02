@@ -1,4 +1,4 @@
-package org.uma.jmetal.problem.multiobjective.UF;
+package org.uma.jmetal.problem.multiobjective.uf;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -165,7 +165,7 @@ org.uma.jmetal.problem.multiobjective.lz09
 org.uma.jmetal.problem.multiobjective.maf
 org.uma.jmetal.problem.multiobjective.mop
 org.uma.jmetal.problem.multiobjective.re
-org.uma.jmetal.problem.multiobjective.UF
+org.uma.jmetal.problem.multiobjective.uf
 org.uma.jmetal.problem.multiobjective.wfg
 org.uma.jmetal.problem.multiobjective.zdt
 org.uma.jmetal.problem.permutationproblem
