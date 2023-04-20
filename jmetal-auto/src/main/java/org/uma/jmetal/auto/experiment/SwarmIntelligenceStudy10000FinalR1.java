@@ -11,9 +11,12 @@ import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
-import org.uma.jmetal.lab.experiment.component.impl.ExecuteAlgorithms;
+import org.uma.jmetal.lab.experiment.component.impl.ComputeQualityIndicators;
+import org.uma.jmetal.lab.experiment.component.impl.GenerateHtmlPages;
+import org.uma.jmetal.lab.experiment.component.impl.GenerateLatexTablesWithStatistics;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
+import org.uma.jmetal.lab.visualization.StudyVisualizer;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1_2D;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2_2D;
@@ -51,7 +54,7 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 
-public class SwarmIntelligenceStudyR1 {
+public class SwarmIntelligenceStudy10000FinalR1 {
   private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
@@ -91,7 +94,7 @@ public class SwarmIntelligenceStudyR1 {
         configureAlgorithmList(problemList);
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("SwarmIntelligenceStudyR1")
+        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("SwarmIntelligenceExperiment10000Final")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setReferenceFrontDirectory("resources/referenceFrontsCSV")
@@ -110,23 +113,22 @@ public class SwarmIntelligenceStudyR1 {
             .setNumberOfCores(8)
             .build();
 
-   new ExecuteAlgorithms<>(experiment).run();
-   //new GenerateLatexTablesWithStatistics(experiment).run();//
-    // new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run();
-    //new GenerateLatexTablesWithStatistics(experiment).run();
-    //new GenerateFriedmanHolmTestTables<>(experiment).run();
+    new ComputeQualityIndicators<>(experiment).run();
+    new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run();
+    new GenerateLatexTablesWithStatistics(experiment).run();
 
-   //new ComputeQualityIndicators<>(experiment).run();
-   /*
+    /*
+   new ExecuteAlgorithms<>(experiment).run();
+   new ComputeQualityIndicators<>(experiment).run();
    new GenerateLatexTablesWithStatistics(experiment).run();
    new GenerateWilcoxonTestTablesWithR<>(experiment).run();
    new GenerateFriedmanHolmTestTables<>(experiment).run();
    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run();
-   new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run();
+    new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run();
+*/
 
-   new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run();
+    //new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run();
 
-     */
   }
   /**
    * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of
@@ -137,29 +139,11 @@ public class SwarmIntelligenceStudyR1 {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-
-        /*
-        nsgaII(algorithms, run, experimentProblem);
-        smpso(algorithms, run, experimentProblem);
-        omopso(algorithms, run, experimentProblem);
-        autoMOPSOZDR(algorithms, run, experimentProblem);
-        autoMOPSOZWR(algorithms, run, experimentProblem);
-        autoMOPSODWR(algorithms, run, experimentProblem);
-        autoMOPSOZDW(algorithms, run, experimentProblem);
+        autoMOPSOD(algorithms, run, experimentProblem);
+        autoMOPSOW(algorithms, run, experimentProblem);
+        autoMOPSORE(algorithms, run, experimentProblem);
         autoMOPSOZ(algorithms, run, experimentProblem);
-         */
-        /*
-        autoMOPSOZDR(algorithms, run, experimentProblem);
-        autoMOPSOZWR(algorithms, run, experimentProblem);
-        autoMOPSODWR(algorithms, run, experimentProblem);
-        autoMOPSOZDW(algorithms, run, experimentProblem);
         autoMOPSOANTs(algorithms, run, experimentProblem);
-         */
-        autoMOPSOZDW(algorithms, run, experimentProblem);
-        autoMOPSOZDR(algorithms, run, experimentProblem);
-        autoMOPSOZWR(algorithms, run, experimentProblem);
-        autoMOPSODWR(algorithms, run, experimentProblem);
-        autoMOPSOZ(algorithms, run, experimentProblem);
       }
     }
     return algorithms;
@@ -290,193 +274,6 @@ public class SwarmIntelligenceStudyR1 {
         new ExperimentAlgorithm<>(algorithm, "OMOPSO", experimentProblem, run));
   }
 
-  private static void autoMOPSOZDW(List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run, ExperimentProblem<DoubleSolution> experimentProblem) {
-    String[] parameters =
-        ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
-            + "--randomGeneratorSeed 12 "
-            + "--referenceFrontFileName "+ experimentProblem.getReferenceFront() + " "
-            + "--maximumNumberOfEvaluations 10000 "
-            + "--swarmSize 85 "
-            + "--archiveSize 100 "
-            + "--leaderArchive hypervolumeArchive "
-            + "--algorithmResult leaderArchive "
-            + "--swarmInitialization latinHypercubeSampling "
-            + "--velocityInitialization SPSO2007VelocityInitialization "
-            + "--perturbation frequencySelectionMutationBasedPerturbation "
-            + "--mutationProbabilityFactor 0.8105 "
-            + "--mutationRepairStrategy random "
-            + "--inertiaWeightComputingStrategy randomSelectedValue "
-            + "--velocityUpdate constrainedVelocityUpdate "
-            + "--c1Min 1.3350 "
-            + "--c1Max 2.0245 "
-            + "--c2Min 1.3831 "
-            + "--c2Max 2.2457 "
-            + "--localBestInitialization defaultLocalBestInitialization "
-            + "--globalBestInitialization defaultGlobalBestInitialization "
-            + "--globalBestSelection tournament "
-            + "--globalBestUpdate defaultGlobalBestUpdate "
-            + "--localBestUpdate defaultLocalBestUpdate "
-            + "--positionUpdate defaultPositionUpdate "
-            + "--mutation polynomial "
-            + "--frequencyOfApplicationOfMutationOperator 5 "
-            + "--weightMin 0.1804 "
-            + "--weightMax 0.7621 "
-            + "--selectionTournamentSize 8 "
-            + "--velocityChangeWhenLowerLimitIsReached 0.6725 "
-            + "--velocityChangeWhenUpperLimitIsReached -0.9531 "
-            + "--polynomialMutationDistributionIndex 103.5688 "
-)
-            .split("\\s+");
-
-    AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parse(parameters);
-
-    ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
-
-    algorithms.add(
-        new ExperimentAlgorithm<>(algorithm, "AMOPSOZDW", experimentProblem, run));
-  }
-
-  private static void autoMOPSOZDR(List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run, ExperimentProblem<DoubleSolution> experimentProblem) {
-    String[] parameters =
-        ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
-            + "--randomGeneratorSeed 12 "
-            + "--referenceFrontFileName "+ experimentProblem.getReferenceFront() + " "
-            + "--swarmSize 40 "
-            + "--maximumNumberOfEvaluations 10000 "
-            + "--archiveSize 100 "
-            + "--leaderArchive hypervolumeArchive "
-            + "--algorithmResult leaderArchive "
-            + "--swarmInitialization scatterSearch "
-            + "--velocityInitialization defaultVelocityInitialization "
-            + "--perturbation frequencySelectionMutationBasedPerturbation "
-            + "--mutationProbabilityFactor 1.7132 "
-            + "--mutationRepairStrategy round "
-            + "--inertiaWeightComputingStrategy linearIncreasingValue "
-            + "--velocityUpdate constrainedVelocityUpdate "
-            + "--c1Min 1.0454 "
-            + "--c1Max 2.7443 "
-            + "--c2Min 1.6418 "
-            + "--c2Max 2.4326 "
-            + "--localBestInitialization defaultLocalBestInitialization "
-            + "--globalBestInitialization defaultGlobalBestInitialization "
-            + "--globalBestSelection tournament "
-            + "--globalBestUpdate defaultGlobalBestUpdate "
-            + "--localBestUpdate defaultLocalBestUpdate "
-            + "--positionUpdate defaultPositionUpdate "
-            + "--mutation uniform "
-            + "--frequencyOfApplicationOfMutationOperator 9 "
-            + "--weightMin 0.3632 "
-            + "--weightMax 0.6343 "
-            + "--selectionTournamentSize 8 "
-            + "--velocityChangeWhenLowerLimitIsReached -0.5227 "
-            + "--velocityChangeWhenUpperLimitIsReached -0.7936 "
-            + "--uniformMutationPerturbation 0.4280 "
-       )
-            .split("\\s+");
-
-    AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parse(parameters);
-
-    ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
-
-    algorithms.add(
-        new ExperimentAlgorithm<>(algorithm, "AMOPSOZDR", experimentProblem, run));
-  }
-
-  private static void autoMOPSOZWR(List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run, ExperimentProblem<DoubleSolution> experimentProblem) {
-    String[] parameters =
-        ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
-            + "--randomGeneratorSeed 12 "
-            + "--referenceFrontFileName "+ experimentProblem.getReferenceFront() + " "
-            + "--swarmSize 65 "
-            + "--maximumNumberOfEvaluations 10000 "
-            + "--archiveSize 100 "
-            + "--leaderArchive hypervolumeArchive "
-            + "--algorithmResult leaderArchive "
-            + "--swarmInitialization latinHypercubeSampling "
-            + "--velocityInitialization SPSO2007VelocityInitialization "
-            + "--perturbation frequencySelectionMutationBasedPerturbation "
-            + "--mutationProbabilityFactor 0.3493 "
-            + "--mutationRepairStrategy round "
-            + "--inertiaWeightComputingStrategy constantValue "
-            + "--velocityUpdate defaultVelocityUpdate "
-            + "--c1Min 1.5545 "
-            + "--c1Max 2.6173 "
-            + "--c2Min 1.1539 "
-            + "--c2Max 2.1002 "
-            + "--localBestInitialization defaultLocalBestInitialization "
-            + "--globalBestInitialization defaultGlobalBestInitialization "
-            + "--globalBestSelection tournament "
-            + "--globalBestUpdate defaultGlobalBestUpdate "
-            + "--localBestUpdate defaultLocalBestUpdate "
-            + "--positionUpdate defaultPositionUpdate "
-            + "--mutation uniform "
-            + "--frequencyOfApplicationOfMutationOperator 4 "
-            + "--weight 0.2824 "
-            + "--selectionTournamentSize 2 "
-            + "--velocityChangeWhenLowerLimitIsReached 0.3175 "
-            + "--velocityChangeWhenUpperLimitIsReached -0.0848 "
-            + "--uniformMutationPerturbation 0.7443 "
-        )
-            .split("\\s+");
-
-    AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parse(parameters);
-
-    ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
-
-    algorithms.add(
-        new ExperimentAlgorithm<>(algorithm, "AMOPSOZWR", experimentProblem, run));
-  }
-
-  private static void autoMOPSODWR(List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run, ExperimentProblem<DoubleSolution> experimentProblem) {
-    String[] parameters =
-        ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
-            + "--randomGeneratorSeed 12 "
-            + "--referenceFrontFileName "+ experimentProblem.getReferenceFront() + " "
-            + "--swarmSize 17 "
-            + "--maximumNumberOfEvaluations 10000 "
-            + "--archiveSize 100 "
-            + "--leaderArchive hypervolumeArchive "
-            + "--algorithmResult leaderArchive "
-            + "--swarmInitialization scatterSearch "
-            + "--velocityInitialization SPSO2011VelocityInitialization "
-            + "--perturbation frequencySelectionMutationBasedPerturbation "
-            + "--mutationProbabilityFactor 0.7496 "
-            + "--mutationRepairStrategy round "
-            + "--inertiaWeightComputingStrategy randomSelectedValue "
-            + "--velocityUpdate constrainedVelocityUpdate "
-            + "--c1Min 1.2614 "
-            + "--c1Max 2.1578 "
-            + "--c2Min 1.0130 "
-            + "--c2Max 2.0642 "
-            + "--localBestInitialization defaultLocalBestInitialization "
-            + "--globalBestInitialization defaultGlobalBestInitialization "
-            + "--globalBestSelection tournament "
-            + "--globalBestUpdate defaultGlobalBestUpdate "
-            + "--localBestUpdate defaultLocalBestUpdate "
-            + "--positionUpdate defaultPositionUpdate "
-            + "--mutation uniform "
-            + "--frequencyOfApplicationOfMutationOperator 3 "
-            + "--weightMin 0.2226 "
-            + "--weightMax 0.6598 "
-            + "--selectionTournamentSize 3 "
-            + "--velocityChangeWhenLowerLimitIsReached -0.2137 "
-            + "--velocityChangeWhenUpperLimitIsReached 0.9396 "
-            + "--uniformMutationPerturbation 0.1803 "
-        )
-            .split("\\s+");
-
-    AutoMOPSO autoMOPSO = new AutoMOPSO();
-    autoMOPSO.parse(parameters);
-
-    ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
-
-    algorithms.add(
-        new ExperimentAlgorithm<>(algorithm, "AMOPSODWR", experimentProblem, run));
-  }
-
   private static void autoMOPSOZ(List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run, ExperimentProblem<DoubleSolution> experimentProblem) {
     String[] parameters =
         ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
@@ -511,6 +308,53 @@ public class SwarmIntelligenceStudyR1 {
             + "--velocityChangeWhenLowerLimitIsReached 0.0188 "
             + "--velocityChangeWhenUpperLimitIsReached -0.8965 "
             + "--nonUniformMutationPerturbation 0.1002 "
+)
+            .split("\\s+");
+
+    AutoMOPSO autoMOPSO = new AutoMOPSO();
+    autoMOPSO.parse(parameters);
+
+    ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
+
+    algorithms.add(
+        new ExperimentAlgorithm<>(algorithm, "AutoMOPSOZ", experimentProblem, run));
+  }
+
+  private static void autoMOPSOD(List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run, ExperimentProblem<DoubleSolution> experimentProblem) {
+    String[] parameters =
+        ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+            + "--randomGeneratorSeed 12 "
+            + "--referenceFrontFileName "+ experimentProblem.getReferenceFront() + " "
+            + "--maximumNumberOfEvaluations 10000 "
+            + "--swarmSize 194 "
+            + "--archiveSize 100 "
+            + "--leaderArchive hypervolumeArchive "
+            + "--algorithmResult leaderArchive "
+            + "--swarmInitialization scatterSearch "
+            + "--velocityInitialization SPSO2007VelocityInitialization "
+            + "--perturbation frequencySelectionMutationBasedPerturbation "
+            + "--mutationProbabilityFactor 0.0474 "
+            + "--mutationRepairStrategy random "
+            + "--inertiaWeightComputingStrategy linearDecreasingValue "
+            + "--velocityUpdate constrainedVelocityUpdate "
+            + "--c1Min 1.7527 "
+            + "--c1Max 2.2168 "
+            + "--c2Min 1.4592 "
+            + "--c2Max 2.0739 "
+            + "--localBestInitialization defaultLocalBestInitialization "
+            + "--globalBestInitialization defaultGlobalBestInitialization "
+            + "--globalBestSelection tournament "
+            + "--globalBestUpdate defaultGlobalBestUpdate "
+            + "--localBestUpdate defaultLocalBestUpdate "
+            + "--positionUpdate defaultPositionUpdate "
+            + "--mutation linkedPolynomial "
+            + "--frequencyOfApplicationOfMutationOperator 6 "
+            + "--weightMin 0.2495 "
+            + "--weightMax 0.9620 "
+            + "--selectionTournamentSize 5 "
+            + "--velocityChangeWhenLowerLimitIsReached 0.8566 "
+            + "--velocityChangeWhenUpperLimitIsReached 0.0578 "
+            + "--linkedPolynomialMutationDistributionIndex 151.3372 "
         )
             .split("\\s+");
 
@@ -520,8 +364,102 @@ public class SwarmIntelligenceStudyR1 {
     ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
 
     algorithms.add(
-        new ExperimentAlgorithm<>(algorithm, "AMOPSOZ", experimentProblem, run));
+        new ExperimentAlgorithm<>(algorithm, "AutoMOPSOD", experimentProblem, run));
   }
+
+  private static void autoMOPSOW(List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run, ExperimentProblem<DoubleSolution> experimentProblem) {
+    String[] parameters =
+        ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+            + "--randomGeneratorSeed 12 "
+            + "--referenceFrontFileName "+ experimentProblem.getReferenceFront() + " "
+            + "--maximumNumberOfEvaluations 10000 "
+            + "--swarmSize 53 "
+            + "--archiveSize 100 "
+            + "--leaderArchive hypervolumeArchive "
+            + "--algorithmResult leaderArchive "
+            + "--swarmInitialization latinHypercubeSampling "
+            + "--velocityInitialization SPSO2011VelocityInitialization "
+            + "--perturbation frequencySelectionMutationBasedPerturbation "
+            + "--mutationProbabilityFactor 0.0375 "
+            + "--mutationRepairStrategy round "
+            + "--inertiaWeightComputingStrategy linearIncreasingValue "
+            + "--velocityUpdate defaultVelocityUpdate "
+            + "--c1Min 1.2925 "
+            + "--c1Max 2.5585 "
+            + "--c2Min 1.3270 "
+            + "--c2Max 2.3430 "
+            + "--localBestInitialization defaultLocalBestInitialization "
+            + "--globalBestInitialization defaultGlobalBestInitialization "
+            + "--globalBestSelection tournament "
+            + "--globalBestUpdate defaultGlobalBestUpdate "
+            + "--localBestUpdate defaultLocalBestUpdate "
+            + "--positionUpdate defaultPositionUpdate "
+            + "--mutation polynomial "
+            + "--frequencyOfApplicationOfMutationOperator 9 "
+            + "--weightMin 0.2040 "
+            + "--weightMax 0.5885 "
+            + "--selectionTournamentSize 8 "
+            + "--velocityChangeWhenLowerLimitIsReached -0.9443 "
+            + "--velocityChangeWhenUpperLimitIsReached -0.8179 "
+            + "--polynomialMutationDistributionIndex 105.8681 "
+        )
+            .split("\\s+");
+
+    AutoMOPSO autoMOPSO = new AutoMOPSO();
+    autoMOPSO.parse(parameters);
+
+    ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
+
+    algorithms.add(
+        new ExperimentAlgorithm<>(algorithm, "AutoMOPSOW", experimentProblem, run));
+  }
+
+  private static void autoMOPSORE(List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run, ExperimentProblem<DoubleSolution> experimentProblem) {
+    String[] parameters =
+        ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+            + "--randomGeneratorSeed 12 "
+            + "--referenceFrontFileName "+ experimentProblem.getReferenceFront() + " "
+            + "--maximumNumberOfEvaluations 10000 "
+            + "--swarmSize 111 "
+            + "--archiveSize 100 "
+            + "--leaderArchive hypervolumeArchive "
+            + "--algorithmResult leaderArchive "
+            + "--swarmInitialization random "
+            + "--velocityInitialization SPSO2011VelocityInitialization "
+            + "--perturbation frequencySelectionMutationBasedPerturbation "
+            + "--mutationProbabilityFactor 0.6054 "
+            + "--mutationRepairStrategy random "
+            + "--inertiaWeightComputingStrategy constantValue "
+            + "--velocityUpdate defaultVelocityUpdate "
+            + "--c1Min 1.2878 "
+            + "--c1Max 2.7783 "
+            + "--c2Min 1.1213 "
+            + "--c2Max 2.7264 "
+            + "--localBestInitialization defaultLocalBestInitialization "
+            + "--globalBestInitialization defaultGlobalBestInitialization "
+            + "--globalBestSelection tournament "
+            + "--globalBestUpdate defaultGlobalBestUpdate "
+            + "--localBestUpdate defaultLocalBestUpdate "
+            + "--positionUpdate defaultPositionUpdate "
+            + "--mutation linkedPolynomial "
+            + "--frequencyOfApplicationOfMutationOperator 6 "
+            + "--weight 0.1143 "
+            + "--selectionTournamentSize 2 "
+            + "--velocityChangeWhenLowerLimitIsReached 0.9868 "
+            + "--velocityChangeWhenUpperLimitIsReached 0.7494 "
+            + "--linkedPolynomialMutationDistributionIndex 307.3590 "
+        )
+            .split("\\s+");
+
+    AutoMOPSO autoMOPSO = new AutoMOPSO();
+    autoMOPSO.parse(parameters);
+
+    ParticleSwarmOptimizationAlgorithm algorithm = autoMOPSO.create();
+
+    algorithms.add(
+        new ExperimentAlgorithm<>(algorithm, "AutoMOPSORE", experimentProblem, run));
+  }
+
 
   private static void autoMOPSOANTs(List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run, ExperimentProblem<DoubleSolution> experimentProblem) {
     String[] parameters =
@@ -569,5 +507,4 @@ public class SwarmIntelligenceStudyR1 {
     algorithms.add(
         new ExperimentAlgorithm<>(algorithm, "AMOPSOANTS", experimentProblem, run));
   }
-
 }
