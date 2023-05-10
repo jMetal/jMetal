@@ -32,7 +32,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class NSGAIIWithRealTimeChartExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.UF.UF9";
+    String problemName = "org.uma.jmetal.problem.multiobjective.uf.UF9";
     String referenceParetoFront = "resources/referenceFrontsCSV/UF9.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
