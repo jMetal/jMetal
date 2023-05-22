@@ -27,7 +27,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class NSGAIIPlottingEstimationsOfNadirAndIdealPointsExample {
 
   public static void main(String[] args) throws JMetalException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

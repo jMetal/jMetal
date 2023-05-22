@@ -3,7 +3,6 @@ package org.uma.jmetal.auto.parameter.catalogue;
 import java.util.List;
 import org.uma.jmetal.auto.parameter.BooleanParameter;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
 import org.uma.jmetal.util.aggregationfunction.impl.ModifiedTschebyscheff;
 import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
@@ -41,9 +40,6 @@ public class AggregationFunctionParameter extends CategoricalParameter {
     }
 
 */
-    var epsilonParameterForNormalizing = (RealParameter) normalizeObjectivesParameter.findGlobalParameter(
-        "epsilonParameterForNormalizing") ;
-    epsilon = epsilonParameterForNormalizing.value() ;
 
 
     switch (value()) {

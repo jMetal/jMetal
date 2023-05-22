@@ -33,7 +33,7 @@ public class MOEADConfiguredToSolveProblemZDT110F2 {
             + "--neighborhoodSize 20 "
             + "--maximumNumberOfReplacedSolutions 2 "
             + "--aggregationFunction penaltyBoundaryIntersection "
-           // + "--pbiTheta 5.0 "
+            + "--pbiTheta 5.0 "
             + "--neighborhoodSelectionProbability 0.9 "
             + "--variation crossoverAndMutationVariation "
             + "--selection populationAndNeighborhoodMatingPoolSelection "

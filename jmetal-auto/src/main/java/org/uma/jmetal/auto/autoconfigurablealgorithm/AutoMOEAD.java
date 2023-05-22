@@ -84,6 +84,10 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   }
 
   public void configure() {
+    normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives") ;
+    RealParameter epsilonParameterForNormalizing = new RealParameter("epsilonParameterForNormalizing", 0.0000001, 25.0) ;
+    normalizeObjectivesParameter.addSpecificParameter("TRUE", epsilonParameterForNormalizing);
+
     problemNameParameter = new StringParameter("problemName");
     randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed") ;
     maximumNumberOfEvaluationsParameter =
@@ -105,9 +109,6 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     maximumNumberOfReplacedSolutionsParameter =
         new IntegerParameter("maximumNumberOfReplacedSolutions",1, 5);
 
-    normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives") ;
-    RealParameter epsilonParameterForNormalizing = new RealParameter("epsilonParameterForNormalizing", 0.0000001, 25.0) ;
-    normalizeObjectivesParameter.addGlobalParameter(epsilonParameterForNormalizing);
 
     aggregationFunctionParameter =
         new AggregationFunctionParameter(
@@ -123,7 +124,6 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     autoConfigurableParameterList.add(neighborhoodSizeParameter);
     autoConfigurableParameterList.add(maximumNumberOfReplacedSolutionsParameter);
-    autoConfigurableParameterList.add(normalizeObjectivesParameter);
     autoConfigurableParameterList.add(aggregationFunctionParameter);
 
     autoConfigurableParameterList.add(algorithmResultParameter);
