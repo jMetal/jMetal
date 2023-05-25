@@ -20,6 +20,7 @@ import org.uma.jmetal.auto.parameter.catalogue.MutationParameter;
 import org.uma.jmetal.auto.parameter.catalogue.ProbabilityParameter;
 import org.uma.jmetal.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
 import org.uma.jmetal.auto.parameter.catalogue.SelectionParameter;
+import org.uma.jmetal.auto.parameter.catalogue.SequenceGeneratorParameter;
 import org.uma.jmetal.auto.parameter.catalogue.VariationParameter;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
@@ -42,7 +43,6 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
 /**
  * Class to configure NSGA-II with an argument string using class {@link EvolutionaryAlgorithm}
@@ -68,6 +68,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   private IntegerParameter maximumNumberOfReplacedSolutionsParameter;
   private AggregationFunctionParameter aggregationFunctionParameter;
   private BooleanParameter normalizeObjectivesParameter ;
+  private SequenceGeneratorParameter subProblemIdGeneratorParameter ;
 
   @Override
   public List<Parameter<?>> configurableParameterList() {
@@ -84,6 +85,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   }
 
   public void configure() {
+    subProblemIdGeneratorParameter = new SequenceGeneratorParameter(List.of("permutation","integerSequence")) ;
+
     normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives") ;
     RealParameter epsilonParameterForNormalizing = new RealParameter("epsilonParameterForNormalizing", 0.0000001, 25.0) ;
     normalizeObjectivesParameter.addSpecificParameter("TRUE", epsilonParameterForNormalizing);
@@ -112,7 +115,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     aggregationFunctionParameter =
         new AggregationFunctionParameter(
-            List.of("tschebyscheff", "weightedSum", "penaltyBoundaryIntersection"));
+            List.of("tschebyscheff", "weightedSum", "penaltyBoundaryIntersection", "modifiedTschebyscheff"));
     RealParameter pbiTheta = new RealParameter("pbiTheta",1.0, 200);
     aggregationFunctionParameter.addSpecificParameter("penaltyBoundaryIntersection", pbiTheta);
     aggregationFunctionParameter.addGlobalParameter(normalizeObjectivesParameter);
@@ -125,6 +128,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     autoConfigurableParameterList.add(neighborhoodSizeParameter);
     autoConfigurableParameterList.add(maximumNumberOfReplacedSolutionsParameter);
     autoConfigurableParameterList.add(aggregationFunctionParameter);
+    autoConfigurableParameterList.add(subProblemIdGeneratorParameter);
 
     autoConfigurableParameterList.add(algorithmResultParameter);
     autoConfigurableParameterList.add(createInitialSolutionsParameter);
@@ -288,10 +292,11 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
       }
     }
 
-    var subProblemIdGenerator = new IntegerPermutationGenerator(populationSizeParameter.value());
+    subProblemIdGeneratorParameter.sequenceLength(populationSizeParameter.value());
+    var subProblemIdGenerator = subProblemIdGeneratorParameter.getParameter() ;
+
     selectionParameter.addNonConfigurableParameter("neighborhood", neighborhood);
     selectionParameter.addNonConfigurableParameter("subProblemIdGenerator", subProblemIdGenerator);
-
     variationParameter.addNonConfigurableParameter("subProblemIdGenerator", subProblemIdGenerator);
 
     var variation = (Variation<DoubleSolution>) variationParameter.getDoubleSolutionParameter();

@@ -27,6 +27,7 @@ public class MOEADDEConfiguredForDTLZ1 {
             + "--algorithmResult population "
             + "--normalizeObjectives false "
             + "--populationSize 91 "
+            + "--sequenceGenerator integerSequence "
             + "--offspringPopulationSize 1 "
             + "--createInitialSolutions random "
             + "--neighborhoodSize 30 "

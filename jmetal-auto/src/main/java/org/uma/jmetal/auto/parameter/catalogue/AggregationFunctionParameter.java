@@ -32,16 +32,6 @@ public class AggregationFunctionParameter extends CategoricalParameter {
     boolean normalizeObjectives = normalizeObjectivesParameter.value();
     double epsilon = 0.00000001;
 
-    /*
-    if (normalizeObjectives) {
-      var epsilonParameterForNormalizing = (RealParameter) normalizeObjectivesParameter.findSpecificParameter(
-          "epsilonParameterForNormalizing") ;
-      epsilon = epsilonParameterForNormalizing.value() ;
-    }
-
-*/
-
-
     switch (value()) {
       case "tschebyscheff":
         aggregationFunction = new Tschebyscheff(normalizedObjectives);

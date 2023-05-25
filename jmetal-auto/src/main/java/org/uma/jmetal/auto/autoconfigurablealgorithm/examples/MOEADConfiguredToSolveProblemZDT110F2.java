@@ -29,6 +29,7 @@ public class MOEADConfiguredToSolveProblemZDT110F2 {
             + "--offspringPopulationSize 1 "
             + "--createInitialSolutions random "
             + "--normalizeObjectives TRUE "
+            + "--sequenceGenerator integerSequence "
             + "--epsilonParameterForNormalizing 0.001 "
             + "--neighborhoodSize 20 "
             + "--maximumNumberOfReplacedSolutions 2 "
