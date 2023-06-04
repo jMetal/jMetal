@@ -15,7 +15,7 @@ import org.uma.jmetal.util.point.impl.IdealPoint;
 import org.uma.jmetal.util.point.impl.NadirPoint;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class EstimatingIdealAndNadirPointsPlotObserver<S extends Solution<?>> implements
     Observer<Map<String, Object>> {
@@ -71,21 +71,21 @@ public class EstimatingIdealAndNadirPointsPlotObserver<S extends Solution<?>> im
 
     Check.notNull(population);
 
-    nonDominatedSolutionListArchive = new NonDominatedSolutionListArchive<>() ;
-    nonDominatedSolutionListArchive.addAll(population);
-
-    if (idealPoint == null) {
-      idealPoint = new IdealPoint(population.get(0).objectives().length);
-    }
-
-    nadirPoint = new NadirPoint(population.get(0).objectives().length);
-    idealPoint.update(nonDominatedSolutionListArchive.solutions());
-    nadirPoint.update(nonDominatedSolutionListArchive.solutions());
-
-    List<S> solutionsToPlot = nonDominatedSolutionListArchive.solutions() ;
-
     if (evaluations != null) {
       if (evaluations % plotUpdateFrequency == 0) {
+        nonDominatedSolutionListArchive = new NonDominatedSolutionListArchive<>() ;
+        nonDominatedSolutionListArchive.addAll(population);
+
+        if (idealPoint == null) {
+          idealPoint = new IdealPoint(population.get(0).objectives().length);
+        }
+
+        nadirPoint = new NadirPoint(population.get(0).objectives().length);
+        idealPoint.update(nonDominatedSolutionListArchive.solutions());
+        nadirPoint.update(nonDominatedSolutionListArchive.solutions());
+
+        List<S> solutionsToPlot = nonDominatedSolutionListArchive.solutions() ;
+
         List<Double> objective1 = solutionsToPlot.stream().map(s -> s.objectives()[0])
             .collect(Collectors.toList());
         List<Double> objective2 = solutionsToPlot.stream().map(s -> s.objectives()[1])

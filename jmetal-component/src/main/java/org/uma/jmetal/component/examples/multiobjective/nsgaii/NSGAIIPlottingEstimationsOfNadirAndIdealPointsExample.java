@@ -53,7 +53,7 @@ public class NSGAIIPlottingEstimationsOfNadirAndIdealPointsExample {
         .setTermination(termination)
         .build();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(100);
+    EvaluationObserver evaluationObserver = new EvaluationObserver(500);
     var chartObserver =
         new EstimatingIdealAndNadirPointsPlotObserver<>("NSGA-II", "F1", "F2", problem.name(), 100, 200);
 
