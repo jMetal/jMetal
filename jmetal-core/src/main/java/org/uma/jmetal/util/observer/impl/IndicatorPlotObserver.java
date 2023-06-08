@@ -44,7 +44,7 @@ public class IndicatorPlotObserver<S extends Solution<?>> implements Observer<Ma
   }
 
   /**
-   * This method displays a front (population)
+   * This method displays a chart with the values of the quality indicator
    * @param data Map of pairs (key, value)
    */
   @Override
