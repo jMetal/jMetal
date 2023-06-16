@@ -37,7 +37,7 @@ public class EvaluationObserver implements Observer<Map<String, Object>> {
 
     if (evaluations!=null) {
       if (evaluations % frequency == 0) {
-        System.out.println("Evaluations: " + evaluations);
+        JMetalLogger.logger.info("Evaluations: " + evaluations);
       }
     } else {
       JMetalLogger.logger.warning(getClass().getName()+
