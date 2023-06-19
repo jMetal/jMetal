@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoConfigurableAlgorithm;
 import org.uma.jmetal.auto.parameter.BooleanParameter;
+import org.uma.jmetal.auto.parameter.CategoricalIntegerParameter;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.OrdinalParameter;
@@ -99,6 +100,8 @@ public class IraceParameterFileGenerator {
     String result = " ";
     if (parameter instanceof CategoricalParameter) {
       result = "c";
+    } else if (parameter instanceof CategoricalIntegerParameter) {
+      result = "c";
     } else if (parameter instanceof BooleanParameter) {
       result = "c";
     } else if (parameter instanceof OrdinalParameter) {
@@ -119,6 +122,10 @@ public class IraceParameterFileGenerator {
 
     if (parameter instanceof CategoricalParameter) {
       result = ((CategoricalParameter) parameter).validValues().toString();
+      result = result.replace("[", "(");
+      result = result.replace("]", ")");
+    } else     if (parameter instanceof CategoricalIntegerParameter) {
+      result = ((CategoricalIntegerParameter) parameter).validValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof BooleanParameter) {

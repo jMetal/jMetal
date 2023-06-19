@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import org.uma.jmetal.auto.parameter.CategoricalIntegerParameter;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
@@ -59,7 +60,8 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
   private IntegerParameter populationSizeWithArchiveParameter;
-  private IntegerParameter offspringPopulationSizeParameter;
+  //private IntegerParameter offspringPopulationSizeParameter;
+  private CategoricalIntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter<DoubleSolution> selectionParameter;
   private VariationParameter variationParameter;
@@ -149,8 +151,9 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
         new RealParameter("nonUniformMutationPerturbation", 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
-    offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", 1,
-        400);
+    //offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", 1,  400);
+    offspringPopulationSizeParameter = new CategoricalIntegerParameter("offspringPopulationSize",
+        List.of(1, 2, 5, 10, 20, 50, 100, 150, 200, 300, 400));
 
     variationParameter =
         new VariationParameter(List.of("crossoverAndMutationVariation"));
