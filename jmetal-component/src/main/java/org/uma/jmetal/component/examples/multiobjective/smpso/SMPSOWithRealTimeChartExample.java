@@ -26,8 +26,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class SMPSOWithRealTimeChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws Exception {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.rwx.Goel2007";
+    String referenceParetoFront = "resources/referenceFrontsCSV/Goel2007.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
