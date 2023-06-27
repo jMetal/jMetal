@@ -8,7 +8,6 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSo
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomSelection;
@@ -18,8 +17,6 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.densityestimator.DensityEstimator;
-import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
@@ -33,7 +30,6 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 public class SMSEMOABuilder<S extends Solution<?>> {
   private String name;
   private Ranking<S> ranking;
-  private DensityEstimator<S> densityEstimator;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
@@ -45,7 +41,6 @@ public class SMSEMOABuilder<S extends Solution<?>> {
       CrossoverOperator<S> crossover, MutationOperator<S> mutation) {
     name = "SMS-EMOA";
 
-    densityEstimator = new CrowdingDistanceDensityEstimator<>();
     ranking = new FastNonDominatedSortRanking<>();
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
@@ -71,9 +66,8 @@ public class SMSEMOABuilder<S extends Solution<?>> {
 
   public SMSEMOABuilder<S> setRanking(Ranking<S> ranking) {
     this.ranking = ranking;
-    this.replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
+    Hypervolume<S> hypervolume = new PISAHypervolume<>();
+    this.replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
 
     return this;
   }
