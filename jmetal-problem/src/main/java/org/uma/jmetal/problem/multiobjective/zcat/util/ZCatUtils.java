@@ -58,8 +58,8 @@ public class ZCatUtils {
    * @param ub: Up bound
    * @return: 1: lb <= y <= ub; 0: otherwise
    */
-  public static int zcatValueIn(double y, double lb, double ub) {
-    return (zcatLq(lb, y) == 1 && zcatLq(y, ub) == 1) ? 1 : 0;
+  public static boolean zcatValueIn(double y, double lb, double ub) {
+    return (zcatLq(lb, y) == 1 && zcatLq(y, ub) == 1) ? true : false;
   }
 
   /**
@@ -70,9 +70,9 @@ public class ZCatUtils {
    * @param ub: Up bound
    * @return: 1: lb <= yi <= ub (for all i=1,..,m-1); 0: otherwise
    */
-  public static int zcatForallValueIn(double[] y, int m, double lb, double ub) {
+  public static int zcatForAllValueIn(double[] y, int m, double lb, double ub) {
     for (int i = 0; i < m; i++) {
-      if (zcatValueIn(y[i], lb, ub) == 0) {
+      if (!zcatValueIn(y[i], lb, ub)) {
         return 0;
       }
     }
