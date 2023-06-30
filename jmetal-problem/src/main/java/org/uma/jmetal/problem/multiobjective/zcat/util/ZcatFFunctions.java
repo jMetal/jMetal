@@ -13,7 +13,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  void F1(double[] F, double[] y, int M) {
+  public static void F1(double[] F, double[] y, int M) {
     F[0] = 1.0;
     for (int i = 1; i <= M - 1; i++) {
       F[0] *= Math.sin(y[i - 1] * Math.PI / 2.0);
@@ -37,7 +37,7 @@ public class ZcatFFunctions {
   }
 
 
-  public void F2(double[] F, double[] y, int M) {
+  public static void F2(double[] F, double[] y, int M) {
     double[] temp = new double[M];
 
     temp[0] = 1.0;
@@ -68,7 +68,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  public void F3(double[] F, double[] y, int M) {
+  public static void F3(double[] F, double[] y, int M) {
     double[] temp = new double[M];
 
     temp[0] = 0.0;
@@ -101,7 +101,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  public void F4(double[] F, double[] y, int M) {
+  public static void F4(double[] F, double[] y, int M) {
     for (int j = 1; j <= M - 1; ++j) {
       F[j - 1] = y[j - 1];
       assert (0 <= F[j - 1] && F[j - 1] <= 1.0);
@@ -123,7 +123,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  public void F5(double[] F, double[] y, int M) {
+  public static void F5(double[] F, double[] y, int M) {
     for (int j = 1; j <= M - 1; ++j) {
       F[j - 1] = y[j - 1];
       assert (0 <= F[j - 1] && F[j - 1] <= 1.0);
@@ -145,7 +145,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  public void F6(double[] F, double[] y, int M) {
+  public static void F6(double[] F, double[] y, int M) {
     double mu = 0.0;
     double k = 40.0;
     double r = 0.05;
@@ -174,7 +174,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  public void F7(double[] F, double[] y, int M) {
+  public static void F7(double[] F, double[] y, int M) {
     double sum = 0.0;
 
     for (int j = 1; j <= M - 1; ++j) {
@@ -198,7 +198,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  public void F8(double[] F, double[] y, int M) {
+  public static void F8(double[] F, double[] y, int M) {
     F[0] = 1.0;
     for (int i = 1; i <= M - 1; ++i) {
       F[0] *= 1.0 - Math.sin(y[i - 1] * Math.PI / 2);
@@ -227,7 +227,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  public void F9(double[] F, double[] y, int M) {
+  public static void F9(double[] F, double[] y, int M) {
     F[0] = 0.0;
     for (int i = 1; i <= M - 1; ++i) {
       F[0] += Math.sin(y[i - 1] * Math.PI / 2);
@@ -256,7 +256,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  public void F10(double[] F, double[] y, int M) {
+  public static void F10(double[] F, double[] y, int M) {
     double sum = 0.0;
     double r = 0.02;
 
@@ -278,7 +278,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  public void F11(double[] F, double[] y, int M) {
+  public static void F11(double[] F, double[] y, int M) {
     double k = 4.0;
 
     F[0] = 0.0;
@@ -310,7 +310,7 @@ public class ZcatFFunctions {
    * @param y: The first 'm' normalized decision variables
    * @param M: The number of objectives
    */
-  public void F12(double[] F, double[] y, int M) {
+  public static void F12(double[] F, double[] y, int M) {
     double k = 3.0;
 
     F[0] = 1.0;
@@ -335,7 +335,7 @@ public class ZcatFFunctions {
     assert (0 <= F[M - 1] && F[M - 1] <= 1.0);
   }
 
-  public void F13(double[] F, double[] y, int M) {
+  public static void F13(double[] F, double[] y, int M) {
     int i, j;
     double k = 3.0;
 
@@ -361,7 +361,7 @@ public class ZcatFFunctions {
     assert (0 <= F[M - 1] && F[M - 1] <= 1.0);
   }
 
-  public void F14(double[] F, double[] y, int M) {
+  public static void F14(double[] F, double[] y, int M) {
     int j;
 
     F[0] = Math.pow(Math.sin(y[0] * Math.PI / 2), 2.0);
@@ -381,7 +381,7 @@ public class ZcatFFunctions {
     assert (0 <= F[M - 1] && F[M - 1] <= 1.0);
   }
 
-  public void F15(double[] F, double[] y, int M) {
+  public static void F15(double[] F, double[] y, int M) {
     int j;
     double k = 3.0;
 
@@ -395,7 +395,7 @@ public class ZcatFFunctions {
     assert (0 <= F[M - 1] && F[M - 1] <= 1.0);
   }
 
-  public void F16(double[] F, double[] y, int M) {
+  public static void F16(double[] F, double[] y, int M) {
     int j;
     double k = 5.0;
 
@@ -417,7 +417,7 @@ public class ZcatFFunctions {
     assert (0 <= F[M - 1] && F[M - 1] <= 1.0);
   }
 
-  public void F17(double[] F, double[] y, int M) {
+  public static void F17(double[] F, double[] y, int M) {
     int j;
     boolean wedge_flag;
     double sum;
@@ -450,7 +450,7 @@ public class ZcatFFunctions {
     assert (0 <= F[M - 1] && F[M - 1] <= 1.0);
   }
 
-  public void F18(double[] F, double[] y, int M) {
+  public static void F18(double[] F, double[] y, int M) {
     int j;
     int f1, f2;
     boolean wedge_flag;
@@ -479,7 +479,7 @@ public class ZcatFFunctions {
     assert (0 <= F[M - 1] && F[M - 1] <= 1.0);
   }
 
-  public void F19(double[] F, double[] y, int M) {
+  public static void F19(double[] F, double[] y, int M) {
     int j;
     double A = 5.0;
     double mu;
@@ -501,7 +501,7 @@ public class ZcatFFunctions {
     assert (0 <= F[M - 1] && F[M - 1] <= 1.0);
   }
 
-  public void F20(double[] F, double[] y, int M) {
+  public static void F20(double[] F, double[] y, int M) {
     int j;
     int deg_flag;
     double sum;
@@ -523,8 +523,3 @@ public class ZcatFFunctions {
     assert (0 <= F[M - 1] && F[M - 1] <= 1.0);
   }
 }
-
-
-/*
-Could you translate to Java the following C code:
- */
