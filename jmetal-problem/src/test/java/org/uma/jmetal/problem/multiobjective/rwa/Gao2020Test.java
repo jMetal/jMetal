@@ -2,38 +2,89 @@ package org.uma.jmetal.problem.multiobjective.rwa;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 
-class Gao2020Test {
-  @Test
-  void constructorWorksProperly() {
-    var problem = new Gao2020() ;
+  @DisplayName("Class Gao2020")
+  class Gao2020Test {
 
-    assertEquals(9, problem.numberOfVariables()) ;
-    assertEquals(3, problem.numberOfObjectives()) ;
-    assertEquals(0, problem.numberOfConstraints()) ;
+    private DoubleProblem problem;
 
-    assertEquals(40.0, problem.variableBounds().get(0).getLowerBound()) ;
-    assertEquals(0.35, problem.variableBounds().get(1).getLowerBound()) ;
-    assertEquals(333.0, problem.variableBounds().get(2).getLowerBound()) ;
-    assertEquals(20.0, problem.variableBounds().get(3).getLowerBound()) ;
-    assertEquals(3000.0, problem.variableBounds().get(4).getLowerBound()) ;
-    assertEquals(0.1, problem.variableBounds().get(5).getLowerBound()) ;
-    assertEquals(308.0, problem.variableBounds().get(6).getLowerBound()) ;
-    assertEquals(150.0, problem.variableBounds().get(7).getLowerBound()) ;
-    assertEquals(0.1, problem.variableBounds().get(8).getLowerBound()) ;
+    @BeforeEach
+    void setup() {
+      problem = new Gao2020();
+    }
 
-    assertEquals(100.0, problem.variableBounds().get(0).getUpperBound()) ;
-    assertEquals(0.5, problem.variableBounds().get(1).getUpperBound()) ;
-    assertEquals(363.0, problem.variableBounds().get(2).getUpperBound()) ;
-    assertEquals(40.0, problem.variableBounds().get(3).getUpperBound()) ;
-    assertEquals(4000.0, problem.variableBounds().get(4).getUpperBound()) ;
-    assertEquals(3.0, problem.variableBounds().get(5).getUpperBound()) ;
-    assertEquals(328, problem.variableBounds().get(6).getUpperBound()) ;
-    assertEquals(200, problem.variableBounds().get(7).getUpperBound()) ;
-    assertEquals(2.0, problem.variableBounds().get(8).getUpperBound()) ;
+    @DisplayName("Its main properties are:")
+    @Nested
+    class MainProperties {
 
-    assertEquals("Gao2020", problem.name()) ;
+      @Test
+      @DisplayName("Variables: 9")
+      void theNumberOfVariablesIsCorrect() {
+        assertEquals(9, problem.numberOfVariables());
+      }
+
+      @Test
+      @DisplayName("Objectives: 3")
+      void theNumberOfObjectivesIsCorrect() {
+        assertEquals(3, problem.numberOfObjectives());
+      }
+
+      @Test
+      @DisplayName("Constraints: 0")
+      void theNumberOfConstraintsIsCorrect() {
+        assertEquals(0, problem.numberOfConstraints());
+      }
+
+      @Test
+      @DisplayName("Name: Gao2020")
+      void theNameIsCorrect() {
+        assertEquals("Gao2020", problem.name());
+      }
+    }
+
+    @Nested
+    @DisplayName("Its bounds are:")
+    class Bounds {
+
+      @ParameterizedTest
+      @DisplayName("Lower bounds: ")
+      @CsvSource({
+          "0, 40.0",
+          "1, 0.35",
+          "2, 333.0",
+          "3, 20.0",
+          "4, 3000.0",
+          "5, 0.1",
+          "6, 308.0",
+          "7, 150.0",
+          "8, 0.1"
+      })
+      void checkLowerBounds(int boundIndex, double lowerBound) {
+        assertEquals(lowerBound, problem.variableBounds().get(boundIndex).getLowerBound());
+      }
+
+      @ParameterizedTest
+      @DisplayName("Upper bounds: ")
+      @CsvSource({
+          "0, 100.0",
+          "1, 0.5",
+          "2, 363.0",
+          "3, 40.0",
+          "4, 4000.0",
+          "5, 3.0",
+          "6, 328.0",
+          "7, 200.0",
+          "8, 2.0"
+      })
+      void checkUpperBounds(int boundIndex, double upperBound) {
+        assertEquals(upperBound, problem.variableBounds().get(boundIndex).getUpperBound());
+      }
+    }
   }
-
-}
