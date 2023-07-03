@@ -5,6 +5,12 @@ import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+/**
+ * Problem Chen2015 (RWA9) described in the paper "Engineering applications of
+ * multi-objective evolutionary algorithms: A test suite of box-constrained real-world
+ * problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
+ */
+
 public class Chen2015 extends AbstractDoubleProblem {
 
   public Chen2015() {
@@ -40,20 +46,20 @@ public class Chen2015 extends AbstractDoubleProblem {
         + 57.45 * (a1 - 6.0) * ((b1 - 5.5) / 0.5);
 
     // F2 (maximization)
-    F2 = -1.0 * (130.53 + 45.97 * ((l1 - 20.0) / 2.5) - 52.93 * ((w1 - 20.0) / 0.5)
+    F2 = (130.53 + 45.97 * ((l1 - 20.0) / 2.5) - 52.93 * ((w1 - 20.0) / 0.5)
         - 78.93 * (a1 - 6.0) + 79.22 * (a2 - 11.0)
         + 47.23 * ((w1 - 20.0) / 0.5) * (a1 - 6.0)
         - 40.61 * ((w1 - 20.0) / 0.5) * (a2 - 11.0)
         - 50.62 * (a1 - 6.0) * (a2 - 11.0));
 
     // F3 (maximization)
-    F3 = -1.0 * (203.16 - 42.75 * ((w1 - 20.0) / 0.5) + 56.67 * (a1 - 6.0)
+    F3 = (203.16 - 42.75 * ((w1 - 20.0) / 0.5) + 56.67 * (a1 - 6.0)
         + 19.88 * ((b1 - 5.5) / 0.5) - 12.89 * (a2 - 11.0)
         - 35.09 * (a1 - 6.0) * ((b1 - 5.5) / 0.5)
         - 22.91 * ((b1 - 5.5) / 0.5) * (a2 - 11.0));
 
     // F4 (maximization)
-    F4 = -1.0 * (0.76 - 0.06 * ((l1 - 20.0) / 2.5) + 0.03 * ((l2 - 2.5) / 0.5)
+    F4 = (0.76 - 0.06 * ((l1 - 20.0) / 2.5) + 0.03 * ((l2 - 2.5) / 0.5)
         + 0.02 * (a2 - 11.0) - 0.02 * ((b2 - 6.5) / 0.5)
         - 0.03 * ((d2 - 12.0) / 0.5)
         + 0.03 * ((l1 - 20.0) / 2.5) * ((w1 - 20.0) / 0.5)
@@ -67,9 +73,9 @@ public class Chen2015 extends AbstractDoubleProblem {
         + 0.07 * (a2 - 6.0) * ((b2 - 5.5) / 0.5);
 
     solution.objectives()[0] = F1; // minimization
-    solution.objectives()[1] = F2; // maximization
-    solution.objectives()[2] = F3; // maximization
-    solution.objectives()[3] = F4; // maximization
+    solution.objectives()[1] = -F2; // maximization
+    solution.objectives()[2] = -F3; // maximization
+    solution.objectives()[3] = -F4; // maximization
     solution.objectives()[4] = F5; // minimization
 
     return solution ;

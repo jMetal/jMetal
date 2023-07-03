@@ -5,6 +5,12 @@ import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+/**
+ * Problem Ganesan2013 (RWA3) described in the paper "Engineering applications of
+ * multi-objective evolutionary algorithms: A test suite of box-constrained real-world
+ * problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
+ */
+
 public class Ganesan2013 extends AbstractDoubleProblem {
 
   public Ganesan2013() {

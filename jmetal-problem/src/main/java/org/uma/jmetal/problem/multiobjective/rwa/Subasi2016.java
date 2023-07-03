@@ -4,6 +4,11 @@ import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+/**
+ * Problem Subasi2016 (RWA1) described in the paper "Engineering applications of
+ * multi-objective evolutionary algorithms: A test suite of box-constrained real-world
+ * problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
+ */
 public class Subasi2016 extends AbstractDoubleProblem {
   public Subasi2016() {
     numberOfObjectives(2);
