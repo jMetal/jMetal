@@ -67,7 +67,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     this.evaluator = evaluator;
 
     for (int i = 0; i < problem.numberOfVariables(); i++) {
-      size += problem.bitsPerVariable().get(i);
+      size += problem.numberOfBitsPerVariable().get(i);
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 

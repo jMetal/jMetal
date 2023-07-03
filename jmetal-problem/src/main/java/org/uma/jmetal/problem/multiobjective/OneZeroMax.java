@@ -44,13 +44,13 @@ public class OneZeroMax extends AbstractBinaryProblem {
   }
 
   @Override
-  public List<Integer> bitsPerVariable() {
+  public List<Integer> numberOfBitsPerVariable() {
     return List.of(bits);
   }
 
   @Override
   public BinarySolution createSolution() {
-    return new DefaultBinarySolution(bitsPerVariable(), numberOfObjectives()) ;
+    return new DefaultBinarySolution(numberOfBitsPerVariable(), numberOfObjectives()) ;
   }
 
   /** Evaluate() method */

@@ -13,7 +13,7 @@ import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 
 public class FakeBinaryProblem extends AbstractBinaryProblem {
 
-  private int[] bitsPerVariable;
+  private int[] numberOfBitsPerVariable;
   private int numberOfVariables;
 
   /**
@@ -21,10 +21,10 @@ public class FakeBinaryProblem extends AbstractBinaryProblem {
    */
   public FakeBinaryProblem(Integer numberOfVariables, int numberOfBitsPerVariable) {
     this.numberOfVariables = numberOfVariables;
-    bitsPerVariable = new int[numberOfVariables];
+    this.numberOfBitsPerVariable = new int[numberOfVariables];
 
     for (int var = 0; var < numberOfVariables; var++) {
-      bitsPerVariable[var] = numberOfBitsPerVariable;
+      this.numberOfBitsPerVariable[var] = numberOfBitsPerVariable;
     }
   }
 
@@ -49,13 +49,13 @@ public class FakeBinaryProblem extends AbstractBinaryProblem {
   }
 
   @Override
-  public List<Integer> bitsPerVariable() {
-    return Arrays.stream(bitsPerVariable).boxed().collect(Collectors.toList());
+  public List<Integer> numberOfBitsPerVariable() {
+    return Arrays.stream(numberOfBitsPerVariable).boxed().collect(Collectors.toList());
   }
 
   @Override
   public BinarySolution createSolution() {
-    return new DefaultBinarySolution(bitsPerVariable(), numberOfObjectives());
+    return new DefaultBinarySolution(numberOfBitsPerVariable(), numberOfObjectives());
   }
 
   /**

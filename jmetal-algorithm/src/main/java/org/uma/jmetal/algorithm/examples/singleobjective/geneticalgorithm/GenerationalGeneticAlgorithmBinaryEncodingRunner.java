@@ -38,10 +38,10 @@ public class GenerationalGeneticAlgorithmBinaryEncodingRunner {
 
     crossover = new SinglePointCrossover(0.9) ;
 
-    double mutationProbability = 1.0 / problem.bitsPerVariable().get(0) ;
+    double mutationProbability = 1.0 / problem.totalNumberOfBits() ;
     mutation = new BitFlipMutation(mutationProbability) ;
 
-    selection = new BinaryTournamentSelection<BinarySolution>();
+    selection = new BinaryTournamentSelection<>();
 
     algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
             .setPopulationSize(100)

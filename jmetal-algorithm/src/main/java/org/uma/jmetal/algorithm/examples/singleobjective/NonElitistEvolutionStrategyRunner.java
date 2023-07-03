@@ -31,7 +31,7 @@ public class NonElitistEvolutionStrategyRunner {
     BinaryProblem problem = new OneMax(512);
 
     MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(
-        1.0 / problem.bitsPerVariable().get(0));
+        1.0 / problem.numberOfBitsPerVariable().get(0));
 
     algorithm = new EvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
         EvolutionStrategyBuilder.EvolutionStrategyVariant.NON_ELITIST)

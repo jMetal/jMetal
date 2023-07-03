@@ -14,12 +14,11 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
 public class DefaultBinarySolution
         extends AbstractSolution<BinarySet>
         implements BinarySolution {
 
-  protected List<Integer> bitsPerVariable;
+  protected List<Integer> numberOfBitsPerVariable;
 
   /**
    * Constructor
@@ -33,7 +32,7 @@ public class DefaultBinarySolution
    */
   public DefaultBinarySolution(List<Integer> bitsPerVariable, int numberOfObjectives, int numberOfConstraints) {
     super(bitsPerVariable.size(), numberOfObjectives, numberOfConstraints);
-    this.bitsPerVariable = bitsPerVariable;
+    this.numberOfBitsPerVariable = bitsPerVariable;
 
     initializeBinaryVariables(JMetalRandom.getInstance());
   }
@@ -44,7 +43,7 @@ public class DefaultBinarySolution
   public DefaultBinarySolution(DefaultBinarySolution solution) {
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
-    this.bitsPerVariable = solution.bitsPerVariable;
+    this.numberOfBitsPerVariable = solution.numberOfBitsPerVariable;
 
     for (int i = 0; i < variables().size(); i++) {
       variables().set(i, (BinarySet) solution.variables().get(i).clone());
@@ -71,8 +70,8 @@ public class DefaultBinarySolution
   }
 
   @Override
-  public int numberOfBitsPerVariable(int index) {
-    return variables().get(index).getBinarySetLength();
+  public List<Integer> numberOfBitsPerVariable() {
+    return numberOfBitsPerVariable ;
   }
 
   @Override
@@ -92,7 +91,7 @@ public class DefaultBinarySolution
 
   private void initializeBinaryVariables(JMetalRandom randomGenerator) {
     for (int i = 0; i < variables().size(); i++) {
-      variables().set(i, createNewBinarySet(bitsPerVariable.get(i), randomGenerator));
+      variables().set(i, createNewBinarySet(numberOfBitsPerVariable.get(i), randomGenerator));
     }
   }
 }

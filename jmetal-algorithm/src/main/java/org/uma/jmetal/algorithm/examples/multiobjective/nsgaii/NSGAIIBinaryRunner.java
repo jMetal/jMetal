@@ -36,7 +36,7 @@ public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
     double crossoverProbability = 0.9;
     CrossoverOperator<BinarySolution> crossover = new SinglePointCrossover(crossoverProbability);
 
-    double mutationProbability = 1.0 / problem.bitsPerVariable().get(0);
+    double mutationProbability = 1.0 / problem.totalNumberOfBits();
     MutationOperator<BinarySolution> mutation = new BitFlipMutation(mutationProbability);
 
     SelectionOperator<List<BinarySolution>, BinarySolution> selection = new BinaryTournamentSelection<>();

@@ -20,7 +20,7 @@ public class DefaultBinarySolutionTest {
     DefaultBinarySolution solution = new DefaultBinarySolution(Arrays.asList(2, 2, 2), 3);
 
     for (int i = 0; i < solution.variables().size(); i++) {
-      assertEquals(solution.numberOfBitsPerVariable(i), solution.numberOfBitsPerVariable(i));
+      assertEquals(solution.numberOfBitsPerVariable().get(i), solution.numberOfBitsPerVariable().get(i));
     }
   }
 

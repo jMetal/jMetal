@@ -11,7 +11,7 @@ public abstract class AbstractBinaryProblem implements BinaryProblem {
   public int totalNumberOfBits() {
     int count = 0;
     for (int i = 0; i < this.numberOfVariables(); i++) {
-      count += this.bitsPerVariable().get(i);
+      count += this.numberOfBitsPerVariable().get(i);
     }
 
     return count;
@@ -19,6 +19,6 @@ public abstract class AbstractBinaryProblem implements BinaryProblem {
 
   @Override
   public BinarySolution createSolution() {
-    return new DefaultBinarySolution(bitsPerVariable(), numberOfObjectives(), numberOfConstraints());
+    return new DefaultBinarySolution(numberOfBitsPerVariable(), numberOfObjectives(), numberOfConstraints());
   }
 }
