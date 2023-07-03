@@ -13,7 +13,7 @@ public class Subasi2016 extends AbstractDoubleProblem {
   public Subasi2016() {
     numberOfObjectives(2);
     List<Double> lowerLimit = List.of(20.0, 6.0, 20.0, 0.0, 8000.0) ;
-    List<Double> upperLimit = List.of(60.0, 15.0, 40.0, 3.0, 25000.0) ;
+    List<Double> upperLimit = List.of(60.0, 15.0, 40.0, 30.0, 25000.0) ;
     name("Subasi2016");
 
     variableBounds(lowerLimit, upperLimit);
