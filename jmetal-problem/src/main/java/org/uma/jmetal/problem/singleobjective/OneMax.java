@@ -1,12 +1,10 @@
 package org.uma.jmetal.problem.singleobjective;
 
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
-import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Class representing problem OneMax. The problem consist of maximizing the number of '1's in a
@@ -45,19 +43,13 @@ public class OneMax extends AbstractBinaryProblem {
   }
 
   @Override
-  public int bitsFromVariable(int index) {
-    Check.that(index == 0, "Problem OneMax has only a variable. Index =" + index) ;
-    return bits;
-  }
-
-  @Override
-  public List<Integer> listOfBitsPerVariable() {
-    return Arrays.asList(bits);
+  public List<Integer> bitsPerVariable() {
+    return List.of(bits);
   }
 
   @Override
   public BinarySolution createSolution() {
-    return new DefaultBinarySolution(listOfBitsPerVariable(), numberOfObjectives());
+    return new DefaultBinarySolution(bitsPerVariable(), numberOfObjectives());
   }
 
   /** Evaluate() method */

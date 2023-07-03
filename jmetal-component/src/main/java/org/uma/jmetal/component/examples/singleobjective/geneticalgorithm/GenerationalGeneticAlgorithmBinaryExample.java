@@ -49,7 +49,7 @@ public class GenerationalGeneticAlgorithmBinaryExample {
         .build();
 
     geneticAlgorithm.observable().register(new FitnessPlotObserver("Genetic algorithm",
-        "Evaluations", "Fitness", "Fitness", 500));
+        "Evaluations", "Fitness", "Fitness", 1000));
 
     geneticAlgorithm.run();
 

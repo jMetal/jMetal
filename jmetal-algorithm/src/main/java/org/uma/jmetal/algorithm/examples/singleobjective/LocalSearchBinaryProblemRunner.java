@@ -20,7 +20,7 @@ public class LocalSearchBinaryProblemRunner {
     BinaryProblem problem = new OneMax(512) ;
 
     MutationOperator<BinarySolution> mutationOperator =
-        new BitFlipMutation(1.0 / problem.bitsFromVariable(0)) ;
+        new BitFlipMutation(1.0 / problem.bitsPerVariable().get(0)) ;
 
     int improvementRounds = 5000 ;
 

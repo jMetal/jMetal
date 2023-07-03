@@ -125,7 +125,7 @@ public class BinaryProblemsStudy {
                 problem.getProblem(),
                 new SinglePointCrossover(1.0),
                 new BitFlipMutation(
-                        1.0 / ((BinaryProblem) problem.getProblem()).bitsFromVariable(0)),
+                        1.0 / ((BinaryProblem) problem.getProblem()).bitsPerVariable().get(0)),
                 100)
                 .setMaxEvaluations(25000)
                 .build();
@@ -137,7 +137,7 @@ public class BinaryProblemsStudy {
                 problem.getProblem(),
                 new SinglePointCrossover(1.0),
                 new BitFlipMutation(
-                        1.0 / ((BinaryProblem) problem.getProblem()).bitsFromVariable(0)))
+                        1.0 / ((BinaryProblem) problem.getProblem()).bitsPerVariable().get(0)))
                 .setMaxIterations(250)
                 .setPopulationSize(100)
                 .build();
@@ -149,7 +149,7 @@ public class BinaryProblemsStudy {
                 problem.getProblem(),
                 new SinglePointCrossover(1.0),
                 new BitFlipMutation(
-                        1.0 / ((BinaryProblem) problem.getProblem()).bitsFromVariable(0)))
+                        1.0 / ((BinaryProblem) problem.getProblem()).bitsPerVariable().get(0)))
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
                 .build();

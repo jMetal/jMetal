@@ -71,7 +71,7 @@ public class DefaultBinarySolution
   }
 
   @Override
-  public int getNumberOfBits(int index) {
+  public int numberOfBitsPerVariable(int index) {
     return variables().get(index).getBinarySetLength();
   }
 
@@ -81,7 +81,7 @@ public class DefaultBinarySolution
   }
 
   @Override
-  public int getTotalNumberOfBits() {
+  public int totalNumberOfBits() {
     int sum = 0;
     for (int i = 0; i < variables().size(); i++) {
       sum += variables().get(i).getBinarySetLength();

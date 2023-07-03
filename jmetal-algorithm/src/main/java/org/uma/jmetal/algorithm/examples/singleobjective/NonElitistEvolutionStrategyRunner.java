@@ -21,36 +21,38 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NonElitistEvolutionStrategyRunner {
+
   /**
    * Usage: java org.uma.jmetal.runner.singleobjective.NonElitistEvolutionStrategyRunner
    */
   public static void main(String[] args) throws Exception {
 
     Algorithm<BinarySolution> algorithm;
-    BinaryProblem problem = new OneMax(512) ;
+    BinaryProblem problem = new OneMax(512);
 
-    MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(1.0 / problem.bitsFromVariable(0)) ;
+    MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(
+        1.0 / problem.bitsPerVariable().get(0));
 
     algorithm = new EvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
         EvolutionStrategyBuilder.EvolutionStrategyVariant.NON_ELITIST)
         .setMaxEvaluations(25000)
         .setMu(1)
         .setLambda(10)
-        .build() ;
+        .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute();
 
-    BinarySolution solution = algorithm.result() ;
-    List<BinarySolution> population = new ArrayList<>(1) ;
-    population.add(solution) ;
+    BinarySolution solution = algorithm.result();
+    List<BinarySolution> population = new ArrayList<>(1);
+    population.add(solution);
 
-    long computingTime = algorithmRunner.getComputingTime() ;
+    long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");

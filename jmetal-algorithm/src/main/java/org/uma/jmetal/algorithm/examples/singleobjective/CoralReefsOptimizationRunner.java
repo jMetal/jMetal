@@ -36,7 +36,7 @@ public class CoralReefsOptimizationRunner {
 		CrossoverOperator<BinarySolution> crossoverOperator = new SinglePointCrossover(
 				0.9);
 		MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(
-				1.0 / problem.bitsFromVariable(0));
+				1.0 / problem.bitsPerVariable().get(0));
 		SelectionOperator<List<BinarySolution>, BinarySolution> selectionOperator = new BinaryTournamentSelection<BinarySolution>();
 
 		algorithm = new CoralReefsOptimizationBuilder<BinarySolution>(problem,

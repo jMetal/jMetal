@@ -18,7 +18,6 @@ import java.util.BitSet;
 import java.util.List;
 import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.errorchecking.Check;
 
 /** Class representing problem ZDT5 */
 public class ZDT5 extends AbstractBinaryProblem {
@@ -37,7 +36,6 @@ public class ZDT5 extends AbstractBinaryProblem {
    */
   public ZDT5(Integer numberOfVariables) {
     this.numberOfVariables = numberOfVariables ;
-
 
     bitsPerVariable = new ArrayList<>(numberOfVariables);
 
@@ -66,15 +64,8 @@ public class ZDT5 extends AbstractBinaryProblem {
   }
 
   @Override
-  public List<Integer> listOfBitsPerVariable() {
+  public List<Integer> bitsPerVariable() {
     return bitsPerVariable;
-  }
-
-  @Override
-  public int bitsFromVariable(int index) {
-    Check.valueIsInRange(index, 0, this.numberOfVariables());
-
-    return bitsPerVariable.get(index);
   }
 
   /** Evaluate() method */

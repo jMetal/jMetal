@@ -49,18 +49,13 @@ public class FakeBinaryProblem extends AbstractBinaryProblem {
   }
 
   @Override
-  public int bitsFromVariable(int index) {
-    return bitsPerVariable[index];
-  }
-
-  @Override
-  public List<Integer> listOfBitsPerVariable() {
+  public List<Integer> bitsPerVariable() {
     return Arrays.stream(bitsPerVariable).boxed().collect(Collectors.toList());
   }
 
   @Override
   public BinarySolution createSolution() {
-    return new DefaultBinarySolution(listOfBitsPerVariable(), numberOfObjectives());
+    return new DefaultBinarySolution(bitsPerVariable(), numberOfObjectives());
   }
 
   /**

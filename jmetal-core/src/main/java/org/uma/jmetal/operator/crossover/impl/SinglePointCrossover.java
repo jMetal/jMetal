@@ -88,7 +88,7 @@ public class SinglePointCrossover<S extends BinarySolution> implements Crossover
 
     if (crossoverRandomGenerator.getRandomValue() < probability) {
       // 1. Get the total number of bits
-      int totalNumberOfBits = parent1.getTotalNumberOfBits();
+      int totalNumberOfBits = parent1.totalNumberOfBits();
 
       // 2. Calculate the point to make the crossover
       int crossoverPoint = pointRandomGenerator.getRandomValue(0, totalNumberOfBits - 1);

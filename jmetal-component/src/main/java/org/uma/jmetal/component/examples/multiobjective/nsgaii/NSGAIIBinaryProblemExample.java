@@ -10,6 +10,7 @@ import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.multiobjective.OneZeroMax;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -26,7 +27,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class NSGAIIBinaryProblemExample {
   public static void main(String[] args) throws JMetalException, IOException {
 
-    BinaryProblem problem = new OneZeroMax(256) ;
+    BinaryProblem problem = new ZDT5() ;
 
     var  crossover = new SinglePointCrossover(0.9);
     var mutation = new BitFlipMutation(1.0 / problem.totalNumberOfBits());

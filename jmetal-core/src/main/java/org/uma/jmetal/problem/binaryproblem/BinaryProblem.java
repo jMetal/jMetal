@@ -10,7 +10,6 @@ import org.uma.jmetal.solution.binarysolution.BinarySolution;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface BinaryProblem extends Problem<BinarySolution> {
-  List<Integer> listOfBitsPerVariable() ;
-  int bitsFromVariable(int index) ;
+  List<Integer> bitsPerVariable() ;
   int totalNumberOfBits() ;
 }

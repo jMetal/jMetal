@@ -83,7 +83,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   @Override
   public void run() {
     for (int i = 0; i < problem.numberOfVariables(); i++) {
-      size += problem.bitsFromVariable(i);
+      size += problem.bitsPerVariable().get(i);
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 

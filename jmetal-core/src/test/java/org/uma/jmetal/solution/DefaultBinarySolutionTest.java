@@ -13,14 +13,14 @@ public class DefaultBinarySolutionTest {
   @Test public void shouldTheSumOfGetNumberOfBitsBeEqualToTheSumOfBitsPerVariable() {
     DefaultBinarySolution solution = new DefaultBinarySolution(Arrays.asList(2, 2, 2),2);
 
-    assertEquals(6, solution.getTotalNumberOfBits());
+    assertEquals(6, solution.totalNumberOfBits());
   }
 
   @Test public void shouldGetNumberOfBitsBeEqualToTheNumberOfOfBitsPerVariable() {
     DefaultBinarySolution solution = new DefaultBinarySolution(Arrays.asList(2, 2, 2), 3);
 
     for (int i = 0; i < solution.variables().size(); i++) {
-      assertEquals(solution.getNumberOfBits(i), solution.getNumberOfBits(i));
+      assertEquals(solution.numberOfBitsPerVariable(i), solution.numberOfBitsPerVariable(i));
     }
   }
 

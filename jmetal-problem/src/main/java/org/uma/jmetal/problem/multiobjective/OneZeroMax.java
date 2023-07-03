@@ -1,6 +1,5 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
@@ -15,6 +14,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 @SuppressWarnings("serial")
 public class OneZeroMax extends AbstractBinaryProblem {
   private int bits ;
+
   /** Constructor */
   public OneZeroMax() throws JMetalException {
     this(512);
@@ -44,21 +44,13 @@ public class OneZeroMax extends AbstractBinaryProblem {
   }
 
   @Override
-  public List<Integer> listOfBitsPerVariable() {
-    return Arrays.asList(bits);
-  }
-
-  @Override
-  public int bitsFromVariable(int index) {
-  	if (index != 0) {
-  		throw new JMetalException("Problem OneZeroMax has only a variable. Index = " + index) ;
-  	}
-  	return bits ;
+  public List<Integer> bitsPerVariable() {
+    return List.of(bits);
   }
 
   @Override
   public BinarySolution createSolution() {
-    return new DefaultBinarySolution(listOfBitsPerVariable(), numberOfObjectives()) ;
+    return new DefaultBinarySolution(bitsPerVariable(), numberOfObjectives()) ;
   }
 
   /** Evaluate() method */

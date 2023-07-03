@@ -55,7 +55,7 @@ public class MOCellHVRunner extends AbstractAlgorithmRunner {
         new RankingAndCrowdingDistanceComparator<>());
 
     BoundedArchive<DoubleSolution> archive =
-        new HypervolumeArchive<DoubleSolution>(100, new PISAHypervolume<DoubleSolution>());
+        new HypervolumeArchive<>(100, new PISAHypervolume<>());
 
     var algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)

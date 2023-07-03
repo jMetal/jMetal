@@ -26,7 +26,7 @@ public class WASFGABinaryRunner extends AbstractAlgorithmRunner {
     double crossoverProbability = 0.9;
     var crossover = new SinglePointCrossover(crossoverProbability);
 
-    double mutationProbability = 1.0 / problem.bitsFromVariable(0);
+    double mutationProbability = 1.0 / problem.bitsPerVariable().get(0);
     var mutation = new BitFlipMutation(mutationProbability);
 
     SelectionOperator<List<BinarySolution>, BinarySolution> selection = new BinaryTournamentSelection<BinarySolution>();

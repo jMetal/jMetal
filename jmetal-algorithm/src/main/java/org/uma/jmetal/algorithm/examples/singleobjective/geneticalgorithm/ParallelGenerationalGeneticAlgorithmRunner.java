@@ -45,7 +45,7 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
 
     CrossoverOperator<BinarySolution> crossoverOperator = new SinglePointCrossover(0.9);
     MutationOperator<BinarySolution> mutationOperator =
-        new BitFlipMutation(1.0 / problem.bitsFromVariable(0));
+        new BitFlipMutation(1.0 / problem.bitsPerVariable().get(0));
     SelectionOperator<List<BinarySolution>, BinarySolution> selectionOperator =
         new BinaryTournamentSelection<BinarySolution>();
 
