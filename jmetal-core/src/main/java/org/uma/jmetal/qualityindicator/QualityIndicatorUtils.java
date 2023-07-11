@@ -2,22 +2,30 @@ package org.uma.jmetal.qualityindicator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GeneralizedSpread;
 import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
+import org.uma.jmetal.qualityindicator.impl.SetCoverage;
 import org.uma.jmetal.qualityindicator.impl.Spread;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class QualityIndicatorUtils {
 
+  private QualityIndicatorUtils() {
+    throw new IllegalArgumentException() ;
+  }
+
   /**
-   * Creates a list with the available indicators (but setCoverage)
+   * Creates a list with the available indicators (but {@link SetCoverage}). The
+   * quality indicators are initialized with a reference front.
    *
    * @param referenceFront
    * @return
@@ -37,28 +45,69 @@ public class QualityIndicatorUtils {
   }
 
   /**
-   * Given an indicator name, finds the indicator in the list of indicator
+   * Creates a list with the available indicators (but {@link SetCoverage}) without
+   * indicating a reference front (it must be added later).
+   *
+   * @return A list of quality indicators
+   */
+  public static List<QualityIndicator> getAvailableIndicators() {
+    List<QualityIndicator> list = new ArrayList<>();
+    list.add(new Epsilon());
+    list.add(new PISAHypervolume());
+    list.add(new NormalizedHypervolume());
+    list.add(new GenerationalDistance());
+    list.add(new InvertedGenerationalDistance());
+    list.add(new InvertedGenerationalDistancePlus());
+    list.add(new Spread());
+    list.add(new GeneralizedSpread());
+
+    return list;
+  }
+
+  /**
+   * Given an indicator name, finds the indicator in the list of available indicators
+   *
+   * @param indicatorName
+   * @return A quality indicator
+   */
+  public static QualityIndicator getIndicatorFromName(String indicatorName) {
+    return getIndicatorFromName(indicatorName, getAvailableIndicators()) ;
+  }
+
+  /**
+   * Given an indicator name, finds the indicator in the indicator list
    *
    * @param indicatorName
    * @param indicatorList
-   * @return
+   * @return A quality indicator
    */
   public static QualityIndicator getIndicatorFromName(String indicatorName,
       List<QualityIndicator> indicatorList) {
-    QualityIndicator result = null;
+    QualityIndicator result = indicatorList.stream()
+        .filter(indicator -> indicator.name().equals(indicatorName)).findFirst().orElse(null);
 
-    for (QualityIndicator indicator : indicatorList) {
-      if (indicator.name().equals(indicatorName)) {
-        result = indicator;
-        break;
-      }
+    if (null == result) {
+      throw new JMetalException("The indicator " + indicatorName + " does not exist") ;
     }
-
-    Check.notNull(result);
 
     return result;
   }
 
+  /**
+   * Returns a list of quality indicators from a list of indicator names
+   * @param indicatorNames
+   * @return
+   */
+  public static List<QualityIndicator> getIndicatorsFromNames(List<String> indicatorNames) {
+    return indicatorNames.stream().map(QualityIndicatorUtils::getIndicatorFromName).collect(Collectors.toList());
+  }
+
+  /**
+   * Given a front and a reference front, computes and prints the quality indicator values of the
+   * front.
+   * @param front
+   * @param referenceFront
+   */
   public static void printQualityIndicators(double[][] front, double[][] referenceFront) {
     double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
     double[][] normalizedFront =

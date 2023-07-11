@@ -14,22 +14,20 @@ import org.uma.jmetal.lab.experiment.component.impl.ComputeQualityIndicators;
 import org.uma.jmetal.lab.experiment.component.impl.ExecuteAlgorithms;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateBoxplotsWithR;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateFriedmanTestTables;
+import org.uma.jmetal.lab.experiment.component.impl.GenerateHtmlPages;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateLatexTablesWithStatistics;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateReferenceParetoSetAndFrontFromDoubleSolutions;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateWilcoxonTestTablesWithR;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
+import org.uma.jmetal.lab.visualization.StudyVisualizer;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
-import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
-import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
-import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
-import org.uma.jmetal.qualityindicator.impl.Spread;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -86,16 +84,11 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
                             experimentBaseDirectory + "/ZDTScalabilityStudy/referenceFronts")
                     .setIndicatorList(Arrays.asList(
                             new Epsilon(),
-                            new Spread(),
-                            new GenerationalDistance(),
                             new PISAHypervolume(),
-                            new NormalizedHypervolume(),
-                            new InvertedGenerationalDistance(),
                             new InvertedGenerationalDistancePlus()))
                     .setIndependentRuns(INDEPENDENT_RUNS)
                     .setNumberOfCores(8)
                     .build();
-
     new ExecuteAlgorithms<>(experiment).run();
     new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
@@ -103,6 +96,7 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
+    new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run() ;
   }
 
   /**

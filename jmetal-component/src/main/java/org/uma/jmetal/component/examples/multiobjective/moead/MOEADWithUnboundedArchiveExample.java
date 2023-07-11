@@ -30,7 +30,7 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
  */
 public class MOEADWithUnboundedArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2Minus";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1Minus";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

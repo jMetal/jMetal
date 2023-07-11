@@ -13,7 +13,7 @@ public class ErrorRatioTest {
   private static final double EPSILON = 0.0000000000001;
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheReferenceFrontIsNull() {
+  void shouldExecuteRaiseAnExceptionIfTheReferenceFrontIsNull() {
     double[][] referenceFront = null;
     Assertions.assertThrows(NullParameterException.class, () -> new ErrorRatio(referenceFront));
   }
