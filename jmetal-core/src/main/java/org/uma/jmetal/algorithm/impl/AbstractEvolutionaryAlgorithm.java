@@ -11,7 +11,6 @@ import org.uma.jmetal.problem.Problem;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
 public abstract class AbstractEvolutionaryAlgorithm<S, R>  implements Algorithm<R>{
   protected List<S> population;
   protected Problem<S> problem ;

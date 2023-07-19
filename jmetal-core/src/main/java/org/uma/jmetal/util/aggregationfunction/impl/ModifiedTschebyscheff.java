@@ -8,7 +8,6 @@ public class ModifiedTschebyscheff implements AggregationFunction {
   private boolean normalizeObjectives ;
   private double epsilon = 0.000001 ;
 
-
   public ModifiedTschebyscheff(boolean normalizeObjectives) {
     this.normalizeObjectives = normalizeObjectives ;
   }

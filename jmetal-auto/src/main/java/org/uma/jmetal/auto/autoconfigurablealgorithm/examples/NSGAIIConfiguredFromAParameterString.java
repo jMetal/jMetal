@@ -18,30 +18,16 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class NSGAIIConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
+    String referenceFrontFileName = "resources/referenceFrontsCSV/Goel2007.csv";
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.rwa.Goel2007 "
             + "--randomGeneratorSeed 12 "
             + "--referenceFrontFileName " + referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 25000 "
-            + "--algorithmResult population "
             + "--populationSize 100 "
-            + "--offspringPopulationSize 100 "
-            + "--createInitialSolutions random "
-            + "--variation crossoverAndMutationVariation "
-            + "--selection tournament "
-            + "--selectionTournamentSize 2 "
-            + "--rankingForSelection dominanceRanking "
-            + "--densityEstimatorForSelection crowdingDistance "
-            + "--crossover SBX "
-            + "--crossoverProbability 0.9 "
-            + "--crossoverRepairStrategy bounds "
-            + "--sbxDistributionIndex 20.0 "
-            + "--mutation polynomial "
-            + "--mutationProbabilityFactor 1.0 "
-            + "--mutationRepairStrategy bounds "
-            + "--polynomialMutationDistributionIndex 20.0 ")
+
+            + "--algorithmResult externalArchive --populationSizeWithArchive 124 --externalArchive unboundedArchive --createInitialSolutions random --offspringPopulationSize 2 --variation crossoverAndMutationVariation --crossover BLX_ALPHA --crossoverProbability 0.7010787592319431 --crossoverRepairStrategy bounds --sbxDistributionIndex 57.924991903104385 --blxAlphaCrossoverAlphaValue 0.6973202647778088 --mutation uniform --mutationProbabilityFactor 1.2713535077837586 --mutationRepairStrategy bounds --polynomialMutationDistributionIndex 396.8451873327768 --linkedPolynomialMutationDistributionIndex 156.87717624372152 --uniformMutationPerturbation 0.913387037325259 --nonUniformMutationPerturbation 0.7438075108181977 --selection random --selectionTournamentSize 4 \n")
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
