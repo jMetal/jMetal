@@ -4,7 +4,7 @@
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
-    <version>6.2-SNAPSHOT</version>
+    <version>6.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -239,42 +239,37 @@
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-core</artifactId>
-                <version>6.2-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.uma.jmetal</groupId>
-                <artifactId>jmetal-example</artifactId>
-                <version>5.12-SNAPSHOT</version>
+                <version>6.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-problem</artifactId>
-                <version>6.2-SNAPSHOT</version>
+                <version>6.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-algorithm</artifactId>
-                <version>6.2-SNAPSHOT</version>
+                <version>6.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-lab</artifactId>
-                <version>6.2-SNAPSHOT</version>
+                <version>6.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-parallel</artifactId>
-                <version>6.2-SNAPSHOT</version>
+                <version>6.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-component</artifactId>
-                <version>6.2-SNAPSHOT</version>
+                <version>6.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-auto</artifactId>
-                <version>6.2-SNAPSHOT</version>
+                <version>6.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
