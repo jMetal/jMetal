@@ -48,8 +48,7 @@ Comments and suggestions are welcome.
 
 Changelog
 ---------
-* [07/04/2023]. Added the RWA benchmark, described in "Engineering applications of
- multi-objective evolutionary algorithms: A test suite of box-constrained real-world
+* [07/04/2023]. Added the RWA benchmark, described in "Engineering applications of multi-objective evolutionary algorithms: A test suite of box-constrained real-world
  problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
 
 * [12/13/2022] jMetal 6.0 is released.
