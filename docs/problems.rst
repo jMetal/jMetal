@@ -4,7 +4,7 @@ Problems
 ========
 
 :Author: Antonio J. Nebro
-:Date: 2022-12-1
+:Date: 2023-09-14
 
 All the problems in jMetal implement the `Problem <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/Problem.java>`_ interface:
 
@@ -22,10 +22,10 @@ All the problems in jMetal implement the `Problem <https://github.com/jMetal/jMe
      */
     public interface Problem<S> extends Serializable {
       /* Getters */
-      int getNumberOfVariables() ;
-      int objectives().length ;
-      int getNumberOfConstraints() ;
-      String getName() ;
+      int numberOfVariables() ;
+      int numberbjectives() ;
+      int numberOfConstraints() ;
+      String name() ;
 
       /* Methods */
       void evaluate(S solution) ;
