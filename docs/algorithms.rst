@@ -5,7 +5,7 @@ Algorithms
 
 :Author: Antonio J. Nebro
 :Version: 1.0
-:Date: 2022-12-1
+:Date: 2023-09-14
 
 A metaheuristic in jMetal is an entity that implements the ``Algorithm`` interface (package ``org.uma.jmetal.algorithm``
 in sub-project ``jmetal-core``:
@@ -20,12 +20,14 @@ in sub-project ``jmetal-core``:
     * @version 1.0
     * @param <Result> Result
     */
-  public interface Algorithm<Result> extends Runnable, Serializable, DescribedEntity {
+  public interface Algorithm<Result> extends Runnable, Serializable {
     void run() ;
-    Result getResult() ;
+    Result result() ;
+    String name();
+    String description();
   }
 
-This interface is very generic: it specifies that an algorithm must have a ``run()`` method and return a result by invoking the ``getResult()`` method. As it extends Runnable, any algorithm can be executed in a thread. The simplicity of the interface offers plenty of freedom to implement a metaheuristic. We explore three alternatives next by taking NSGA-II as the target algorithm.
+This interface is very generic: it specifies that an algorithm must have a ``run()`` method and return a result by invoking the ``result()`` method. As it extends Runnable, any algorithm can be executed in a thread. The simplicity of the interface offers plenty of freedom to implement a metaheuristic. We explore three alternatives next by taking NSGA-II as the target algorithm.
 
 Direct extension: NSGA-II in jMetal 4.5
 ---------------------------------------
@@ -109,7 +111,6 @@ the use of algorithm templates which contain the behavior of the algorithms, and
     protected abstract List<S> selection(List<S> population);
     protected abstract List<S> reproduction(List<S> population);
     protected abstract List<S> replacement(List<S> population, List<S> offspringPopulation);
-    @Override public abstract R getResult();
 
     @Override public void run() {
       List<S> offspringPopulation;
