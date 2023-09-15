@@ -86,6 +86,6 @@ public class DifferentialEvolutionSelection
       indexList.add(currentSolutionIndex);
     }
 
-    return indexList.stream().map(index -> solutionList.get(index)).collect(Collectors.toList());
+    return indexList.stream().map(solutionList::get).collect(Collectors.toList());
   }
 }
