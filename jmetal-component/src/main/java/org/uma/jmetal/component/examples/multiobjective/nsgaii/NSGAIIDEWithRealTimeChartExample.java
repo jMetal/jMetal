@@ -48,7 +48,7 @@ public class NSGAIIDEWithRealTimeChartExample {
 
     Termination termination = new TerminationByEvaluations(175000);
 
-    double cr = 0.5;
+    double cr = 1.0;
     double f = 0.5;
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIDEBuilder(
         problem,

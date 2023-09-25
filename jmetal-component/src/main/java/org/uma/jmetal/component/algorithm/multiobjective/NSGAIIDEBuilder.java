@@ -32,7 +32,6 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerato
  * Class to configure and build an instance of the NSGA-II algorithm using DE operators
  */
 public class NSGAIIDEBuilder {
-
   private String name;
   private Ranking<DoubleSolution> ranking;
   private DensityEstimator<DoubleSolution> densityEstimator;
