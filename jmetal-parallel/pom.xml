@@ -89,20 +89,5 @@
             <artifactId>spark-core_2.12</artifactId>
             <version>3.4.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.jppf</groupId>
-            <artifactId>jppf-common</artifactId>
-            <version>6.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jppf</groupId>
-            <artifactId>jppf-node</artifactId>
-            <version>6.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jppf</groupId>
-            <artifactId>jppf-client</artifactId>
-            <version>6.2</version>
-        </dependency>
     </dependencies>
 </project>
