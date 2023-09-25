@@ -14,7 +14,6 @@ import org.uma.jmetal.qualityindicator.impl.Spread;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NormalizeUtils;
-import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class QualityIndicatorUtils {

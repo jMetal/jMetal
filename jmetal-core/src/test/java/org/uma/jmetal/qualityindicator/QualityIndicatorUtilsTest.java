@@ -1,5 +1,9 @@
 package org.uma.jmetal.qualityindicator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -8,11 +12,6 @@ import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Unit tests for class QualityIndicatorUtils")
 class QualityIndicatorUtilsTest {

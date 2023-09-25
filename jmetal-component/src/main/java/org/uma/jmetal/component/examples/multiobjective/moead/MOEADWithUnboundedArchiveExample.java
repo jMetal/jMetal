@@ -10,9 +10,9 @@ import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByE
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;

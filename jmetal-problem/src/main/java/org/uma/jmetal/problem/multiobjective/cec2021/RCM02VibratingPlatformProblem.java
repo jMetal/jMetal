@@ -1,6 +1,5 @@
 package org.uma.jmetal.problem.multiobjective.cec2021;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
