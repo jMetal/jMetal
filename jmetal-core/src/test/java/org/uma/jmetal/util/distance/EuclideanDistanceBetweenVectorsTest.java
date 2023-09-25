@@ -1,13 +1,15 @@
 package org.uma.jmetal.util.distance;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

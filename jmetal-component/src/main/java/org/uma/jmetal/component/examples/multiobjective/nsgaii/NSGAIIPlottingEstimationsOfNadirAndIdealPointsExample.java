@@ -14,8 +14,8 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.EstimatingIdealAndNadirPointsPlotObserver;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**

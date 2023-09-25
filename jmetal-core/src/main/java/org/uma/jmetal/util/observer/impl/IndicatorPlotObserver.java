@@ -11,9 +11,9 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.plot.SingleValueScatterPlot;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
+import org.uma.jmetal.util.plot.SingleValueScatterPlot;
 
 /**
 

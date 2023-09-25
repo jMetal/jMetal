@@ -1,6 +1,11 @@
 package org.uma.jmetal.problem.multiobjective.zcat.util;
 
-import static java.lang.Math.*;
+import static java.lang.Math.PI;
+import static java.lang.Math.abs;
+import static java.lang.Math.cos;
+import static java.lang.Math.exp;
+import static java.lang.Math.max;
+import static java.lang.Math.pow;
 
 public class ZCatZFunctions {
 
