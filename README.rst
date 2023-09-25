@@ -48,6 +48,8 @@ Comments and suggestions are welcome.
 
 Changelog
 ---------
+* [09/25/2023] The jMetal project adopts Java 17.
+
 * [09/25/2023] Added a variant of NSGA-II using differential evolution.
 
 * [07/19/2023] jMetal 6.1 is released.
