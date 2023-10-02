@@ -4,8 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.util.errorchecking.Check;
 import smile.plot.swing.ScatterPlot;
-
-
 public class PlotSmile implements PlotFront {
   private double[][] matrix;
   private String plotTitle;
