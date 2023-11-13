@@ -30,7 +30,7 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
  */
 public class MOEADWithUnboundedArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1Minus";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2Minus";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -44,7 +44,7 @@ public class MOEADWithUnboundedArchiveExample {
 
     int populationSize = 91;
 
-    Termination termination = new TerminationByEvaluations(40000);
+    Termination termination = new TerminationByEvaluations(30000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
 
