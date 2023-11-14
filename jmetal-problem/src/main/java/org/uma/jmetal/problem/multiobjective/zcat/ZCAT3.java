@@ -5,12 +5,12 @@ import org.uma.jmetal.problem.multiobjective.zcat.ffunction.F1;
 import org.uma.jmetal.problem.multiobjective.zcat.gfunction.G0;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-public class ZCAT1 extends ZCAT {
+public class ZCAT3 extends ZCAT {
 
   private Function<double[], double[]> fFunction ;
   private Function<double[], double[]> gFunction ;
 
-  public ZCAT1(int numberOfObjectives, int numberOfVariables) {
+  public ZCAT3(int numberOfObjectives, int numberOfVariables) {
     super(numberOfObjectives, numberOfVariables, true, 1, true, false);
 
     int paretoSetDimension = numberOfObjectives - 1 ;

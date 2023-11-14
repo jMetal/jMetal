@@ -11,13 +11,16 @@ public abstract class ZCAT extends AbstractDoubleProblem {
 
   public int numberOfObjectives;
   public int numberOfVariables;
-  public int complicatedParetoSet;
+  public boolean complicatedParetoSet;
   public int level;
-  public int bias;
-  public int imbalance;
+  public boolean bias;
+  public boolean imbalance;
 
-  public ZCAT(int numberOfObjectives, int numberOfVariables, int complicatedParetoSet, int level,
-      int bias, int imbalance) {
+  public ZCAT(int numberOfObjectives,
+      int numberOfVariables,
+      boolean complicatedParetoSet,
+      int level,
+      boolean bias, boolean imbalance) {
     this.numberOfObjectives = numberOfObjectives;
     this.numberOfVariables = numberOfVariables;
     this.complicatedParetoSet = complicatedParetoSet;
