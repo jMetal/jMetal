@@ -11,7 +11,6 @@ import java.util.function.Function;
  * @param y: The first 'm' normalized decision variables
  * @param M: The number of objectives
  */
-
 public class F1 implements Function<double[], double[]> {
   int numberOfObjectives ;
 
