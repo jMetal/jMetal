@@ -24,12 +24,12 @@ public class ElitistEvolutionStrategyRunner {
   /**
    * Usage: java org.uma.jmetal.runner.singleobjective.ElitistEvolutionStrategyRunner
    */
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     Algorithm<BinarySolution> algorithm;
     BinaryProblem problem = new OneMax(512) ;
 
     MutationOperator<BinarySolution> mutationOperator =
-        new BitFlipMutation(1.0 / problem.numberOfBitsPerVariable().get(0)) ;
+        new BitFlipMutation<>(1.0 / problem.numberOfBitsPerVariable().get(0)) ;
 
     algorithm = new EvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
         EvolutionStrategyBuilder.EvolutionStrategyVariant.ELITIST)
@@ -40,6 +40,7 @@ public class ElitistEvolutionStrategyRunner {
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
+    algorithm.run();
 
     BinarySolution solution = algorithm.result() ;
     List<BinarySolution> population = new ArrayList<>(1) ;

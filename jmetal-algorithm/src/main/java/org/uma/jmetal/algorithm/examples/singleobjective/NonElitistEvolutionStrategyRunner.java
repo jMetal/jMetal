@@ -25,12 +25,12 @@ public class NonElitistEvolutionStrategyRunner {
   /**
    * Usage: java org.uma.jmetal.runner.singleobjective.NonElitistEvolutionStrategyRunner
    */
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
 
     Algorithm<BinarySolution> algorithm;
     BinaryProblem problem = new OneMax(512);
 
-    MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(
+    MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation<>(
         1.0 / problem.numberOfBitsPerVariable().get(0));
 
     algorithm = new EvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
