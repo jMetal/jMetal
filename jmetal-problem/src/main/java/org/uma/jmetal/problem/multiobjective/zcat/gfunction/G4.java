@@ -16,11 +16,12 @@ public class G4 implements Function<double[], double[]> {
     double[] g = new double[numberOfVariables - paretoSetDimension];
 
     for (int j = 1; j <= numberOfVariables - paretoSetDimension; ++j) {
-      double sum = 0.0;
+      double mu = 0.0;
       for (int i = 1; i <= paretoSetDimension; ++i) {
-        sum += Math.pow(Math.sin(0.5 * Math.PI * y[i - 1] + AngleCalculator.calculateTheta(j, paretoSetDimension, numberOfVariables)), 2.0);
+        mu += y[i - 1] ;
       }
-      g[j - 1] = sum / paretoSetDimension;
+      mu = mu / paretoSetDimension;
+      g[j - 1] = (mu / 2.0) * Math.cos(4.0 * Math.PI * mu + AngleCalculator.calculateTheta(j, paretoSetDimension, numberOfVariables)) + 0.5;
       assertValidRange(g[j - 1]);
     }
 
