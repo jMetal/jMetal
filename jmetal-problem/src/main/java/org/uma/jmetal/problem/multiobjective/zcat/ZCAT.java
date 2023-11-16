@@ -47,6 +47,7 @@ public abstract class ZCAT extends AbstractDoubleProblem {
     variableBounds(lowerLimit, upperLimit);
   }
 
+
   /**
    * Obtaining the values of alpha (eq. 5 in the paper)
    * @return

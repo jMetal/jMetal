@@ -12,8 +12,16 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 public class ZCAT1 extends ZCAT {
 
-  private Function<double[], double[]> fFunction;
-  private Function<double[], double[]> gFunction;
+  protected Function<double[], double[]> fFunction;
+  protected Function<double[], double[]> gFunction;
+
+  public ZCAT1(int numberOfObjectives, int numberOfVariables) {
+    this(numberOfObjectives, numberOfVariables, true, 1, false, false);
+  }
+
+  public ZCAT1() {
+    this(3, 30, true, 1, false, false);
+  }
 
   private int paretoSetDimension ;
   public ZCAT1(int numberOfObjectives,
@@ -30,13 +38,6 @@ public class ZCAT1 extends ZCAT {
         : new G0(numberOfVariables, paretoSetDimension);
   }
 
-  public ZCAT1() {
-    this(3, 30, true, 1, false, false);
-  }
-
-  public ZCAT1(int numberOfObjectives, int numberOfVariables) {
-    this(numberOfObjectives, numberOfVariables, true, 1, false, false);
-  }
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
