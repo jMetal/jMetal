@@ -70,13 +70,13 @@ public class ZCatUtils {
    * @param ub: Up bound
    * @return: 1: lb <= yi <= ub (for all i=1,..,m-1); 0: otherwise
    */
-  public static int zcatForAllValueIn(double[] y, int m, double lb, double ub) {
+  public static boolean zcatForAllValueIn(double[] y, int m, double lb, double ub) {
     for (int i = 0; i < m; i++) {
       if (!zcatValueIn(y[i], lb, ub)) {
-        return 0;
+        return false;
       }
     }
-    return 1;
+    return true;
   }
 
   /**
