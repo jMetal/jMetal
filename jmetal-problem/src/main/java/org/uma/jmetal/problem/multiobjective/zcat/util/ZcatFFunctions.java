@@ -452,13 +452,13 @@ public class ZcatFFunctions {
 
   public static void F18(double[] F, double[] y, int M) {
     int j;
-    int f1, f2;
+    boolean f1, f2;
     boolean wedge_flag;
     double sum;
 
     f1 = zcatForAllValueIn(y, M - 1, 0.0, 0.4);
     f2 = zcatForAllValueIn(y, M - 1, 0.6, 1.0);
-    wedge_flag = (f1 == 1 || f2 == 1) ? true : false;
+    wedge_flag = (f1 || f2) ? true : false;
 
     sum = 0.0;
     for (j = 1; j <= M - 1; ++j) {
