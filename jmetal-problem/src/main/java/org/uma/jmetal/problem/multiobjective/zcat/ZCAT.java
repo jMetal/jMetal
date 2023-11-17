@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.zcat;
 
+import static org.uma.jmetal.problem.multiobjective.zcat.util.ZCatUtils.DBL_EPSILON;
 import static org.uma.jmetal.problem.multiobjective.zcat.util.ZCatZFunctions.Z1;
 import static org.uma.jmetal.problem.multiobjective.zcat.util.ZCatZFunctions.Z2;
 import static org.uma.jmetal.problem.multiobjective.zcat.util.ZCatZFunctions.Z3;
@@ -237,6 +238,43 @@ public abstract class ZCAT extends AbstractDoubleProblem {
       f[i - 1] = alpha[i - 1] + beta[i - 1]; /* Additive Approach */
     }
     return f ;
+  }
+
+  /**
+   * Verify if value 'y' is into 'lb' and 'ub': lb<= y <= ub
+   * @param y:    A given value
+   * @param lb:   Low bound
+   * @param ub:   Up bound
+   * @return: 1: lb<= y <= ub;
+   *          0: otherwise
+   */
+  public static boolean zcatValueIn(double y, double lb, double ub) {
+    return zcatLq(lb, y) && zcatLq(y, ub);
+  }
+
+  /**
+   * For precision issues.
+   * This function verifies whether y <= z
+   *
+   * @param y First double value
+   * @param z Second double value
+   * @return true if y is less than or approximately equal to z, false otherwise
+   */
+  public static boolean zcatLq(double y, double z) {
+    return y < z || Math.abs(z - y) < DBL_EPSILON;
+  }
+
+
+  /**
+   * For precision issues.
+   * This function verifies whether y == z
+   *
+   * @param y First double value
+   * @param z Second double value
+   * @return true if y is approximately equal to z, false otherwise
+   */
+  public static boolean zcatEq(double y, double z) {
+    return Math.abs(z - y) < DBL_EPSILON;
   }
 }
 

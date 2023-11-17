@@ -20,7 +20,6 @@ public class ZCAT6 extends ZCAT1 {
     this(3, 30, true, 1, false, false);
   }
 
-  private int paretoSetDimension ;
   public ZCAT6(int numberOfObjectives,
       int numberOfVariables,
       boolean complicatedParetoSet,

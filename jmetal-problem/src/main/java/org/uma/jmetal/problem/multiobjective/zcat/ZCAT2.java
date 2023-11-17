@@ -22,7 +22,6 @@ public class ZCAT2 extends ZCAT1 {
     this(3, 30, true, 1, false, false);
   }
 
-  private int paretoSetDimension ;
   public ZCAT2(int numberOfObjectives,
       int numberOfVariables,
       boolean complicatedParetoSet,

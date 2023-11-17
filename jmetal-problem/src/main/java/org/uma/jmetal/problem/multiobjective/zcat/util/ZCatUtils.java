@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class ZCatUtils {
 
-  private static final double DBL_EPSILON = Math.ulp(1.0);
+  public static final double DBL_EPSILON = Math.ulp(1.0);
   private static final Random rand = new Random();
 
   /**
