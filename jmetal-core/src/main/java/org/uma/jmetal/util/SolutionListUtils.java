@@ -358,44 +358,44 @@ public class SolutionListUtils {
       return archive.solutions();
     }
 
-    for (int i = 0; i < originalSolutionList.size(); i++) {
-      originalSolutionList.get(i).attributes().put("INDEX_", i);
-    }
-
     // STEP 1. Normalize the objectives values of the solution list
-    List<S> solutions = new ArrayList<>();
-    solutions.addAll(normalizeSolutionList(originalSolutionList));
+    List<S> normalizedSolutions = new ArrayList<>();
+    normalizedSolutions.addAll(normalizeSolutionList(originalSolutionList));
+
+    for (int i = 0; i < normalizedSolutions.size(); i++) {
+      normalizedSolutions.get(i).attributes().put("INDEX_", i);
+    }
 
     // STEP 2. Find the solution having the best objective value, being the objective randomly
     // selected
     int randomObjective =
-        JMetalRandom.getInstance().nextInt(0, solutions.get(0).objectives().length - 1);
+        JMetalRandom.getInstance().nextInt(0, normalizedSolutions.get(0).objectives().length - 1);
 
     int bestSolutionIndex =
-        findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective));
+        findIndexOfBestSolution(normalizedSolutions, new ObjectiveComparator<>(randomObjective));
 
     //  STEP 3. Add the solution to the current list of selected solutions and remove it from the original list
     List<S> selectedSolutions = new ArrayList<>(finalListSize);
-    selectedSolutions.add(solutions.get(bestSolutionIndex));
-    solutions.remove(bestSolutionIndex);
+    selectedSolutions.add(normalizedSolutions.get(bestSolutionIndex));
+    normalizedSolutions.remove(bestSolutionIndex);
 
     // STEP 4. Find the solution having the largest distance to the selected solutions
     Distance<S, List<S>> distance =
         new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
     while (selectedSolutions.size() < finalListSize) {
-      for (S solution : solutions) {
+      for (S solution : normalizedSolutions) {
         solution.attributes().put(
             "SUBSET_SELECTION_DISTANCE", distance.compute(solution, selectedSolutions));
       }
       int largestDistanceSolutionIndex =
           findIndexOfBestSolution(
-              solutions,
+              normalizedSolutions,
               (S s1, S s2) -> Double.compare(
                   (double) s2.attributes().get("SUBSET_SELECTION_DISTANCE"),
                   (double) s1.attributes().get("SUBSET_SELECTION_DISTANCE"))
           );
-      selectedSolutions.add(solutions.get(largestDistanceSolutionIndex));
-      solutions.remove(largestDistanceSolutionIndex);
+      selectedSolutions.add(normalizedSolutions.get(largestDistanceSolutionIndex));
+      normalizedSolutions.remove(largestDistanceSolutionIndex);
     }
 
     List<S> resultList = new ArrayList<>();
