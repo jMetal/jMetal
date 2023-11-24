@@ -62,7 +62,7 @@ public class MOEADWithUnboundedArchiveExample {
         sequenceGenerator,
         normalizeObjectives)
         .setTermination(termination)
-        .setEvaluation(new SequentialEvaluationWithArchive<DoubleSolution>(problem, externalArchive))
+        .setEvaluation(new SequentialEvaluationWithArchive<>(problem, externalArchive))
         .build();
 
     moead.run();
