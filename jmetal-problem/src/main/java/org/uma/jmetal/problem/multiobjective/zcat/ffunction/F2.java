@@ -1,7 +1,5 @@
 package org.uma.jmetal.problem.multiobjective.zcat.ffunction;
 
-import static org.uma.jmetal.problem.multiobjective.zcat.util.ZCatUtils.zcatFixTo01;
-
 import java.util.function.Function;
 
 /**

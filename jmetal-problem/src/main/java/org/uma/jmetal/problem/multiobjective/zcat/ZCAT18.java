@@ -2,17 +2,19 @@ package org.uma.jmetal.problem.multiobjective.zcat;
 
 import java.util.Collections;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.zcat.ffunction.F16;
 import org.uma.jmetal.problem.multiobjective.zcat.ffunction.F18;
 import org.uma.jmetal.problem.multiobjective.zcat.gfunction.G0;
-import org.uma.jmetal.problem.multiobjective.zcat.gfunction.G10;
 import org.uma.jmetal.problem.multiobjective.zcat.gfunction.G8;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+/**
+ * Problem ZCAT18, defined in: "Challenging test problems for multi-and many-objective optimization",
+ * DOI: https://doi.org/10.1016/j.swevo.2023.101350
+ */
 public class ZCAT18 extends ZCAT1 {
 
   public ZCAT18(int numberOfObjectives, int numberOfVariables) {
-    this(numberOfObjectives, numberOfVariables, true, 1, false, false);
+    this(numberOfObjectives, numberOfVariables, false, 1, false, false);
   }
 
   public ZCAT18() {

@@ -2,8 +2,6 @@ package org.uma.jmetal.problem.multiobjective.zcat.gfunction;
 
 import java.util.function.Function;
 
-import java.util.function.Function;
-
 public class G5 implements Function<double[], double[]> {
   private final int numberOfVariables;
   private final int paretoSetDimension;

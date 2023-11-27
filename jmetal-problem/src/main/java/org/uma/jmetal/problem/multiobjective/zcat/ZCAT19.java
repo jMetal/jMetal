@@ -3,21 +3,23 @@ package org.uma.jmetal.problem.multiobjective.zcat;
 import java.util.Collections;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.zcat.ffunction.F16;
 import org.uma.jmetal.problem.multiobjective.zcat.ffunction.F19;
 import org.uma.jmetal.problem.multiobjective.zcat.gfunction.G0;
-import org.uma.jmetal.problem.multiobjective.zcat.gfunction.G10;
 import org.uma.jmetal.problem.multiobjective.zcat.gfunction.G6;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+/**
+ * Problem ZCAT9, defined in: "Challenging test problems for multi-and many-objective optimization",
+ * DOI: https://doi.org/10.1016/j.swevo.2023.101350
+ */
 public class ZCAT19 extends ZCAT1 {
 
   public ZCAT19(int numberOfObjectives, int numberOfVariables) {
-    this(numberOfObjectives, numberOfVariables, true, 1, false, false);
+    this(numberOfObjectives, numberOfVariables, false, 1, false, false);
   }
 
   public ZCAT19() {
-    this(3, 30, true, 1, false, false);
+    this(3, 30, false, 1, false, false);
   }
 
   public ZCAT19(int numberOfObjectives,
