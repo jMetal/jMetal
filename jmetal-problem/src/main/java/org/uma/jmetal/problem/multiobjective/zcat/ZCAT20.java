@@ -29,6 +29,7 @@ public class ZCAT20 extends ZCAT1 {
       int level,
       boolean bias, boolean imbalance) {
     super(numberOfObjectives, numberOfVariables, complicatedParetoSet, level, bias, imbalance);
+    name("ZCAT20");
 
     fFunction = new F20(numberOfObjectives);
     gFunction = complicatedParetoSet ? new G6(numberOfVariables, paretoSetDimension)

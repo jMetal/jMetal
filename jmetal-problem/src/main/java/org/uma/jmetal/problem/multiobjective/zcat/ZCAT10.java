@@ -28,6 +28,7 @@ public class ZCAT10 extends ZCAT1 {
       int level,
       boolean bias, boolean imbalance) {
     super(numberOfObjectives, numberOfVariables, complicatedParetoSet, level, bias, imbalance);
+    name("ZCAT10");
 
     paretoSetDimension = numberOfObjectives - 1;
 
