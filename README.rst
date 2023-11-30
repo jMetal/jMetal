@@ -48,7 +48,7 @@ Comments and suggestions are welcome.
 
 Changelog
 ---------
-* [11/30/2023] The ZCAT (Zapotecas-Coello-Aguirre-benchmark (https://doi.org/10.1016/j.swevo.2023.101350) is included in jMetal.
+* [11/30/2023] The Zapotecas-Coello-Aguirre-benchmark (ZCAT) (https://doi.org/10.1016/j.swevo.2023.101350) is included in jMetal.
 
 * [09/25/2023] The jMetal project adopts Java 17.
 
