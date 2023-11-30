@@ -48,6 +48,8 @@ Comments and suggestions are welcome.
 
 Changelog
 ---------
+* [11/30/2023] The ZCAT (Zapotecas-Coello-Aguirre-benchmark (https://doi.org/10.1016/j.swevo.2023.101350) is included in jMetal.
+
 * [09/25/2023] The jMetal project adopts Java 17.
 
 * [09/25/2023] Added a variant of NSGA-II using differential evolution.
