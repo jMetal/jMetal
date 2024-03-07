@@ -359,8 +359,7 @@ public class SolutionListUtils {
     }
 
     // STEP 1. Normalize the objectives values of the solution list
-    List<S> normalizedSolutions = new ArrayList<>();
-    normalizedSolutions.addAll(normalizeSolutionList(originalSolutionList));
+    List<S> normalizedSolutions = new ArrayList<>(normalizeSolutionList(originalSolutionList));
 
     for (int i = 0; i < normalizedSolutions.size(); i++) {
       normalizedSolutions.get(i).attributes().put("INDEX_", i);
