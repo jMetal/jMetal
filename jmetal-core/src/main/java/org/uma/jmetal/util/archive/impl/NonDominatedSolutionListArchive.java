@@ -68,9 +68,9 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
     while (((!isDominated) && (!isContained)) && (iterator.hasNext())) {
       S listIndividual = iterator.next();
       int flag = dominanceComparator.compare(solution, listIndividual);
-      if (flag == -1) {
+      if (flag < 0) {
         iterator.remove();
-      } else if (flag == 1) {
+      } else if (flag > 0) {
         isDominated = true; // dominated by one in the list
       } else if (equalSolutions.compare(solution, listIndividual) == 0) {// solutions are equals
         isContained = true;

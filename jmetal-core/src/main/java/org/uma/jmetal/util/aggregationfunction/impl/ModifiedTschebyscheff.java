@@ -28,7 +28,7 @@ public class ModifiedTschebyscheff implements AggregationFunction {
       if (weightVector[n] == 0) {
         feval = 0.0000001 * diff;
       } else {
-        feval = diff * 1.0/weightVector[n];
+        feval = diff /weightVector[n];
       }
       if (feval > maxFun) {
         maxFun = feval;

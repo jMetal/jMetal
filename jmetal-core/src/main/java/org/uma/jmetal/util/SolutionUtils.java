@@ -48,9 +48,9 @@ public class SolutionUtils {
       S solution1, S solution2, Comparator<S> comparator, BinaryOperator<S> equalityPolicy) {
     S result;
     int flag = comparator.compare(solution1, solution2);
-    if (flag == -1) {
+    if (flag < 0) {
       result = solution1;
-    } else if (flag == 1) {
+    } else if (flag > 0) {
       result = solution2;
     } else {
       result = equalityPolicy.apply(solution1, solution2);

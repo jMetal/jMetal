@@ -206,7 +206,7 @@ public class SolutionListUtils {
     int i = 0;
 
     while (!result && (i < solutionSet.size())) {
-      if (dominance.compare(solution, solutionSet.get(i)) == 1) {
+      if (dominance.compare(solution, solutionSet.get(i)) > 0) {
         result = true;
       }
       i++;
