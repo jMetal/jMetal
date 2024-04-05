@@ -59,7 +59,7 @@ public class SolutionUtils {
     return result;
   }
 
-  /** Returns the euclidean distance between a pair of solutions in the objective space */
+  /** Returns the Euclidean distance between a pair of solutions in the objective space */
   public static <S extends Solution<?>> double distanceBetweenObjectives(
       S firstSolution, S secondSolution) {
 
