@@ -19,7 +19,7 @@ public class ZCAT19 extends ZCAT1 {
   }
 
   public ZCAT19() {
-    this(3, 30, false, 1, false, false);
+    this(3, 30, true, 1, false, false);
   }
 
   public ZCAT19(int numberOfObjectives,
