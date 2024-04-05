@@ -15,8 +15,8 @@ import org.uma.jmetal.util.neighborhood.Neighborhood;
  */
 @SuppressWarnings("serial")
 public class KNearestNeighborhood<S extends Solution<?>> implements Neighborhood<S> {
-  private int neighborSize;
-  private Distance<S, S> distance;
+  private final int neighborSize;
+  private final Distance<S, S> distance;
 
   public KNearestNeighborhood(int neighborSize) {
     this(neighborSize, new EuclideanDistanceBetweenSolutionsInObjectiveSpace<S>());
@@ -48,7 +48,7 @@ public class KNearestNeighborhood<S extends Solution<?>> implements Neighborhood
     return neighbourSolutions;
   }
 
-  private void minFastSort(double x[], int idx[], int n, int m) {
+  private void minFastSort(double[] x, int[] idx, int n, int m) {
     for (int i = 0; i < m; i++) {
       for (int j = i + 1; j < n; j++) {
         if (x[i] > x[j]) {

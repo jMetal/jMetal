@@ -16,10 +16,10 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 @SuppressWarnings("serial")
 public class AdaptiveRandomNeighborhood<S> implements Neighborhood<S> {
-  private int solutionListSize ;
-  private int numberOfRandomNeighbours;
+  private final int solutionListSize ;
+  private final int numberOfRandomNeighbours;
   private List<List<Integer>> neighbours;
-  private BoundedRandomGenerator<Integer> randomGenerator ;
+  private final BoundedRandomGenerator<Integer> randomGenerator ;
 
   /**
    * Constructor

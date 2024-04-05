@@ -21,11 +21,11 @@ import org.uma.jmetal.util.neighborhood.Neighborhood;
  */
 @SuppressWarnings("serial")
 public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighborhood<S> {
-  private int numberOfWeightVectors;
-  private int weightVectorSize;
-  private int[][] neighborhood;
-  private double[][] weightVector;
-  private int neighborhoodSize;
+  private final int numberOfWeightVectors;
+  private final int weightVectorSize;
+  private final int[][] neighborhood;
+  private final double[][] weightVector;
+  private final int neighborhoodSize;
 
   public WeightVectorNeighborhood(int numberOfWeightVectors, int neighborhoodSize) {
     this.numberOfWeightVectors = numberOfWeightVectors;
@@ -78,7 +78,7 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
         StringTokenizer st = new StringTokenizer(aux);
         j = 0;
         while (st.hasMoreTokens()) {
-          double value = Double.valueOf(st.nextToken());
+          double value = Double.parseDouble(st.nextToken());
           weightVector[i][j] = value;
           j++;
         }
@@ -103,14 +103,14 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
         idx[j] = j;
       }
 
-      // find 'niche' nearest neighboring subproblems
+      // find 'niche' nearest neighboring sub problems
       minFastSort(x, idx, numberOfWeightVectors, neighborhoodSize);
 
       System.arraycopy(idx, 0, neighborhood[i], 0, neighborhoodSize);
     }
   }
 
-  private void minFastSort(double x[], int idx[], int n, int m) {
+  private void minFastSort(double[] x, int[] idx, int n, int m) {
     for (int i = 0; i < m; i++) {
       for (int j = i + 1; j < n; j++) {
         if (x[i] > x[j]) {

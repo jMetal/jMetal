@@ -62,8 +62,7 @@ public class GenericChartContainer<S extends Solution<?>> {
   }
 
   public void setSingleValueChart
-      (String xLabel, String yLabel)
-      throws FileNotFoundException {
+      (String xLabel, String yLabel) {
     this.frontChart =
         new XYChartBuilder()
             .xAxisTitle(xLabel)

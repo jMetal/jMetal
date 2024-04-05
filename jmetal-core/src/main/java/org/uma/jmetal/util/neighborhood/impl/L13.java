@@ -5,7 +5,7 @@ import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 /**
  * Class defining an L9 neighborhood of a solution belonging to a list of solutions which is
- * structured as a bi-dimensional mesh. The neighbors is illustrated as follows:
+ * structured as a bi-dimensional mesh. The neighbors are illustrated as follows:
  *
  *              *
  *            * * *

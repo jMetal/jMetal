@@ -95,7 +95,7 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
    * Returns a solutionSet containing the neighbors of a given solution
    * @param solutionSet From where neighbors will be obtained
    * @param solution The solution for which the neighbors will be computed
-   * @param neighborhood The list of neighbors we want to obtain as shift regarding to solution
+   * @param neighborhood The list of neighbors we want to obtain as shift regarding solution
    * @return
    */
   private List<S> findNeighbors(List<S> solutionSet, int solution, int [][] neighborhood) {
