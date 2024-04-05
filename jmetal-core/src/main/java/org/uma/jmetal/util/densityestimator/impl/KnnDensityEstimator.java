@@ -20,10 +20,10 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
 
   private final String attributeId = getClass().getName();
-  private Distance<double[], double[]> distance = new EuclideanDistanceBetweenVectors();
-  private int k;
-  private double[][] distanceMatrix;
-  private boolean normalize;
+  private final Distance<double[], double[]> distance = new EuclideanDistanceBetweenVectors();
+  private final int k;
+
+  private final boolean normalize;
 
   public KnnDensityEstimator(int k) {
     this(k, false);
@@ -41,6 +41,7 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
    */
   @Override
   public void compute(List<S> solutionList) {
+    double[][] distanceMatrix;
     int size = solutionList.size();
 
     Check.that(size > 0, "The solution list size must be greater than zero");

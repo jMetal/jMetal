@@ -14,15 +14,15 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
 /**
- * This class implements the a density estimator based on the cosine similarity
+ * This class implements a density estimator based on the cosine similarity
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
   private final String attributeId = getClass().getName();
-  private Distance<double[], double[]> distance;
-  private Point referencePoint;
-  private boolean normalize;
+  private final Distance<double[], double[]> distance;
+  private final Point referencePoint;
+  private final boolean normalize;
 
   public CosineSimilarityDensityEstimator(Point referencePoint) {
     this(referencePoint, true);
@@ -110,7 +110,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
     }
 
     for (int i = 0; i < solutionList.get(0).objectives().length; i++) {
-      solutionList.sort(new ObjectiveComparator<S>(i));
+      solutionList.sort(new ObjectiveComparator<>(i));
       solutionList.get(solutionList.size() - 1).attributes().put(attributeId, 0.0);
     }
   }

@@ -12,7 +12,7 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
- * This class implements the a density estimator based on the distance to the k-th nearest solution
+ * This class implements a density estimator based on the distance to the k-th nearest solution
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -46,12 +46,12 @@ public class SpatialSpreadDeviationDensityEstimator<S extends Solution<?>>
 
     int numberOfObjectives = solutionList.get(0).objectives().length;
 
-    double objetiveMaxn[] = new double[numberOfObjectives];
-    double objetiveMinn[] = new double[numberOfObjectives];
+    double[] objetiveMaxn = new double[numberOfObjectives];
+    double[] objetiveMinn = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
-      Collections.sort(front, new ObjectiveComparator<S>(i));
+      front.sort(new ObjectiveComparator<>(i));
       objetiveMinn[i] = front.get(0).objectives()[i];
       objetiveMaxn[i] = front.get(front.size() - 1).objectives()[i];
 

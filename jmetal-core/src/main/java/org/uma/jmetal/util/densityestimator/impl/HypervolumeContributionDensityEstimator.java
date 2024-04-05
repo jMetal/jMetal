@@ -16,8 +16,8 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHyp
  */
 public class HypervolumeContributionDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
 
-  private String attributeId = getClass().getName();
-  private Hypervolume<S> hypervolume ;
+  private final String attributeId = getClass().getName();
+  private final Hypervolume<S> hypervolume ;
 
   public HypervolumeContributionDensityEstimator(List<S> referenceFront) {
     hypervolume = new PISAHypervolume<>(new ArrayFront(referenceFront)) ;

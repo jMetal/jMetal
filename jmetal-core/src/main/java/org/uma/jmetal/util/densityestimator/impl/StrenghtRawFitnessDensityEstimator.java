@@ -17,10 +17,10 @@ import org.uma.jmetal.util.errorchecking.Check;
 public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
     implements DensityEstimator<S> {
   private final String attributeId = getClass().getName();
-  private int k;
+  private final int k;
 
   private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR =
-      new DominanceWithConstraintsComparator<Solution<?>>();
+      new DominanceWithConstraintsComparator<>();
 
   public StrenghtRawFitnessDensityEstimator(int k) {
     this.k = k;
@@ -41,7 +41,7 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
     // strength(i) = |{j | j <- SolutionSet and i dominate j}|
     for (int i = 0; i < solutionList.size(); i++) {
       for (S solution : solutionList) {
-        if (DOMINANCE_COMPARATOR.compare(solutionList.get(i), solution) == -1) {
+        if (DOMINANCE_COMPARATOR.compare(solutionList.get(i), solution) < 0) {
           strength[i] += 1.0;
         }
       }
@@ -51,7 +51,7 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
     // rawFitness(i) = |{sum strenght(j) | j <- SolutionSet and j dominate i}|
     for (int i = 0; i < solutionList.size(); i++) {
       for (int j = 0; j < solutionList.size(); j++) {
-        if (DOMINANCE_COMPARATOR.compare(solutionList.get(i), solutionList.get(j)) == 1) {
+        if (DOMINANCE_COMPARATOR.compare(solutionList.get(i), solutionList.get(j)) > 0) {
           rawFitness[i] += strength[j];
         }
       }
