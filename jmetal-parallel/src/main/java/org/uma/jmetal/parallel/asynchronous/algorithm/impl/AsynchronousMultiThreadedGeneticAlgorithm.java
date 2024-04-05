@@ -150,10 +150,12 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
 
   @Override
   public ParallelTask<S> createNewTask() {
-    if (population.size() > 2) {
-      List<S> parents = new ArrayList<>(2);
-      parents.add(selection.execute(population));
-      parents.add(selection.execute(population));
+    int numberOfParents = crossover.numberOfRequiredParents();
+    if (population.size() > numberOfParents) {
+      List<S> parents = new ArrayList<>(numberOfParents);
+      for (int i = 0; i < numberOfParents; i++) {
+        parents.add(selection.execute(population));
+      }
 
       List<S> offspring = crossover.execute(parents);
 
