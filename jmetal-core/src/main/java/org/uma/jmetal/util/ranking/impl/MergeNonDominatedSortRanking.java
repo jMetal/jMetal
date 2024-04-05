@@ -51,7 +51,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
       System.arraycopy(solutionSet.get(i).objectives(), 0, population[i], 0, m);
       population[i][SOL_ID] = i;
     }
-    int ranking[] = sort(population);
+    int[] ranking = sort(population);
     rankedSubPopulations = new ArrayList<ArrayList<S>>();
     for (int i = 0; i < n; i++) {
       for (int r = rankedSubPopulations.size(); r <= ranking[i]; r++) {
@@ -63,7 +63,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
     return this;
   }
 
-  private final int compare_lex(double[] s1, double[] s2, int fromObj, int toObj) {
+  private int compareLex(double[] s1, double[] s2, int fromObj, int toObj) {
     for (; fromObj < toObj; fromObj++) {
       if (s1[fromObj] < s2[fromObj]) return -1;
       if (s1[fromObj] > s2[fromObj]) return 1;
@@ -71,16 +71,16 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
     return 0;
   }
 
-  private boolean merge_sort(
-          double src[][], double dest[][], int low, int high, int obj, int toObj) {
+  private boolean mergeSort(
+          double[][] src, double[][] dest, int low, int high, int obj, int toObj) {
     int i, j, s;
-    double temp[] = null;
+    double[] temp = null;
     int destLow = low;
     int length = high - low;
 
     if (length < INSERTIONSORT) {
       for (i = low; i < high; i++) {
-        for (j = i; j > low && compare_lex(dest[j - 1], dest[j], obj, toObj) > 0; j--) {
+        for (j = i; j > low && compareLex(dest[j - 1], dest[j], obj, toObj) > 0; j--) {
           temp = dest[j];
           dest[j] = dest[j - 1];
           dest[j - 1] = temp;
@@ -89,8 +89,8 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
       return temp == null; // if temp==null, src is already sorted
     }
     int mid = (low + high) >>> 1;
-    boolean isSorted = merge_sort(dest, src, low, mid, obj, toObj);
-    isSorted &= merge_sort(dest, src, mid, high, obj, toObj);
+    boolean isSorted = mergeSort(dest, src, low, mid, obj, toObj);
+    isSorted &= mergeSort(dest, src, mid, high, obj, toObj);
 
     // If list is already sorted, just copy from src to dest.
     if (src[mid - 1][obj] <= src[mid][obj]) {
@@ -101,7 +101,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
     for (s = low, i = low, j = mid; s < high; s++) {
       if (j >= high) {
         dest[s] = src[i++];
-      } else if (i < mid && compare_lex(src[i], src[j], obj, toObj) <= 0) {
+      } else if (i < mid && compareLex(src[i], src[j], obj, toObj) <= 0) {
         dest[s] = src[i++];
       } else {
         dest[s] = src[j++];
@@ -113,11 +113,11 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
   private boolean sortFirstObjective() {
     int p = 0;
     System.arraycopy(population, 0, work, 0, n);
-    merge_sort(population, work, 0, n, 0, m);
+    mergeSort(population, work, 0, n, 0, m);
     population[0] = work[0];
     population[0][SORT_INDEX] = 0;
     for (int q = 1; q < n; q++) {
-      if (0 != compare_lex(population[p], work[q], 0, m)) {
+      if (0 != compareLex(population[p], work[q], 0, m)) {
         p++;
         population[p] = work[q];
         population[p][SORT_INDEX] = p;
@@ -132,7 +132,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
     int p, solutionId;
     boolean dominance = false;
     System.arraycopy(population, 0, work, 0, n);
-    merge_sort(population, work, 0, n, 1, 2);
+    mergeSort(population, work, 0, n, 1, 2);
     System.arraycopy(work, 0, population, 0, n);
     for (p = 0; p < n; p++) {
       solutionId = ((int) population[p][SORT_INDEX]);
@@ -151,7 +151,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
     boolean dominance;
     System.arraycopy(population, 0, work, 0, n);
     for (int obj = 2; obj < m; obj++) {
-      if (merge_sort(
+      if (mergeSort(
               population,
               work,
               0,

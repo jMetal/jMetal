@@ -111,13 +111,9 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
       Arrays.sort(distance[i]);
       double kDistance = 0.0;
       for (int k = numberOfObjectives; k > 0; k--) {
-        // kDistance += (dmaxx-dminn) / (distance[i][k]);//me gusta mas este
-        // kDistance += (dmaxx-dminn) / (distance[i][k]+dminn);//original
         kDistance += (dmaxx - dminn) / distance[i][k];
       }
       double temp = (double) front.get(i).attributes().get(getAttributeID());
-      // if(temp!=Double.POSITIVE_INFINITY)
-      // kDistance=kDistance/numberOfObjectives-1;
       temp -= kDistance;
       front.get(i).attributes().put(getAttributeID(), temp);
     }
