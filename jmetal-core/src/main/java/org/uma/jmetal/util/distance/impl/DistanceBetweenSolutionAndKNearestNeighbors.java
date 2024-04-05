@@ -44,7 +44,7 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
     }
     return result;
   }
-s
+
   /**
    * Computes the distance between a solution and the solutions of a list. Distances equal to 0 are ignored.
    * @param solution
