@@ -15,14 +15,14 @@ public class EuclideanDistanceBetweenVectors implements Distance<double[], doubl
     Check.notNull(vector1);
     Check.notNull(vector2);
     Check.that(vector1.length == vector2.length, "The vectors have different" +
-            "dimension: " + vector1.length + " and " + vector2.length);
+        "dimension: " + vector1.length + " and " + vector2.length);
 
     double distance = 0.0;
 
     double diff;
-    for (int i = 0; i < vector1.length ; i++){
+    for (int i = 0; i < vector1.length; i++) {
       diff = vector1[i] - vector2[i];
-      distance += diff * diff ;
+      distance += diff * diff;
     }
 
     return Math.sqrt(distance);
