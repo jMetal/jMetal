@@ -103,9 +103,10 @@ public class SolutionUtils {
       DoubleSolution solution, List<DoubleSolution> solutionList) {
     double distance = Double.MAX_VALUE;
 
-    for (int i = 0; i < solutionList.size(); i++) {
-      double aux = distanceBetweenSolutionsInObjectiveSpace(solution, solutionList.get(i));
-      if (aux < distance) distance = aux;
+    for (DoubleSolution doubleSolution : solutionList) {
+      double aux = distanceBetweenSolutionsInObjectiveSpace(solution, doubleSolution);
+      if (aux < distance)
+        distance = aux;
     }
 
     return distance;
