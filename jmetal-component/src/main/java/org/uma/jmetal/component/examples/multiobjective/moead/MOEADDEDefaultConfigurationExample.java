@@ -15,6 +15,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
+import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -63,7 +64,7 @@ public class MOEADDEDefaultConfigurationExample {
         .setMaximumNumberOfReplacedSolutionsy(2)
         .setNeighborhoodSelectionProbability(0.9)
         .setNeighborhoodSize(20)
-        .setAggregationFunction(new PenaltyBoundaryIntersection(5.0, normalizeObjectives))
+        .setAggregationFunction(new Tschebyscheff(normalizeObjectives))
         .build() ;
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
