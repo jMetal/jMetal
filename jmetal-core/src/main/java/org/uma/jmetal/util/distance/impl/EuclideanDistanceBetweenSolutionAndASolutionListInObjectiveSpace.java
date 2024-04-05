@@ -14,7 +14,7 @@ public class EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace
         <S extends Solution<?>, L extends List<S>>
         implements Distance<S, L> {
 
-  private EuclideanDistanceBetweenVectors distance ;
+  private final EuclideanDistanceBetweenVectors distance ;
 
   public EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace() {
     distance = new EuclideanDistanceBetweenVectors() ;

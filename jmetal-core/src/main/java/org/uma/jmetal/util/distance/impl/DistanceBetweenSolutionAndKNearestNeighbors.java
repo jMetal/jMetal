@@ -16,7 +16,7 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
         implements Distance<S, List<S>> {
 
   private final int k ;
-  private Distance<S, S> distance ;
+  private final Distance<S, S> distance ;
 
   public DistanceBetweenSolutionAndKNearestNeighbors(int k, Distance<S, S> distance) {
     this.k = k ;
@@ -44,7 +44,7 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
     }
     return result;
   }
-
+s
   /**
    * Computes the distance between a solution and the solutions of a list. Distances equal to 0 are ignored.
    * @param solution
@@ -53,10 +53,10 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
    */
   private List<Double> knnDistances(S solution, List<S> solutionList) {
     List<Double> listOfDistances = new ArrayList<>() ;
-    for (int i = 0 ; i< solutionList.size(); i++) {
-      double distanceBetweenSolutions = distance.compute(solution, solutionList.get(i)) ;
+    for (S solutionInList : solutionList) {
+      double distanceBetweenSolutions = distance.compute(solution, solutionInList);
       if (distanceBetweenSolutions != 0) {
-        listOfDistances.add(distanceBetweenSolutions) ;
+        listOfDistances.add(distanceBetweenSolutions);
       }
     }
 

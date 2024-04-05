@@ -9,7 +9,7 @@ import org.uma.jmetal.util.distance.Distance;
  */
 public class CosineSimilarityBetweenVectors implements Distance<double[], double[]> {
 
-  private double[] referencePoint;
+  private final double[] referencePoint;
 
   public CosineSimilarityBetweenVectors(double[] referencePoint) {
     this.referencePoint = referencePoint;

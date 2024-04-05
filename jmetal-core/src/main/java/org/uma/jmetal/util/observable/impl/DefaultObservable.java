@@ -9,7 +9,7 @@ import org.uma.jmetal.util.observer.Observer;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class DefaultObservable<D> implements Observable<D> {
-  private Set<Observer<D>> observers;
+  private final Set<Observer<D>> observers;
   private boolean dataHasChanged;
   private String name;
 
