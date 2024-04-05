@@ -34,9 +34,7 @@ public class RemoveNSolutionsAccordingToTheCrowdingDistance<S extends Solution<?
     }
     solutionList.clear();
 
-    for (S solution: archive.solutions()) {
-      solutionList.add(solution) ;
-    }
+    solutionList.addAll(archive.solutions());
 
     return numberOfSolutions ;
   }

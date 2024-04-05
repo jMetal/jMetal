@@ -52,9 +52,7 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
 
     // Use a new SolutionSet to avoid altering the original solutionSet
     List<S> front = new ArrayList<>(size);
-    for (S solution : solutionList) {
-      front.add(solution);
-    }
+    front.addAll(solutionList);
 
     for (int i = 0; i < size; i++) {
       front.get(i).attributes().put(getAttributeIdentifier(), 0.0);

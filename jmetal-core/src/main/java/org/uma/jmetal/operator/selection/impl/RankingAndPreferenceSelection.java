@@ -82,9 +82,7 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
 
     front = ranking.getSubFront(rank);
 
-    for (int i = 0; i < front.size(); i++) {
-      population.add(front.get(i));
-    }
+    population.addAll(front);
   }
 
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {

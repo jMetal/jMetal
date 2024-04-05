@@ -82,7 +82,7 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
 
     front = ranking.getSubFront(rank);
 
-    front.forEach(population::add);
+    population.addAll(front);
   }
 
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S>population) {
