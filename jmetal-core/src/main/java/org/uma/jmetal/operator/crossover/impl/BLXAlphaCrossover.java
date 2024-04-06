@@ -16,14 +16,13 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
 public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
   private static final double DEFAULT_ALPHA = 0.5;
 
   private double crossoverProbability;
   private double alpha ;
-  private RepairDoubleSolution solutionRepair ;
-  private RandomGenerator<Double> randomGenerator ;
+  private final RepairDoubleSolution solutionRepair ;
+  private final RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
   public BLXAlphaCrossover(double crossoverProbability) {

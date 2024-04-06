@@ -14,26 +14,29 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * returned from a population. The number of solutions is requested in the class constructor (by
  * default, its value is 3), and they must be also different from the one indicated by an index
  * (typically, the current solution being processed by a DE algorithm). This current solution can
- * belong to the returned list if the {@link #selectCurrentSolution} variable is set to True when
- * invoking the {@link #setSelectCurrentSolution()} method; in this case, the current solution will
- * be the last one of the returned list.
+ * belong to the returned list if the {@link #selectCurrentSolution} variable is set to True; in
+ * this case, the current solution will be the last one of the returned list.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
 public class DifferentialEvolutionSelection
     implements SelectionOperator<List<DoubleSolution>, List<DoubleSolution>> {
-  private int currentSolutionIndex = Integer.MIN_VALUE;
-  private BoundedRandomGenerator<Integer> randomGenerator;
-  private int numberOfSolutionsToSelect;
-  private boolean selectCurrentSolution;
 
-  /** Constructor */
+  private int currentSolutionIndex = Integer.MIN_VALUE;
+  private final BoundedRandomGenerator<Integer> randomGenerator;
+  private final int numberOfSolutionsToSelect;
+  private final boolean selectCurrentSolution;
+
+  /**
+   * Constructor
+   */
   public DifferentialEvolutionSelection() {
     this((a, b) -> JMetalRandom.getInstance().nextInt(a, b), 3, false);
   }
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public DifferentialEvolutionSelection(
       int numberOfSolutionsToSelect, boolean selectCurrentSolution) {
     this(
@@ -42,7 +45,9 @@ public class DifferentialEvolutionSelection
         selectCurrentSolution);
   }
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public DifferentialEvolutionSelection(
       BoundedRandomGenerator<Integer> randomGenerator,
       int numberOfSolutionsToSelect,
@@ -56,7 +61,9 @@ public class DifferentialEvolutionSelection
     this.currentSolutionIndex = index;
   }
 
-  /** Execute() method */
+  /**
+   * Execute() method
+   */
   @Override
   public List<DoubleSolution> execute(List<DoubleSolution> solutionList) {
     Check.notNull(solutionList);

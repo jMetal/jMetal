@@ -67,13 +67,13 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   private DE_CROSSOVER_TYPE crossoverType = DE_CROSSOVER_TYPE.BIN;
   private DE_MUTATION_TYPE mutationType = DE_MUTATION_TYPE.RAND;
 
-  private DE_VARIANT variant;
+  private final DE_VARIANT variant;
 
   private DoubleSolution currentSolution = null;
   private DoubleSolution bestSolution = null;
 
-  private BoundedRandomGenerator<Integer> jRandomGenerator;
-  private BoundedRandomGenerator<Double> crRandomGenerator;
+  private final BoundedRandomGenerator<Integer> jRandomGenerator;
+  private final BoundedRandomGenerator<Double> crRandomGenerator;
 
   private RepairDoubleSolution solutionRepair;
 
