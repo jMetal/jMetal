@@ -14,7 +14,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 /**
  * This class allows to apply a whole arithmetic crossover operator to two parent solutions.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class WholeArithmeticCrossover implements CrossoverOperator<DoubleSolution> {

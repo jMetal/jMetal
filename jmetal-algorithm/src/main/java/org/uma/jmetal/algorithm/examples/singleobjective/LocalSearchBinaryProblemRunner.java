@@ -13,7 +13,7 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 /**
  * Class to configure and run a single objective local search. The target problem is OneMax.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class LocalSearchBinaryProblemRunner {
   public static void main(String[] args)  {

@@ -23,7 +23,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * Class to configure and run a genetic algorithm to solve an instance of the TSP
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GeneticAlgorithmTSPExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {

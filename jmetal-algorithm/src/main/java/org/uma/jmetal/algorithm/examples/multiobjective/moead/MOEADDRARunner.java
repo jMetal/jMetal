@@ -19,7 +19,7 @@ import org.uma.jmetal.util.VectorUtils;
 /**
  * Class for configuring and running the MOEA/D-DRA algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class MOEADDRARunner extends AbstractAlgorithmRunner {
 

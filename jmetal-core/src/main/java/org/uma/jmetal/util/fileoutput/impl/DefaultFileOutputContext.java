@@ -10,7 +10,7 @@ import org.uma.jmetal.util.fileoutput.FileOutputContext;
 /**
  * Class using the default method for getting a buffered writer
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings("serial")
 public class  DefaultFileOutputContext implements FileOutputContext {

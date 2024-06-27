@@ -26,7 +26,7 @@ import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
  * Class to configure and run the NSGA-II algorithm configured with the ranking method known as
  * Merge non-dominated sorting ranking (DOI: https://doi.org/10.1109/TCYB.2020.2968301)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIWithMNDSRankingExample {
   public static void main(String[] args) throws JMetalException, IOException {

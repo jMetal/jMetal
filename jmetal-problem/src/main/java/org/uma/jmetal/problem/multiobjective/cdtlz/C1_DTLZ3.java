@@ -11,7 +11,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * Nondominated Sorting Approach, Part II: Handling Constraints and Extending to an Adaptive Approach."
  * EEE Transactions on Evolutionary Computation, 18(4):602-622, 2014.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class C1_DTLZ3 extends DTLZ3 {

@@ -9,7 +9,7 @@ import org.uma.jmetal.problem.Problem;
  * @param <S> Solution
  * @param <R> Result
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public abstract class AbstractEvolutionaryAlgorithm<S, R>  implements Algorithm<R>{
   protected List<S> population;

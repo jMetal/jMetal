@@ -27,7 +27,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * Class to configure and run the NSGA-II algorithm configured a bounded external archive that uses
  * the crowding distance to remove solutions when the archive gets full.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIWithCrowdingDistanceArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {

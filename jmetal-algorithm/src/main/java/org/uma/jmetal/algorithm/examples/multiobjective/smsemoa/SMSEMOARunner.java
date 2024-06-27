@@ -23,7 +23,7 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHyp
 /**
  * Class to configure and run the SMS-EMOA algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class SMSEMOARunner extends AbstractAlgorithmRunner {
 

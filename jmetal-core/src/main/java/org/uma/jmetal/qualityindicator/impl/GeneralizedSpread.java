@@ -16,7 +16,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * multi-objective optimization using a convergence criterion,
  * 2006 IEEE Congress on Evolutionary Computation, 2006, pp. 3234-3241.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

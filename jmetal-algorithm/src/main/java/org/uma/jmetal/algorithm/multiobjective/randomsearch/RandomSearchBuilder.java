@@ -7,7 +7,7 @@ import org.uma.jmetal.solution.Solution;
 /**
  * This class implements a simple random search algorithm.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class RandomSearchBuilder<S extends Solution<?>> implements AlgorithmBuilder<RandomSearch<S>> {
   private Problem<S> problem ;

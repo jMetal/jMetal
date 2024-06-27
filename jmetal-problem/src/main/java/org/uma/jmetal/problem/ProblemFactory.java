@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 public class ProblemFactory {
 

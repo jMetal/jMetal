@@ -15,7 +15,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 /**
  * This class implements a density estimator based on the distance to the k-th nearest solution
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
 

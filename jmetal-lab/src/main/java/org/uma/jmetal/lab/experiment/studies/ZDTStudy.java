@@ -61,7 +61,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  * 4. Generate Latex tables reporting means and medians, and tables with statistical tests
  * 5. Generate HTML pages with tables, boxplots, and fronts.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 
 public class ZDTStudy {

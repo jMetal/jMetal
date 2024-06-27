@@ -12,7 +12,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 /**
  * Class defining tasks for the execution of algorithms in parallel.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> {
   private Algorithm<Result> algorithm;

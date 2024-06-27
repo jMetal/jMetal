@@ -12,7 +12,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * This defines an implementation of a binary solution. These solutions are composed of a number
  * of variables containing {@link BinarySet} objects.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class DefaultBinarySolution
         extends AbstractSolution<BinarySet>

@@ -19,7 +19,7 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithCons
 /**
  * Class to configure and run the NSGA-II algorithm to solve the Ebes problem
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIEbesRunner extends AbstractAlgorithmRunner {
 

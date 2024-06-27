@@ -7,7 +7,7 @@ import org.uma.jmetal.solution.binarysolution.BinarySolution;
 /**
  * Interface representing binary problems
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public interface BinaryProblem extends Problem<BinarySolution> {
   List<Integer> numberOfBitsPerVariable() ;

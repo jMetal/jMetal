@@ -19,7 +19,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 /**
  * Class for configuring and running the PESA2 algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class PESA2Runner extends AbstractAlgorithmRunner {
   /**

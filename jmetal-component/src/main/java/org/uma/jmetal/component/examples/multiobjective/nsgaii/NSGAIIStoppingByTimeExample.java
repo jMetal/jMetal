@@ -24,7 +24,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * Class to configure and run the NSGA-II algorithm with a stopping condition based a maximum
  * computing time.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIStoppingByTimeExample {
 

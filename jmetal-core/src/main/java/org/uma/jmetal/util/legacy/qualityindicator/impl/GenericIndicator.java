@@ -11,7 +11,7 @@ import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 /**
  * Abstract class representing quality indicators that need a reference front to be computed
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 @Deprecated

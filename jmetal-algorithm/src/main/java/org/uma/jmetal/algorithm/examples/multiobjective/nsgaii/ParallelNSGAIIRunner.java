@@ -25,7 +25,7 @@ import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 /**
  * Class for configuring and running the NSGA-II algorithm (parallel version)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
   /**

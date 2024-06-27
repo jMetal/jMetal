@@ -12,7 +12,7 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithCons
 /**
  * This class implements an archive containing non-dominated solutions
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

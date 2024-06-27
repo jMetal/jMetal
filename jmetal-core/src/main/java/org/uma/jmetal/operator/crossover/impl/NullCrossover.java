@@ -10,7 +10,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * This class defines a null crossover operator: the parent solutions are returned without any
  * change. It can be useful when configuring a genetic algorithm and we want to use only mutation.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings({ "unchecked", "serial" })
 public class NullCrossover<S extends Solution<?>>

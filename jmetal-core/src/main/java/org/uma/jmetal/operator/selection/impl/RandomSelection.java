@@ -8,7 +8,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**
  * This class implements a random selection operator used for selecting randomly a solution from a list
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class RandomSelection<S> implements SelectionOperator<List<S>, S> {

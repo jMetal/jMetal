@@ -24,7 +24,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
  * of cores is specified as an optional parameter. A default value is used is the parameter is not
  * provided. The target problem is OneMax
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class ParallelGenerationalGeneticAlgorithmRunner {
   private static final int DEFAULT_NUMBER_OF_CORES = 0;

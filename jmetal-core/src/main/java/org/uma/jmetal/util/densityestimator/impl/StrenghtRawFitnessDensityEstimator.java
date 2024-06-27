@@ -12,7 +12,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**
  * This class implements the density estimator based on the distance to the k-th nearest solution
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
     implements DensityEstimator<S> {

@@ -22,7 +22,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  * Class to configure and run the implementation of the NSGA-II algorithm included in
  * {@link NSGAII45}
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAII45Runner extends AbstractAlgorithmRunner {
 

@@ -12,7 +12,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * {@link CompositeSolution} objects. It is required that the operators be compatible with the
  * solutions inside the composite solutions.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class CompositeMutation implements MutationOperator<CompositeSolution> {

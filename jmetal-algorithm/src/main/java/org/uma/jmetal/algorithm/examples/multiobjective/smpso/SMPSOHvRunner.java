@@ -25,7 +25,7 @@ import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
  * Selection Strategies in a Multi-Objective Particle Swarm Optimizer. 2013 IEEE Congress on
  * Evolutionary Computation. June 2013 DOI: 10.1109/CEC.2013.6557955
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class SMPSOHvRunner extends AbstractAlgorithmRunner {
 

@@ -24,7 +24,7 @@ import org.uma.jmetal.util.JMetalLogger;
  * To run the R script: Rscript indicatorName.Wilcoxon.R
  * To generate the resulting Latex file: pdflatex indicatorName.Wilcoxon.tex
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solution<?>>> implements ExperimentComponent {
   private static final String DEFAULT_R_DIRECTORY = "R";

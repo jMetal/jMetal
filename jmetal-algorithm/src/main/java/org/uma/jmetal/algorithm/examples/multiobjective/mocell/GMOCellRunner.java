@@ -25,7 +25,7 @@ import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
  * Class to configure and run the MOCell algorithm with DM support applying the concept of
  * g-dominance
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GMOCellRunner extends AbstractAlgorithmRunner {
 

@@ -14,7 +14,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 /**
  * This class allows to apply a BLX-alpha crossover operator to two parent solutions.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
   private static final double DEFAULT_ALPHA = 0.5;

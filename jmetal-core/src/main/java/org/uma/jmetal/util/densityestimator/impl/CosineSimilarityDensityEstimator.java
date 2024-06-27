@@ -16,7 +16,7 @@ import org.uma.jmetal.util.point.Point;
 /**
  * This class implements a density estimator based on the cosine similarity
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
   private final String attributeId = getClass().getName();

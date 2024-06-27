@@ -18,7 +18,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * - the file containing a reference front
  * - the file whose Pareto front approximation is going to be analyzed
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class CommandLineQualityIndicatorTool {
   public static void main(String[] args) throws Exception {

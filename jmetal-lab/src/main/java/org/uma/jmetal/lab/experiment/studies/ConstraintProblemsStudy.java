@@ -63,7 +63,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  * 7. Generate Latex tables with the ranking obtained by applying the Friedman test
  * 8. Generate R scripts to obtain boxplots
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 public class ConstraintProblemsStudy {
   private static final int INDEPENDENT_RUNS = 25;

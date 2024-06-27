@@ -17,7 +17,7 @@ import org.uma.jmetal.util.ranking.Ranking;
  * numbering starts from 1); thus, subset 0 contains the non-dominated solutions, subset 1 contains
  * the non-dominated population after removing those belonging to subset 0, and so on.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranking<S> {
 

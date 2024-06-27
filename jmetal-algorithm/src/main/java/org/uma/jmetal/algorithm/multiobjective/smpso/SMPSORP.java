@@ -39,7 +39,7 @@ import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
  * Coello, Antonio Benítez-Hidalgo, José F. Aldana-Montes. Parallel Problem Solving from Nature --
  * PPSN XV. Lecture Notes In Computer Science, Vol. 11101, pp. 298-310. 2018".
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings("serial")
 public class SMPSORP

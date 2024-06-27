@@ -20,7 +20,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * Class for configuring and running the SMPSO algorithm to solve a problem of the CEC2015 Big
  * Optimization competition
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 
 public class SMPSOBigDataRunner extends AbstractAlgorithmRunner {

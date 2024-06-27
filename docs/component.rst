@@ -257,7 +257,7 @@ interface for termination components is as follows:
   /**
    * This interface represents classes that isMet the termination condition of an algorithm.
    *
-   * @author Antonio J. Nebro <antonio@lcc.uma.es>
+   * @author Antonio J. Nebro
    */
   @FunctionalInterface
   public interface Termination {
@@ -276,7 +276,7 @@ For example, the ``TerminationByEvaluations`` class defines that method as shown
    * Class that allows to check the termination condition based on a maximum number of indicated
    * evaluations.
    *
-   *  @author Antonio J. Nebro <antonio@lcc.uma.es>
+   *  @author Antonio J. Nebro
    */
   public class TerminationByEvaluations implements Termination {
     private final int maximumNumberOfEvaluations ;

@@ -13,7 +13,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * of Innovative Computing, Information and Control, vol. 8, no. 5B, pp.
  * 3677–3688, 2012.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class GLT2 extends AbstractDoubleProblem {

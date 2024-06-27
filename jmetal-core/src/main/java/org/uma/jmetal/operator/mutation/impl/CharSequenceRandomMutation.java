@@ -8,7 +8,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * This class implements a swap mutation. The solution type of the solution must be Permutation.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

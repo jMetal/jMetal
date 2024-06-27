@@ -8,7 +8,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * Class that allows to check the termination condition when the computing time of an algorithm
  * gets higher than a given threshold.
  *
- *  @author Antonio J. Nebro <antonio@lcc.uma.es>
+ *  @author Antonio J. Nebro
  */
 public class TerminationByComputingTime implements Termination {
   private final long maxComputingTime ;

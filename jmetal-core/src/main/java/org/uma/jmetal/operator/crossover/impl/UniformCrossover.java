@@ -11,7 +11,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 /**
  * This class implements a uniform crossover operator for binary solutions.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class UniformCrossover<S extends BinarySolution> implements CrossoverOperator<S> {

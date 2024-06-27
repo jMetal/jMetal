@@ -26,7 +26,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 /**
  * Class to configure and run the NSGA-II algorithm showing the population while the algorithm is running
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIEbesExample {
   public static void main(String[] args) throws JMetalException, IOException {

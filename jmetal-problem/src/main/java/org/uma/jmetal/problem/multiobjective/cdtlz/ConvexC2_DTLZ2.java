@@ -11,7 +11,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * Handling Constraints and Extending to an Adaptive Approach." EEE Transactions on Evolutionary
  * Computation, 18(4):602-622, 2014.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class ConvexC2_DTLZ2 extends DTLZ2 {

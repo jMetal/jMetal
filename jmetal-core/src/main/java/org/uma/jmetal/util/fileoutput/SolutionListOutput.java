@@ -7,7 +7,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
-/** @author Antonio J. Nebro <antonio@lcc.uma.es> */
+/** @author Antonio J. Nebro  */
 public class SolutionListOutput {
   private FileOutputContext varFileContext;
   private FileOutputContext funFileContext;

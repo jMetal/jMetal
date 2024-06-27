@@ -21,7 +21,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 /**
  * Class to configure and run a steady-state genetic algorithm. The target problem is Sphere
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class SteadyStateGeneticAlgorithmRunner {
   /**

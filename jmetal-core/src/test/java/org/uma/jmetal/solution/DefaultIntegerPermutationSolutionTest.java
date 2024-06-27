@@ -10,7 +10,7 @@ import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutation
 import org.uma.jmetal.problem.permutationproblem.impl.FakeIntegerPermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 
-/** @author Antonio J. Nebro <antonio@lcc.uma.es> */
+/** @author Antonio J. Nebro  */
 public class DefaultIntegerPermutationSolutionTest {
 
   @Test

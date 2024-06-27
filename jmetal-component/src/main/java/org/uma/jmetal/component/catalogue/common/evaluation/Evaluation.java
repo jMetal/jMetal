@@ -7,7 +7,7 @@ import org.uma.jmetal.solution.Solution;
 /**
  *  Interface representing entities that evaluate a list of solutions
  *
- *  @author Antonio J. Nebro <antonio@lcc.uma.es>
+ *  @author Antonio J. Nebro
  *
  * @param <S> Solution
  */

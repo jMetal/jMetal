@@ -27,7 +27,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * Class to configure and run the NSGA-II-DE algorithm showing the population while the algorithm is
  * running
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIDEWithRealTimeChartExample {
 

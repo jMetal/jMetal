@@ -29,7 +29,7 @@ import org.uma.jmetal.util.JMetalLogger;
  * Although the maximum, minimum, and total number of items are also computed, no tables are generated
  * with them (this is a pending work).
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
   private static final String DEFAULT_LATEX_DIRECTORY = "latex" ;

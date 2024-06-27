@@ -27,7 +27,7 @@ import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
  * By default, the files are stored in a directory called "referenceFront", which is located in the
  * org.uma.jmetal.experiment base directory. Each front is named following the scheme "problemName.rf".
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GenerateReferenceParetoFront implements ExperimentComponent {
   private final Experiment<?, ?> experiment;

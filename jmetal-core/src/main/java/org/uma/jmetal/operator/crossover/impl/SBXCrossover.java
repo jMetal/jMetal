@@ -19,7 +19,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * <p>The implementation is based on the NSGA-II code available in <a
  * href="http://www.iitk.ac.in/kangal/codes.shtml">http://www.iitk.ac.in/kangal/codes.shtml</a>
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

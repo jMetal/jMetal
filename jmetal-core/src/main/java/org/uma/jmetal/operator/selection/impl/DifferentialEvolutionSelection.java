@@ -17,7 +17,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * belong to the returned list if the {@link #selectCurrentSolution} variable is set to True; in
  * this case, the current solution will be the last one of the returned list.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class DifferentialEvolutionSelection
     implements SelectionOperator<List<DoubleSolution>, List<DoubleSolution>> {

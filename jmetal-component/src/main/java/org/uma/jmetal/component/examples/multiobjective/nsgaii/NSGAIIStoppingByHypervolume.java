@@ -27,7 +27,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * a Pareto front approximation having a hypervolume value higher than the 95% of the hypervolume
  * of the reference front.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIStoppingByHypervolume  {
 

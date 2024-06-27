@@ -8,7 +8,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**
  * This class implements a comparator based on a given objective
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class ObjectiveComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
 

@@ -25,7 +25,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 /**
  * Class to configure and run the NSGA-II algorithm to solve problem ZDT1
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIRunner extends AbstractAlgorithmRunner {
 

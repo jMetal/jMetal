@@ -12,7 +12,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * Each solution in a solution list must have a neighborhood composed by it itself and
  * K random selected neighbors (the same solution can be chosen several times).
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class AdaptiveRandomNeighborhood<S> implements Neighborhood<S> {

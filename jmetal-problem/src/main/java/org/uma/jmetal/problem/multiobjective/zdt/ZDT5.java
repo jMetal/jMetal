@@ -1,7 +1,7 @@
 //  ZDT5.java
 //
 //  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Antonio J. Nebro 
 //       Juan J. Durillo <durillo@lcc.uma.es>
 //
 //  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo

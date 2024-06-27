@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 /**
  * Abstract class representing a generic solution
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings("serial")
 public abstract class AbstractSolution<T> implements Solution<T> {

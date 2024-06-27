@@ -16,7 +16,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * the front could contain solutions that dominate some of those of the supposed Pareto front.
  * It is a responsibility of the caller to ensure that this does not happen.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * TODO: using an epsilon value
  */
 @SuppressWarnings("serial")

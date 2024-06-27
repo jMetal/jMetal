@@ -20,7 +20,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
  * Class for configuring and running the NSGA-II algorithm to solve a problem of the CEC 2015 Big
  * Optimization competition
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 
 public class NSGAIIBigDataRunner extends AbstractAlgorithmRunner {

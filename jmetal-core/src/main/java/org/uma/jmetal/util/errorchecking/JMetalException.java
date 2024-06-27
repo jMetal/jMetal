@@ -7,7 +7,7 @@ import org.uma.jmetal.util.JMetalLogger;
 /**
  * jMetal exception class
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class JMetalException extends RuntimeException implements Serializable {
   public JMetalException(String message) {

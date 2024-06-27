@@ -8,7 +8,7 @@ import org.uma.jmetal.util.bounds.Bounds;
 /**
  * Interface representing integer problems
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public interface IntegerProblem extends Problem<IntegerSolution> {
   List<Bounds<Integer>> variableBounds() ;

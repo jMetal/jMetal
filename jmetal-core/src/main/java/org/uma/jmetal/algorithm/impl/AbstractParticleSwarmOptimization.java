@@ -6,7 +6,7 @@ import org.uma.jmetal.algorithm.Algorithm;
 /**
  * Abstract class representing a PSO algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public abstract class AbstractParticleSwarmOptimization<S, Result> implements Algorithm <Result> {

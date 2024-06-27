@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * This interface represents classes that check the termination condition of an algorithm.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @FunctionalInterface
 public interface Termination {

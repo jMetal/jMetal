@@ -8,7 +8,7 @@ import org.uma.jmetal.util.JMetalLogger;
 /**
  * Class that allows to check the termination condition based on introducing a character by keyboard.
  *
- *  @author Antonio J. Nebro <antonio@lcc.uma.es>
+ *  @author Antonio J. Nebro
  */
 public class TerminationByKeyboard implements Termination {
   public boolean keyHit ;

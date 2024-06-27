@@ -6,7 +6,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * Abstract class representing quality indicators. It is assumed that the fronts are normalized
  * before computing the indicators.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public abstract class QualityIndicator {
   protected double[][] referenceFront ;

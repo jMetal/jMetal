@@ -17,7 +17,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
  * Class for configuring and running the GDE3 algorithm for solving a problem of the Big
  * Optimization competition at CEC2015
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GDE3BigDataRunner {
 

@@ -11,7 +11,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * Defines an implementation of the {@link IntegerSolution} interface
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings("serial")
 public class DefaultIntegerSolution extends AbstractSolution<Integer> implements IntegerSolution {

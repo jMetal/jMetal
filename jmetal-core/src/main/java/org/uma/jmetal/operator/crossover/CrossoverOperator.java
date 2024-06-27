@@ -7,7 +7,7 @@ import org.uma.jmetal.operator.Operator;
  * Interface representing crossover operators. They will receive a list of solutions and return
  * another list of solutions
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  *
  * @param <Source> The class of the solutions
  */

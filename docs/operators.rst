@@ -17,7 +17,7 @@ The ``Operator`` interface (package ``org.uma.jmetal.operator``) belongs the ``j
 
     /** Interface representing an operator
      *
-     * @author Antonio J. Nebro <antonio@lcc.uma.es>
+     * @author Antonio J. Nebro
      * @version 1.0
 
      * @param <Source> Source Class of the object to be operated with

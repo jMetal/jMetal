@@ -15,7 +15,7 @@ import org.uma.jmetal.util.observer.Observer;
  * VAR.x.tsv and VAR.x.tsv, respectively (x is an iteration counter). The frequency of the writes are set by a
  * parameter.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class WriteSolutionsToFilesObserver implements Observer<Map<String, Object>> {
 

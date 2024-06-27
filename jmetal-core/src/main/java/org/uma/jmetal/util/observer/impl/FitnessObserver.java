@@ -10,7 +10,7 @@ import org.uma.jmetal.util.observer.Observer;
  * This observer prints the current best fitness of an algorithm. It requires a pair
  * (EVALUATIONS, int) and another pair (BEST_SOLUTION, solution) in the map used in the update() method.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class FitnessObserver implements Observer<Map<String, Object>> {
 

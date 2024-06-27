@@ -43,7 +43,7 @@ import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
  * variable values of the contributed solutions by the algorithm called "algorithmName" to
  * "problemName.ps"
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements ExperimentComponent {
   private final Experiment<?, ?> experiment;

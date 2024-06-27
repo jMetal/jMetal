@@ -8,7 +8,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**
  * This class implements a solution comparator for dominance checking
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class DefaultDominanceComparator<S extends Solution<?>> implements DominanceComparator<S> {

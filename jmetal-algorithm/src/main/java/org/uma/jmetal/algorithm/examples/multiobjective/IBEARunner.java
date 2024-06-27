@@ -20,7 +20,7 @@ import org.uma.jmetal.util.VectorUtils;
 /**
  * Class for configuring and running the IBEA algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class IBEARunner extends AbstractAlgorithmRunner {
 

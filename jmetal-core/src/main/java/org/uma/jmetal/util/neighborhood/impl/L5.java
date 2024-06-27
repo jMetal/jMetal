@@ -13,7 +13,7 @@ import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
  *               * o *
  *                 *
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

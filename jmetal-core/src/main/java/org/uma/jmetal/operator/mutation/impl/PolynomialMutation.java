@@ -20,7 +20,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * <p>If the lower and upper bounds of a variable are the same, no mutation is carried out and the
  * bound value is returned.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

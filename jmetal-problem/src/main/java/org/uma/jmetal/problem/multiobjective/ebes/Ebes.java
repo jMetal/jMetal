@@ -1,14 +1,14 @@
 /**
  * EBEs.java
  *
- * @author Gustavo R. Zavala <grzavala@gmail.com> Antonio J. Nebro <antonio@lcc.uma.es> Juan J.
+ * @author Gustavo R. Zavala <grzavala@gmail.com> Antonio J. Nebro  Juan J.
  *     Durillo <durillo@lcc.uma.es>
  * @version 1.0
  */
 /**
  * Ebes.java
  *
- * @author Gustavo R. Zavala <grzavala@gmail.com> Antonio J. Nebro <antonio@lcc.uma.es> Juan J.
+ * @author Gustavo R. Zavala <grzavala@gmail.com> Antonio J. Nebro  Juan J.
  *     Durillo <durillo@lcc.uma.es>
  * @version 1.0
  */

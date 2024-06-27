@@ -5,7 +5,7 @@ import org.uma.jmetal.operator.Operator;
 /**
  * Interface representing mutation operators
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  *
  * @param <Source> The solution class of the solution to be mutated
  */

@@ -8,7 +8,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * This class implements a solution comparator taking into account the violation constraints and
  * an optional epsilon value (i.e, implements an epsilon dominance comparator)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class EpsilonDominanceComparator<S extends Solution<?>> implements DominanceComparator<S> {
   private final double epsilon ;

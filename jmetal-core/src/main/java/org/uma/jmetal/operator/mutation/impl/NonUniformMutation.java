@@ -12,7 +12,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 /**
  * This class implements a non-uniform mutation operator.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

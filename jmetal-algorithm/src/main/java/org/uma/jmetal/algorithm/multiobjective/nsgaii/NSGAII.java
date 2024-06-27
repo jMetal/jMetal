@@ -15,7 +15,7 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceC
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {

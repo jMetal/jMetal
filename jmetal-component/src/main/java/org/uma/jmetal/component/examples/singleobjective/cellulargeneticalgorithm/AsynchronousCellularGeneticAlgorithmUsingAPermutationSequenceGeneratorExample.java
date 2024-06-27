@@ -30,7 +30,7 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 /**
  * Class to configure and run an asynchronous cellular genetic algorithm to solve a {@link DoubleProblem}
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class AsynchronousCellularGeneticAlgorithmUsingAPermutationSequenceGeneratorExample {
   public static void main(String[] args) throws JMetalException {

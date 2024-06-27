@@ -10,7 +10,7 @@ import org.uma.jmetal.solution.Solution;
  * equal or not. A dominance test is applied to decide about what solution
  * is the best.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class EqualSolutionsComparator<S extends Solution<?>> implements Comparator<S>, Serializable {

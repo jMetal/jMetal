@@ -18,7 +18,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  *
  * It is assumed that problems using instances of this class will properly manage the solutions it contains.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class CompositeSolution extends AbstractSolution<Solution<?>> {

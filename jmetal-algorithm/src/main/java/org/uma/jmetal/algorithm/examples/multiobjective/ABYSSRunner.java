@@ -21,7 +21,7 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
  * A. Beham "AbYSS: Adapting Scatter Search to Multiobjective Optimization." IEEE Transactions on
  * Evolutionary Computation. Vol. 12, No. 4 (August 2008), pp. 439-457
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class ABYSSRunner extends AbstractAlgorithmRunner {
 

@@ -6,7 +6,7 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
  * Extended pseudo random number generator based on the decorator pattern.
  * Two new methods are added: randNormal() and randSphere()
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {

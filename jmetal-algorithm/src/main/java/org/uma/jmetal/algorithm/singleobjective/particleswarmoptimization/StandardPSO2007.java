@@ -18,7 +18,7 @@ import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 /**
  * Class implementing a Standard PSO 2007 algorithm.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSolution, DoubleSolution> {

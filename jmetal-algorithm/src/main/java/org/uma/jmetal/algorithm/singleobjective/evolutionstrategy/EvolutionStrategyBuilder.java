@@ -9,7 +9,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * Class implementing a (mu , lambda) Evolution Strategy (lambda must be divisible by mu)
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class EvolutionStrategyBuilder<S extends Solution<?>> implements AlgorithmBuilder<Algorithm<S>> {
   public enum EvolutionStrategyVariant {ELITIST, NON_ELITIST}

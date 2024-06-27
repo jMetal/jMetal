@@ -11,7 +11,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 /**
  * This class implements a basic local search operator based in the use of a mutation operator.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOperator<S> {

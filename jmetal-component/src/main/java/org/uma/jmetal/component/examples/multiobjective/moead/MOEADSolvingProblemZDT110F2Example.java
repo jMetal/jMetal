@@ -27,7 +27,7 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 /**
  * Class to configure and run the NSGA-II algorithm configured with standard settings.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class MOEADSolvingProblemZDT110F2Example {
 

@@ -7,7 +7,7 @@ import org.uma.jmetal.solution.sequencesolution.SequenceSolution;
 /**
  * Defines an implementation of solution representing sequences of chars.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class CharSequenceSolution extends AbstractSolution<Character> implements SequenceSolution<Character> {

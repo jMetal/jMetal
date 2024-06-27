@@ -11,7 +11,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**
  * This class implements the crowding distance
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
 

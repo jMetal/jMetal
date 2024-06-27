@@ -34,7 +34,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * KEEL: A Software Tool to Assess Evolutionary Algorithms to Data Mining Problems. Soft Computing 13:3 (2009) 307-318
  * Doi: 10.1007/s00500-008-0323-y
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 
 public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?>>> implements ExperimentComponent {

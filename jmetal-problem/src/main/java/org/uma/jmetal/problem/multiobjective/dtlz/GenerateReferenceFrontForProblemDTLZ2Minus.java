@@ -12,7 +12,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 /**
  * Class aimed at generating a reference Pareto front por problem {@link DTLZ2Minus}
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GenerateReferenceFrontForProblemDTLZ2Minus {
   public static void main(String[] args) throws JMetalException {

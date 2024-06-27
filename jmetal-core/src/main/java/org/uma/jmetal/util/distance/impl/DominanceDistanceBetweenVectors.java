@@ -6,7 +6,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**
  * Class for calculating the dominance distance between two vectors
  *
- * @author <antonio@lcc.uma.es>
+ * @author
  */
 public class DominanceDistanceBetweenVectors implements Distance<double[], double[]> {
 

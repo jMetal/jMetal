@@ -6,7 +6,7 @@ import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 /**
  * Interface representing permutation problems
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public interface PermutationProblem<S extends PermutationSolution<?>> extends Problem<S> {
   int length() ;

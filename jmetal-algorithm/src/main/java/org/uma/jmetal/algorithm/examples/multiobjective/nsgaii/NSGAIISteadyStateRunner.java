@@ -25,7 +25,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 /**
  * Class to configure and run the NSGA-II (steady state version) algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIISteadyStateRunner extends AbstractAlgorithmRunner {
 

@@ -51,7 +51,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  * Wilcoxon Rank Sum Test 7. Generate Latex tables with the ranking obtained by applying the
  * Friedman test 8. Generate R scripts to obtain boxplots
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class ZDTScalabilityStudy {
 

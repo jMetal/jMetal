@@ -10,7 +10,7 @@ import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 /**
  * This class implements a solution comparator taking into account the violation constraints
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class DominanceWithConstraintsComparator<S extends Solution<?>> implements
     DominanceComparator<S> {

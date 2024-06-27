@@ -8,7 +8,7 @@ import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
  * of a {@link SolutionAttribute} is the class object, but it can be set to a different value
  * when constructing an instance.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings("serial")
 public class GenericSolutionAttribute <S extends Solution<?>, V> implements SolutionAttribute<S, V>{

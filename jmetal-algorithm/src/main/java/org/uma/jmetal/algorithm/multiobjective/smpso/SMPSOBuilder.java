@@ -14,7 +14,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
   public enum SMPSOVariant {SMPSO, Measures}

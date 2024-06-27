@@ -34,7 +34,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * the resulting values are store in a file called as {@link QualityIndicator #getName()}, which is located
  * in the same directory of the FUN files.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class ComputeQualityIndicators<S extends Solution<?>, Result extends List<S>> implements ExperimentComponent {
   private final Experiment<S, Result> experiment;

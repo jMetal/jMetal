@@ -31,7 +31,7 @@ import org.uma.jmetal.util.neighborhood.impl.C9;
 /**
  * Class to configure and run the MOCell algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class MOCellChangingMutationAndCrossoverProbabilitiesRunner extends AbstractAlgorithmRunner {
 

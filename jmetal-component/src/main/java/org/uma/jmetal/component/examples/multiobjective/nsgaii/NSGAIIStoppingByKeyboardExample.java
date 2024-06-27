@@ -23,7 +23,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * Class to configure and run the NSGA-II algorithm with a stopping condition based on pressing a key.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIStoppingByKeyboardExample {
   public static void main(String[] args) throws JMetalException, IOException {

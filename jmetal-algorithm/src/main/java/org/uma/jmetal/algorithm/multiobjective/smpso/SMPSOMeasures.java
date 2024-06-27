@@ -17,7 +17,7 @@ import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
 /**
  * This class implements a version of SMPSO using measures
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings("serial")
 public class SMPSOMeasures extends SMPSO implements Measurable {

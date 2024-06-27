@@ -18,7 +18,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * org.uma.jmetal.experiment, which are stored in the directory {@link Experiment
  * #getExperimentBaseDirectory()}/algorithmName/problemName.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
     implements ExperimentComponent {

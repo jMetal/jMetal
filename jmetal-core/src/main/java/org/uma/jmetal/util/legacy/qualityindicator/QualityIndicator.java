@@ -4,7 +4,7 @@ import java.io.Serializable;
 import org.uma.jmetal.util.naming.DescribedEntity;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
 
  * @param <Evaluate> Entity to runAlgorithm
  * @param <Result> Result of the evaluation

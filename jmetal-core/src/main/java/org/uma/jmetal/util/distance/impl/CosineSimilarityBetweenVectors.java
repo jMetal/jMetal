@@ -5,7 +5,7 @@ import org.uma.jmetal.util.distance.Distance;
 /**
  * Class for calculating the cosine similarity between two vectors.
  *
- * @author <antonio@lcc.uma.es>
+ * @author
  */
 public class CosineSimilarityBetweenVectors implements Distance<double[], double[]> {
 

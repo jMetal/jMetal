@@ -19,7 +19,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * A {@link RepairDoubleSolution} object is used to decide the strategy to apply when a value is out
  * of range.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class IntegerPolynomialMutation implements MutationOperator<IntegerSolution> {

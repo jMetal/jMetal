@@ -19,7 +19,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 /**
  * Integration tests for algorithm OMOPSO
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class OMOPSOIT {
   Algorithm<List<DoubleSolution>> algorithm;

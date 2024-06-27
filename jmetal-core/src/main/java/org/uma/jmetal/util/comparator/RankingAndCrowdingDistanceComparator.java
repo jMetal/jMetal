@@ -8,7 +8,7 @@ import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @version 1.0
  *     <p>This class implements a comparator based on the rank of the solutions; if the rank is the
  *     same then the crowding distance is used.

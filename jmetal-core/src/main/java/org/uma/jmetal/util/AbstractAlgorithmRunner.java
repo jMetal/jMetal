@@ -14,7 +14,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * Abstract class for Runner classes
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public abstract class AbstractAlgorithmRunner {
   /**

@@ -8,7 +8,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**d
  * Class representing an ideal point (minimization is assumed)
  *
- * @author Antonio J.Nebro <antonio@lcc.uma.es>
+ * @author Antonio J.Nebro 
  */
 public class IdealPoint extends ArrayPoint {
 

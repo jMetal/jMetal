@@ -17,7 +17,7 @@ import org.uma.jmetal.util.plot.SingleValueScatterPlot;
 
 /**
 
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class IndicatorPlotObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
   private final SingleValueScatterPlot chart;

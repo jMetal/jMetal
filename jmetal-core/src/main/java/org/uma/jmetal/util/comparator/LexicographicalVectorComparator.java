@@ -7,7 +7,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * This class implements the Comparator interface for comparing two vectors.
  * The order used is lexicographical numerical order.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class LexicographicalVectorComparator implements Comparator<double[]> {
 

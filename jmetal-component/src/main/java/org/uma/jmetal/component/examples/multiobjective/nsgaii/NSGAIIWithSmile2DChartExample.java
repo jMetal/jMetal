@@ -27,7 +27,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * Class to configure and run the NSGA-II algorithm to solve a bi-objective problem and plotting
  * the result front with Smile (https://haifengl.github.io/)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIWithSmile2DChartExample {
   public static void main(String[] args) throws JMetalException, IOException {

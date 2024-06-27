@@ -13,7 +13,7 @@ import org.uma.jmetal.util.point.Point;
 /**
  * A Front is a  list of points. This class includes utilities to work with {@link Front} objects.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @Deprecated
 public class FrontUtils {

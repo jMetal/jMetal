@@ -23,7 +23,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 /**
  * Class for configuring and running the SPEA2 algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 
 public class SPEA2Runner extends AbstractAlgorithmRunner {

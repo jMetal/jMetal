@@ -16,7 +16,7 @@ import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
  * This class implements the grouped and linked polynomial mutation operator presented in:
  * https://doi.org/10.1109/SSCI.2016.7850214
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

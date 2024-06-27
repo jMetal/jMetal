@@ -28,7 +28,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * Class to configure and run the NSGA-II algorithm using an unbounded archive that stores the
  * non-dominated solutions found during the search. The result is a subset of the archive.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIWithUnboundedArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {

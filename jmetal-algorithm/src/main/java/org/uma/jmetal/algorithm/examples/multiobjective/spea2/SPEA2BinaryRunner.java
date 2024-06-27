@@ -15,7 +15,7 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 /**
  * Class for configuring and running the SPEA2 algorithm (binary encoding)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 
 public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {

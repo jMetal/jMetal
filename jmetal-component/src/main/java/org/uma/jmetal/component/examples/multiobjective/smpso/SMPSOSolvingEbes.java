@@ -18,7 +18,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * Class for configuring and running the SMPSO algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class SMPSOSolvingEbes extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws Exception {

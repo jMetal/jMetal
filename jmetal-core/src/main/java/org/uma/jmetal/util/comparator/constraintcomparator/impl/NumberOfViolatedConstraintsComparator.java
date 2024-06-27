@@ -10,7 +10,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * This class implements a {@link Comparator} for {@link Solution} objects based on the number of
  * violated constraints of solutions.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class NumberOfViolatedConstraintsComparator<S extends Solution<?>> implements

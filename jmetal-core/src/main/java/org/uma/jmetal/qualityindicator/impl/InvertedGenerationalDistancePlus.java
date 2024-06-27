@@ -11,7 +11,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * Reference: Ishibuchi et al 2015, "A Study on Performance Evaluation Ability of a Modified
  * Inverted Generational Distance Indicator", GECCO 2015
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class InvertedGenerationalDistancePlus extends QualityIndicator {

@@ -9,7 +9,7 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
  * relative hypervolume = 1 - (HV of the front / HV of the reference front).
  * Before computing this indicator it must be checked that the HV of the reference front is not zero.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NormalizedHypervolume extends QualityIndicator {
   private double referenceFrontHypervolume;

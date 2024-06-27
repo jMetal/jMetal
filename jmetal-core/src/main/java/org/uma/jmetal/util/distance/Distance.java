@@ -3,7 +3,7 @@ package org.uma.jmetal.util.distance;
 /**
  * Interface representing distances between two entities
  *
- * @author <antonio@lcc.uma.es>
+ * @author
  */
 @FunctionalInterface
 public interface Distance<E, J> {

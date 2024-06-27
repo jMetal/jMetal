@@ -6,7 +6,7 @@ import org.uma.jmetal.util.observer.Observer;
 /**
  * Interface representing observable entities according to the Observer Pattern
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public interface Observable<D> {
 	void register(Observer<D> observer) ;

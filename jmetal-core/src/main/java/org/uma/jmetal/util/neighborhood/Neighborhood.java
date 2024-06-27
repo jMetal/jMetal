@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Interface representing a neighborhood of a given solution in a list of solutions
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public interface Neighborhood<S> extends Serializable {
   enum NeighborType {

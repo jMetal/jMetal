@@ -15,7 +15,7 @@ import org.uma.jmetal.util.observer.Observer;
  *  * - (EVALUATIONS, int)
  *  * - (POPULATION, List<Solution>)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class RunTimeForDynamicProblemsChartObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
   private ChartForDynamicProblemsContainer<S> chart;

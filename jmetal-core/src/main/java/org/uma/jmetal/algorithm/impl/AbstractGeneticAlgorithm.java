@@ -11,7 +11,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 /**
  * Abstract class representing a genetic algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolutionaryAlgorithm<S, Result> {

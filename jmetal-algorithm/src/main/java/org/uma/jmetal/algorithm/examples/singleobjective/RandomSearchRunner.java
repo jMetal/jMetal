@@ -15,7 +15,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 /**
  * Class for configuring and running the random search algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 
 public class RandomSearchRunner extends AbstractAlgorithmRunner {

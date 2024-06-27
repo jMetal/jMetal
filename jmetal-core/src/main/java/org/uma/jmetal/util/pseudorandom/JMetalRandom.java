@@ -4,7 +4,7 @@ import java.io.Serializable;
 import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class JMetalRandom implements Serializable {

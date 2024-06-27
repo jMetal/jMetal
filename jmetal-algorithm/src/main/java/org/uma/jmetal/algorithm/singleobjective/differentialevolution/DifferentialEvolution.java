@@ -13,7 +13,7 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 /**
  * This class implements a differential evolution algorithm.
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleSolution> {

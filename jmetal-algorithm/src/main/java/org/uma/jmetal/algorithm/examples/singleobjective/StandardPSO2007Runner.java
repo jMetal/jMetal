@@ -19,7 +19,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
  * Class to configure and run a StandardPSO2007. The algorithm can be configured to use threads. The
  * number of cores is specified as an optional parameter. The target problem is Sphere.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class StandardPSO2007Runner {
   private static final int DEFAULT_NUMBER_OF_CORES = 1;

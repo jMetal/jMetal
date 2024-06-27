@@ -12,7 +12,7 @@ import org.uma.jmetal.util.point.impl.ArrayPoint;
 /**
  * This interface represents implementations of the Hypervolume quality indicator
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

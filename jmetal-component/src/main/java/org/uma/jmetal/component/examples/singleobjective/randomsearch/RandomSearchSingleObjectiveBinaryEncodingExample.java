@@ -22,7 +22,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * Class to configure and run the a random search.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class RandomSearchSingleObjectiveBinaryEncodingExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException {

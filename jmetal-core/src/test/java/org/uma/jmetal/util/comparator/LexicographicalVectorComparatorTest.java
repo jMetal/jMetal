@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @version 1.0
  */
 public class LexicographicalVectorComparatorTest {

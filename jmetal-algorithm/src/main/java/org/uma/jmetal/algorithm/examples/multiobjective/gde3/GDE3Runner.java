@@ -19,7 +19,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 /**
  * Class for configuring and running the GDE3 algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GDE3Runner extends AbstractAlgorithmRunner {
 

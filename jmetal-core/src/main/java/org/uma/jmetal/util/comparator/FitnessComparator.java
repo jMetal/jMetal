@@ -10,7 +10,7 @@ import org.uma.jmetal.util.solutionattribute.impl.Fitness;
  * <code>Solution</code> objects) based on the fitness value returned by the
  * method <code>getFitness</code>.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class FitnessComparator<S extends Solution<?>> implements Comparator<S>, Serializable {

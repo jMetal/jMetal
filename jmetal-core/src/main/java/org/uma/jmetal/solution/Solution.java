@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Interface representing a Solution
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @param <T> Type (Double, Integer, etc.)
  */
 public interface Solution<T> extends Serializable {

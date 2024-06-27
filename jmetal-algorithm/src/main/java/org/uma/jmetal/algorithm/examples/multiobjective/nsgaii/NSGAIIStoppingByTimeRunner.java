@@ -25,7 +25,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 /**
  * Class to configure and run the NSGA-II algorithm (version NSGAIIStoppingByTime)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIStoppingByTimeRunner extends AbstractAlgorithmRunner {
   /**

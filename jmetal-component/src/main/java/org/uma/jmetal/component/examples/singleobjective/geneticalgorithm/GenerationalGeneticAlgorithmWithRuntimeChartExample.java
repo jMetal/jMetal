@@ -22,7 +22,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * Class to configure and run a generational genetic algorithm to solve a {@link DoubleProblem}
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GenerationalGeneticAlgorithmWithRuntimeChartExample {
   public static void main(String[] args) throws JMetalException, IOException {

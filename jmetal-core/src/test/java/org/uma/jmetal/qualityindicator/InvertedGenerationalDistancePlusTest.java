@@ -6,7 +6,7 @@ import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class InvertedGenerationalDistancePlusTest {
   private static final double EPSILON = 0.0000000000001;

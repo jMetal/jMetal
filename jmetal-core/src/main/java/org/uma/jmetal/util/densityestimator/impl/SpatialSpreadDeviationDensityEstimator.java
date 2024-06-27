@@ -14,7 +14,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**
  * This class implements a density estimator based on the distance to the k-th nearest solution
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class SpatialSpreadDeviationDensityEstimator<S extends Solution<?>>
     implements DensityEstimator<S> {

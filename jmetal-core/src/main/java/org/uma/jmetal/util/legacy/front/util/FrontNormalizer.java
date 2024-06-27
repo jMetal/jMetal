@@ -9,7 +9,7 @@ import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 /**
  * Class for normalizing {@link Front} objects
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @Deprecated
 public class FrontNormalizer {

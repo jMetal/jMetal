@@ -3,7 +3,7 @@ package org.uma.jmetal.util.extremevalues;
 /**
  * Interface representing classes aimed at finding the extreme values of Source objects (e.g., lists)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  *
  * @param <Source>
  * @param <Result>

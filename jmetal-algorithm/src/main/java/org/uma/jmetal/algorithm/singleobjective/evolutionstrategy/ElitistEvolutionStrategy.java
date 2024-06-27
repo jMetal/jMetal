@@ -13,7 +13,7 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 /**
  * Class implementing a (mu + lambda) Evolution Strategy (lambda must be divisible by mu)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvolutionStrategy<S, S> {

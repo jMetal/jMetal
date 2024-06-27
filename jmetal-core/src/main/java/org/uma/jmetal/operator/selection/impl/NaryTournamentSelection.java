@@ -13,7 +13,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * Applies a N-ary tournament selection to return the best solution between N that have been chosen
  * at random from a solution list.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings("serial")
 public class NaryTournamentSelection<S extends Solution<?>>

@@ -22,7 +22,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 /**
  * Class to configure and run a generational genetic algorithm. The target problem is {@link StringMatching}.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GenerationalGeneticAlgorithmStringMatchingRunner {
   public static void main(String[] args) {

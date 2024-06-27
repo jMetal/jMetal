@@ -13,7 +13,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 /**
  * This class implements a single point crossover operator.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class SinglePointCrossover<S extends BinarySolution> implements CrossoverOperator<S> {

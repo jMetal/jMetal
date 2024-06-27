@@ -22,7 +22,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * Class to configure and run the NSGA-II algorithm configured with standard settings for solving
  * a binary problem ({@link OneZeroMax} is a multi-objective variant of OneMax).
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIBinaryProblemExample {
   public static void main(String[] args) throws JMetalException, IOException {

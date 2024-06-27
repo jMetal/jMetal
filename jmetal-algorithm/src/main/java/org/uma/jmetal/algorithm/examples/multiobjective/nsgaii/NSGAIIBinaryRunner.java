@@ -19,7 +19,7 @@ import org.uma.jmetal.util.JMetalLogger;
 /**
  * Class for configuring and running the NSGA-II algorithm (binary encoding)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 
 public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {

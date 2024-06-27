@@ -35,7 +35,7 @@ import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 /**
  * Class to configure and run the R-NSGA-II algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Cristobal Barba <cbarba@lcc.uma.es>
  */
 public class RNSGAIIConstraintRunner extends AbstractAlgorithmRunner {

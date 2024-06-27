@@ -10,7 +10,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-/** @author Antonio J. Nebro <antonio@lcc.uma.es> */
+/** @author Antonio J. Nebro  */
 public class GenericSolutionAttributeTest {
 
   @Test

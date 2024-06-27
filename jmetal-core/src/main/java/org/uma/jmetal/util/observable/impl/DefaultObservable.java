@@ -7,7 +7,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
 
-/** @author Antonio J. Nebro <antonio@lcc.uma.es> */
+/** @author Antonio J. Nebro  */
 public class DefaultObservable<D> implements Observable<D> {
   private final Set<Observer<D>> observers;
   private boolean dataHasChanged;

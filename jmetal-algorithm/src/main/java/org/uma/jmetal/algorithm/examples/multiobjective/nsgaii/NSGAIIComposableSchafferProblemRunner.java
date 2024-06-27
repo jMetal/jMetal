@@ -22,7 +22,7 @@ import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
  * {@link org.uma.jmetal.problem.multiobjective.Schaffer} problem, which is defined dynamically by
  * using the {@link ComposableDoubleProblem} class.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIComposableSchafferProblemRunner extends AbstractAlgorithmRunner {
 

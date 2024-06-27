@@ -7,7 +7,7 @@ import org.uma.jmetal.util.binarySet.BinarySet;
 /**
  * Interface representing binary (bitset) solutions
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public interface BinarySolution extends Solution<BinarySet> {
   List<Integer> numberOfBitsPerVariable() ;

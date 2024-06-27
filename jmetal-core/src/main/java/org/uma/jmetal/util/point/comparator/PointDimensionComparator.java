@@ -8,7 +8,7 @@ import org.uma.jmetal.util.point.Point;
  * This class implements the {@link Comparator} interface. It is used
  * to compare two points according the value of a particular dimension.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 public class PointDimensionComparator implements Comparator<Point> {

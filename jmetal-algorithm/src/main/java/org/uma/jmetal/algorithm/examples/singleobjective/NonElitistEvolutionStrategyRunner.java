@@ -18,7 +18,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
  * Class to configure and run a non elitist (mu,lamba) evolution strategy. The target problem is
  * OneMax.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NonElitistEvolutionStrategyRunner {
 

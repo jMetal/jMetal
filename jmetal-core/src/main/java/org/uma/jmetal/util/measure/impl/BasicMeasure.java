@@ -7,7 +7,7 @@ import org.uma.jmetal.util.measure.PushMeasure;
  * A {@link BasicMeasure} provides a simple way to define a
  * measure that merely stores a single value
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings("serial")
 public class BasicMeasure<T> extends SimplePushMeasure<T> implements

@@ -12,7 +12,7 @@ import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @DisplayName("The compute() method of class EuclideanDistanceBetweenVectors")
 public class EuclideanDistanceBetweenVectorsTest {

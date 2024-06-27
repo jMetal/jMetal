@@ -4,7 +4,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 /**
  * Abstract class representing an evolution strategy algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 
 @SuppressWarnings("serial")

@@ -18,7 +18,7 @@ import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
  * SMPSO: A new PSO-based metaheuristic for multi-objective optimization
  * MCDM 2009. DOI: http://dx.doi.org/10.1109/MCDM.2009.4938830
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> {

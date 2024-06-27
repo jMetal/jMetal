@@ -8,7 +8,7 @@ import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @param <S>
  */
 public abstract class AbstractBoundedArchive<S extends Solution<?>> implements BoundedArchive<S> {

@@ -15,7 +15,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * This class implements the linked polynomial mutation operator presented in: https://doi.org/10.1109/SSCI.2016.7850214
  *
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class LinkedPolynomialMutation implements MutationOperator<DoubleSolution> {

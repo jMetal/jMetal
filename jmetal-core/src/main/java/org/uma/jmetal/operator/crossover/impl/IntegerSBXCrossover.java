@@ -13,7 +13,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 /**
  * This class allows to apply a SBX crossover operator using two parent solutions (Integer encoding)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {

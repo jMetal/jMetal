@@ -20,7 +20,7 @@ import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 /**
  * Class for configuring and running the SMPSO algorithm (parallel version)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 
 public class ParallelSMPSORunner extends AbstractAlgorithmRunner {

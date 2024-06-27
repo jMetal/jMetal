@@ -26,7 +26,7 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHyp
 /**
  * Class to configure and run the MOCell algorithm
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class MOCellHVRunner extends AbstractAlgorithmRunner {
 

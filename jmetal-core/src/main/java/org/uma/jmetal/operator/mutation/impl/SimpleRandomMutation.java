@@ -10,7 +10,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 /**
  * This class implements a random mutation operator for double solutions
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {

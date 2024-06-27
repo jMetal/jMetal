@@ -9,7 +9,7 @@ import org.uma.jmetal.util.observer.Observer;
  * This observer prints the current evaluation number of an algorithm. It expects a pair
  * (EVALUATIONS, int) in the map used in the update() method.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 public class EvaluationObserver implements Observer<Map<String, Object>> {
 

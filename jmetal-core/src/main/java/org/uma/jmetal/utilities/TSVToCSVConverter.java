@@ -14,7 +14,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * <p>The program receives two parameters: 1. The name of the input TSV file 2. The name of the
  * output CSV file
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class TSVToCSVConverter {
   public static void main(String[] args) throws IOException {

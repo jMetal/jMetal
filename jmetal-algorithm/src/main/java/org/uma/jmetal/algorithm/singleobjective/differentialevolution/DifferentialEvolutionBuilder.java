@@ -10,7 +10,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 /**
  * DifferentialEvolutionBuilder class
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class DifferentialEvolutionBuilder {
   private DoubleProblem problem;

@@ -9,7 +9,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * This class implements a selection operator used for selecting the best solution
  * in a list according to a given comparator.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class BestSolutionSelection<S> implements SelectionOperator<List<S>, S> {
 private final Comparator<S> comparator ;

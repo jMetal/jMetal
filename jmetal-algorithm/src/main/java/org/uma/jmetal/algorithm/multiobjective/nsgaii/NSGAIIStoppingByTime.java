@@ -12,7 +12,7 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 /**
  * This class shows a version of NSGA-II having a stopping condition depending on run-time
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings("serial")
 public class NSGAIIStoppingByTime<S extends Solution<?>> extends NSGAII<S> {

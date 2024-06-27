@@ -9,7 +9,7 @@ import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class DominanceDistanceBetweenVectorsTest {
   private static final double EPSILON = 0.0000000000001 ;

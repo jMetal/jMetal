@@ -8,7 +8,7 @@ import org.uma.jmetal.util.bounds.Bounds;
 /**
  * Interface representing continuous problems
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 public interface DoubleProblem extends Problem<DoubleSolution> {
   List<Bounds<Double>> variableBounds() ;

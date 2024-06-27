@@ -10,7 +10,7 @@ import org.uma.jmetal.algorithm.Algorithm;
  * @param <S> Solution
  * @param <R> Result
 
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public abstract class AbstractScatterSearch<S, R>  implements Algorithm<R>{

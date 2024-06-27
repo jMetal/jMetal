@@ -11,7 +11,7 @@ import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
  * Defines an implementation of solution composed of a permutation of integers. A permutation is
  * represented as a list of integers, so the permutation length is equal to the number of variables.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class IntegerPermutationSolution extends AbstractSolution<Integer>

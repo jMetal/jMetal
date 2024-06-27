@@ -23,7 +23,7 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithCons
  * {@link org.uma.jmetal.problem.multiobjective.Srinivas} problem, which is defined dynamically by
  * using the {@link ComposableDoubleProblem} class.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunner {
 

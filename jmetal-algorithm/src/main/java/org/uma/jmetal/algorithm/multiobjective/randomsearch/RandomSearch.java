@@ -9,7 +9,7 @@ import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 /**
  * This class implements a simple random search algorithm.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class RandomSearch<S extends Solution<?>> implements Algorithm<List<S>> {

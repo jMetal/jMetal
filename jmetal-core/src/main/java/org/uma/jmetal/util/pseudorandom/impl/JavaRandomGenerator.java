@@ -4,7 +4,7 @@ import java.util.Random;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 @SuppressWarnings("serial")
 public class JavaRandomGenerator implements PseudoRandomGenerator {

@@ -8,7 +8,7 @@ import org.uma.jmetal.util.comparator.constraintcomparator.ConstraintComparator;
  * This class implements a <code>Comparator</code> (a method for comparing <code>Solution</code> objects)
  * based on the overall constraint violation of the solutions, as done in NSGA-II.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class OverallConstraintViolationDegreeComparator<S extends Solution<?>> implements
     ConstraintComparator<S> {

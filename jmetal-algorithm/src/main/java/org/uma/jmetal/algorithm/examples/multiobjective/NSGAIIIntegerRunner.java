@@ -17,7 +17,7 @@ import org.uma.jmetal.util.JMetalLogger;
 /**
  * Class for configuring and running the NSGA-II algorithm (integer encoding)
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 
 public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {

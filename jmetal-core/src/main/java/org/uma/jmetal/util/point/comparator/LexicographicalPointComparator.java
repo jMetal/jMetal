@@ -8,7 +8,7 @@ import org.uma.jmetal.util.point.Point;
  * This class implements the Comparator interface for comparing two points.
  * The order used is lexicographical order.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
 
  */

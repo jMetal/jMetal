@@ -11,7 +11,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * Evolutionary Algorithms: A Comparative Case Study and the Strength Pareto Approach, IEEE
  * Transactions on Evolutionary Computation, vol. 3, no. 4, pp. 257-271, 1999.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

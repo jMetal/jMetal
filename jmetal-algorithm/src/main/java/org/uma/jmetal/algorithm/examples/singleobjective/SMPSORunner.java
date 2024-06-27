@@ -22,7 +22,7 @@ import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 /**
  * Class for configuring and running the SMPSO algorithm to solve a single-objective problem
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class SMPSORunner extends AbstractAlgorithmRunner {
   /**

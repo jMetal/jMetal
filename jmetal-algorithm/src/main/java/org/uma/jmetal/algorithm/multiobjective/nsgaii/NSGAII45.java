@@ -19,7 +19,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
  * Implementation of NSGA-II following the scheme used in jMetal4.5 and former versions, i.e,
  * without implementing the {@link AbstractGeneticAlgorithm} interface.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   protected List<S> population;

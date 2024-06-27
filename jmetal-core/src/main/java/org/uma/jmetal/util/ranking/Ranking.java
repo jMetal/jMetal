@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Ranks a list of population according to the dominance relationship
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public interface Ranking<S> {
   Ranking<S> compute(List<S> solutionList) ;

@@ -16,7 +16,7 @@ import org.uma.jmetal.util.VectorUtils;
 /**
  * Integration tests for algorithm DMOPSO
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro 
  */
 public class DMOPSOIT {
   Algorithm<List<DoubleSolution>> algorithm;

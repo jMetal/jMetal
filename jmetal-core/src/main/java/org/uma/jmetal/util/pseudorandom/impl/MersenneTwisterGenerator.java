@@ -4,7 +4,7 @@ import org.apache.commons.math3.random.MersenneTwister;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class MersenneTwisterGenerator implements PseudoRandomGenerator {

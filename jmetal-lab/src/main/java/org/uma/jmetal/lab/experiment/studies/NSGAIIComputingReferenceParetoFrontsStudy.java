@@ -55,7 +55,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * 7. Generate Latex tables with the ranking obtained by applying the Friedman test 8. Generate R scripts to obtain boxplots
  * 8. Generate HTML pages
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class NSGAIIComputingReferenceParetoFrontsStudy {
 

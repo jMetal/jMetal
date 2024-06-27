@@ -16,7 +16,7 @@ All the problems in jMetal implement the `Problem <https://github.com/jMetal/jMe
     /**
      * Interface representing a multi-objective optimization problem
      *
-     * @author Antonio J. Nebro <antonio@lcc.uma.es>
+     * @author Antonio J. Nebro
      *
      * @param <S> Encoding
      */

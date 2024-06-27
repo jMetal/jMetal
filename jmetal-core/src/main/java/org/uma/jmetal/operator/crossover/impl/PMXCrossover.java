@@ -12,7 +12,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 /**
  * This class allows to apply a PMX crossover operator using two parent solutions.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")

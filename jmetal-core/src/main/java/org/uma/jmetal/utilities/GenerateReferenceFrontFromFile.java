@@ -23,7 +23,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
  * 1. the name of the file or directory containing the data
  * 2. the output file name which will contain the generated front
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class GenerateReferenceFrontFromFile {
   public static void main(String[] args) throws IOException {

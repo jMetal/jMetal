@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Interface representing an archive of solutions
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public interface Archive<S> extends Serializable {
   boolean add(S solution) ;

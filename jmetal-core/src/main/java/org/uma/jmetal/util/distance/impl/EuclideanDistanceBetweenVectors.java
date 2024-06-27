@@ -6,7 +6,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**
  * Class for calculating the Euclidean distance between two vectors
  *
- * @author <antonio@lcc.uma.es>
+ * @author 
  */
 public class EuclideanDistanceBetweenVectors implements Distance<double[], double[]> {
 

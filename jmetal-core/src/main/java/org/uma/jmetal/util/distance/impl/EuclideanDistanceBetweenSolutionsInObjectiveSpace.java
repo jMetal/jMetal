@@ -6,7 +6,7 @@ import org.uma.jmetal.util.distance.Distance;
 /**
  * Class for calculating the Euclidean distance between two {@link Solution} objects in objective space.
  *
- * @author <antonio@lcc.uma.es>
+ * @author
  */
 public class EuclideanDistanceBetweenSolutionsInObjectiveSpace<S extends Solution<?>>
     implements Distance<S, S> {

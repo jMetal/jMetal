@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.logging.Logger;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class JMetalLogger implements Serializable {
 
