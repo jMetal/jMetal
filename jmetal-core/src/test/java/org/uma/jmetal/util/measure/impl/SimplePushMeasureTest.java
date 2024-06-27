@@ -2,13 +2,14 @@ package org.uma.jmetal.util.measure.impl;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.measure.MeasureListener;
 
-public class SimplePushMeasureTest {
+class SimplePushMeasureTest {
 
 	@Test
-	public void testNotifiedWhenRegistered() {
+  void testNotifiedWhenRegistered() {
 		final Integer[] lastReceived = { null };
 		MeasureListener<Integer> listener = new MeasureListener<Integer>() {
 
@@ -21,15 +22,15 @@ public class SimplePushMeasureTest {
 		pusher.register(listener);
 
 		pusher.push(3);
-		assertEquals(3, (Object) lastReceived[0]);
+		Assertions.assertEquals(3, (Object) lastReceived[0]);
 		pusher.push(null);
-		assertEquals(null, (Object) lastReceived[0]);
+		Assertions.assertEquals(null, (Object) lastReceived[0]);
 		pusher.push(5);
-		assertEquals(5, (Object) lastReceived[0]);
+		Assertions.assertEquals(5, (Object) lastReceived[0]);
 	}
 
 	@Test
-	public void testNotNotifiedWhenUnregistered() {
+  void testNotNotifiedWhenUnregistered() {
 		final Integer[] lastReceived = { null };
 		MeasureListener<Integer> listener = new MeasureListener<Integer>() {
 
@@ -43,9 +44,9 @@ public class SimplePushMeasureTest {
 		pusher.unregister(listener);
 
 		pusher.push(3);
-		assertEquals(null, (Object) lastReceived[0]);
+		Assertions.assertEquals(null, (Object) lastReceived[0]);
 		pusher.push(-45);
-		assertEquals(null, (Object) lastReceived[0]);
+		Assertions.assertEquals(null, (Object) lastReceived[0]);
 	}
 
 }

@@ -7,37 +7,39 @@ import static org.junit.Assert.assertTrue;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.PullMeasure;
 import org.uma.jmetal.util.measure.PushMeasure;
 
-public class MeasureFactoryTest {
+class MeasureFactoryTest {
 
 	@Test
-	public void testCreatePullFromPush() {
+  void testCreatePullFromPush() {
 		MeasureFactory factory = new MeasureFactory();
 		SimplePushMeasure<Integer> push = new SimplePushMeasure<>();
 		PullMeasure<Integer> pull = factory.createPullFromPush(push, null);
 
-		assertEquals(null, (Object) pull.get());
+		Assertions.assertEquals(null, (Object) pull.get());
 		push.push(3);
-		assertEquals(3, (Object) pull.get());
+		Assertions.assertEquals(3, (Object) pull.get());
 		push.push(5);
-		assertEquals(5, (Object) pull.get());
+		Assertions.assertEquals(5, (Object) pull.get());
 		push.push(null);
-		assertEquals(null, (Object) pull.get());
+		Assertions.assertEquals(null, (Object) pull.get());
 		push.push(-65);
 		push.push(8);
 		push.push(4);
 		push.push(-10);
-		assertEquals(-10, (Object) pull.get());
+		Assertions.assertEquals(-10, (Object) pull.get());
 	}
 
-  @Ignore @Test
+  @Disabled
+	@Test
   @SuppressWarnings("serial")
-	public void testCreatePushFromPullNotifiesWithTheCorrectFrequency()
+  void testCreatePushFromPullNotifiesWithTheCorrectFrequency()
 			throws InterruptedException {
 		// create a pull measure
 		/*
@@ -116,22 +118,22 @@ public class MeasureFactoryTest {
 		 */
 		int minIterations = (int) Math.floor(iterations * (1 - sensibility));
 		int maxIterations = (int) Math.ceil(iterations * (1 + sensibility));
-		assertTrue(timestamps.size() + " notifications, it should be between "
-				+ minIterations + " and " + maxIterations,
-				timestamps.size() >= minIterations
-						&& timestamps.size() <= maxIterations);
+		Assertions.assertTrue(timestamps.size() >= minIterations
+				&& timestamps.size() <= maxIterations, timestamps.size() + " notifications, it should be between "
+						+ minIterations + " and " + maxIterations);
 
 		// check the average period is reasonable
 		long average = timestamps.getLast() / timestamps.size();
 		long minPeriod = (long) Math.floor(period * (1 - sensibility));
 		long maxPeriod = (long) Math.ceil(period * (1 + sensibility));
-		assertTrue(average + "ms, it should be between " + minPeriod + " and "
-				+ maxPeriod, average >= minPeriod && average <= maxPeriod);
+		Assertions.assertTrue(average >= minPeriod && average <= maxPeriod,
+				average + "ms, it should be between " + minPeriod + " and "
+						+ maxPeriod);
 	}
 
 	@Test
 	@SuppressWarnings("serial")
-	public void testCreatePushFromPullStopNotificationsWhenPullDestroyed()
+  void testCreatePushFromPullStopNotificationsWhenPullDestroyed()
 			throws InterruptedException {
 		// create a pull measure which is always different, thus leading to
 		// generate a notification at every check
@@ -168,12 +170,12 @@ public class MeasureFactoryTest {
 
 		// check no notifications are coming anymore
 		Thread.sleep(10 * period);
-		assertEquals(0, timestamps.size());
+		Assertions.assertEquals(0, timestamps.size());
 	}
 
 	@Test
 	@SuppressWarnings("serial")
-	public void testCreatePushFromPullStopNotificationsWhenPushDestroyed()
+  void testCreatePushFromPullStopNotificationsWhenPushDestroyed()
 			throws InterruptedException {
 		// create a pull measure which is always different, thus leading to
 		// generate a notification at every check
@@ -201,12 +203,12 @@ public class MeasureFactoryTest {
 		// check no periodical check are made anymore
 		isCalled[0] = false;
 		Thread.sleep(10 * period);
-		assertFalse(isCalled[0]);
+		Assertions.assertFalse(isCalled[0]);
 	}
 
 	@Test
 	@SuppressWarnings("serial")
-	public void testCreatePushFromPullNotifiesOnlyWhenValueChanged()
+  void testCreatePushFromPullNotifiesOnlyWhenValueChanged()
 			throws InterruptedException {
 		// create a pull measure which changes only when we change the value of
 		// the array
@@ -235,51 +237,51 @@ public class MeasureFactoryTest {
 
 		// check no change provide no notifications
 		Thread.sleep(10 * period);
-		assertEquals(0, notified.size());
+		Assertions.assertEquals(0, notified.size());
 
 		// check 1 change provides 1 notification with the correct value
 		value[0] = 56;
 		Thread.sleep(10 * period);
-		assertEquals(1, notified.size());
-		assertEquals(56, (Object) notified.get(0));
+		Assertions.assertEquals(1, notified.size());
+		Assertions.assertEquals(56, (Object) notified.get(0));
 
 		// check 1 more change provides 1 more notification with the new value
 		value[0] = 43;
 		Thread.sleep(10 * period);
-		assertEquals(2, notified.size());
-		assertEquals(56, (Object) notified.get(0));
-		assertEquals(43, (Object) notified.get(1));
+		Assertions.assertEquals(2, notified.size());
+		Assertions.assertEquals(56, (Object) notified.get(0));
+		Assertions.assertEquals(43, (Object) notified.get(1));
 
 		// check 1 more change provides 1 more notification with the new value
 		value[0] = -43;
 		Thread.sleep(10 * period);
-		assertEquals(3, notified.size());
-		assertEquals(56, (Object) notified.get(0));
-		assertEquals(43, (Object) notified.get(1));
-		assertEquals(-43, (Object) notified.get(2));
+		Assertions.assertEquals(3, notified.size());
+		Assertions.assertEquals(56, (Object) notified.get(0));
+		Assertions.assertEquals(43, (Object) notified.get(1));
+		Assertions.assertEquals(-43, (Object) notified.get(2));
 
 		// check no change provide no more notifications
 		Thread.sleep(10 * period);
-		assertEquals(3, notified.size());
-		assertEquals(56, (Object) notified.get(0));
-		assertEquals(43, (Object) notified.get(1));
-		assertEquals(-43, (Object) notified.get(2));
+		Assertions.assertEquals(3, notified.size());
+		Assertions.assertEquals(56, (Object) notified.get(0));
+		Assertions.assertEquals(43, (Object) notified.get(1));
+		Assertions.assertEquals(-43, (Object) notified.get(2));
 	}
 
 	@Test
-	public void testCreatePullsFromGettersRetrieveNothingFromEmptyObject() {
+  void testCreatePullsFromGettersRetrieveNothingFromEmptyObject() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
 				.createPullsFromGetters(new Object());
-		assertTrue(measures.toString(), measures.isEmpty());
+		Assertions.assertTrue(measures.isEmpty(), measures.toString());
 	}
 
 	@Test
-	public void testCreatePullsFromFieldsRetrieveNothingFromEmptyObject() {
+  void testCreatePullsFromFieldsRetrieveNothingFromEmptyObject() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
 				.createPullsFromFields(new Object());
-		assertTrue(measures.toString(), measures.isEmpty());
+		Assertions.assertTrue(measures.isEmpty(), measures.toString());
 	}
 
 	@SuppressWarnings("unused")
@@ -321,77 +323,75 @@ public class MeasureFactoryTest {
 	}
 
 	@Test
-	public void testCreatePullsFromGettersRetrieveAllInstantiatedPublicGetters() {
+  void testCreatePullsFromGettersRetrieveAllInstantiatedPublicGetters() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
 				.createPullsFromGetters(new Child());
-		assertTrue(measures.toString(), measures.containsKey("ChildPublic"));
-		assertEquals("child-test", measures.get("ChildPublic").get());
+		Assertions.assertTrue(measures.containsKey("ChildPublic"), measures.toString());
+		Assertions.assertEquals("child-test", measures.get("ChildPublic").get());
 	}
 
 	@Test
-	public void testCreatePullsFromFieldsRetrieveAllInstantiatedPublicFields() {
+  void testCreatePullsFromFieldsRetrieveAllInstantiatedPublicFields() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
 				.createPullsFromFields(new Child());
-		assertTrue(measures.toString(), measures.containsKey("childPublic"));
-		assertEquals(false, measures.get("childPublic").get());
+		Assertions.assertTrue(measures.containsKey("childPublic"), measures.toString());
+		Assertions.assertEquals(false, measures.get("childPublic").get());
 	}
 
 	@Test
-	public void testCreatePullsFromGettersRetrieveAllInheritedPublicGetters() {
+  void testCreatePullsFromGettersRetrieveAllInheritedPublicGetters() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
 				.createPullsFromGetters(new Child());
-		assertTrue(measures.toString(), measures.containsKey("ParentPublic"));
-		assertEquals("parent-test", measures.get("ParentPublic").get());
+		Assertions.assertTrue(measures.containsKey("ParentPublic"), measures.toString());
+		Assertions.assertEquals("parent-test", measures.get("ParentPublic").get());
 	}
 
 	@Test
-	public void testCreatePullsFromFieldsRetrieveAllInheritedPublicFields() {
+  void testCreatePullsFromFieldsRetrieveAllInheritedPublicFields() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
 				.createPullsFromFields(new Child());
-		assertTrue(measures.toString(), measures.containsKey("parentPublic"));
-		assertEquals(true, measures.get("parentPublic").get());
+		Assertions.assertTrue(measures.containsKey("parentPublic"), measures.toString());
+		Assertions.assertEquals(true, measures.get("parentPublic").get());
 	}
 
 	@Test
-	public void testCreatePullsFromGettersRetrieveNoInstantiatedProtectedNorPrivateGetter() {
+  void testCreatePullsFromGettersRetrieveNoInstantiatedProtectedNorPrivateGetter() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
 				.createPullsFromGetters(new Child());
-		assertFalse(measures.toString(), measures.containsKey("ChildProtected"));
-		assertFalse(measures.toString(), measures.containsKey("ChildPrivate"));
+		Assertions.assertFalse(measures.containsKey("ChildProtected"), measures.toString());
+		Assertions.assertFalse(measures.containsKey("ChildPrivate"), measures.toString());
 	}
 
 	@Test
-	public void testCreatePullsFromFieldsRetrieveNoInstantiatedProtectedNorPrivateField() {
+  void testCreatePullsFromFieldsRetrieveNoInstantiatedProtectedNorPrivateField() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
 				.createPullsFromFields(new Child());
-		assertFalse(measures.toString(), measures.containsKey("childProtected"));
-		assertFalse(measures.toString(), measures.containsKey("childPrivate"));
+		Assertions.assertFalse(measures.containsKey("childProtected"), measures.toString());
+		Assertions.assertFalse(measures.containsKey("childPrivate"), measures.toString());
 	}
 
 	@Test
-	public void testCreatePullsFromGettersRetrieveNoInheritedProtectedNorPrivateGetter() {
+  void testCreatePullsFromGettersRetrieveNoInheritedProtectedNorPrivateGetter() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
 				.createPullsFromGetters(new Child());
-		assertFalse(measures.toString(),
-				measures.containsKey("ParentProtected"));
-		assertFalse(measures.toString(), measures.containsKey("ParentPrivate"));
+		Assertions.assertFalse(measures.containsKey("ParentProtected"), measures.toString());
+		Assertions.assertFalse(measures.containsKey("ParentPrivate"), measures.toString());
 	}
 
 	@Test
-	public void testCreatePullsFromFieldsRetrieveNoInheritedProtectedNorPrivateField() {
+  void testCreatePullsFromFieldsRetrieveNoInheritedProtectedNorPrivateField() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
 				.createPullsFromFields(new Child());
-		assertFalse(measures.toString(),
-				measures.containsKey("parentProtected"));
-		assertFalse(measures.toString(), measures.containsKey("parentPrivate"));
+		Assertions.assertFalse(measures.containsKey("parentProtected"), measures.toString());
+		Assertions.assertFalse(measures.containsKey("parentPrivate"), measures.toString());
 	}
 
 }

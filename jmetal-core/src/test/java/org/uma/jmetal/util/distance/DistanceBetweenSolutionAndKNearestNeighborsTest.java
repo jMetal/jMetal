@@ -4,18 +4,19 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.impl.DistanceBetweenSolutionAndKNearestNeighbors;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInSolutionSpace;
 
-public class DistanceBetweenSolutionAndKNearestNeighborsTest {
+class DistanceBetweenSolutionAndKNearestNeighborsTest {
   private static final double EPSILON = 0.00000000001 ;
 
   @Test
-  public void shouldGetDistanceReturnZeroIfTheSolutionListContainsOnlyTheSolution() {
+  void shouldGetDistanceReturnZeroIfTheSolutionListContainsOnlyTheSolution() {
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
     DoubleSolution solution = problem.createSolution() ;
@@ -30,11 +31,11 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
             new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
 
     double receivedValue = distance.compute(solution, solutionList) ;
-    assertEquals(0.0, receivedValue, EPSILON) ;
+    Assertions.assertEquals(0.0, receivedValue, EPSILON);
   }
 
   @Test
-  public void shouldGetDistanceWorkProperlyIfTheListContainsOnlyASolution() {
+  void shouldGetDistanceWorkProperlyIfTheListContainsOnlyASolution() {
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
     DoubleSolution solution = problem.createSolution() ;
@@ -52,11 +53,11 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
     DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =
             new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
     double receivedValue = distance.compute(solution, solutionList) ;
-    assertEquals(Math.sqrt(2), receivedValue, EPSILON) ;
+    Assertions.assertEquals(Math.sqrt(2), receivedValue, EPSILON);
   }
 
   @Test
-  public void shouldGetDistanceWorkProperlyIfTheListContainsThreeSolutionsAndKIsEqualToTwo() {
+  void shouldGetDistanceWorkProperlyIfTheListContainsThreeSolutionsAndKIsEqualToTwo() {
 
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
@@ -83,6 +84,6 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
             new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
 
     double receivedValue = distance.compute(solution, solutionList) ;
-    assertEquals((Math.sqrt(4+4)), receivedValue, EPSILON) ;
+    Assertions.assertEquals((Math.sqrt(4+4)), receivedValue, EPSILON);
   }
 }

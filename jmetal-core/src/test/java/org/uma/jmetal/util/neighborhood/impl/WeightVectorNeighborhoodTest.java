@@ -8,39 +8,41 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-public class WeightVectorNeighborhoodTest {
+class WeightVectorNeighborhoodTest {
   private static final double EPSILON = 0.000000000001;
 
   @Test
-  public void shouldDefaultConstructorBeCorrectlyInitialized() {
+  void shouldDefaultConstructorBeCorrectlyInitialized() {
     WeightVectorNeighborhood<?> weightVectorNeighborhood = new WeightVectorNeighborhood<>(100, 20);
 
-    assertEquals(100, weightVectorNeighborhood.getNumberOfWeightVectors());
-    assertEquals(20, weightVectorNeighborhood.neighborhoodSize());
-    assertEquals(2, weightVectorNeighborhood.getWeightVectorSize());
-    assertEquals(0.0, weightVectorNeighborhood.getWeightVector()[0][0], EPSILON);
-    assertEquals(1.0, weightVectorNeighborhood.getWeightVector()[0][1], EPSILON);
-    assertEquals(
-        0.0101010101010101010101, weightVectorNeighborhood.getWeightVector()[1][0], EPSILON);
-    assertEquals(0.989898989898989898, weightVectorNeighborhood.getWeightVector()[1][1], EPSILON);
-    assertEquals(1.0, weightVectorNeighborhood.getWeightVector()[99][0], EPSILON);
-    assertEquals(0.0, weightVectorNeighborhood.getWeightVector()[99][1], EPSILON);
+    Assertions.assertEquals(100, weightVectorNeighborhood.getNumberOfWeightVectors());
+    Assertions.assertEquals(20, weightVectorNeighborhood.neighborhoodSize());
+    Assertions.assertEquals(2, weightVectorNeighborhood.getWeightVectorSize());
+    Assertions.assertEquals(0.0, weightVectorNeighborhood.getWeightVector()[0][0], EPSILON);
+    Assertions.assertEquals(1.0, weightVectorNeighborhood.getWeightVector()[0][1], EPSILON);
+    Assertions.assertEquals(0.0101010101010101010101,
+        weightVectorNeighborhood.getWeightVector()[1][0], EPSILON);
+    Assertions.assertEquals(0.989898989898989898, weightVectorNeighborhood.getWeightVector()[1][1],
+        EPSILON);
+    Assertions.assertEquals(1.0, weightVectorNeighborhood.getWeightVector()[99][0], EPSILON);
+    Assertions.assertEquals(0.0, weightVectorNeighborhood.getWeightVector()[99][1], EPSILON);
 
-    assertArrayEquals(
+    Assertions.assertArrayEquals(
         new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19},
         weightVectorNeighborhood.getNeighborhood()[0]);
-    assertArrayEquals(
+    Assertions.assertArrayEquals(
         new int[] {69, 70, 68, 71, 67, 72, 66, 73, 65, 64, 74, 75, 63, 76, 62, 77, 61, 78, 60, 79},
         weightVectorNeighborhood.getNeighborhood()[69]);
   }
 
   @Test
-  public void shouldConstructorRaiseAnExceptionIfTheWeightFileDoesNotExist() {
+  void shouldConstructorRaiseAnExceptionIfTheWeightFileDoesNotExist() {
     final int populationSize = 100;
     final int neighborSize = 20;
     final int weightVectorSize = 2;
@@ -53,7 +55,7 @@ public class WeightVectorNeighborhoodTest {
   }
 
   @Test
-  public void shouldGetNeighborsWorksProperlyWithTwoObjectives() {
+  void shouldGetNeighborsWorksProperlyWithTwoObjectives() {
     final int populationSize = 100;
     final int neighborSize = 20;
     WeightVectorNeighborhood<DoubleSolution> weightVectorNeighborhood =
@@ -66,14 +68,14 @@ public class WeightVectorNeighborhoodTest {
     List<DoubleSolution> neighbors;
     neighbors = weightVectorNeighborhood.getNeighbors(solutionList, 0);
 
-    assertEquals(neighborSize, neighbors.size());
-    assertSame(solutionList.get(0), neighbors.get(0));
-    assertSame(solutionList.get(19), neighbors.get(19));
+    Assertions.assertEquals(neighborSize, neighbors.size());
+    Assertions.assertSame(solutionList.get(0), neighbors.get(0));
+    Assertions.assertSame(solutionList.get(19), neighbors.get(19));
 
     neighbors = weightVectorNeighborhood.getNeighbors(solutionList, 69);
 
-    assertEquals(neighborSize, neighbors.size());
-    assertSame(solutionList.get(69), neighbors.get(0));
-    assertSame(solutionList.get(79), neighbors.get(19));
+    Assertions.assertEquals(neighborSize, neighbors.size());
+    Assertions.assertSame(solutionList.get(69), neighbors.get(0));
+    Assertions.assertSame(solutionList.get(79), neighbors.get(19));
   }
 }

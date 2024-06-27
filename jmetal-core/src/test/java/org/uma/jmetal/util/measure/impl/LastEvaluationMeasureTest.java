@@ -3,14 +3,15 @@ package org.uma.jmetal.util.measure.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.impl.LastEvaluationMeasure.Evaluation;
 
-public class LastEvaluationMeasureTest {
+class LastEvaluationMeasureTest {
 
 	@Test
-	public void testSpecializedPushActLikeParentPush() {
+  void testSpecializedPushActLikeParentPush() {
 		LastEvaluationMeasure<String, Integer> measure = new LastEvaluationMeasure<>();
 		@SuppressWarnings("unchecked")
 		final Evaluation<String, Integer>[] lastEvaluation = new Evaluation[] { null };
@@ -25,18 +26,18 @@ public class LastEvaluationMeasureTest {
 		String solution = "individual";
 		int value = 3;
 		measure.push(solution, value);
-		assertNotNull(lastEvaluation[0]);
-		assertEquals(solution, lastEvaluation[0].solution);
-		assertEquals(value, (Object) lastEvaluation[0].value);
+		Assertions.assertNotNull(lastEvaluation[0]);
+		Assertions.assertEquals(solution, lastEvaluation[0].solution);
+		Assertions.assertEquals(value, (Object) lastEvaluation[0].value);
 
 		lastEvaluation[0] = null;
 		Evaluation<String, Integer> evaluation = new Evaluation<>();
 		evaluation.solution = solution;
 		evaluation.value = value;
 		measure.push(evaluation);
-		assertNotNull(lastEvaluation[0]);
-		assertEquals(solution, lastEvaluation[0].solution);
-		assertEquals(value, (Object) lastEvaluation[0].value);
+		Assertions.assertNotNull(lastEvaluation[0]);
+		Assertions.assertEquals(solution, lastEvaluation[0].solution);
+		Assertions.assertEquals(value, (Object) lastEvaluation[0].value);
 	}
 
 }

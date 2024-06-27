@@ -4,13 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.PushMeasure;
 
-public class ListenerTimeMeasureTest {
+class ListenerTimeMeasureTest {
 
 	private class FakeListener implements MeasureListener<Object> {
 
@@ -30,9 +31,9 @@ public class ListenerTimeMeasureTest {
 		}
 	};
 
-	@Ignore
+	@Disabled
 	@Test
-	public void testFakeListener() {
+  void testFakeListener() {
 		for (long expected : new Long[] { 5L, 10L, 20L }) {
 			FakeListener listener = new FakeListener(expected);
 			int rounds = 10;
@@ -48,14 +49,14 @@ public class ListenerTimeMeasureTest {
 			average /= rounds;
 
 			// check we are within a range of 10% around the expected time
-			assertTrue("Time spent: " + average + " instead of " + expected,
-					average > expected * 0.9 && average < expected * 1.1);
+			Assertions.assertTrue(average > expected * 0.9 && average < expected * 1.1,
+					"Time spent: " + average + " instead of " + expected);
 		}
 	}
 
-	@Ignore
+	@Disabled
 	@Test
-	public void testCountTimeInListeners() {
+  void testCountTimeInListeners() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		MeasureListener<Object> original10ms = new FakeListener(10);
@@ -73,36 +74,36 @@ public class ListenerTimeMeasureTest {
 		long expected = 60;
 
 		// check we are within a range of 10% around the expected time
-		assertTrue("Time spent: " + measure.get() + " instead of " + expected,
-				measure.get() > expected * 0.9
-						&& measure.get() < expected * 1.1);
+		Assertions.assertTrue(measure.get() > expected * 0.9
+				&& measure.get() < expected * 1.1,
+				"Time spent: " + measure.get() + " instead of " + expected);
 	}
 
 	@Test
-	public void testExceptionOnNullListener() {
+  void testExceptionOnNullListener() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 		try {
 			measure.wrapListener(null);
-			fail("No exception thrown");
+			Assertions.fail("No exception thrown");
 		} catch (IllegalArgumentException e) {
 		}
 	}
 
 	@Test
-	public void testReturnSameWrapperForSameListener()
+  void testReturnSameWrapperForSameListener()
 			throws InterruptedException {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		MeasureListener<Object> wrapped = new FakeListener(10);
 		MeasureListener<Object> wrapper = measure.wrapListener(wrapped);
 
-		assertEquals(wrapper, measure.wrapListener(wrapped));
-		assertEquals(wrapper, measure.wrapListener(wrapped));
-		assertEquals(wrapper, measure.wrapListener(wrapped));
+		Assertions.assertEquals(wrapper, measure.wrapListener(wrapped));
+		Assertions.assertEquals(wrapper, measure.wrapListener(wrapped));
+		Assertions.assertEquals(wrapper, measure.wrapListener(wrapped));
 	}
 
 	@Test
-	public void testForgetListenerWrapperIfNotUsedAnymore() {
+  void testForgetListenerWrapperIfNotUsedAnymore() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		MeasureListener<Object> wrapped = new FakeListener(10);
@@ -121,13 +122,13 @@ public class ListenerTimeMeasureTest {
 		}
 
 		// check the instance always changes with an error of 10%
-		assertTrue("Differences: " + differences + "/" + rounds,
-				differences > rounds * 0.9 && differences <= rounds);
+		Assertions.assertTrue(differences > rounds * 0.9 && differences <= rounds,
+				"Differences: " + differences + "/" + rounds);
 	}
 
-	@Ignore
+	@Disabled
 	@Test
-	public void testCountTimeInMeasures() {
+  void testCountTimeInMeasures() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		SimplePushMeasure<Object> original10ms = new SimplePushMeasure<>();
@@ -148,35 +149,35 @@ public class ListenerTimeMeasureTest {
 		long expected = 60;
 
 		// check we are within a range of 10% around the expected time
-		assertTrue("Time spent: " + measure.get() + " instead of " + expected,
-				measure.get() > expected * 0.9
-						&& measure.get() < expected * 1.1);
+		Assertions.assertTrue(measure.get() > expected * 0.9
+				&& measure.get() < expected * 1.1,
+				"Time spent: " + measure.get() + " instead of " + expected);
 	}
 
 	@Test
-	public void testExceptionOnNullMeasure() {
+  void testExceptionOnNullMeasure() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 		try {
 			measure.wrapMeasure(null);
-			fail("No exception thrown");
+			Assertions.fail("No exception thrown");
 		} catch (IllegalArgumentException e) {
 		}
 	}
 
 	@Test
-	public void testReturnSameWrapperForSameMeasure() {
+  void testReturnSameWrapperForSameMeasure() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		SimplePushMeasure<Object> wrapped = new SimplePushMeasure<Object>();
 		PushMeasure<Object> wrapper = measure.wrapMeasure(wrapped);
 
-		assertEquals(wrapper, measure.wrapMeasure(wrapped));
-		assertEquals(wrapper, measure.wrapMeasure(wrapped));
-		assertEquals(wrapper, measure.wrapMeasure(wrapped));
+		Assertions.assertEquals(wrapper, measure.wrapMeasure(wrapped));
+		Assertions.assertEquals(wrapper, measure.wrapMeasure(wrapped));
+		Assertions.assertEquals(wrapper, measure.wrapMeasure(wrapped));
 	}
 
 	@Test
-	public void testForgetMeasureWrapperIfNotUsedAnymore() {
+  void testForgetMeasureWrapperIfNotUsedAnymore() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		SimplePushMeasure<Object> wrapped = new SimplePushMeasure<Object>();
@@ -195,12 +196,12 @@ public class ListenerTimeMeasureTest {
 		}
 
 		// check the instance always changes with an error of 10%
-		assertTrue("Differences: " + differences + "/" + rounds,
-				differences > rounds * 0.9 && differences <= rounds);
+		Assertions.assertTrue(differences > rounds * 0.9 && differences <= rounds,
+				"Differences: " + differences + "/" + rounds);
 	}
 
 	@Test
-	public void testSameNameAndDescriptionThanOriginalMeasure() {
+  void testSameNameAndDescriptionThanOriginalMeasure() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		{
@@ -209,8 +210,8 @@ public class ListenerTimeMeasureTest {
 			PushMeasure<Object> original = new SimplePushMeasure<>(name,
 					description);
 			PushMeasure<Object> wrapper = measure.wrapMeasure(original);
-			assertEquals(name, wrapper.name());
-			assertEquals(description, wrapper.description());
+			Assertions.assertEquals(name, wrapper.name());
+			Assertions.assertEquals(description, wrapper.description());
 		}
 
 		{
@@ -219,8 +220,8 @@ public class ListenerTimeMeasureTest {
 			PushMeasure<Object> original = new SimplePushMeasure<>(name,
 					description);
 			PushMeasure<Object> wrapper = measure.wrapMeasure(original);
-			assertEquals(name, wrapper.name());
-			assertEquals(description, wrapper.description());
+			Assertions.assertEquals(name, wrapper.name());
+			Assertions.assertEquals(description, wrapper.description());
 		}
 
 		{
@@ -229,14 +230,14 @@ public class ListenerTimeMeasureTest {
 			PushMeasure<Object> original = new SimplePushMeasure<>(name,
 					description);
 			PushMeasure<Object> wrapper = measure.wrapMeasure(original);
-			assertEquals(name, wrapper.name());
-			assertEquals(description, wrapper.description());
+			Assertions.assertEquals(name, wrapper.name());
+			Assertions.assertEquals(description, wrapper.description());
 		}
 	}
 
-	@Ignore
+	@Disabled
 	@Test
-	public void testCountTimeInManager() {
+  void testCountTimeInManager() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		SimplePushMeasure<Object> measure1 = new SimplePushMeasure<Object>();
@@ -262,46 +263,46 @@ public class ListenerTimeMeasureTest {
 		long expected = 60;
 
 		// check we are within a range of 10% around the expected time
-		assertTrue("Time spent: " + measure.get() + " instead of " + expected,
-				measure.get() > expected * 0.9
-						&& measure.get() < expected * 1.1);
+		Assertions.assertTrue(measure.get() > expected * 0.9
+				&& measure.get() < expected * 1.1,
+				"Time spent: " + measure.get() + " instead of " + expected);
 	}
 
 	@Test
-	public void testExceptionOnNullManager() {
+  void testExceptionOnNullManager() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 		try {
 			measure.wrapManager(null, null);
-			fail("No exception thrown");
+			Assertions.fail("No exception thrown");
 		} catch (IllegalArgumentException e) {
 		}
 	}
 
 	@Test
-	public void testAdditionalKeyProvidedByManager() {
+  void testAdditionalKeyProvidedByManager() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 		String key = "measure";
 
 		SimpleMeasureManager wrapped = new SimpleMeasureManager();
 		MeasureManager wrapper = measure.wrapManager(wrapped, key);
 
-		assertTrue(wrapper.getMeasureKeys().contains(key));
+		Assertions.assertTrue(wrapper.getMeasureKeys().contains(key));
 	}
 
 	@Test
-	public void testAdditionalKeyForWrappedManagerReturnCurrentMeasure() {
+  void testAdditionalKeyForWrappedManagerReturnCurrentMeasure() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 		String key = "measure";
 
 		SimpleMeasureManager wrapped = new SimpleMeasureManager();
 		MeasureManager wrapper = measure.wrapManager(wrapped, key);
 
-		assertEquals(measure, wrapper.getPullMeasure(key));
+		Assertions.assertEquals(measure, wrapper.getPullMeasure(key));
 	}
 
 	@Test
 	@SuppressWarnings("serial")
-	public void testAdditionalKeyForWrappedManagerRejectAlreadyUsedKeys() {
+  void testAdditionalKeyForWrappedManagerRejectAlreadyUsedKeys() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		SimplePullMeasure<Object> pull = new SimplePullMeasure<Object>() {
@@ -321,16 +322,16 @@ public class ListenerTimeMeasureTest {
 		for (Object key : wrapped.getMeasureKeys()) {
 			try {
 				measure.wrapManager(wrapped, key);
-				fail("No exception thrown for key " + key);
+				Assertions.fail("No exception thrown for key " + key);
 			} catch (IllegalArgumentException e) {
 				counter++;
 			}
 		}
-		assertEquals(3, counter);
+		Assertions.assertEquals(3, counter);
 	}
 
 	@Test
-	public void testResetToZeroWhenNoListenerIsRunning() {
+  void testResetToZeroWhenNoListenerIsRunning() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		MeasureListener<Object> original10ms = new FakeListener(10);
@@ -347,12 +348,12 @@ public class ListenerTimeMeasureTest {
 		wrapper10ms.measureGenerated(null);
 
 		measure.reset();
-		assertEquals(0, (long) measure.get());
+		Assertions.assertEquals(0, (long) measure.get());
 	}
 
-	@Ignore
+	@Disabled
 	@Test
-	public void testResetToCurrentTimeWhenListenerIsRunning() {
+  void testResetToCurrentTimeWhenListenerIsRunning() {
 		final ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
 		MeasureListener<Object> original50ms = new FakeListener(50);
@@ -381,8 +382,8 @@ public class ListenerTimeMeasureTest {
 		long expected = 75;
 
 		// check we are within a range of 10% around the expected time
-		assertTrue("Time spent: " + measure.get() + " instead of " + expected,
-				measure.get() > expected * 0.9
-						&& measure.get() < expected * 1.1);
+		Assertions.assertTrue(measure.get() > expected * 0.9
+				&& measure.get() < expected * 1.1,
+				"Time spent: " + measure.get() + " instead of " + expected);
 	}
 }

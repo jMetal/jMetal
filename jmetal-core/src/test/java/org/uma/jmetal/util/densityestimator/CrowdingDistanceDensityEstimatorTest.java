@@ -4,15 +4,16 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 
-public class CrowdingDistanceDensityEstimatorTest {
+class CrowdingDistanceDensityEstimatorTest {
   private static final double EPSILON = 0.000000001;
 
   @Test
-  public void shouldTheCrowdingDistanceOfASingleSolutionBeInfinity() {
+  void shouldTheCrowdingDistanceOfASingleSolutionBeInfinity() {
     DensityEstimator<PointSolution> crowdingDistance = new CrowdingDistanceDensityEstimator<>();
 
     List<PointSolution> solutionList = new ArrayList<>();
@@ -21,11 +22,11 @@ public class CrowdingDistanceDensityEstimatorTest {
     crowdingDistance.compute(solutionList);
     double value = crowdingDistance.value(solutionList.get(0));
 
-    assertEquals(Double.POSITIVE_INFINITY, value, EPSILON);
+    Assertions.assertEquals(Double.POSITIVE_INFINITY, value, EPSILON);
   }
 
   @Test
-  public void shouldTheCrowdingDistanceOfTwoSolutionsBeInfinity() {
+  void shouldTheCrowdingDistanceOfTwoSolutionsBeInfinity() {
     DensityEstimator<PointSolution> crowdingDistance = new CrowdingDistanceDensityEstimator<>();
 
     List<PointSolution> solutionList = new ArrayList<>();
@@ -34,12 +35,14 @@ public class CrowdingDistanceDensityEstimatorTest {
 
     crowdingDistance.compute(solutionList);
 
-    assertEquals(Double.POSITIVE_INFINITY, crowdingDistance.value(solutionList.get(0)), EPSILON);
-    assertEquals(Double.POSITIVE_INFINITY, crowdingDistance.value(solutionList.get(1)), EPSILON);
+    Assertions.assertEquals(Double.POSITIVE_INFINITY, crowdingDistance.value(solutionList.get(0)),
+        EPSILON);
+    Assertions.assertEquals(Double.POSITIVE_INFINITY, crowdingDistance.value(solutionList.get(1)),
+        EPSILON);
   }
 
   @Test
-  public void shouldTheCrowdingDistanceOfThreeSolutionsCorrectlyAssigned() {
+  void shouldTheCrowdingDistanceOfThreeSolutionsCorrectlyAssigned() {
     DensityEstimator<PointSolution> crowdingDistance = new CrowdingDistanceDensityEstimator<>();
 
     PointSolution solution1 = new PointSolution(2);
@@ -60,8 +63,8 @@ public class CrowdingDistanceDensityEstimatorTest {
 
     crowdingDistance.compute(solutionList);
 
-    assertEquals(Double.POSITIVE_INFINITY, crowdingDistance.value(solution1), EPSILON);
-    assertEquals(Double.POSITIVE_INFINITY, crowdingDistance.value(solution2), EPSILON);
-    assertEquals(2.0, crowdingDistance.value(solution3), EPSILON);
+    Assertions.assertEquals(Double.POSITIVE_INFINITY, crowdingDistance.value(solution1), EPSILON);
+    Assertions.assertEquals(Double.POSITIVE_INFINITY, crowdingDistance.value(solution2), EPSILON);
+    Assertions.assertEquals(2.0, crowdingDistance.value(solution3), EPSILON);
   }
 }

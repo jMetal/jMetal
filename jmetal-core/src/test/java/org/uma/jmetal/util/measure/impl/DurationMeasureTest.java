@@ -3,22 +3,23 @@ package org.uma.jmetal.util.measure.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class DurationMeasureTest {
+class DurationMeasureTest {
 
 	private final static long DEFAULT_LIMIT = 100;
 
 	@Test
-	public void testNoRunningRemainsAtZero() throws InterruptedException {
+  void testNoRunningRemainsAtZero() throws InterruptedException {
 		DurationMeasure measure = new DurationMeasure();
-		assertEquals(0, (long) measure.get());
+		Assertions.assertEquals(0, (long) measure.get());
 		Thread.sleep(DEFAULT_LIMIT);
-		assertEquals(0, (long) measure.get());
+		Assertions.assertEquals(0, (long) measure.get());
 	}
 
 	@Test
-	public void testIncreasesBetweenStartAndStop() throws InterruptedException {
+  void testIncreasesBetweenStartAndStop() throws InterruptedException {
 		DurationMeasure measure = new DurationMeasure();
 		long oldDuration;
 		long newDuration;
@@ -28,18 +29,18 @@ public class DurationMeasureTest {
 		Thread.sleep(DEFAULT_LIMIT);
 		measure.stop();
 		newDuration = measure.get();
-		assertTrue(oldDuration < newDuration);
+		Assertions.assertTrue(oldDuration < newDuration);
 
 		oldDuration = measure.get();
 		measure.start();
 		Thread.sleep(DEFAULT_LIMIT);
 		measure.stop();
 		newDuration = measure.get();
-		assertTrue(oldDuration < newDuration);
+		Assertions.assertTrue(oldDuration < newDuration);
 	}
 
 	@Test
-	public void testDoNotEvolveBetweenStopAndRestart()
+  void testDoNotEvolveBetweenStopAndRestart()
 			throws InterruptedException {
 		DurationMeasure measure = new DurationMeasure();
 
@@ -50,11 +51,11 @@ public class DurationMeasureTest {
 		Thread.sleep(DEFAULT_LIMIT);
 		long newDuration = measure.get();
 
-		assertEquals(oldDuration, newDuration);
+		Assertions.assertEquals(oldDuration, newDuration);
 	}
 
 	@Test
-	public void testResetGoBackToZeroWhenStopped() throws InterruptedException {
+  void testResetGoBackToZeroWhenStopped() throws InterruptedException {
 		DurationMeasure measure = new DurationMeasure();
 
 		measure.start();
@@ -63,11 +64,11 @@ public class DurationMeasureTest {
 		measure.reset();
 		long dureation = measure.get();
 
-		assertEquals(0, dureation);
+		Assertions.assertEquals(0, dureation);
 	}
 
 	@Test
-	public void testResetRestartFromZeroWhenRunning()
+  void testResetRestartFromZeroWhenRunning()
 			throws InterruptedException {
 		DurationMeasure measure = new DurationMeasure();
 
@@ -82,8 +83,8 @@ public class DurationMeasureTest {
 		double errorRatioAccepted = 0.2;
 		double lowerExpected = expected * (1 - errorRatioAccepted);
 		double higherExpected = expected * (1 + errorRatioAccepted);
-		assertTrue(duration > lowerExpected);
-		assertTrue(duration < higherExpected);
+		Assertions.assertTrue(duration > lowerExpected);
+		Assertions.assertTrue(duration < higherExpected);
 	}
 
 }
