@@ -7,8 +7,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /** Class representing problem Schaffer */
 public class Schaffer extends AbstractDoubleProblem {
-  private static final long serialVersionUID = -2366503015218789989L;
-
   /** Constructor. Creates a default instance of problem Schaffer */
   public Schaffer() {
     int numberOfVariables = 1;
