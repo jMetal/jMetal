@@ -6,7 +6,8 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -17,51 +18,51 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithCons
 /**
  * @author Antonio J. Nebro <ajnebro@uma.es>.
  */
-public class NonDominatedSolutionListArchiveTest {
+class NonDominatedSolutionListArchiveTest {
   private static final double  EPSILON = 0.000000000001 ;
 
   @Test
-  public void shouldConstructorCreateAnEmptyArchive() {
+  void shouldConstructorCreateAnEmptyArchive() {
     NonDominatedSolutionListArchive<IntegerSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
-    assertEquals(0, archive.solutions().size()) ;
+    Assertions.assertEquals(0, archive.solutions().size());
   }
 
   @Test
-  public void shouldConstructorAssignThePassedComparator() {
+  void shouldConstructorAssignThePassedComparator() {
     DominanceWithConstraintsComparator<IntegerSolution> comparator = mock(
         DominanceWithConstraintsComparator.class) ;
 
     NonDominatedSolutionListArchive<IntegerSolution> archive ;
     archive = new NonDominatedSolutionListArchive<IntegerSolution>(comparator) ;
 
-    assertSame(comparator, ReflectionTestUtils.getField(archive, "dominanceComparator")) ;
+    Assertions.assertSame(comparator, ReflectionTestUtils.getField(archive, "dominanceComparator"));
   }
 
   @Test
-  public void shouldAddOnAnEmptyListHaveSizeOne() {
+  void shouldAddOnAnEmptyListHaveSizeOne() {
     NonDominatedSolutionListArchive<IntegerSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
     archive.add(mock(IntegerSolution.class)) ;
 
-    assertEquals(1, archive.size()) ;
+    Assertions.assertEquals(1, archive.size());
   }
 
   @Test
-  public void shouldAddOnAnEmptyListInsertTheElement() {
+  void shouldAddOnAnEmptyListInsertTheElement() {
     NonDominatedSolutionListArchive<IntegerSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
     IntegerSolution solution = mock(IntegerSolution.class) ;
     archive.add(solution) ;
 
-    assertSame(solution, archive.solutions().get(0)) ;
+    Assertions.assertSame(solution, archive.solutions().get(0));
   }
 
   @Test
-  public void shouldAddADominatedSolutionInAnArchiveOfSize1DiscardTheNewSolution() {
+  void shouldAddADominatedSolutionInAnArchiveOfSize1DiscardTheNewSolution() {
     NonDominatedSolutionListArchive<DoubleSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
@@ -77,12 +78,12 @@ public class NonDominatedSolutionListArchiveTest {
 
     archive.add(solution2) ;
 
-    assertEquals(1, archive.size()) ;
-    assertSame(solution1, archive.get(0)) ;
+    Assertions.assertEquals(1, archive.size());
+    Assertions.assertSame(solution1, archive.get(0));
   }
 
   @Test
-  public void shouldAddADominantSolutionInAnArchiveOfSize1DiscardTheExistingSolution() {
+  void shouldAddADominantSolutionInAnArchiveOfSize1DiscardTheExistingSolution() {
     NonDominatedSolutionListArchive<DoubleSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
@@ -98,13 +99,13 @@ public class NonDominatedSolutionListArchiveTest {
 
     boolean result = archive.add(solution2) ;
 
-    assertEquals(1, archive.size()) ;
-    assertTrue(result) ;
-    assertSame(solution2, archive.get(0)) ;
+    Assertions.assertEquals(1, archive.size());
+    Assertions.assertTrue(result);
+    Assertions.assertSame(solution2, archive.get(0));
   }
 
   @Test
-  public void shouldAddADominantSolutionInAnArchiveOfSize3DiscardTheRestOfSolutions() {
+  void shouldAddADominantSolutionInAnArchiveOfSize3DiscardTheRestOfSolutions() {
     NonDominatedSolutionListArchive<DoubleSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
@@ -134,13 +135,13 @@ public class NonDominatedSolutionListArchiveTest {
 
     boolean result = archive.add(solution4) ;
 
-    assertEquals(1, archive.size()) ;
-    assertTrue(result) ;
-    assertSame(solution4, archive.get(0)) ;
+    Assertions.assertEquals(1, archive.size());
+    Assertions.assertTrue(result);
+    Assertions.assertSame(solution4, archive.get(0));
   }
 
   @Test
-  public void shouldAddANonDominantSolutionInAnArchiveOfSize1IncorporateTheNewSolution() {
+  void shouldAddANonDominantSolutionInAnArchiveOfSize1IncorporateTheNewSolution() {
     NonDominatedSolutionListArchive<DoubleSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
@@ -156,11 +157,11 @@ public class NonDominatedSolutionListArchiveTest {
 
     archive.add(solution2) ;
 
-    assertEquals(2, archive.size()) ;
+    Assertions.assertEquals(2, archive.size());
   }
 
   @Test
-  public void shouldAddASolutionEqualsToOneAlreadyInTheArchiveDoNothing() {
+  void shouldAddASolutionEqualsToOneAlreadyInTheArchiveDoNothing() {
     NonDominatedSolutionListArchive<DoubleSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
@@ -182,14 +183,14 @@ public class NonDominatedSolutionListArchiveTest {
 
     boolean result = archive.add(equalSolution) ;
 
-    assertEquals(2, archive.size()) ;
-    assertFalse(result) ;
-    assertTrue(archive.solutions().contains(solution1) ||
-            archive.solutions().contains(equalSolution)) ;
+    Assertions.assertEquals(2, archive.size());
+    Assertions.assertFalse(result);
+    Assertions.assertTrue(archive.solutions().contains(solution1) ||
+            archive.solutions().contains(equalSolution));
   }
 
   @Test
-  public void shouldJoinTwoEmptyArchivesReturnAnEmptyArchive() {
+  void shouldJoinTwoEmptyArchivesReturnAnEmptyArchive() {
     NonDominatedSolutionListArchive<IntegerSolution> archive1 ;
     archive1 = new NonDominatedSolutionListArchive<>() ;
 
@@ -198,11 +199,11 @@ public class NonDominatedSolutionListArchiveTest {
 
     archive1.join(archive2) ;
 
-    assertEquals(0.0, archive1.solutions().size(), EPSILON);
+    Assertions.assertEquals(0.0, archive1.solutions().size(), EPSILON);
   }
 
   @Test
-  public void shouldJoinWithAnEmptyArchivesRemainTheArchiveWithTheSameNumberOfSolutions() {
+  void shouldJoinWithAnEmptyArchivesRemainTheArchiveWithTheSameNumberOfSolutions() {
     DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
@@ -217,11 +218,11 @@ public class NonDominatedSolutionListArchiveTest {
 
     archive1.join(archive2) ;
 
-    assertEquals(1, archive1.solutions().size(), EPSILON);
+    Assertions.assertEquals(1, archive1.solutions().size(), EPSILON);
   }
 
   @Test
-  public void shouldJoinAnEAnEmptyArchiveProduceAnArchiveWithTheSameSolutions() {
+  void shouldJoinAnEAnEmptyArchiveProduceAnArchiveWithTheSameSolutions() {
     NonDominatedSolutionListArchive<DoubleSolution> archive1 ;
     archive1 = new NonDominatedSolutionListArchive<>() ;
 
@@ -241,6 +242,6 @@ public class NonDominatedSolutionListArchiveTest {
 
     archive1.join(archive2) ;
 
-    assertEquals(2, archive1.solutions().size(), EPSILON);
+    Assertions.assertEquals(2, archive1.solutions().size(), EPSILON);
   }
 }

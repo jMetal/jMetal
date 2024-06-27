@@ -3,7 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.mosa.cooling.impl;
 import org.uma.jmetal.algorithm.multiobjective.mosa.cooling.CoolingScheme;
 
 /**
- * Linear cooling scheme used by {@link SimulatedAnnealing} algorithms
+ * Linear cooling scheme used by simulated annealing algorithms
  */
 public class Linear implements CoolingScheme {
   private final double beta ;

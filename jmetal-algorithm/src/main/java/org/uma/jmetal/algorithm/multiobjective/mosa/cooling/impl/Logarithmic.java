@@ -3,7 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.mosa.cooling.impl;
 import org.uma.jmetal.algorithm.multiobjective.mosa.cooling.CoolingScheme;
 
 /**
- * Logarithmic cooling scheme used by {@link SimulatedAnnealing} algorithms
+ * Logarithmic cooling scheme used by simulated annealing algorithms
  */
 public class Logarithmic implements CoolingScheme {
 

@@ -20,13 +20,12 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
-/** Created by ajnebro on 3/5/15. */
-public class DifferentialEvolutionSelectionTest {
+class DifferentialEvolutionSelectionTest {
   private DifferentialEvolutionSelection selection;
   private List<DoubleSolution> population;
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
+  void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
     selection = new DifferentialEvolutionSelection();
     
     Executable executable = () -> selection.execute(null);
@@ -36,7 +35,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsHasOneSolution() {
+  void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsHasOneSolution() {
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(0);
 
@@ -49,7 +48,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheSizeOFTheListOfSolutionsIsLowerThanTheNumberOfRequestedSolutions() {
+  void shouldExecuteRaiseAnExceptionIfTheSizeOFTheListOfSolutionsIsLowerThanTheNumberOfRequestedSolutions() {
     selection = new DifferentialEvolutionSelection(3, false);
     selection.setIndex(0);
 
@@ -62,7 +61,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
+  void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(0);
 
@@ -75,7 +74,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheIndexIsNegative() {
+  void shouldExecuteRaiseAnExceptionIfTheIndexIsNegative() {
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(-1);
 
@@ -90,7 +89,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheIndexIsNotIndicated() {
+  void shouldExecuteRaiseAnExceptionIfTheIndexIsNotIndicated() {
     selection = new DifferentialEvolutionSelection();
 
     population =
@@ -104,7 +103,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheIndexIsHigherThanTheSolutionListLength() {
+  void shouldExecuteRaiseAnExceptionIfTheIndexIsHigherThanTheSolutionListLength() {
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(5);
 
@@ -119,7 +118,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void shouldExecuteReturnThreeDifferentSolutionsIfTheListHasFourElements() {
+  void shouldExecuteReturnThreeDifferentSolutionsIfTheListHasFourElements() {
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(1);
 
@@ -145,7 +144,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void shouldExecuteReturnFiveDifferentSolutionsIfTheListHasSixElements() {
+  void shouldExecuteReturnFiveDifferentSolutionsIfTheListHasSixElements() {
     selection = new DifferentialEvolutionSelection(5, false);
     selection.setIndex(2);
 
@@ -176,7 +175,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void shouldExecuteReturnThreeDifferentSolutionsIncludingTheCurrentOne() {
+  void shouldExecuteReturnThreeDifferentSolutionsIncludingTheCurrentOne() {
     selection = new DifferentialEvolutionSelection(3, true);
     selection.setIndex(1);
 
@@ -203,7 +202,7 @@ public class DifferentialEvolutionSelectionTest {
 
   /*
   @Test
-  public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
+  void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
     // Configuration
     List<DoubleSolution> solutions =
         Arrays.asList(
