@@ -63,7 +63,10 @@ public class SPS2011VelocityUpdate implements VelocityUpdate {
   public double[][] update(List<DoubleSolution> swarm, double[][] speed, DoubleSolution[] localBest,
       BoundedArchive<DoubleSolution> leaders, GlobalBestSelection globalBestSelection,
       InertiaWeightComputingStrategy inertiaWeightComputingStrategy) {
-    double r1, r2, c1, c2;
+    double r1;
+    double r2;
+    double c1;
+    double c2;
 
     for (int i = 0; i < swarm.size(); i++) {
       DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();

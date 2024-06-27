@@ -12,6 +12,7 @@ import org.uma.jmetal.util.archive.BoundedArchive;
  * @author Antonio J. Nebro
  */
 public interface VelocityUpdate {
+
   double[][] update(
       List<DoubleSolution> swarm,
       double[][] speed, DoubleSolution[] localBest,
