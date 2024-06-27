@@ -1,4 +1,4 @@
-package org.uma.jmetal.qualityindicator.impl.hypervolume.impl;
+package org.uma.jmetal.qualityindicator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.VectorUtils;
 
 public class PISAHypervolumeTest {
