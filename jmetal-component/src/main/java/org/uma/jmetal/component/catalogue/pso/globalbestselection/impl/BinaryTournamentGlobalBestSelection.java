@@ -16,21 +16,6 @@ public class BinaryTournamentGlobalBestSelection implements GlobalBestSelection 
 
   @Override
   public DoubleSolution select(List<DoubleSolution> globalBestList) {
-    /*
-    NaryTournamentSelection<DoubleSolution> tournament = new NaryTournamentSelection<>(
-        tournamentSize, comparator);
-
-    DoubleSolution result ;
-    if (globalBestList.size() < tournamentSize) {
-      result = globalBestList.get(0) ;
-    } else {
-      result = tournament.execute(globalBestList);
-    }
-
-
-    return result ;
-*/
-
     DoubleSolution bestGlobal;
     int pos1 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
     int pos2 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
