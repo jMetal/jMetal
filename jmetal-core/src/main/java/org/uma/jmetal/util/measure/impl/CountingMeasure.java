@@ -20,7 +20,7 @@ import org.uma.jmetal.util.measure.PushMeasure;
  * {@link #get()} or when it is updated by registering a listener with
  * {@link #register(MeasureListener)}.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  * 
  */
 @SuppressWarnings("serial")

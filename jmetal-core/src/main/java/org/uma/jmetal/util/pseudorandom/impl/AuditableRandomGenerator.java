@@ -11,7 +11,7 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
  * An {@link AuditableRandomGenerator} is a {@link PseudoRandomGenerator} which can be audited
  * to know when a random generation method is called.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  *
  */
 @SuppressWarnings("serial")

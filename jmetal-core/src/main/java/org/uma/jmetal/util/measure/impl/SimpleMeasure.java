@@ -8,7 +8,7 @@ import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
  * provides a basic support for the most generic properties required by this
  * interface.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  * 
  * @param <Value>
  */

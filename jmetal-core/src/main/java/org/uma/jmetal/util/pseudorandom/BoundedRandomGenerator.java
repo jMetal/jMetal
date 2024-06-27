@@ -13,7 +13,7 @@ import java.io.Serializable;
  * intended to be directly implemented by a class, but instead to request a
  * method for generating random values, usually by using lambda expressions.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  *
  * @param <Value>
  *            The type of value to generate

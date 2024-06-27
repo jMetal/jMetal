@@ -8,7 +8,7 @@ import org.uma.jmetal.util.measure.impl.LastEvaluationMeasure.Evaluation;
  * evaluation made in an algorithm. It extends {@link SimplePushMeasure} and add
  * the method {@link #push(Object, Object)} for simplicity.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  * 
  * @param <Solution>
  *            the solution evaluated
@@ -44,7 +44,7 @@ public class LastEvaluationMeasure<Solution, Value> extends
 	/**
 	 * This structure represent an atomic evaluation of a given solution.
 	 * 
-	 * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+	 * @author Matthieu Vergne 
 	 * 
 	 */
 	public static class Evaluation<Solution, Value> {

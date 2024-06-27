@@ -14,7 +14,7 @@ import org.uma.jmetal.util.measure.PushMeasure;
  * solution and its value to {@link #push(Object, Object)}, leading to the
  * notification of the registered observers.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  * 
  * @param <Value>
  */

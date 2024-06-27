@@ -9,7 +9,7 @@ import org.uma.jmetal.util.measure.PullMeasure;
  * through its {@link #get()} method. This method must be implemented by the
  * algorithm to specify how the value can be retrieved.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  * 
  * @param <Value>
  */

@@ -7,7 +7,7 @@ package org.uma.jmetal.util.measure;
  * available or generated before to be returned by {@link #get()}.
  * 
  * @author Created by Antonio J. Nebro on 21/10/14 based on the ideas of
- *         Matthieu Vergne <matthieu.vergne@gmail.com>
+ *         Matthieu Vergne 
  * 
  * @param <Value>
  *            the type of value the {@link PullMeasure} can provide

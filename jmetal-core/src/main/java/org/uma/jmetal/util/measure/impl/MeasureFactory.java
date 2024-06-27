@@ -17,7 +17,7 @@ import org.uma.jmetal.util.measure.PushMeasure;
  * The {@link MeasureFactory} provides some useful methods to build specific
  * {@link Measure}s.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  * 
  */
 public class MeasureFactory {

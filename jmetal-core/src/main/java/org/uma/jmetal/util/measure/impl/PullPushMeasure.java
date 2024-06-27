@@ -16,7 +16,7 @@ import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
  * calling {@link #PullPushMeasure(PushMeasure, Object)} or other constructors
  * taking a {@link Measure} as argument.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  * 
  * @param <Value>
  */

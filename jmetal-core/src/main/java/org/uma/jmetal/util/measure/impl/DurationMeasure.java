@@ -13,7 +13,7 @@ package org.uma.jmetal.util.measure.impl;
  * with {@link #reset()}.
  * 
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  * 
  */
 @SuppressWarnings("serial")

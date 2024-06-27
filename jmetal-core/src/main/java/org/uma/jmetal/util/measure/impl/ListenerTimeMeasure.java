@@ -27,7 +27,7 @@ import org.uma.jmetal.util.measure.PushMeasure;
  * superior to the physical time spent. If you want to measure the physical time
  * spent in the execution of parallel runs, you should use another way.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  * 
  */
 @SuppressWarnings("serial")

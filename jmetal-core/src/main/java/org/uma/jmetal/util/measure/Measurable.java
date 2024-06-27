@@ -6,7 +6,7 @@ package org.uma.jmetal.util.measure;
  * through a {@link MeasureManager}.
  * 
  * @author Created by Antonio J. Nebro on 21/10/14 based on the ideas of
- *         Matthieu Vergne <matthieu.vergne@gmail.com>
+ *         Matthieu Vergne 
  * 
  */
 public interface Measurable {

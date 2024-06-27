@@ -10,7 +10,7 @@ import org.uma.jmetal.util.naming.DescribedEntity;
  * implements the methods of {@link DescribedEntity}.
  * 
  * @author Created by Antonio J. Nebro on 21/10/14 based on the ideas of
- *         Matthieu Vergne <matthieu.vergne@gmail.com>
+ *         Matthieu Vergne 
  * 
  * @param <Value>
  *            the type of value the {@link Measure} can provide

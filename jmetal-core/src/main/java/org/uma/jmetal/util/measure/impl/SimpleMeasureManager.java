@@ -22,7 +22,7 @@ import org.uma.jmetal.util.measure.PushMeasure;
  * granularity with {@link #getPullMeasure(Object)} and
  * {@link #getPushMeasure(Object)}.
  * 
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  * 
  */
 public class SimpleMeasureManager implements MeasureManager {

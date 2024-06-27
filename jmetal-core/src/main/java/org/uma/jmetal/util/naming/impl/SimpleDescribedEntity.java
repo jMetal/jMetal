@@ -6,7 +6,7 @@ import org.uma.jmetal.util.naming.DescribedEntity;
  * {@link SimpleDescribedEntity} is a basic implementation of {@link DescribedEntity}. It provides a
  * basic support for the most generic properties required by this interface.
  *
- * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @author Matthieu Vergne 
  */
 public class SimpleDescribedEntity implements DescribedEntity {
 
