@@ -12,10 +12,10 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 
 
-public class StrengthRankingTest {
+class StrengthRankingTest {
 
   @Test
-  public void shouldRankingAssignZeroToAllTheSolutionsIfTheyAreNonDominated() {
+  void shouldRankingAssignZeroToAllTheSolutionsIfTheyAreNonDominated() {
     /*
           5 1
           4   2
@@ -23,8 +23,6 @@ public class StrengthRankingTest {
           2
           1         4
           0 1 2 3 4 5
-
-
      */
     DoubleProblem problem = new FakeDoubleProblem(2,2,0) ;
     DoubleSolution solution1 = problem.createSolution() ;
@@ -57,7 +55,7 @@ public class StrengthRankingTest {
   }
 
   @Test
-  public void shouldRankingWorkProperly() {
+  void shouldRankingWorkProperly() {
     /*
          5 1
          4   2
