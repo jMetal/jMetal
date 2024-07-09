@@ -13,7 +13,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
+import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.fileinput.VectorFileUtils;
@@ -132,7 +132,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 		return new ASFWASFGA<>(weights, interestPoint);
 	}
 
-	public void updatePointOfInterest(List<Double> newPointOfInterest) {
+	public void updatePointsOfInterest(List<Double> newPointOfInterest) {
 		((ASFWASFGA<S>)this.achievementScalarizingFunction).updatePointOfInterest(newPointOfInterest);
 	}
 

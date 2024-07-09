@@ -9,7 +9,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.RankingAndPreferenceSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
+import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.measure.Measurable;
@@ -54,7 +54,7 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> implements
     initMeasures();
   }
   @Override
-  public void updatePointOfInterest(List<Double> newReferencePoints){
+  public void updatePointsOfInterest(List<Double> newReferencePoints){
     this.interestPoint = newReferencePoints;
   }
   @Override protected void initProgress() {

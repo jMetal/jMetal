@@ -17,7 +17,7 @@ import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
+import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.util.artificialdecisionmaker.impl.ArtificialDecisionMakerDecisionTree;
 import org.uma.jmetal.util.artificialdecisionmaker.impl.ArtificiallDecisionMakerBuilder;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;

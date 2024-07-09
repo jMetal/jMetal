@@ -12,7 +12,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.artificialdecisionmaker.ArtificialDecisionMaker;
 import org.uma.jmetal.util.artificialdecisionmaker.DecisionTreeEstimator;
-import org.uma.jmetal.util.artificialdecisionmaker.InteractiveAlgorithm;
+import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;

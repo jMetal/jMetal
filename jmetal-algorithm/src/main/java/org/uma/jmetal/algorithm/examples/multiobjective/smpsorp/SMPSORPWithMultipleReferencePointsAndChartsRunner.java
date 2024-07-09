@@ -42,9 +42,11 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
 
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
-    //referencePoints.add(Arrays.asList(0.6, 0.1)) ;
-    referencePoints.add(Arrays.asList(0.2, 0.3));
-    referencePoints.add(Arrays.asList(0.8, 0.2));
+    referencePoints.add(List.of(0.1, 0.8));
+    referencePoints.add(List.of(0.2, 0.4));
+    referencePoints.add(List.of(0.5, 0.2));
+    referencePoints.add(List.of(0.8, 0.15));
+    referencePoints.add(List.of(0.9, 0.0));
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
