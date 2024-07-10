@@ -3,15 +3,13 @@ package org.uma.jmetal.algorithm.dynamic;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import org.uma.jmetal.algorithm.dynamic.util.DynamicFrontManager;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.algorithm.dynamic.util.UpdatedFront;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.observable.Observable;
@@ -24,7 +22,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
   private DynamicProblem<S, Integer> problem;
   private Observable<Map<String, Object>> observable;
   private int completedIterations;
-  private UpdatedFront<PointSolution> updatedFront;
+  private DynamicFrontManager<S> updatedFront;
   private List<S> lastReceivedFront;
   /**
    * Constructor
@@ -53,7 +51,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       SolutionListEvaluator<S> evaluator,
       RestartStrategy<S> restartStrategy,
       Observable<Map<String, Object>> observable,
-      UpdatedFront<PointSolution> updatedFront) {
+      DynamicFrontManager<S> updatedFront) {
     super(
         problem,
         maxEvaluations,
@@ -78,10 +76,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       boolean coverage = false;
       if (lastReceivedFront != null) {
         updateIndicatorReferenceFront();
-        List<PointSolution> pointSolutionList;
-        List<S> list = getPopulation();
-        pointSolutionList = list.stream().map(PointSolution::new).collect(Collectors.toList());
-        coverage = updatedFront.update(pointSolutionList);
+        coverage = updatedFront.update(getPopulation());
       }
 
       if (coverage) {
