@@ -3,7 +3,7 @@ package org.uma.jmetal.algorithm.dynamic;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.uma.jmetal.algorithm.dynamic.util.DynamicFrontManager;
+import org.uma.jmetal.util.DynamicFrontManager;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;

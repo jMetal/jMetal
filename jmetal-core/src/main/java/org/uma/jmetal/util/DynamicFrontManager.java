@@ -1,9 +1,9 @@
-package org.uma.jmetal.algorithm.dynamic.util;
+package org.uma.jmetal.util;
 
 import java.util.List;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.SolutionListUtils;
+
 /**
  * The {@code DynamicFrontManager} class maintains a current front (list of solutions)
  * and updates it based on a specified quality indicator and a threshold value.

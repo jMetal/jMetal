@@ -2,7 +2,7 @@ package org.uma.jmetal.algorithm.examples.dynamic;
 
 import java.util.List;
 import org.uma.jmetal.algorithm.dynamic.DynamicNSGAII;
-import org.uma.jmetal.algorithm.dynamic.util.DynamicFrontManager;
+import org.uma.jmetal.util.DynamicFrontManager;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
