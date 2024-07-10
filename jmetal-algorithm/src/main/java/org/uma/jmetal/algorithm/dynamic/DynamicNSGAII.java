@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
+import org.uma.jmetal.algorithm.dynamic.util.CoverageFront;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -53,7 +53,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       SolutionListEvaluator<S> evaluator,
       RestartStrategy<S> restartStrategy,
       Observable<Map<String, Object>> observable,
-      CoverageFront coverageFront) {
+      CoverageFront<PointSolution> coverageFront) {
     super(
         problem,
         maxEvaluations,

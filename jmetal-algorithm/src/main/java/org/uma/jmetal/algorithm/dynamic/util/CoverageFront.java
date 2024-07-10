@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaii.util;
+package org.uma.jmetal.algorithm.dynamic.util;
 
 import java.util.List;
 import org.uma.jmetal.qualityindicator.QualityIndicator;

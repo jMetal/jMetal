@@ -2,7 +2,7 @@ package org.uma.jmetal.algorithm.examples.dynamic;
 
 import java.util.List;
 import org.uma.jmetal.algorithm.dynamic.DynamicNSGAII;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
+import org.uma.jmetal.algorithm.dynamic.util.CoverageFront;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -13,6 +13,7 @@ import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.problem.multiobjective.fda.FDA2;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.observer.impl.RunTimeForDynamicProblemsChartObserver;
@@ -38,7 +39,7 @@ public class DynamicNSGAIIRunner {
         new BinaryTournamentSelection<>();
 
     InvertedGenerationalDistance igd = new InvertedGenerationalDistance();
-    CoverageFront<DoubleSolution> coverageFront = new CoverageFront<>(0.055, igd);
+    CoverageFront<PointSolution> coverageFront = new CoverageFront<>(0.055, igd);
     var algorithm =
         new DynamicNSGAII<>(
             problem,
