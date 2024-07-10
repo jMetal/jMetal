@@ -111,11 +111,6 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
     return false;
   }
 
-  @Override
-  protected void updateProgress() {
-    super.updateProgress();
-  }
-
   public DynamicProblem<S, ?> getDynamicProblem() {
     return problem;
   }
