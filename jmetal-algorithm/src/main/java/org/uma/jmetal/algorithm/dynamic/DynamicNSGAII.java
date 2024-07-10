@@ -1,9 +1,10 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaii;
+package org.uma.jmetal.algorithm.dynamic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;

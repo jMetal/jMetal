@@ -1,7 +1,7 @@
-package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
+package org.uma.jmetal.algorithm.examples.dynamic;
 
 import java.util.List;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.DynamicNSGAII;
+import org.uma.jmetal.algorithm.dynamic.DynamicNSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
