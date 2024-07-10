@@ -22,8 +22,8 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
   private DynamicProblem<S, Integer> problem;
   private Observable<Map<String, Object>> observable;
   private int completedIterations;
-  private DynamicFrontManager<S> updatedFront;
-  private List<S> lastReceivedFront;
+  private DynamicFrontManager<S> dynamicFrontManager;
+  private List<S> lastPopulation;
   /**
    * Constructor
    *
@@ -51,7 +51,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       SolutionListEvaluator<S> evaluator,
       RestartStrategy<S> restartStrategy,
       Observable<Map<String, Object>> observable,
-      DynamicFrontManager<S> updatedFront) {
+      DynamicFrontManager<S> dynamicFrontManager) {
     super(
         problem,
         maxEvaluations,
@@ -66,20 +66,19 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
     this.problem = problem;
     this.observable = observable;
     this.completedIterations = 0;
-    this.updatedFront = updatedFront;
+    this.dynamicFrontManager = dynamicFrontManager;
   }
 
   @Override
   protected boolean isStoppingConditionReached() {
     if (evaluations >= maxEvaluations) {
-
-      boolean coverage = false;
-      if (lastReceivedFront != null) {
+      boolean frontIsUpdated = false;
+      if (lastPopulation != null) {
         updateIndicatorReferenceFront();
-        coverage = updatedFront.update(getPopulation());
+        frontIsUpdated = dynamicFrontManager.update(getPopulation());
       }
 
-      if (coverage) {
+      if (frontIsUpdated) {
         observable.setChanged();
 
         Map<String, Object> algorithmData = new HashMap<>();
@@ -90,7 +89,8 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
         observable.notifyObservers(algorithmData);
         observable.clearChanged();
       }
-      lastReceivedFront = getPopulation();
+
+      lastPopulation = getPopulation();
       completedIterations++;
       problem.update(completedIterations);
 
@@ -103,7 +103,8 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
   }
 
   private void updateIndicatorReferenceFront() {
-    updatedFront.indicator().referenceFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
+    dynamicFrontManager.indicator().referenceFront(SolutionListUtils.getMatrixWithObjectiveValues(
+        lastPopulation));
   }
 
   public DynamicProblem<S, ?> getDynamicProblem() {

@@ -16,6 +16,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.observer.impl.RunTimeForDynamicProblemsChartObserver;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.restartstrategy.impl.CreateNRandomSolutions;
 import org.uma.jmetal.util.restartstrategy.impl.DefaultRestartStrategy;
 import org.uma.jmetal.util.restartstrategy.impl.RemoveNRandomSolutions;
@@ -28,6 +29,7 @@ public class DynamicNSGAIIRunner {
    * @param args
    */
   public static void main(String[] args) {
+    JMetalRandom.getInstance().setSeed(1);
     DynamicProblem<DoubleSolution, Integer> problem = new FDA2();
 
     // STEP 2. Create the algorithm
