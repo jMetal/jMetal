@@ -1,11 +1,11 @@
 package org.uma.jmetal.algorithm.dynamic;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.algorithm.dynamic.util.CoverageFront;
+import org.uma.jmetal.algorithm.dynamic.util.UpdatedFront;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -24,7 +24,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
   private DynamicProblem<S, Integer> problem;
   private Observable<Map<String, Object>> observable;
   private int completedIterations;
-  private CoverageFront coverageFront;
+  private UpdatedFront<PointSolution> updatedFront;
   private List<S> lastReceivedFront;
   /**
    * Constructor
@@ -53,7 +53,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       SolutionListEvaluator<S> evaluator,
       RestartStrategy<S> restartStrategy,
       Observable<Map<String, Object>> observable,
-      CoverageFront<PointSolution> coverageFront) {
+      UpdatedFront<PointSolution> updatedFront) {
     super(
         problem,
         maxEvaluations,
@@ -68,8 +68,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
     this.problem = problem;
     this.observable = observable;
     this.completedIterations = 0;
-    this.coverageFront = coverageFront;
-    this.lastReceivedFront = null;
+    this.updatedFront = updatedFront;
   }
 
   @Override
@@ -78,14 +77,11 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
 
       boolean coverage = false;
       if (lastReceivedFront != null) {
-        coverageFront.updateFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
-        List<PointSolution> pointSolutionList = new ArrayList<>();
+        updateIndicatorReferenceFront();
+        List<PointSolution> pointSolutionList;
         List<S> list = getPopulation();
-        for (S s : list) {
-          PointSolution pointSolution = new PointSolution(s);
-          pointSolutionList.add(pointSolution);
-        }
-        coverage = coverageFront.isCoverageWithLast(pointSolutionList);
+        pointSolutionList = list.stream().map(PointSolution::new).collect(Collectors.toList());
+        coverage = updatedFront.update(pointSolutionList);
       }
 
       if (coverage) {
@@ -109,6 +105,10 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       initProgress();
     }
     return false;
+  }
+
+  private void updateIndicatorReferenceFront() {
+    updatedFront.indicator().referenceFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
   }
 
   public DynamicProblem<S, ?> getDynamicProblem() {
