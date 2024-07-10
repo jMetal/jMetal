@@ -1,8 +1,5 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;

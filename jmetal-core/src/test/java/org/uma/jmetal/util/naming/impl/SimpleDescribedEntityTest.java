@@ -1,8 +1,5 @@
 package org.uma.jmetal.util.naming.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
