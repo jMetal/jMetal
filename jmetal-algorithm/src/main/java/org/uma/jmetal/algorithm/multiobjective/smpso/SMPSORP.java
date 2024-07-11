@@ -226,29 +226,26 @@ public class SMPSORP
 
   @Override
   protected void updateVelocity(List<DoubleSolution> swarm) {
-    double r1, r2, c1, c2;
-    double wmax, wmin;
     DoubleSolution bestGlobal;
-
     for (int i = 0; i < swarm.size(); i++) {
       DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       DoubleSolution bestParticle = (DoubleSolution) localBest.getAttribute(swarm.get(i)).copy();
 
       bestGlobal = selectGlobalBest();
 
-      r1 = randomGenerator.nextDouble(r1Min, r1Max);
-      r2 = randomGenerator.nextDouble(r2Min, r2Max);
-      c1 = randomGenerator.nextDouble(c1Min, c1Max);
-      c2 = randomGenerator.nextDouble(c2Min, c2Max);
-      wmax = weightMax;
-      wmin = weightMin;
+      var r1 = randomGenerator.nextDouble(r1Min, r1Max);
+      var r2 = randomGenerator.nextDouble(r2Min, r2Max);
+      var c1 = randomGenerator.nextDouble(c1Min, c1Max);
+      var c2 = randomGenerator.nextDouble(c2Min, c2Max);
+      var wmax = weightMax;
+      var wmin = weightMin;
 
-      for (int var = 0; var < particle.variables().size(); var++) {
-        speed[i][var] = velocityConstriction(constrictionCoefficient(c1, c2) * (
-                inertiaWeight(iterations, maxIterations, wmax, wmin) * speed[i][var] +
-                    c1 * r1 * (bestParticle.variables().get(var) - particle.variables().get(var)) +
-                    c2 * r2 * (bestGlobal.variables().get(var) - particle.variables().get(var))),
-            deltaMax, deltaMin, var);
+      for (int j = 0; j < particle.variables().size(); j++) {
+        speed[i][j] = velocityConstriction(constrictionCoefficient(c1, c2) * (
+                inertiaWeight(iterations, maxIterations, wmax, wmin) * speed[i][j] +
+                    c1 * r1 * (bestParticle.variables().get(j) - particle.variables().get(j)) +
+                    c2 * r2 * (bestGlobal.variables().get(j) - particle.variables().get(j))),
+            deltaMax, deltaMin, j);
       }
     }
   }

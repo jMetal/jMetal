@@ -15,14 +15,12 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.restartstrategy.RestartStrategy;
 
-@SuppressWarnings("serial")
 public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
-
-  private RestartStrategy<S> restartStrategy;
-  private DynamicProblem<S, Integer> problem;
-  private Observable<Map<String, Object>> observable;
+  private final RestartStrategy<S> restartStrategy;
+  private final DynamicProblem<S, Integer> problem;
+  private final Observable<Map<String, Object>> observable;
   private int completedIterations;
-  private DynamicFrontManager<S> dynamicFrontManager;
+  private final DynamicFrontManager<S> dynamicFrontManager;
   private List<S> lastPopulation;
   /**
    * Constructor
