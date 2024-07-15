@@ -142,10 +142,10 @@ public class SMPSORP
     measureManager.setPushMeasure("currentIteration", currentIteration);
 
     referencePointSolutions = new ArrayList<>();
-    for (int i = 0; i < referencePoints.size(); i++) {
+    for (List<Double> referencePoint : referencePoints) {
       DoubleSolution refPoint = problem.createSolution();
       for (int j = 0; j < referencePoints.get(0).size(); j++) {
-        refPoint.objectives()[j] = referencePoints.get(i).get(j);
+        refPoint.objectives()[j] = referencePoint.get(j);
       }
 
       referencePointSolutions.add(refPoint);
