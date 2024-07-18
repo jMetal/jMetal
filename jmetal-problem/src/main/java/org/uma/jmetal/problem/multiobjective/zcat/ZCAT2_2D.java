@@ -7,6 +7,11 @@ package org.uma.jmetal.problem.multiobjective.zcat;
  */
 public class ZCAT2_2D extends ZCAT2 {
   public ZCAT2_2D() {
-    super(2, 30, false, 1, false, false);
+    super(2, 30, true, 1, false, false);
+  }
+
+  @Override
+  public String name() {
+    return "ZCAT2_2D";
   }
 }

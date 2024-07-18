@@ -18,19 +18,19 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class NSGAIIConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZCAT2.2D.csv";
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zcat.ZCAT2_2D "
             + "--randomGeneratorSeed 12 "
             + "--referenceFrontFileName " + referenceFrontFileName + " "
-            + "--maximumNumberOfEvaluations 25000 "
+            + "--maximumNumberOfEvaluations 10000 "
             + "--populationSize 100 "
             + "--algorithmResult population  "
             + "--createInitialSolutions random "
             + "--offspringPopulationSize 100 "
             + "--variation crossoverAndMutationVariation --crossover SBX "
-            + "--crossoverProbability 0.7010787592319431 "
+            + "--crossoverProbability 0.9 "
             + "--crossoverRepairStrategy bounds "
             + "--sbxDistributionIndex 20.0 "
             + "--mutation polynomial "
