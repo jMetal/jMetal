@@ -7,7 +7,7 @@ import org.uma.jmetal.component.algorithm.multiobjective.MOEADBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
-import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
+import org.uma.jmetal.lab.visualization.plot.impl.ScatterPlot;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -89,7 +89,7 @@ public class MOEADWithRealTimeChartExample {
         SolutionListUtils.getMatrixWithObjectiveValues(population),
         VectorUtils.readVectors(referenceParetoFront, ","));
 
-    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix(), problem.name() + " (MOEA/D)");
+    PlotFront plot = new ScatterPlot(new ArrayFront(population).getMatrix(), problem.name() + " (MOEA/D)");
     plot.plot();
   }
 }

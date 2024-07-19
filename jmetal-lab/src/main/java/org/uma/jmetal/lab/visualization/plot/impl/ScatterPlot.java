@@ -3,16 +3,16 @@ package org.uma.jmetal.lab.visualization.plot.impl;
 import java.lang.reflect.InvocationTargetException;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.util.errorchecking.Check;
-import smile.plot.swing.ScatterPlot;
-public class PlotSmile implements PlotFront {
+
+public class ScatterPlot implements PlotFront {
   private double[][] matrix;
   private String plotTitle;
 
-  public PlotSmile(double[][] matrix) {
+  public ScatterPlot(double[][] matrix) {
     this(matrix, "Front") ;
   }
 
-  public PlotSmile(double[][] matrix, String plotTitle) {
+  public ScatterPlot(double[][] matrix, String plotTitle) {
     Check.notNull(matrix);
     Check.that(matrix.length >= 1, "The data matrix is empty");
 
@@ -22,7 +22,7 @@ public class PlotSmile implements PlotFront {
 
   @Override
   public void plot() {
-    var canvas = ScatterPlot.of(matrix).canvas() ;
+    var canvas = smile.plot.swing.ScatterPlot.of(matrix).canvas() ;
     canvas.setTitle(plotTitle) ;
     try {
       canvas.window() ;

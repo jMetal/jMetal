@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
-import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
+import org.uma.jmetal.lab.visualization.plot.impl.ScatterPlot;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -81,7 +81,7 @@ public class SBXCrossoverExample {
 
     double[][] classifier = classify(population, problem, granularity);
 
-    PlotFront plot = new PlotSmile(classifier, "") ;
+    PlotFront plot = new ScatterPlot(classifier, "") ;
     plot.plot();
   }
 

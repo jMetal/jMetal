@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
-import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
+import org.uma.jmetal.lab.visualization.plot.impl.ScatterPlot;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.IntegerPolynomialMutation;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
@@ -73,7 +73,7 @@ public class IntegerPolynomialMutationExample {
     population.sort(new IntegerVariableComparator());
     double[][] classifier = classify(population, problem, granularity);
 
-    PlotFront plot = new PlotSmile(classifier) ;
+    PlotFront plot = new ScatterPlot(classifier) ;
     plot.plot();
   }
 
