@@ -7,7 +7,7 @@ import org.uma.jmetal.component.algorithm.multiobjective.MOEADBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
-import org.uma.jmetal.lab.visualization.plot.impl.Plot2D;
+import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -87,7 +87,7 @@ public class MOEADSolvingProblemZDT110F2Example {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
-    PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix(), problem.name() + " (MOEA/D)");
+    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix(), problem.name() + " (MOEA/D)");
     plot.plot();
   }
 }

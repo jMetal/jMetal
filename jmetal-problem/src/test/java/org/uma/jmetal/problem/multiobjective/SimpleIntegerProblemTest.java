@@ -1,11 +1,12 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.junit.jupiter.api.Test;
-import org.uma.jmetal.solution.integersolution.IntegerSolution;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.uma.jmetal.util.ConstraintHandling.isFeasible;
 import static org.uma.jmetal.util.ConstraintHandling.overallConstraintViolationDegree;
+
+import org.junit.jupiter.api.Test;
+import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
 class SimpleIntegerProblemTest {
     @Test

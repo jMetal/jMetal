@@ -1,9 +1,5 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
