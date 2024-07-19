@@ -8,7 +8,7 @@ import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvalu
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
-import org.uma.jmetal.lab.visualization.plot.impl.Plot3D;
+import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -64,7 +64,7 @@ public class SMPSOWithUnboundedArchiveExample {
         SolutionListUtils.getMatrixWithObjectiveValues(population),
         VectorUtils.readVectors(referenceParetoFront, ","));
 
-    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.name() + " (NSGA-II)");
+    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix(), problem.name() + " (SMPSO)");
     plot.plot();
   }
 }

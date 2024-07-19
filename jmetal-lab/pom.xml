@@ -84,12 +84,12 @@
         <dependency>
             <groupId>com.github.haifengl</groupId>
             <artifactId>smile-core</artifactId>
-            <version>3.0.2</version>
+            <version>3.1.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.haifengl</groupId>
             <artifactId>smile-plot</artifactId>
-            <version>3.0.2</version>
+            <version>3.1.1</version>
         </dependency>
     </dependencies>
 </project>
