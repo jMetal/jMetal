@@ -8,21 +8,18 @@ import tech.tablesaw.api.Table;
 
 public class FriedmanTest {
 
-  public static final boolean MINIMIZAR = true;
-  public static final boolean MAXIMIZAR = false;
-
   private Table results;
-  private boolean minimizar;
+  private boolean minimize;
   private int numberOfAlgorithms;
   private int datasetCount;
 
   public FriedmanTest(
-      boolean minimizar,
+      boolean minimize,
       Table table,
       StringColumn algorithms,
       StringColumn problems,
       String indicatorValueColumnName) {
-    this.minimizar = minimizar;
+    this.minimize = minimize;
     numberOfAlgorithms = algorithms.size();
     datasetCount = table.rowCount();
     double[][] mean =
@@ -59,7 +56,7 @@ public class FriedmanTest {
     Pareja[][] orden = new Pareja[problems.size()][algorithms.size()];
     for (int i = 0; i < problems.size(); i++) {
       for (int j = 0; j < algorithms.size(); j++) {
-        orden[i][j] = new Pareja(j, mean[i][j], minimizar);
+        orden[i][j] = new Pareja(j, mean[i][j], minimize);
       }
       Arrays.sort(orden[i]);
     }
@@ -78,7 +75,7 @@ public class FriedmanTest {
             position = k + 1;
           }
         }
-        rank[i][j] = new Pareja(position, orden[i][position - 1].getValor(), minimizar);
+        rank[i][j] = new Pareja(position, orden[i][position - 1].getValor(), minimize);
       }
     }
 
