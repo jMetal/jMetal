@@ -51,8 +51,6 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
     this.weightVectorSize = weightVectorSize;
     this.neighborhoodSize = neighborhoodSize;
 
-
-
     this.neighborhood = new int[numberOfWeightVectors][neighborhoodSize];
     this.weightVector = new double[numberOfWeightVectors][weightVectorSize];
 

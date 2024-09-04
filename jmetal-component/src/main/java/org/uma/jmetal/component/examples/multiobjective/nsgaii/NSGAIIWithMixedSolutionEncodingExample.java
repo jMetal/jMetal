@@ -33,7 +33,7 @@ public class NSGAIIWithMixedSolutionEncodingExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
     Problem<CompositeSolution> problem =
-        new MixedIntegerDoubleProblem(10, 10, 100, -100, -1000, +1000);
+        new MixedIntegerDoubleProblem(60, 20, 100, -100, -1000, +1000);
 
     CompositeCrossover crossover =
         new CompositeCrossover(
@@ -42,7 +42,7 @@ public class NSGAIIWithMixedSolutionEncodingExample {
     CompositeMutation mutation =
         new CompositeMutation(
             Arrays.asList(
-                new IntegerPolynomialMutation(0.1, 2.0), new PolynomialMutation(0.1, 20.0)));
+                new IntegerPolynomialMutation(0.1, 20.0), new PolynomialMutation(0.1, 20.0)));
 
     int populationSize = 100;
     int offspringPopulationSize = 100;

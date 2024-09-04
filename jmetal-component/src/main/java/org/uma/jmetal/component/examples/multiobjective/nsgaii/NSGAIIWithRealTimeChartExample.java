@@ -46,7 +46,7 @@ public class NSGAIIWithRealTimeChartExample {
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    int offspringPopulationSize = 100;
 
     Termination termination = new TerminationByEvaluations(25000);
 
@@ -61,7 +61,7 @@ public class NSGAIIWithRealTimeChartExample {
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     var chartObserver =
-        new FrontPlotObserver<DoubleSolution>("NSGA-II", "F1", "F2", problem.name(), 500);
+        new FrontPlotObserver<DoubleSolution>("NSGA-II", "F1", "F2", problem.name(), 5000);
 
     chartObserver.setFront(readVectors(referenceParetoFront, ","), "Reference front");
 
