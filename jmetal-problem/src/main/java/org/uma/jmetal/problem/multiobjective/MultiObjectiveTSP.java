@@ -16,7 +16,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  *   http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/tsp/
  */
 @SuppressWarnings("serial")
-public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
+public class MultiObjectiveTSP extends AbstractIntegerPermutationProblem {
   protected int         numberOfCities ;
   protected double [][] distanceMatrix ;
   protected double [][] costMatrix;
@@ -24,7 +24,7 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
   /**
    * Creates a new MultiobjectiveTSP problem instance
    */
-  public MultiobjectiveTSP(String distanceFile, String costFile) throws IOException {
+  public MultiObjectiveTSP(String distanceFile, String costFile) throws IOException {
     distanceMatrix = readProblem(distanceFile) ;
     costMatrix     = readProblem(costFile);
   }

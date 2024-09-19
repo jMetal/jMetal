@@ -11,7 +11,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.multiobjective.MultiobjectiveTSP;
+import org.uma.jmetal.problem.multiobjective.MultiObjectiveTSP;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -34,7 +34,7 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws JMetalException, IOException {
 
-    PermutationProblem<PermutationSolution<Integer>> problem = new MultiobjectiveTSP(
+    PermutationProblem<PermutationSolution<Integer>> problem = new MultiObjectiveTSP(
         "resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
 
     CrossoverOperator<PermutationSolution<Integer>> crossover = new PMXCrossover(0.9);
