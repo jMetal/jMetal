@@ -174,7 +174,7 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
   public EvolutionaryAlgorithm<PermutationSolution<Integer>> create() throws IOException {
     JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.value());
 
-    var problem =  (PermutationProblem<PermutationSolution<Integer>>)problem();
+    var problem = (PermutationProblem<PermutationSolution<Integer>>)problem();
 
     Archive<PermutationSolution<Integer>> archive = null;
 
