@@ -27,9 +27,9 @@ import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.problem.multiobjective.MultiObjectiveTSP;
+import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.MultiObjectiveTSP;
+import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroA100KroB100TSP;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.MultiComparator;
@@ -174,9 +174,7 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
   public EvolutionaryAlgorithm<PermutationSolution<Integer>> create() throws IOException {
     JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.value());
 
-    PermutationProblem<PermutationSolution<Integer>> problem =
-            new MultiObjectiveTSP(
-                    "resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
+    PermutationProblem<PermutationSolution<Integer>> problem = new KroA100KroB100TSP() ;
 
     Archive<PermutationSolution<Integer>> archive = null;
 
