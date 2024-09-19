@@ -213,7 +213,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   public EvolutionaryAlgorithm<DoubleSolution> create() {
     JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.value());
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.value());
+    Problem<DoubleSolution> problem = problem() ;
 
     Archive<DoubleSolution> archive = null;
 
