@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -27,10 +26,10 @@ public class ArrayPointTest {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
-    double[] pointDimensions = (double[])ReflectionTestUtils.getField(point, "point");
+    double[] pointDimensions = point.values() ;
 
     double[] expectedArray = {0.0, 0.0, 0.0, 0.0, 0.0} ;
-    assertArrayEquals(expectedArray, pointDimensions, EPSILON); ;
+    assertArrayEquals(expectedArray, pointDimensions, EPSILON);
   }
 
   @Test
@@ -46,7 +45,7 @@ public class ArrayPointTest {
     Point newPoint = new ArrayPoint(point) ;
 
     double[] expectedArray = {1.0, -2.0, 45.5, -323.234, 2344234.23424} ;
-    double[] newPointDimensions = (double[])ReflectionTestUtils.getField(newPoint, "point");
+    double[] newPointDimensions = point.values() ;
 
     assertArrayEquals(expectedArray, newPointDimensions, EPSILON);
 
@@ -71,12 +70,9 @@ public class ArrayPointTest {
     Point point = new ArrayPoint(solution.objectives()) ;
 
     double[] expectedArray = {0.2, 234.23, -234.2356} ;
-    double[] pointDimensions = (double[])ReflectionTestUtils.getField(point, "point");
+    double[] pointDimensions = point.values() ;
 
     assertArrayEquals(expectedArray, pointDimensions, EPSILON);
-
-//    Mockito.verify(solution).objectives().length ;
-//    Mockito.verify(solution, Mockito.times(3)).getObjective(Mockito.anyInt());
   }
 
   @Test
@@ -84,7 +80,7 @@ public class ArrayPointTest {
     double[] array = {0.2, 234.23, -234.2356} ;
     Point point = new ArrayPoint(array) ;
 
-    double[] storedValues = (double[])ReflectionTestUtils.getField(point, "point");
+    double[] storedValues = point.values() ;
 
     assertArrayEquals(array, storedValues, EPSILON);
   }
@@ -110,7 +106,7 @@ public class ArrayPointTest {
     double[] array = {1.0, -2.0, 45.5, -323.234, 2344234.23424} ;
 
     Point point = new ArrayPoint(dimension) ;
-    ReflectionTestUtils.setField(point, "point", array);
+    point.set(array);
 
     assertArrayEquals(array, point.values(), EPSILON);
   }
@@ -121,7 +117,7 @@ public class ArrayPointTest {
     double[] array = {1.0, -2.0, 45.5, -323.234, Double.MAX_VALUE} ;
 
     Point point = new ArrayPoint(dimension) ;
-    ReflectionTestUtils.setField(point, "point", array);
+    point.set(array);
 
     assertEquals(1.0, point.value(0), EPSILON) ;
     assertEquals(-2.0, point.value(1), EPSILON) ;
@@ -151,7 +147,7 @@ public class ArrayPointTest {
 
     double[] array = {1.0, -2.0, 45.5, -323.234, Double.MAX_VALUE} ;
 
-    assertArrayEquals(array, (double[])ReflectionTestUtils.getField(point, "point"), EPSILON);
+    assertArrayEquals(array, point.values(), EPSILON);
   }
 
   @Test (expected = InvalidConditionException.class)

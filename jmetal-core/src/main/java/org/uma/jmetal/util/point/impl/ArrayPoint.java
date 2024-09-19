@@ -64,35 +64,6 @@ public class ArrayPoint implements Point {
     System.arraycopy(point, 0, this.point, 0, point.length);
   }
 
-  /**
-   * Constructor reading the values from a file
-   * @param fileName
-   */
-  public ArrayPoint(String fileName) throws IOException {
-   FileInputStream fis = new FileInputStream(fileName);
-   InputStreamReader isr = new InputStreamReader(fis);
-   try(BufferedReader br = new BufferedReader(isr)){
-
-    List<Double> auxiliarPoint = new ArrayList<Double>();
-    String aux = br.readLine();
-    while (aux != null) {
-      StringTokenizer st = new StringTokenizer(aux);
-
-      while (st.hasMoreTokens()) {
-        Double value = Double.valueOf(st.nextToken());
-        auxiliarPoint.add(value);
-      }
-      aux = br.readLine();
-    }
-
-    point = new double[auxiliarPoint.size()] ;
-    for (int i = 0; i < auxiliarPoint.size(); i++) {
-      point[i] = auxiliarPoint.get(i) ;
-    }
-
-   }
-  }
-
   @Override
   public int dimension() {
     return point.length;

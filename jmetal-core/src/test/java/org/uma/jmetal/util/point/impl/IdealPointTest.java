@@ -3,7 +3,8 @@ package org.uma.jmetal.util.point.impl;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -12,27 +13,27 @@ import org.uma.jmetal.util.point.Point;
 /**
  * Created by ajnebro on 12/2/16.
  */
-public class IdealPointTest {
+class IdealPointTest {
   private static final double EPSILON = 0.00000000001 ;
   private static final double DEFAULT_INITIAL_VALUE = Double.POSITIVE_INFINITY ;
 
   private IdealPoint referencePoint ;
 
   @Test
-  public void shouldConstructorCreateAnIdealPointWithAllObjectiveValuesCorrectlyInitialized() {
+  void shouldConstructorCreateAnIdealPointWithAllObjectiveValuesCorrectlyInitialized() {
     int numberOfObjectives = 4 ;
 
     referencePoint = new IdealPoint(numberOfObjectives) ;
 
-    assertEquals(numberOfObjectives, referencePoint.dimension()) ;
+    Assertions.assertEquals(numberOfObjectives, referencePoint.dimension());
 
     for (int i = 0 ; i < numberOfObjectives; i++) {
-      assertEquals(DEFAULT_INITIAL_VALUE, referencePoint.value(i), EPSILON) ;
+      Assertions.assertEquals(DEFAULT_INITIAL_VALUE, referencePoint.value(i), EPSILON);
     }
   }
 
   @Test
-  public void shouldUpdateWithOneSolutionMakeTheIdealPointHaveTheSolutionValues() {
+  void shouldUpdateWithOneSolutionMakeTheIdealPointHaveTheSolutionValues() {
     int numberOfObjectives = 2 ;
 
     referencePoint = new IdealPoint(numberOfObjectives) ;
@@ -44,13 +45,13 @@ public class IdealPointTest {
 
     referencePoint.update(solution.objectives());
 
-    assertEquals(1.0, referencePoint.value(0), EPSILON) ;
-    assertEquals(2.0, referencePoint.value(1), EPSILON) ;
-    assertArrayEquals(new double[]{1.0, 2.0}, solution.objectives(), EPSILON);
+    Assertions.assertEquals(1.0, referencePoint.value(0), EPSILON);
+    Assertions.assertEquals(2.0, referencePoint.value(1), EPSILON);
+    Assertions.assertArrayEquals(new double[]{1.0, 2.0}, solution.objectives(), EPSILON);
   }
 
   @Test
-  public void shouldUpdateWithTwoSolutionsLeadToTheCorrectIdealPoint() {
+  void shouldUpdateWithTwoSolutionsLeadToTheCorrectIdealPoint() {
     int numberOfObjectives = 2 ;
 
     referencePoint = new IdealPoint(numberOfObjectives) ;
@@ -67,12 +68,12 @@ public class IdealPointTest {
     referencePoint.update(solution1.objectives());
     referencePoint.update(solution2.objectives());
 
-    assertEquals(0.0, referencePoint.value(0), EPSILON) ;
-    assertEquals(0.0, referencePoint.value(1), EPSILON) ;
+    Assertions.assertEquals(0.0, referencePoint.value(0), EPSILON);
+    Assertions.assertEquals(0.0, referencePoint.value(1), EPSILON);
   }
 
   @Test
-  public void shouldUpdateWithThreeSolutionsLeadToTheCorrectIdealPoint() {
+  void shouldUpdateWithThreeSolutionsLeadToTheCorrectIdealPoint() {
     int numberOfObjectives = 3 ;
 
     referencePoint = new IdealPoint(numberOfObjectives) ;
@@ -97,18 +98,18 @@ public class IdealPointTest {
     referencePoint.update(solution2.objectives());
     referencePoint.update(solution3.objectives());
 
-    assertEquals(0.2, referencePoint.value(0), EPSILON) ;
-    assertEquals(1.0, referencePoint.value(1), EPSILON) ;
-    assertEquals(1.5, referencePoint.value(2), EPSILON) ;
+    Assertions.assertEquals(0.2, referencePoint.value(0), EPSILON);
+    Assertions.assertEquals(1.0, referencePoint.value(1), EPSILON);
+    Assertions.assertEquals(1.5, referencePoint.value(2), EPSILON);
   }
 
   @Test
-  public void shouldSetAssignTheRightValues() {
+  void shouldSetAssignTheRightValues() {
     Point point = new ArrayPoint(new double[]{2, 3, 3}) ;
 
     point.set(new double[]{5, 6, 7}) ;
-    assertEquals(5, point.value(0), EPSILON);
-    assertEquals(6, point.value(1), EPSILON);
-    assertEquals(7, point.value(2), EPSILON);
+    Assertions.assertEquals(5, point.value(0), EPSILON);
+    Assertions.assertEquals(6, point.value(1), EPSILON);
+    Assertions.assertEquals(7, point.value(2), EPSILON);
   }
 }
