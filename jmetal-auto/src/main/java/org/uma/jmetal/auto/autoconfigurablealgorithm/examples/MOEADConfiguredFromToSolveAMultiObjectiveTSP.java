@@ -60,7 +60,6 @@ public class MOEADConfiguredFromToSolveAMultiObjectiveTSP {
     moead.run();
 
     JMetalLogger.logger.info("Total computing time: " + moead.totalComputingTime());
-    ;
 
     new SolutionListOutput(moead.result())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

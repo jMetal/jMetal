@@ -22,7 +22,7 @@ public class NSGAIIConfiguredToSolveAMultiObjectiveTSP {
     String referenceFrontFileName = null ;
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroA100KroB100TSP "
+            ("--problemName org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.EuclidA300EuclidB300 "
                 + "--randomGeneratorSeed 12 "
                 + "--referenceFrontFileName " + referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 200000 "
