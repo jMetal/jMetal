@@ -1,4 +1,4 @@
-package org.uma.jmetal.problem.multiobjective;
+package org.uma.jmetal.problem.multiobjective.multiobjectivetsp;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
