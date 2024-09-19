@@ -1,6 +1,5 @@
 package org.uma.jmetal.auto.irace.parameterfilegeneration;
 
-import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOEAD;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOEADPermutation;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 

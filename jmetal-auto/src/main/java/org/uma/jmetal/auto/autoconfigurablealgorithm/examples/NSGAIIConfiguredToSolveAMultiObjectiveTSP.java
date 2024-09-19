@@ -1,17 +1,14 @@
 package org.uma.jmetal.auto.autoconfigurablealgorithm.examples;
 
+import java.io.IOException;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAIIPermutation;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
-
-import java.io.IOException;
 
 /**
  * Class configuring NSGA-II using arguments in the form <key, value> and the {@link AutoNSGAII}

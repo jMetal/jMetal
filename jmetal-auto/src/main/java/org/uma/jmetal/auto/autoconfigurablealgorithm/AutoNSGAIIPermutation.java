@@ -27,8 +27,6 @@ import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.MultiObjectiveTSP;
-import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroA100KroB100TSP;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.archive.Archive;
