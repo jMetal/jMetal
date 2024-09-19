@@ -89,7 +89,7 @@ public class VariationParameter extends CategoricalParameter {
 
   public Variation<? extends PermutationSolution<Integer>> getPermutationSolutionParameter() {
     Variation<PermutationSolution<Integer>> result;
-    int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").value() ;
+    int offspringPopulationSize = (Integer)findSpecificParameter("offspringPopulationSize").value() ;
 
     if ("crossoverAndMutationVariation".equals(value())) {
       CrossoverParameter crossoverParameter =

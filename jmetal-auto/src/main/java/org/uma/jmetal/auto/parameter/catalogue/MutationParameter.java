@@ -79,7 +79,7 @@ public class MutationParameter extends CategoricalParameter {
     double mutationProbability = (double) findGlobalParameter(
             "mutationProbabilityFactor").value() / permutationLength;
 
-    if ("PermutationSwap".equals(value())) {
+    if ("swap".equals(value())) {
       result = new PermutationSwapMutation<>(mutationProbability) ;
     } else {
       throw new JMetalException("Mutation operator does not exist: " + name());

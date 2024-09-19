@@ -108,7 +108,7 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
     crossoverParameter.addGlobalParameter(crossoverProbability);
 
     MutationParameter mutationParameter =
-        new MutationParameter(List.of("PermutationSwap"));
+        new MutationParameter(List.of("swap"));
 
     RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor",
         0.0, 2.0);

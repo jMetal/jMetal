@@ -1,9 +1,11 @@
 package org.uma.jmetal.auto.autoconfigurablealgorithm.examples;
 
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOEAD;
+import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOEADPermutation;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -15,17 +17,17 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class MOEADConfiguredFromAParameterString {
+public class MOEADConfiguredFromToSolveAMultiObjectiveTSP {
   public static void main(String[] args) {
-    String referenceFrontFileName = "DTLZ1.3D.csv" ;
+    String referenceFrontFileName = null ;
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroA100KroB100TSP "
             + "--referenceFrontFileName DTLZ1.3D.csv "
             + "--randomGeneratorSeed 124 "
-            + "--maximumNumberOfEvaluations 150000 "
+            + "--maximumNumberOfEvaluations 200000 "
             + "--algorithmResult population "
-            + "--populationSize 91 "
+            + "--populationSize 100 "
             + "--offspringPopulationSize 1 "
             + "--sequenceGenerator integerSequence "
             + "--createInitialSolutions random "
@@ -37,30 +39,24 @@ public class MOEADConfiguredFromAParameterString {
             + "--neighborhoodSelectionProbability 0.9 "
             + "--variation crossoverAndMutationVariation "
             + "--selection populationAndNeighborhoodMatingPoolSelection "
-            + "--crossover SBX "
+            + "--crossover PMX "
             + "--crossoverProbability 0.9 "
-            + "--crossoverRepairStrategy bounds "
-            + "--sbxDistributionIndex 20.0 "
-            + "--mutation polynomial "
-            + "--mutationProbabilityFactor 1.0 "
-            + "--mutationRepairStrategy bounds "
-            + "--polynomialMutationDistributionIndex 20.0 ")
+            + "--mutation swap "
+            + "--mutationProbabilityFactor 1.0 ")
             .split("\\s+");
 
-    AutoMOEAD autoMOEAD = new AutoMOEAD();
+    AutoMOEADPermutation autoMOEAD = new AutoMOEADPermutation();
     autoMOEAD.parse(parameters);
 
     AutoNSGAII.print(autoMOEAD.fixedParameterList);
     AutoNSGAII.print(autoMOEAD.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> moead = autoMOEAD.create();
+    EvolutionaryAlgorithm<PermutationSolution<Integer>> moead = autoMOEAD.create();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "MOEAD", 80, 5000,"resources/referenceFrontsCSV/" + referenceFrontFileName);
+            "MOEAD", 80, 5000,referenceFrontFileName);
 
-    moead.observable().register(evaluationObserver);
     moead.observable().register(runTimeChartObserver);
 
     moead.run();

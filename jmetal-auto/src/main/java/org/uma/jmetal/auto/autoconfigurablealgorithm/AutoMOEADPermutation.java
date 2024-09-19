@@ -141,7 +141,7 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
     crossoverParameter.addGlobalParameter(crossoverProbability);
 
     MutationParameter mutationParameter =
-        new MutationParameter(Arrays.asList("permutationSwap"));
+        new MutationParameter(List.of("swap"));
 
     RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor",
         0.0, 2.0);
@@ -223,9 +223,9 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
 
     MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter(
         "mutation");
-    mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
-        problem.numberOfVariables());
 
+    mutationParameter.addNonConfigurableParameter("permutationLength",
+        problem.numberOfVariables());
 
     Neighborhood<PermutationSolution<Integer>> neighborhood = null ;
 
