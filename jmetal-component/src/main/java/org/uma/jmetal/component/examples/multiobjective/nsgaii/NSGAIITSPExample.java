@@ -11,13 +11,18 @@ import org.uma.jmetal.operator.crossover.impl.PMXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
 import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.MultiObjectiveTSP;
+import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroA100KroB100TSP;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.FrontPlotObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+
+import static org.uma.jmetal.util.VectorUtils.readVectors;
 
 /**
  * Class to configure and run the NSGA-II algorithm to solve a bi-objective TSP.
@@ -27,9 +32,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class NSGAIITSPExample {
   public static void main(String[] args) throws JMetalException, IOException {
 
-    PermutationProblem<PermutationSolution<Integer>> problem =
-        new MultiObjectiveTSP(
-            "resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
+    PermutationProblem<PermutationSolution<Integer>> problem = new KroA100KroB100TSP() ;
 
     CrossoverOperator<PermutationSolution<Integer>> crossover = new PMXCrossover(0.9);
 
@@ -49,6 +52,11 @@ public class NSGAIITSPExample {
                     mutation)
         .setTermination(termination)
         .build();
+
+    var chartObserver =
+            new FrontPlotObserver<DoubleSolution>("NSGA-II", "F1", "F2", problem.name(), 5000);
+
+    nsgaii.observable().register(chartObserver);
 
     nsgaii.run();
 
