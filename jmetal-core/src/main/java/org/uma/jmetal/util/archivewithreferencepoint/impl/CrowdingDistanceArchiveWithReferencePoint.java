@@ -21,15 +21,16 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 
 /**
- * Class representing a {@link ArchiveWithReferencePoint} archive using a crowding distance based density estimator
+ * Class representing a {@link ArchiveWithReferencePoint} archive using a crowding distance based density estimator that
+ * takes into account the preferences of the decision make through a reference point
  * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class CrowdingDistanceArchiveWithReferencePoint<S extends Solution<?>> extends ArchiveWithReferencePoint<S> {
   private final DensityEstimator<S> densityEstimator ;
 
-  public CrowdingDistanceArchiveWithReferencePoint(int maxSize, List<Double> refPointDM) {
-    super(maxSize, refPointDM, new CrowdingDistanceDensityEstimator<S>().comparator());
+  public CrowdingDistanceArchiveWithReferencePoint(int maxSize, List<Double> referencePoint) {
+    super(maxSize, referencePoint, new CrowdingDistanceDensityEstimator<S>().comparator());
 
     densityEstimator = new CrowdingDistanceDensityEstimator<>() ;
   }
