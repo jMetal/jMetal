@@ -13,4 +13,9 @@ public class KroA100KroB100TSP extends MultiObjectiveTSP {
   public KroA100KroB100TSP() throws IOException {
     super("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
   }
+
+  @Override
+  public String name() {
+    return "KroA100KroB100TSP" ;
+  }
 }

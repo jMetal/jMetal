@@ -150,7 +150,7 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
     offspringPopulationSizeParameter.value(1) ;
 
     variationParameter =
-        new VariationParameter(List.of("crossoverAndMutationVariation", "differentialEvolutionVariation"));
+        new VariationParameter(List.of("crossoverAndMutationVariation"));
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", offspringPopulationSizeParameter);

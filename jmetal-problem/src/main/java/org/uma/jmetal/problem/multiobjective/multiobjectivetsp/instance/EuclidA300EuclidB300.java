@@ -12,4 +12,9 @@ public class EuclidA300EuclidB300 extends MultiObjectiveTSP {
   public EuclidA300EuclidB300() throws IOException {
     super("resources/tspInstances/euclidA300.tsp", "resources/tspInstances/euclidB300.tsp");
   }
+
+  @Override
+  public String name() {
+    return "EuclidA300EuclidB300" ;
+  }
 }
