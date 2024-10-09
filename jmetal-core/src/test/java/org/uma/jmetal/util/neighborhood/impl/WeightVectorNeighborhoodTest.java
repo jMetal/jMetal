@@ -2,6 +2,7 @@ package org.uma.jmetal.util.neighborhood.impl;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Assertions;
@@ -28,6 +29,8 @@ class WeightVectorNeighborhoodTest {
         EPSILON);
     Assertions.assertEquals(1.0, weightVectorNeighborhood.getWeightVector()[99][0], EPSILON);
     Assertions.assertEquals(0.0, weightVectorNeighborhood.getWeightVector()[99][1], EPSILON);
+
+    System.out.println(Arrays.toString(weightVectorNeighborhood.getNeighborhood()[0])) ;
 
     Assertions.assertArrayEquals(
         new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19},
