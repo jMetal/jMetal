@@ -8,8 +8,10 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSo
 import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.ScatterSearchSolutionsCreation;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class CreateInitialSolutionsParameter extends CategoricalParameter {
@@ -43,5 +45,13 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter {
     }
     throw new JMetalException(
         value() + " is not a valid initialization strategy");
+  }
+
+  public SolutionsCreation<? extends PermutationSolution<Integer>> getParameter(PermutationProblem<PermutationSolution<Integer>> problem, int populationSize) {
+    if (value().equals("random")) {
+      return new RandomSolutionsCreation<>(problem, populationSize);
+    }
+    throw new JMetalException(
+            value() + " is not a valid initialization strategy");
   }
 }

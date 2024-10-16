@@ -8,7 +8,7 @@ import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGA;
 import org.uma.jmetal.operator.crossover.impl.PMXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.multiobjective.MultiobjectiveTSP;
+import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.BiObjectiveTSP;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -30,7 +30,7 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
         new BinaryTournamentSelection<PermutationSolution<Integer>>(
             new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
 
-    var problem = new MultiobjectiveTSP("resources/tspInstances/kroA100.tsp",
+    var problem = new BiObjectiveTSP("resources/tspInstances/kroA100.tsp",
         "resources/tspInstances/kroB100.tsp");
 
     List<Double> referencePoint = new ArrayList<>();

@@ -3,13 +3,10 @@ package org.uma.jmetal.auto.parameter.catalogue;
 import java.util.List;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
-import org.uma.jmetal.operator.mutation.impl.LinkedPolynomialMutation;
-import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.mutation.impl.UniformMutation;
+import org.uma.jmetal.operator.mutation.impl.*;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class MutationParameter extends CategoricalParameter {
@@ -73,6 +70,22 @@ public class MutationParameter extends CategoricalParameter {
       throw new JMetalException("Mutation operator does not exist: " + name());
     }
     return result;
+  }
+
+  public MutationOperator<PermutationSolution<Integer>> getPermutationParameter() {
+    MutationOperator<PermutationSolution<Integer>> result;
+
+    int permutationLength = (int) getNonConfigurableParameter("permutationLength");
+    double mutationProbability = (double) findGlobalParameter(
+            "mutationProbabilityFactor").value() / permutationLength;
+
+    if ("swap".equals(value())) {
+      result = new PermutationSwapMutation<>(mutationProbability) ;
+    } else {
+      throw new JMetalException("Mutation operator does not exist: " + name());
+    }
+
+    return result ;
   }
 
   @Override

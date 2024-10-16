@@ -9,6 +9,7 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
@@ -79,6 +80,29 @@ public class VariationParameter extends CategoricalParameter {
       result =
           new CrossoverAndMutationVariation<>(
               offspringPopulationSize, crossoverOperator, mutationOperatorOperator);
+    } else {
+      throw new JMetalException("Variation component unknown: " + value());
+    }
+
+    return result;
+  }
+
+  public Variation<? extends PermutationSolution<Integer>> getPermutationSolutionParameter() {
+    Variation<PermutationSolution<Integer>> result;
+    int offspringPopulationSize = (Integer)findSpecificParameter("offspringPopulationSize").value() ;
+
+    if ("crossoverAndMutationVariation".equals(value())) {
+      CrossoverParameter crossoverParameter =
+              (CrossoverParameter) findSpecificParameter("crossover");
+      MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
+
+      CrossoverOperator<PermutationSolution<Integer>> crossoverOperator = crossoverParameter.getPermutationParameter();
+      MutationOperator<PermutationSolution<Integer>> mutationOperatorOperator =
+              mutationParameter.getPermutationParameter();
+
+      result =
+              new CrossoverAndMutationVariation<>(
+                      offspringPopulationSize, crossoverOperator, mutationOperatorOperator);
     } else {
       throw new JMetalException("Variation component unknown: " + value());
     }

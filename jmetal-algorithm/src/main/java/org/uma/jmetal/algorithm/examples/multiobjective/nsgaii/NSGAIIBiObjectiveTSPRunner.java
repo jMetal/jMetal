@@ -11,7 +11,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.multiobjective.MultiobjectiveTSP;
+import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.BiObjectiveTSP;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -27,25 +27,25 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *
  * @author Antonio J. Nebro
  */
-public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
+public class NSGAIIBiObjectiveTSPRunner extends AbstractAlgorithmRunner {
 
   /**
    * @param args Command line arguments.
    */
   public static void main(String[] args) throws JMetalException, IOException {
 
-    PermutationProblem<PermutationSolution<Integer>> problem = new MultiobjectiveTSP(
+    PermutationProblem<PermutationSolution<Integer>> problem = new BiObjectiveTSP(
         "resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
 
     CrossoverOperator<PermutationSolution<Integer>> crossover = new PMXCrossover(0.9);
 
     double mutationProbability = 0.2;
-    MutationOperator<PermutationSolution<Integer>> mutation = new PermutationSwapMutation<Integer>(
+    MutationOperator<PermutationSolution<Integer>> mutation = new PermutationSwapMutation<>(
         mutationProbability);
 
     SelectionOperator<List<PermutationSolution<Integer>>, PermutationSolution<Integer>> selection =
-        new BinaryTournamentSelection<PermutationSolution<Integer>>(
-            new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
+        new BinaryTournamentSelection<>(
+            new RankingAndCrowdingDistanceComparator<>());
 
     int populationSize = 100;
     Algorithm<List<PermutationSolution<Integer>>> algorithm =

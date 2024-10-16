@@ -10,13 +10,17 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.PMXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
-import org.uma.jmetal.problem.multiobjective.MultiobjectiveTSP;
+import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.MultiObjectiveTSP;
+import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroAB100TSP;
+import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroABC100TSP;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.FrontPlotObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -24,31 +28,37 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *
  * @author Antonio J. Nebro
  */
-public class NSGAIITSPExample {
+public class NSGAIIMultiObjectiveTSPExample {
   public static void main(String[] args) throws JMetalException, IOException {
 
+    // PermutationProblem<PermutationSolution<Integer>> problem = new KroABC100TSP() ;
     PermutationProblem<PermutationSolution<Integer>> problem =
-        new MultiobjectiveTSP(
-            "resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
+        new MultiObjectiveTSP(
+            List.of(
+                "resources/tspInstances/kroA100.tsp",
+                "resources/tspInstances/kroB100.tsp",
+                "resources/tspInstances/kroC100.tsp"));
 
     CrossoverOperator<PermutationSolution<Integer>> crossover = new PMXCrossover(0.9);
 
     double mutationProbability = 0.2;
-    MutationOperator<PermutationSolution<Integer>> mutation = new PermutationSwapMutation<>(mutationProbability);
+    MutationOperator<PermutationSolution<Integer>> mutation =
+        new PermutationSwapMutation<>(mutationProbability);
 
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
     Termination termination = new TerminationByEvaluations(125000);
 
-    EvolutionaryAlgorithm<PermutationSolution<Integer>> nsgaii = new NSGAIIBuilder<>(
-                    problem,
-                    populationSize,
-                    offspringPopulationSize,
-                    crossover,
-                    mutation)
-        .setTermination(termination)
-        .build();
+    EvolutionaryAlgorithm<PermutationSolution<Integer>> nsgaii =
+        new NSGAIIBuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation)
+            .setTermination(termination)
+            .build();
+
+    var chartObserver =
+        new FrontPlotObserver<DoubleSolution>("NSGA-II", "F1", "F2", problem.name(), 5000);
+
+    nsgaii.observable().register(chartObserver);
 
     nsgaii.run();
 
@@ -57,9 +67,9 @@ public class NSGAIITSPExample {
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.numberOfEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
-            .print();
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");

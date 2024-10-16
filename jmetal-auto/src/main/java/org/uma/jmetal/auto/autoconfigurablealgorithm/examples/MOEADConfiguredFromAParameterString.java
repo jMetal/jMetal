@@ -23,7 +23,7 @@ public class MOEADConfiguredFromAParameterString {
         ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1 "
             + "--referenceFrontFileName DTLZ1.3D.csv "
             + "--randomGeneratorSeed 124 "
-            + "--maximumNumberOfEvaluations 35000 "
+            + "--maximumNumberOfEvaluations 150000 "
             + "--algorithmResult population "
             + "--populationSize 91 "
             + "--offspringPopulationSize 1 "
@@ -47,27 +47,27 @@ public class MOEADConfiguredFromAParameterString {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoMOEAD autoNSGAII = new AutoMOEAD();
-    autoNSGAII.parse(parameters);
+    AutoMOEAD autoMOEAD = new AutoMOEAD();
+    autoMOEAD.parse(parameters);
 
-    AutoNSGAII.print(autoNSGAII.fixedParameterList);
-    AutoNSGAII.print(autoNSGAII.autoConfigurableParameterList);
+    AutoNSGAII.print(autoMOEAD.fixedParameterList);
+    AutoNSGAII.print(autoMOEAD.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+    EvolutionaryAlgorithm<DoubleSolution> moead = autoMOEAD.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "MOEAD", 80, 1000,"resources/referenceFrontsCSV/" + referenceFrontFileName);
+            "MOEAD", 80, 5000,"resources/referenceFrontsCSV/" + referenceFrontFileName);
 
-    nsgaII.observable().register(evaluationObserver);
-    nsgaII.observable().register(runTimeChartObserver);
+    moead.observable().register(evaluationObserver);
+    moead.observable().register(runTimeChartObserver);
 
-    nsgaII.run();
+    moead.run();
 
-    JMetalLogger.logger.info("Total computing time: " + nsgaII.totalComputingTime()); ;
+    JMetalLogger.logger.info("Total computing time: " + moead.totalComputingTime()); ;
 
-    new SolutionListOutput(nsgaII.result())
+    new SolutionListOutput(moead.result())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
         .print();
