@@ -7,6 +7,7 @@ import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByComputingTime;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByKeyboard;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -42,9 +43,9 @@ public class NSGAIIDefaultConfigurationExample {
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = 1 ;
+    int offspringPopulationSize = 100 ;
 
-    Termination termination = new TerminationByComputingTime(25000);
+    Termination termination = new TerminationByKeyboard();
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
                     problem,
