@@ -15,25 +15,22 @@ import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
- * Class representing a multi-objective TSP (Traveling Salesman Problem) problem.
+ * Class representing a bi-objective TSP (Traveling Salesman Problem) problem.
  * It accepts data files from TSPLIB:
  *   http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/tsp/
  */
 @SuppressWarnings("serial")
-public class MultiObjectiveTSP extends AbstractIntegerPermutationProblem {
-  protected int numberOfCities ;
-  List<double[][]> distanceMatrices ;
+public class BiObjectiveTSP extends AbstractIntegerPermutationProblem {
+  protected int         numberOfCities ;
+  protected double [][] distanceMatrix ;
+  protected double [][] costMatrix;
 
   /**
-   * Creates a new MultiobjectiveTSP problem instance. It is assumed that all the distance files represent
-   * problems with the same number of cities.
+   * Creates a new MultiobjectiveTSP problem instance
    */
-  public MultiObjectiveTSP(List<String> distanceFileNames) throws IOException {
-    distanceMatrices = new ArrayList<>() ;
-    for (String distanceFileName: distanceFileNames) {
-      double[][] distanceMatrix = readProblem(distanceFileName) ;
-      distanceMatrices.add(distanceMatrix) ;
-    }
+  public BiObjectiveTSP(String distanceFile, String costFile) throws IOException {
+    distanceMatrix = readProblem(distanceFile) ;
+    costMatrix     = readProblem(costFile);
   }
 
   @Override
@@ -43,7 +40,7 @@ public class MultiObjectiveTSP extends AbstractIntegerPermutationProblem {
 
   @Override
   public int numberOfObjectives() {
-    return distanceMatrices.size();
+    return 2;
   }
 
   @Override
@@ -58,7 +55,11 @@ public class MultiObjectiveTSP extends AbstractIntegerPermutationProblem {
 
   /** Evaluate() method */
   public PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution){
-    double[] fitness = IntStream.range(0, numberOfObjectives()).mapToDouble(i -> 0).toArray();
+    double fitness1   ;
+    double fitness2   ;
+
+    fitness1 = 0.0 ;
+    fitness2 = 0.0 ;
 
     for (int i = 0; i < (numberOfCities - 1); i++) {
       int x ;
@@ -67,24 +68,20 @@ public class MultiObjectiveTSP extends AbstractIntegerPermutationProblem {
       x = solution.variables().get(i) ;
       y = solution.variables().get(i+1) ;
 
-      for (int j = 0 ; j < numberOfObjectives(); j++) {
-        fitness[j] += distanceMatrices.get(j)[x][y] ;
-      }
+      fitness1 += distanceMatrix[x][y] ;
+      fitness2 += costMatrix[x][y];
     }
-
     int firstCity ;
     int lastCity  ;
 
     firstCity = solution.variables().get(0) ;
     lastCity = solution.variables().get(numberOfCities - 1) ;
 
-    for (int j = 0 ; j < numberOfObjectives(); j++) {
-      fitness[j] += distanceMatrices.get(j)[firstCity][lastCity] ;
-    }
+    fitness1 += distanceMatrix[firstCity][lastCity] ;
+    fitness2 += costMatrix[firstCity][lastCity];
 
-    for (int i = 0; i < numberOfObjectives(); i++) {
-      solution.objectives()[i] = fitness[i] ;
-    }
+    solution.objectives()[0] = fitness1 ;
+    solution.objectives()[1] = fitness2 ;
 
     return solution ;
   }
@@ -119,7 +116,7 @@ public class MultiObjectiveTSP extends AbstractIntegerPermutationProblem {
 
       matrix = new double[numberOfCities][numberOfCities] ;
 
-      // Find the string SECTION  
+      // Find the string SECTION
       found = false ;
       token.nextToken();
       while(!found) {
