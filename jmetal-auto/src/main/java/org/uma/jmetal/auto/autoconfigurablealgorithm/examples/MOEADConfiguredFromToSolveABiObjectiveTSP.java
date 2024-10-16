@@ -16,12 +16,12 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class MOEADConfiguredFromToSolveAMultiObjectiveTSP {
+public class MOEADConfiguredFromToSolveABiObjectiveTSP {
   public static void main(String[] args) {
     String referenceFrontFileName = null;
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroA100KroB100TSP "
+        ("--problemName org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroAB100TSP "
                 + "--referenceFrontFileName refereceFrontFileNameToBeIndicated "
                 + "--randomGeneratorSeed 124 "
                 + "--maximumNumberOfEvaluations 200000 "

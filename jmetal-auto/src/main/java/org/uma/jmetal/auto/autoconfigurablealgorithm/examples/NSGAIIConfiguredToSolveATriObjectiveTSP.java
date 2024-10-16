@@ -16,13 +16,13 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class NSGAIIConfiguredToSolveAMultiObjectiveTSP {
+public class NSGAIIConfiguredToSolveATriObjectiveTSP {
 
   public static void main(String[] args) throws IOException {
     String referenceFrontFileName = null ;
 
     String[] parameters =
-            ("--problemName org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.EuclidA300EuclidB300 "
+            ("--problemName org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroABC100TSP "
                 + "--randomGeneratorSeed 12 "
                 + "--referenceFrontFileName " + referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 200000 "
