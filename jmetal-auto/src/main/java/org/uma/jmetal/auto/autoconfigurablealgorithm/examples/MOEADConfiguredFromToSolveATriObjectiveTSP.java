@@ -22,7 +22,7 @@ public class MOEADConfiguredFromToSolveATriObjectiveTSP {
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroABC100TSP "
-                + "--referenceFrontFileName refereceFrontFileNameToBeIndicated "
+                + "--referenceFrontFileName referenceFrontFileNameToBeIndicated "
                 + "--randomGeneratorSeed 124 "
                 + "--maximumNumberOfEvaluations 200000 "
                 + "--algorithmResult population "

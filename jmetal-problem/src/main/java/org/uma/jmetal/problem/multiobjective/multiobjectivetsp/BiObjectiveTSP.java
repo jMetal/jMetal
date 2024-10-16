@@ -26,7 +26,7 @@ public class BiObjectiveTSP extends AbstractIntegerPermutationProblem {
   protected double [][] costMatrix;
 
   /**
-   * Creates a new MultiobjectiveTSP problem instance
+   * Creates a new BiObjectiveTSP problem instance
    */
   public BiObjectiveTSP(String distanceFile, String costFile) throws IOException {
     distanceMatrix = readProblem(distanceFile) ;
