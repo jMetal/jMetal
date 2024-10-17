@@ -189,7 +189,6 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     deCrossoverParameter.addGlobalParameter(fParameter);
 
     offspringPopulationSizeParameter = new PositiveIntegerValue("offspringPopulationSize") ;
-    offspringPopulationSizeParameter.value(1) ;
 
     variationParameter =
         new VariationParameter(List.of("crossoverAndMutationVariation", "differentialEvolutionVariation"));
@@ -230,6 +229,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     for (Parameter<?> parameter : configurableParameterList()) {
       parameter.parse(arguments).check();
     }
+
+
   }
 
   protected Problem<DoubleSolution> problem() {

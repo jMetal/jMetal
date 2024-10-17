@@ -10,7 +10,7 @@ public class KroAC100TSP extends BiObjectiveTSP {
    *
    */
   public KroAC100TSP() throws IOException {
-    super("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroAC100.tsp");
+    super("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroC100.tsp");
   }
 
   @Override
