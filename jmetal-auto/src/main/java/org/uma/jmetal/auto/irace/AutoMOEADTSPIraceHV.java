@@ -20,7 +20,7 @@ public class AutoMOEADTSPIraceHV {
     EvolutionaryAlgorithm<PermutationSolution<Integer>> mopso = autoMOEAD.create();
     mopso.run();
 
-    String referenceFrontFile = "resources/referenceFrontsCSV/"
+    String referenceFrontFile = "resources/referenceFrontsTSP/"
         + autoMOEAD.referenceFrontFilenameParameter.value();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
