@@ -3,91 +3,25 @@ package org.uma.jmetal.auto.experiments;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOEADPermutation;
-import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAIIPermutation;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
-import org.uma.jmetal.component.algorithm.multiobjective.MOEADBuilder;
-import org.uma.jmetal.component.algorithm.multiobjective.MOEADDEBuilder;
-import org.uma.jmetal.component.algorithm.multiobjective.SMPSOBuilder;
-import org.uma.jmetal.component.algorithm.multiobjective.SMSEMOABuilder;
-import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.component.catalogue.common.termination.Termination;
-import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentSelection;
-import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
-import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
-import org.uma.jmetal.component.catalogue.pso.globalbestselection.impl.NaryTournamentGlobalBestSelection;
-import org.uma.jmetal.component.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
-import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.impl.ConstantValueStrategy;
-import org.uma.jmetal.component.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
-import org.uma.jmetal.component.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
-import org.uma.jmetal.component.catalogue.pso.perturbation.impl.FrequencySelectionMutationBasedPerturbation;
-import org.uma.jmetal.component.catalogue.pso.positionupdate.impl.DefaultPositionUpdate;
-import org.uma.jmetal.component.catalogue.pso.velocityinitialization.impl.SPSO2007VelocityInitialization;
-import org.uma.jmetal.component.catalogue.pso.velocityupdate.impl.DefaultVelocityUpdate;
-import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
 import org.uma.jmetal.lab.experiment.component.impl.*;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
-import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
-import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.mutation.impl.LinkedPolynomialMutation;
-import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroAB100TSP;
-import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroAC100TSP;
-import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroAD100TSP;
-import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroAE100TSP;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT1;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT10;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT11;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT12;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT13;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT14;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT15;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT16;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT17;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT18;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT19;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT2;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT20;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT3;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT4;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT5;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT6;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT7;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT8;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT9;
+import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.*;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
-import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
-import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
-import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
-import org.uma.jmetal.util.comparator.MultiComparator;
-import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
-import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
-public class BiObjectiveTSPStudy {
+public class TriObjectiveTSPStudy {
 
   private static final int INDEPENDENT_RUNS = 8;
 
@@ -98,19 +32,19 @@ public class BiObjectiveTSPStudy {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<PermutationSolution<Integer>>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new KroAB100TSP()));
-    problemList.add(new ExperimentProblem<>(new KroAC100TSP()));
-    problemList.add(new ExperimentProblem<>(new KroAD100TSP()));
-    problemList.add(new ExperimentProblem<>(new KroAE100TSP()));
+    problemList.add(new ExperimentProblem<>(new KroABC100TSP()));
+    problemList.add(new ExperimentProblem<>(new KroABD100TSP()));
+    problemList.add(new ExperimentProblem<>(new KroACD100TSP()));
+    problemList.add(new ExperimentProblem<>(new KroACE100TSP()));
 
     var algorithmList = configureAlgorithmList(problemList);
 
     var experiment =
-            new ExperimentBuilder<PermutationSolution<Integer>, List<PermutationSolution<Integer>>>("BiObjectiveTSP")
+            new ExperimentBuilder<PermutationSolution<Integer>, List<PermutationSolution<Integer>>>("TriObjectiveTSP")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
                     .setExperimentBaseDirectory(experimentBaseDirectory)
-                    .setReferenceFrontDirectory(experimentBaseDirectory + "/BiObjectiveTSP/referenceFronts")
+                    .setReferenceFrontDirectory(experimentBaseDirectory + "/TriObjectiveTSP/referenceFronts")
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
                     .setIndicatorList(Arrays.asList(
@@ -122,7 +56,7 @@ public class BiObjectiveTSPStudy {
                     .setNumberOfCores(8)
                     .build();
 
-    // new ExecuteAlgorithms<>(experiment).run();
+    new ExecuteAlgorithms<>(experiment).run();
 
     new GenerateReferenceParetoFront(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
