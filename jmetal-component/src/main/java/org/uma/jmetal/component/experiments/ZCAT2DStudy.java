@@ -1,4 +1,4 @@
-package org.uma.jmetal.component;
+package org.uma.jmetal.component.experiments;
 
 import java.io.IOException;
 import java.util.ArrayList;
