@@ -27,7 +27,6 @@ public class MOEADConfiguredFromToSolveATriObjectiveTSP {
                 + "--maximumNumberOfEvaluations 200000 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
-                + "--offspringPopulationSize 1 "
                 + "--sequenceGenerator integerSequence "
                 + "--createInitialSolutions random "
                 + "--normalizeObjectives false "

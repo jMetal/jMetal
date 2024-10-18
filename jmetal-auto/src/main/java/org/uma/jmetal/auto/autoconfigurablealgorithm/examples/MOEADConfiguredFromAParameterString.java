@@ -26,7 +26,6 @@ public class MOEADConfiguredFromAParameterString {
             + "--maximumNumberOfEvaluations 150000 "
             + "--algorithmResult population "
             + "--populationSize 91 "
-            + "--offspringPopulationSize 1 "
             + "--sequenceGenerator integerSequence "
             + "--createInitialSolutions random "
             + "--normalizeObjectives false "

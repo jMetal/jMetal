@@ -1,9 +1,12 @@
 package org.uma.jmetal.auto.autoconfigurablealgorithm;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
+
 import org.uma.jmetal.auto.parameter.BooleanParameter;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
@@ -223,14 +226,17 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
   @Override
   public void parse(String[] arguments) {
+  String [] offspringPopulationSizeValue = new String[]{"--offspringPopulationSize", "1"} ;
+  String [] extendedArguments = Stream.concat(Arrays.stream(arguments), Arrays.stream(offspringPopulationSizeValue))
+          .toArray(size -> (String[]) Array.newInstance(arguments.getClass().getComponentType(), size));
+
+
     for (Parameter<?> parameter : fixedParameterList) {
-      parameter.parse(arguments).check();
+      parameter.parse(extendedArguments).check();
     }
     for (Parameter<?> parameter : configurableParameterList()) {
-      parameter.parse(arguments).check();
+      parameter.parse(extendedArguments).check();
     }
-
-
   }
 
   protected Problem<DoubleSolution> problem() {

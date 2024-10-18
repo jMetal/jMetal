@@ -28,7 +28,6 @@ public class MOEADDEConfiguredForDTLZ1 {
             + "--normalizeObjectives false "
             + "--populationSize 91 "
             + "--sequenceGenerator integerSequence "
-            + "--offspringPopulationSize 1 "
             + "--createInitialSolutions random "
             + "--neighborhoodSize 30 "
             + "--maximumNumberOfReplacedSolutions 5 "
@@ -46,13 +45,13 @@ public class MOEADDEConfiguredForDTLZ1 {
             + "--mutationRepairStrategy round ")
             .split("\\s+");
 
-    AutoMOEAD autoNSGAII = new AutoMOEAD();
-    autoNSGAII.parse(parameters);
+    AutoMOEAD autoMOEAD = new AutoMOEAD();
+    autoMOEAD.parse(parameters);
 
-    AutoNSGAII.print(autoNSGAII.fixedParameterList);
-    AutoNSGAII.print(autoNSGAII.autoConfigurableParameterList);
+    AutoNSGAII.print(autoMOEAD.fixedParameterList);
+    AutoNSGAII.print(autoMOEAD.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoMOEAD.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =

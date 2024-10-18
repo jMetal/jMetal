@@ -25,7 +25,6 @@ public class MOEADConfiguredFromToSolveABiObjectiveTSP {
                 + "--referenceFrontFileName " + referenceFrontFileName + " "
                 + "--randomGeneratorSeed 124 "
                 + "--maximumNumberOfEvaluations 1500000 "
-                + "--offspringPopulationSize 1 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
                 + "--sequenceGenerator integerSequence "
