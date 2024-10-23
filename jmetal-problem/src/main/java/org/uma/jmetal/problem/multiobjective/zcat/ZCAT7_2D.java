@@ -5,13 +5,13 @@ package org.uma.jmetal.problem.multiobjective.zcat;
  * multi-and many-objective optimization",
  * DOI: https://doi.org/10.1016/j.swevo.2023.101350
  */
-public class ZCAT1_2D extends ZCAT1 {
-  public ZCAT1_2D() {
+public class ZCAT7_2D extends ZCAT7 {
+  public ZCAT7_2D() {
     super(2, 30, true, 1, false, false);
   }
 
   @Override
   public String name() {
-    return "ZCAT1_2D";
+    return "ZCAT7_2D";
   }
 }
