@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.rwa;
 
 
 import java.util.List;
+
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -74,5 +76,16 @@ public class Ahmad2017 extends AbstractDoubleProblem {
     solution.objectives()[6] = -Tensile; // maximization
 
     return solution ;
+  }
+
+  public static void main(String[] args){
+    DoubleProblem problem = new Ahmad2017() ;
+    DoubleSolution lowerSolution = problem.createSolution() ;
+    lowerSolution.variables().set(0, problem.variableBounds().get(0).getLowerBound()) ;
+    lowerSolution.variables().set(1, problem.variableBounds().get(1).getLowerBound()) ;
+    lowerSolution.variables().set(2, problem.variableBounds().get(2).getLowerBound()) ;
+    problem.evaluate(lowerSolution) ;
+
+    int a = 12 ;
   }
 }
