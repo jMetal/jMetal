@@ -23,14 +23,14 @@ public class NormalizedHypervolume extends QualityIndicator {
     double[][] referenceFront = {referencePoint};
     hypervolume = new PISAHypervolume(referenceFront);
 
-    referenceFrontHypervolume = hypervolume.compute(referenceFront);
+    //referenceFrontHypervolume = hypervolume.compute(referenceFront);
   }
 
   public NormalizedHypervolume(double[][] referenceFront) {
     super(referenceFront);
     hypervolume = new PISAHypervolume(referenceFront);
 
-    referenceFrontHypervolume = hypervolume.compute(referenceFront);
+    //referenceFrontHypervolume = hypervolume.compute(referenceFront);
   }
 
   @Override
@@ -38,7 +38,7 @@ public class NormalizedHypervolume extends QualityIndicator {
     super.referenceFront(referenceFront);
 
     hypervolume = new PISAHypervolume(referenceFront);
-    referenceFrontHypervolume = hypervolume.compute(referenceFront);
+    //referenceFrontHypervolume = hypervolume.compute(referenceFront);
   }
 
   @Override
@@ -59,6 +59,7 @@ public class NormalizedHypervolume extends QualityIndicator {
 
   @Override
   public double compute(double[][] front) {
+    referenceFrontHypervolume = hypervolume.compute(referenceFront);
     double hypervolumeValue = hypervolume.compute(front);
 
     return 1 - (hypervolumeValue / referenceFrontHypervolume);
