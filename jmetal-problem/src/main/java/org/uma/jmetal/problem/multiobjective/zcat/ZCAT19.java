@@ -14,40 +14,57 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  */
 public class ZCAT19 extends ZCAT1 {
 
-  public ZCAT19(int numberOfObjectives, int numberOfVariables) {
-    this(numberOfObjectives, numberOfVariables, false, 1, false, false);
-  }
-
   public ZCAT19() {
-    this(3, 30, true, 1, false, false);
+    this(
+        DefaultZCATSettings.numberOfObjectives,
+        DefaultZCATSettings.numberOfVariables,
+        DefaultZCATSettings.complicatedParetoSet,
+        DefaultZCATSettings.level,
+        DefaultZCATSettings.bias,
+        DefaultZCATSettings.imbalance);
   }
 
-  public ZCAT19(int numberOfObjectives,
+  public ZCAT19(
+      int numberOfObjectives,
       int numberOfVariables,
       boolean complicatedParetoSet,
       int level,
-      boolean bias, boolean imbalance) {
+      boolean bias,
+      boolean imbalance) {
     super(numberOfObjectives, numberOfVariables, complicatedParetoSet, level, bias, imbalance);
     name("ZCAT19");
 
     fFunction = new F19(numberOfObjectives);
-    gFunction = complicatedParetoSet ? new G6(numberOfVariables, paretoSetDimension)
-        : new G0(numberOfVariables, paretoSetDimension);
+    gFunction =
+        complicatedParetoSet
+            ? new G6(numberOfVariables, paretoSetDimension)
+            : new G0(numberOfVariables, paretoSetDimension);
   }
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] normalizedVariables = zcatGetY(solution.variables());
     paretoSetDimension =
-        (zcatValueIn(normalizedVariables[0], 0.0, 0.2) || zcatValueIn(normalizedVariables[0], 0.4,
-            0.6)) ? 1 : numberOfObjectives - 1;
+        (zcatValueIn(normalizedVariables[0], 0.0, 0.2)
+                || zcatValueIn(normalizedVariables[0], 0.4, 0.6))
+            ? 1
+            : numberOfObjectives - 1;
 
-    gFunction = complicatedParetoSet ? new G6(numberOfVariables(), paretoSetDimension)
-        : new G0(numberOfVariables(), paretoSetDimension);
+    gFunction =
+        complicatedParetoSet
+            ? new G6(numberOfVariables(), paretoSetDimension)
+            : new G0(numberOfVariables(), paretoSetDimension);
 
     double[] alpha = zcatGetAlpha(normalizedVariables, numberOfObjectives(), fFunction);
-    double[] beta = zcatGetBeta(normalizedVariables, numberOfVariables(), paretoSetDimension, bias,
-        imbalance, level, gFunction);
+    double[] beta =
+        zcatGetBeta(
+            normalizedVariables,
+            numberOfVariables(),
+            paretoSetDimension,
+            bias,
+            imbalance,
+            level,
+            gFunction);
 
     double[] f = zcatMopDefinition(alpha, beta, numberOfObjectives);
     IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
@@ -65,4 +82,3 @@ public class ZCAT19 extends ZCAT1 {
     System.out.println(solution);
   }
 }
-
