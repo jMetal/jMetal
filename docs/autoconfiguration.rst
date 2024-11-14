@@ -232,11 +232,11 @@ The first step is to create a directory for the experiment. Let us called is, fo
 
   .. code-block:: text
 
-org.uma.jmetal.problem.multiobjective.zdt.ZDT1 --referenceFrontFileName ZDT1.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
-org.uma.jmetal.problem.multiobjective.zdt.ZDT2 --referenceFrontFileName ZDT2.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
-org.uma.jmetal.problem.multiobjective.zdt.ZDT3 --referenceFrontFileName ZDT3.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
-org.uma.jmetal.problem.multiobjective.zdt.ZDT4 --referenceFrontFileName ZDT4.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
-org.uma.jmetal.problem.multiobjective.zdt.ZDT6 --referenceFrontFileName ZDT6.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT1 --referenceFrontFileName ZDT1.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT2 --referenceFrontFileName ZDT2.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT3 --referenceFrontFileName ZDT3.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT4 --referenceFrontFileName ZDT4.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT6 --referenceFrontFileName ZDT6.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
 
   5. ``run.sh``. Bash script to run irace. IMPORTANT: the number of cores to be used by irace are indicated in the ``IRACE_PARAMS`` variable.
 
