@@ -39,6 +39,11 @@ public class Epsilon extends QualityIndicator {
     return true ;
   }
 
+  @Override
+  public QualityIndicator newInstance() {
+    return new Epsilon();
+  }
+
   /**
    * Evaluate() method
    *

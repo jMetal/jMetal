@@ -34,6 +34,11 @@ public class NormalizedHypervolume extends QualityIndicator {
   }
 
   @Override
+  public QualityIndicator newInstance() {
+    return new NormalizedHypervolume();
+  }
+
+  @Override
   public void referenceFront(double[][] referenceFront) {
     super.referenceFront(referenceFront);
 
@@ -61,6 +66,13 @@ public class NormalizedHypervolume extends QualityIndicator {
   public double compute(double[][] front) {
     double hypervolumeValue = hypervolume.compute(front);
 
-    return 1 - (hypervolumeValue / referenceFrontHypervolume);
+    double result = 1 - (hypervolumeValue / referenceFrontHypervolume);
+
+    if  (result < 0) {
+      System.out.println("HV reference front: " + referenceFrontHypervolume) ;
+      System.out.println("HV current front  : " + hypervolumeValue) ;
+    }
+
+    return result ;
   }
 }
