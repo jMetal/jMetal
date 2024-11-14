@@ -14,9 +14,8 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * Class for executing quality indicators from the command line. The program requires two arguments:
- * - the name of the quality indicator (HV, EP, etc., o ALL to compute all of them
- * - the file containing a reference front
- * - the file whose Pareto front approximation is going to be analyzed
+ * - the name of the quality indicator (HV, EP, etc., o ALL to compute all of them - the file
+ * containing a reference front - the file whose Pareto front approximation is going to be analyzed
  *
  * @author Antonio J. Nebro
  */
@@ -48,11 +47,11 @@ public class CommandLineQualityIndicatorTool {
             + "IGD  - Inverted generational distance\n"
             + "IGD+ - Inverted generational distance plus \n"
             + "HV   - Hypervolume \n"
+            + "NHV  - Normalized hypervolume \n"
             + "ER   - Error ratio \n"
             + "SP   - Spread (two objectives)\n"
             + "GSPREAD - Generalized Spread (more than two objectives)\n"
-            + "SC   - Set coverage\n"
-            );
+            + "SC   - Set coverage\n");
   }
 
   /**
@@ -62,7 +61,7 @@ public class CommandLineQualityIndicatorTool {
    */
   private static void calculateAndPrintIndicators(String[] args) throws IOException {
     double[][] referenceFront = VectorUtils.readVectors(args[1], ",");
-    double[][] front = VectorUtils.readVectors(args[2],",");
+    double[][] front = VectorUtils.readVectors(args[2], ",");
 
     double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
     double[][] normalizedFront =
@@ -76,11 +75,20 @@ public class CommandLineQualityIndicatorTool {
     List<QualityIndicator> indicatorList = getAvailableIndicators(normalizedReferenceFront);
 
     if (!args[0].equals("ALL")) {
-      QualityIndicator indicator = getIndicatorFromName(args[0], indicatorList);
-      JMetalLogger.logger.info(() -> "" + indicator.compute(normalizedFront));
+      if (args[0] != "SC") {
+        QualityIndicator indicator = getIndicatorFromName(args[0], indicatorList);
+        JMetalLogger.logger.info(() -> "" + indicator.compute(normalizedFront));
+      } else {
+        SetCoverage sc = new SetCoverage();
+        JMetalLogger.logger.info(
+                () -> "SC(refFront, front): " + sc.compute(normalizedReferenceFront, normalizedFront));
+        JMetalLogger.logger.info(
+                () -> "SC(front, refFront): " + sc.compute(normalizedFront, normalizedReferenceFront));
+      }
     } else {
       for (QualityIndicator indicator : indicatorList) {
-        JMetalLogger.logger.info(() -> indicator.name() + ": " + indicator.compute(normalizedFront));
+        JMetalLogger.logger.info(
+            () -> indicator.name() + ": " + indicator.compute(normalizedFront));
       }
 
       SetCoverage sc = new SetCoverage();

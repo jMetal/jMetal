@@ -3,14 +3,8 @@ package org.uma.jmetal.qualityindicator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.uma.jmetal.qualityindicator.impl.Epsilon;
-import org.uma.jmetal.qualityindicator.impl.GeneralizedSpread;
-import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
-import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
-import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
-import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
-import org.uma.jmetal.qualityindicator.impl.SetCoverage;
-import org.uma.jmetal.qualityindicator.impl.Spread;
+
+import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NormalizeUtils;
@@ -34,11 +28,13 @@ public class QualityIndicatorUtils {
     list.add(new Epsilon(referenceFront));
     list.add(new PISAHypervolume(referenceFront));
     list.add(new NormalizedHypervolume(referenceFront));
+    list.add(new ErrorRatio(referenceFront));
     list.add(new GenerationalDistance(referenceFront));
     list.add(new InvertedGenerationalDistance(referenceFront));
     list.add(new InvertedGenerationalDistancePlus(referenceFront));
     list.add(new Spread(referenceFront));
     list.add(new GeneralizedSpread(referenceFront));
+    list.add(new SetCoverage(referenceFront));
 
     return list;
   }
@@ -54,11 +50,13 @@ public class QualityIndicatorUtils {
     list.add(new Epsilon());
     list.add(new PISAHypervolume());
     list.add(new NormalizedHypervolume());
+    list.add(new ErrorRatio());
     list.add(new GenerationalDistance());
     list.add(new InvertedGenerationalDistance());
     list.add(new InvertedGenerationalDistancePlus());
     list.add(new Spread());
     list.add(new GeneralizedSpread());
+    list.add(new SetCoverage()) ;
 
     return list;
   }

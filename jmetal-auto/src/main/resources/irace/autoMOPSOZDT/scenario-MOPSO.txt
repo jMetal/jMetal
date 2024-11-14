@@ -32,7 +32,7 @@ testInstancesDir = ""
 
 ## File containing a list of test instances and optionally additional
 ## parameters for them.  If empty or NULL, do not use a file.
-testInstancesFile = "../instances-list-ZDT-DTLZ-WFG-RE_2D.txt" 
+#testInstancesFile = "../instances-list-ZDT-DTLZ-WFG-RE_2D.txt" 
 
 ## Number of elite configurations returned by irace that will be tested
 ## if test instances are provided.
@@ -43,29 +43,31 @@ testIterationElites = 1
 
 ## File that contains a table of initial configurations. If empty or NULL, all
 ## initial configurations are randomly generated.
-configurationsFile = "../configurationsMOPSO.txt"
+#configurationsFile = "../configurations.txt"
 
 ## File that contains a list of logical expressions that cannot be TRUE for
 ## any evaluated configuration. If empty or NULL, do not use forbidden
 ## expressions.
 # forbiddenFile = ""
 
-## Script called for each configuration that executes the target algorithm to
-## be tuned. See the templates and examples provided.
-targetRunner = "../target-runner-AutoMOPSOIraceHV"
-# targetRunner = "../jmetal-auto-6.0-SNAPSHOT-jar-with-dependencies.jar"
+## Executable called for each configuration that executes the target algorithm
+## to be tuned. See the templates and examples provided.
+# targetRunner = "../target-runner-AutoMOPSOIraceNHV"
+targetRunner = "../jmetal-auto-6.7-SNAPSHOT-jar-with-dependencies.jar"
 
-## An executable that will be used to launch the target runner, when
-## targetRunner cannot be executed directly (.e.g, a Python script in
-## Windows).
-# targetRunnerLauncher = "java"
+## Executable that will be used to launch the target runner, when targetRunner
+## cannot be executed directly (e.g., a Python script in Windows).
+targetRunnerLauncher = "java"
 
-## Command-line arguments provided to targetRunnerLauncher. The substrings
-## \{targetRunner\} and \{targetRunnerArgs\} will be replaced by the value of
-## the option targetRunner and by the arguments usually passed when calling
-## targetRunner, respectively. Example: "-m \{targetRunner\ --args
-## \{targetRunnerArgs\}"}.
-#targetRunnerLauncherArgs = " -cp {targetRunner} org.uma.jmetal.auto.irace.AutoMOPSOIraceNHVIGDPlus {targetRunnerArgs}"
+## Command-line arguments provided to targetRunner (or targetRunnerLauncher if
+## defined). The substrings \{configurationID\}, \{instanceID\}, \{seed\},
+## \{instance\}, and \{bound\} will be replaced by their corresponding values.
+## The substring \{targetRunnerArgs\} will be replaced by the concatenation of
+## the switch and value of all active parameters of the particular
+## configuration being evaluated.  The substring \{targetRunner\}, if present,
+## will be replaced by the value of targetRunner (useful when using
+## targetRunnerLauncher).
+targetCmdline = "-cp {targetRunner} org.uma.jmetal.auto.irace.AutoNSGAIIIraceNHV --randomGeneratorSeed {seed} --problemName {instance} {targetRunnerArgs}"
 
 ## Number of times to retry a call to targetRunner if the call failed.
 # targetRunnerRetries = 0
@@ -117,12 +119,18 @@ sampleInstances = 0
 ## Specifies the statistical test type: F-test or t-test.
 # testType = "F-test"
 
+## Number of training instances, that make up a `block' in trainInstancesFile.
+## Elimination of configurations will only be performed after evaluating a
+## complete block and never in the middle of a block. Each block typically
+## contains one instance from each instance class (type or family).
+blockSize = 5
+
 ## Specifies how many instances are seen before the first elimination
 ## test. It must be a multiple of eachTest.
-firstTest = 5 * 5
+# firstTest = 5
 
 ## Specifies how many instances are seen between elimination tests.
-eachTest = 5
+# eachTest = 1
 
 ## Minimum number of configurations needed to continue the execution of each
 ## race (iteration).

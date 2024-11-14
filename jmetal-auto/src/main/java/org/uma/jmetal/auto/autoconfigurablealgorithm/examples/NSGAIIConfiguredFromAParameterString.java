@@ -18,10 +18,10 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class NSGAIIConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZCAT2.2D.csv";
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zcat.ZCAT2_2D "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--randomGeneratorSeed 12 "
             + "--referenceFrontFileName " + referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 10000 "

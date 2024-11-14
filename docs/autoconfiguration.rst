@@ -4,7 +4,7 @@ Automatic design and configuration of multi-objective metaheuristics
 ====================================================================
 
 :Author: Antonio J. Nebro <ajnebro@uma.es>
-:Date: 2022-11-17
+:Date: 2024-11-14
 
 Before reading this section, readers are referred to the papers :ref:`[NLB+19] <NLB+19>` and :ref:`[DNL+22]<DNL+22>`. Please, take into account that this is a research line that is currently guiding the evolution of jMetal,
 so changes are expected in the incoming releases.
@@ -122,31 +122,31 @@ We have created then a file called ``parameters-NSGAII.txt`` containing the para
 
 .. code-block:: text
 
-  populationSize                           "--populationSize "                      o       (100)                                              
-  #
-  algorithmResult                          "--algorithmResult "                     c       (externalArchive, population)                      
+  algorithmResult                          "--algorithmResult "                     c       (externalArchive, population)
   populationSizeWithArchive                "--populationSizeWithArchive "           i       (10, 200)                      | algorithmResult %in% c("externalArchive")
-  externalArchive                          "--externalArchive "                     c       (crowdingDistanceArchive) | algorithmResult %in% c("externalArchive")
+  externalArchive                          "--externalArchive "                     c       (crowdingDistanceArchive, unboundedArchive) | algorithmResult %in% c("externalArchive")
   #
-  createInitialSolutions                   "--createInitialSolutions "              c       (random,latinHypercubeSampling,scatterSearch)
+  createInitialSolutions                   "--createInitialSolutions "              c       (random, latinHypercubeSampling, scatterSearch)
   #
   variation                                "--variation "                           c       (crossoverAndMutationVariation)
-  offspringPopulationSize                  "--offspringPopulationSize "             i       (1, 400)
-  crossover                                "--crossover "                           c       (SBX,BLX_ALPHA)
-  crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA")
-  crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random, round, bounds)        | crossover %in% c("SBX","BLX_ALPHA")
+  offspringPopulationSize                  "--offspringPopulationSize "             c       (100)                          | variation %in% c("crossoverAndMutationVariation")
+  crossover                                "--crossover "                           c       (SBX, BLX_ALPHA, wholeArithmetic) | variation %in% c("crossoverAndMutationVariation")
+  crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA","wholeArithmetic")
+  crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random, round, bounds)        | crossover %in% c("SBX","BLX_ALPHA","wholeArithmetic")
   sbxDistributionIndex                     "--sbxDistributionIndex "                r       (5.0, 400.0)                   | crossover %in% c("SBX")
   blxAlphaCrossoverAlphaValue              "--blxAlphaCrossoverAlphaValue "         r       (0.0, 1.0)                     | crossover %in% c("BLX_ALPHA")
-  mutation                                 "--mutation "                            c       (uniform, polynomial, nonUniform)
-  mutationProbabilityFactor                "--mutationProbabilityFactor "           r       (0.0, 2.0)                     | mutation %in% c("uniform","polynomial","nonUniform")
-  mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random, round, bounds)        | mutation %in% c("uniform","polynomial","nonUniform")
+  mutation                                 "--mutation "                            c       (uniform, polynomial, linkedPolynomial, nonUniform) | variation %in% c("crossoverAndMutationVariation")
+  mutationProbabilityFactor                "--mutationProbabilityFactor "           r       (0.0, 2.0)                     | mutation %in% c("uniform","polynomial","linkedPolynomial","nonUniform")
+  mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random, round, bounds)        | mutation %in% c("uniform","polynomial","linkedPolynomial","nonUniform")
   polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("polynomial")
+  linkedPolynomialMutationDistributionIndex "--linkedPolynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("linkedPolynomial")
   uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
   nonUniformMutationPerturbation           "--nonUniformMutationPerturbation "      r       (0.0, 1.0)                     | mutation %in% c("nonUniform")
   #
   selection                                "--selection "                           c       (tournament, random)
   selectionTournamentSize                  "--selectionTournamentSize "             i       (2, 10)                        | selection %in% c("tournament")
   #
+
 
 To know about the syntax of irace configuration files, please refer to the irace documentation.
 
@@ -166,32 +166,30 @@ An example can be found in the ``NSGAIIConfiguredFromAParameterString`` class
   public class NSGAIIConfiguredFromAParameterString {
 
     public static void main(String[] args) {
-      String referenceFrontFileName = "ZDT1.csv" ;
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
 
-      String[] parameters =
+    String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-                + "--referenceFrontFileName "+ referenceFrontFileName + " "
-                + "--maximumNumberOfEvaluations 25000 "
-                + "--algorithmResult population "
-                + "--populationSize 100 "
-                + "--offspringPopulationSize 100 "
-                + "--createInitialSolutions random "
-                + "--variation crossoverAndMutationVariation "
-                + "--selection tournament "
-                + "--selectionTournamentSize 2 "
-                + "--rankingForSelection dominanceRanking "
-                + "--densityEstimatorForSelection crowdingDistance "
-                + "--crossover SBX "
-                + "--crossoverProbability 0.9 "
-                + "--crossoverRepairStrategy bounds "
-                + "--sbxDistributionIndex 20.0 "
-                + "--mutation polynomial "
-                + "--mutationProbabilityFactor 1.0 "
-                + "--mutationRepairStrategy bounds "
-                + "--polynomialMutationDistributionIndex 20.0 ")
+            + "--randomGeneratorSeed 12 "
+            + "--referenceFrontFileName " + referenceFrontFileName + " "
+            + "--maximumNumberOfEvaluations 10000 "
+            + "--populationSize 100 "
+            + "--algorithmResult population  "
+            + "--createInitialSolutions random "
+            + "--offspringPopulationSize 100 "
+            + "--variation crossoverAndMutationVariation --crossover SBX "
+            + "--crossoverProbability 0.9 "
+            + "--crossoverRepairStrategy bounds "
+            + "--sbxDistributionIndex 20.0 "
+            + "--mutation polynomial "
+            + "--mutationProbabilityFactor 1.0 "
+            + "--polynomialMutationDistributionIndex 20.0 "
+            + "--mutationRepairStrategy bounds "
+            + "--selection tournament "
+            + "--selectionTournamentSize 2 \n")
             .split("\\s+");
 
-      AutoNSGAII NSGAII = new AutoNSGAII();
+      AutoNSGAII autoNSGAII = new AutoNSGAII();
       NSGAII.parseAndCheckParameters(parameters);
 
       EvolutionaryAlgorithm<DoubleSolution> nsgaII = NSGAII.create();
@@ -212,13 +210,13 @@ To replicate the study presented in :ref:`[NLB+19] <NLB+19>` you must follow the
 
 The software requirements are the following:
 
-* Java JDK (14+)
+* Java JDK (19+)
 * R
 
 
 The first step is to create a directory for the experiment. Let us called is, for example, ``iraceJMetal``. This directory must contain:
 
-* File ``jmetal-auto-6.0-SNAPSHOT-jar-with-dependencies.jar``. To generate this file, just type the following command at the root of the jMetal project:
+* File ``jmetal-auto-6.7-SNAPSHOT-jar-with-dependencies.jar``. To generate this file, just type the following command at the root of the jMetal project:
 
     .. code-block:: bash
 
@@ -227,22 +225,20 @@ The first step is to create a directory for the experiment. Let us called is, fo
   If everything goes fine, the file will be generated in the ``jmetal-auto/target`` folder.
 * The following contents available in folder ``jmetal-auto/src/main/resources/irace``:
   
-  1. ``irace_3.5tar.gz``: file containing irace
+  1. ``irace_3.5.1.tar.gz``: file containing irace
   2. ``autoNSGAIIZDT``: directory containing the ``scenario-NSGAII.txt`` configuration file, which is prepared to execute the autoconfiguration of NSGA-II using the ZDT problems as training set and the hypervolume as quality indicator for irace. This directory will contain both the temporal as well as the final files generated during the run of irace.
   3. ``parameters-NSGAII.txt``: file describing the parameters that can be tuned, including their allowed values and their dependencies. You are free to modify some parameter values if you know their meaning.
   4. ``instances-list-ZDT.txt``: the problems to be solved (we are assuming the ZDT suite), their reference Pareto fronts, the maximum number of evaluations to be computed are included here:
 
   .. code-block:: text
 
-    org.uma.jmetal.problem.multiobjective.zdt.ZDT1 --referenceFrontFileName ZDT1.csv --maximumNumberOfEvaluations 10000
-    org.uma.jmetal.problem.multiobjective.zdt.ZDT2 --referenceFrontFileName ZDT2.csv --maximumNumberOfEvaluations 10000
-    org.uma.jmetal.problem.multiobjective.zdt.ZDT3 --referenceFrontFileName ZDT3.csv --maximumNumberOfEvaluations 10000
-    org.uma.jmetal.problem.multiobjective.zdt.ZDT4 --referenceFrontFileName ZDT4.csv --maximumNumberOfEvaluations 10000
-    org.uma.jmetal.problem.multiobjective.zdt.ZDT6 --referenceFrontFileName ZDT6.csv --maximumNumberOfEvaluations 10000
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT1 --referenceFrontFileName ZDT1.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT2 --referenceFrontFileName ZDT2.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT3 --referenceFrontFileName ZDT3.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT4 --referenceFrontFileName ZDT4.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
+    org.uma.jmetal.problem.multiobjective.zdt.ZDT6 --referenceFrontFileName ZDT6.csv  --maximumNumberOfEvaluations 10000 --populationSize 100
 
-
-  5. ``target-runner-AutoNSGAIIIraceHV``. Bash script which is executed in every run of irace. This file must have execution rights (if not, just type ``chmod +x target-runner-AutoNSGAIIIraceHV`` in a terminal)
-  6. ``run.sh``. Bash script to run irace. IMPORTANT: the number of cores to be used by irace are indicated in the ``IRACE_PARAMS`` variable (the default value is 24).
+  5. ``run.sh``. Bash script to run irace. IMPORTANT: the number of cores to be used by irace are indicated in the ``IRACE_PARAMS`` variable.
 
 * A copy of the ``resources`` folder of the jMetal project. This is needed to allow the algorithm to find the reference fronts.
 
