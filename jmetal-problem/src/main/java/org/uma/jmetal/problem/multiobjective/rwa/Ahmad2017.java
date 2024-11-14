@@ -77,15 +77,4 @@ public class Ahmad2017 extends AbstractDoubleProblem {
 
     return solution ;
   }
-
-  public static void main(String[] args){
-    DoubleProblem problem = new Ahmad2017() ;
-    DoubleSolution lowerSolution = problem.createSolution() ;
-    lowerSolution.variables().set(0, problem.variableBounds().get(0).getLowerBound()) ;
-    lowerSolution.variables().set(1, problem.variableBounds().get(1).getLowerBound()) ;
-    lowerSolution.variables().set(2, problem.variableBounds().get(2).getLowerBound()) ;
-    problem.evaluate(lowerSolution) ;
-
-    int a = 12 ;
-  }
 }
