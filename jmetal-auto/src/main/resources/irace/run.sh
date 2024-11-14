@@ -13,7 +13,7 @@ let SEED=1234567+RUN
 EXECDIR=$(dirname ${SCENARIO})/execdir-${RUN}
 IRACE_PARAMS="--scenario ${SCENARIO} --debug-level 1 --parallel $N_CPUS --seed ${SEED} --exec-dir=${EXECDIR}"
 
-RPACKAGE="./irace_3.5.tar.gz"
+RPACKAGE="./irace_3.5.1.tar.gz"
 # install irace
 if [ ! -r $RPACKAGE ]; then
     echo "cannot read $RPACKAGE"
@@ -23,7 +23,7 @@ RLIBDIR="$(pwd)/R/"
 mkdir -p $RLIBDIR
 R CMD INSTALL $RPACKAGE --library=$RLIBDIR
 export R_LIBS="$RLIBDIR:$R_LIBS"
-irace="$(pwd)/R/irace/bin/irace"
+irace="${RLIBDIR}/irace/bin/irace"
 if [ ! -x $irace ]; then
     echo "cannot execute $irace"
     exit 1
