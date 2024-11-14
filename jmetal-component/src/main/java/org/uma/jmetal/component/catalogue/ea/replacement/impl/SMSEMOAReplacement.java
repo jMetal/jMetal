@@ -7,6 +7,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
 public class SMSEMOAReplacement<S extends Solution<?>>
     implements Replacement<S> {
@@ -32,7 +33,7 @@ public class SMSEMOAReplacement<S extends Solution<?>>
 
     List<S> lastSubFront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
 
-    lastSubFront = hypervolume.computeHypervolumeContribution(lastSubFront, jointPopulation) ;
+    lastSubFront = hypervolume.computeHypervolumeContribution(lastSubFront, jointPopulation);
 
     List<S> resultPopulation = new ArrayList<>() ;
     for (int i = 0; i < ranking.getNumberOfSubFronts()-1; i++) {
