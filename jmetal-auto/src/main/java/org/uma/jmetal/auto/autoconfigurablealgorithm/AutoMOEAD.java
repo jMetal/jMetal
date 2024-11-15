@@ -7,13 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.uma.jmetal.auto.parameter.BooleanParameter;
-import org.uma.jmetal.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.auto.parameter.IntegerParameter;
-import org.uma.jmetal.auto.parameter.Parameter;
-import org.uma.jmetal.auto.parameter.PositiveIntegerValue;
-import org.uma.jmetal.auto.parameter.RealParameter;
-import org.uma.jmetal.auto.parameter.StringParameter;
+import org.uma.jmetal.auto.parameter.*;
 import org.uma.jmetal.auto.parameter.catalogue.AggregationFunctionParameter;
 import org.uma.jmetal.auto.parameter.catalogue.CreateInitialSolutionsParameter;
 import org.uma.jmetal.auto.parameter.catalogue.CrossoverParameter;
@@ -62,7 +56,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   private CategoricalParameter algorithmResultParameter;
   private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
-  private PositiveIntegerValue offspringPopulationSizeParameter;
+  private CategoricalIntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter<DoubleSolution> selectionParameter;
   private VariationParameter variationParameter;
@@ -103,18 +97,20 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     populationSizeParameter = new PositiveIntegerValue("populationSize");
 
+    offspringPopulationSizeParameter = new CategoricalIntegerParameter("offspringPopulationSize", List.of(1));
+
     fixedParameterList.add(populationSizeParameter);
     fixedParameterList.add(problemNameParameter);
     fixedParameterList.add(referenceFrontFilenameParameter);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter) ;
+    fixedParameterList.add(offspringPopulationSizeParameter) ;
 
     neighborhoodSizeParameter = new IntegerParameter("neighborhoodSize",5, 50);
     neighborhoodSelectionProbabilityParameter =
         new ProbabilityParameter("neighborhoodSelectionProbability");
     maximumNumberOfReplacedSolutionsParameter =
         new IntegerParameter("maximumNumberOfReplacedSolutions",1, 5);
-
 
     aggregationFunctionParameter =
         new AggregationFunctionParameter(
@@ -191,8 +187,6 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     deCrossoverParameter.addGlobalParameter(crParameter);
     deCrossoverParameter.addGlobalParameter(fParameter);
 
-    offspringPopulationSizeParameter = new PositiveIntegerValue("offspringPopulationSize") ;
-
     variationParameter =
         new VariationParameter(List.of("crossoverAndMutationVariation", "differentialEvolutionVariation"));
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
@@ -200,6 +194,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("differentialEvolutionVariation", mutationParameter);
     variationParameter.addSpecificParameter("differentialEvolutionVariation", deCrossoverParameter);
+    variationParameter.addSpecificParameter("differentialEvolutionVariation", offspringPopulationSizeParameter);
   }
 
   private void selection() {
@@ -226,10 +221,9 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
   @Override
   public void parse(String[] arguments) {
-  String [] offspringPopulationSizeValue = new String[]{"--offspringPopulationSize", "1"} ;
-  String [] extendedArguments = Stream.concat(Arrays.stream(arguments), Arrays.stream(offspringPopulationSizeValue))
-          .toArray(size -> (String[]) Array.newInstance(arguments.getClass().getComponentType(), size));
-
+    String [] offspringPopulationSizeValue = new String[]{"--offspringPopulationSize", "1"} ;
+    String [] extendedArguments = Stream.concat(Arrays.stream(arguments), Arrays.stream(offspringPopulationSizeValue))
+            .toArray(size -> (String[]) Array.newInstance(arguments.getClass().getComponentType(), size));
 
     for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse(extendedArguments).check();

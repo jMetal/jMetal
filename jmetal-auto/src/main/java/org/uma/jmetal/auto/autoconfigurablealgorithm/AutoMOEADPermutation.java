@@ -7,13 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.uma.jmetal.auto.parameter.BooleanParameter;
-import org.uma.jmetal.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.auto.parameter.IntegerParameter;
-import org.uma.jmetal.auto.parameter.Parameter;
-import org.uma.jmetal.auto.parameter.PositiveIntegerValue;
-import org.uma.jmetal.auto.parameter.RealParameter;
-import org.uma.jmetal.auto.parameter.StringParameter;
+import org.uma.jmetal.auto.parameter.*;
 import org.uma.jmetal.auto.parameter.catalogue.AggregationFunctionParameter;
 import org.uma.jmetal.auto.parameter.catalogue.CreateInitialSolutionsParameter;
 import org.uma.jmetal.auto.parameter.catalogue.CrossoverParameter;
@@ -60,7 +54,7 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
   private CategoricalParameter algorithmResultParameter;
   private ExternalArchiveParameter<PermutationSolution<Integer>> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
-  private PositiveIntegerValue offspringPopulationSizeParameter;
+  private CategoricalIntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter<PermutationSolution<Integer>> selectionParameter;
   private VariationParameter variationParameter;
@@ -100,6 +94,8 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
     referenceFrontFilenameParameter = new StringParameter("referenceFrontFileName");
 
     populationSizeParameter = new PositiveIntegerValue("populationSize");
+
+    offspringPopulationSizeParameter = new CategoricalIntegerParameter("offspringPopulationSize", List.of(1));
 
     fixedParameterList.add(populationSizeParameter);
     fixedParameterList.add(problemNameParameter);
@@ -149,8 +145,6 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
     RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor",
         0.0, 2.0);
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
-
-    offspringPopulationSizeParameter = new PositiveIntegerValue("offspringPopulationSize") ;
 
     variationParameter =
         new VariationParameter(List.of("crossoverAndMutationVariation"));
