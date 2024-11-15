@@ -72,10 +72,24 @@ public class CrossoverParameter extends CategoricalParameter {
 
     CrossoverOperator<PermutationSolution<Integer>> result;
 
-    if (value().equals("PMX")) {
-      result = new PMXCrossover(crossoverProbability) ;
-    } else {
-      throw new JMetalException("Crossover operator does not exist: " + name());
+    switch (value()) {
+      case "PMX":
+        result = new PMXCrossover(crossoverProbability) ;
+        break;
+      case "CX":
+        result = new CycleCrossover(crossoverProbability);
+        break;
+      case "OXD":
+        result = new OXDCrossover(crossoverProbability);
+        break;
+      case "positionBased":
+        result = new PositionBasedCrossover(crossoverProbability);
+        break;
+      case "edgeRecombination":
+        result = new EdgeRecombinationCrossover(crossoverProbability);
+        break;
+      default:
+        throw new JMetalException("Crossover operator does not exist: " + name());
     }
 
     return result ;
