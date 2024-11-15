@@ -134,13 +134,13 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
   }
 
   private void variation() {
-    CrossoverParameter crossoverParameter = new CrossoverParameter(List.of("PMX"));
+    CrossoverParameter crossoverParameter = new CrossoverParameter(List.of("PMX", "CX", "OXD", "positionBased", "edgeRecombination"));
     ProbabilityParameter crossoverProbability =
         new ProbabilityParameter("crossoverProbability");
     crossoverParameter.addGlobalParameter(crossoverProbability);
 
     MutationParameter mutationParameter =
-        new MutationParameter(List.of("swap"));
+        new MutationParameter(List.of("swap", "displacement", "insert", "scramble", "inversion"));
 
     RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor",
         0.0, 2.0);
