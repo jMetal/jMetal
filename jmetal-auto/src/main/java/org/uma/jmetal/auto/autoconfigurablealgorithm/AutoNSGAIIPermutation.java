@@ -63,6 +63,7 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
   public List<Parameter<?>> configurableParameterList() {
     return configurableParameterList;
   }
+
   @Override
   public List<Parameter<?>> fixedParameterList() {
     return fixedParameterList;
@@ -76,8 +77,7 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
     problemNameParameter = new StringParameter("problemName");
     randomGeneratorSeedParameter = new PositiveIntegerValue("randomGeneratorSeed");
     referenceFrontFilename = new StringParameter("referenceFrontFileName");
-    maximumNumberOfEvaluationsParameter =
-        new PositiveIntegerValue("maximumNumberOfEvaluations");
+    maximumNumberOfEvaluationsParameter = new PositiveIntegerValue("maximumNumberOfEvaluations");
     populationSizeParameter = new PositiveIntegerValue("populationSize");
 
     fixedParameterList.add(populationSizeParameter);
@@ -85,7 +85,6 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
     fixedParameterList.add(referenceFrontFilename);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter);
-
 
     algorithmResult();
     createInitialSolution();
@@ -99,26 +98,26 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
   }
 
   private void variation() {
-    CrossoverParameter crossoverParameter = new CrossoverParameter(
-        List.of("PMX"));
-    ProbabilityParameter crossoverProbability =
-        new ProbabilityParameter("crossoverProbability");
+    CrossoverParameter crossoverParameter =
+        new CrossoverParameter(List.of("PMX", "CX", "OXD", "positionBased", "edgeRecombination"));
+
+    ProbabilityParameter crossoverProbability = new ProbabilityParameter("crossoverProbability");
     crossoverParameter.addGlobalParameter(crossoverProbability);
 
     MutationParameter mutationParameter =
-        new MutationParameter(List.of("swap"));
+        new MutationParameter(List.of("swap", "displacement", "insert", "scramble", "inversion"));
 
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor",
-        0.0, 2.0);
+    RealParameter mutationProbabilityFactor =
+        new RealParameter("mutationProbabilityFactor", 0.0, 2.0);
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
 
-    offspringPopulationSizeParameter = new CategoricalIntegerParameter("offspringPopulationSize",
-        List.of(1, 2, 5, 10, 20, 50, 100, 150, 200, 300, 400));
+    offspringPopulationSizeParameter =
+        new CategoricalIntegerParameter(
+            "offspringPopulationSize", List.of(1, 2, 5, 10, 20, 50, 100, 150, 200, 300, 400));
 
-    variationParameter =
-        new VariationParameter(List.of("crossoverAndMutationVariation"));
-    variationParameter.addSpecificParameter("crossoverAndMutationVariation",
-        offspringPopulationSizeParameter);
+    variationParameter = new VariationParameter(List.of("crossoverAndMutationVariation"));
+    variationParameter.addSpecificParameter(
+        "crossoverAndMutationVariation", offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
   }
@@ -131,22 +130,19 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
   }
 
   private void createInitialSolution() {
-    createInitialSolutionsParameter =
-        new CreateInitialSolutionsParameter(List.of("random"));
+    createInitialSolutionsParameter = new CreateInitialSolutionsParameter(List.of("random"));
   }
 
   private void algorithmResult() {
     algorithmResultParameter =
         new CategoricalParameter("algorithmResult", List.of("externalArchive", "population"));
-    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", 10,
-        200);
-    externalArchiveParameter = new ExternalArchiveParameter(
-        List.of("crowdingDistanceArchive", "unboundedArchive"));
+    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", 10, 200);
+    externalArchiveParameter =
+        new ExternalArchiveParameter(List.of("crowdingDistanceArchive", "unboundedArchive"));
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
 
-    algorithmResultParameter.addSpecificParameter(
-        "externalArchive", externalArchiveParameter);
+    algorithmResultParameter.addSpecificParameter("externalArchive", externalArchiveParameter);
   }
 
   @Override
@@ -158,7 +154,6 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
       parameter.parse(arguments).check();
     }
   }
-
 
   protected Problem<PermutationSolution<Integer>> problem() {
     return ProblemFactory.loadProblem(problemNameParameter.value());
@@ -172,7 +167,7 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
   public EvolutionaryAlgorithm<PermutationSolution<Integer>> create() throws IOException {
     JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.value());
 
-    var problem = (PermutationProblem<PermutationSolution<Integer>>)problem();
+    var problem = (PermutationProblem<PermutationSolution<Integer>>) problem();
 
     Archive<PermutationSolution<Integer>> archive = null;
 
@@ -182,9 +177,10 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
       populationSizeParameter.value(populationSizeWithArchiveParameter.value());
     }
 
-    Ranking<PermutationSolution<Integer>> ranking = new FastNonDominatedSortRanking<>(
-        new DominanceWithConstraintsComparator<>());
-    DensityEstimator<PermutationSolution<Integer>> densityEstimator = new CrowdingDistanceDensityEstimator<>();
+    Ranking<PermutationSolution<Integer>> ranking =
+        new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator<>());
+    DensityEstimator<PermutationSolution<Integer>> densityEstimator =
+        new CrowdingDistanceDensityEstimator<>();
     MultiComparator<PermutationSolution<Integer>> rankingAndCrowdingComparator =
         new MultiComparator<>(
             Arrays.asList(
@@ -192,16 +188,16 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
                 Comparator.comparing(densityEstimator::value).reversed()));
 
     var initialSolutionsCreation =
-        (SolutionsCreation<PermutationSolution<Integer>>) createInitialSolutionsParameter.getParameter(
-            problem,
-            populationSizeParameter.value());
+        (SolutionsCreation<PermutationSolution<Integer>>)
+            createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.value());
 
-    MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter(
-        "mutation");
-    mutationParameter.addNonConfigurableParameter("permutationLength",
-        problem.numberOfVariables());
+    MutationParameter mutationParameter =
+        (MutationParameter) variationParameter.findSpecificParameter("mutation");
+    mutationParameter.addNonConfigurableParameter("permutationLength", problem.numberOfVariables());
 
-    var variation = (Variation<PermutationSolution<Integer>>) variationParameter.getPermutationSolutionParameter();
+    var variation =
+        (Variation<PermutationSolution<Integer>>)
+            variationParameter.getPermutationSolutionParameter();
 
     Selection<PermutationSolution<Integer>> selection =
         selectionParameter.getParameter(
@@ -214,23 +210,24 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
       evaluation = new SequentialEvaluation<>(problem);
     }
 
-    RankingAndDensityEstimatorPreference<PermutationSolution<Integer>> preferenceForReplacement = new RankingAndDensityEstimatorPreference<>(
-        ranking, densityEstimator);
+    RankingAndDensityEstimatorPreference<PermutationSolution<Integer>> preferenceForReplacement =
+        new RankingAndDensityEstimatorPreference<>(ranking, densityEstimator);
     Replacement<PermutationSolution<Integer>> replacement =
-        new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement,
-            Replacement.RemovalPolicy.ONE_SHOT);
+        new RankingAndDensityEstimatorReplacement<>(
+            preferenceForReplacement, Replacement.RemovalPolicy.ONE_SHOT);
 
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.value());
 
-    class EvolutionaryAlgorithmWithArchive extends EvolutionaryAlgorithm<PermutationSolution<Integer>> {
+    class EvolutionaryAlgorithmWithArchive
+        extends EvolutionaryAlgorithm<PermutationSolution<Integer>> {
 
       private Archive<PermutationSolution<Integer>> archive;
 
       /**
        * Constructor
        *
-       * @param name                      Algorithm name
+       * @param name Algorithm name
        * @param initialPopulationCreation
        * @param evaluation
        * @param termination
@@ -238,20 +235,29 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
        * @param variation
        * @param replacement
        */
-      public EvolutionaryAlgorithmWithArchive(String name,
+      public EvolutionaryAlgorithmWithArchive(
+          String name,
           SolutionsCreation<PermutationSolution<Integer>> initialPopulationCreation,
-          Evaluation<PermutationSolution<Integer>> evaluation, Termination termination,
-          Selection<PermutationSolution<Integer>> selection, Variation<PermutationSolution<Integer>> variation,
+          Evaluation<PermutationSolution<Integer>> evaluation,
+          Termination termination,
+          Selection<PermutationSolution<Integer>> selection,
+          Variation<PermutationSolution<Integer>> variation,
           Replacement<PermutationSolution<Integer>> replacement,
           Archive<PermutationSolution<Integer>> archive) {
-        super(name, initialPopulationCreation, evaluation, termination, selection, variation,
+        super(
+            name,
+            initialPopulationCreation,
+            evaluation,
+            termination,
+            selection,
+            variation,
             replacement);
         this.archive = archive;
       }
 
       @Override
       public List<PermutationSolution<Integer>> result() {
-        return archive.solutions() ;
+        return archive.solutions();
       }
     }
 

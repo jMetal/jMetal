@@ -48,19 +48,21 @@ public class MOEADDefaultConfigurationExample {
     Termination termination = new TerminationByEvaluations(40000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
-    boolean normalizeObjectives = false ;
+    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize);
+    boolean normalizeObjectives = false;
 
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
-        problem,
-        populationSize,
-        crossover,
-        mutation,
-        weightVectorDirectory,
-        sequenceGenerator, normalizeObjectives)
-        .setTermination(termination)
-        .setAggregationFunction(new PenaltyBoundaryIntersection(5.0, normalizeObjectives))
-        .build();
+    EvolutionaryAlgorithm<DoubleSolution> moead =
+        new MOEADBuilder<>(
+                problem,
+                populationSize,
+                crossover,
+                mutation,
+                weightVectorDirectory,
+                sequenceGenerator,
+                normalizeObjectives)
+            .setTermination(termination)
+            .setAggregationFunction(new PenaltyBoundaryIntersection(5.0, normalizeObjectives))
+            .build();
 
     moead.run();
 
