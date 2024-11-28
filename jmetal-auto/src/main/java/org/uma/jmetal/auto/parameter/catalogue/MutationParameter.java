@@ -98,6 +98,9 @@ public class MutationParameter extends CategoricalParameter {
       case "inversion":
         result = new InversionMutation<>(mutationProbability);
         break;
+      case "simpleInversion":
+        result = new SimpleInversionMutation<>(mutationProbability);
+        break;
       default:
         throw new JMetalException("Mutation operator does not exist: " + name());
     }
