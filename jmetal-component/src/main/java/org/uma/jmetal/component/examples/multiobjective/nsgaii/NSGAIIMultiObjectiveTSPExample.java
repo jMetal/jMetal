@@ -41,7 +41,7 @@ public class NSGAIIMultiObjectiveTSPExample {
 
     CrossoverOperator<PermutationSolution<Integer>> crossover = new PMXCrossover(0.9);
 
-    double mutationProbability = 0.2;
+    double mutationProbability = 0.0;
     MutationOperator<PermutationSolution<Integer>> mutation =
         new PermutationSwapMutation<>(mutationProbability);
 
