@@ -18,6 +18,8 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * Class representing a multi-objective TSP (Traveling Salesman Problem) problem.
  * It accepts data files from TSPLIB:
  *   http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/tsp/
+ *
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class MultiObjectiveTSP extends AbstractIntegerPermutationProblem {

@@ -6,10 +6,7 @@ import java.io.IOException;
 
 public class KroAB100TSP extends BiObjectiveTSP {
 
-  /**
-   * Creates a new MultiobjectiveTSP problem instance
-   *
-   */
+  /** Creates a new MultiobjectiveTSP problem instance */
   public KroAB100TSP() throws IOException {
     super("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
   }

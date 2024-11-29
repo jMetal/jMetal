@@ -6,10 +6,7 @@ import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.MultiObjectiveTSP
 
 public class KroACE100TSP extends MultiObjectiveTSP {
 
-  /**
-   * Creates a new MultiobjectiveTSP problem instance
-   *
-   */
+  /** Creates a new MultiobjectiveTSP problem instance */
   public KroACE100TSP() throws IOException {
     super(List.of("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroC100.tsp", "resources/tspInstances/kroE100.tsp"));
   }
