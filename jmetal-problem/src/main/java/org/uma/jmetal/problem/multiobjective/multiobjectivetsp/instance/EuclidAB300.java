@@ -5,10 +5,7 @@ import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.BiObjectiveTSP;
 
 public class EuclidAB300 extends BiObjectiveTSP {
 
-  /**
-   * Creates a new MultiobjectiveTSP problem instance
-   *
-   */
+  /** Creates a new MultiobjectiveTSP problem instance */
   public EuclidAB300() throws IOException {
     super("resources/tspInstances/euclidA300.tsp", "resources/tspInstances/euclidB300.tsp");
   }

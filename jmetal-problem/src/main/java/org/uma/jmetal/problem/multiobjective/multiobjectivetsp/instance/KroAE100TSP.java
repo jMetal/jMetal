@@ -5,10 +5,7 @@ import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.BiObjectiveTSP;
 
 public class KroAE100TSP extends BiObjectiveTSP {
 
-  /**
-   * Creates a new MultiobjectiveTSP problem instance
-   *
-   */
+  /** Creates a new MultiobjectiveTSP problem instance */
   public KroAE100TSP() throws IOException {
     super("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroE100.tsp");
   }
