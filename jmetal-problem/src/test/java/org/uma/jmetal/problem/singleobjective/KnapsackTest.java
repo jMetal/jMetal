@@ -1,6 +1,5 @@
 package org.uma.jmetal.problem.singleobjective;
 
-import org.apache.commons.collections4.trie.KeyAnalyzer;
 import org.junit.jupiter.api.*;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
@@ -38,7 +37,7 @@ class KnapsackTest {
 
     @Test
     @DisplayName(
-        "An exception is raised if the sizes of the profits and weight vectores are not equal")
+        "An exception is raised if the sizes of the profits and weight vectors are not equal")
     void whenTheSizesOfWeightsAndProfitsAreNotEqualThenAnExceptionIsRaised() {
       // Arrange
       int[] profits = {10, 5, 15, 7, 6, 18, 3};
