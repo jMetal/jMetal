@@ -24,7 +24,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 @SuppressWarnings("serial")
 public class MultiObjectiveTSP extends AbstractIntegerPermutationProblem {
   protected int numberOfCities ;
-  List<double[][]> distanceMatrices ;
+  protected List<double[][]> distanceMatrices ;
 
   /**
    * Creates a new MultiobjectiveTSP problem instance. It is assumed that all the distance files represent
