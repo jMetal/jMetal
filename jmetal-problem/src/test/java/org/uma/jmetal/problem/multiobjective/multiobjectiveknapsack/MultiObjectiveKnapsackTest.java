@@ -271,8 +271,8 @@ class MultiObjectiveKnapsackTest {
       assertEquals(expectedConstraintValues[1], solution.constraints()[1]);
       assertEquals(expectedConstraintValues[2], solution.constraints()[2]);
 
-        assertEquals(3, ConstraintHandling.numberOfViolatedConstraints(solution));
-        assertEquals(-16, ConstraintHandling.overallConstraintViolationDegree(solution));
+      assertEquals(3, ConstraintHandling.numberOfViolatedConstraints(solution));
+      assertEquals(-16, ConstraintHandling.overallConstraintViolationDegree(solution));
     }
   }
 }
