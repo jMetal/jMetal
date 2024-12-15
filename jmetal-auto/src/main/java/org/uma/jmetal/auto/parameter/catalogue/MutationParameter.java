@@ -78,9 +78,8 @@ public class MutationParameter extends CategoricalParameter {
   public MutationOperator<PermutationSolution<Integer>> getPermutationParameter() {
     MutationOperator<PermutationSolution<Integer>> result;
 
-    int permutationLength = (int) getNonConfigurableParameter("permutationLength");
     double mutationProbability =
-        (double) findGlobalParameter("mutationProbabilityFactor").value() / permutationLength;
+        (double) findGlobalParameter("mutationProbability").value() ;
 
     switch (value()) {
       case "swap":

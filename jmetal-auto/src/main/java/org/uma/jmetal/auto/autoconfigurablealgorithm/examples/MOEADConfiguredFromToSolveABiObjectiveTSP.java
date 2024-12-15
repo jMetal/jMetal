@@ -40,7 +40,7 @@ public class MOEADConfiguredFromToSolveABiObjectiveTSP {
                 + "--crossover PMX "
                 + "--crossoverProbability 0.9 "
                 + "--mutation swap "
-                + "--mutationProbabilityFactor 1.0 ")
+                + "--mutationProbability 0.08 ")
             .split("\\s+");
 
     AutoMOEADPermutation autoMOEAD = new AutoMOEADPermutation();
