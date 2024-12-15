@@ -43,8 +43,6 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
     this.normalize = normalize;
   }
 
-
-
   @Override
   public List<S> replace(
       List<S> population, List<S> offspringPopulation) {
@@ -101,6 +99,7 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
   private void updateIdealPoint(List<S> population, S newSolution) {
     if (firstReplacement) {
       idealPoint = new IdealPoint(population.get(0).objectives().length);
+      idealPoint.update(population);
       if (normalize) {
         nonDominatedSolutionListArchive = new NonDominatedSolutionListArchive<>() ;
         nonDominatedSolutionListArchive.addAll(population);
