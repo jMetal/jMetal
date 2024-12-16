@@ -34,9 +34,6 @@ import org.uma.jmetal.util.errorchecking.Check;
  * volume = 3 - Item 2: profit = 5, importance = 4, weight = 3, volume = 2 - Item 3: profit = 15,
  * importance = 10, weight = 5, volume = 4 - Constraints: - Maximum weight = 8 - Maximum volume = 6
  *
- * <p>Usage: This class can be used with a multi-objective optimization algorithm in JMetal, such as
- * NSGA-II or SPEA2, to solve the defined multi-objective knapsack problem.
- *
  * <p>Example instantiation: int[][] profits = { {10, 5, 15}, {8, 4, 10} }; int[][] weights = { {2,
  * 3, 5}, {3, 2, 4} }; int[] capacities = {8, 6};
  *
