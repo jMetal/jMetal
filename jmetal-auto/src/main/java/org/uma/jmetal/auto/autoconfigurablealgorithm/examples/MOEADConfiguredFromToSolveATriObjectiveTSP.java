@@ -24,7 +24,7 @@ public class MOEADConfiguredFromToSolveATriObjectiveTSP {
         ("--problemName org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroABC100TSP "
                 + "--referenceFrontFileName referenceFrontFileNameToBeIndicated "
                 + "--randomGeneratorSeed 124 "
-                + "--maximumNumberOfEvaluations 200000 "
+                + "--maximumNumberOfEvaluations 1200000 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
                 + "--sequenceGenerator integerSequence "
@@ -40,7 +40,7 @@ public class MOEADConfiguredFromToSolveATriObjectiveTSP {
                 + "--crossover PMX "
                 + "--crossoverProbability 0.9 "
                 + "--mutation swap "
-                + "--mutationProbabilityFactor 1.0 ")
+                + "--mutationProbability 0.08 ")
             .split("\\s+");
 
     AutoMOEADPermutation autoMOEAD = new AutoMOEADPermutation();
@@ -52,7 +52,7 @@ public class MOEADConfiguredFromToSolveATriObjectiveTSP {
     EvolutionaryAlgorithm<PermutationSolution<Integer>> moead = autoMOEAD.create();
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("MOEAD", 80, 5000, referenceFrontFileName);
+        new RunTimeChartObserver<>("MOEAD", 80, 10000, referenceFrontFileName);
 
     moead.observable().register(runTimeChartObserver);
 
