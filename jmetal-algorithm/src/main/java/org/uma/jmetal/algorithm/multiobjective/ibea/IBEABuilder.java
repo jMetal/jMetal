@@ -108,7 +108,7 @@ public class IBEABuilder implements AlgorithmBuilder<IBEA<DoubleSolution>> {
   }
 
   public IBEA<DoubleSolution> build() {
-    return new IBEA<DoubleSolution>(problem, populationSize, archiveSize, maxEvaluations, selection, crossover,
+    return new mIBEA<>(problem, populationSize, archiveSize, maxEvaluations, selection, crossover,
         mutation);
   }
 }
