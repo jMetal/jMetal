@@ -23,26 +23,27 @@ import org.uma.jmetal.lab.visualization.StudyVisualizer;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT10_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT11_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT12_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT13_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT14_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT15_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT16_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT17_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT18_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT19_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT1_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT20_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT2_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT3_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT4_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT5_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT6_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT7_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT8_2D;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT9_2D;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT1;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT10;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT11;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT12;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT13;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT14;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT15;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT16;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT17;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT18;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT19;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT1;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT20;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT2;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT3;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT4;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT5;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT6;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT7;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT8;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT9;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
@@ -85,26 +86,26 @@ public class ZCATStudy {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = List.of(
-        new ExperimentProblem<>(new ZCAT1_2D()).setReferenceFront("ZCAT1.2D.csv"),
-        new ExperimentProblem<>(new ZCAT2_2D()).setReferenceFront("ZCAT2.2D.csv"),
-        new ExperimentProblem<>(new ZCAT3_2D()).setReferenceFront("ZCAT3.2D.csv"),
-        new ExperimentProblem<>(new ZCAT4_2D()).setReferenceFront("ZCAT4.2D.csv"),
-        new ExperimentProblem<>(new ZCAT5_2D()).setReferenceFront("ZCAT5.2D.csv"),
-        new ExperimentProblem<>(new ZCAT6_2D()).setReferenceFront("ZCAT6.2D.csv"),
-        new ExperimentProblem<>(new ZCAT7_2D()).setReferenceFront("ZCAT7.2D.csv"),
-        new ExperimentProblem<>(new ZCAT8_2D()).setReferenceFront("ZCAT8.2D.csv"),
-        new ExperimentProblem<>(new ZCAT9_2D()).setReferenceFront("ZCAT9.2D.csv"),
-        new ExperimentProblem<>(new ZCAT10_2D()).setReferenceFront("ZCAT10.2D.csv"),
-        new ExperimentProblem<>(new ZCAT11_2D()).setReferenceFront("ZCAT11.2D.csv"),
-        new ExperimentProblem<>(new ZCAT12_2D()).setReferenceFront("ZCAT12.2D.csv"),
-        new ExperimentProblem<>(new ZCAT13_2D()).setReferenceFront("ZCAT13.2D.csv"),
-        new ExperimentProblem<>(new ZCAT14_2D()).setReferenceFront("ZCAT14.2D.csv"),
-        new ExperimentProblem<>(new ZCAT15_2D()).setReferenceFront("ZCAT15.2D.csv"),
-        new ExperimentProblem<>(new ZCAT16_2D()).setReferenceFront("ZCAT16.2D.csv"),
-        new ExperimentProblem<>(new ZCAT17_2D()).setReferenceFront("ZCAT17.2D.csv"),
-        new ExperimentProblem<>(new ZCAT18_2D()).setReferenceFront("ZCAT18.2D.csv"),
-        new ExperimentProblem<>(new ZCAT19_2D()).setReferenceFront("ZCAT19.2D.csv"),
-        new ExperimentProblem<>(new ZCAT20_2D()).setReferenceFront("ZCAT20.2D.csv")
+        new ExperimentProblem<>(new ZCAT1()).setReferenceFront("ZCAT1.2D.csv"),
+        new ExperimentProblem<>(new ZCAT2()).setReferenceFront("ZCAT2.2D.csv"),
+        new ExperimentProblem<>(new ZCAT3()).setReferenceFront("ZCAT3.2D.csv"),
+        new ExperimentProblem<>(new ZCAT4()).setReferenceFront("ZCAT4.2D.csv"),
+        new ExperimentProblem<>(new ZCAT5()).setReferenceFront("ZCAT5.2D.csv"),
+        new ExperimentProblem<>(new ZCAT6()).setReferenceFront("ZCAT6.2D.csv"),
+        new ExperimentProblem<>(new ZCAT7()).setReferenceFront("ZCAT7.2D.csv"),
+        new ExperimentProblem<>(new ZCAT8()).setReferenceFront("ZCAT8.2D.csv"),
+        new ExperimentProblem<>(new ZCAT9()).setReferenceFront("ZCAT9.2D.csv"),
+        new ExperimentProblem<>(new ZCAT10()).setReferenceFront("ZCAT10.2D.csv"),
+        new ExperimentProblem<>(new ZCAT11()).setReferenceFront("ZCAT11.2D.csv"),
+        new ExperimentProblem<>(new ZCAT12()).setReferenceFront("ZCAT12.2D.csv"),
+        new ExperimentProblem<>(new ZCAT13()).setReferenceFront("ZCAT13.2D.csv"),
+        new ExperimentProblem<>(new ZCAT14()).setReferenceFront("ZCAT14.2D.csv"),
+        new ExperimentProblem<>(new ZCAT15()).setReferenceFront("ZCAT15.2D.csv"),
+        new ExperimentProblem<>(new ZCAT16()).setReferenceFront("ZCAT16.2D.csv"),
+        new ExperimentProblem<>(new ZCAT17()).setReferenceFront("ZCAT17.2D.csv"),
+        new ExperimentProblem<>(new ZCAT18()).setReferenceFront("ZCAT18.2D.csv"),
+        new ExperimentProblem<>(new ZCAT19()).setReferenceFront("ZCAT19.2D.csv"),
+        new ExperimentProblem<>(new ZCAT20()).setReferenceFront("ZCAT20.2D.csv")
     );
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =

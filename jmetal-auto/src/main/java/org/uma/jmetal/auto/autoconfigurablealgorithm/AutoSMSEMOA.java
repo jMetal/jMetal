@@ -28,6 +28,7 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
@@ -40,6 +41,8 @@ import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
@@ -49,7 +52,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
  *
  * @autor Antonio J. Nebro
  */
-public class AutoNSGAII implements AutoConfigurableAlgorithm {
+public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
   private List<Parameter<?>> configurableParameterList = new ArrayList<>();
   private List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
@@ -60,7 +63,6 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
   private IntegerParameter populationSizeWithArchiveParameter;
-  private CategoricalIntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter<DoubleSolution> selectionParameter;
   private VariationParameter variationParameter;
@@ -74,7 +76,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     return fixedParameterList;
   }
 
-  public AutoNSGAII() {
+  public AutoSMSEMOA() {
     this.configure();
   }
 
@@ -91,7 +93,6 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     fixedParameterList.add(referenceFrontFilename);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter);
-
 
     algorithmResult();
     createInitialSolution();
@@ -150,14 +151,8 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
         new RealParameter("nonUniformMutationPerturbation", 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
-    //offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", 1,  400);
-    offspringPopulationSizeParameter = new CategoricalIntegerParameter("offspringPopulationSize",
-        List.of(1, 2, 5, 10, 20, 50, 100, 150, 200, 300, 400));
-
     variationParameter =
         new VariationParameter(List.of("crossoverAndMutationVariation"));
-    variationParameter.addSpecificParameter("crossoverAndMutationVariation",
-        offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
   }
@@ -246,6 +241,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
           maximumNumberOfEvaluationsParameter.value() / populationSizeParameter.value());
     }
 
+    variationParameter.addNonConfigurableParameter("offspringPopulationSize", 1);
     var variation = (Variation<DoubleSolution>) variationParameter.getDoubleSolutionParameter();
 
     Selection<DoubleSolution> selection =
@@ -259,12 +255,8 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
       evaluation = new SequentialEvaluation<>(problem);
     }
 
-    RankingAndDensityEstimatorPreference<DoubleSolution> preferenceForReplacement = new RankingAndDensityEstimatorPreference<>(
-        ranking, densityEstimator);
-    Replacement<DoubleSolution> replacement =
-        new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement,
-            Replacement.RemovalPolicy.ONE_SHOT);
-
+    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<>();
+    var replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.value());
 
@@ -275,7 +267,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
       /**
        * Constructor
        *
-       * @param name                      Algorithm name
+       * @param name Algorithm name
        * @param initialPopulationCreation
        * @param evaluation
        * @param termination
