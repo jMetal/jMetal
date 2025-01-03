@@ -59,6 +59,7 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
   public StringParameter referenceFrontFilename;
   private PositiveIntegerValue randomGeneratorSeedParameter;
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
+  private PositiveIntegerValue offspringPopulationSizeParameter;
   private CategoricalParameter algorithmResultParameter;
   private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
@@ -151,8 +152,12 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
         new RealParameter("nonUniformMutationPerturbation", 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
+    offspringPopulationSizeParameter = new PositiveIntegerValue("offspringPopulationSize") ;
+    offspringPopulationSizeParameter.value(1) ;
+
     variationParameter =
         new VariationParameter(List.of("crossoverAndMutationVariation"));
+    variationParameter.addSpecificParameter("crossoverAndMutationVariation", offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
   }
@@ -241,7 +246,7 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
           maximumNumberOfEvaluationsParameter.value() / populationSizeParameter.value());
     }
 
-    variationParameter.addNonConfigurableParameter("offspringPopulationSize", 1);
+    //variationParameter.addNonConfigurableParameter("offspringPopulationSize", 1);
     var variation = (Variation<DoubleSolution>) variationParameter.getDoubleSolutionParameter();
 
     Selection<DoubleSolution> selection =
