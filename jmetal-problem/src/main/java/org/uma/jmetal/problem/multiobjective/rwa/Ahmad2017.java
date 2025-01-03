@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.rwa;
 
 
 import java.util.List;
+
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 

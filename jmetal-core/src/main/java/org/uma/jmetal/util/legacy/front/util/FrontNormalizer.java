@@ -2,6 +2,7 @@ package org.uma.jmetal.util.legacy.front.util;
 
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
@@ -102,6 +103,16 @@ public class FrontNormalizer {
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfPointDimensions; j++) {
         if ((maximumValues[j] - minimumValues[j]) == 0) {
+          JMetalLogger.logger.severe("Maximum values :");
+            for (double maximumValue : maximumValues) {
+                JMetalLogger.logger.severe("" + maximumValue);
+            }
+
+          JMetalLogger.logger.severe("Minimum values :");
+            for (double minimumValue : minimumValues) {
+                JMetalLogger.logger.severe("" + minimumValue);
+            }
+
           throw new JMetalException("Maximum and minimum values of index " + j + " "
               + "are the same: " + maximumValues[j]);
         }
