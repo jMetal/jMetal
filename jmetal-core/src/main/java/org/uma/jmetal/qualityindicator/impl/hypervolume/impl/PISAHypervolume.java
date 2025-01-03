@@ -1,6 +1,9 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume.impl;
 
 import java.io.FileNotFoundException;
+
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -40,6 +43,11 @@ public class PISAHypervolume extends Hypervolume {
    */
   public PISAHypervolume(double[][] referenceFront) {
     super(referenceFront);
+  }
+
+  @Override
+  public QualityIndicator newInstance() {
+    return new PISAHypervolume();
   }
 
   /**

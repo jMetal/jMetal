@@ -34,6 +34,8 @@ public abstract class QualityIndicator {
     return referenceFront;
   }
 
+  public abstract QualityIndicator newInstance() ;
+
   public abstract String name() ;
   public abstract String description() ;
 }

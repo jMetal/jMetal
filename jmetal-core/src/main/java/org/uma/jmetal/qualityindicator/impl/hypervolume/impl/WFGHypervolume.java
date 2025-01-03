@@ -3,6 +3,8 @@ package org.uma.jmetal.qualityindicator.impl.hypervolume.impl;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
+
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -14,6 +16,9 @@ import org.uma.jmetal.util.errorchecking.Check;
  */
 @SuppressWarnings("serial")
 public class WFGHypervolume extends Hypervolume {
+
+  public WFGHypervolume() {
+  }
 
   /**
    * Constructor with reference point
@@ -32,6 +37,11 @@ public class WFGHypervolume extends Hypervolume {
    */
   public WFGHypervolume(double[][] referenceFront) {
     super(referenceFront);
+  }
+
+  @Override
+  public QualityIndicator newInstance() {
+    return new WFGHypervolume();
   }
 
   @Override

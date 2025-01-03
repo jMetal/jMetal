@@ -33,6 +33,11 @@ public class GenerationalDistance extends QualityIndicator {
     super(referenceFront) ;
   }
 
+  @Override
+  public QualityIndicator newInstance() {
+    return new GenerationalDistance();
+  }
+
   /**
    * Evaluate() method
    * @param front

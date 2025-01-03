@@ -38,6 +38,12 @@ public class GeneralizedSpread extends QualityIndicator {
     super(referenceFront) ;
   }
 
+
+  @Override
+  public QualityIndicator newInstance() {
+    return new GeneralizedSpread();
+  }
+
   /**
    * Evaluate() method
    * @param front
