@@ -18,7 +18,6 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -26,10 +25,10 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *
  * @author Antonio J. Nebro
  */
-public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
+public class SMSEMOASolving3DProblemExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -43,7 +42,7 @@ public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
 
     int populationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(40000);
 
     var algorithm = new SMSEMOABuilder<>(
             problem,
@@ -52,8 +51,6 @@ public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
             mutation)
         .setTermination(termination)
         .build();
-
-    algorithm.observable().register(new RunTimeChartObserver<>("SMS-EMOA", 80, 1000, referenceParetoFront));
 
     algorithm.run();
 

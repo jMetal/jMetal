@@ -8,30 +8,33 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSo
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.DifferentialEvolutionSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
+import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.DifferentialEvolutionCrossoverVariation;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover.DE_VARIANT;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.densityestimator.DensityEstimator;
-import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
 
 /**
- * Class to configure and build an instance of the NSGA-II algorithm using DE operators
+ * Class to configure and build an instance of the SMS-EMOA algorithm
+ *
+ * @param <DoubleSolution>
  */
-public class NSGAIIDEBuilder {
+public class SMSEMOADEBuilder {
   private String name;
   private Ranking<DoubleSolution> ranking;
-  private DensityEstimator<DoubleSolution> densityEstimator;
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialPopulation;
   private Termination termination;
@@ -39,61 +42,56 @@ public class NSGAIIDEBuilder {
   private Variation<DoubleSolution> variation;
   private Replacement<DoubleSolution> replacement;
 
-  private SequenceGenerator<Integer> sequenceGenerator;
+  public SMSEMOADEBuilder(
+          Problem<DoubleSolution> problem, 
+          int populationSize,
+          double cr,
+          double f,
+          MutationOperator<DoubleSolution> mutation,
+          DifferentialEvolutionCrossover.DE_VARIANT differentialEvolutionVariant) {
+    name = "SMS-EMOA-DE";
 
-  public NSGAIIDEBuilder(
-      Problem<DoubleSolution> problem,
-      int populationSize,
-      double cr,
-      double f,
-      MutationOperator<DoubleSolution> mutation,
-      DE_VARIANT differentialEvolutionVariant) {
-    name = "NSGAIIDE";
-
-    densityEstimator = new CrowdingDistanceDensityEstimator<>();
     ranking = new FastNonDominatedSortRanking<>();
-    sequenceGenerator = new IntegerBoundedSequenceGenerator(populationSize);
+    var sequenceGenerator = new IntegerBoundedSequenceGenerator(populationSize);
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    this.replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
+    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<>();
+    this.replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
 
     DifferentialEvolutionCrossover crossover =
-        new DifferentialEvolutionCrossover(
-            cr, f, differentialEvolutionVariant);
+            new DifferentialEvolutionCrossover(
+                    cr, f, differentialEvolutionVariant);
 
     this.variation =
-        new DifferentialEvolutionCrossoverVariation(
-            1, crossover, mutation, sequenceGenerator);
+            new DifferentialEvolutionCrossoverVariation(
+                    1, crossover, mutation, sequenceGenerator);
 
     int numberOfParentsToSelect = crossover.numberOfRequiredParents() ;
     this.selection =
-        new DifferentialEvolutionSelection(variation.getMatingPoolSize(), numberOfParentsToSelect, false,
-            sequenceGenerator);
-
+            new DifferentialEvolutionSelection(variation.getMatingPoolSize(), numberOfParentsToSelect, false,
+                    sequenceGenerator);
+    
     this.termination = new TerminationByEvaluations(25000);
 
     this.evaluation = new SequentialEvaluation<>(problem);
   }
 
-  public NSGAIIDEBuilder setTermination(Termination termination) {
+  public SMSEMOADEBuilder setTermination(Termination termination) {
     this.termination = termination;
 
     return this;
   }
 
-  public NSGAIIDEBuilder setRanking(Ranking<DoubleSolution> ranking) {
+  public SMSEMOADEBuilder setRanking(Ranking<DoubleSolution> ranking) {
     this.ranking = ranking;
-    this.replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
+    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<>();
+    this.replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
 
     return this;
   }
 
-  public NSGAIIDEBuilder setEvaluation(Evaluation<DoubleSolution> evaluation) {
+  public SMSEMOADEBuilder setEvaluation(Evaluation<DoubleSolution> evaluation) {
     this.evaluation = evaluation;
 
     return this;
