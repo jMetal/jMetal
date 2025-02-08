@@ -48,6 +48,8 @@ Comments and suggestions are welcome.
 
 Changelog
 ---------
+* [01/17/2025] Added a variant of SMS-EMOA using differential evolution.
+
 * [11/30/2024] Added single and multi-objective versions of the Knapsack problem.
 
 * [11/22/2024] Added new crossover (Cycle, EdgeRecombination, ODX, Population-Based) and mutation (Displacement, Insert, Inversion, Scamble, SimpleInversion) operators for permutations. Contribution of Nicolas R. Uribe (@NicolasRodriguezUribe)

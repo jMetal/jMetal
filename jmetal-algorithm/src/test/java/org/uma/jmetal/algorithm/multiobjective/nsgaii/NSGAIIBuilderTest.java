@@ -64,7 +64,7 @@ public class NSGAIIBuilderTest {
 
   @Test public void testDefaultConfiguration() {
     assertEquals(100, builder.getPopulationSize());
-    assertEquals(25000, builder.getMaxIterations());
+    assertEquals(25000, builder.getMaxEvaluations());
 
     SBXCrossover crossover = (SBXCrossover) builder.getCrossoverOperator();
     assertEquals(0.9, crossover.crossoverProbability(), EPSILON);
@@ -83,7 +83,7 @@ public class NSGAIIBuilderTest {
 
   @Test public void setPositiveMaxNumberOfIterations() {
     builder.setMaxEvaluations(20000);
-    assertEquals(20000, builder.getMaxIterations());
+    assertEquals(20000, builder.getMaxEvaluations());
   }
 
   @Test(expected = JMetalException.class) public void setNegativeMaxNumberOfIterations() {

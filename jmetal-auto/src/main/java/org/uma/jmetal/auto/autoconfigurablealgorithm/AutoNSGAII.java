@@ -92,7 +92,6 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter);
 
-
     algorithmResult();
     createInitialSolution();
     selection();
