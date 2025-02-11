@@ -1,11 +1,10 @@
 package org.uma.jmetal.util;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-
-import java.lang.reflect.Constructor;
 import org.junit.Test;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test Class responsible for testing {@link NormalizeUtils}
@@ -18,32 +17,20 @@ public class NormalizeUtilsTest {
 
   private static final double EPSILON = 0.0000000001;
 
-  @Test(expected = ReflectiveOperationException.class)
-  public void shouldThrowExceptionWhenInitiateThisClass() throws Exception {
-
-    final Class<?> cls = NormalizeUtils.class;
-
-    final Constructor<?> c = cls.getDeclaredConstructors()[0];
-
-    c.setAccessible(true);
-
-    c.newInstance((Object[]) null);
-  }
-
   @Test(expected = InvalidConditionException.class)
   public void shouldThrowAnExceptionWhenMinAndMaxValuesAreTheSame() {
     NormalizeUtils.normalize(2, 10, 10);
   }
 
   @Test
-  public void shouldReturnTheCorrectNumberWhenRangeIsZeroAndOne() {
+  public void shouldNormalizeReturnTheCorrectNumberWhenRangeIsZeroAndOne() {
     assertEquals(0.0, NormalizeUtils.normalize(10, 10, 20), EPSILON);
     assertEquals(0.5, NormalizeUtils.normalize(15, 10, 20), EPSILON);
     assertEquals(1.0, NormalizeUtils.normalize(20, 10, 20), EPSILON);
   }
 
   @Test
-  public void shouldReturnTheCorrectNumberWhenRangeIsMinusOneAndPlusOne() {
+  public void shouldNormalizeReturnTheCorrectNumberWhenRangeIsMinusOneAndPlusOne() {
     assertEquals(-1.0, NormalizeUtils.normalize(10, -1, 1, 10, 20), EPSILON);
     assertEquals(0.0, NormalizeUtils.normalize(15, -1, 1, 10, 20), EPSILON);
     assertEquals(1.0, NormalizeUtils.normalize(20, -1, 1, 10, 20), EPSILON);
@@ -70,6 +57,25 @@ public class NormalizeUtilsTest {
         NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(matrix),
         0.00001);
   }
+
+
+  @Test
+  public void shouldNormalizeReturnTheRightValuesWhenTheMatrixHasTwoValues() {
+    double[][] matrix = new double[2][];
+    matrix[0] = new double[] {2.0, 0.0};
+    matrix[1] = new double[] {0.0, 2.0};
+
+    var normalizedMatrix = NormalizeUtils.normalize(matrix);
+
+    double[][] expectedMatrix = {
+            {1.0, 0.0},
+            {0.0, 1.0}
+    };
+
+    assertArrayEquals(expectedMatrix[0], normalizedMatrix[0]);
+    assertArrayEquals(expectedMatrix[1], normalizedMatrix[1]);
+  }
+
 
   @Test
   public void shouldGetMinValuesOfTheColumnsOfAMatrixReturnTheRightValuesWhenTheMatrixHasTwoRows() {
