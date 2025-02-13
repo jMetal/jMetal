@@ -33,11 +33,11 @@ class MultiObjectiveKnapsackTest {
       var problem = new MultiObjectiveKnapsack(profits, weights, capacities);
       // Assert
       assertArrayEquals(capacities, problem.capacities());
-      assertArrayEquals(profitsA, problem.profits()[0]);
-      assertArrayEquals(profitsB, problem.profits()[1]);
-      assertArrayEquals(weightsA, problem.weights()[0]);
-      assertArrayEquals(weightsB, problem.weights()[1]);
-      assertArrayEquals(weightsC, problem.weights()[2]);
+      assertArrayEquals(profitsA, problem.objectives()[0]);
+      assertArrayEquals(profitsB, problem.objectives()[1]);
+      assertArrayEquals(weightsA, problem.constraints()[0]);
+      assertArrayEquals(weightsB, problem.constraints()[1]);
+      assertArrayEquals(weightsC, problem.constraints()[2]);
 
       assertEquals(1, problem.numberOfVariables());
       assertEquals(profits.length, problem.numberOfObjectives());
@@ -69,7 +69,7 @@ class MultiObjectiveKnapsackTest {
           assertThrows(
               InvalidConditionException.class,
               () -> new MultiObjectiveKnapsack(profits, weights, capacities));
-      String expectedMessage = "The profit vectors must have the same size";
+      String expectedMessage = "The objective vectors must have the same size";
       assertEquals(expectedMessage, exception.getMessage());
     }
 
@@ -92,7 +92,7 @@ class MultiObjectiveKnapsackTest {
           assertThrows(
               InvalidConditionException.class,
               () -> new MultiObjectiveKnapsack(profits, weights, capacities));
-      String expectedMessage = "The weight vectors must have the same size";
+      String expectedMessage = "The constraint vectors must have the same size";
       assertEquals(expectedMessage, exception.getMessage());
     }
 
@@ -117,9 +117,9 @@ class MultiObjectiveKnapsackTest {
               InvalidConditionException.class,
               () -> new MultiObjectiveKnapsack(profits, weights, capacities));
       String expectedMessage =
-          "The number of profits ("
+          "The number of objectives ("
               + profits[0].length
-              + ") must be equal to the number of weights ("
+              + ") must be equal to the number of constraints ("
               + weights[0].length
               + ")";
       assertEquals(expectedMessage, exception.getMessage());

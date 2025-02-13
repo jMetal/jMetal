@@ -47,31 +47,31 @@ import org.uma.jmetal.util.errorchecking.Check;
  * @author Antonio J. Nebro
  */
 public class MultiObjectiveKnapsack extends AbstractBinaryProblem {
-  private final int[][] profits;
-  private final int[][] weights;
+  private final int[][] objectives;
+  private final int[][] constraints;
   private final int[] capacities;
 
-  public MultiObjectiveKnapsack(int[][] profits, int[][] weights, int[] capacities) {
+  public MultiObjectiveKnapsack(int[][] objectives, int[][] constraints, int[] capacities) {
     Check.that(
-        Arrays.stream(profits).mapToInt(vector -> vector.length).distinct().count() == 1,
-        "The profit vectors must have the same size");
+        Arrays.stream(objectives).mapToInt(vector -> vector.length).distinct().count() == 1,
+        "The objective vectors must have the same size");
     Check.that(
-        Arrays.stream(weights).mapToInt(vector -> vector.length).distinct().count() == 1,
-        "The weight vectors must have the same size");
+        Arrays.stream(constraints).mapToInt(vector -> vector.length).distinct().count() == 1,
+        "The constraint vectors must have the same size");
     Check.that(
-        profits[0].length == weights[0].length,
-        "The number of profits ("
-            + profits[0].length
-            + ") must be equal to the number of weights ("
-            + weights[0].length
+        objectives[0].length == constraints[0].length,
+        "The number of objectives ("
+            + objectives[0].length
+            + ") must be equal to the number of constraints ("
+            + constraints[0].length
             + ")");
 
     Check.that(
         Arrays.stream(capacities).allMatch(capacity -> capacity > 0),
         "All the capacities must be greater than zero");
 
-    this.profits = profits;
-    this.weights = weights;
+    this.objectives = objectives;
+    this.constraints = constraints;
     this.capacities = capacities;
   }
 
@@ -82,7 +82,7 @@ public class MultiObjectiveKnapsack extends AbstractBinaryProblem {
 
   @Override
   public int numberOfObjectives() {
-    return profits.length;
+    return objectives.length;
   }
 
   @Override
@@ -92,7 +92,7 @@ public class MultiObjectiveKnapsack extends AbstractBinaryProblem {
 
   @Override
   public List<Integer> numberOfBitsPerVariable() {
-    return List.of(profits[0].length);
+    return List.of(objectives[0].length);
   }
 
   @Override
@@ -104,28 +104,28 @@ public class MultiObjectiveKnapsack extends AbstractBinaryProblem {
     return capacities;
   }
 
-  public int[][] weights() {
-    return weights;
+  public int[][] constraints() {
+    return constraints;
   }
 
-  public int[][] profits() {
-    return profits;
+  public int[][] objectives() {
+    return objectives;
   }
 
   @Override
   public BinarySolution evaluate(BinarySolution solution) {
-    int[] totalProfits = new int[profits.length];
-    int[] totalWeights = new int[weights.length];
+    int[] totalProfits = new int[objectives.length];
+    int[] totalWeights = new int[constraints.length];
 
     BitSet bitSet = solution.variables().get(0);
 
     for (int i = 0; i < bitSet.length(); i++) {
       if (bitSet.get(i)) {
-        for (int j = 0; j < profits.length; j++) {
-          totalProfits[j] += profits[j][i];
+        for (int j = 0; j < objectives.length; j++) {
+          totalProfits[j] += objectives[j][i];
         }
-        for (int j = 0; j < weights.length; j++) {
-          totalWeights[j] += weights[j][i];
+        for (int j = 0; j < constraints.length; j++) {
+          totalWeights[j] += constraints[j][i];
         }
       }
     }
