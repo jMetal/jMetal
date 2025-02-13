@@ -1,5 +1,9 @@
 package org.uma.jmetal.problem.multiobjective.multiobjectiveknapsack;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
@@ -16,8 +20,8 @@ import org.uma.jmetal.util.errorchecking.Check;
  * <p>Problem Description: - There are n items, each item j has multiple attributes (e.g., profit,
  * weight). - There are m objectives to maximize. - There are L constraints to satisfy.
  *
- * <p>Inputs: - int[][] profits: An m x n matrix where profits[k][j] represents the profit of item j
- * for objective k. - int[][] weights: An L x n matrix where weights[l][j] represents the weight of
+ * <p>Inputs: - int[][] objectives: An m x n matrix where objectives[k][j] represents the profit of item j
+ * for objective k. - int[][] constraints: An L x n matrix where constraints[l][j] represents the weight of
  * item j for constraint l. - int[] capacities: An array of length L representing the capacity for
  * each constraint.
  *
@@ -114,18 +118,18 @@ public class MultiObjectiveKnapsack extends AbstractBinaryProblem {
 
   @Override
   public BinarySolution evaluate(BinarySolution solution) {
-    int[] totalProfits = new int[objectives.length];
-    int[] totalWeights = new int[constraints.length];
+    int[] totalObjectives = new int[objectives.length];
+    int[] totalConstraints = new int[constraints.length];
 
     BitSet bitSet = solution.variables().get(0);
 
     for (int i = 0; i < bitSet.length(); i++) {
       if (bitSet.get(i)) {
         for (int j = 0; j < objectives.length; j++) {
-          totalProfits[j] += objectives[j][i];
+          totalObjectives[j] += objectives[j][i];
         }
         for (int j = 0; j < constraints.length; j++) {
-          totalWeights[j] += constraints[j][i];
+          totalConstraints[j] += constraints[j][i];
         }
       }
     }
@@ -133,13 +137,103 @@ public class MultiObjectiveKnapsack extends AbstractBinaryProblem {
     IntStream.range(0, capacities.length)
         .forEach(
             i -> {
-              if (totalWeights[i] > capacities[i]) {
-                solution.constraints()[i] = 1.0 * capacities[i] - totalWeights[i];
+              if (totalConstraints[i] > capacities[i]) {
+                solution.constraints()[i] = 1.0 * capacities[i] - totalConstraints[i];
               }
             });
 
     IntStream.range(0, numberOfObjectives())
-        .forEach(i -> solution.objectives()[i] = -totalProfits[i]);
+        .forEach(i -> solution.objectives()[i] = -totalObjectives[i]);
+
     return solution;
   }
+
+  private static List<String> readLinesFromFile(String filename) throws IOException {
+    List<String> lines = new ArrayList<>();
+    try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        line = line.trim();
+        if (!line.isEmpty() && !line.startsWith("#")) {
+          lines.add(line);
+        }
+      }
+    }
+    return lines;
+  }
+
+  /**
+   * Reads data from a specified file where each objective and constraint value is stored on separate lines.
+   *
+   * @param filename the path to the data file
+   * @return an instance of MKPProblem
+   * @throws IOException if an error occurs while reading the file
+   */
+  public static MultiObjectiveKnapsack readMKP(String filename) throws IOException {
+    List<String> lines = readLinesFromFile(filename);
+    int numberOfItems = Integer.parseInt(lines.get(0));
+    int numberOfObjectives = Integer.parseInt(lines.get(1));
+    int numberOfConstraints = Integer.parseInt(lines.get(2));
+
+    int[][] objectives = new int[numberOfObjectives][numberOfItems];
+    int[][] constraints = new int[numberOfConstraints][numberOfItems];
+    int[] capacities = new int[numberOfConstraints];
+
+    // Read objective values from the file
+    int baseObjectiveIndex = 3;
+    for (int i = 0; i < numberOfObjectives; i++) {
+      for (int j = 0; j < numberOfItems; j++) {
+        objectives[i][j] = Integer.parseInt(lines.get(baseObjectiveIndex + i * numberOfItems + j));
+      }
+    }
+
+    // Read constraint values from the file
+    int baseConstraintIndex = baseObjectiveIndex + numberOfObjectives * numberOfItems;
+    for (int i = 0; i < numberOfConstraints; i++) {
+      for (int j = 0; j < numberOfItems; j++) {
+        constraints[i][j] = Integer.parseInt(lines.get(baseConstraintIndex + i * numberOfItems + j));
+      }
+      capacities[i] = Integer.parseInt(lines.get(baseConstraintIndex + (i + 1) * numberOfItems));
+    }
+
+    return new MultiObjectiveKnapsack(objectives, constraints, capacities);
+  }
+
+  /**
+   * Reads data from a specified file in a compact format where objectives and constraints are stored in a single line.
+   *
+   * @param filename the path to the data file
+   * @return an instance of MKPProblem
+   * @throws IOException if an error occurs while reading the file
+   */
+  public static MultiObjectiveKnapsack readMKPCompact(String filename) throws IOException {
+    List<String> lines = readLinesFromFile(filename);
+    int numberOfItems = Integer.parseInt(lines.get(0));
+    int numberOfObjectives = Integer.parseInt(lines.get(1));
+    int numberOfConstraints = Integer.parseInt(lines.get(2));
+
+    int[][] objectives = new int[numberOfObjectives][numberOfItems];
+    int[][] constraints = new int[numberOfConstraints][numberOfItems];
+    int[] capacities = new int[numberOfConstraints];
+
+    // Read objectives
+    for (int i = 0; i < numberOfObjectives; i++) {
+      String[] objectiveLine = lines.get(3 + i).split("\\s+");
+      for (int j = 0; j < objectiveLine.length; j++) {
+        objectives[i][j] = Integer.parseInt(objectiveLine[j]);
+      }
+    }
+
+    // Read constraints and capacities
+    for (int i = 0; i < numberOfConstraints; i++) {
+      String[] constraintLine = lines.get(3 + numberOfObjectives + (i * 2)).split("\\s+");
+      for (int j = 0; j < numberOfItems; j++) {
+        constraints[i][j] = Integer.parseInt(constraintLine[j]);
+      }
+      capacities[i] = Integer.parseInt(lines.get(3 + numberOfObjectives + (i * 2) + 1));
+    }
+
+    return new MultiObjectiveKnapsack(objectives, constraints, capacities);
+  }
+
 }
