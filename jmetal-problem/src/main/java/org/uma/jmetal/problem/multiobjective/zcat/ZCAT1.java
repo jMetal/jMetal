@@ -68,14 +68,4 @@ public class ZCAT1 extends ZCAT {
 
     return solution;
   }
-
-  public static void main(String[] args) {
-    DoubleProblem problem = new ZCAT1();
-
-    DoubleSolution solution = problem.createSolution();
-    Collections.fill(solution.variables(), 0.45);
-
-    problem.evaluate(solution);
-    System.out.println(solution);
-  }
 }

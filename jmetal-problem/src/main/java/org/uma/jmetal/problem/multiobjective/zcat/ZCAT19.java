@@ -71,14 +71,4 @@ public class ZCAT19 extends ZCAT1 {
 
     return solution;
   }
-
-  public static void main(String[] args) {
-    DoubleProblem problem = new ZCAT19();
-
-    DoubleSolution solution = problem.createSolution();
-    Collections.fill(solution.variables(), 0.45);
-
-    problem.evaluate(solution);
-    System.out.println(solution);
-  }
 }

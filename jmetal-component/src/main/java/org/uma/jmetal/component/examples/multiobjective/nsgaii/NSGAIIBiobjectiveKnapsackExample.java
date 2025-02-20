@@ -32,10 +32,10 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 public class NSGAIIBiobjectiveKnapsackExample {
   public static void main(String[] args) throws JMetalException, IOException {
 
-    MultiObjectiveKnapsack problem =
+    var problem =
         MultiObjectiveKnapsack.readMKP("resources/mokpInstances/1B-B/2KP50-1B.dat");
 
-    CrossoverOperator<BinarySolution> crossover = new SinglePointCrossover<>(0.0);
+    CrossoverOperator<BinarySolution> crossover = new SinglePointCrossover<>(0.9);
 
     double mutationProbability = 1.0 / problem.totalNumberOfBits();
     MutationOperator<BinarySolution> mutation = new BitFlipMutation<>(mutationProbability);
@@ -43,7 +43,7 @@ public class NSGAIIBiobjectiveKnapsackExample {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(1000000);
+    Termination termination = new TerminationByEvaluations(100000);
 
     Ranking<BinarySolution> ranking =
         new FastNonDominatedSortRanking<>(

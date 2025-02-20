@@ -41,14 +41,4 @@ public class ZCAT14 extends ZCAT1 {
             ? new G6(numberOfVariables, paretoSetDimension)
             : new G0(numberOfVariables, paretoSetDimension);
   }
-
-  public static void main(String[] args) {
-    DoubleProblem problem = new ZCAT14();
-
-    DoubleSolution solution = problem.createSolution();
-    Collections.fill(solution.variables(), 0.45);
-
-    problem.evaluate(solution);
-    System.out.println(solution);
-  }
 }
