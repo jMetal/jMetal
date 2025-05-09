@@ -24,6 +24,7 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.util.restartstrategy.CreateNewSolutionsStrategy;
 
 /**
  * Class to configure and build an instance of the NSGA-II algorithm
@@ -92,6 +93,12 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     this.evaluation = evaluation;
 
     return this;
+  }
+
+  public NSGAIIBuilder<S> setCreateInitialPopulation(SolutionsCreation<S> solutionsCreation) {
+    this.createInitialPopulation = solutionsCreation ;
+
+    return this ;
   }
 
   public EvolutionaryAlgorithm<S> build() {
