@@ -18,11 +18,11 @@ jMetal project Web site
    :target: https://jmetal.readthedocs.io/?badge=latest
 
 jMetal is a Java-based framework for multi-objective optimization with metaheuristics.
-The last stable version is 6.6.
+The last stable version is 6.7.
 The most recent documentation is hosted in https://jmetal.readthedocs.io.
 
 
-The current development version (6.7-SNAPSHOT) is a Maven project structured in the following sub-projects:
+The current development version (6.8-SNAPSHOT) is a Maven project structured in the following sub-projects:
 
 +---------------------+------------------------------------+
 | Sub-project         |  Contents                          | 
@@ -48,6 +48,10 @@ Comments and suggestions are welcome.
 
 Changelog
 ---------
+* [05/09/2025] jMetal 6.7 is released.
+
+* [05/09/2025] The jMetal project adopts Java 22.
+
 * [01/17/2025] Added a variant of SMS-EMOA using differential evolution.
 
 * [11/30/2024] Added single and multi-objective versions of the Knapsack problem.

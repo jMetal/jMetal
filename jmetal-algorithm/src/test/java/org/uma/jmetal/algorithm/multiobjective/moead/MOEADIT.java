@@ -140,8 +140,6 @@ public class MOEADIT {
     // return find a front with a hypervolume value higher than 0.25
     double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
-    System.out.println(hv);
-
     assertTrue(hv > 0.25);
 
     JMetalRandom.getInstance().setSeed(System.currentTimeMillis());
