@@ -15,11 +15,6 @@
     <description>Component based algorithms</description>
     <url>http://jmetal.sourceforge.net</url>
 
-    <build>
-        <plugins>
-        </plugins>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
