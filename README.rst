@@ -47,8 +47,8 @@ The current development version (6.8-SNAPSHOT) is a Maven project structured in 
 
 Related projects
 ----------------
-* `jMetalPy <https://github.com/jMetal/SAES>`_
-* `SAES <https://github.com/jMetal/SAES>`_
+* `jMetalPy <https://github.com/jMetal/jmetalpy>`_: jMetal in Python
+* `SAES <https://github.com/jMetal/SAES>`_: Python library to analyse and compare the performance of multi-objective algorithms
 
 Changelog
 ---------
