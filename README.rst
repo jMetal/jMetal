@@ -44,7 +44,11 @@ The current development version (6.8-SNAPSHOT) is a Maven project structured in 
 | jmetal-component    |  Component-based algorithms        |
 +---------------------+------------------------------------+
 
-Comments and suggestions are welcome.
+
+Related projects
+----------------
+* `jMetalPy <https://github.com/jMetal/SAES>`_
+* `SAES <https://github.com/jMetal/SAES>`_
 
 Changelog
 ---------
