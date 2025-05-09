@@ -66,8 +66,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <doclint>none</doclint>
         <junit.version>4.13.1</junit.version>
-        <maven.compiler.source>19</maven.compiler.source>
-        <maven.compiler.target>19</maven.compiler.target>
+        <maven.compiler.release>22</maven.compiler.release>
     </properties>
 
     <build>
