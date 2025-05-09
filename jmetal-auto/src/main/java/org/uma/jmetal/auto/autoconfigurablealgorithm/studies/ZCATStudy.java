@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.lab.experiment.Experiment;
@@ -12,16 +11,11 @@ import org.uma.jmetal.lab.experiment.ExperimentBuilder;
 import org.uma.jmetal.lab.experiment.component.impl.ComputeQualityIndicators;
 import org.uma.jmetal.lab.experiment.component.impl.ExecuteAlgorithms;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateBoxplotsWithR;
-import org.uma.jmetal.lab.experiment.component.impl.GenerateFriedmanHolmTestTables;
-import org.uma.jmetal.lab.experiment.component.impl.GenerateHtmlPages;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateLatexTablesWithStatistics;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateWilcoxonTestTablesWithR;
 import org.uma.jmetal.lab.experiment.studies.DTLZStudy;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
-import org.uma.jmetal.lab.visualization.StudyVisualizer;
-import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zcat.ZCAT1;
 import org.uma.jmetal.problem.multiobjective.zcat.ZCAT10;
@@ -34,9 +28,8 @@ import org.uma.jmetal.problem.multiobjective.zcat.ZCAT16;
 import org.uma.jmetal.problem.multiobjective.zcat.ZCAT17;
 import org.uma.jmetal.problem.multiobjective.zcat.ZCAT18;
 import org.uma.jmetal.problem.multiobjective.zcat.ZCAT19;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT1;
-import org.uma.jmetal.problem.multiobjective.zcat.ZCAT20;
 import org.uma.jmetal.problem.multiobjective.zcat.ZCAT2;
+import org.uma.jmetal.problem.multiobjective.zcat.ZCAT20;
 import org.uma.jmetal.problem.multiobjective.zcat.ZCAT3;
 import org.uma.jmetal.problem.multiobjective.zcat.ZCAT4;
 import org.uma.jmetal.problem.multiobjective.zcat.ZCAT5;
@@ -133,10 +126,8 @@ public class ZCATStudy {
     new ExecuteAlgorithms<>(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
-    new GenerateFriedmanHolmTestTables<>(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(5).setColumns(4).run();
-    //new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run() ;
   }
 
   /**

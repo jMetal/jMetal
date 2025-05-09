@@ -13,14 +13,11 @@ import org.uma.jmetal.lab.experiment.ExperimentBuilder;
 import org.uma.jmetal.lab.experiment.component.impl.ComputeQualityIndicators;
 import org.uma.jmetal.lab.experiment.component.impl.ExecuteAlgorithms;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateBoxplotsWithR;
-import org.uma.jmetal.lab.experiment.component.impl.GenerateFriedmanHolmTestTables;
-import org.uma.jmetal.lab.experiment.component.impl.GenerateHtmlPages;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateLatexTablesWithStatistics;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateReferenceParetoSetAndFrontFromDoubleSolutions;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateWilcoxonTestTablesWithR;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
-import org.uma.jmetal.lab.visualization.StudyVisualizer;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -94,9 +91,7 @@ public class ZDTScalabilityComputingReferenceParetoFrontsStudy {
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
-    new GenerateFriedmanHolmTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
-    new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run() ;
   }
 
   /**
