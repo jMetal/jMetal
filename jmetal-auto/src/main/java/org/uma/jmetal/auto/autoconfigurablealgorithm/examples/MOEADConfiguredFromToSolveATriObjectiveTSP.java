@@ -29,7 +29,7 @@ public class MOEADConfiguredFromToSolveATriObjectiveTSP {
                 + "--populationSize 100 "
                 + "--sequenceGenerator integerSequence "
                 + "--createInitialSolutions random "
-                + "--normalizeObjectives false "
+                + "--normalizeObjectives FALSE "
                 + "--neighborhoodSize 20 "
                 + "--maximumNumberOfReplacedSolutions 2 "
                 + "--aggregationFunction penaltyBoundaryIntersection "

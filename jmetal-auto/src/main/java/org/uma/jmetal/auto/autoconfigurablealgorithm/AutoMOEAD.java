@@ -64,7 +64,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   private IntegerParameter neighborhoodSizeParameter;
   private IntegerParameter maximumNumberOfReplacedSolutionsParameter;
   private AggregationFunctionParameter aggregationFunctionParameter;
-  private BooleanParameter normalizeObjectivesParameter ;
+  private CategoricalParameter normalizeObjectivesParameter ;
   private SequenceGeneratorParameter subProblemIdGeneratorParameter ;
 
   @Override
@@ -84,7 +84,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   public void configure() {
     subProblemIdGeneratorParameter = new SequenceGeneratorParameter(List.of("permutation","integerSequence")) ;
 
-    normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives") ;
+    normalizeObjectivesParameter = new CategoricalParameter("normalizeObjectives", List.of("TRUE", "FALSE")) ;
     RealParameter epsilonParameterForNormalizing = new RealParameter("epsilonParameterForNormalizing", 0.0000001, 25.0) ;
     normalizeObjectivesParameter.addSpecificParameter("TRUE", epsilonParameterForNormalizing);
 
@@ -309,7 +309,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     int maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutionsParameter.value();
 
-    aggregationFunctionParameter.normalizedObjectives(normalizeObjectivesParameter.value());
+    boolean normalizeObjectives = Boolean.valueOf(normalizeObjectivesParameter.value());
+    aggregationFunctionParameter.normalizedObjectives(normalizeObjectives);
     AggregationFunction aggregativeFunction = aggregationFunctionParameter.getParameter();
     var replacement =
         new MOEADReplacement<>(
@@ -317,7 +318,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
             (WeightVectorNeighborhood<DoubleSolution>) neighborhood,
             aggregativeFunction,
             subProblemIdGenerator,
-            maximumNumberOfReplacedSolutions, normalizeObjectivesParameter.value());
+            maximumNumberOfReplacedSolutions, normalizeObjectives);
 
     class EvolutionaryAlgorithmWithArchive extends EvolutionaryAlgorithm<DoubleSolution> {
       private Archive<DoubleSolution> archive ;

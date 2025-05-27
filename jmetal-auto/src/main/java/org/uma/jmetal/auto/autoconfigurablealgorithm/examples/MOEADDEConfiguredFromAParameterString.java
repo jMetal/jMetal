@@ -26,7 +26,7 @@ public class MOEADDEConfiguredFromAParameterString {
             + "--maximumNumberOfEvaluations 175000 "
             + "--algorithmResult population "
             + "--populationSize 300 "
-            + "--normalizeObjectives false "
+            + "--normalizeObjectives FALSE "
             + "--sequenceGenerator integerSequence "
             + "--createInitialSolutions random "
             + "--neighborhoodSize 20 "

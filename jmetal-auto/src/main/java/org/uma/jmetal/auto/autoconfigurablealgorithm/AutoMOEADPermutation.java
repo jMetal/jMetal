@@ -62,7 +62,7 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
   private IntegerParameter neighborhoodSizeParameter;
   private IntegerParameter maximumNumberOfReplacedSolutionsParameter;
   private AggregationFunctionParameter aggregationFunctionParameter;
-  private BooleanParameter normalizeObjectivesParameter;
+  private CategoricalParameter normalizeObjectivesParameter;
   private SequenceGeneratorParameter subProblemIdGeneratorParameter;
 
   @Override
@@ -83,7 +83,7 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
     subProblemIdGeneratorParameter =
         new SequenceGeneratorParameter(List.of("permutation", "integerSequence"));
 
-    normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives");
+    normalizeObjectivesParameter = new CategoricalParameter("normalizeObjectives", List.of("TRUE", "FALSE"));
     RealParameter epsilonParameterForNormalizing =
         new RealParameter("epsilonParameterForNormalizing", 0.0000001, 25.0);
     normalizeObjectivesParameter.addSpecificParameter("TRUE", epsilonParameterForNormalizing);
@@ -270,7 +270,8 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
 
     int maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutionsParameter.value();
 
-    aggregationFunctionParameter.normalizedObjectives(normalizeObjectivesParameter.value());
+    boolean normalizeObjectives = Boolean.valueOf(normalizeObjectivesParameter.value());
+    aggregationFunctionParameter.normalizedObjectives(normalizeObjectives);
     AggregationFunction aggregativeFunction = aggregationFunctionParameter.getParameter();
     var replacement =
         new MOEADReplacement<>(
@@ -279,7 +280,7 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
             aggregativeFunction,
             subProblemIdGenerator,
             maximumNumberOfReplacedSolutions,
-            normalizeObjectivesParameter.value());
+                normalizeObjectives);
 
     class EvolutionaryAlgorithmWithArchive
         extends EvolutionaryAlgorithm<PermutationSolution<Integer>> {
