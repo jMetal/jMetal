@@ -52,6 +52,9 @@ Related projects
 
 Changelog
 ---------
+* [06/18/2025] A folder `resources/referenceFrontsRSG` have been added. It contains Pareto front approximations produced with the `Reference Set Generator <https://doi.org/10.3390/math13101626>`_  method.
+Contribution of Oliver Schütze.
+
 * [05/09/2025] jMetal 6.7 is released.
 
 * [05/09/2025] The jMetal project adopts Java 22.
