@@ -13,7 +13,7 @@ import org.uma.jmetal.util.ranking.Ranking;
 /**
  * This class implements a solution list ranking based on the strength concept defined in SPEA2. The
  * strength of solution is computed by considering the number of solutions they dominates and the
- * strenght of the solutions dominating it. As an output, a set of subsets are obtained. The subsets
+ * strength of the solutions dominating it. As an output, a set of subsets are obtained. The subsets
  * are numbered starting from 0; thus, subset 0 contains the non-dominated solutions, subset 1
  * contains the non-dominated population after removing those belonging to subset 0, and so on.
  *

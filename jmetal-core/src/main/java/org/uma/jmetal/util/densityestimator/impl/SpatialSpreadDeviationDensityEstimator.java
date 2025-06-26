@@ -20,7 +20,7 @@ public class SpatialSpreadDeviationDensityEstimator<S extends Solution<?>>
   private final String attributeId = getClass().getName();
 
   /**
-   * Assigns the KNN distance to all the solutions in a list
+   * Assigns the distance to all the solutions in a list
    *
    * @param solutionList
    */
