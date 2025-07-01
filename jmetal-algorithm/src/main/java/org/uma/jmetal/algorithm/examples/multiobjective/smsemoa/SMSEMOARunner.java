@@ -52,7 +52,7 @@ public class SMSEMOARunner extends AbstractAlgorithmRunner {
     hypervolume = new PISAHypervolume<>();
     hypervolume.setOffset(100.0);
 
-    var algorithm = new SMSEMOABuilder<DoubleSolution>(problem, crossover, mutation)
+    var algorithm = new SMSEMOABuilder<>(problem, crossover, mutation)
         .setSelectionOperator(selection)
         .setMaxEvaluations(40000)
         .setPopulationSize(100)

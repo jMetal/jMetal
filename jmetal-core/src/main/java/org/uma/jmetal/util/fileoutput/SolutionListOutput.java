@@ -56,7 +56,7 @@ public class SolutionListOutput {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     try {
-      if (solutionList.size() > 0) {
+      if (!solutionList.isEmpty()) {
         int numberOfVariables = solutionList.get(0).variables().size();
         for (int i = 0; i < solutionList.size(); i++) {
           for (int j = 0; j < numberOfVariables - 1; j++) {
@@ -80,7 +80,7 @@ public class SolutionListOutput {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     try {
-      if (solutionList.size() > 0) {
+      if (!solutionList.isEmpty()) {
         int numberOfObjectives = solutionList.get(0).objectives().length;
         for (int i = 0; i < solutionList.size(); i++) {
           for (int j = 0; j < numberOfObjectives - 1; j++) {
@@ -105,7 +105,7 @@ public class SolutionListOutput {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     try {
-      if (solutionList.size() > 0) {
+      if (!solutionList.isEmpty()) {
         int numberOfObjectives = solutionList.get(0).objectives().length;
         if (numberOfObjectives != minimizeObjective.size()) {
           throw new JMetalException(

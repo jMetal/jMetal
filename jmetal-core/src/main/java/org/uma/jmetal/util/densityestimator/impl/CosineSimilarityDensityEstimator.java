@@ -12,6 +12,7 @@ import org.uma.jmetal.util.distance.impl.CosineSimilarityBetweenVectors;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 /**
  * This class implements a density estimator based on the cosine similarity
@@ -24,13 +25,9 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
   private final Point referencePoint;
   private final boolean normalize;
 
-  public CosineSimilarityDensityEstimator(Point referencePoint) {
-    this(referencePoint, true);
-  }
-
-  public CosineSimilarityDensityEstimator(Point referencePoint, boolean normalize) {
-    this.referencePoint = referencePoint;
-    distance = new CosineSimilarityBetweenVectors(referencePoint.values());
+  public CosineSimilarityDensityEstimator(double[] referencePoint, boolean normalize) {
+    this.referencePoint = new ArrayPoint(referencePoint);
+    distance = new CosineSimilarityBetweenVectors(this.referencePoint.values());
     this.normalize = normalize;
   }
 

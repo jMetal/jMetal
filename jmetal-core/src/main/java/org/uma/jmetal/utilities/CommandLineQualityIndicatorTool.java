@@ -72,6 +72,8 @@ public class CommandLineQualityIndicatorTool {
 
     JMetalLogger.logger.info("The fronts are normalized before computing the indicators");
 
+
+
     List<QualityIndicator> indicatorList = getAvailableIndicators(normalizedReferenceFront);
 
     if (!args[0].equals("ALL")) {
