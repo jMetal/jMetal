@@ -28,8 +28,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class SMPSOWithUnboundedArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ3.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
