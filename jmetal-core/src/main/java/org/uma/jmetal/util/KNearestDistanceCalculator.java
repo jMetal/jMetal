@@ -2,10 +2,6 @@ package org.uma.jmetal.util;
 
 import java.util.Arrays;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.stream.IntStream;
-
 /**
  * Utility class for computing the distance of each row in a matrix to its K-th nearest neighbor
  * using Euclidean distance, with optional normalization.
