@@ -12,7 +12,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 /**
- * This class allows to apply a whole arithmetic crossover operator to two parent solutions.
+ * This class allows applying a whole arithmetic crossover operator to two parent solutions.
  *
  * @author Antonio J. Nebro
  */
