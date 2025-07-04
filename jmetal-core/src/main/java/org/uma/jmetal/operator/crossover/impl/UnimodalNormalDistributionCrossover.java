@@ -122,6 +122,13 @@ public class UnimodalNormalDistributionCrossover implements CrossoverOperator<Do
       }
       double distance = Math.sqrt(distanceSquared);
       
+      // If parents are too close, return exact copies to avoid division by zero
+      if (distance < 1e-10) {
+        offspring.add((DoubleSolution) parent1.copy());
+        offspring.add((DoubleSolution) parent2.copy());
+        return offspring;
+      }
+      
       // Generate offspring
       for (int i = 0; i < numberOfVariables; i++) {
         // Generate values along the line connecting the parents
@@ -134,10 +141,7 @@ public class UnimodalNormalDistributionCrossover implements CrossoverOperator<Do
         }
         
         // Calculate the orthogonal component from parent3
-        double orthogonal = 0.0;
-        if (distance > 0) {
-          orthogonal = (parent3.variables().get(i) - center[i]) / distance;
-        }
+        double orthogonal = (parent3.variables().get(i) - center[i]) / distance;
         
         // Create the new values
         double value1 = center[i] + alpha * diff[i] / distance + beta * orthogonal;
