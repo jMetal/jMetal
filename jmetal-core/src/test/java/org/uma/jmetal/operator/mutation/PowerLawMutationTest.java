@@ -1,0 +1,349 @@
+package org.uma.jmetal.operator.mutation;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.RepeatedTest;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.uma.jmetal.operator.mutation.impl.PowerLawMutation;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.repairsolution.RepairDoubleSolution;
+import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@DisplayName("PowerLawMutation Tests")
+class PowerLawMutationTest {
+
+  @Mock
+  private DoubleSolution mockSolution;
+
+  @Mock private RepairDoubleSolution mockRepair;
+
+  @Mock private RandomGenerator<Double> mockRandomGenerator;
+
+  @Mock private Bounds<Double> mockBounds;
+
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+  }
+
+  @Nested
+  @DisplayName("Constructor Tests")
+  class ConstructorTests {
+
+    @Test
+    @DisplayName("Default constructor should create instance with default values")
+    void testDefaultConstructor() {
+      PowerLawMutation mutation = new PowerLawMutation();
+
+      assertEquals(0.01, mutation.mutationProbability(), 1e-10);
+      assertEquals(1.0, mutation.delta(), 1e-10);
+      assertNotNull(mutation.solutionRepair());
+    }
+
+    @Test
+    @DisplayName("Constructor with parameters should set values correctly")
+    void testConstructorWithParameters() {
+      double probability = 0.05;
+      double delta = 2.0;
+
+      PowerLawMutation mutation = new PowerLawMutation(probability, delta);
+
+      assertEquals(probability, mutation.mutationProbability(), 1e-10);
+      assertEquals(delta, mutation.delta(), 1e-10);
+    }
+
+    @Test
+    @DisplayName("Constructor should throw exception for invalid probability")
+    void testConstructorInvalidProbability() {
+      assertThrows(JMetalException.class, () -> new PowerLawMutation(-0.1, 1.0));
+
+      assertThrows(JMetalException.class, () -> new PowerLawMutation(1.1, 1.0));
+    }
+
+    @Test
+    @DisplayName("Constructor should throw exception for invalid delta")
+    void testConstructorInvalidDelta() {
+      assertThrows(JMetalException.class, () -> new PowerLawMutation(0.01, 0.0));
+
+      assertThrows(JMetalException.class, () -> new PowerLawMutation(0.01, -1.0));
+    }
+  }
+
+  @Nested
+  @DisplayName("Setter Tests")
+  class SetterTests {
+
+    private PowerLawMutation mutation;
+
+    @BeforeEach
+    void setUp() {
+      mutation = new PowerLawMutation();
+    }
+
+    @Test
+    @DisplayName("Set mutation probability should update value")
+    void testSetMutationProbability() {
+      double newProbability = 0.15;
+      mutation.mutationProbability(newProbability);
+
+      assertEquals(newProbability, mutation.mutationProbability(), 1e-10);
+    }
+
+    @Test
+    @DisplayName("Set invalid mutation probability should throw exception")
+    void testSetInvalidMutationProbability() {
+      assertThrows(JMetalException.class, () -> mutation.mutationProbability(-0.1));
+
+      assertThrows(JMetalException.class, () -> mutation.mutationProbability(1.5));
+    }
+
+    @Test
+    @DisplayName("Set delta should update value")
+    void testSetDelta() {
+      double newDelta = 3.0;
+      mutation.delta(newDelta);
+
+      assertEquals(newDelta, mutation.delta(), 1e-10);
+    }
+
+    @Test
+    @DisplayName("Set invalid delta should throw exception")
+    void testSetInvalidDelta() {
+      assertThrows(JMetalException.class, () -> mutation.delta(0.0));
+
+      assertThrows(JMetalException.class, () -> mutation.delta(-1.0));
+    }
+  }
+
+  @Nested
+  @DisplayName("Execution Tests")
+  class ExecutionTests {
+
+    @Test
+    @DisplayName("Execute should throw exception for null solution")
+    void testExecuteNullSolution() {
+      PowerLawMutation mutation = new PowerLawMutation();
+
+      assertThrows(JMetalException.class, () -> mutation.execute(null));
+    }
+
+    @Test
+    @DisplayName("Execute should return the same solution instance")
+    void testExecuteReturnsSameSolution() {
+      PowerLawMutation mutation = new PowerLawMutation(0.0, 1.0, mockRepair, mockRandomGenerator);
+
+      List<Double> variables = new ArrayList<>();
+      variables.add(5.0);
+      when(mockSolution.variables()).thenReturn(variables);
+      when(mockRandomGenerator.getRandomValue()).thenReturn(1.0);
+
+      DoubleSolution result = mutation.execute(mockSolution);
+
+      assertSame(mockSolution, result);
+    }
+
+    @Test
+    @DisplayName("Execute with zero probability should not modify solution")
+    void testExecuteZeroProbability() {
+      PowerLawMutation mutation = new PowerLawMutation(0.0, 1.0, mockRepair, mockRandomGenerator);
+
+      List<Double> variables = new ArrayList<>();
+      variables.add(5.0);
+      when(mockSolution.variables()).thenReturn(variables);
+      when(mockRandomGenerator.getRandomValue()).thenReturn(0.5);
+
+      mutation.execute(mockSolution);
+
+      // Should not call getBounds or repair since probability is 0
+      verify(mockSolution, never()).getBounds(anyInt());
+      verify(mockRepair, never())
+          .repairSolutionVariableValue(anyDouble(), anyDouble(), anyDouble());
+    }
+
+    @Test
+    @DisplayName("Execute with probability 1.0 should always mutate")
+    void testExecuteAlwaysMutate() {
+      PowerLawMutation mutation = new PowerLawMutation(1.0, 1.0, mockRepair, mockRandomGenerator);
+
+      List<Double> variables = new ArrayList<>();
+      variables.add(5.0);
+      when(mockSolution.variables()).thenReturn(variables);
+      when(mockSolution.getBounds(0)).thenReturn(mockBounds);
+      when(mockBounds.getLowerBound()).thenReturn(0.0);
+      when(mockBounds.getUpperBound()).thenReturn(10.0);
+      when(mockRandomGenerator.getRandomValue()).thenReturn(0.5);
+      when(mockRepair.repairSolutionVariableValue(anyDouble(), anyDouble(), anyDouble()))
+          .thenAnswer(invocation -> invocation.getArgument(0));
+
+      mutation.execute(mockSolution);
+
+      verify(mockSolution, times(1)).getBounds(0);
+      verify(mockRepair, times(1))
+          .repairSolutionVariableValue(anyDouble(), anyDouble(), anyDouble());
+    }
+  }
+
+  @Nested
+  @DisplayName("Boundary Tests")
+  class BoundaryTests {
+
+    @Test
+    @DisplayName("Mutation should handle extreme random values")
+    void testExtremeRandomValues() {
+      PowerLawMutation mutation = new PowerLawMutation(1.0, 1.0, mockRepair, mockRandomGenerator);
+
+      List<Double> variables = new ArrayList<>();
+      variables.add(5.0);
+      when(mockSolution.variables()).thenReturn(variables);
+      when(mockSolution.getBounds(0)).thenReturn(mockBounds);
+      when(mockBounds.getLowerBound()).thenReturn(0.0);
+      when(mockBounds.getUpperBound()).thenReturn(10.0);
+      when(mockRepair.repairSolutionVariableValue(anyDouble(), anyDouble(), anyDouble()))
+          .thenAnswer(invocation -> invocation.getArgument(0));
+
+      // Test with very small random value
+      when(mockRandomGenerator.getRandomValue()).thenReturn(1e-15);
+      assertDoesNotThrow(() -> mutation.execute(mockSolution));
+
+      // Test with very large random value
+      when(mockRandomGenerator.getRandomValue()).thenReturn(1.0 - 1e-15);
+      assertDoesNotThrow(() -> mutation.execute(mockSolution));
+    }
+
+    @Test
+    @DisplayName("Mutation should call repair for out-of-bounds values")
+    void testRepairCalled() {
+      PowerLawMutation mutation = new PowerLawMutation(1.0, 1.0, mockRepair, mockRandomGenerator);
+
+      List<Double> variables = new ArrayList<>();
+      variables.add(5.0);
+      when(mockSolution.variables()).thenReturn(variables);
+      when(mockSolution.getBounds(0)).thenReturn(mockBounds);
+      when(mockBounds.getLowerBound()).thenReturn(0.0);
+      when(mockBounds.getUpperBound()).thenReturn(10.0);
+      when(mockRandomGenerator.getRandomValue()).thenReturn(0.5);
+      when(mockRepair.repairSolutionVariableValue(anyDouble(), eq(0.0), eq(10.0))).thenReturn(7.5);
+
+      mutation.execute(mockSolution);
+
+      verify(mockRepair, times(1)).repairSolutionVariableValue(anyDouble(), eq(0.0), eq(10.0));
+    }
+  }
+
+  @Nested
+  @DisplayName("Parameter Effects Tests")
+  class ParameterEffectsTests {
+
+    @ParameterizedTest
+    @ValueSource(doubles = {0.5, 1.0, 1.5, 2.0, 3.0})
+    @DisplayName("Different delta values should not cause exceptions")
+    void testDifferentDeltaValues(double delta) {
+      PowerLawMutation mutation = new PowerLawMutation(1.0, delta, mockRepair, mockRandomGenerator);
+
+      List<Double> variables = new ArrayList<>();
+      variables.add(5.0);
+      when(mockSolution.variables()).thenReturn(variables);
+      when(mockSolution.getBounds(0)).thenReturn(mockBounds);
+      when(mockBounds.getLowerBound()).thenReturn(0.0);
+      when(mockBounds.getUpperBound()).thenReturn(10.0);
+      when(mockRandomGenerator.getRandomValue()).thenReturn(0.5);
+      when(mockRepair.repairSolutionVariableValue(anyDouble(), anyDouble(), anyDouble()))
+          .thenAnswer(invocation -> invocation.getArgument(0));
+
+      assertDoesNotThrow(() -> mutation.execute(mockSolution));
+    }
+
+    @RepeatedTest(10)
+    @DisplayName("Repeated mutations should produce different results")
+    void testRepeatedMutations() {
+      PowerLawMutation mutation = new PowerLawMutation(1.0, 1.0, mockRepair, mockRandomGenerator);
+
+      List<Double> variables = new ArrayList<>();
+      variables.add(5.0);
+      when(mockSolution.variables()).thenReturn(variables);
+      when(mockSolution.getBounds(0)).thenReturn(mockBounds);
+      when(mockBounds.getLowerBound()).thenReturn(0.0);
+      when(mockBounds.getUpperBound()).thenReturn(10.0);
+      when(mockRandomGenerator.getRandomValue()).thenReturn(Math.random());
+      when(mockRepair.repairSolutionVariableValue(anyDouble(), anyDouble(), anyDouble()))
+          .thenAnswer(invocation -> invocation.getArgument(0));
+
+      assertDoesNotThrow(() -> mutation.execute(mockSolution));
+    }
+  }
+
+  @Nested
+  @DisplayName("Multiple Variables Tests")
+  class MultipleVariablesTests {
+
+    @Test
+    @DisplayName("Multiple variables should be handled correctly")
+    void testMultipleVariables() {
+      PowerLawMutation mutation = new PowerLawMutation(1.0, 1.0, mockRepair, mockRandomGenerator);
+
+      List<Double> variables = new ArrayList<>();
+      variables.add(5.0);
+      variables.add(3.0);
+      variables.add(7.0);
+      when(mockSolution.variables()).thenReturn(variables);
+
+      // Setup bounds for each variable
+      when(mockSolution.getBounds(0)).thenReturn(mockBounds);
+      when(mockSolution.getBounds(1)).thenReturn(mockBounds);
+      when(mockSolution.getBounds(2)).thenReturn(mockBounds);
+      when(mockBounds.getLowerBound()).thenReturn(0.0);
+      when(mockBounds.getUpperBound()).thenReturn(10.0);
+      when(mockRandomGenerator.getRandomValue()).thenReturn(0.5);
+      when(mockRepair.repairSolutionVariableValue(anyDouble(), anyDouble(), anyDouble()))
+          .thenAnswer(invocation -> invocation.getArgument(0));
+
+      mutation.execute(mockSolution);
+
+      // Should call getBounds for each variable
+      verify(mockSolution, times(3)).getBounds(anyInt());
+      verify(mockRepair, times(3))
+          .repairSolutionVariableValue(anyDouble(), anyDouble(), anyDouble());
+    }
+  }
+
+  @Nested
+  @DisplayName("Utility Tests")
+  class UtilityTests {
+
+    @Test
+    @DisplayName("toString should return correct format")
+    void testToString() {
+      PowerLawMutation mutation = new PowerLawMutation(0.05, 2.0);
+      String result = mutation.toString();
+
+      assertTrue(result.contains("PowerLawMutation"));
+      assertTrue(result.contains("mutationProbability=0.05"));
+      assertTrue(result.contains("delta=2.0"));
+    }
+
+    @Test
+    @DisplayName("setSolutionRepair should update repair strategy")
+    void testSetSolutionRepair() {
+      PowerLawMutation mutation = new PowerLawMutation();
+      RepairDoubleSolution newRepair = mock(RepairDoubleSolution.class);
+
+      mutation.solutionRepair(newRepair);
+
+      assertSame(newRepair, mutation.solutionRepair());
+    }
+  }
+}

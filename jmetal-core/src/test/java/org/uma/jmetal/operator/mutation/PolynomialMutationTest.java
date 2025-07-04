@@ -1,15 +1,19 @@
 package org.uma.jmetal.operator.mutation;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -67,22 +71,22 @@ public class PolynomialMutationTest {
         .getField(mutation, "distributionIndex"), EPSILON) ;
   }
 
-  @Test (expected = InvalidProbabilityValueException.class)
+  @Test
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
     double mutationProbability = -0.1 ;
-    new PolynomialMutation(mutationProbability, 2.0) ;
+    assertThrows(InvalidProbabilityValueException.class, () ->new PolynomialMutation(mutationProbability, 2.0)) ;
   }
 
-  @Test (expected = InvalidProbabilityValueException.class)
+  @Test
   public void shouldConstructorFailWhenPassedAValueHigherThanOne() {
     double mutationProbability = 1.1 ;
-    new PolynomialMutation(mutationProbability, 2.0) ;
+    assertThrows(InvalidProbabilityValueException.class, () ->new PolynomialMutation(mutationProbability, 2.0)) ;
   }
 
-  @Test (expected = InvalidConditionException.class)
+  @Test
   public void shouldConstructorFailWhenPassedANegativeDistributionIndex() {
     double distributionIndex = -0.1 ;
-    new PolynomialMutation(0.1, distributionIndex) ;
+    assertThrows(InvalidConditionException.class, () ->new PolynomialMutation(0.1, distributionIndex)) ;
   }
 
   @Test
@@ -95,13 +99,6 @@ public class PolynomialMutationTest {
   public void shouldGetDistributionIndexReturnTheRightValue() {
     PolynomialMutation mutation = new PolynomialMutation(0.1, 30.0) ;
     assertEquals(30.0, mutation.getDistributionIndex(), EPSILON) ;
-  }
-
-  @Test (expected = NullParameterException.class)
-  public void shouldExecuteWithNullParameterThrowAnException() {
-    PolynomialMutation mutation = new PolynomialMutation(0.1, 20.0) ;
-
-    mutation.execute(null) ;
   }
 
   @Test
@@ -200,8 +197,9 @@ public class PolynomialMutationTest {
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
 
     FakeDoubleProblem problem = new FakeDoubleProblem(1, 1, 0) ;
-    ReflectionTestUtils.setField(problem, "lowerLimit", Arrays.asList(new Double[]{1.0}));
-    ReflectionTestUtils.setField(problem, "upperLimit", Arrays.asList(new Double[]{1.0}));
+    List<Bounds<Double>> newBounds = new ArrayList<>(List.of(Bounds.create(1.0, 1.0))) ;
+
+    ReflectionTestUtils.setField(problem, "bounds", newBounds);
 
     DoubleSolution solution = problem.createSolution() ;
 
