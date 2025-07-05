@@ -17,7 +17,7 @@ import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 @ExtendWith(MockitoExtension.class)
 class LaplaceCrossoverTest {
   private static final double EPSILON = 0.0000000000001;
-  private static final double DEFAULT_SCALE = 0.5;
+  private static final double DEFAULT_SCALE = 0.5;  
   private static final double CROSSOVER_PROBABILITY = 0.9;
 
   @Test
