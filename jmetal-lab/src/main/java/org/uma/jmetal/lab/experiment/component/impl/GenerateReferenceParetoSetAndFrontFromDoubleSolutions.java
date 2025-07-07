@@ -38,7 +38,7 @@ import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
  * the org.uma.jmetal.experiment base directory. The following files are generated per problem: -
  * "problemName.pf": the reference Pareto front. - "problemName.ps": the reference Pareto set (i.e.,
  * the variable values of the solutions of the reference Pareto front. -
- * "problemName.algorithmName.pf": the objectives values of the contributed solutions by the
+ * "problemName.algorithmName.pf": the objective values of the contributed solutions by the
  * algorithm called "algorithmName" to "problemName.pf" - "problemName.algorithmName.ps": the
  * variable values of the contributed solutions by the algorithm called "algorithmName" to
  * "problemName.ps"

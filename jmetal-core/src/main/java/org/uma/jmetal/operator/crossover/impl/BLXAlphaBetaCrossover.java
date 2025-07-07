@@ -33,6 +33,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * a crossover that only generates values strictly between the parent values.
  *
  * @author Antonio J. Nebro
+ * @generated Cascade v1.0.0
  */
 public class BLXAlphaBetaCrossover implements CrossoverOperator<DoubleSolution> {
   private final double crossoverProbability;

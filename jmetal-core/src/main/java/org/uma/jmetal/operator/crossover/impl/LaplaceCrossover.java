@@ -21,8 +21,8 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * <p>Reference: Deep, K., Thakur, M. (2007). A new crossover operator for real coded genetic
  * algorithms. Applied Mathematics and Computation, 188(1), 895-911.
  *
- * @author Your Name
- * @param <S> Solution type
+ * @author Antonio J. Nebro
+ * @generated Cascade v1.0.0
  */
 public class LaplaceCrossover implements CrossoverOperator<DoubleSolution> {
   private static final double DEFAULT_EPSILON = 1.0e-14;

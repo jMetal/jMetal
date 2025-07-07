@@ -20,6 +20,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * 265-319.
  *
  * @author Antonio J. Nebro
+ * @generated Cascade v1.0.0
  */
 public class FuzzyRecombinationCrossover implements CrossoverOperator<DoubleSolution> {
   private static final double EPSILON = 1e-10;

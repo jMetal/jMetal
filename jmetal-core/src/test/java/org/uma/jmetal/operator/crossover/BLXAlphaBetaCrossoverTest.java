@@ -14,7 +14,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
-import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 
 @ExtendWith(MockitoExtension.class)
 class BLXAlphaBetaCrossoverTest {
