@@ -52,6 +52,8 @@ Related projects
 
 Changelog
 ---------
+* [07/07/2025] Added new crossover (BLX-Alpha-Beta, Laplace, Arithmetic, Fuzzy recombination, UNDX) and mutation (Power Law, Levy Flight, Simple Random) operators for continuous problems.
+
 * [06/18/2025] A new folder *resources/referenceFrontsRSG* have been added. It contains Pareto front approximations produced with the `Reference Set Generator (DOI: https://doi.org/10.3390/math13101626) <https://doi.org/10.3390/math13101626>`_  method. Contribution of Oliver Schütze.
 
 * [05/09/2025] jMetal 6.7 is released.

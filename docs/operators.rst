@@ -27,36 +27,38 @@ Crossover operators combine genetic information from parent solutions to create 
 For Double Solutions
 ~~~~~~~~~~~~~~~~~~~
 
-- **SBXCrossover**: Simulated Binary Crossover with polynomial distribution. Good for real-valued optimization.
-- **BLXAlphaCrossover**: Blend Crossover with alpha parameter controlling exploration.
-- **BLXAlphaBetaCrossover**: Extended BLX with separate alpha and beta parameters for more control.
+- **SBXCrossover**: Simulated Binary Crossover with polynomial distribution.
+- **BLXAlphaCrossover**: Blend Crossover with alpha parameter.
+- **BLXAlphaBetaCrossover**: Extended BLX with separate alpha and beta parameters.
 - **DifferentialEvolutionCrossover**: Used in Differential Evolution algorithms.
 - **ArithmeticCrossover**: Weighted arithmetic mean of parent solutions.
-- **LaplaceCrossover**: Based on Laplace distribution for real-coded variables.
+- **LaplaceCrossover**: Based on Laplace distribution.
 - **WholeArithmeticCrossover**: Uses all parents in arithmetic recombination.
+- **FuzzyRecombinationCrossover**: Implements fuzzy recombination.
+- **UnimodalNormalDistributionCrossover**: Uses unimodal normal distribution.
 
 For Integer Solutions
 ~~~~~~~~~~~~~~~~~~~~
 
-- **IntegerSBXCrossover**: Integer version of SBX for integer variables.
-- **IntegerPolynomialCrossover**: Polynomial crossover for integer variables.
+- **IntegerSBXCrossover**: Integer version of SBX.
+- **IntegerPolynomialCrossover**: Polynomial crossover.
 
 For Binary Solutions
 ~~~~~~~~~~~~~~~~~~~
 
-- **HUXCrossover**: Half Uniform Crossover, preserves half of the differing bits.
-- **SinglePointCrossover**: One-point crossover for binary strings.
-- **TwoPointCrossover**: Two-point crossover for binary strings.
+- **HUXCrossover**: Half Uniform Crossover.
+- **SinglePointCrossover**: One-point crossover.
+- **TwoPointCrossover**: Two-point crossover.
 - **NPointCrossover**: General N-point crossover.
-- **UniformCrossover**: Each bit is randomly selected from either parent.
+- **UniformCrossover**: Random bit selection from parents.
 
 For Permutation Solutions
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-- **PMXCrossover**: Partially Mapped Crossover, good for ordering problems.
-- **CycleCrossover**: Preserves absolute positions from parents.
+- **PMXCrossover**: Partially Mapped Crossover.
+- **CycleCrossover**: Preserves absolute positions.
 - **PositionBasedCrossover**: Preserves relative ordering.
-- **OXDCrossover**: Order-based crossover for permutation problems.
+- **OXDCrossover**: Order-based crossover.
 - **EdgeRecombinationCrossover**: Preserves adjacency information.
 
 Mutation Operators
@@ -66,55 +68,54 @@ Mutation operators introduce random changes to solutions to maintain diversity.
 For Double Solutions
 ~~~~~~~~~~~~~~~~~~~
 
-- **PolynomialMutation**: Polynomial mutation with distribution index.
-- **NonUniformMutation**: Mutation strength decreases over time.
-- **UniformMutation**: Uniform random mutation within bounds.
-- **LevyFlightMutation**: Uses Lévy flights for larger jumps in search space.
-- **PowerLawMutation**: Mutation based on power law distribution.
-- **SimpleRandomMutation**: Simple uniform random mutation.
+- **PolynomialMutation**: Polynomial mutation.
+- **NonUniformMutation**: Strength decreases over time.
+- **UniformMutation**: Random mutation within bounds.
+- **LevyFlightMutation**: Uses Lévy flights.
+- **PowerLawMutation**: Based on power law distribution.
+- **SimpleRandomMutation**: Uniform random mutation.
 
 For Integer Solutions
 ~~~~~~~~~~~~~~~~~~~~
 
 - **IntegerPolynomialMutation**: Integer version of polynomial mutation.
-- **SimpleRandomMutation**: Random perturbation of integer values.
+- **SimpleRandomMutation**: Random perturbation of values.
 
 For Binary Solutions
 ~~~~~~~~~~~~~~~~~~~
 
-- **BitFlipMutation**: Flips each bit with a given probability.
+- **BitFlipMutation**: Flips each bit with given probability.
 
 For Permutation Solutions
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-- **SwapMutation**: Randomly swaps two elements.
-- **InsertMutation**: Moves an element to a new position.
-- **ScrambleMutation**: Randomly reorders a subsequence.
-- **InversionMutation**: Inverts the order of a subsequence.
-- **DisplacementMutation**: Moves a subsequence to a new position.
-- **SimpleInversionMutation**: Simple inversion of two elements.
+- **SwapMutation**: Swaps two elements.
+- **InsertMutation**: Moves element to new position.
+- **ScrambleMutation**: Reorders subsequence.
+- **InversionMutation**: Inverts subsequence order.
+- **DisplacementMutation**: Moves subsequence.
+- **SimpleInversionMutation**: Inverts two elements.
 
 Selection Operators
 ------------------
-Selection operators choose solutions from a population for reproduction.
 
-- **BinaryTournamentSelection**: Selects the better of two random solutions.
-- **NaryTournamentSelection**: Selects the best from N random solutions.
-- **RankingAndCrowdingSelection**: NSGA-II selection with crowding distance.
-- **RandomSelection**: Selects solutions uniformly at random.
-- **BestSolutionSelection**: Selects the best solution in the population.
-- **RouletteWheelSelection**: Fitness-proportional selection.
-- **StochasticUniversalSampling**: Improved version of roulette wheel selection.
+- **BinaryTournamentSelection**: Better of two random solutions.
+- **NaryTournamentSelection**: Best of N random solutions.
+- **RankingAndCrowdingSelection**: NSGA-II selection.
+- **RandomSelection**: Uniform random selection.
+- **BestSolutionSelection**: Best in population.
+- **RouletteWheelSelection**: Fitness-proportional.
+- **StochasticUniversalSampling**: Improved roulette wheel.
 
 Local Search Operators
 ---------------------
 
-- **BasicLocalSearch**: Applies local search to improve solutions.
+- **BasicLocalSearch**: Improves solutions locally.
 
 Using Operators in jMetal
 ------------------------
 
-Here's an example of how to create and use a crossover operator:
+Example of creating and using a crossover operator:
 
 .. code-block:: java
 
@@ -129,7 +130,7 @@ Here's an example of how to create and use a crossover operator:
    parents.add(parent2);
    List<DoubleSolution> offspring = crossover.execute(parents);
 
-And here's how to create and use a mutation operator:
+Example of creating and using a mutation operator:
 
 .. code-block:: java
 
@@ -146,8 +147,7 @@ Choosing the Right Operator
 
 The choice of operators depends on several factors:
 
-1. **Solution Encoding**: Match the operator to your solution representation (binary, real, permutation, etc.).
-2. **Problem Characteristics**: Some operators work better for certain problem types.
-3. **Diversity vs. Intensification**: Some operators promote exploration while others favor exploitation.
-4. **Computational Cost**: More complex operators may be more expensive but provide better results.
-
+1. **Solution Encoding**: Match the operator to your solution representation.
+2. **Problem Characteristics**: Some operators work better for certain problems.
+3. **Diversity vs. Intensification**: Balance exploration and exploitation.
+4. **Computational Cost**: Consider the complexity of the operator.
