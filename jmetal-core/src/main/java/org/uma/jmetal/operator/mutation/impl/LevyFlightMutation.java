@@ -46,7 +46,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 public class LevyFlightMutation implements MutationOperator<DoubleSolution> {
   private double mutationProbability;
   private double beta; // Lévy index parameter (1 < beta <= 2)
-  private double stepSize; // Scaling factor for Lévy steps
+  private double stepSize; // Scaling factor for Lévy steps (0.01 < stepSize < 1.0)  
   private RepairDoubleSolution solutionRepair;
   private RandomGenerator<Double> randomGenerator;
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.repairsolution.RepairDoubleSolution;
+import org.uma.jmetal.solution.doublesolution.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -40,6 +42,7 @@ public class BLXAlphaBetaCrossover implements CrossoverOperator<DoubleSolution> 
   private final double alpha;
   private final double beta;
   private final RandomGenerator<Double> randomGenerator;
+  private final RepairDoubleSolution solutionRepair;
 
   /**
    * Constructor with default random generator
@@ -52,29 +55,50 @@ public class BLXAlphaBetaCrossover implements CrossoverOperator<DoubleSolution> 
         crossoverProbability,
         alpha,
         beta,
+        new RepairDoubleSolutionWithBoundValue(),
         () -> JMetalRandom.getInstance().nextDouble());
   }
 
   /**
-   * Constructor with custom random generator
+   * Constructor with default solution repair strategy
    * @param crossoverProbability Crossover probability (must be in [0,1])
    * @param alpha Controls exploration below parents (must be >= 0, typical [0,1])
    * @param beta Controls exploration above parents (must be >= 0, typical [0,1])
+   * @param solutionRepair Strategy for repairing solutions
+   */
+  public BLXAlphaBetaCrossover(
+      double crossoverProbability,
+      double alpha,
+      double beta,
+      RepairDoubleSolution solutionRepair) {
+    this(crossoverProbability, alpha, beta, solutionRepair, 
+        () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /**
+   * Constructor with custom random generator and solution repair strategy
+   * @param crossoverProbability Crossover probability (must be in [0,1])
+   * @param alpha Controls exploration below parents (must be >= 0, typical [0,1])
+   * @param beta Controls exploration above parents (must be >= 0, typical [0,1])
+   * @param solutionRepair Strategy for repairing solutions
    * @param randomGenerator Custom random number generator
    */
   public BLXAlphaBetaCrossover(
       double crossoverProbability,
       double alpha,
       double beta,
+      RepairDoubleSolution solutionRepair,
       RandomGenerator<Double> randomGenerator) {
     Check.probabilityIsValid(crossoverProbability);
     Check.that(alpha >= 0, "Alpha must be non-negative: " + alpha);
     Check.that(beta >= 0, "Beta must be non-negative: " + beta);
+    Check.notNull(solutionRepair);
     Check.notNull(randomGenerator);
 
     this.crossoverProbability = crossoverProbability;
     this.alpha = alpha;
     this.beta = beta;
+    this.solutionRepair = solutionRepair;
     this.randomGenerator = randomGenerator;
   }
 
@@ -115,12 +139,12 @@ public class BLXAlphaBetaCrossover implements CrossoverOperator<DoubleSolution> 
         double value1 = cMin + randomGenerator.getRandomValue() * (cMax - cMin);
         double value2 = cMin + randomGenerator.getRandomValue() * (cMax - cMin);
 
-        // Apply bounds checking and repair if needed
+        // Apply solution repair strategy
         double lowerBound = child1.getBounds(i).getLowerBound();
         double upperBound = child1.getBounds(i).getUpperBound();
         
-        value1 = Math.max(lowerBound, Math.min(upperBound, value1));
-        value2 = Math.max(lowerBound, Math.min(upperBound, value2));
+        value1 = solutionRepair.repairSolutionVariableValue(value1, lowerBound, upperBound);
+        value2 = solutionRepair.repairSolutionVariableValue(value2, lowerBound, upperBound);
 
         child1.variables().set(i, value1);
         child2.variables().set(i, value2);

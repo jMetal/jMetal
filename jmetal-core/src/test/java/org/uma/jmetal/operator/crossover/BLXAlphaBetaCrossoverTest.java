@@ -11,6 +11,7 @@ import org.uma.jmetal.operator.crossover.impl.BLXAlphaBetaCrossover;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -68,7 +69,8 @@ class BLXAlphaBetaCrossoverTest {
   void shouldConstructorWhenPassedNullRandomGeneratorThrowAnException() {
     assertThrows(
         NullParameterException.class,
-        () -> new BLXAlphaBetaCrossover(CROSSOVER_PROBABILITY, ALPHA, BETA, null));
+        () -> new BLXAlphaBetaCrossover(CROSSOVER_PROBABILITY, ALPHA, BETA, 
+            new RepairDoubleSolutionWithBoundValue(), null));
   }
 
   @Test
@@ -87,7 +89,8 @@ class BLXAlphaBetaCrossoverTest {
     // Problem with bounds [0.0, 5.0] to allow our test values
     DoubleProblem problem = new FakeDoubleProblem(1, 2, 0, 0.0, 5.0);
     BLXAlphaBetaCrossover crossover =
-        new BLXAlphaBetaCrossover(CROSSOVER_PROBABILITY, ALPHA, BETA, randomGenerator);
+        new BLXAlphaBetaCrossover(CROSSOVER_PROBABILITY, ALPHA, BETA, 
+            new RepairDoubleSolutionWithBoundValue(), randomGenerator);
 
     // Create parent solutions with known values
     DoubleSolution parent1 = problem.createSolution();
@@ -131,7 +134,8 @@ class BLXAlphaBetaCrossoverTest {
     // Test with alpha=0.25, beta=0.75
     // For parents 1.0 and 2.0, range should be [1.0-0.25*1.0, 2.0+0.75*1.0] = [0.75, 2.75]
     BLXAlphaBetaCrossover crossover =
-        new BLXAlphaBetaCrossover(CROSSOVER_PROBABILITY, 0.25, 0.75, randomGenerator);
+        new BLXAlphaBetaCrossover(CROSSOVER_PROBABILITY, 0.25, 0.75, 
+            new RepairDoubleSolutionWithBoundValue(), randomGenerator);
 
     DoubleSolution parent1 = problem.createSolution();
     DoubleSolution parent2 = problem.createSolution();
@@ -156,7 +160,8 @@ class BLXAlphaBetaCrossoverTest {
     // Problem with bounds [0.0, 5.0]
     DoubleProblem problem = new FakeDoubleProblem(1, 2, 0, 0.0, 5.0);
     BLXAlphaBetaCrossover crossover =
-        new BLXAlphaBetaCrossover(CROSSOVER_PROBABILITY, ALPHA, BETA, randomGenerator);
+        new BLXAlphaBetaCrossover(CROSSOVER_PROBABILITY, ALPHA, BETA, 
+            new RepairDoubleSolutionWithBoundValue(), randomGenerator);
 
     // Create parent solutions with known values
     DoubleSolution parent1 = problem.createSolution();
