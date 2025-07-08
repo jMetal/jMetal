@@ -16,14 +16,14 @@ public class HypervolumeTest {
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheReferenceFrontIsNull() {
     double[][] referenceFront = null;
-    Assertions.assertThrows(NullParameterException.class, () -> new PISAHypervolume(referenceFront));
+    Assertions.assertThrows(NullPointerException.class, () -> new PISAHypervolume(referenceFront));
   }
 
   @Test
   public void shouldComputeRaiseAnExceptionIfTheFrontIsNull() {
     double[][] referenceFront = new double[0][0];
     double[][] front = null;
-    Assertions.assertThrows(NullParameterException.class, () -> new PISAHypervolume(referenceFront).compute(front));
+    Assertions.assertThrows(IllegalArgumentException.class, () -> new PISAHypervolume(referenceFront).compute(front));
   }
 
 }

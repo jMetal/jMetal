@@ -122,7 +122,7 @@ public class BiObjectiveTSPStudy {
                     .setNumberOfCores(8)
                     .build();
 
-    // new ExecuteAlgorithms<>(experiment).run();
+    new ExecuteAlgorithms<>(experiment).run();
 
     new GenerateReferenceParetoFront(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
