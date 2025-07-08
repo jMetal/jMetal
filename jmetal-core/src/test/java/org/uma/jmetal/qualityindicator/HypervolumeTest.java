@@ -3,27 +3,26 @@ package org.uma.jmetal.qualityindicator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
-import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class HypervolumeTest {
+class HypervolumeTest {
 
   private static final double EPSILON = 0.0000000000001;
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheReferenceFrontIsNull() {
+  void shouldExecuteRaiseAnExceptionIfTheReferenceFrontIsNull() {
     double[][] referenceFront = null;
     Assertions.assertThrows(NullPointerException.class, () -> new PISAHypervolume(referenceFront));
   }
 
   @Test
-  public void shouldComputeRaiseAnExceptionIfTheFrontIsNull() {
+  void shouldComputeRaiseAnExceptionIfTheFrontIsNull() {
     double[][] referenceFront = new double[0][0];
     double[][] front = null;
-    Assertions.assertThrows(IllegalArgumentException.class, () -> new PISAHypervolume(referenceFront).compute(front));
+    Assertions.assertThrows(
+        IllegalArgumentException.class, () -> new PISAHypervolume(referenceFront).compute(front));
   }
-
 }
