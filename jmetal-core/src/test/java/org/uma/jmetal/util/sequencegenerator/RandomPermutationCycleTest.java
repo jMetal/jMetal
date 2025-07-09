@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -80,7 +81,7 @@ class RandomPermutationCycleTest {
 
   @Test
   void sequenceResetsAfterFullCycle() {
-    int size = 5;
+    int size = 25;
     var generator = new RandomPermutationCycle(size);
     
     // Get the first permutation
@@ -96,9 +97,9 @@ class RandomPermutationCycleTest {
       secondPermutation[i] = generator.getValue();
       generator.generateNext();
     }
-    
+
     // The two permutations should be different (very high probability)
-    assertNotEquals(firstPermutation[0], secondPermutation[0]);
+    assertFalse(Arrays.equals(firstPermutation, secondPermutation), "The permutations shold be different");
   }
 
   @Test
