@@ -21,7 +21,7 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.RandomPermutationCycle;
 
 class MOEADBuilderIT {
   @Test
@@ -46,7 +46,7 @@ class MOEADBuilderIT {
 
     String weightVectorDirectory = "../resources/weightVectorFiles/moead";
 
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
+    SequenceGenerator<Integer> sequenceGenerator = new RandomPermutationCycle(populationSize) ;
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
         populationSize,
@@ -102,7 +102,7 @@ class MOEADBuilderIT {
     Termination termination = new TerminationByEvaluations(175000);
 
     String weightVectorDirectory = "../resources/weightVectorFiles/moead";
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
+    SequenceGenerator<Integer> sequenceGenerator = new RandomPermutationCycle(populationSize) ;
 
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADDEBuilder(
         problem,

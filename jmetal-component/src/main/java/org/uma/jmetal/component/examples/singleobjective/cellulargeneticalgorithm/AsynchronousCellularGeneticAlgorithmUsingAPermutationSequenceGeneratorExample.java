@@ -24,7 +24,7 @@ import org.uma.jmetal.util.neighborhood.impl.C9;
 import org.uma.jmetal.util.observer.impl.FitnessObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.RandomPermutationCycle;
 
 
 /**
@@ -51,7 +51,7 @@ public class AsynchronousCellularGeneticAlgorithmUsingAPermutationSequenceGenera
     int columns = 10 ;
     Neighborhood<DoubleSolution> neighborhood = new C9<>(rows, columns) ;
 
-    SequenceGenerator<Integer> solutionIndexGenerator = new IntegerPermutationGenerator(populationSize);
+    SequenceGenerator<Integer> solutionIndexGenerator = new RandomPermutationCycle(populationSize);
 
     var variation = new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation) ;
 

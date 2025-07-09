@@ -23,7 +23,7 @@ import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimato
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.CyclicIntegerSequence;
 
 /**
  * Class to configure and build an instance of the NSGA-II algorithm using DE operators
@@ -52,7 +52,7 @@ public class NSGAIIDEBuilder {
 
     densityEstimator = new CrowdingDistanceDensityEstimator<>();
     ranking = new FastNonDominatedSortRanking<>();
-    sequenceGenerator = new IntegerBoundedSequenceGenerator(populationSize);
+    sequenceGenerator = new CyclicIntegerSequence(populationSize);
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 

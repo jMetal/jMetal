@@ -11,21 +11,17 @@ import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.DifferentialEvolutionSelection;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
-import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.DifferentialEvolutionCrossoverVariation;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.CyclicIntegerSequence;
 
 /**
  * Class to configure and build an instance of the SMS-EMOA algorithm
@@ -52,7 +48,7 @@ public class SMSEMOADEBuilder {
     name = "SMS-EMOA-DE";
 
     ranking = new FastNonDominatedSortRanking<>();
-    var sequenceGenerator = new IntegerBoundedSequenceGenerator(populationSize);
+    var sequenceGenerator = new CyclicIntegerSequence(populationSize);
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 

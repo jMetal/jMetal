@@ -101,6 +101,12 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     return this ;
   }
 
+  public NSGAIIBuilder<S> setSelection(Selection<S> selection) {
+    this.selection = selection ;
+
+    return this ;
+  }
+
   public EvolutionaryAlgorithm<S> build() {
       return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
           selection, variation, replacement);
