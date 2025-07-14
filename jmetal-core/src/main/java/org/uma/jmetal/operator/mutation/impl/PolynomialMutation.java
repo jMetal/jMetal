@@ -26,11 +26,20 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 @SuppressWarnings("serial")
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0;
+  private static final double DEFAULT_MUTATION_PROBABILITY = 0.01;
+
   private double distributionIndex;
   private double mutationProbability;
   private RepairDoubleSolution solutionRepair;
 
   private RandomGenerator<Double> randomGenerator;
+
+  /*
+   * Constructor with default parameters
+   */
+   public PolynomialMutation() {
+    this(DEFAULT_MUTATION_PROBABILITY, DEFAULT_DISTRIBUTION_INDEX);
+   }
 
   /** Constructor */
   public PolynomialMutation(double mutationProbability) {
