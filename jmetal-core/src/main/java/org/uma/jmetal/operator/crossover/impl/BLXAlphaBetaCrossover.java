@@ -38,11 +38,23 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * @generated Cascade v1.0.0
  */
 public class BLXAlphaBetaCrossover implements CrossoverOperator<DoubleSolution> {
+  public static final double DEFAULT_ALPHA = 0.5;
+  public static final double DEFAULT_BETA = 0.5;
+  
   private final double crossoverProbability;
   private final double alpha;
   private final double beta;
   private final RandomGenerator<Double> randomGenerator;
   private final RepairDoubleSolution solutionRepair;
+  
+
+  /**
+   * Constructor with default alpha and beta values
+   * @param crossoverProbability
+   */
+  public BLXAlphaBetaCrossover(double crossoverProbability) {
+    this(crossoverProbability, DEFAULT_ALPHA, DEFAULT_BETA);
+  }
 
   /**
    * Constructor with default random generator

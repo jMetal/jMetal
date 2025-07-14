@@ -17,6 +17,9 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  */
 @SuppressWarnings("serial")
 public class NonUniformMutation implements MutationOperator<DoubleSolution> {
+  private static final double DEFAULT_PERTURBATION = 0.1;
+  private static final int DEFAULT_MAX_ITERATIONS = 100;
+
   private double perturbation;
   private int maxIterations;
   private double mutationProbability;
@@ -24,6 +27,11 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
   private int currentIteration;
   private RandomGenerator<Double> randomGenenerator ;
   private RepairDoubleSolution solutionRepair;
+
+  /** Constructor */
+  public NonUniformMutation(double mutationProbability) {
+	  this(mutationProbability, DEFAULT_PERTURBATION, DEFAULT_MAX_ITERATIONS);
+  }
 
   /** Constructor */
   public NonUniformMutation(double mutationProbability, double perturbation, int maxIterations) {

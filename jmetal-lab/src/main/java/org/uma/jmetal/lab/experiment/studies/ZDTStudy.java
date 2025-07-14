@@ -164,7 +164,7 @@ public class ZDTStudy {
     double mutationDistributionIndex = 20.0;
     Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
             (DoubleProblem) experimentProblem.getProblem(),
-            new CrowdingDistanceArchive<DoubleSolution>(100))
+            new CrowdingDistanceArchive<>(100))
             .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
             .setMaxIterations(250)
             .setSwarmSize(100)

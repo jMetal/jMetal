@@ -17,6 +17,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  */
 @SuppressWarnings("serial")
 public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
+  private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0;
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;
 
@@ -24,6 +25,11 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
   private double crossoverProbability  ;
 
   private RandomGenerator<Double> randomGenerator ;
+
+  /** Constructor */
+  public IntegerSBXCrossover(double crossoverProbability) {
+    this(crossoverProbability, DEFAULT_DISTRIBUTION_INDEX);
+  }
 
   /** Constructor */
   public IntegerSBXCrossover(double crossoverProbability, double distributionIndex) {

@@ -37,6 +37,9 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * @author Antonio J. Nebro.
  */
 public class PowerLawMutation implements MutationOperator<DoubleSolution> {
+  private static final double DEFAULT_DELTA = 1.0;
+  private static final double DEFAULT_MUTATION_PROBABILITY = 0.01;
+
   private double mutationProbability;
   private double delta;
   private RepairDoubleSolution solutionRepair;
@@ -44,7 +47,12 @@ public class PowerLawMutation implements MutationOperator<DoubleSolution> {
 
   /** Constructor with default parameters */
   public PowerLawMutation() {
-    this(0.01, 1.0);
+    this(DEFAULT_MUTATION_PROBABILITY, DEFAULT_DELTA);
+  }
+
+  /** Constructor */
+  public PowerLawMutation(double mutationProbability) {
+    this(mutationProbability, DEFAULT_DELTA);
   }
 
   /**
