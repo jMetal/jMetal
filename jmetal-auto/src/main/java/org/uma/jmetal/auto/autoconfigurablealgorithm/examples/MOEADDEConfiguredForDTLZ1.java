@@ -25,7 +25,7 @@ public class MOEADDEConfiguredForDTLZ1 {
             + "--randomGeneratorSeed 124 "
             + "--maximumNumberOfEvaluations 50000 "
             + "--algorithmResult population "
-            + "--normalizeObjectives false "
+            + "--normalizeObjectives FALSE "
             + "--populationSize 91 "
             + "--sequenceGenerator integerSequence "
             + "--createInitialSolutions random "

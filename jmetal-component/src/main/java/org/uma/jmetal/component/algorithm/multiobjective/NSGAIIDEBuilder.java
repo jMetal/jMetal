@@ -52,6 +52,7 @@ public class NSGAIIDEBuilder {
 
     densityEstimator = new CrowdingDistanceDensityEstimator<>();
     ranking = new FastNonDominatedSortRanking<>();
+
     sequenceGenerator = new CyclicIntegerSequence(populationSize);
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);

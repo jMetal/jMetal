@@ -67,6 +67,8 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   private CategoricalParameter normalizeObjectivesParameter ;
   private SequenceGeneratorParameter subProblemIdGeneratorParameter ;
 
+  private String weightVectorsDirectory ;
+
   @Override
   public List<Parameter<?>> configurableParameterList() {
     return autoConfigurableParameterList;
@@ -78,6 +80,11 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   }
 
   public AutoMOEAD() {
+    this("resources/weightVectorFiles/moead") ;
+  }
+
+  public AutoMOEAD(String weightVectorsDirectory) {
+    this.weightVectorsDirectory = weightVectorsDirectory ;
     this.configure() ;
   }
 
@@ -288,7 +295,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
                 populationSizeParameter.value(),
                 problem.numberOfObjectives(),
                 neighborhoodSizeParameter.value(),
-                "resources/weightVectorFiles/moead");
+                weightVectorsDirectory);
       } catch (FileNotFoundException exception) {
         exception.printStackTrace();
       }

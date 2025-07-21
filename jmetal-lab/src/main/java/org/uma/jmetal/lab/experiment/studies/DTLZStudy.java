@@ -72,12 +72,12 @@ public class DTLZStudy {
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new DTLZ1()).setReferenceFront("DTLZ1.3D.csv"));
-    problemList.add(new ExperimentProblem<>(new DTLZ2()).setReferenceFront("DTLZ1.3D.csv"));
-    problemList.add(new ExperimentProblem<>(new DTLZ3()).setReferenceFront("DTLZ1.3D.csv"));
-    problemList.add(new ExperimentProblem<>(new DTLZ4()).setReferenceFront("DTLZ1.3D.csv"));
-    problemList.add(new ExperimentProblem<>(new DTLZ5()).setReferenceFront("DTLZ1.3D.csv"));
-    problemList.add(new ExperimentProblem<>(new DTLZ6()).setReferenceFront("DTLZ1.3D.csv"));
-    problemList.add(new ExperimentProblem<>(new DTLZ7()).setReferenceFront("DTLZ1.3D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ2()).setReferenceFront("DTLZ2.3D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ3()).setReferenceFront("DTLZ3.3D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ4()).setReferenceFront("DTLZ4.3D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ5()).setReferenceFront("DTLZ5.3D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ6()).setReferenceFront("DTLZ6.3D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ7()).setReferenceFront("DTLZ7.3D.csv"));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);

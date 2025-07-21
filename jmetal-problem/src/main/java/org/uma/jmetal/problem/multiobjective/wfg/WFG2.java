@@ -3,31 +3,30 @@ package org.uma.jmetal.problem.multiobjective.wfg;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
- * This class implements the WFG2 problem
- * Reference: Simon Huband, Luigi Barone, Lyndon While, Phil Hingston
- * A Scalable Multi-objective Test Problem Toolkit.
- * Evolutionary Multi-Criterion Optimization:
- * Third International Conference, EMO 2005.
- * Proceedings, volume 3410 of Lecture Notes in Computer Science
+ * This class implements the WFG2 problem Reference: Simon Huband, Luigi Barone, Lyndon While, Phil
+ * Hingston A Scalable Multi-objective Test Problem Toolkit. Evolutionary Multi-Criterion
+ * Optimization: Third International Conference, EMO 2005. Proceedings, volume 3410 of Lecture Notes
+ * in Computer Science
  */
 @SuppressWarnings("serial")
 public class WFG2 extends WFG {
   /**
-   * Creates a default WFG2 instance with
-   * 2 position-related parameters
-   * 4 distance-related parameters
-   * and 2 objectives
-   **/
+   * Creates a default WFG2 instance with 2 position-related parameters 4 distance-related
+   * parameters and 2 objectives
+   */
   public WFG2() {
-    this(2, 4, 2);
+    this(
+        DefaultWFGSettings.numberOfPositionParameters,
+        DefaultWFGSettings.numberOfDistanceParameters,
+        DefaultWFGSettings.numberOfObjectives);
   }
 
   /**
    * Creates a WFG2 problem instance
    *
-   * @param k            Number of position parameters
-   * @param l            Number of distance parameters
-   * @param m            Number of objective functions
+   * @param k Number of position parameters
+   * @param l Number of distance parameters
+   * @param m Number of objective functions
    */
   public WFG2(Integer k, Integer l, Integer m) {
     super(k, l, m);
@@ -57,16 +56,12 @@ public class WFG2 extends WFG {
     for (int m = 1; m <= this.m - 1; m++) {
       result[m - 1] = d * x[this.m - 1] + s[m - 1] * (new Shapes()).convex(x, m);
     }
-    result[m - 1] =
-      d * x[m - 1] + s[m - 1] * (new Shapes()).disc(x, 5, (float) 1.0, (float) 1.0);
+    result[m - 1] = d * x[m - 1] + s[m - 1] * (new Shapes()).disc(x, 5, (float) 1.0, (float) 1.0);
 
     return result;
   }
 
-
-  /**
-   * WFG2 t1 transformation
-   */
+  /** WFG2 t1 transformation */
   public float[] t1(float[] z, int k) {
     float[] result = new float[z.length];
 
@@ -79,9 +74,7 @@ public class WFG2 extends WFG {
     return result;
   }
 
-  /**
-   * WFG2 t2 transformation
-   */
+  /** WFG2 t2 transformation */
   public float[] t2(float[] z, int k) {
     float[] result = new float[z.length];
 
@@ -100,13 +93,10 @@ public class WFG2 extends WFG {
     return result;
   }
 
-  /**
-   * WFG2 t3 transformation
-   */
+  /** WFG2 t3 transformation */
   public float[] t3(float[] z, int k, int M) {
     float[] result = new float[M];
     float[] w = new float[z.length];
-
 
     for (int i = 0; i < z.length; i++) {
       w[i] = (float) 1.0;
@@ -146,7 +136,7 @@ public class WFG2 extends WFG {
     }
 
     for (int i = 0; i < numberOfVariables(); i++) {
-      variables[i] = (float) x[i] ;
+      variables[i] = (float) x[i];
     }
 
     float[] sol2 = evaluate(variables);
@@ -154,7 +144,6 @@ public class WFG2 extends WFG {
     for (int i = 0; i < sol2.length; i++) {
       solution.objectives()[i] = sol2[i];
     }
-    return solution ;
+    return solution;
   }
 }
-

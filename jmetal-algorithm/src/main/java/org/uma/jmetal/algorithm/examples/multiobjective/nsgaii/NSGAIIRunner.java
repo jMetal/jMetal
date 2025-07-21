@@ -49,7 +49,7 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
         new RankingAndCrowdingDistanceComparator<>());
 
-    int populationSize = 100;
+    int populationSize = 101;
     Algorithm<List<DoubleSolution>> algorithm =
         new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
