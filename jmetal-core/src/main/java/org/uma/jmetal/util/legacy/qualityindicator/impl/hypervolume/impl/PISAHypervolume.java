@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -244,6 +245,13 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
       double[] maximumValues = FrontUtils.getMaximumValues(referenceFront);
       double[] minimumValues = FrontUtils.getMinimumValues(referenceFront);
+
+      for (int i = 0; i < maximumValues.length; i++) {
+        if (minimumValues[i] == maximumValues[i]) {
+          String message = "The minimum and maximum values of index " + i + " are the same: " + maximumValues[i] ;
+          throw new JMetalException(message) ;
+        }
+      }
 
       // STEP 2. Get the normalized front
       FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
