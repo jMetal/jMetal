@@ -3,6 +3,7 @@ package org.uma.jmetal.qualityindicator.impl;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.util.JMetalLogger;
 
 /**
  * Class providing an implementation of the normalized hypervolume, which is calculated as follows:
@@ -70,8 +71,9 @@ public class NormalizedHypervolume extends QualityIndicator {
     double result = 1 - (hypervolumeValue / referenceFrontHypervolume);
 
     if  (result < 0) {
-      System.out.println("HV reference front: " + referenceFrontHypervolume) ;
-      System.out.println("HV current front  : " + hypervolumeValue) ;
+      JMetalLogger.logger.info("The normalized hypervolue value is negative: ");
+      JMetalLogger.logger.info("- HV reference front: " + referenceFrontHypervolume) ;
+      JMetalLogger.logger.info("- HV current front  : " + hypervolumeValue) ;
     }
 
     return result ;
