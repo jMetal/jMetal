@@ -60,6 +60,7 @@ public class NSGAIIDEWithRealTimeChartExample {
     EvaluationObserver evaluationObserver = new EvaluationObserver(5000);
     var chartObserver =
         new FrontPlotObserver<DoubleSolution>("NSGA-II-DE", "F1", "F2", problem.name(), 10000);
+    chartObserver.filterDominatedSolutions(true);
 
     chartObserver.setFront(readVectors(referenceParetoFront, ","), "Reference front");
 
