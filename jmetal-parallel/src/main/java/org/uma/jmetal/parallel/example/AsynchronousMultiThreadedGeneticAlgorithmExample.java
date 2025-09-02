@@ -71,7 +71,7 @@ public class AsynchronousMultiThreadedGeneticAlgorithmExample {
 
     long endTime = System.currentTimeMillis();
 
-    List<BinarySolution> resultList = geneticAlgorithm.getResult();
+    List<BinarySolution> resultList = geneticAlgorithm.result();
 
     JMetalLogger.logger.info("Computing time: " + (endTime - initTime));
     new SolutionListOutput(resultList)

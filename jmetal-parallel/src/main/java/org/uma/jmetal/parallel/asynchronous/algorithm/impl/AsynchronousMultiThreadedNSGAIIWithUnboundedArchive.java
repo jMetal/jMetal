@@ -36,7 +36,7 @@ public class AsynchronousMultiThreadedNSGAIIWithUnboundedArchive<S extends Solut
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return externalArchive.solutions();
   }
 }

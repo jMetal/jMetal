@@ -179,7 +179,7 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   }
 
   @Override
-  public List<S> getResult() {
+  public List<S> result() {
     return population;
   }
 

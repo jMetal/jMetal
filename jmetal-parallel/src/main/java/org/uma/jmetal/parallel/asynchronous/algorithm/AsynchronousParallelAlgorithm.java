@@ -25,7 +25,7 @@ public interface AsynchronousParallelAlgorithm<T extends ParallelTask<?>, R> {
   boolean stoppingConditionIsNotMet();
   void initProgress() ;
   void updateProgress() ;
-  R getResult() ;
+  R result() ;
 
   default void run() {
     List<T> initialTasks = createInitialTasks();
