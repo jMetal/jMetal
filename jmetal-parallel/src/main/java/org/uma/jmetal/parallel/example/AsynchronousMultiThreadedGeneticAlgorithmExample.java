@@ -65,7 +65,7 @@ public class AsynchronousMultiThreadedGeneticAlgorithmExample {
             numberOfCores, problem, populationSize, crossover, mutation, selection, replacement, new TerminationByEvaluations(maxEvaluations));
 
     FitnessObserver printObjectivesObserver = new FitnessObserver(100) ;
-    geneticAlgorithm.getObservable().register(printObjectivesObserver);
+    geneticAlgorithm.observable().register(printObjectivesObserver);
 
     geneticAlgorithm.run();
 

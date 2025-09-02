@@ -63,7 +63,7 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
                     "NSGA-II",
                     80, 10, "resources/referenceFrontsCSV/ZDT1.csv");
 
-    nsgaii.getObservable().register(runTimeChartObserver);
+    nsgaii.observable().register(runTimeChartObserver);
 
     nsgaii.run();
 

@@ -183,7 +183,7 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
     return population;
   }
 
-  public Observable<Map<String, Object>> getObservable() {
+  public Observable<Map<String, Object>> observable() {
     return observable;
   }
 }
