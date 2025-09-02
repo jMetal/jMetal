@@ -88,13 +88,15 @@ public class FrontScatterPlot {
 
   public void updateChart(List<Double> x, List<Double> y) {
     if (firstUpdate) {
-      swingWrapper = new SwingWrapper<>(chart);
-      swingWrapper.displayChart();
+      if ((!x.isEmpty()) && (!y.isEmpty())) {
+        swingWrapper = new SwingWrapper<>(chart);
+        swingWrapper.displayChart();
 
-      firstUpdate = false;
-      var series = chart.addSeries(legend, x, y);
-      series.setMarkerColor(Color.BLACK);
-      series.setMarker(SeriesMarkers.CIRCLE);
+        firstUpdate = false;
+        var series = chart.addSeries(legend, x, y);
+        series.setMarkerColor(Color.BLACK);
+        series.setMarker(SeriesMarkers.CIRCLE);
+      }
     } else {
       try {
         TimeUnit.MILLISECONDS.sleep(delay);
