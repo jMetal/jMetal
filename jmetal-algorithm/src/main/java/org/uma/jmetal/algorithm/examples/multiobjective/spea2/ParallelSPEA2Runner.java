@@ -45,7 +45,7 @@ public class ParallelSPEA2Runner extends AbstractAlgorithmRunner {
     var evaluator = new MultiThreadedSolutionListEvaluator<DoubleSolution>(0);
 
     var algorithm =
-        new SPEA2Builder<DoubleSolution>(problem, crossover, mutation)
+        new SPEA2Builder<>(problem, crossover, mutation)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
             .setPopulationSize(100)
