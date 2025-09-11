@@ -4,13 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import org.uma.jmetal.auto.parameter.CategoricalIntegerParameter;
-import org.uma.jmetal.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.auto.parameter.IntegerParameter;
-import org.uma.jmetal.auto.parameter.Parameter;
-import org.uma.jmetal.auto.parameter.PositiveIntegerValue;
-import org.uma.jmetal.auto.parameter.RealParameter;
-import org.uma.jmetal.auto.parameter.StringParameter;
+
+import org.uma.jmetal.auto.parameter.*;
 import org.uma.jmetal.auto.parameter.catalogue.CreateInitialSolutionsParameter;
 import org.uma.jmetal.auto.parameter.catalogue.CrossoverParameter;
 import org.uma.jmetal.auto.parameter.catalogue.ExternalArchiveParameter;
@@ -27,15 +22,15 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCrea
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
-import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
@@ -52,7 +47,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
  *
  * @autor Antonio J. Nebro
  */
-public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
+public class AutoSMSEMOAPermutation implements AutoConfigurableAlgorithm {
   private List<Parameter<?>> configurableParameterList = new ArrayList<>();
   private List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
@@ -61,10 +56,10 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private PositiveIntegerValue offspringPopulationSizeParameter;
   private CategoricalParameter algorithmResultParameter;
-  private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
+  private ExternalArchiveParameter<PermutationSolution<Integer>> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
-  private SelectionParameter<DoubleSolution> selectionParameter;
+  private SelectionParameter<PermutationSolution<Integer>> selectionParameter;
   private VariationParameter variationParameter;
 
   @Override
@@ -76,7 +71,7 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
     return fixedParameterList;
   }
 
-  public AutoSMSEMOA() {
+  public AutoSMSEMOAPermutation() {
     this.configure();
   }
 
@@ -106,57 +101,25 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
   }
 
   private void variation() {
-    CrossoverParameter crossoverParameter = new CrossoverParameter(
-        List.of("SBX", "BLX_ALPHA", "wholeArithmetic"));
-    ProbabilityParameter crossoverProbability =
-        new ProbabilityParameter("crossoverProbability");
+    CrossoverParameter crossoverParameter =
+            new CrossoverParameter(List.of("PMX", "CX", "OXD", "positionBased", "edgeRecombination"));
+
+    RealParameter crossoverProbability = new RealParameter("crossoverProbability", 0.6, 0.9);
     crossoverParameter.addGlobalParameter(crossoverProbability);
-    RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter(
-            "crossoverRepairStrategy", Arrays.asList("random", "round", "bounds"));
-    crossoverParameter.addGlobalParameter(crossoverRepairStrategy);
-
-    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", 5.0, 400.0);
-    crossoverParameter.addSpecificParameter("SBX", distributionIndex);
-
-    RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", 0.0, 1.0);
-    crossoverParameter.addSpecificParameter("BLX_ALPHA", alpha);
 
     MutationParameter mutationParameter =
-        new MutationParameter(
-            Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
+            new MutationParameter(List.of("swap", "displacement", "insert", "scramble", "inversion", "simpleInversion"));
 
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor",
-        0.0, 2.0);
-    mutationParameter.addGlobalParameter(mutationProbabilityFactor);
-    RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter(
-            "mutationRepairStrategy", Arrays.asList("random", "round", "bounds"));
-    mutationParameter.addGlobalParameter(mutationRepairStrategy);
-
-    RealParameter distributionIndexForPolynomialMutation =
-        new RealParameter("polynomialMutationDistributionIndex", 5.0, 400.0);
-    mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
-
-    RealParameter distributionIndexForLinkedPolynomialMutation =
-        new RealParameter("linkedPolynomialMutationDistributionIndex", 5.0, 400.0);
-    mutationParameter.addSpecificParameter("linkedPolynomial",
-        distributionIndexForLinkedPolynomialMutation);
-
-    RealParameter uniformMutationPerturbation =
-        new RealParameter("uniformMutationPerturbation", 0.0, 1.0);
-    mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
-
-    RealParameter nonUniformMutationPerturbation =
-        new RealParameter("nonUniformMutationPerturbation", 0.0, 1.0);
-    mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
+    RealParameter mutationProbability =
+            new RealParameter("mutationProbability", 0.05, 0.1);
+    mutationParameter.addGlobalParameter(mutationProbability);
 
     offspringPopulationSizeParameter = new PositiveIntegerValue("offspringPopulationSize") ;
     offspringPopulationSizeParameter.value(1) ;
 
-    variationParameter =
-        new VariationParameter(List.of("crossoverAndMutationVariation"));
-    variationParameter.addSpecificParameter("crossoverAndMutationVariation", offspringPopulationSizeParameter);
+    variationParameter = new VariationParameter(List.of("crossoverAndMutationVariation"));
+    variationParameter.addSpecificParameter(
+            "crossoverAndMutationVariation", offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
   }
@@ -169,19 +132,14 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
   }
 
   private void createInitialSolution() {
-    createInitialSolutionsParameter =
-        new CreateInitialSolutionsParameter(
-            Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
+    createInitialSolutionsParameter = new CreateInitialSolutionsParameter(List.of("random"));
   }
 
   private void algorithmResult() {
     algorithmResultParameter =
         new CategoricalParameter("algorithmResult", List.of("externalArchive", "population"));
-    //populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", 10, 200) ;
     externalArchiveParameter = new ExternalArchiveParameter(
         List.of("crowdingDistanceArchive", "unboundedArchive"));
-    //algorithmResultParameter.addSpecificParameter(
-    //    "externalArchive", populationSizeWithArchiveParameter);
 
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", externalArchiveParameter);
@@ -198,7 +156,7 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
   }
 
 
-  protected Problem<DoubleSolution> problem() {
+  protected Problem<PermutationSolution<Integer>> problem() {
     return ProblemFactory.loadProblem(problemNameParameter.value());
   }
 
@@ -207,66 +165,54 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
    *
    * @return
    */
-  public EvolutionaryAlgorithm<DoubleSolution> create() {
+  public EvolutionaryAlgorithm<PermutationSolution<Integer>> create() {
     JMetalRandom.getInstance().setSeed(randomGeneratorSeedParameter.value());
 
-    Problem<DoubleSolution> problem = problem() ;
+    var problem = (PermutationProblem<PermutationSolution<Integer>>) problem();
 
-    Archive<DoubleSolution> archive = null;
+    Archive<PermutationSolution<Integer>> archive = null;
 
     if (algorithmResultParameter.value().equals("externalArchive")) {
       externalArchiveParameter.setSize(populationSizeParameter.value());
-      //archive = externalArchiveParameter.getParameter();
-      //populationSizeParameter.value(populationSizeWithArchiveParameter.value());
     }
 
-    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(
+    Ranking<PermutationSolution<Integer>> ranking = new FastNonDominatedSortRanking<>(
         new DominanceWithConstraintsComparator<>());
-    DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
-    MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
+    DensityEstimator<PermutationSolution<Integer>> densityEstimator = new CrowdingDistanceDensityEstimator<>();
+    MultiComparator<PermutationSolution<Integer>> rankingAndCrowdingComparator =
         new MultiComparator<>(
             Arrays.asList(
                 Comparator.comparing(ranking::getRank),
                 Comparator.comparing(densityEstimator::value).reversed()));
 
     var initialSolutionsCreation =
-        (SolutionsCreation<DoubleSolution>) createInitialSolutionsParameter.getParameter(
-            (DoubleProblem) problem,
-            populationSizeParameter.value());
+            (SolutionsCreation<PermutationSolution<Integer>>)
+                    createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.value());
+                    MutationParameter mutationParameter =
+                    (MutationParameter) variationParameter.findSpecificParameter("mutation");
+                mutationParameter.addNonConfigurableParameter("permutationLength", problem.numberOfVariables());
+                
+    var variation = (Variation<PermutationSolution<Integer>>) variationParameter.getPermutationSolutionParameter();
 
-    MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter(
-        "mutation");
-    mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
-        problem.numberOfVariables());
-
-    if (mutationParameter.value().equals("nonUniform")) {
-      mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
-      mutationParameter.addNonConfigurableParameter("maxIterations",
-          maximumNumberOfEvaluationsParameter.value() / populationSizeParameter.value());
-    }
-
-    //variationParameter.addNonConfigurableParameter("offspringPopulationSize", 1);
-    var variation = (Variation<DoubleSolution>) variationParameter.getDoubleSolutionParameter();
-
-    Selection<DoubleSolution> selection =
+    Selection<PermutationSolution<Integer>> selection =
         selectionParameter.getParameter(
             variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 
-    Evaluation<DoubleSolution> evaluation;
+    Evaluation<PermutationSolution<Integer>> evaluation;
     if (algorithmResultParameter.value().equals("externalArchive")) {
       evaluation = new SequentialEvaluationWithArchive<>(problem, archive);
     } else {
       evaluation = new SequentialEvaluation<>(problem);
     }
 
-    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<>();
+    Hypervolume<PermutationSolution<Integer>> hypervolume = new PISAHypervolume<>();
     var replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.value());
 
-    class EvolutionaryAlgorithmWithArchive extends EvolutionaryAlgorithm<DoubleSolution> {
+    class EvolutionaryAlgorithmWithArchive extends EvolutionaryAlgorithm<PermutationSolution<Integer>> {
 
-      private Archive<DoubleSolution> archive;
+      private Archive<PermutationSolution<Integer>> archive;
 
       /**
        * Constructor
@@ -280,18 +226,18 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
        * @param replacement
        */
       public EvolutionaryAlgorithmWithArchive(String name,
-          SolutionsCreation<DoubleSolution> initialPopulationCreation,
-          Evaluation<DoubleSolution> evaluation, Termination termination,
-          Selection<DoubleSolution> selection, Variation<DoubleSolution> variation,
-          Replacement<DoubleSolution> replacement,
-          Archive<DoubleSolution> archive) {
+          SolutionsCreation<PermutationSolution<Integer>> initialPopulationCreation,
+          Evaluation<PermutationSolution<Integer>> evaluation, Termination termination,
+          Selection<PermutationSolution<Integer>> selection, Variation<PermutationSolution<Integer>> variation,
+          Replacement<PermutationSolution<Integer>> replacement,
+          Archive<PermutationSolution<Integer>> archive) {
         super(name, initialPopulationCreation, evaluation, termination, selection, variation,
             replacement);
         this.archive = archive;
       }
 
       @Override
-      public List<DoubleSolution> result() {
+      public List<PermutationSolution<Integer>> result() {
         return archive.solutions() ;
       }
     }
@@ -308,7 +254,7 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
           archive);
     } else {
       return new EvolutionaryAlgorithm<>(
-          "SMS-EMOA",
+        "SMS-EMOA",
           initialSolutionsCreation,
           evaluation,
           termination,
