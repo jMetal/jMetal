@@ -52,6 +52,8 @@ Related projects
 
 Changelog
 ---------
+* [09/12/2025] jMetal 6.9.3 is released.
+
 * [07/14/2025] jMetal 6.9.1 is released.
 
 * [07/07/2025] jMetal 6.8 is released.
