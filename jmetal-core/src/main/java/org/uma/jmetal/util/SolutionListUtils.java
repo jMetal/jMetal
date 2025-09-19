@@ -368,7 +368,7 @@ public class SolutionListUtils {
     // STEP 2. Find the solution having the best objective value, being the objective randomly
     // selected
     int randomObjective =
-        JMetalRandom.getInstance().nextInt(0, normalizedSolutions.get(0).objectives().length - 1);
+        JMetalRandom.getInstance().nextInt(0, normalizedSolutions.get(0).objectives().length);
 
     int bestSolutionIndex =
         findIndexOfBestSolution(normalizedSolutions, new ObjectiveComparator<>(randomObjective));
