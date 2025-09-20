@@ -98,7 +98,8 @@ class BestSolutionsArchiveTest {
     var result = archive.solutions() ;
 
     // Assert
-    assertEquals(1, archive.size());
+    assertEquals(2, result.size());
+    assertEquals(3, archive.size());
   }
 
 }

@@ -17,9 +17,10 @@ public class NormalizeUtilsTest {
 
   private static final double EPSILON = 0.0000000001;
 
-  @Test(expected = InvalidConditionException.class)
-  public void shouldThrowAnExceptionWhenMinAndMaxValuesAreTheSame() {
-    NormalizeUtils.normalize(2, 10, 10);
+  @Test
+  public void shouldReturnTheMidpointOfTheRangeWhenMinAndMaxValuesAreTheSame() {
+    double result = NormalizeUtils.normalize(2, 10, 10);
+    assertEquals(0.5, result, EPSILON);
   }
 
   @Test

@@ -18,27 +18,25 @@ public class NormalizeUtils {
   }
 
   /**
-   * It normalizes a {@code value} in a range [{@code a}, {@code b}] given a {@code min} and {@code
-   * max} value. The equation used here were based on the following links:
+   * Normalize a value from one range to another using min-max normalization
    *
-   * <ul>
-   *   <li>{@link https://stats.stackexchange.com/a/281165}
-   *   <li>{@link https://stats.stackexchange.com/a/178629}
-   *   <li>{@link https://en.wikipedia.org/wiki/Normalization_(statistics)}
-   *   <li>{@link https://en.wikipedia.org/wiki/Feature_scaling}
-   * </ul>
-   *
-   * @param value value number to be normalized
-   * @param minRangeValue the minimum value for the range
-   * @param maxRangeValue the maximum value for the range
-   * @param min minimum value that {@code value} can take on
-   * @param max maximum value that {@code value} can take on
-   * @return the normalized number
+   * @param value the input value to normalize
+   * @param minRangeValue the minimum value of the target range
+   * @param maxRangeValue the maximum value of the target range
+   * @param min the minimum value of the source range
+   * @param max the maximum value of the source range
+   * @return the normalized value in the target range
    */
   public static double normalize(
           double value, double minRangeValue, double maxRangeValue, double min, double max) {
-    Check.that(max != min, "" + max + " minus " + min + " should not be zero");
 
+    // Handle the case where all source values are identical (min == max)
+    if (max == min) {
+      // Return the midpoint of the target range
+      return (minRangeValue + maxRangeValue) / 2.0;
+    }
+
+    // Standard min-max normalization formula with range scaling
     return minRangeValue + (((value - min) * (maxRangeValue - minRangeValue)) / (max - min));
   }
 
