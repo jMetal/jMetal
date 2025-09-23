@@ -10,8 +10,6 @@ import org.uma.jmetal.auto.parameter.catalogue.CreateInitialSolutionsParameter;
 import org.uma.jmetal.auto.parameter.catalogue.CrossoverParameter;
 import org.uma.jmetal.auto.parameter.catalogue.ExternalArchiveParameter;
 import org.uma.jmetal.auto.parameter.catalogue.MutationParameter;
-import org.uma.jmetal.auto.parameter.catalogue.ProbabilityParameter;
-import org.uma.jmetal.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
 import org.uma.jmetal.auto.parameter.catalogue.SelectionParameter;
 import org.uma.jmetal.auto.parameter.catalogue.VariationParameter;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
@@ -27,9 +25,7 @@ import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.MultiComparator;
@@ -196,7 +192,7 @@ public class AutoSMSEMOAPermutation implements AutoConfigurableAlgorithm {
 
     Selection<PermutationSolution<Integer>> selection =
         selectionParameter.getParameter(
-            variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+            variation.matingPoolSize(), rankingAndCrowdingComparator);
 
     Evaluation<PermutationSolution<Integer>> evaluation;
     if (algorithmResultParameter.value().equals("externalArchive")) {

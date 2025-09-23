@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import org.uma.jmetal.auto.parameter.CategoricalIntegerParameter;
+
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
@@ -27,11 +27,9 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCrea
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
-import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -250,7 +248,7 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
 
     Selection<DoubleSolution> selection =
         selectionParameter.getParameter(
-            variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+            variation.matingPoolSize(), rankingAndCrowdingComparator);
 
     Evaluation<DoubleSolution> evaluation;
     if (algorithmResultParameter.value().equals("externalArchive")) {

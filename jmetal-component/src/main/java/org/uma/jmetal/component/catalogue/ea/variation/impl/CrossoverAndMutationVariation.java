@@ -92,12 +92,12 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
   }
 
   @Override
-  public int getMatingPoolSize() {
+  public int matingPoolSize() {
     return matingPoolSize ;
   }
 
   @Override
-  public int getOffspringPopulationSize() {
+  public int offspringPopulationSize() {
     return offspringPopulationSize ;
   }
 }

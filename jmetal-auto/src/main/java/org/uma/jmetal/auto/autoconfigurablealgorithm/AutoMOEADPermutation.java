@@ -266,7 +266,7 @@ public class AutoMOEADPermutation implements AutoConfigurableAlgorithm {
 
     var selection =
         (PopulationAndNeighborhoodSelection<PermutationSolution<Integer>>)
-            selectionParameter.getParameter(variation.getMatingPoolSize(), null);
+            selectionParameter.getParameter(variation.matingPoolSize(), null);
 
     int maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutionsParameter.value();
 

@@ -201,7 +201,7 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
 
     Selection<PermutationSolution<Integer>> selection =
         selectionParameter.getParameter(
-            variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+            variation.matingPoolSize(), rankingAndCrowdingComparator);
 
     Evaluation<PermutationSolution<Integer>> evaluation;
     if (algorithmResultParameter.value().equals("externalArchive")) {

@@ -249,7 +249,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
 
     Selection<DoubleSolution> selection =
         selectionParameter.getParameter(
-            variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+            variation.matingPoolSize(), rankingAndCrowdingComparator);
 
     Evaluation<DoubleSolution> evaluation;
     if (algorithmResultParameter.value().equals("externalArchive")) {

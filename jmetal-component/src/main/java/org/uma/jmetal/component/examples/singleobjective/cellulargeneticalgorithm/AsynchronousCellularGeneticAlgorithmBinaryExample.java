@@ -55,7 +55,7 @@ public class AsynchronousCellularGeneticAlgorithmBinaryExample {
 
     var selection =
         new NeighborhoodSelection<BinarySolution>(
-            variation.getMatingPoolSize(),
+            variation.matingPoolSize(),
             solutionIndexGenerator,
             neighborhood,
             new NaryTournamentSelection<>(2, new ObjectiveComparator<>(0)),

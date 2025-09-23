@@ -312,7 +312,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     var selection =
         (PopulationAndNeighborhoodSelection<DoubleSolution>)
-            selectionParameter.getParameter(variation.getMatingPoolSize(), null);
+            selectionParameter.getParameter(variation.matingPoolSize(), null);
 
     int maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutionsParameter.value();
 

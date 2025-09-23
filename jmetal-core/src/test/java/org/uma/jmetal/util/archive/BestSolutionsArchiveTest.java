@@ -101,5 +101,4 @@ class BestSolutionsArchiveTest {
     assertEquals(2, result.size());
     assertEquals(3, archive.size());
   }
-
 }

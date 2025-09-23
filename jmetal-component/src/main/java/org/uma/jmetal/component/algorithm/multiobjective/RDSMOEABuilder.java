@@ -21,9 +21,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
-import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.ranking.Ranking;
-import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 /**
  * Class to configure and build an instance of a MOEA algorithm based on ranking and crowding distance components (RDS)
@@ -61,7 +59,7 @@ public class RDSMOEABuilder<S extends Solution<?>> {
     this.selection =
         new NaryTournamentSelection<>(
             tournamentSize,
-            variation.getMatingPoolSize(),
+            variation.matingPoolSize(),
             new MultiComparator<>(
                 Arrays.asList(
                     Comparator.comparing(ranking::getRank),

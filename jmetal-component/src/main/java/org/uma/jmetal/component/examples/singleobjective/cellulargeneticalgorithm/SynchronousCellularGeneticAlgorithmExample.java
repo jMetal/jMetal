@@ -57,7 +57,7 @@ public class SynchronousCellularGeneticAlgorithmExample {
 
     var selection =
         new NeighborhoodSelection<>(
-            variation.getMatingPoolSize(),
+            variation.matingPoolSize(),
             solutionIndexGenerator,
             neighborhood,
             new NaryTournamentSelection<>(2, new ObjectiveComparator<>(0)),

@@ -65,7 +65,7 @@ public class SMSEMOADEBuilder {
 
     int numberOfParentsToSelect = crossover.numberOfRequiredParents() ;
     this.selection =
-            new DifferentialEvolutionSelection(variation.getMatingPoolSize(), numberOfParentsToSelect, false,
+            new DifferentialEvolutionSelection(variation.matingPoolSize(), numberOfParentsToSelect, false,
                     sequenceGenerator);
     
     this.termination = new TerminationByEvaluations(25000);

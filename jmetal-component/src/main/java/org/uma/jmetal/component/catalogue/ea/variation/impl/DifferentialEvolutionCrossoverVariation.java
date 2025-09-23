@@ -67,12 +67,12 @@ public class DifferentialEvolutionCrossoverVariation implements Variation<Double
   }
 
   @Override
-  public int getMatingPoolSize() {
+  public int matingPoolSize() {
     return matingPoolSize;
   }
 
   @Override
-  public int getOffspringPopulationSize() {
+  public int offspringPopulationSize() {
     return offspringPopulationSize;
   }
 }

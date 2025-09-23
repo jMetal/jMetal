@@ -51,7 +51,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
     this.variation =
         new CrossoverAndMutationVariation<>(1, crossover, mutation);
 
-    this.selection = new RandomSelection<>(variation.getMatingPoolSize());
+    this.selection = new RandomSelection<>(variation.matingPoolSize());
 
     this.termination = new TerminationByEvaluations(25000);
 
