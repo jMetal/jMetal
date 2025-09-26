@@ -86,9 +86,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
           sequentialTruncation(
               rankingId + 1, sizeOfTheResultingSolutionList - currentRankSolutions.size()));
     } else {
-      for (S solution : currentRankSolutions) {
-        resultList.add(solution);
-      }
+      resultList.addAll(currentRankSolutions);
       while (resultList.size() > sizeOfTheResultingSolutionList) {
         resultList.sort(Comparator.comparing(densityEstimator::value).reversed());
 
