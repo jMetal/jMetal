@@ -42,7 +42,7 @@ public class RDSMOEABuilder<S extends Solution<?>> {
 
   public RDSMOEABuilder(Problem<S> problem, int populationSize, int offspringPopulationSize,
                         CrossoverOperator<S> crossover, MutationOperator<S> mutation,
-                        Ranking<S> ranking, DensityEstimator<S> densityEstimator, Replacement.RemovalPolicy removalPolicy) {
+                        Ranking<S> ranking, DensityEstimator<S> densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy removalPolicy) {
     name = "MOEA";
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
@@ -80,7 +80,7 @@ public class RDSMOEABuilder<S extends Solution<?>> {
     this.ranking = ranking;
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
+            ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     return this;
   }

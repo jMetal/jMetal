@@ -71,51 +71,6 @@ public class EpsilonTest {
     Assertions.assertEquals(0.5, new Epsilon(referenceFront).compute(front), EPSILON);
   }
 
-  /**
-   * The same case as shouldExecuteReturnTheCorrectValueCaseB() but using list of solutions
-   */
-  /*
-  @Test
-  public void shouldExecuteReturnTheCorrectValueCaseC() {
-    int numberOfPoints = 3 ;
-    int numberOfDimensions = 2 ;
-    Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
-    Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
-
-    Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setValue(0, 1.5);
-    point1.setValue(1, 4.0);
-    Point point2 = new ArrayPoint(numberOfDimensions) ;
-    point2.setValue(0, 1.5);
-    point2.setValue(1, 2.0);
-    Point point3 = new ArrayPoint(numberOfDimensions) ;
-    point3.setValue(0, 2.0);
-    point3.setValue(1, 1.5);
-
-    frontApproximation.setPoint(0, point1);
-    frontApproximation.setPoint(1, point2);
-    frontApproximation.setPoint(2, point3);
-
-    Point point4 = new ArrayPoint(numberOfDimensions) ;
-    point4.setValue(0, 1.0);
-    point4.setValue(1, 3.0);
-    Point point5 = new ArrayPoint(numberOfDimensions) ;
-    point5.setValue(0, 1.5);
-    point5.setValue(1, 2.0);
-    Point point6 = new ArrayPoint(numberOfDimensions) ;
-    point6.setValue(0, 2.0);
-    point6.setValue(1, 1.5);
-
-    referenceFront.setPoint(0, point4);
-    referenceFront.setPoint(1, point5);
-    referenceFront.setPoint(2, point6);
-
-    List<PointSolution> listA = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
-    List<PointSolution> listB = FrontUtils.convertFrontToSolutionList(referenceFront) ;
-
-    assertEquals(0.5, epsilon.execute(listA, listB), EPSILON);
-  }
-*/
   @Test
   public void shouldGetNameReturnTheCorrectValue() {
     Assertions.assertEquals("EP", new Epsilon().name());

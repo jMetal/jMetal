@@ -9,6 +9,7 @@ import org.uma.jmetal.component.algorithm.multiobjective.RDSMOEABuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -55,7 +56,7 @@ public class MOEA_NSGAIIExample {
     Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>();
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
-    Replacement.RemovalPolicy removalPolicy = Replacement.RemovalPolicy.ONE_SHOT ;
+    RankingAndDensityEstimatorReplacement.RemovalPolicy removalPolicy = RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT ;
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new RDSMOEABuilder<>(

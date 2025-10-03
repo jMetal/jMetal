@@ -59,7 +59,7 @@ class RankingAndDensityEstimatorReplacementTest {
     Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>();
     Replacement<DoubleSolution> replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, new CrowdingDistanceDensityEstimator<>(), Replacement.RemovalPolicy.ONE_SHOT);
+            ranking, new CrowdingDistanceDensityEstimator<>(), RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     var nextPopulation = replacement.replace(population, offspringPopulation);
 
@@ -106,7 +106,7 @@ class RankingAndDensityEstimatorReplacementTest {
     Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>();
     Replacement<DoubleSolution> replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, new CrowdingDistanceDensityEstimator<>(), Replacement.RemovalPolicy.ONE_SHOT);
+            ranking, new CrowdingDistanceDensityEstimator<>(), RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     var nextPopulation = replacement.replace(population, offspringPopulation);
 

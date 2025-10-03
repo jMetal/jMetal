@@ -26,6 +26,6 @@ public class AsynchronousMultiThreadedNSGAII<S extends Solution<?>>
             new RankingAndDensityEstimatorReplacement<>(
                     new MergeNonDominatedSortRanking<>(),
                     new CrowdingDistanceDensityEstimator<>(),
-                    Replacement.RemovalPolicy.ONE_SHOT),termination);
+                    RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT),termination);
   }
 }

@@ -214,7 +214,7 @@ public class AutoNSGAIIPermutation implements AutoConfigurableAlgorithm {
         new RankingAndDensityEstimatorPreference<>(ranking, densityEstimator);
     Replacement<PermutationSolution<Integer>> replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            preferenceForReplacement, Replacement.RemovalPolicy.ONE_SHOT);
+            preferenceForReplacement, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.value());

@@ -7,6 +7,7 @@ import org.uma.jmetal.component.algorithm.multiobjective.RDSMOEABuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -53,7 +54,7 @@ public class MOEA_SPEA2Example {
     Ranking<DoubleSolution> ranking = new StrengthRanking<>();
     DensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1, false);
 
-    Replacement.RemovalPolicy removalPolicy = Replacement.RemovalPolicy.SEQUENTIAL ;
+    RankingAndDensityEstimatorReplacement.RemovalPolicy removalPolicy = RankingAndDensityEstimatorReplacement.RemovalPolicy.SEQUENTIAL ;
 
     EvolutionaryAlgorithm<DoubleSolution> spea2 =
         new RDSMOEABuilder<>(

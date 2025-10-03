@@ -59,7 +59,7 @@ public class NSGAIIDEBuilder {
 
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
+            ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     DifferentialEvolutionCrossover crossover =
         new DifferentialEvolutionCrossover(
@@ -89,7 +89,7 @@ public class NSGAIIDEBuilder {
     this.ranking = ranking;
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
+            ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     return this;
   }
