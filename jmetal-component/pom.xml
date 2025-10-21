@@ -13,9 +13,10 @@
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Component based algorithms</description>
-    <url>http://jmetal.sourceforge.net</url>
+    <url>https://github.com/jMetal/jMetal.git</url>
 
     <dependencies>
+        <!-- JMetal Dependencies -->
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-core</artifactId>
@@ -24,21 +25,28 @@
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-lab</artifactId>
         </dependency>
+        
+        <!-- Apache Commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        
+        <!-- Test Dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
+            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.18.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.18.0</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -48,7 +56,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>6.2.8</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

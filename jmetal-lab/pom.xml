@@ -13,9 +13,14 @@
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Visualization features and support for experimental studies</description>
-    <url>http://jmetal.sourceforge.net</url>
+    <url>https://github.com/jMetal/jMetal.git</url>
+
+    <properties>
+        <smile.version>3.1.1</smile.version>
+    </properties>
 
     <dependencies>
+        <!-- JMetal Dependencies -->
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-core</artifactId>
@@ -28,19 +33,23 @@
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-problem</artifactId>
         </dependency>
+        
+        <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        
+        <!-- Visualization Dependencies -->
         <dependency>
             <groupId>com.github.haifengl</groupId>
             <artifactId>smile-core</artifactId>
-            <version>3.1.1</version>
+            <version>${smile.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.haifengl</groupId>
             <artifactId>smile-plot</artifactId>
-            <version>3.1.1</version>
+            <version>${smile.version}</version>
         </dependency>
     </dependencies>
 </project>

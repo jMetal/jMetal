@@ -20,18 +20,13 @@ public class NormalizedHypervolume extends QualityIndicator {
   }
 
   public NormalizedHypervolume(double[] referencePoint) {
-    // TODO: add a unit test
     double[][] referenceFront = {referencePoint};
     hypervolume = new PISAHypervolume(referenceFront);
-
-    //referenceFrontHypervolume = hypervolume.compute(referenceFront);
   }
 
   public NormalizedHypervolume(double[][] referenceFront) {
     super(referenceFront);
     hypervolume = new PISAHypervolume(referenceFront);
-
-    //referenceFrontHypervolume = hypervolume.compute(referenceFront);
   }
 
   @Override
@@ -44,7 +39,6 @@ public class NormalizedHypervolume extends QualityIndicator {
     super.referenceFront(referenceFront);
 
     hypervolume = new PISAHypervolume(referenceFront);
-    //referenceFrontHypervolume = hypervolume.compute(referenceFront);
   }
 
   @Override

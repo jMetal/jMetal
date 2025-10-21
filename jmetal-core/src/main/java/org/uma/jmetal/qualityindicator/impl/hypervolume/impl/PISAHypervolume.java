@@ -58,6 +58,12 @@ public class PISAHypervolume extends Hypervolume {
    */
   @Override
   public double compute(double[][] front) {
+    if (front == null) {
+      throw new IllegalArgumentException("Front is null");
+    }
+    if (front.length == 0) {
+      return 0.0;
+    }
     return hypervolume(front, referenceFront);
   }
 

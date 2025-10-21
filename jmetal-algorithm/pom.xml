@@ -13,14 +13,14 @@
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>jMetal algorithms (single- and multi-objective)</description>
-    <url>http://jmetal.sourceforge.net</url>
+    <url>https://github.com/jMetal/jMetal.git</url>
 
     <build>
         <plugins>
+            <!-- Assembly plugin for creating fat JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.0.0</version>
                 <configuration>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -39,6 +39,7 @@
     </build>
 
     <dependencies>
+        <!-- JMetal Dependencies -->
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-core</artifactId>
@@ -47,6 +48,8 @@
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-problem</artifactId>
         </dependency>
+
+        <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -54,24 +57,20 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.18.0</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>6.2.8</version>
-            <scope>test</scope>
         </dependency>
+
+        <!-- Fuzzy Logic Dependencies -->
         <dependency>
             <groupId>com.fuzzylite</groupId>
             <artifactId>jfuzzylite</artifactId>
-            <version>5.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.chwagnlucid</groupId>
             <artifactId>Juzzy</artifactId>
-            <version>2.0</version>
         </dependency>
     </dependencies>
 </project>

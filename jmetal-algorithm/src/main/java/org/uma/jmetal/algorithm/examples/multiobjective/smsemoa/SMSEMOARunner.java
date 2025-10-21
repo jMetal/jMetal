@@ -31,8 +31,8 @@ public class SMSEMOARunner extends AbstractAlgorithmRunner {
    * @param args Command line arguments.
    */
   public static void main(String[] args) throws IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

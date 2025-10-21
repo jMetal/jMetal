@@ -43,7 +43,7 @@ public class NSGAIIDefaultConfigurationExample {
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = 100 ;
+    int offspringPopulationSize = 1 ;
 
     Termination termination = new TerminationByEvaluations(25000);
 

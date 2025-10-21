@@ -283,7 +283,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
         hvContribution.setAttribute(solutionList.get(i), contributions[i]);
       }
 
-      Collections.sort(solutionList, new HypervolumeContributionComparator<S>());
+      solutionList.sort(new HypervolumeContributionComparator<S>());
     }
     return solutionList;
   }

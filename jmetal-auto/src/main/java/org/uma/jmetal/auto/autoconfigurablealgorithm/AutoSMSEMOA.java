@@ -61,6 +61,7 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
   private CategoricalParameter algorithmResultParameter;
   private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
+  private IntegerParameter populationSizeWithArchiveParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter<DoubleSolution> selectionParameter;
   private VariationParameter variationParameter;
@@ -175,11 +176,11 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
   private void algorithmResult() {
     algorithmResultParameter =
         new CategoricalParameter("algorithmResult", List.of("externalArchive", "population"));
-    //populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", 10, 200) ;
+    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", 10, 200) ;
     externalArchiveParameter = new ExternalArchiveParameter(
         List.of("crowdingDistanceArchive", "unboundedArchive"));
-    //algorithmResultParameter.addSpecificParameter(
-    //    "externalArchive", populationSizeWithArchiveParameter);
+    algorithmResultParameter.addSpecificParameter(
+        "externalArchive", populationSizeWithArchiveParameter);
 
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", externalArchiveParameter);
@@ -214,8 +215,8 @@ public class AutoSMSEMOA implements AutoConfigurableAlgorithm {
 
     if (algorithmResultParameter.value().equals("externalArchive")) {
       externalArchiveParameter.setSize(populationSizeParameter.value());
-      //archive = externalArchiveParameter.getParameter();
-      //populationSizeParameter.value(populationSizeWithArchiveParameter.value());
+      archive = externalArchiveParameter.getParameter();
+      populationSizeParameter.value(populationSizeWithArchiveParameter.value());
     }
 
     Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(
