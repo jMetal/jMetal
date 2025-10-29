@@ -1,15 +1,13 @@
 package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
+import static org.uma.jmetal.util.VectorUtils.readVectors;
+
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
-
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
-import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByComputingTime;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByKeyboard;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -18,23 +16,25 @@ import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.JavaFXChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
- * Class to configure and run the NSGA-II algorithm configured with standard settings.
+ * Class to configure and run the NSGA-II algorithm showing the population while the algorithm is
+ * running
  *
  * @author Antonio J. Nebro
  */
-public class NSGAIIDefaultConfigurationExample {
+public class NSGAIIWithRealTimeChartWithJavaFXExample {
+
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
@@ -47,12 +47,16 @@ public class NSGAIIDefaultConfigurationExample {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(10000);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new NSGAIIBuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation)
             .setTermination(termination)
             .build();
+
+    var chartObserver = new JavaFXChartObserver<>("NSGA-II");
+
+    nsgaii.observable().register(chartObserver);
 
     nsgaii.run();
 
@@ -71,6 +75,6 @@ public class NSGAIIDefaultConfigurationExample {
 
     QualityIndicatorUtils.printQualityIndicators(
         SolutionListUtils.getMatrixWithObjectiveValues(population),
-        VectorUtils.readVectors(referenceParetoFront, ","));
+        readVectors(referenceParetoFront, ","));
   }
 }
