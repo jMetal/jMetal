@@ -9,7 +9,6 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
-import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacementImproved;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
@@ -18,17 +17,13 @@ import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.sequencegenerator.impl.CyclicIntegerSequence;
 
 /**
  * Class to configure and build an instance of the SMS-EMOA algorithm
- *
- * @param <DoubleSolution>
- */
+ **/
 public class SMSEMOADEBuilder {
   private String name;
   private Ranking<DoubleSolution> ranking;
@@ -53,7 +48,7 @@ public class SMSEMOADEBuilder {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    this.replacement = new SMSEMOAReplacementImproved<>(ranking);
+    this.replacement = new SMSEMOAReplacement<>(ranking);
 
     DifferentialEvolutionCrossover crossover =
             new DifferentialEvolutionCrossover(
@@ -81,8 +76,7 @@ public class SMSEMOADEBuilder {
 
   public SMSEMOADEBuilder setRanking(Ranking<DoubleSolution> ranking) {
     this.ranking = ranking;
-    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<>();
-    this.replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
+    this.replacement = new SMSEMOAReplacement<>(ranking);
 
     return this;
   }

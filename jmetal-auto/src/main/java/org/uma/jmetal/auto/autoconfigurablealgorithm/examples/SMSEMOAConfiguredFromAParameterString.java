@@ -19,7 +19,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class SMSEMOAConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT4.csv";
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT2.csv";
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT2 "
@@ -54,11 +54,11 @@ public class SMSEMOAConfiguredFromAParameterString {
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoSMSEMOA.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    //RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-    //    new RunTimeChartObserver<>("NSGA-II", 80, 1000, referenceFrontFileName, "F1", "F2");
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+        new RunTimeChartObserver<>("NSGA-II", 80, 1000, referenceFrontFileName, "F1", "F2");
 
     nsgaII.observable().register(evaluationObserver);
-    //nsgaII.observable().register(runTimeChartObserver);
+    nsgaII.observable().register(runTimeChartObserver);
 
     nsgaII.run();
 

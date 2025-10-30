@@ -6,6 +6,7 @@ import java.util.Comparator;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.HypervolumeContribution2D;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
@@ -83,9 +84,7 @@ public class WFGHypervolume extends Hypervolume {
       this.nPoints = frente.length;
       for (int x = 0; x < frente.length; x++) {
         points[x] = new Point(frente[0].length);
-        for (int j = 0; j < frente[0].length; j++) {
-          points[x].objectives[j] = frente[x][j];
-        }
+        System.arraycopy(frente[x], 0, points[x].objectives, 0, frente[0].length);
       }
     }
   }

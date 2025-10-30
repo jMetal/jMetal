@@ -9,7 +9,6 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
-import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacementImproved;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
@@ -22,14 +21,6 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-
-// Legacy imports for compatibility with SMSEMOAReplacement (to be removed in future versions)
-@SuppressWarnings("deprecation")
-class LegacyHypervolumeAdapter {
-  static <S extends Solution<?>> org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume<S> createLegacyHypervolume() {
-    return new org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume<>();
-  }
-}
 
 /**
  * Class to configure and build an instance of the SMS-EMOA algorithm
@@ -54,8 +45,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    Hypervolume hypervolume = new PISAHypervolume();
-    this.replacement = new SMSEMOAReplacementImproved<>(ranking, hypervolume);
+    this.replacement = new SMSEMOAReplacement<>(ranking);
 
     this.variation =
         new CrossoverAndMutationVariation<>(1, crossover, mutation);
@@ -76,7 +66,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
   @SuppressWarnings("deprecation")
   public SMSEMOABuilder<S> setRanking(Ranking<S> ranking) {
     this.ranking = ranking;
-    this.replacement = new SMSEMOAReplacement<>(ranking, LegacyHypervolumeAdapter.createLegacyHypervolume());
+    this.replacement = new SMSEMOAReplacement<>(ranking);
 
     return this;
   }
