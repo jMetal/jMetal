@@ -9,6 +9,7 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacementImproved;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
@@ -46,7 +47,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     Hypervolume<S> hypervolume = new PISAHypervolume<>();
-    this.replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
+    this.replacement = new SMSEMOAReplacementImproved<>(ranking, hypervolume);
 
     this.variation =
         new CrossoverAndMutationVariation<>(1, crossover, mutation);

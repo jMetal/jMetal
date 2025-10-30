@@ -7,7 +7,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
 public class SMSEMOAReplacement<S extends Solution<?>>
     implements Replacement<S> {

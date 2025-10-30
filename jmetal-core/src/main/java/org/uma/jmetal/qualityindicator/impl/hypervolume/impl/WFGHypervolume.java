@@ -6,13 +6,10 @@ import java.util.Comparator;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * This class implements the hypervolume indicator developed by the WFG
- *
- * @author Alejandro Santiago
  */
 @SuppressWarnings("serial")
 public class WFGHypervolume extends Hypervolume {
@@ -531,17 +528,29 @@ public class WFGHypervolume extends Hypervolume {
    * Returns the hypervolume value of a front of points
    *
    * @param front          The front
-   * @param referenceFront The true pareto front
+   * @param referenceFront The reference front (used to get number of objectives)
    */
   private double hypervolume(double[][] front, double[][] referenceFront) {
-    double[][] invertedFront;
-    invertedFront = VectorUtils.getInvertedFront(front);
-
     int numberOfObjectives = referenceFront[0].length;
+    
+    // Get the reference point from the reference front
+    double[] referencePoint = getReferencePoint();
+    
+    // Translate points so that the reference point becomes the origin
+    // WFG algorithm assumes the reference point is at the origin
+    double[][] translatedFront = new double[front.length][numberOfObjectives];
+    for (int i = 0; i < front.length; i++) {
+      for (int j = 0; j < numberOfObjectives; j++) {
+        translatedFront[i][j] = referencePoint[j] - front[i][j];
+        // If the point is dominated by (worse than) the reference point, set to 0
+        if (translatedFront[i][j] < 0) {
+          translatedFront[i][j] = 0;
+        }
+      }
+    }
 
-
-    // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
-    return CalculateHypervolume(invertedFront, invertedFront.length, numberOfObjectives);
+    // The hypervolume (control is passed to the Java version of WFG code)
+    return CalculateHypervolume(translatedFront, translatedFront.length, numberOfObjectives);
   }
 
   @Override
