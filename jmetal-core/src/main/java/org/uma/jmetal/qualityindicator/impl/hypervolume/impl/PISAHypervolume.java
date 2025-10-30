@@ -212,6 +212,46 @@ public class PISAHypervolume extends Hypervolume {
     return this.calculateHypervolume(invertedFront, invertedFront.length, numberOfObjectives);
   }
 
+  /**
+   * Computes the hypervolume contribution of each point in the front.
+   * The contribution of a point is calculated as: HV(all) - HV(all \ point)
+   * 
+   * @param front The front of points
+   * @return An array where contributions[i] is the hypervolume contribution of point i
+   */
+  public double[] computeHypervolumeContribution(double[][] front) {
+    Check.notNull(front);
+    Check.that(front.length > 0, "The front cannot be empty");
+    
+    int numberOfPoints = front.length;
+    double[] contributions = new double[numberOfPoints];
+    
+    // Calculate the hypervolume of the complete front
+    double totalHypervolume = compute(front);
+    
+    // For each point, calculate its contribution
+    for (int i = 0; i < numberOfPoints; i++) {
+      // Create a new front without point i
+      double[][] frontWithoutPoint = new double[numberOfPoints - 1][];
+      int index = 0;
+      for (int j = 0; j < numberOfPoints; j++) {
+        if (j != i) {
+          frontWithoutPoint[index++] = front[j];
+        }
+      }
+      
+      // Calculate hypervolume without point i
+      double hypervolumeWithoutPoint = (frontWithoutPoint.length > 0) 
+          ? compute(frontWithoutPoint) 
+          : 0.0;
+      
+      // The contribution is the difference
+      contributions[i] = totalHypervolume - hypervolumeWithoutPoint;
+    }
+    
+    return contributions;
+  }
+
   @Override
   public String name() {
     return "HV";

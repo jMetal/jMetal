@@ -1,6 +1,7 @@
 package org.uma.jmetal.qualityindicator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -114,5 +115,68 @@ public class PISAHypervolumeTest {
     double result = hypervolume.compute(front);
 
     assertEquals(0.610509, result, 0.0001);
+  }
+
+  // Tests for computeHypervolumeContribution()
+  
+  @Test
+  void shouldComputeHypervolumeContributionForSinglePoint() {
+    double[] referencePoint = {1.0, 1.0};
+    double[][] front = {{0.5, 0.5}};
+    
+    var hypervolume = new PISAHypervolume(referencePoint);
+    double[] contributions = hypervolume.computeHypervolumeContribution(front);
+    
+    assertEquals(1, contributions.length);
+    // The contribution of a single point equals the total hypervolume
+    double totalHV = hypervolume.compute(front);
+    assertEquals(totalHV, contributions[0], EPSILON);
+  }
+  
+  @Test
+  void shouldComputeHypervolumeContributionForTwoPoints2D() {
+    double[] referencePoint = {1.0, 1.0};
+    double[][] front = {{0.5, 0.5}, {0.25, 0.75}};
+    
+    var hypervolume = new PISAHypervolume(referencePoint);
+    double[] contributions = hypervolume.computeHypervolumeContribution(front);
+    
+    assertEquals(2, contributions.length);
+    // All contributions should be positive
+    assertTrue(contributions[0] > 0);
+    assertTrue(contributions[1] > 0);
+    // Sum of contributions may not equal total HV due to overlap, so just check they're reasonable
+    double totalHV = hypervolume.compute(front);
+    assertTrue(contributions[0] < totalHV);
+    assertTrue(contributions[1] < totalHV);
+  }
+  
+  @Test
+  void shouldComputeHypervolumeContributionForLShapedFront() {
+    double[] referencePoint = {1.0, 1.0};
+    double[][] front = {{0.2, 0.8}, {0.5, 0.5}, {0.8, 0.2}};
+    
+    var hypervolume = new PISAHypervolume(referencePoint);
+    double[] contributions = hypervolume.computeHypervolumeContribution(front);
+    
+    assertEquals(3, contributions.length);
+    // All contributions should be positive
+    for (double contribution : contributions) {
+      assertTrue(contribution > 0, "All contributions should be positive");
+    }
+  }
+  
+  @Test
+  void shouldComputeHypervolumeContributionFor3DFront() {
+    double[] referencePoint = {1.0, 1.0, 1.0};
+    double[][] front = {{0.5, 0.5, 0.5}, {0.3, 0.6, 0.7}};
+    
+    var hypervolume = new PISAHypervolume(referencePoint);
+    double[] contributions = hypervolume.computeHypervolumeContribution(front);
+    
+    assertEquals(2, contributions.length);
+    // All contributions should be positive
+    assertTrue(contributions[0] > 0);
+    assertTrue(contributions[1] > 0);
   }
 }

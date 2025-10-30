@@ -21,6 +21,7 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacementImproved;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.problem.Problem;
@@ -201,8 +202,7 @@ public class AutoSMSEMOAPermutation implements AutoConfigurableAlgorithm {
       evaluation = new SequentialEvaluation<>(problem);
     }
 
-    Hypervolume<PermutationSolution<Integer>> hypervolume = new PISAHypervolume<>();
-    var replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
+    var replacement = new SMSEMOAReplacementImproved<>(ranking);
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.value());
 

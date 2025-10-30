@@ -553,6 +553,84 @@ public class WFGHypervolume extends Hypervolume {
     return CalculateHypervolume(translatedFront, translatedFront.length, numberOfObjectives);
   }
 
+  /**
+   * Computes the hypervolume contribution of each point in the front.
+   * 
+   * This method uses different strategies based on the number of objectives:
+   * - For 2D: Uses the efficient O(n log n) dimension-sweep algorithm via HypervolumeContribution2D
+   * - For 3D+: Uses the WFG exclusion method (HV(all) - HV(all\point))
+   * 
+   * @param front The front of points
+   * @return An array where contributions[i] is the hypervolume contribution of point i
+   */
+  public double[] computeHypervolumeContribution(double[][] front) {
+    Check.notNull(front);
+    Check.that(front.length > 0, "The front cannot be empty");
+    
+    int numberOfObjectives = referenceFront[0].length;
+    
+    // For 2D, use the efficient dimension-sweep algorithm
+    if (numberOfObjectives == 2) {
+      double[] referencePoint = getReferencePoint();
+      return HypervolumeContribution2D.compute(front, referencePoint);
+    }
+    
+    // For 3D+, use the exclusion method
+    return computeHypervolumeContributionND(front, numberOfObjectives);
+  }
+  
+  /**
+   * Computes hypervolume contributions for 3D+ using the exclusion method.
+   * 
+   * @param front The front of points
+   * @param numObjectives Number of objectives
+   * @return Array of contributions for each point
+   */
+  private double[] computeHypervolumeContributionND(double[][] front, int numObjectives) {
+    int numberOfPoints = front.length;
+    double[] contributions = new double[numberOfPoints];
+    
+    // Get the reference point
+    double[] referencePoint = getReferencePoint();
+    
+    // Translate the entire front once (shared computation)
+    double[][] translatedFront = new double[numberOfPoints][numObjectives];
+    for (int i = 0; i < numberOfPoints; i++) {
+      for (int j = 0; j < numObjectives; j++) {
+        translatedFront[i][j] = referencePoint[j] - front[i][j];
+        if (translatedFront[i][j] < 0) {
+          translatedFront[i][j] = 0;
+        }
+      }
+    }
+    
+    // Calculate total hypervolume once
+    double totalHV = CalculateHypervolume(translatedFront, translatedFront.length, numObjectives);
+    
+    // For each point, calculate contribution efficiently
+    for (int i = 0; i < numberOfPoints; i++) {
+      // Create front without point i using the already translated values
+      double[][] frontWithoutPoint = new double[numberOfPoints - 1][numObjectives];
+      int idx = 0;
+      for (int j = 0; j < numberOfPoints; j++) {
+        if (j != i) {
+          System.arraycopy(translatedFront[j], 0, frontWithoutPoint[idx], 0, numObjectives);
+          idx++;
+        }
+      }
+      
+      // Calculate HV without this point
+      double hvWithoutPoint = (frontWithoutPoint.length > 0) 
+          ? CalculateHypervolume(frontWithoutPoint, frontWithoutPoint.length, numObjectives)
+          : 0.0;
+      
+      // Contribution is the difference
+      contributions[i] = totalHV - hvWithoutPoint;
+    }
+    
+    return contributions;
+  }
+
   @Override
   public String name() {
     return "HV";

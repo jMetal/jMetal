@@ -9,6 +9,7 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacementImproved;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
@@ -52,8 +53,7 @@ public class SMSEMOADEBuilder {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<>();
-    this.replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
+    this.replacement = new SMSEMOAReplacementImproved<>(ranking);
 
     DifferentialEvolutionCrossover crossover =
             new DifferentialEvolutionCrossover(

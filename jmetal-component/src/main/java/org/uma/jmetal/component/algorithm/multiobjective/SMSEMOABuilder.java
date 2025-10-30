@@ -17,11 +17,19 @@ import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutation
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
+
+// Legacy imports for compatibility with SMSEMOAReplacement (to be removed in future versions)
+@SuppressWarnings("deprecation")
+class LegacyHypervolumeAdapter {
+  static <S extends Solution<?>> org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume<S> createLegacyHypervolume() {
+    return new org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume<>();
+  }
+}
 
 /**
  * Class to configure and build an instance of the SMS-EMOA algorithm
@@ -46,7 +54,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    Hypervolume<S> hypervolume = new PISAHypervolume<>();
+    Hypervolume hypervolume = new PISAHypervolume();
     this.replacement = new SMSEMOAReplacementImproved<>(ranking, hypervolume);
 
     this.variation =
@@ -65,10 +73,10 @@ public class SMSEMOABuilder<S extends Solution<?>> {
     return this;
   }
 
+  @SuppressWarnings("deprecation")
   public SMSEMOABuilder<S> setRanking(Ranking<S> ranking) {
     this.ranking = ranking;
-    Hypervolume<S> hypervolume = new PISAHypervolume<>();
-    this.replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
+    this.replacement = new SMSEMOAReplacement<>(ranking, LegacyHypervolumeAdapter.createLegacyHypervolume());
 
     return this;
   }

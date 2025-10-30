@@ -22,7 +22,7 @@ public class SMSEMOAConfiguredFromAParameterString {
     String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT4.csv";
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT2 "
                 + "--randomGeneratorSeed 12 "
                 + "--referenceFrontFileName "
                 + referenceFrontFileName
@@ -32,7 +32,8 @@ public class SMSEMOAConfiguredFromAParameterString {
                 + "--algorithmResult population  "
                 + "--createInitialSolutions random "
                 + "--offspringPopulationSize 1 "
-                + "--variation crossoverAndMutationVariation --crossover SBX "
+                + "--variation crossoverAndMutationVariation "
+                + "--crossover SBX "
                 + "--crossoverProbability 0.9 "
                 + "--crossoverRepairStrategy bounds "
                 + "--sbxDistributionIndex 20.0 "
@@ -53,11 +54,11 @@ public class SMSEMOAConfiguredFromAParameterString {
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoSMSEMOA.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, 1000, referenceFrontFileName, "F1", "F2");
+    //RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+    //    new RunTimeChartObserver<>("NSGA-II", 80, 1000, referenceFrontFileName, "F1", "F2");
 
     nsgaII.observable().register(evaluationObserver);
-    nsgaII.observable().register(runTimeChartObserver);
+    //nsgaII.observable().register(runTimeChartObserver);
 
     nsgaII.run();
 
