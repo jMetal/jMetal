@@ -50,15 +50,32 @@ class TwoPointCrossoverTest {
     DoubleProblem problem = new FakeDoubleProblem(10, 2, 0);
     DoubleSolution parent1 = problem.createSolution();
     DoubleSolution parent2 = problem.createSolution();
+    
+    // Ensure parents have different values
+    for (int i = 0; i < parent1.variables().size(); i++) {
+      parent1.variables().set(i, (double) i);
+      parent2.variables().set(i, 10.0 + i);
+    }
 
     var crossover = new TwoPointCrossover<DoubleSolution, Double>(1.0);
 
     // Act
     List<DoubleSolution> children = crossover.execute(List.of(parent1, parent2));
 
-    // Assert
-    assertNotEquals(parent1, children.get(0));
-    assertNotEquals(parent2, children.get(1));
+    // Assert - Check that children are not the same objects as parents
+    assertNotSame(parent1, children.get(0));
+    assertNotSame(parent2, children.get(1));
+    
+    // Check that at least one variable is different
+    boolean atLeastOneDifferent = false;
+    for (int i = 0; i < parent1.variables().size(); i++) {
+      if (!parent1.variables().get(i).equals(children.get(0).variables().get(i)) ||
+          !parent2.variables().get(i).equals(children.get(1).variables().get(i))) {
+        atLeastOneDifferent = true;
+        break;
+      }
+    }
+    assertTrue(atLeastOneDifferent, "At least one variable should be different after crossover");
   }
 
   @Test
