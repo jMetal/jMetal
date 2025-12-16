@@ -10,28 +10,28 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 
-@DisplayName("Class Vaidyanathan2004")
-class Vaidyanathan2004Test {
+@DisplayName("Class RWA9")
+class RWA9Test {
   private DoubleProblem problem;
 
   @BeforeEach
   void setup() {
-    problem = new Vaidyanathan2004();
+    problem = new RWA9();
   }
 
   @DisplayName("Its main properties are:")
   @Nested
   class MainProperties {
     @Test
-    @DisplayName("Variables: 4")
+    @DisplayName("Variables: 6")
     void theNumberOfVariablesIsCorrect() {
-      assertEquals(4, problem.numberOfVariables());
+      assertEquals(6, problem.numberOfVariables());
     }
 
     @Test
-    @DisplayName("Objectives: 4")
+    @DisplayName("Objectives: 5")
     void theNumberOfObjectivesIsCorrect() {
-      assertEquals(4, problem.numberOfObjectives());
+      assertEquals(5, problem.numberOfObjectives());
     }
 
     @Test
@@ -41,9 +41,9 @@ class Vaidyanathan2004Test {
     }
 
     @Test
-    @DisplayName("Name: Vaidyanathan2004")
+    @DisplayName("Name: Chen2015")
     void theNameIsCorrect() {
-      assertEquals("Vaidyanathan2004", problem.name());
+      assertEquals("RWA9", problem.name());
     }
   }
 
@@ -53,10 +53,12 @@ class Vaidyanathan2004Test {
     @ParameterizedTest
     @DisplayName("Lower bounds: ")
     @CsvSource({
-        "0, 0.0",
-        "1, 0.0",
-        "2, 0.0",
-        "3, 0.0"
+        "0, 17.5",
+        "1, 17.5",
+        "2, 2.0",
+        "3, 2.0",
+        "4, 5.0",
+        "5, 5.0"
     })
     void checkLowerBounds(int boundIndex, double lowerBound) {
       assertEquals(lowerBound, problem.variableBounds().get(boundIndex).getLowerBound());
@@ -65,10 +67,12 @@ class Vaidyanathan2004Test {
     @ParameterizedTest
     @DisplayName("Upper bounds: ")
     @CsvSource({
-        "0, 1.0",
-        "1, 1.0",
-        "2, 1.0",
-        "3, 1.0"
+        "0, 22.5",
+        "1, 22.5",
+        "2, 3.0",
+        "3, 3.0",
+        "4, 7.0",
+        "5, 6.0"
     })
     void checkUpperBounds(int boundIndex, double upperBound) {
       assertEquals(upperBound, problem.variableBounds().get(boundIndex).getUpperBound());

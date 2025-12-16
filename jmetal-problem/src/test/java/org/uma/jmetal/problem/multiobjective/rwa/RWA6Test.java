@@ -10,13 +10,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 
-@DisplayName("Class Xu2020")
-class Xu2020Test {
+@DisplayName("Class RWA6")
+class RWA6Test {
   private DoubleProblem problem;
 
   @BeforeEach
   void setup() {
-    problem = new Xu2020();
+    problem = new RWA6();
   }
 
   @DisplayName("Its main properties are:")
@@ -43,7 +43,7 @@ class Xu2020Test {
     @Test
     @DisplayName("Name: Xu2020")
     void theNameIsCorrect() {
-      assertEquals("Xu2020", problem.name());
+      assertEquals("RWA6", problem.name());
     }
   }
 

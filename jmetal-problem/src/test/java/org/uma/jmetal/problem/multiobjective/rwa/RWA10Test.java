@@ -10,28 +10,29 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 
-@DisplayName("Class Goel2007")
-class Goel2007Test {
-  private DoubleProblem problem;
+@DisplayName("Class RWA10")
+class RWA10Test {
+  private DoubleProblem problem ;
 
   @BeforeEach
   void setup() {
-    problem = new Goel2007();
+    problem = new RWA10() ;
   }
 
   @DisplayName("Its main properties are:")
   @Nested
   class MainProperties {
+
     @Test
-    @DisplayName("Variables: 4")
+    @DisplayName("Variables: 3")
     void theNumberOfVariablesIsCorrect() {
-      assertEquals(4, problem.numberOfVariables());
+      assertEquals(3, problem.numberOfVariables());
     }
 
     @Test
-    @DisplayName("Objectives: 3")
+    @DisplayName("Objectives: 7")
     void theNumberOfObjectivesIsCorrect() {
-      assertEquals(3, problem.numberOfObjectives());
+      assertEquals(7, problem.numberOfObjectives());
     }
 
     @Test
@@ -41,9 +42,9 @@ class Goel2007Test {
     }
 
     @Test
-    @DisplayName("Name: Goel2007")
+    @DisplayName("Name: Ahmad2017")
     void theNameIsCorrect() {
-      assertEquals("Goel2007", problem.name());
+      assertEquals("RWA10", problem.name()) ;
     }
   }
 
@@ -53,25 +54,23 @@ class Goel2007Test {
     @ParameterizedTest
     @DisplayName("Lower bounds: ")
     @CsvSource({
-        "0, 0.0",
-        "1, 0.0",
-        "2, 0.0",
-        "3, 0.0"
+        "0, 10.0",
+        "1, 10.0",
+        "2, 150.0"
     })
     void checkLowerBounds(int boundIndex, double lowerBound) {
       assertEquals(lowerBound, problem.variableBounds().get(boundIndex).getLowerBound());
     }
-
     @ParameterizedTest
     @DisplayName("Upper bounds: ")
     @CsvSource({
-        "0, 1.0",
-        "1, 1.0",
-        "2, 1.0",
-        "3, 1.0"
+        "0, 50.0",
+        "1, 50.0",
+        "2, 170.0"
     })
     void checkUpperBounds(int boundIndex, double upperBound) {
       assertEquals(upperBound, problem.variableBounds().get(boundIndex).getUpperBound());
     }
   }
 }
+
