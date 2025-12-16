@@ -11,11 +11,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
  */
 
-public class Ganesan2013 extends AbstractDoubleProblem {
+public class RWA8 extends AbstractDoubleProblem {
 
-  public Ganesan2013() {
+  public RWA8() {
     numberOfObjectives(3);
-    name("Ganesan2013") ;
+    name("RWA8") ;
 
     List<Double> lowerLimit = List.of(0.25, 10000.0, 600.0) ;
     List<Double> upperLimit = List.of(0.55, 20000.0, 1100.0) ;

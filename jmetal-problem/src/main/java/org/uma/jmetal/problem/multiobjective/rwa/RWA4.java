@@ -9,12 +9,12 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * multi-objective evolutionary algorithms: A test suite of box-constrained real-world
  * problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
  */
-public class Subasi2016 extends AbstractDoubleProblem {
-  public Subasi2016() {
+public class RWA4 extends AbstractDoubleProblem {
+  public RWA4() {
     numberOfObjectives(2);
     List<Double> lowerLimit = List.of(20.0, 6.0, 20.0, 0.0, 8000.0) ;
     List<Double> upperLimit = List.of(60.0, 15.0, 40.0, 30.0, 25000.0) ;
-    name("Subasi2016");
+    name("RWA4");
 
     variableBounds(lowerLimit, upperLimit);
   }

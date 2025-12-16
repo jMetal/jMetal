@@ -9,11 +9,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * multi-objective evolutionary algorithms: A test suite of box-constrained real-world
  * problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
  */
-public class Gao2020 extends AbstractDoubleProblem {
+public class RWA7 extends AbstractDoubleProblem {
 
-  public Gao2020() {
+  public RWA7() {
     numberOfObjectives(3);
-    name("Gao2020");
+    name("RWA7");
 
     List<Double> lowerLimit = List.of(40.0, 0.35, 333.0, 20.0, 3000.0, 0.1, 308.0, 150.0, 0.1);
     List<Double> upperLimit = List.of(100.0, 0.5, 363.0, 40.0, 4000.0, 3.0, 328.0, 200.0, 2.0);

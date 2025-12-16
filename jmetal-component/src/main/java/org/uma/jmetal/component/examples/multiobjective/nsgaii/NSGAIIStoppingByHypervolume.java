@@ -11,6 +11,7 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -36,6 +37,7 @@ public class NSGAIIStoppingByHypervolume  {
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+    problem = new ZDT1(2048);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
@@ -51,7 +53,7 @@ public class NSGAIIStoppingByHypervolume  {
     TerminationByQualityIndicator termination = new TerminationByQualityIndicator(
             new PISAHypervolume(),
             readVectors(referenceParetoFront, ","),
-            0.95, 150000);
+            0.95, 2000000);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
         problem,

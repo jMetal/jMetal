@@ -11,11 +11,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * multi-objective evolutionary algorithms: A test suite of box-constrained real-world
  * problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
  */
-public class Liao2008 extends AbstractDoubleProblem {
+public class RWA2 extends AbstractDoubleProblem {
 
-  public Liao2008() {
+  public RWA2() {
     numberOfObjectives(3);
-    name("Liao2008");
+    name("RWA2");
 
     int numberOfVariables = 5;
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);

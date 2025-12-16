@@ -13,11 +13,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
  */
 
-public class Ahmad2017 extends AbstractDoubleProblem {
+public class RWA10 extends AbstractDoubleProblem {
 
-  public Ahmad2017() {
+  public RWA10() {
     numberOfObjectives(7);
-    name("Ahmad2017");
+    name("RWA10");
 
     List<Double> lowerLimit = List.of(10.0, 10.0, 150.0);
     List<Double> upperLimit = List.of(50.0, 50.0, 170.0);
