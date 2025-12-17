@@ -13,10 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.TournamentReplacement;
-import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 @DisplayName("TournamentReplacement tests")
 class TournamentReplacementTest {
@@ -26,15 +23,13 @@ class TournamentReplacementTest {
   class ConstructorTests {
 
     @Test
-    @DisplayName("Given preference constructor, when getTournamentSize is called, then returns default value")
-    void givenPreferenceConstructor_whenGetTournamentSizeIsCalled_thenReturnsDefaultValue() {
+    @DisplayName("Given default constructor, when getTournamentSize is called, then returns default value")
+    void givenDefaultConstructor_whenGetTournamentSizeIsCalled_thenReturnsDefaultValue() {
       // Arrange
-      var preference = new RankingAndDensityEstimatorPreference<DoubleSolution>(
-          new FastNonDominatedSortRanking<>(),
-          new CrowdingDistanceDensityEstimator<>());
+      Comparator<DoubleSolution> comparator = Comparator.comparingDouble(s -> s.objectives()[0]);
 
       // Act
-      TournamentReplacement<DoubleSolution> replacement = new TournamentReplacement<>(preference);
+      TournamentReplacement<DoubleSolution> replacement = new TournamentReplacement<>(comparator);
 
       // Assert
       assertThat(replacement.getTournamentSize())
@@ -42,28 +37,11 @@ class TournamentReplacementTest {
     }
 
     @Test
-    @DisplayName("Given custom tournament size with preference, when getTournamentSize is called, then returns custom value")
-    void givenCustomTournamentSizeWithPreference_whenGetTournamentSizeIsCalled_thenReturnsCustomValue() {
-      // Arrange
-      var preference = new RankingAndDensityEstimatorPreference<DoubleSolution>(
-          new FastNonDominatedSortRanking<>(),
-          new CrowdingDistanceDensityEstimator<>());
-      int tournamentSize = 5;
-
-      // Act
-      TournamentReplacement<DoubleSolution> replacement =
-          new TournamentReplacement<>(tournamentSize, preference);
-
-      // Assert
-      assertThat(replacement.getTournamentSize()).isEqualTo(tournamentSize);
-    }
-
-    @Test
-    @DisplayName("Given comparator constructor, when getTournamentSize is called, then returns custom value")
-    void givenComparatorConstructor_whenGetTournamentSizeIsCalled_thenReturnsCustomValue() {
+    @DisplayName("Given custom tournament size, when getTournamentSize is called, then returns custom value")
+    void givenCustomTournamentSize_whenGetTournamentSizeIsCalled_thenReturnsCustomValue() {
       // Arrange
       Comparator<DoubleSolution> comparator = Comparator.comparingDouble(s -> s.objectives()[0]);
-      int tournamentSize = 3;
+      int tournamentSize = 5;
 
       // Act
       TournamentReplacement<DoubleSolution> replacement =
