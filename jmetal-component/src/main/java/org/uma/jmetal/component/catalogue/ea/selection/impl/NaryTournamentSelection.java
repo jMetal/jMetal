@@ -7,6 +7,23 @@ import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.solution.Solution;
 
+/**
+ * N-ary tournament selection repeatedly selects the best solution from a random subset
+ * of the population. The tournament size controls selection pressure.
+ *
+ * <p>Control parameters:
+ * <ul>
+ *   <li><b>tournamentSize</b>: Number of solutions competing in each tournament.
+ *       Range: [2, populationSize]. Default: 2 (binary tournament).
+ *       Higher values increase selection pressure.</li>
+ * </ul>
+ *
+ * <p>The matingPoolSize is not a control parameter; it is determined by the variation
+ * component based on the offspring population size.
+ *
+ * @author Antonio J. Nebro
+ * @param <S> Type of the solutions
+ */
 public class NaryTournamentSelection<S extends Solution<?>>
     implements Selection<S> {
   private org.uma.jmetal.operator.selection.impl.NaryTournamentSelection<S> selectionOperator;

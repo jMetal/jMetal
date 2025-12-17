@@ -65,7 +65,7 @@ public class NormalizedHypervolume extends QualityIndicator {
     double result = 1 - (hypervolumeValue / referenceFrontHypervolume);
 
     if  (result < 0) {
-      JMetalLogger.logger.info("The normalized hypervolue value is negative: ");
+      JMetalLogger.logger.info("The normalized hypervolume value is negative: ");
       JMetalLogger.logger.info("- HV reference front: " + referenceFrontHypervolume) ;
       JMetalLogger.logger.info("- HV current front  : " + hypervolumeValue) ;
     }
