@@ -18,11 +18,11 @@ TjMetal project Web site
    :target: https://jmetal.readthedocs.io/?badge=latest
 
 jMetal is a Java-based framework for multi-objective optimization with metaheuristics.
-The last stable version is 6.9.4.
+The last stable version is 6.10.
 The most recent documentation is hosted in https://jmetal.readthedocs.io.
 
 
-The current development version (6.9.5-SNAPSHOT) is a Maven project structured in the following sub-projects:
+The current development version (6.11-SNAPSHOT) is a Maven project structured in the following sub-projects:
 
 +---------------------+------------------------------------+
 | Sub-project         |  Contents                          | 
@@ -52,7 +52,9 @@ Related projects
 
 Changelog
 ---------
-* [12/18/2025] Added new selection (TruncationSelection, RankingSelection, StochasticUniversalSampling, BoltzmannSelection), replacement (RandomReplacement, TournamentReplacement), and solutions creation (OppositionBasedSolutionsCreation, GridSolutionsCreation, ChaosBasedSolutionsCreation) components for auto-configuration.
+* [12/18/2025] jMetal 6.10 is released.
+
+* [12/18/2025] Added new selection (TruncationSelection, RankingSelection, StochasticUniversalSampling, BoltzmannSelection), replacement (RandomReplacement, TournamentReplacement), and solutions creation (OppositionBasedSolutionsCreation, GridSolutionsCreation, ChaosBasedSolutionsCreation) components.
 
 * [12/17/2025] jMetal 6.9.4 is released.
 
