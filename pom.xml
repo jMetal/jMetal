@@ -5,7 +5,7 @@
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
-    <version>6.11-SNAPSHOT</version>
+    <version>6.10</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
