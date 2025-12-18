@@ -24,6 +24,10 @@ import org.uma.jmetal.util.bounds.Bounds;
  *
  * <p>Control parameters: None
  *
+ * <p>Reference: H.R. Tizhoosh, "Opposition-Based Learning: A New Scheme for Machine Intelligence",
+ * International Conference on Computational Intelligence for Modelling, Control and Automation
+ * (CIMCA), 2005. DOI: <a href="https://doi.org/10.1109/CIMCA.2005.1631345">10.1109/CIMCA.2005.1631345</a>
+ *
  * @author Antonio J. Nebro
  */
 public class OppositionBasedSolutionsCreation implements SolutionsCreation<DoubleSolution> {

@@ -28,6 +28,9 @@ import org.uma.jmetal.util.bounds.Bounds;
  *
  * <p>Control parameters: None
  *
+ * <p>Reference: M. Clerc, "Standard Particle Swarm Optimisation", HAL open archive, 2012.
+ * Available at: <a href="https://hal.archives-ouvertes.fr/hal-00764996">hal-00764996</a>
+ *
  * @author Antonio J. Nebro
  */
 public class GridSolutionsCreation implements SolutionsCreation<DoubleSolution> {

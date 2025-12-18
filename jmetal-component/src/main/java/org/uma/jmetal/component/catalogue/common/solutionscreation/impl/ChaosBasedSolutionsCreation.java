@@ -31,6 +31,10 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *
  * <p>Control parameters: None
  *
+ * <p>Reference: B. Alatas, E. Akin, A.B. Ozer, "Chaos embedded particle swarm optimization
+ * algorithms", Chaos, Solitons &amp; Fractals, vol. 40, no. 4, pp. 1715-1734, 2009.
+ * DOI: <a href="https://doi.org/10.1016/j.chaos.2007.09.063">10.1016/j.chaos.2007.09.063</a>
+ *
  * @author Antonio J. Nebro
  */
 public class ChaosBasedSolutionsCreation implements SolutionsCreation<DoubleSolution> {
