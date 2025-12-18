@@ -52,6 +52,8 @@ Related projects
 
 Changelog
 ---------
+* [12/18/2025] Added new selection (TruncationSelection, RankingSelection, StochasticUniversalSampling, BoltzmannSelection), replacement (RandomReplacement, TournamentReplacement), and solutions creation (OppositionBasedSolutionsCreation, GridSolutionsCreation, ChaosBasedSolutionsCreation) components for auto-configuration.
+
 * [12/17/2025] jMetal 6.9.4 is released.
 
 * [09/12/2025] jMetal 6.9.3 is released.
