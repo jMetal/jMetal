@@ -4,8 +4,8 @@ Component-based algorithms
 ==========================
 
 :Author: Antonio J. Nebro
-:Version: 1.0
-:Date: 2022-12-12
+:Version: 1.1
+:Date: 2025-12-18
 
 The design and architecture of the metaheuristics included in jMetal is probably the feature that has evolved
 the most since the start of the project in 2006. In first versions, the implementation of a metaheuristic required
@@ -245,7 +245,45 @@ The key of having a component-based architecture is to provide a catalogue of co
    :alt: Component catalogue.
 
 Each component type is included in a package containing an interface with the component name and an ``impl``
-sub-package where all the implementations of the interface are stored. For example, the ``Termination``
+sub-package where all the implementations of the interface are stored.
+
+Available Components
+~~~~~~~~~~~~~~~~~~~~
+
+**Selection Components** (``ea.selection``):
+
+- ``NaryTournamentSelection``: Best of N random solutions.
+- ``RandomSelection``: Uniform random selection.
+- ``TruncationSelection``: Deterministic selection of top-ranked solutions.
+- ``RankingSelection``: Linear ranking-based roulette wheel selection.
+- ``StochasticUniversalSampling``: Lower variance than standard roulette wheel.
+- ``BoltzmannSelection``: Temperature-controlled selection pressure (control parameter: ``temperature``).
+
+**Replacement Components** (``ea.replacement``):
+
+- ``RankingAndDensityEstimatorReplacement``: NSGA-II style replacement using ranking and crowding distance.
+- ``MuPlusLambdaReplacement``: (μ+λ) replacement strategy.
+- ``MuCommaLambdaReplacement``: (μ,λ) replacement strategy.
+- ``RandomReplacement``: Zero selection pressure baseline (random replacement).
+- ``TournamentReplacement``: Configurable pressure via tournament size.
+
+**Solutions Creation Components** (``common.solutionscreation``):
+
+- ``RandomSolutionsCreation``: Standard random initialization.
+- ``LatinHypercubeSamplingSolutionsCreation``: Stratified sampling for better coverage.
+- ``ScatterSearchSolutionsCreation``: Diverse initial population.
+- ``OppositionBasedSolutionsCreation``: Creates pairs (original + opposite mirrored across bounds center). Reference: Tizhoosh (2005) DOI:10.1109/CIMCA.2005.1631345
+- ``GridSolutionsCreation``: Deterministic grid-based initialization for uniform coverage.
+- ``ChaosBasedSolutionsCreation``: Uses logistic map chaotic sequences for quasi-random coverage. Reference: Alatas et al. (2009) DOI:10.1016/j.chaos.2007.09.063
+
+**Termination Components** (``common.termination``):
+
+- ``TerminationByEvaluations``: Stop after a maximum number of evaluations.
+- ``TerminationByComputingTime``: Stop after a given computing time.
+- ``TerminationByKeyboard``: Stop when a key is pressed.
+- ``TerminationByQualityIndicator``: Stop when quality indicator exceeds threshold.
+
+For example, the ``Termination``
 interface for termination components is as follows:
 
 .. code-block:: java
