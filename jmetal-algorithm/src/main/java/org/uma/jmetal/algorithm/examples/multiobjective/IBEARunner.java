@@ -29,8 +29,8 @@ public class IBEARunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws Exception {
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
