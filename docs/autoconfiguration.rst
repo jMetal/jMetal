@@ -4,7 +4,7 @@ Automatic design and configuration of multi-objective metaheuristics
 ====================================================================
 
 :Author: Antonio J. Nebro <ajnebro@uma.es>
-:Date: 2024-11-14
+:Date: 2025-12-18
 
 Before reading this section, readers are referred to the papers :ref:`[NLB+19] <NLB+19>` and :ref:`[DNL+22]<DNL+22>`. Please, take into account that this is a research line that is currently guiding the evolution of jMetal,
 so changes are expected in the incoming releases.
@@ -216,7 +216,7 @@ The software requirements are the following:
 
 The first step is to create a directory for the experiment. Let us called is, for example, ``iraceJMetal``. This directory must contain:
 
-* File ``jmetal-auto-6.7-SNAPSHOT-jar-with-dependencies.jar``. To generate this file, just type the following command at the root of the jMetal project:
+* File ``jmetal-auto-6.11-SNAPSHOT-jar-with-dependencies.jar``. To generate this file, just type the following command at the root of the jMetal project:
 
     .. code-block:: bash
 

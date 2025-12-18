@@ -4,8 +4,8 @@ Quality indicators
 ==================
 
 :Author: Antonio J. Nebro
-:Version: 1.0
-:Date: 2022-12-12
+:Version: 1.1
+:Date: 2025-12-18
 
 Quality indicators are entities that typically measure the convergence and/or the diversity Pareto front approximations, and most of
 them require a reference Pareto front to be applied. These indicators are located in package ``org.uma.jmetal.qualityindicator`` (sub-project ``jmetal-core``), and all of them implement the ``QualityIndicator`` abstract class:
@@ -83,7 +83,7 @@ The list of available quality indicators can be obtained by calling the class wi
 
 .. code-block:: bash
 
-  % java -cp jmetal-core/target/jmetal-core-6.0-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool
+  % java -cp jmetal-core/target/jmetal-core-6.10-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool
 
   INFO: Loggers configured with null [org.uma.jmetal.util.JMetalLogger configureLoggers]
   INFO: Parameters: indicatorName referenceFrontFile frontFile 
@@ -105,7 +105,7 @@ We can compute a single indicator, as the inverted generational distance:
 
 .. code-block:: bash
 
- % java -cp jmetal-core/target/jmetal-core-6.0-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool IGD FUN.csv resources/referenceFrontsCSV/ZDT1.csv
+ % java -cp jmetal-core/target/jmetal-core-6.10-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool IGD FUN.csv resources/referenceFrontsCSV/ZDT1.csv
  
   INFO: Loggers configured with null [org.uma.jmetal.util.JMetalLogger configureLoggers]
   INFO: The fronts are normalized before computing the indicators [org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators]
@@ -115,7 +115,7 @@ Or all the quality indicators if we use ``ALL`` as indicator:
 
 .. code-block:: bash
 
-  % java -cp jmetal-core/target/jmetal-core-6.0-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool ALL FUN.csv resources/referenceFrontsCSV/ZDT1.csv
+  % java -cp jmetal-core/target/jmetal-core-6.10-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool ALL FUN.csv resources/referenceFrontsCSV/ZDT1.csv
 
   INFO: Loggers configured with null [org.uma.jmetal.util.JMetalLogger configureLoggers]
   INFO: The fronts are normalized before computing the indicators [org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators]

@@ -4,8 +4,8 @@ Project structure
 =================
 
 :Author: Antonio J. Nebro
-:Version: 1.0
-:Date: 2022-11-30
+:Version: 1.1
+:Date: 2025-12-18
 
 The jMetal project is a Maven project structured in the following sub-projects:
 
@@ -40,7 +40,7 @@ file of your project would contain then:
     <dependency>
       <groupId>org.uma.jmetal</groupId>
       <artifactId>jmetal-algorithm</artifactId>
-      <version>6.0</version>
+      <version>6.10</version>
     </dependency>
    </dependencies>
 

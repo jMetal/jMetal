@@ -18,13 +18,13 @@
 # -- Project information -----------------------------------------------------
 
 project = 'jmetal'
-copyright = '2022, Antonio J. Nebro'
+copyright = '2025, Antonio J. Nebro'
 author = 'Antonio J. Nebro'
 
 highlight_language = 'java'
 
 # The full version, including alpha/beta/rc tags
-release = '6.0-SNAPSHOT'
+release = '6.11-SNAPSHOT'
 
 
 # -- General configuration ---------------------------------------------------
