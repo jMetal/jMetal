@@ -2,7 +2,6 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaiii;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.EnvironmentalSelection;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.ReferencePoint;
@@ -22,48 +21,77 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
  */
 @SuppressWarnings("serial")
 public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
-  protected int iterations ;
-  protected int maxIterations ;
+  protected int iterations;
+  protected int maxIterations;
 
-  protected SolutionListEvaluator<S> evaluator ;
+  protected SolutionListEvaluator<S> evaluator;
 
-  protected int numberOfDivisions  ;
-  protected List<ReferencePoint<S>> referencePoints = new Vector<>() ;
+  protected int numberOfDivisions;
+  protected int secondLayerDivisions;
+  protected List<ReferencePoint<S>> referencePoints = new ArrayList<>();
 
   /** Constructor */
   public NSGAIII(NSGAIIIBuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
-    super(builder.getProblem()) ;
-    maxIterations = builder.getMaxIterations() ;
+    super(builder.getProblem());
+    maxIterations = builder.getMaxIterations();
 
-    crossoverOperator =  builder.getCrossoverOperator() ;
-    mutationOperator  =  builder.getMutationOperator() ;
-    selectionOperator =  builder.getSelectionOperator() ;
+    crossoverOperator = builder.getCrossoverOperator();
+    mutationOperator = builder.getMutationOperator();
+    selectionOperator = builder.getSelectionOperator();
 
-    evaluator = builder.getEvaluator() ;
+    evaluator = builder.getEvaluator();
 
     /// NSGAIII
-    numberOfDivisions = builder.getNumberOfDivisions() ;
+    numberOfDivisions = builder.getNumberOfDivisions();
+    secondLayerDivisions = builder.getSecondLayerDivisions();
 
-    (new ReferencePoint<S>()).generateReferencePoints(referencePoints,getProblem().numberOfObjectives() , numberOfDivisions);
+    // Generate first layer (outer) reference points
+    (new ReferencePoint<S>()).generateReferencePoints(referencePoints, getProblem().numberOfObjectives(),
+        numberOfDivisions);
+
+    // Generate second layer (inner) reference points if enabled
+    if (secondLayerDivisions > 0) {
+      List<ReferencePoint<S>> innerLayerPoints = new ArrayList<>();
+      (new ReferencePoint<S>()).generateReferencePoints(innerLayerPoints, getProblem().numberOfObjectives(),
+          secondLayerDivisions);
+
+      // Shrink inner layer points towards the center (0.5, 0.5, ..., 0.5)
+      double shrinkFactor = 0.5;
+      for (ReferencePoint<S> point : innerLayerPoints) {
+        for (int i = 0; i < point.position.size(); i++) {
+          point.position.set(i, shrinkFactor + point.position.get(i) * shrinkFactor);
+        }
+      }
+      // Normalize inner layer points to sum to 1
+      for (ReferencePoint<S> point : innerLayerPoints) {
+        double sum = point.position.stream().mapToDouble(Double::doubleValue).sum();
+        for (int i = 0; i < point.position.size(); i++) {
+          point.position.set(i, point.position.get(i) / sum);
+        }
+      }
+      referencePoints.addAll(innerLayerPoints);
+      JMetalLogger.logger.info("Two-layer reference points: outer=" + (referencePoints.size() - innerLayerPoints.size())
+          + ", inner=" + innerLayerPoints.size());
+    }
 
     int populationSize = referencePoints.size();
-    while (populationSize%4>0) {
+    while (populationSize % 4 > 0) {
       populationSize++;
     }
 
     setMaxPopulationSize(populationSize);
 
-    JMetalLogger.logger.info("rpssize: " + referencePoints.size()); ;
+    JMetalLogger.logger.info("rpssize: " + referencePoints.size());
   }
 
   @Override
   protected void initProgress() {
-    iterations = 1 ;
+    iterations = 1;
   }
 
   @Override
   protected void updateProgress() {
-    iterations++ ;
+    iterations++;
   }
 
   @Override
@@ -73,17 +101,17 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluator.evaluate(population, getProblem()) ;
+    population = evaluator.evaluate(population, getProblem());
 
-    return population ;
+    return population;
   }
 
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = new ArrayList<>(population.size()) ;
+    List<S> matingPopulation = new ArrayList<>(population.size());
     for (int i = 0; i < getMaxPopulationSize(); i++) {
       S solution = selectionOperator.execute(population);
-      matingPopulation.add(solution) ;
+      matingPopulation.add(solution);
     }
 
     return matingPopulation;
@@ -92,10 +120,10 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   @Override
   protected List<S> reproduction(List<S> population) {
     List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i+=2) {
+    for (int i = 0; i < getMaxPopulationSize(); i += 2) {
       List<S> parents = new ArrayList<>(2);
       parents.add(population.get(i));
-      parents.add(population.get(Math.min(i + 1, getMaxPopulationSize()-1)));
+      parents.add(population.get(Math.min(i + 1, getMaxPopulationSize() - 1)));
 
       List<S> offspring = crossoverOperator.execute(parents);
 
@@ -105,28 +133,27 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
       offspringPopulation.add(offspring.get(0));
       offspringPopulation.add(offspring.get(1));
     }
-    return offspringPopulation ;
+    return offspringPopulation;
   }
 
-  
   private List<ReferencePoint<S>> getReferencePointsCopy() {
-	  List<ReferencePoint<S>> copy = new ArrayList<>();
-	  for (ReferencePoint<S> r : this.referencePoints) {
-		  copy.add(new ReferencePoint<>(r));
-	  }
-	  return copy;
+    List<ReferencePoint<S>> copy = new ArrayList<>();
+    for (ReferencePoint<S> r : this.referencePoints) {
+      copy.add(new ReferencePoint<>(r));
+    }
+    return copy;
   }
-  
+
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-   
-	List<S> jointPopulation = new ArrayList<>();
-    jointPopulation.addAll(population) ;
-    jointPopulation.addAll(offspringPopulation) ;
+
+    List<S> jointPopulation = new ArrayList<>();
+    jointPopulation.addAll(population);
+    jointPopulation.addAll(offspringPopulation);
 
     Ranking<S> ranking = computeRanking(jointPopulation);
-    
-    //List<Solution> pop = crowdingDistanceSelection(ranking);
+
+    // List<Solution> pop = crowdingDistanceSelection(ranking);
     List<S> last = new ArrayList<>();
     List<S> pop = new ArrayList<>();
     List<List<S>> fronts = new ArrayList<>();
@@ -143,40 +170,43 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
     if (pop.size() == this.getMaxPopulationSize())
       return pop;
-    
-    // A copy of the reference list should be used as parameter of the environmental selection
-    EnvironmentalSelection<S> selection =
-            new EnvironmentalSelection<>(fronts,getMaxPopulationSize() - pop.size(),getReferencePointsCopy(),
-                    getProblem().numberOfObjectives());
-    
+
+    // A copy of the reference list should be used as parameter of the environmental
+    // selection
+    EnvironmentalSelection<S> selection = new EnvironmentalSelection<>(fronts, getMaxPopulationSize() - pop.size(),
+        getReferencePointsCopy(),
+        getProblem().numberOfObjectives());
+
     var choosen = selection.execute(last);
     pop.addAll(choosen);
-     
+
     return pop;
   }
 
   @Override
   public List<S> result() {
-    return getNonDominatedSolutions(getPopulation()) ;
+    return getNonDominatedSolutions(getPopulation());
   }
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking<S> ranking = new FastNonDominatedSortRanking<>() ;
-    ranking.compute(solutionList) ;
+    Ranking<S> ranking = new FastNonDominatedSortRanking<>();
+    ranking.compute(solutionList);
 
-    return ranking ;
+    return ranking;
   }
 
   protected List<S> getNonDominatedSolutions(List<S> solutionList) {
-    return SolutionListUtils.getNonDominatedSolutions(solutionList) ;
+    return SolutionListUtils.getNonDominatedSolutions(solutionList);
   }
 
-  @Override public String name() {
-    return "NSGAIII" ;
+  @Override
+  public String name() {
+    return "NSGAIII";
   }
 
-  @Override public String description() {
-    return "Nondominated Sorting Genetic Algorithm version III" ;
+  @Override
+  public String description() {
+    return "Nondominated Sorting Genetic Algorithm version III";
   }
 
 }

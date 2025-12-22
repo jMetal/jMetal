@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.examples.multiobjective;
+package org.uma.jmetal.algorithm.examples.multiobjective.nsgaiii;
 
 import java.util.List;
 import org.uma.jmetal.algorithm.examples.AlgorithmRunner;

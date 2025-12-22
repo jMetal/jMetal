@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.examples.multiobjective;
+package org.uma.jmetal.algorithm.examples.multiobjective.nsgaiii;
 
 import java.io.FileNotFoundException;
 import java.util.List;
