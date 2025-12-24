@@ -50,23 +50,20 @@ public class NSGAIIBuilder<S extends Solution<?>> {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    this.replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
+    this.replacement = new RankingAndDensityEstimatorReplacement<>(
+        ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
-    this.variation =
-        new CrossoverAndMutationVariation<>(
-            offspringPopulationSize, crossover, mutation);
+    this.variation = new CrossoverAndMutationVariation<>(
+        offspringPopulationSize, crossover, mutation);
 
-    int tournamentSize = 2 ;
-    this.selection =
-        new NaryTournamentSelection<>(
-            tournamentSize,
-            variation.matingPoolSize(),
-            new MultiComparator<>(
-                Arrays.asList(
-                    Comparator.comparing(ranking::getRank),
-                    Comparator.comparing(densityEstimator::value).reversed())));
+    int tournamentSize = 2;
+    this.selection = new NaryTournamentSelection<>(
+        tournamentSize,
+        variation.matingPoolSize(),
+        new MultiComparator<>(
+            Arrays.asList(
+                Comparator.comparing(ranking::getRank),
+                Comparator.comparing(densityEstimator::value).reversed())));
 
     this.termination = new TerminationByEvaluations(25000);
 
@@ -81,9 +78,26 @@ public class NSGAIIBuilder<S extends Solution<?>> {
 
   public NSGAIIBuilder<S> setRanking(Ranking<S> ranking) {
     this.ranking = ranking;
-    this.replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
+    this.replacement = new RankingAndDensityEstimatorReplacement<>(
+        ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
+
+    return this;
+  }
+
+  public NSGAIIBuilder<S> setDensityEstimator(DensityEstimator<S> densityEstimator) {
+    this.densityEstimator = densityEstimator;
+    this.replacement = new RankingAndDensityEstimatorReplacement<>(
+        ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
+
+    // Update selection to use new density estimator
+    int tournamentSize = 2;
+    this.selection = new NaryTournamentSelection<>(
+        tournamentSize,
+        variation.matingPoolSize(),
+        new MultiComparator<>(
+            java.util.Arrays.asList(
+                java.util.Comparator.comparing(ranking::getRank),
+                java.util.Comparator.comparing(densityEstimator::value).reversed())));
 
     return this;
   }
@@ -95,19 +109,19 @@ public class NSGAIIBuilder<S extends Solution<?>> {
   }
 
   public NSGAIIBuilder<S> setCreateInitialPopulation(SolutionsCreation<S> solutionsCreation) {
-    this.createInitialPopulation = solutionsCreation ;
+    this.createInitialPopulation = solutionsCreation;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIBuilder<S> setSelection(Selection<S> selection) {
-    this.selection = selection ;
+    this.selection = selection;
 
-    return this ;
+    return this;
   }
 
   public EvolutionaryAlgorithm<S> build() {
-      return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-          selection, variation, replacement);
+    return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
+        selection, variation, replacement);
   }
 }
