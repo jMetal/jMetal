@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 
 @DisplayName("Class RWA3")
-class RWA3Test {
+class RWA8Test {
   private DoubleProblem problem;
 
   @BeforeEach
@@ -23,9 +23,9 @@ class RWA3Test {
   @Nested
   class MainProperties {
     @Test
-    @DisplayName("Variables: 5")
+    @DisplayName("Variables: 3")
     void theNumberOfVariablesIsCorrect() {
-      assertEquals(5, problem.numberOfVariables());
+      assertEquals(3, problem.numberOfVariables());
     }
 
     @Test
@@ -41,7 +41,7 @@ class RWA3Test {
     }
 
     @Test
-    @DisplayName("Name: Padhi2016")
+    @DisplayName("Name: Ganesan2013")
     void theNameIsCorrect() {
       assertEquals("RWA3", problem.name());
     }
@@ -53,11 +53,9 @@ class RWA3Test {
     @ParameterizedTest
     @DisplayName("Lower bounds: ")
     @CsvSource({
-        "0, 1.0",
-        "1, 10.0",
-        "2, 850.0",
-        "3, 20.0",
-        "4, 4.0"
+        "0, 0.25",
+        "1, 10000.0",
+        "2, 600.0"
     })
     void checkLowerBounds(int boundIndex, double lowerBound) {
       assertEquals(lowerBound, problem.variableBounds().get(boundIndex).getLowerBound());
@@ -66,11 +64,9 @@ class RWA3Test {
     @ParameterizedTest
     @DisplayName("Upper bounds: ")
     @CsvSource({
-        "0, 1.4",
-        "1, 26.0",
-        "2, 1650.0",
-        "3, 40.0",
-        "4, 8.0"
+        "0, 0.55",
+        "1, 20000.0",
+        "2, 1100.0"
     })
     void checkUpperBounds(int boundIndex, double upperBound) {
       assertEquals(upperBound, problem.variableBounds().get(boundIndex).getUpperBound());

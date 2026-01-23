@@ -10,81 +10,68 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 
-  @DisplayName("Class RWA7")
-  class RWA7Test {
+@DisplayName("Class RWA7")
+class RWA1Test {
+  private DoubleProblem problem;
 
-    private DoubleProblem problem;
+  @BeforeEach
+  void setup() {
+    problem = new RWA7();
+  }
 
-    @BeforeEach
-    void setup() {
-      problem = new RWA7();
+  @DisplayName("Its main properties are:")
+  @Nested
+  class MainProperties {
+    @Test
+    @DisplayName("Variables: 4")
+    void theNumberOfVariablesIsCorrect() {
+      assertEquals(4, problem.numberOfVariables());
     }
 
-    @DisplayName("Its main properties are:")
-    @Nested
-    class MainProperties {
-
-      @Test
-      @DisplayName("Variables: 9")
-      void theNumberOfVariablesIsCorrect() {
-        assertEquals(9, problem.numberOfVariables());
-      }
-
-      @Test
-      @DisplayName("Objectives: 3")
-      void theNumberOfObjectivesIsCorrect() {
-        assertEquals(3, problem.numberOfObjectives());
-      }
-
-      @Test
-      @DisplayName("Constraints: 0")
-      void theNumberOfConstraintsIsCorrect() {
-        assertEquals(0, problem.numberOfConstraints());
-      }
-
-      @Test
-      @DisplayName("Name: Gao2020")
-      void theNameIsCorrect() {
-        assertEquals("RWA7", problem.name());
-      }
+    @Test
+    @DisplayName("Objectives: 3")
+    void theNumberOfObjectivesIsCorrect() {
+      assertEquals(3, problem.numberOfObjectives());
     }
 
-    @Nested
-    @DisplayName("Its bounds are:")
-    class Bounds {
+    @Test
+    @DisplayName("Constraints: 0")
+    void theNumberOfConstraintsIsCorrect() {
+      assertEquals(0, problem.numberOfConstraints());
+    }
 
-      @ParameterizedTest
-      @DisplayName("Lower bounds: ")
-      @CsvSource({
-          "0, 40.0",
-          "1, 0.35",
-          "2, 333.0",
-          "3, 20.0",
-          "4, 3000.0",
-          "5, 0.1",
-          "6, 308.0",
-          "7, 150.0",
-          "8, 0.1"
-      })
-      void checkLowerBounds(int boundIndex, double lowerBound) {
-        assertEquals(lowerBound, problem.variableBounds().get(boundIndex).getLowerBound());
-      }
-
-      @ParameterizedTest
-      @DisplayName("Upper bounds: ")
-      @CsvSource({
-          "0, 100.0",
-          "1, 0.5",
-          "2, 363.0",
-          "3, 40.0",
-          "4, 4000.0",
-          "5, 3.0",
-          "6, 328.0",
-          "7, 200.0",
-          "8, 2.0"
-      })
-      void checkUpperBounds(int boundIndex, double upperBound) {
-        assertEquals(upperBound, problem.variableBounds().get(boundIndex).getUpperBound());
-      }
+    @Test
+    @DisplayName("Name: Goel2007")
+    void theNameIsCorrect() {
+      assertEquals("RWA7", problem.name());
     }
   }
+
+  @Nested
+  @DisplayName("Its bounds are:")
+  class Bounds {
+    @ParameterizedTest
+    @DisplayName("Lower bounds: ")
+    @CsvSource({
+        "0, 0.0",
+        "1, 0.0",
+        "2, 0.0",
+        "3, 0.0"
+    })
+    void checkLowerBounds(int boundIndex, double lowerBound) {
+      assertEquals(lowerBound, problem.variableBounds().get(boundIndex).getLowerBound());
+    }
+
+    @ParameterizedTest
+    @DisplayName("Upper bounds: ")
+    @CsvSource({
+        "0, 1.0",
+        "1, 1.0",
+        "2, 1.0",
+        "3, 1.0"
+    })
+    void checkUpperBounds(int boundIndex, double upperBound) {
+      assertEquals(upperBound, problem.variableBounds().get(boundIndex).getUpperBound());
+    }
+  }
+}

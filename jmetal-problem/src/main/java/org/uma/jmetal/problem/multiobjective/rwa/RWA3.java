@@ -6,53 +6,48 @@ import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
- * Problem Padhi2016 (RWA4) described in the paper "Engineering applications of
+ * Problem Ganesan2013 (RWA3) described in the paper "Engineering applications of
  * multi-objective evolutionary algorithms: A test suite of box-constrained real-world
  * problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
  */
+
 public class RWA3 extends AbstractDoubleProblem {
 
   public RWA3() {
     numberOfObjectives(3);
-    name("RWA3");
+    name("RWA3") ;
 
-    List<Double> lowerLimit = List.of(1.0, 10.0, 850.0, 20.0, 4.0) ;
-    List<Double> upperLimit = List.of(1.4, 26.0, 1650.0, 40.0, 8.0) ;
+    List<Double> lowerLimit = List.of(0.25, 10000.0, 600.0) ;
+    List<Double> upperLimit = List.of(0.55, 20000.0, 1100.0) ;
 
     variableBounds(lowerLimit, upperLimit);
   }
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = solution.variables().get(0);
-    double x2 = solution.variables().get(1);
-    double x3 = solution.variables().get(2);
-    double x4 = solution.variables().get(3);
-    double x5 = solution.variables().get(4);
-    double CR, Ra, DD;
+    double O2CH4 = solution.variables().get(0);
+    double GV = solution.variables().get(1);
+    double T = solution.variables().get(2);
 
-    CR = 1.74 + 0.42 * x1 - 0.27 * x2 + 0.087 * x3 - 0.19 * x4 + 0.18 * x5
-        + 0.11 * x1 * x1 + 0.036 * x4 * x4 - 0.025 * x5 * x5
-        + 0.044 * x1 * x2 + 0.034 * x1 * x4 + 0.17 * x1 * x5
-        - 0.028 * x2 * x4 + 0.093 * x3 * x4 - 0.033 * x4 * x5;
+    double HC4_conversion, CO_selectivity, H2_CO_ratio;
 
-    Ra = 2.19 + 0.26 * x1 - 0.088 * x2 + 0.037 * x3 - 0.16 * x4 + 0.069 * x5
-        + 0.036 * x1 * x1 + 0.11 * x1 * x3 - 0.077 * x1 * x4
-        - 0.075 * x2 * x3 + 0.054 * x2 * x4 + 0.090 * x3 * x5
-        + 0.041 * x4 * x5;
+    HC4_conversion = (-8.87e-6)
+        * (86.74 + 14.6 * O2CH4 - 3.06 * GV + 18.82 * T + 3.14 * O2CH4 * GV
+        - 6.91 * O2CH4 * O2CH4 - 13.31 * T * T);
 
-    DD = 0.095 + 0.013 * x1 - 8.625 * 1e-003 * x2 - 5.458 * 1e-003 * x3
-        - 0.012 * x4 + 1.462 * 1e-003 * x1 * x1 - 6.635 * 1e-004 * x2 * x2
-        - 1.788 * 1e-003 * x4 * x4 - 0.011 * x1 * x2
-        - 6.188 * 1e-003 * x1 * x3 + 8.937 * 1e-003 * x1 * x4
-        - 4.563 * 1e-003 * x1 * x5 - 0.012 * x2 * x3
-        - 1.063 * 1e-003 * x2 * x4 + 2.438 * 1e-003 * x2 * x5
-        - 1.937 * 1e-003 * x3 * x4 - 1.188 * 1e-003 * x3 * x5
-        - 3.312 * 1e-003 * x4 * x5;
+    CO_selectivity = (-2.152e-9)
+        * (39.46 + 5.98 * O2CH4 - 2.4 * GV + 13.06 * T + 2.5 * O2CH4 * GV
+        + 1.64 * GV * T - 3.9 * O2CH4 * O2CH4 - 10.15 * T * T
+        - 3.69 * GV * GV * O2CH4) + 45.7;
 
-    solution.objectives()[0] = -CR; /* Maximization */
-    solution.objectives()[1] = Ra; /* Minimization */
-    solution.objectives()[2] = DD; /* Minimization */
+    H2_CO_ratio = (4.425e-10)
+        * (1.29 - 0.45 * T - 0.112 * O2CH4 * GV - 0.142 * T * GV
+        + 0.109 * O2CH4 * O2CH4 + 0.405 * T * T
+        + 0.167 * T * T * GV) + 0.18;
+
+    solution.objectives()[0] = -HC4_conversion; /* maximization */
+    solution.objectives()[1] = -CO_selectivity; /* maximization */
+    solution.objectives()[2] = H2_CO_ratio; /* minimization */
 
     return solution ;
   }

@@ -1,69 +1,50 @@
 package org.uma.jmetal.problem.multiobjective.rwa;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
- * Problem Goel2007 (RWA7) described in the paper "Engineering applications of
+ * Problem Subasi2016 (RWA1) described in the paper "Engineering applications of
  * multi-objective evolutionary algorithms: A test suite of box-constrained real-world
  * problems". DOI: https://doi.org/10.1016/j.engappai.2023.106192
  */
 public class RWA1 extends AbstractDoubleProblem {
-
   public RWA1() {
-    numberOfObjectives(3);
+    numberOfObjectives(2);
+    List<Double> lowerLimit = List.of(20.0, 6.0, 20.0, 0.0, 8000.0) ;
+    List<Double> upperLimit = List.of(60.0, 15.0, 40.0, 30.0, 25000.0) ;
     name("RWA1");
-
-    int numberOfVariables = 4 ;
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
-
-    for (int i = 0; i < numberOfVariables; i++) {
-      lowerLimit.add(0.0);
-      upperLimit.add(1.0);
-    }
 
     variableBounds(lowerLimit, upperLimit);
   }
 
-
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double a = solution.variables().get(0);
-    double DHA = solution.variables().get(1);
-    double DOA = solution.variables().get(2);
-    double OPTT = solution.variables().get(3);
-    double Xcc;
-    double TFmax;
-    double TTmax;
+    double H = solution.variables().get(0);
+    double t = solution.variables().get(1);
+    double Sy = solution.variables().get(2);
+    double theta = solution.variables().get(3);
+    double Re = solution.variables().get(4);
 
-    Xcc = 0.153 - 0.322 * a + 0.396 * DHA + 0.424 * DOA + 0.0226 * OPTT
-        + 0.175 * a * a + 0.0185 * DHA * a - 0.0701 * DHA * DHA
-        - 0.251 * DOA * a + 0.179 * DOA * DHA + 0.0150 * DOA * DOA
-        + 0.0134 * OPTT * a + 0.0296 * OPTT * DHA + 0.0752 * OPTT * DOA
-        + 0.0192 * OPTT * OPTT;
+    double f;
+    double Nu;
 
-    TFmax = 0.692 + 0.477 * a - 0.687 * DHA - 0.080 * DOA - 0.0650 * OPTT
-        - 0.167 * a * a - 0.0129 * DHA * a + 0.0796 * DHA * DHA
-        - 0.0634 * DOA * a - 0.0257 * DOA * DHA + 0.0877 * DOA * DOA
-        - 0.0521 * OPTT * a + 0.00156 * OPTT * DHA + 0.00198 * OPTT * DOA
-        + 0.0184 * OPTT * OPTT;
+    Nu = 89.027 + 0.300 * H - 0.096 * t - 1.124 * Sy - 0.968 * theta
+        + 4.148 * 10e-3 * Re + 0.0464 * H * t - 0.0244 * H * Sy
+        + 0.0159 * H * theta + 4.151 * 10e-5 * H * Re + 0.1111 * t * Sy
+        - 4.121 * 10e-5 * Sy * Re + 4.192 * 10e-5 * theta * Re;
 
-    TTmax = 0.370 - 0.205 * a + 0.0307 * DHA + 0.108 * DOA + 1.019 * OPTT
-        - 0.135 * a * a + 0.0141 * DHA * a + 0.0998 * DHA * DHA
-        + 0.208 * DOA * a - 0.0301 * DOA * DHA - 0.226 * DOA * DOA
-        + 0.353 * OPTT * a - 0.0497 * OPTT * DOA - 0.423 * OPTT * OPTT
-        + 0.202 * DHA * a * a - 0.281 * DOA * a * a - 0.342 * DHA * DHA * a
-        - 0.245 * DHA * DHA * DOA + 0.281 * DOA * DOA * DHA
-        - 0.184 * OPTT * OPTT * a - 0.281 * DHA * a * DOA;
+    f = 0.4753 - 0.0181 * H + 0.0420 * t + 5.481 * 10e-3 * Sy - 0.0191 * theta
+        - 3.416 * 10e-6 * Re - 8.851 * 10e-4 * H * Sy
+        + 8.702 * 10e-4 * H * theta + 1.536 * 10e-3 * t * theta
+        - 2.761 * 10e-6 * t * Re - 4.400 * 10e-4 * Sy * theta
+        + 9.714 * 10e-7 * Sy * Re + 6.777 * 10e-4 * H * H;
 
-    solution.objectives()[0] = Xcc;
-    solution.objectives()[1] = TFmax;
-    solution.objectives()[2] = TTmax;
+    solution.objectives()[0] = -Nu;
+    solution.objectives()[1] = f;
 
     return solution ;
   }
 }
+
