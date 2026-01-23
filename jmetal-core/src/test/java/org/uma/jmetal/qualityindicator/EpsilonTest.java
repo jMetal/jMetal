@@ -27,46 +27,49 @@ public class EpsilonTest {
 
   @Test
   public void shouldComputeReturnZeroIfTheFrontsContainOnePointWhichIsTheSame() {
-    double[] vector = {10, 12, -1};
+    double[] vector = { 10, 12, -1 };
 
-    double[][] front = {vector};
-    double[][] referenceFront = {vector};
+    double[][] front = { vector };
+    double[][] referenceFront = { vector };
 
     Assertions.assertEquals(0.0, new Epsilon(referenceFront).compute(front), EPSILON);
   }
 
   /**
-   * Given a front with point [2,3] and a Pareto front with point [1,2], the value of the
+   * Given a front with point [2,3] and a Pareto front with point [1,2], the value
+   * of the
    * epsilon indicator is 1
    */
   @Test
   public void shouldComputeReturnTheRightValueIfTheFrontsContainOnePointWhichIsNotTheSame() {
-    double[][] front = {{2, 3}};
-    double[][] referenceFront = {{1, 2}};
+    double[][] front = { { 2, 3 } };
+    double[][] referenceFront = { { 1, 2 } };
 
     Assertions.assertEquals(1.0, new Epsilon(referenceFront).compute(front), EPSILON);
   }
 
   /**
-   * Given a front with points [1.5,4.0], [2.0,3.0],[3.0,2.0] and a Pareto front with points
+   * Given a front with points [1.5,4.0], [2.0,3.0],[3.0,2.0] and a Pareto front
+   * with points
    * [1.0,3.0], [1.5,2.0], [2.0, 1.5], the value of the epsilon indicator is 1
    */
   @Test
   public void shouldComputeReturnTheCorrectValueCaseA() {
-    double[][] front = {{1.5, 4.0}, {2.0, 3.0}, {3.0, 2.0}};
-    double[][] referenceFront = {{1.0, 3.0}, {1.5, 2.0}, {2.0, 1.5}};
+    double[][] front = { { 1.5, 4.0 }, { 2.0, 3.0 }, { 3.0, 2.0 } };
+    double[][] referenceFront = { { 1.0, 3.0 }, { 1.5, 2.0 }, { 2.0, 1.5 } };
 
     Assertions.assertEquals(1.0, new Epsilon(referenceFront).compute(front), EPSILON);
   }
 
   /**
-   * Given a front with points [1.5,4.0], [1.5,2.0],[2.0,1.5] and a Pareto front with points
+   * Given a front with points [1.5,4.0], [1.5,2.0],[2.0,1.5] and a Pareto front
+   * with points
    * [1.0,3.0], [1.5,2.0], [2.0, 1.5], the value of the epsilon indicator is 0.5
    */
   @Test
   public void shouldComputeReturnTheCorrectValueCaseB() {
-    double[][] front = {{1.5, 4.0}, {1.5, 2.0}, {2.0, 1.5}};
-    double[][] referenceFront = {{1.0, 3.0}, {1.5, 2.0}, {2.0, 1.5}};
+    double[][] front = { { 1.5, 4.0 }, { 1.5, 2.0 }, { 2.0, 1.5 } };
+    double[][] referenceFront = { { 1.0, 3.0 }, { 1.5, 2.0 }, { 2.0, 1.5 } };
 
     Assertions.assertEquals(0.5, new Epsilon(referenceFront).compute(front), EPSILON);
   }
