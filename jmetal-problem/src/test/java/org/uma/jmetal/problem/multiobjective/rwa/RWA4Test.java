@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 
 @DisplayName("Class RWA4")
-class RWA3Test {
+class RWA4Test {
   private DoubleProblem problem;
 
   @BeforeEach

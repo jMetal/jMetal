@@ -10,10 +10,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 
-  @DisplayName("Class RWA5")
-  class RWA7Test {
+@DisplayName("Class RWA5")
+class RWA5Test {
 
-    private DoubleProblem problem;
+  private DoubleProblem problem;
 
     @BeforeEach
     void setup() {
