@@ -1,8 +1,8 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
+import java.util.Objects;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.ReferencePointUtils;
-import java.util.Objects;
 
 /**
  * This interface represents implementations of the Hypervolume quality indicator

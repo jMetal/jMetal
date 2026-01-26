@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.sequencegenerator.impl;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A thread-safe implementation of {@link SequenceGenerator} that generates a cyclic sequence of

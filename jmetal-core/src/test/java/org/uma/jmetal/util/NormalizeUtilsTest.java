@@ -1,10 +1,9 @@
 package org.uma.jmetal.util;
 
-import org.junit.Test;
-import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.Test;
 
 /**
  * Test Class responsible for testing {@link NormalizeUtils}

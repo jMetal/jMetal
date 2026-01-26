@@ -1,5 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.multiobjectiveknapsack;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -8,8 +10,6 @@ import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MultiObjectiveKnapsackTest {
   @Nested

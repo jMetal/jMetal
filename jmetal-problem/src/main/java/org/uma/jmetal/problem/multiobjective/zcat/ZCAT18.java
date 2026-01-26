@@ -1,11 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.zcat;
 
-import java.util.Collections;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zcat.ffunction.F18;
 import org.uma.jmetal.problem.multiobjective.zcat.gfunction.G0;
 import org.uma.jmetal.problem.multiobjective.zcat.gfunction.G8;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Problem ZCAT18, defined in: "Challenging test problems for multi-and many-objective

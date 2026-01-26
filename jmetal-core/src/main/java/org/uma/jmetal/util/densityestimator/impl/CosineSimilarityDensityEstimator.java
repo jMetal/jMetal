@@ -10,9 +10,6 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.CosineSimilarityBetweenVectors;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 /**
  * This class implements a density estimator based on the cosine similarity
@@ -21,14 +18,24 @@ import org.uma.jmetal.util.point.impl.ArrayPoint;
  */
 public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
   private final String attributeId = getClass().getName();
-  private final Distance<double[], double[]> distance;
-  private final Point referencePoint;
+  private final double[] referencePoint;
   private final boolean normalize;
 
   public CosineSimilarityDensityEstimator(double[] referencePoint, boolean normalize) {
-    this.referencePoint = new ArrayPoint(referencePoint);
-    distance = new CosineSimilarityBetweenVectors(this.referencePoint.values());
+    this.referencePoint = referencePoint != null ? referencePoint.clone() : null;
     this.normalize = normalize;
+  }
+
+  public CosineSimilarityDensityEstimator(double[] referencePoint) {
+    this(referencePoint, false);
+  }
+
+  public CosineSimilarityDensityEstimator(boolean normalize) {
+    this(null, normalize);
+  }
+
+  public CosineSimilarityDensityEstimator() {
+    this(null, false);
   }
 
   /**
@@ -58,21 +65,16 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       return;
     }
 
-    for (S solution : solutionList) {
-      referencePoint.update(solution.objectives());
-    }
-
-    double[][] distanceMatrix = new double[solutionList.size()][solutionList.size()];
-    double[][] solutionMatrix = null;
+    double[][] solutionMatrix;
     if (normalize) {
-      try {
-        solutionMatrix = NormalizeUtils.normalize(SolutionListUtils.getMatrixWithObjectiveValues(solutionList));
-      } catch (JMetalException e) {
-        e.printStackTrace();
-      }
+      solutionMatrix = NormalizeUtils.normalize(SolutionListUtils.getMatrixWithObjectiveValues(solutionList));
     } else {
       solutionMatrix = SolutionListUtils.getMatrixWithObjectiveValues(solutionList);
     }
+
+    double[] effectiveReferencePoint = referencePoint != null ? referencePoint : new double[numberOfObjectives];
+    Distance<double[], double[]> distance = new CosineSimilarityBetweenVectors(effectiveReferencePoint);
+    double[][] distanceMatrix = new double[solutionList.size()][solutionList.size()];
 
     for (int i = 0; i < solutionList.size(); i++) {
       for (int j = i + 1; j < solutionList.size(); j++) {
@@ -101,9 +103,6 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       solutionList
           .get(i)
           .attributes().put(attributeId, (currentMaximumDistance + secondCurrentMaximumDistance));
-      solutionList
-          .get(i)
-          .attributes().put("DIFF", Math.abs(currentMaximumDistance - secondCurrentMaximumDistance));
     }
 
     for (int i = 0; i < solutionList.get(0).objectives().length; i++) {

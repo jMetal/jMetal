@@ -1,11 +1,11 @@
 package org.uma.jmetal.problem.singleobjective;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.*;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class KnapsackTest {
   @Nested

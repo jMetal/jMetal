@@ -18,7 +18,6 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-
 /**
  * Class implementing the
  * Towards automatic testing of reference point based interactive methods described in:

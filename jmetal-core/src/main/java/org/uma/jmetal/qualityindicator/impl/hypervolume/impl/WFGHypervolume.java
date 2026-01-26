@@ -3,7 +3,6 @@ package org.uma.jmetal.qualityindicator.impl.hypervolume.impl;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
-
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.HypervolumeContribution2D;

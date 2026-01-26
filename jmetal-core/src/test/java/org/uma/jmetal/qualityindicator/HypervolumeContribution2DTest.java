@@ -1,9 +1,9 @@
 package org.uma.jmetal.qualityindicator;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.HypervolumeContribution2D;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for HypervolumeContribution2D.

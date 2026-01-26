@@ -11,7 +11,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 
-
 class StrengthRankingTest {
 
   @Test

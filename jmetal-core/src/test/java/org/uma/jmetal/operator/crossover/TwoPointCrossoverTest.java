@@ -1,5 +1,8 @@
 package org.uma.jmetal.operator.crossover;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.operator.crossover.impl.TwoPointCrossover;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -8,10 +11,6 @@ import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.problem.integerproblem.impl.FakeIntegerProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TwoPointCrossoverTest {
   @Test

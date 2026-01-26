@@ -1,10 +1,9 @@
 package org.uma.jmetal.problem.binaryproblem.impl;
 
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
-
-import java.util.stream.IntStream;
 
 @SuppressWarnings("serial")
 public abstract class AbstractBinaryProblem implements BinaryProblem {

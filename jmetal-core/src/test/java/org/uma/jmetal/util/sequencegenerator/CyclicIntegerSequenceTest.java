@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;

@@ -1,11 +1,10 @@
 package org.uma.jmetal.operator.mutation.impl;
 
+import java.util.Collections;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.Collections;
 
 /**
  * Simple Inversion Mutation operator for permutation-based genetic algorithms. This operator

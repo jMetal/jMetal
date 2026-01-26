@@ -1,8 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance;
 
-import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.BiObjectiveTSP;
-
 import java.io.IOException;
+import org.uma.jmetal.problem.multiobjective.multiobjectivetsp.BiObjectiveTSP;
 
 public class KroAB100TSP extends BiObjectiveTSP {
 

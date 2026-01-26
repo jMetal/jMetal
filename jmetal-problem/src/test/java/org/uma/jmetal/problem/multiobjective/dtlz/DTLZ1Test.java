@@ -1,12 +1,11 @@
 package org.uma.jmetal.problem.multiobjective.dtlz;
 
-import org.junit.jupiter.api.Test;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 class DTLZ1Test {
   @Test

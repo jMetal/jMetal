@@ -47,7 +47,7 @@ public class NSGAIIDefaultConfigurationExample {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(1000);
+    Termination termination = new TerminationByEvaluations(10000);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new NSGAIIBuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation)
