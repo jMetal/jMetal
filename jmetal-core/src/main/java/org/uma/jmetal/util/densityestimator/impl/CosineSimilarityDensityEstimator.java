@@ -83,31 +83,36 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       }
     }
 
+    // Calculate angular diversity: for each solution, find the sum of angular distances
+    // to its two nearest angular neighbors
     for (int i = 0; i < solutionList.size(); i++) {
-      double currentMaximumDistance = 0.0;
-      double secondCurrentMaximumDistance = 0.0;
+      double highestSimilarity = Double.NEGATIVE_INFINITY;
+      double secondHighestSimilarity = Double.NEGATIVE_INFINITY;
 
       for (int j = 0; j < solutionList.size(); j++) {
         if (i != j) {
-          double d = distanceMatrix[i][j];
+          double similarity = distanceMatrix[i][j];
 
-          if (d >= currentMaximumDistance) {
-            secondCurrentMaximumDistance = currentMaximumDistance;
-            currentMaximumDistance = d;
-          } else if (d > secondCurrentMaximumDistance) {
-            secondCurrentMaximumDistance = d;
+          if (similarity > highestSimilarity) {
+            secondHighestSimilarity = highestSimilarity;
+            highestSimilarity = similarity;
+          } else if (similarity > secondHighestSimilarity) {
+            secondHighestSimilarity = similarity;
           }
         }
       }
 
-      solutionList
-          .get(i)
-          .attributes().put(attributeId, (currentMaximumDistance + secondCurrentMaximumDistance));
+      // Convert similarity to angular distance: 1 - similarity
+      // Higher angular distance = more diverse = higher density value (should be kept)
+      double angularDistance = (2.0 - highestSimilarity - secondHighestSimilarity);
+      solutionList.get(i).attributes().put(attributeId, angularDistance);
     }
 
+    // Protect extreme solutions by setting their density to maximum (most diverse)
     for (int i = 0; i < solutionList.get(0).objectives().length; i++) {
       solutionList.sort(new ObjectiveComparator<>(i));
-      solutionList.get(solutionList.size() - 1).attributes().put(attributeId, 0.0);
+      solutionList.get(0).attributes().put(attributeId, Double.POSITIVE_INFINITY);
+      solutionList.get(solutionList.size() - 1).attributes().put(attributeId, Double.POSITIVE_INFINITY);
     }
   }
 
