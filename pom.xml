@@ -49,7 +49,7 @@
     <properties>
         <!-- Build Properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>22</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
         <doclint>none</doclint>
 
         <!-- Dependency Versions -->
