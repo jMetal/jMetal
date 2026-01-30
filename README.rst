@@ -1,4 +1,4 @@
-TjMetal project Web site
+jMetal project Web site
 =======================
 
 .. image:: https://github.com/jMetal/jMetal/actions/workflows/build.yml/badge.svg
