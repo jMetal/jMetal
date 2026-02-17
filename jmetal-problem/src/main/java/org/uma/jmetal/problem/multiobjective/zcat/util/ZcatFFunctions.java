@@ -357,7 +357,7 @@ public class ZcatFFunctions {
     }
 
     F[M - 1] =
-        1.0 - (Math.cos((2 * k - 1) * y[0] * Math.PI) + 2 * y[0] + 4 * k * (1 - y[0])) / (4.0 * k);
+        1.0 - (Math.cos((2 * k - 1) * y[0] * Math.PI) + 2 * y[0] + 4 * k * (1 - y[0]) - 1) / (4.0 * k);
     assert (0 <= F[M - 1] && F[M - 1] <= 1.0);
   }
 
