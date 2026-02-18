@@ -52,6 +52,7 @@ Related projects
 
 Changelog
 ---------
+* [02/0/2026] Added new quality indicator AverageHausdorffDistance.
 * [12/18/2025] jMetal 6.10 is released.
 
 * [12/18/2025] Added new selection (TruncationSelection, RankingSelection, StochasticUniversalSampling, BoltzmannSelection), replacement (RandomReplacement, TournamentReplacement), and solutions creation (OppositionBasedSolutionsCreation, GridSolutionsCreation, ChaosBasedSolutionsCreation) components.
