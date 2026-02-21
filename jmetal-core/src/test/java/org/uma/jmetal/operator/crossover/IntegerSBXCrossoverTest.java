@@ -1,13 +1,13 @@
 package org.uma.jmetal.operator.crossover;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.operator.crossover.impl.IntegerSBXCrossover;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
@@ -16,7 +16,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
 public class IntegerSBXCrossoverTest {
-	@Ignore
+	@Disabled
 	@Test
 	public void testJMetalRandomGeneratorNotUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration

@@ -1,11 +1,11 @@
 package org.uma.jmetal.util.pseudorandom;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BoundedRandomGeneratorTest {
 
@@ -18,7 +18,7 @@ public class BoundedRandomGeneratorTest {
 		for (double v = 0; v <= 1; v += 0.01) {
 			doubleValue[0] = v;
 			Integer value = generator.getRandomValue(1, 5);
-			assertTrue("Out of bounds value (" + value + ") for double " + v, value >= 1 && value <= 5);
+			assertTrue(value >= 1 && value <= 5, "Out of bounds value (" + value + ") for double " + v);
 		}
 	}
 
@@ -45,8 +45,8 @@ public class BoundedRandomGeneratorTest {
 		double epsilon = 0.1;
 		for (int i = min; i <= max; i++) {
 			Integer occurrences = counters.get(i);
-			assertTrue("Not a reasonable amount of occurrences (" + occurrences + ") for value " + i,
-					occurrences >= 2000 * (1 - epsilon) && occurrences <= 2000 * (1 + epsilon));
+			assertTrue(occurrences >= 2000 * (1 - epsilon) && occurrences <= 2000 * (1 + epsilon),
+					"Not a reasonable amount of occurrences (" + occurrences + ") for value " + i);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class BoundedRandomGeneratorTest {
 		for (double v = 0; v <= 1; v += 0.01) {
 			doubleValue[0] = v;
 			Integer value = generator.getRandomValue(1, 5);
-			assertTrue("Out of bounds value (" + value + ") for double " + v, value >= 1 && value <= 5);
+			assertTrue(value >= 1 && value <= 5, "Out of bounds value (" + value + ") for double " + v);
 		}
 	}
 
@@ -86,8 +86,8 @@ public class BoundedRandomGeneratorTest {
 		double epsilon = 0.1;
 		for (int i = min; i <= max; i++) {
 			Integer occurrences = counters.get(i);
-			assertTrue("Not a reasonable amount of occurrences (" + occurrences + ") for value " + i,
-					occurrences >= 2000 * (1 - epsilon) && occurrences <= 2000 * (1 + epsilon));
+			assertTrue(occurrences >= 2000 * (1 - epsilon) && occurrences <= 2000 * (1 + epsilon),
+					"Not a reasonable amount of occurrences (" + occurrences + ") for value " + i);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class BoundedRandomGeneratorTest {
 		double max = 5;
 		for (int i = 0; i <= 10000; i++) {
 			double value = generator.getRandomValue(min, max);
-			assertTrue("Out of bounds value: " + value, value >= min && value <= max);
+			assertTrue(value >= min && value <= max, "Out of bounds value: " + value);
 		}
 	}
 

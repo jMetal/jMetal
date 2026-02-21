@@ -256,7 +256,7 @@ public class SolutionListUtilsTest {
     auditor.addListener((a) -> defaultUses[0]++);
 
     ListUtils.randomSelectionWithoutReplacement(3, solutions);
-    assertTrue("No use of the default generator", defaultUses[0] > 0);
+    assertTrue(defaultUses[0] > 0, "No use of the default generator");
 
     // Test same configuration uses custom generator instead
     defaultUses[0] = 0;
@@ -268,8 +268,8 @@ public class SolutionListUtilsTest {
           customUses[0]++;
           return new Random().nextInt(b + 1 - a) + a;
         });
-    assertTrue("Default random generator used", defaultUses[0] == 0);
-    assertTrue("No use of the custom generator", customUses[0] > 0);
+    assertTrue(defaultUses[0] == 0, "Default random generator used");
+    assertTrue(customUses[0] > 0, "No use of the custom generator");
   }
 
   /** If the list contains 4 solutions, the result list must return all of them */

@@ -1,11 +1,12 @@
 package org.uma.jmetal.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -122,63 +123,63 @@ public class SolutionUtilsTest {
         0.5, SolutionUtils.averageDistanceToSolutionList(solution1, solutionList), EPSILON);
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldNormalizeThrowsAnExceptionWhenTheSolutionIsNull() {
-    SolutionUtils.normalize(null, new double[] {0.1}, new double[] {0.2});
+    assertThrows(JMetalException.class, () -> SolutionUtils.normalize(null, new double[] {0.1}, new double[] {0.2}));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldNormalizeThrowsAnExceptionWhenTheMinValueIsNull() {
 
     DoubleProblem problem = new FakeDoubleProblem(0, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
-    SolutionUtils.normalize(solution, null, new double[] {0.2});
+    assertThrows(JMetalException.class, () -> SolutionUtils.normalize(solution, null, new double[] {0.2}));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldNormalizeThrowsAnExceptionWhenTheMaxValueIsNull() {
 
     DoubleProblem problem = new FakeDoubleProblem(0, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
-    SolutionUtils.normalize(solution, new double[] {0.2}, null);
+    assertThrows(JMetalException.class, () -> SolutionUtils.normalize(solution, new double[] {0.2}, null));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldNormalizeThrowsAnExceptionWhenMinAndMaxValuesHaveDifferentLength() {
 
     DoubleProblem problem = new FakeDoubleProblem(0, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
-    SolutionUtils.normalize(solution, new double[] {0.2, 0.2}, new double[] {0.3});
+    assertThrows(JMetalException.class, () -> SolutionUtils.normalize(solution, new double[] {0.2, 0.2}, new double[] {0.3}));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldNormalizeThrowsAnExceptionWhenMinIsEmpty() {
 
     DoubleProblem problem = new FakeDoubleProblem(0, 0, 0);
     DoubleSolution solution = problem.createSolution();
 
-    SolutionUtils.normalize(solution, new double[] {}, new double[] {0.2});
+    assertThrows(JMetalException.class, () -> SolutionUtils.normalize(solution, new double[] {}, new double[] {0.2}));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldNormalizeThrowsAnExceptionWhenMaxIsEmpty() {
 
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
-    SolutionUtils.normalize(solution, new double[] {0.2}, new double[] {});
+    assertThrows(JMetalException.class, () -> SolutionUtils.normalize(solution, new double[] {0.2}, new double[] {}));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldNormalizeThrowsAnExceptionWhenMinAndMaxValuesHaveDifferentNumberOfObjective() {
 
     DoubleProblem problem = new FakeDoubleProblem(3, 1, 0);
     DoubleSolution solution = problem.createSolution();
 
-    SolutionUtils.normalize(solution, new double[] {0.2, 0.2}, new double[] {0.3, 0.3});
+    assertThrows(JMetalException.class, () -> SolutionUtils.normalize(solution, new double[] {0.2, 0.2}, new double[] {0.3, 0.3}));
   }
 
   @Test

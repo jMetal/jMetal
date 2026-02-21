@@ -1,13 +1,12 @@
 package org.uma.jmetal.util.legacy.front.impl;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.front.Front;
@@ -22,25 +21,19 @@ import org.uma.jmetal.util.point.impl.ArrayPoint;
 public class FrontUtilsTest {
   private static final double EPSILON = 0.0000000000001 ;
 
-  @Rule
-  public ExpectedException exception = ExpectedException.none();
+  
 
   @Test
   public void shouldGetMaximumValuesRaiseAnExceptionIfTheFrontIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is null"));
-
-    FrontUtils.getMaximumValues(null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.getMaximumValues(null));
+    assertTrue(e.getMessage().contains("The front is null"));
   }
 
   @Test
   public void shouldGetMaximumValuesRaiseAnExceptionIfTheFrontIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is empty"));
-
     Front front = new ArrayFront(0, 0);
-
-    FrontUtils.getMaximumValues(front) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.getMaximumValues(front));
+    assertTrue(e.getMessage().contains("The front is empty"));
   }
 
   @Test
@@ -90,20 +83,15 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldGetMinimumValuesRaiseAnExceptionIfTheFrontIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is null"));
-
-    FrontUtils.getMinimumValues(null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.getMinimumValues(null));
+    assertTrue(e.getMessage().contains("The front is null"));
   }
 
   @Test
   public void shouldGetMinimumValuesRaiseAnExceptionIfTheFrontIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is empty"));
-
     Front front = new ArrayFront(0, 0);
-
-    FrontUtils.getMinimumValues(front) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.getMinimumValues(front));
+    assertTrue(e.getMessage().contains("The front is empty"));
   }
 
   @Test
@@ -153,33 +141,24 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldDistanceToNearestPointRaiseAnExceptionIfTheFrontIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is null"));
-
     Point point = new ArrayPoint(1) ;
-
-    FrontUtils.distanceToNearestPoint(point, null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.distanceToNearestPoint(point, null));
+    assertTrue(e.getMessage().contains("The front is null"));
   }
 
   @Test
   public void shouldDistanceToNearestPointRaiseAnExceptionIfThePointIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The point is null"));
-
     Front front = new ArrayFront(1, 1) ;
-
-    FrontUtils.distanceToNearestPoint(null, front) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.distanceToNearestPoint(null, front));
+    assertTrue(e.getMessage().contains("The point is null"));
   }
 
   @Test
   public void shouldDistanceToNearestPointRaiseAnExceptionIfTheFrontIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is empty"));
-
     Point point = new ArrayPoint(1) ;
     Front front = new ArrayFront(0, 1) ;
-
-    FrontUtils.distanceToNearestPoint(point, front) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.distanceToNearestPoint(point, front));
+    assertTrue(e.getMessage().contains("The front is empty"));
   }
 
   @Test
@@ -241,33 +220,24 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldDistanceToClosestPointRaiseAnExceptionIfTheFrontIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is null"));
-
     Point point = new ArrayPoint(1) ;
-
-    FrontUtils.distanceToClosestPoint(point, null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.distanceToClosestPoint(point, null));
+    assertTrue(e.getMessage().contains("The front is null"));
   }
 
   @Test
   public void shouldDistanceToClosestPointRaiseAnExceptionIfThePointIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The point is null"));
-
     Front front = new ArrayFront(1, 1) ;
-
-    FrontUtils.distanceToClosestPoint(null, front) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.distanceToClosestPoint(null, front));
+    assertTrue(e.getMessage().contains("The point is null"));
   }
 
   @Test
   public void shouldDistanceToClosestPointRaiseAnExceptionIfTheFrontIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is empty"));
-
     Point point = new ArrayPoint(1) ;
     Front front = new ArrayFront(0, 1) ;
-
-    FrontUtils.distanceToClosestPoint(point, front) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.distanceToClosestPoint(point, front));
+    assertTrue(e.getMessage().contains("The front is empty"));
   }
 
   @Test
@@ -385,20 +355,15 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldGetInvertedFrontRaiseAnExceptionIfTheFrontIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is null"));
-
-    FrontUtils.getInvertedFront(null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.getInvertedFront(null));
+    assertTrue(e.getMessage().contains("The front is null"));
   }
 
   @Test
   public void shouldGetInvertedFrontRaiseAnExceptionIfTheFrontIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is empty"));
-
     Front front = new ArrayFront(0, 1) ;
-
-    FrontUtils.getInvertedFront(front) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.getInvertedFront(front));
+    assertTrue(e.getMessage().contains("The front is empty"));
   }
 
   /**
@@ -506,10 +471,8 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldConvertFrontToArrayRaiseAnExceptionIfTheFrontIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is null"));
-
-    FrontUtils.convertFrontToArray(null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.convertFrontToArray(null));
+    assertTrue(e.getMessage().contains("The front is null"));
   }
 
   @Test
@@ -591,10 +554,8 @@ public class FrontUtilsTest {
 
   @Test
   public void shouldConvertFrontToSolutionListRaiseAnExceptionIfTheFrontIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is null"));
-
-    FrontUtils.convertFrontToArray(null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> FrontUtils.convertFrontToArray(null));
+    assertTrue(e.getMessage().contains("The front is null"));
   }
 
   @Test

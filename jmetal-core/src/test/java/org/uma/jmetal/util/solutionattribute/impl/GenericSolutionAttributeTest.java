@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -19,10 +18,7 @@ public class GenericSolutionAttributeTest {
     GenericSolutionAttribute<?, ?> genericSolutionAttribute;
     genericSolutionAttribute = new GenericSolutionAttribute<>();
 
-    Object solutionAttributeId =
-        ReflectionTestUtils.getField(genericSolutionAttribute, "identifier");
-
-    assertEquals(genericSolutionAttribute.getClass(), solutionAttributeId);
+    assertEquals(genericSolutionAttribute.getClass(), genericSolutionAttribute.getAttributeIdentifier());
   }
 
   @Test
@@ -31,10 +27,7 @@ public class GenericSolutionAttributeTest {
     Object attributeIdentifier = Double.valueOf(4);
     genericSolutionAttribute = new GenericSolutionAttribute<>(attributeIdentifier);
 
-    Object solutionAttributeId =
-        ReflectionTestUtils.getField(genericSolutionAttribute, "identifier");
-
-    assertEquals(attributeIdentifier, solutionAttributeId);
+    assertEquals(attributeIdentifier, genericSolutionAttribute.getAttributeIdentifier());
   }
 
   @Test

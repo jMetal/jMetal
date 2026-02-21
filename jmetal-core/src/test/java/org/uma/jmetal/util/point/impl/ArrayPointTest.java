@@ -1,12 +1,13 @@
 package org.uma.jmetal.util.point.impl;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -52,11 +53,11 @@ public class ArrayPointTest {
     assertEquals(point, newPoint) ;
   }
 
-  @Test (expected = NullParameterException.class)
+  @Test
   public void shouldConstructAPointFromANullPointRaiseAnException() {
     Point point = null ;
 
-    new ArrayPoint(point) ;
+    assertThrows(NullParameterException.class, () -> new ArrayPoint(point));
   }
 
   @Test
@@ -85,11 +86,11 @@ public class ArrayPointTest {
     assertArrayEquals(array, storedValues, EPSILON);
   }
 
-  @Test (expected = NullParameterException.class)
+  @Test
   public void shouldConstructFromNullArrayRaiseAnException() {
     double[] array = null ;
 
-    new ArrayPoint(array) ;
+    assertThrows(NullParameterException.class, () -> new ArrayPoint(array));
   }
 
   @Test
@@ -126,13 +127,15 @@ public class ArrayPointTest {
     assertEquals(Double.MAX_VALUE, point.value(4), EPSILON) ;
   }
 
-  @Test (expected = InvalidConditionException.class)
+  @Test
   public void shouldGetDimensionValueWithInvalidIndexesRaiseAnException() {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
-    point.value(-1) ;
-    point.value(5) ;
+    assertThrows(InvalidConditionException.class, () -> {
+      point.value(-1) ;
+      point.value(5) ;
+    });
   }
 
   @Test
@@ -150,13 +153,15 @@ public class ArrayPointTest {
     assertArrayEquals(array, point.values(), EPSILON);
   }
 
-  @Test (expected = InvalidConditionException.class)
+  @Test
   public void shouldSetDimensionValueWithInvalidIndexesRaiseAnException() {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
 
-    point.value(-1, 2.2) ;
-    point.value(5, 2.0) ;
+    assertThrows(InvalidConditionException.class, () -> {
+      point.value(-1, 2.2) ;
+      point.value(5, 2.0) ;
+    });
   }
 
   @Test

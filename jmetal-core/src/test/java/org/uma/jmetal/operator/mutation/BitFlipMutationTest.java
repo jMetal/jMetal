@@ -1,17 +1,17 @@
 package org.uma.jmetal.operator.mutation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
 import java.util.Random;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.binaryproblem.impl.FakeBinaryProblem;
@@ -30,14 +30,13 @@ public class BitFlipMutationTest {
   public void shouldConstructorAssignTheCorrectProbabilityValue() {
     double mutationProbability = 0.1 ;
     BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
-    assertEquals(mutationProbability, (Double) ReflectionTestUtils
-        .getField(mutation, "mutationProbability"), EPSILON) ;
+    assertEquals(mutationProbability, mutation.mutationProbability(), EPSILON) ;
   }
 
-  @Test (expected = InvalidProbabilityValueException.class)
+  @Test
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
     double mutationProbability = -0.1 ;
-    new BitFlipMutation(mutationProbability) ;
+    assertThrows(InvalidProbabilityValueException.class, () -> new BitFlipMutation(mutationProbability));
   }
 
   @Test
@@ -47,11 +46,11 @@ public class BitFlipMutationTest {
     assertEquals(mutationProbability, mutation.mutationProbability(), EPSILON) ;
   }
 
-  @Test (expected = NullParameterException.class)
+  @Test
   public void shouldExecuteWithNullParameterThrowAnException() {
     BitFlipMutation mutation = new BitFlipMutation(0.1) ;
 
-    mutation.execute(null) ;
+    assertThrows(NullParameterException.class, () -> mutation.execute(null));
   }
 
   @Test
@@ -62,12 +61,10 @@ public class BitFlipMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.02, 0.02, 0.02, 0.02) ;
 
-    BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
+    BitFlipMutation mutation = new BitFlipMutation(mutationProbability, randomGenerator) ;
     BinaryProblem problem = new FakeBinaryProblem(1, 4) ;
     BinarySolution solution = problem.createSolution() ;
     BinarySolution oldSolution = (BinarySolution)solution.copy() ;
-
-    ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
     mutation.execute(solution) ;
 
@@ -83,12 +80,10 @@ public class BitFlipMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.02, 0.0, 0.02, 0.02) ;
 
-    BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
+    BitFlipMutation mutation = new BitFlipMutation(mutationProbability, randomGenerator) ;
     BinaryProblem problem = new FakeBinaryProblem(1, 4) ;
     BinarySolution solution = problem.createSolution() ;
     BinarySolution oldSolution = (BinarySolution)solution.copy() ;
-
-    ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
     mutation.execute(solution) ;
 
@@ -104,12 +99,10 @@ public class BitFlipMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.02, 0.02, 0.02, 0.02, 0.2, 0.2, 0.2, 0.2) ;
 
-    BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
+    BitFlipMutation mutation = new BitFlipMutation(mutationProbability, randomGenerator) ;
     BinaryProblem problem = new FakeBinaryProblem(2, 4) ;
     BinarySolution solution = problem.createSolution() ;
     BinarySolution oldSolution = (BinarySolution)solution.copy() ;
-
-    ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
     mutation.execute(solution) ;
 
@@ -125,12 +118,10 @@ public class BitFlipMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.01, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.02) ;
 
-    BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
+    BitFlipMutation mutation = new BitFlipMutation(mutationProbability, randomGenerator) ;
     BinaryProblem problem = new FakeBinaryProblem(2, 4) ;
     BinarySolution solution = problem.createSolution() ;
     BinarySolution oldSolution = (BinarySolution)solution.copy() ;
-
-    ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
     mutation.execute(solution) ;
 
@@ -153,8 +144,8 @@ public class BitFlipMutationTest {
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
-		new BitFlipMutation(mutationProbability).execute(solution);
-		assertTrue("No use of the default generator", defaultUses[0] > 0);
+    new BitFlipMutation(mutationProbability).execute(solution);
+    assertTrue(defaultUses[0] > 0, "No use of the default generator");
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
@@ -163,7 +154,7 @@ public class BitFlipMutationTest {
 			customUses[0]++;
 			return new Random().nextDouble();
 		}).execute(solution);
-		assertTrue("Default random generator used", defaultUses[0] == 0);
-		assertTrue("No use of the custom generator", customUses[0] > 0);
+    assertTrue(defaultUses[0] == 0, "Default random generator used");
+    assertTrue(customUses[0] > 0, "No use of the custom generator");
 	}
 }

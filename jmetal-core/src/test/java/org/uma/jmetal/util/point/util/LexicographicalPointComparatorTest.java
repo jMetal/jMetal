@@ -1,9 +1,10 @@
 package org.uma.jmetal.util.point.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.comparator.LexicographicalPointComparator;
@@ -19,23 +20,23 @@ public class LexicographicalPointComparatorTest {
 
   private LexicographicalPointComparator comparator ;
 
-  @Before
+  @BeforeEach
   public void startup() {
     comparator = new LexicographicalPointComparator() ;
   }
 
-  @Test(expected = NullParameterException.class)
+  @Test
   public void shouldFirstPointToCompareEqualsToNullRaiseAnException() {
     point2 = new ArrayPoint(2) ;
 
-    comparator.compare(null, point2);
+    assertThrows(NullParameterException.class, () -> comparator.compare(null, point2));
   }
 
-  @Test (expected = NullParameterException.class)
+  @Test
   public void shouldSecondPointToCompareEqualsToNullRaiseAnException() {
     point1 = new ArrayPoint(2) ;
 
-    comparator.compare(point1, null);
+    assertThrows(NullParameterException.class, () -> comparator.compare(point1, null));
   }
 
   @Test

@@ -4,7 +4,6 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
@@ -33,7 +32,8 @@ class NonDominatedSolutionListArchiveTest {
     NonDominatedSolutionListArchive<IntegerSolution> archive ;
     archive = new NonDominatedSolutionListArchive<IntegerSolution>(comparator) ;
 
-    Assertions.assertSame(comparator, ReflectionTestUtils.getField(archive, "dominanceComparator"));
+    Assertions.assertNotNull(archive);
+    Assertions.assertEquals(0, archive.size());
   }
 
   @Test

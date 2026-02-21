@@ -1,13 +1,14 @@
 package org.uma.jmetal.solution;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -26,17 +27,17 @@ public class CompositeSolutionTest {
     assertNotNull(new CompositeSolution(Arrays.asList(doubleSolution))) ;
   }
 
-  @Test(expected = Exception.class)
-  public void shouldConstructorRaiseAnExceptionIfTheNumberOfObjectivesIsIncoherent() {
-    DoubleSolution doubleSolution =
-            new DefaultDoubleSolution( Arrays.asList(Bounds.create(3.0, 5.0)),
-                    3, 0);
-    IntegerSolution integerSolution =
-            new DefaultIntegerSolution(Arrays.asList(Bounds.create(2, 10)),
-                    2, 0);
+    @Test
+    public void shouldConstructorRaiseAnExceptionIfTheNumberOfObjectivesIsIncoherent() {
+      DoubleSolution doubleSolution =
+        new DefaultDoubleSolution( Arrays.asList(Bounds.create(3.0, 5.0)),
+          3, 0);
+      IntegerSolution integerSolution =
+        new DefaultIntegerSolution(Arrays.asList(Bounds.create(2, 10)),
+          2, 0);
 
-    new CompositeSolution(Arrays.asList(doubleSolution, integerSolution)) ;
-  }
+      assertThrows(Exception.class, () -> new CompositeSolution(Arrays.asList(doubleSolution, integerSolution)));
+    }
 
   @Test
   public void

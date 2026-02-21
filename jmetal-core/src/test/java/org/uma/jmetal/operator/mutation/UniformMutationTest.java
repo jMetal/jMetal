@@ -1,11 +1,11 @@
 package org.uma.jmetal.operator.mutation;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -31,7 +31,7 @@ public class UniformMutationTest {
     auditor.addListener((a) -> defaultUses[0]++);
 
     new UniformMutation(0.5, 0.5).execute(solution);
-    assertTrue("No use of the default generator", defaultUses[0] > 0);
+    assertTrue(defaultUses[0] > 0, "No use of the default generator");
 
     // Test same configuration uses custom generator instead
     defaultUses[0] = 0;
@@ -45,7 +45,7 @@ public class UniformMutationTest {
               return new Random().nextDouble();
             })
         .execute(solution);
-    assertTrue("Default random generator used", defaultUses[0] == 0);
-    assertTrue("No use of the custom generator", customUses[0] > 0);
+    assertTrue(defaultUses[0] == 0, "Default random generator used");
+    assertTrue(customUses[0] > 0, "No use of the custom generator");
   }
 }

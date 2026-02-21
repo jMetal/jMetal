@@ -3,7 +3,7 @@ package org.uma.jmetal.util;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test Class responsible for testing {@link NormalizeUtils}

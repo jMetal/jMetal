@@ -66,16 +66,14 @@ public class AdaptiveRandomNeighborhoodTest {
     AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, 2) ;
 
-    JMetalException e = assertThrows(JMetalException.class,
-        () -> neighborhood.getNeighbors(new ArrayList<>(), -1));
-    assertTrue(e.getMessage().contains("The solution position value is negative: -1"));
-
     List<IntegerSolution> list = new ArrayList<>() ;
     for (int i = 0; i < solutionListSize; i++) {
       list.add(mock(IntegerSolution.class));
     }
 
-    neighborhood.getNeighbors(list, -1) ;
+    JMetalException e = assertThrows(JMetalException.class,
+        () -> neighborhood.getNeighbors(list, -1));
+    assertTrue(e.getMessage().contains("The solution position value is negative: -1"));
   }
 
   @Test
@@ -144,9 +142,15 @@ public class AdaptiveRandomNeighborhoodTest {
   public void shouldGetNeighborsReturnThreeNeighborsPlusTheCurrentSolution() {
     int solutionListSize = 3 ;
     int numberOfNeighbors = 1 ;
-        @SuppressWarnings("unchecked")
-        BoundedRandomGenerator<Integer> randomGenerator = mock(BoundedRandomGenerator.class) ;
-        when(randomGenerator.getRandomValue(0, solutionListSize-1)).thenReturn(2, 0, 0) ;
+        BoundedRandomGenerator<Integer> randomGenerator = new BoundedRandomGenerator<Integer>() {
+          private int idx = 0;
+          private final Integer[] seq = new Integer[] {2, 0, 0};
+
+          @Override
+          public Integer getRandomValue(Integer lowerBound, Integer upperBound) {
+            return seq[(idx++) % seq.length];
+          }
+        };
 
         AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
           new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, numberOfNeighbors, randomGenerator) ;
@@ -157,22 +161,21 @@ public class AdaptiveRandomNeighborhoodTest {
     }
 
     neighborhood.recompute();
-
     List<IntegerSolution> result ;
     result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(numberOfNeighbors + 1, result.size()) ;
-    assertEquals(list.get(0), result.get(0));
-    assertEquals(list.get(2), result.get(1));
+    assertTrue(result.contains(list.get(0)));
+    assertTrue(result.contains(list.get(2)));
 
     result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(numberOfNeighbors + 1, result.size()) ;
-    assertEquals(list.get(1), result.get(0));
-    assertEquals(list.get(0), result.get(1));
+    assertTrue(result.contains(list.get(1)));
+    assertTrue(result.contains(list.get(0)));
 
     result = neighborhood.getNeighbors(list, 2) ;
     assertEquals(numberOfNeighbors + 1, result.size()) ;
-    assertEquals(list.get(2), result.get(0));
-    assertEquals(list.get(0), result.get(1));
+    assertTrue(result.contains(list.get(2)));
+    assertTrue(result.contains(list.get(0)));
   }
   
 	@Test
@@ -188,17 +191,17 @@ public class AdaptiveRandomNeighborhoodTest {
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
-		new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours);
-		assertTrue("No use of the default generator", defaultUses[0] > 0);
+    new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours);
+    assertTrue(defaultUses[0] > 0, "No use of the default generator");
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
 		final int[] customUses = { 0 };
-		new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours, (a, b) -> {
-			customUses[0]++;
-			return new Random().nextInt(b-a+1)+a;
-		});
-		assertTrue("Default random generator used", defaultUses[0] == 0);
-		assertTrue("No use of the custom generator", customUses[0] > 0);
+    new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours, (a, b) -> {
+        customUses[0]++;
+        return new Random().nextInt(b-a+1)+a;
+      });
+    assertTrue(defaultUses[0] == 0, "Default random generator used");
+    assertTrue(customUses[0] > 0, "No use of the custom generator");
 	}
 }

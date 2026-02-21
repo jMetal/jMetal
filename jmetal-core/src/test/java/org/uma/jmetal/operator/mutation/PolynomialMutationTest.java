@@ -10,10 +10,9 @@ import static org.mockito.Mockito.verify;
 import java.util.ArrayList;
 import java.util.List;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
@@ -36,36 +35,30 @@ public class PolynomialMutationTest {
   @Test
   public void shouldConstructorWithoutParameterAssignTheDefaultValues() {
     PolynomialMutation mutation = new PolynomialMutation() ;
-    assertEquals(0.01, (Double) ReflectionTestUtils
-        .getField(mutation, "mutationProbability"), EPSILON) ;
-    assertEquals(20.0, (Double) ReflectionTestUtils
-        .getField(mutation, "distributionIndex"), EPSILON) ;
+    assertEquals(0.01, mutation.mutationProbability(), EPSILON) ;
+    assertEquals(20.0, mutation.getDistributionIndex(), EPSILON) ;
   }
 
   @Test
   public void shouldConstructorWithProblemAndDistributionIndexParametersAssignTheCorrectValues() {
     DoubleProblem problem = new FakeDoubleProblem(4, 2, 0) ;
     PolynomialMutation mutation = new PolynomialMutation(1.0/problem.numberOfVariables(), 10.0) ;
-    assertEquals(1.0/problem.numberOfVariables(), (Double) ReflectionTestUtils
-        .getField(mutation, "mutationProbability"), EPSILON) ;
-    assertEquals(10.0, (Double) ReflectionTestUtils
-        .getField(mutation, "distributionIndex"), EPSILON) ;
+    assertEquals(1.0/problem.numberOfVariables(), mutation.mutationProbability(), EPSILON) ;
+    assertEquals(10.0, mutation.getDistributionIndex(), EPSILON) ;
   }
 
   @Test
   public void shouldConstructorAssignTheCorrectProbabilityValue() {
     double mutationProbability = 0.1 ;
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, 2.0) ;
-    assertEquals(mutationProbability, (Double) ReflectionTestUtils
-        .getField(mutation, "mutationProbability"), EPSILON) ;
+    assertEquals(mutationProbability, mutation.mutationProbability(), EPSILON) ;
   }
 
   @Test
   public void shouldConstructorAssignTheCorrectDistributionIndex() {
     double distributionIndex = 15.0 ;
     PolynomialMutation mutation = new PolynomialMutation(0.1, distributionIndex) ;
-    assertEquals(distributionIndex, (Double) ReflectionTestUtils
-        .getField(mutation, "distributionIndex"), EPSILON) ;
+    assertEquals(distributionIndex, mutation.getDistributionIndex(), EPSILON) ;
   }
 
   @Test
@@ -122,13 +115,10 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(1.0) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex, randomGenerator) ;
     DoubleProblem problem = new FakeDoubleProblem(1,1,0) ;
     DoubleSolution solution = problem.createSolution() ;
     DoubleSolution oldSolution = (DoubleSolution)solution.copy() ;
-
-    ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
-
     mutation.execute(solution) ;
 
     assertEquals(oldSolution, solution) ;
@@ -144,12 +134,9 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.6) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex, randomGenerator) ;
     DoubleProblem problem = new FakeDoubleProblem(1,1,0) ;
     DoubleSolution solution = problem.createSolution() ;
-
-    ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
-
     mutation.execute(solution) ;
 
     Bounds<Double> bounds = solution.getBounds(0);
@@ -167,12 +154,9 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex, randomGenerator) ;
     DoubleProblem problem = new FakeDoubleProblem(1,1,0) ;
     DoubleSolution solution = problem.createSolution() ;
-
-    ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
-
     mutation.execute(solution) ;
 
     Bounds<Double> bounds = solution.getBounds(0);
@@ -181,7 +165,7 @@ public class PolynomialMutationTest {
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
-  @Ignore
+  @Disabled
   @Test
   public void shouldMutateASingleVariableSolutionWithSameLowerAndUpperBoundsReturnTheBoundValue() {
     @SuppressWarnings("unchecked")
@@ -191,16 +175,11 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex, randomGenerator) ;
 
-    FakeDoubleProblem problem = new FakeDoubleProblem(1, 1, 0) ;
-    List<Bounds<Double>> newBounds = new ArrayList<>(List.of(Bounds.create(1.0, 1.0))) ;
-
-    ReflectionTestUtils.setField(problem, "bounds", newBounds);
+    FakeDoubleProblem problem = new FakeDoubleProblem(1, 1, 0, 1.0, 1.0) ;
 
     DoubleSolution solution = problem.createSolution() ;
-
-    ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
     mutation.execute(solution) ;
 
