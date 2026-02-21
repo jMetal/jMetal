@@ -3,7 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.agemoea;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.SurvivalScoreComparator;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
