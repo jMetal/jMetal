@@ -1,14 +1,15 @@
 package org.uma.jmetal.algorithm.multiobjective.pesa2;
 
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -30,7 +31,7 @@ public class PESA2BuilderTest {
   private MutationOperator<DoubleSolution> mutation;
 
   @SuppressWarnings("unchecked")
-  @Before public void startup() {
+  @BeforeEach public void startup() {
     problem = mock(Problem.class);
     when(problem.numberOfVariables()).thenReturn(NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM);
 
@@ -45,7 +46,7 @@ public class PESA2BuilderTest {
     builder = new PESA2Builder<DoubleSolution>(problem, crossover, mutation);
   }
 
-  @After public void cleanup() {
+  @AfterEach public void cleanup() {
     problem = null;
     builder = null;
   }
@@ -73,8 +74,8 @@ public class PESA2BuilderTest {
     assertEquals(20.0, mutation.getDistributionIndex(), EPSILON);
   }
 
-  @Test(expected = JMetalException.class) public void setNegativeMaxNumberOfIterations() {
-    builder.setMaxEvaluations(-100);
+  @Test public void setNegativeMaxNumberOfIterations() {
+    assertThrows(JMetalException.class, () -> builder.setMaxEvaluations(-100));
   }
 
   @Test public void setNewEvaluator() {
@@ -85,7 +86,7 @@ public class PESA2BuilderTest {
     assertEquals(evaluator, builder.getSolutionListEvaluator());
   }
 
-  @Test(expected = JMetalException.class) public void setNullEvaluator() {
-    builder.setSolutionListEvaluator(null);
+  @Test public void setNullEvaluator() {
+    assertThrows(JMetalException.class, () -> builder.setSolutionListEvaluator(null));
   }
 }

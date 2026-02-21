@@ -2,13 +2,14 @@ package org.uma.jmetal.algorithm.multiobjective.agemoea.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.TestCase;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
-public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
+public class AGEMOEAEnvironmentalSelectionTest {
 
     @Test
     public void testFindExtreme() {
@@ -127,11 +128,11 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         es.computeSurvivalScore(front);
 
         assertTrue(Double.isInfinite(
-                (Double) front.get(0).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId())));
+            (Double) front.get(0).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId())));
         assertTrue(Double.isInfinite(
-                (Double) front.get(1).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId())));
+            (Double) front.get(1).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId())));
         assertTrue(Double.isInfinite(
-                (Double) front.get(2).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId())));
+            (Double) front.get(2).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId())));
         assertEquals(2 + 2d / 3d,
                 (Double) front.get(3).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId()));
     }

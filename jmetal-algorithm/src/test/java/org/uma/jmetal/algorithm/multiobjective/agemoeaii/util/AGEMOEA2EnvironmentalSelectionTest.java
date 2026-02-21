@@ -2,11 +2,11 @@ package org.uma.jmetal.algorithm.multiobjective.agemoeaii.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.TestCase;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 
-public class AGEMOEA2EnvironmentalSelectionTest extends TestCase {
+public class AGEMOEA2EnvironmentalSelectionTest {
 
     @Test
     public void testComputeGeometry() {
@@ -70,9 +70,9 @@ public class AGEMOEA2EnvironmentalSelectionTest extends TestCase {
         AGEMOEA2EnvironmentalSelection es = new AGEMOEA2EnvironmentalSelection( 3);
 
         double[] projection = es.projectPoint(point, 1);
-        assertEquals(projection[0], 1d/3d);
-        assertEquals(projection[1], 1d/3d);
-        assertEquals(projection[1], 1d/3d);
+        assertEquals(1d/3d, projection[0], 1e-9);
+        assertEquals(1d/3d, projection[1], 1e-9);
+        assertEquals(1d/3d, projection[2], 1e-9);
     }
 
     public void testProjectPoint2() {
@@ -80,8 +80,8 @@ public class AGEMOEA2EnvironmentalSelectionTest extends TestCase {
         AGEMOEA2EnvironmentalSelection es = new AGEMOEA2EnvironmentalSelection( 2);
 
         double[] projection = es.projectPoint(point, 2);
-        assertEquals(projection[0], 1d/Math.sqrt(2));
-        assertEquals(projection[1], 1d/Math.sqrt(2));
+        assertEquals(1d/Math.sqrt(2), projection[0], 1e-9);
+        assertEquals(1d/Math.sqrt(2), projection[1], 1e-9);
     }
 
     public void testMidPoint() {
@@ -90,8 +90,8 @@ public class AGEMOEA2EnvironmentalSelectionTest extends TestCase {
 
         AGEMOEA2EnvironmentalSelection es = new AGEMOEA2EnvironmentalSelection( 3);
         double[] midPoint = es.midPoint(pointA, pointB);
-        assertEquals(midPoint[0], 0.5);
-        assertEquals(midPoint[1], 0.0);
-        assertEquals(midPoint[2], 0.5);
+        assertEquals(0.5, midPoint[0], 1e-9);
+        assertEquals(0.0, midPoint[1], 1e-9);
+        assertEquals(0.5, midPoint[2], 1e-9);
     }
 }
