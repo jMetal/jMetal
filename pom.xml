@@ -54,7 +54,6 @@
 
         <!-- Dependency Versions -->
         <!-- Test Dependencies -->
-        <junit4.version>4.13.2</junit4.version>
         <junit5.version>5.11.2</junit5.version>
         <mockito.version>5.12.0</mockito.version>
         <assertj.version>3.27.7</assertj.version>
@@ -291,12 +290,6 @@
 
             <!-- Test Dependencies -->
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit4.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
                 <version>${junit5.version}</version>
@@ -311,12 +304,6 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
-                <version>${junit5.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.vintage</groupId>
-                <artifactId>junit-vintage-engine</artifactId>
                 <version>${junit5.version}</version>
                 <scope>test</scope>
             </dependency>

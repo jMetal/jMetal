@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Comparator;
 import java.util.List;

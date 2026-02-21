@@ -1,11 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.paes;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
 
 import java.util.List;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -50,7 +50,7 @@ public class PAESIT {
   }
 
   @Test
-  @Ignore
+  @Disabled
   public void shouldTheHypervolumeHaveAMinimumValue() throws Exception {
     ZDT1 problem = new ZDT1();
     MutationOperator<DoubleSolution> mutation;
@@ -77,7 +77,7 @@ public class PAESIT {
   }
 
   @Test
-  @Ignore
+  @Disabled
   public void shouldTheCrowdingDistanceVariantWorkProperly() throws Exception {
     ZDT1 problem = new ZDT1();
     MutationOperator<DoubleSolution> mutation;

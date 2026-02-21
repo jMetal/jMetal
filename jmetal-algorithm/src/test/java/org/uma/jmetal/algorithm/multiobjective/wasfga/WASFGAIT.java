@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.wasfga;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,8 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 public class WASFGAIT {
 
-  @Test(expected = Exception.class)
-  @Ignore
+  @Disabled
+  @Test
   public void shouldTheAlgorithmReturnAnExceptionIfIndicatingANonExistingWeightVectorFile() {
     DoubleProblem problem = new ZDT1();
 
