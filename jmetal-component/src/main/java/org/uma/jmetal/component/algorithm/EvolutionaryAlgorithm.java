@@ -174,4 +174,20 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   public Evaluation<S> evaluation() {
     return evaluation;
   }
+
+  public SolutionsCreation<S> createInitialPopulation() {
+    return createInitialPopulation;
+  }
+
+  public Selection<S> selection() {
+    return selection;
+  }
+
+  public Variation<S> variation() {
+    return variation;
+  }
+
+  public Replacement<S> replacement() {
+    return replacement;
+  }
 }

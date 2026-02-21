@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -31,12 +30,12 @@ class EvolutionaryAlgorithmTest {
     assertThat(evolutionaryAlgorithm.name()).isEqualTo("EA") ;
     assertThat(evolutionaryAlgorithm.attributes()).isEmpty();
 
-    assertThat(solutionsCreation).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "createInitialPopulation")) ;
-    assertThat(evaluation).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "evaluation")) ;
-    assertThat(termination).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "termination")) ;
-    assertThat(variation).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "variation")) ;
-    assertThat(selection).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "selection")) ;
-    assertThat(replacement).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "replacement")) ;
+    assertThat(solutionsCreation).isSameAs(evolutionaryAlgorithm.createInitialPopulation()) ;
+    assertThat(evaluation).isSameAs(evolutionaryAlgorithm.evaluation()) ;
+    assertThat(termination).isSameAs(evolutionaryAlgorithm.termination()) ;
+    assertThat(variation).isSameAs(evolutionaryAlgorithm.variation()) ;
+    assertThat(selection).isSameAs(evolutionaryAlgorithm.selection()) ;
+    assertThat(replacement).isSameAs(evolutionaryAlgorithm.replacement()) ;
   }
 
 }

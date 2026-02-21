@@ -1,13 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
 import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
@@ -27,7 +26,7 @@ public class ABYSSTest {
   MutationOperator<DoubleSolution> mutation;
   Archive<DoubleSolution> archive;
 
-  @Before
+  @BeforeEach
   public void setup() {
     problem = new FakeDoubleProblem();
     archive = new CrowdingDistanceArchive<>(10);
@@ -38,20 +37,16 @@ public class ABYSSTest {
   @Test
   public void shouldIsStoppingConditionReachedReturnTrueIfTheConditionFulfills() {
     ABYSS abyss;
-    int maxEvaluations = 100;
-    abyss = new ABYSS(problem, maxEvaluations, 0, 0, 0, 0, null, null, null, 0);
-
-    ReflectionTestUtils.setField(abyss, "evaluations", 101);
+    // If maxEvaluations is 0, the stopping condition is fulfilled immediately (evaluations == 0)
+    abyss = new ABYSS(problem, 0, 0, 0, 0, 0, null, null, null, 0);
 
     assertTrue(abyss.isStoppingConditionReached());
   }
 
   @Test
   public void shouldIsStoppingConditionReachedReturnFalseIfTheConditionDoesNotFulfill() {
-    int maxEvaluations = 100;
-    ABYSS abyss = new ABYSS(problem, maxEvaluations, 0, 0, 0, 0, null, null, null, 0);
-
-    ReflectionTestUtils.setField(abyss, "evaluations", 1);
+    // With maxEvaluations set to 1 and initial evaluations == 0, the condition is not fulfilled
+    ABYSS abyss = new ABYSS(problem, 1, 0, 0, 0, 0, null, null, null, 0);
 
     assertFalse(abyss.isStoppingConditionReached());
   }
