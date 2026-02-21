@@ -32,7 +32,7 @@ public class ABYSSIT {
   LocalSearchOperator<DoubleSolution> localSearchOperator;
   Archive<DoubleSolution> archive;
 
-  @Before
+  @BeforeEach
   public void setup() {
     problem = new ZDT1();
 

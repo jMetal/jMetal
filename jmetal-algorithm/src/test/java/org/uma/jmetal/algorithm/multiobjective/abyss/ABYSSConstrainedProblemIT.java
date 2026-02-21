@@ -38,7 +38,7 @@ public class ABYSSConstrainedProblemIT {
   LocalSearchOperator<DoubleSolution> localSearchOperator;
   Archive<DoubleSolution> archive;
 
-  @Before
+  @BeforeEach
   public void setup() {
     problem = new Tanaka();
 

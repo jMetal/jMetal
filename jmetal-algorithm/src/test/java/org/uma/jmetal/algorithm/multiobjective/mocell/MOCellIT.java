@@ -25,7 +25,7 @@ public class MOCellIT {
   CrossoverOperator<DoubleSolution> crossover;
   MutationOperator<DoubleSolution> mutation;
 
-  @Before
+  @BeforeEach
   public void setup() {
     problem = new ZDT4();
 
