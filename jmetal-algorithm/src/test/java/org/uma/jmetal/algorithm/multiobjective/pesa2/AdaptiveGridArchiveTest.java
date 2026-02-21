@@ -2,7 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.pesa2;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.multiobjective.pesa2.util.AdaptiveGridArchive;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
