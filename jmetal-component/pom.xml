@@ -53,10 +53,6 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!-- spring-test removed to avoid reflection utilities in tests; add back only if needed -->
     </dependencies>
 </project>

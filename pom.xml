@@ -325,12 +325,7 @@
                 <version>${assertj.version}</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.test.version}</version>
-                <scope>test</scope>
-            </dependency>
+            <!-- spring-test removed from root pom to avoid bringing reflection utilities into test classpath -->
 
             <!-- Apache Commons -->
             <dependency>
