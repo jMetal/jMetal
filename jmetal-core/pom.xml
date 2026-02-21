@@ -64,10 +64,7 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-        </dependency>
+        <!-- spring-test removed -->
 
         <!-- Apache Commons -->
         <dependency>
