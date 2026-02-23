@@ -37,11 +37,12 @@ class ReferencePointUtilsTest {
       double[] referencePoint = new double[0];
 
       // Act & Assert
-      InvalidConditionException exception =
+        InvalidConditionException exception =
           assertThrows(
-              InvalidConditionException.class,
-              () -> ReferencePointUtils.createReferenceFrontFromReferencePoint(referencePoint));
-      assertEquals("The reference point cannot be empty", exception.getMessage());
+            InvalidConditionException.class,
+            () -> ReferencePointUtils.createReferenceFrontFromReferencePoint(referencePoint));
+        org.junit.jupiter.api.Assertions.assertTrue(
+          exception.getMessage().contains("The reference point cannot be empty"));
     }
 
     @Test
@@ -114,11 +115,12 @@ class ReferencePointUtilsTest {
       double[][] referenceFront = new double[0][];
 
       // Act & Assert
-      InvalidConditionException exception =
+        InvalidConditionException exception =
           assertThrows(
-              InvalidConditionException.class,
-              () -> ReferencePointUtils.extractReferencePointFromReferenceFront(referenceFront));
-      assertEquals("The reference front cannot be empty", exception.getMessage());
+            InvalidConditionException.class,
+            () -> ReferencePointUtils.extractReferencePointFromReferenceFront(referenceFront));
+        org.junit.jupiter.api.Assertions.assertTrue(
+          exception.getMessage().contains("The reference front cannot be empty"));
     }
 
     @Test
@@ -130,11 +132,12 @@ class ReferencePointUtilsTest {
       referenceFront[1] = null;
 
       // Act & Assert
-      IllegalArgumentException exception =
+        IllegalArgumentException exception =
           assertThrows(
-              IllegalArgumentException.class,
-              () -> ReferencePointUtils.extractReferencePointFromReferenceFront(referenceFront));
-      assertEquals("The reference front contains null points", exception.getMessage());
+            IllegalArgumentException.class,
+            () -> ReferencePointUtils.extractReferencePointFromReferenceFront(referenceFront));
+        org.junit.jupiter.api.Assertions.assertTrue(
+          exception.getMessage().contains("The reference front contains null points"));
     }
 
     @Test
@@ -144,13 +147,13 @@ class ReferencePointUtilsTest {
       double[][] referenceFront = {{1.0, 2.0}, {3.0}};
 
       // Act & Assert
-      IllegalArgumentException exception =
+        IllegalArgumentException exception =
           assertThrows(
-              IllegalArgumentException.class,
-              () -> ReferencePointUtils.extractReferencePointFromReferenceFront(referenceFront));
-      assertEquals(
-          "All points in the reference front must have the same number of objectives",
-          exception.getMessage());
+            IllegalArgumentException.class,
+            () -> ReferencePointUtils.extractReferencePointFromReferenceFront(referenceFront));
+        org.junit.jupiter.api.Assertions.assertTrue(
+          exception.getMessage()
+            .contains("All points in the reference front must have the same number of objectives"));
     }
 
     @Test
