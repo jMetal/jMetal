@@ -54,6 +54,8 @@ Changelog
 ---------
 * [02/22/2026] All the unit and integration tests have been updated to jUnit6.
 
+* [02/23/2026] Refactored `Check` utility: added parameter-name-aware overloads, introduced several specific exceptions for clearer errors, propagated the new overloads across modules (updated call sites), and made affected unit tests more robust to message-format changes.
+
 * [02/02/2026] Added  the AverageHausdorffDistance quality indicator
 
 * [12/18/2025] jMetal 6.10 is released.
