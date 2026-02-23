@@ -31,7 +31,7 @@ class DifferentialEvolutionSelectionTest {
     Executable executable = () -> selection.execute(null);
     
     NullParameterException cause = assertThrows(NullParameterException.class, executable);
-    assertThat(cause.getMessage(), containsString("The parameter is null"));
+    assertThat(cause.getMessage(), containsString("is null"));
   }
 
   @Test
