@@ -53,15 +53,17 @@ Related projects
 Changelog
 ---------
 
+* [03/01/2026] Add new solution creations stragegies: SobolSolutionsCreation and CauchySolutionsCreation.
+
 * [02/23/2026] Refactored `Check` utility: added parameter-name-aware overloads and introduced several specific exceptions for clearer errors.
 
 * [02/22/2026] All the unit and integration tests have been updated to jUnit6.
 
-* [02/02/2026] Added  the AverageHausdorffDistance quality indicator
+* [02/02/2026] Added the AverageHausdorffDistance quality indicator
 
 * [12/18/2025] jMetal 6.10 is released.
 
-* [12/18/2025] Added new selection (TruncationSelection, RankingSelection, StochasticUniversalSampling, BoltzmannSelection), replacement (RandomReplacement, TournamentReplacement), and solutions creation (OppositionBasedSolutionsCreation, GridSolutionsCreation, ChaosBasedSolutionsCreation) components.
+* [12/18/2025] Added new selection (TruncationSelection, RankingSelection, StochasticUniversalSampling, BoltzmannSelection), replacement (RandomReplacement, TournamentReplacement), and solutions creation (OppositionBasedSolutionsCreation, ChaosBasedSolutionsCreation) components.
 
 * [07/09/2025] jMetal 6.9 is released.
 

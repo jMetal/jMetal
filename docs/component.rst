@@ -273,7 +273,8 @@ Available Components
 - ``LatinHypercubeSamplingSolutionsCreation``: Stratified sampling for better coverage.
 - ``ScatterSearchSolutionsCreation``: Diverse initial population.
 - ``OppositionBasedSolutionsCreation``: Creates pairs (original + opposite mirrored across bounds center). Reference: Tizhoosh (2005) DOI:10.1109/CIMCA.2005.1631345
-- ``GridSolutionsCreation``: Deterministic grid-based initialization for uniform coverage.
+- ``SobolSolutionsCreation``: Creates quasi-random solutions using Sobol sequences for uniform space coverage. Reference: Sobol (1967) DOI:10.1016/0041-5553(67)90144-9
+- ``CauchySolutionsCreation``: Creates solutions using a heavy-tailed Cauchy distribution to balance local and distant exploration. Reference: Yao et al. (1999) DOI:10.1109/4235.771163
 - ``ChaosBasedSolutionsCreation``: Uses logistic map chaotic sequences for quasi-random coverage. Reference: Alatas et al. (2009) DOI:10.1016/j.chaos.2007.09.063
 
 **Termination Components** (``common.termination``):
