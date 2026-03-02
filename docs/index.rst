@@ -26,7 +26,7 @@ Summary of features:
 * Variable representations (encodings): binary, real, integer, permutation, mixed
 * Problems:
 
-  - Problem families: ZDT, DTLZ, WFG, RE, CRE, FDA, CEC2009, LZ09, GLT, MOP, LIRCMOP, MOP, UF
+  - Problem families: ZDT, DTLZ, WFG, RE, CRE, FDA, CEC2009, LZ09, GLT, MOP, LIRCMOP, MOP, UF, ZCAT
   - Classical problems: Kursawe, Fonseca, Schaffer, Viennet2, Viennet3
   - Constrained problems: Srinivas, Tanaka, Osyczka2, Constr_Ex, Golinski, Water, Viennet4
   - Combinatorial problems: multi-objective TSP

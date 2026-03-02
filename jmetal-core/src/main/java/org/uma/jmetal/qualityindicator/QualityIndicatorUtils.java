@@ -33,6 +33,8 @@ public class QualityIndicatorUtils {
     list.add(new InvertedGenerationalDistancePlus(referenceFront));
     list.add(new Spread(referenceFront));
     list.add(new GeneralizedSpread(referenceFront));
+    list.add(new AverageHausdorffDistance(referenceFront));
+    list.add(new R2(referenceFront));
     list.add(new SetCoverage(referenceFront));
 
     return list;
@@ -55,6 +57,8 @@ public class QualityIndicatorUtils {
     list.add(new InvertedGenerationalDistancePlus());
     list.add(new Spread());
     list.add(new GeneralizedSpread());
+    list.add(new AverageHausdorffDistance());
+    list.add(new R2());
     list.add(new SetCoverage()) ;
 
     return list;

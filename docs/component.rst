@@ -5,7 +5,7 @@ Component-based algorithms
 
 :Author: Antonio J. Nebro
 :Version: 1.1
-:Date: 2025-12-18
+:Date: 2026-03-02
 
 The design and architecture of the metaheuristics included in jMetal is probably the feature that has evolved
 the most since the start of the project in 2006. In first versions, the implementation of a metaheuristic required
@@ -79,20 +79,20 @@ the information that will be notified to observers):
 
 .. code-block:: java
 
-  package org.uma.jmetal.solution;
+  package org.uma.jmetal.component.algorithm;
 
   public class EvolutionaryAlgorithm<S extends Solution<?>>
     implements Algorithm<List<S>>, ObservableEntity<Map<String, Object>> {
 
     private List<S> population;
   
-    private final Evaluation<S> evaluation;
-    private final SolutionsCreation<S> createInitialPopulation;
-    private final Termination termination;
-    private final Selection<S> selection;
-    private final Variation<S> variation;
-    private final Replacement<S> replacement;
-  
+    private Evaluation<S> evaluation;
+    private SolutionsCreation<S> createInitialPopulation;
+    private Termination termination;
+    private Selection<S> selection;
+    private Variation<S> variation;
+    private Replacement<S> replacement;
+
     private final Map<String, Object> attributes;
   
     private long initTime;
@@ -136,20 +136,20 @@ The state of the algorithm is updated with methods ``initProgress()``  and ``upd
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("COMPUTING_TIME", currentComputingTime());
   }
 
   protected void updateProgress() {
-    evaluations += variation.getOffspringPopulationSize();
+    evaluations += variation.offspringPopulationSize();
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("COMPUTING_TIME", currentComputingTime());
 
     observable.setChanged();
     observable.notifyObservers(attributes);
 
-    totalComputingTime = getCurrentComputingTime();
+    totalComputingTime = currentComputingTime();
   }
 
 
@@ -173,21 +173,21 @@ class is the following one:
 
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+            ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     this.variation =
         new CrossoverAndMutationVariation<>(
             offspringPopulationSize, crossover, mutation);
 
-    int tournamentSize = 2 ;
+    int tournamentSize = 2;
     this.selection =
         new NaryTournamentSelection<>(
             tournamentSize,
-            variation.getMatingPoolSize(),
+            variation.matingPoolSize(),
             new MultiComparator<>(
                 Arrays.asList(
                     Comparator.comparing(ranking::getRank),
-                    Comparator.comparing(densityEstimator::getValue).reversed())));
+                    Comparator.comparing(densityEstimator::value).reversed())));
 
     this.termination = new TerminationByEvaluations(25000);
 
@@ -220,9 +220,9 @@ Its ``run()`` method is included in this code snippet:
 
     initProgress();
     while (!termination.isMet(attributes)) {
-      velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection,
+      speed = velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection,
           inertiaWeightComputingStrategy);
-      positionUpdate.update(swarm, speed);
+      swarm = positionUpdate.update(swarm, speed);
       swarm = perturbation.perturb(swarm);
       swarm = evaluation.evaluate(swarm);
       globalBest = globalBestUpdate.update(swarm, globalBest);

@@ -42,16 +42,18 @@ public class CommandLineQualityIndicatorTool {
     JMetalLogger.logger.info(
         "Parameters: indicatorName referenceFrontFile frontFile \n"
             + "Where indicatorValue can be one of these:\n"
-            + "EP   - Additive epsilon\n"
-            + "GD   - Generational distance\n"
-            + "IGD  - Inverted generational distance\n"
-            + "IGD+ - Inverted generational distance plus \n"
-            + "HV   - Hypervolume \n"
-            + "NHV  - Normalized hypervolume \n"
-            + "ER   - Error ratio \n"
-            + "SP   - Spread (two objectives)\n"
+            + "EP      - Additive epsilon\n"
+            + "GD      - Generational distance\n"
+            + "IGD     - Inverted generational distance\n"
+            + "IGD+    - Inverted generational distance plus \n"
+            + "HV      - Hypervolume \n"
+            + "NHV     - Normalized hypervolume \n"
+            + "ER      - Error ratio \n"
+            + "SP      - Spread (two objectives)\n"
             + "GSPREAD - Generalized Spread (more than two objectives)\n"
-            + "SC   - Set coverage\n");
+            + "AHD     - Average Hausdorff Distance\n"
+            + "R2      - R2 indicator\n"
+            + "SC      - Set coverage\n");
   }
 
   /**
