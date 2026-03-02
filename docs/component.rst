@@ -26,7 +26,7 @@ and particle swarm optimization techniques. In this way, code reuse was signific
 at the cost of having to take into account the use of templates, which has proved cumbersome for some researchers,
 and the consequence is that there are still people using jMetal 4.5.
 
-Now, in the current release of jMetal (version 6.0), we propose a new architecture for the
+Now, in the current release of jMetal (version 7.0), we propose a new architecture for the
 design and implementation of metaheuristics. The main reason has to do with the fact that we are
 currently interested in using jMetal for the auto-configuration and auto-design of algorithms,
 and the current architecture has limitations for this, as discussed in the paper
@@ -39,7 +39,7 @@ Furthermore, the templates are observable entities, according to the Observer pa
 can register into them and be notified when the state of the algorithm changes (e.g., a real chart observer
 can receive the population after each algorithm iteration to plot it).
 
-Contrarily to the approach adopted in jMetal 5.0, in jMetal 6.0 the new architecture is not going
+Contrarily to the approach adopted in jMetal 5.0, in jMetal 7.0 the new architecture is not going
 to replace the former one. There are some reasons for taking this decision, starting with
 the aforementioned comment about jMetal users who are comfortable with the current implementation
 and are probably not interested

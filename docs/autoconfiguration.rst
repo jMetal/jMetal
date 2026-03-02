@@ -216,7 +216,7 @@ The software requirements are the following:
 
 The first step is to create a directory for the experiment. Let us called is, for example, ``iraceJMetal``. This directory must contain:
 
-* File ``jmetal-auto-6.11-SNAPSHOT-jar-with-dependencies.jar``. To generate this file, just type the following command at the root of the jMetal project:
+* File ``jmetal-auto-7.0-jar-with-dependencies.jar``. To generate this file, just type the following command at the root of the jMetal project:
 
     .. code-block:: bash
 

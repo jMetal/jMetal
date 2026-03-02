@@ -479,29 +479,6 @@ Method naming format: `given[Context]_when[Action]_then[Outcome]`
 
 ---
 
-## Review Checklist
-
-Before submitting code, verify:
-- [ ] Records used for DTOs and value objects
-- [ ] Sealed classes used for controlled hierarchies
-- [ ] Pattern matching used instead of instanceof chains
-- [ ] Optional returned instead of null
-- [ ] Streams used for collection operations
-- [ ] Try-with-resources used for all closeable resources
-- [ ] Single return point per method
-- [ ] Each method has single responsibility
-- [ ] Complete Javadoc for public APIs
-- [ ] Specific custom exceptions used
-- [ ] Fields are final where possible
-- [ ] Tests follow Given-When-Then naming
-- [ ] Tests use @DisplayName and @Nested appropriately
-
-- [ ] All code, identifiers and comments are written in English
-
-- [ ] Test coverage: module-specific targets set (see Coverage policy)
-
----
-
 ## Coverage policy
 
 To keep expectations realistic and actionable across a multi-module repository, use module-specific coverage targets and measure with JaCoCo.
