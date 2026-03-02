@@ -11,7 +11,7 @@ typically applied to one or more solutions, producing one or more new solutions.
 are typically a solution or a list of solutions, depending on the operator.
 
 Operator Types
--------------
+--------------
 
 jMetal provides four main types of operators:
 
@@ -21,11 +21,11 @@ jMetal provides four main types of operators:
 4. **Local Search**: Applies local search techniques to improve solutions.
 
 Crossover Operators
-------------------
+-------------------
 Crossover operators combine genetic information from parent solutions to create new offspring solutions.
 
 For Double Solutions
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 - **SBXCrossover**: Simulated Binary Crossover with polynomial distribution.
 - **BLXAlphaCrossover**: Blend Crossover with alpha parameter.
@@ -38,13 +38,13 @@ For Double Solutions
 - **UnimodalNormalDistributionCrossover**: Uses unimodal normal distribution.
 
 For Integer Solutions
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 - **IntegerSBXCrossover**: Integer version of SBX.
 - **IntegerPolynomialCrossover**: Polynomial crossover.
 
 For Binary Solutions
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 - **HUXCrossover**: Half Uniform Crossover.
 - **SinglePointCrossover**: One-point crossover.
@@ -53,7 +53,7 @@ For Binary Solutions
 - **UniformCrossover**: Random bit selection from parents.
 
 For Permutation Solutions
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **PMXCrossover**: Partially Mapped Crossover.
 - **CycleCrossover**: Preserves absolute positions.
@@ -62,11 +62,11 @@ For Permutation Solutions
 - **EdgeRecombinationCrossover**: Preserves adjacency information.
 
 Mutation Operators
------------------
+------------------
 Mutation operators introduce random changes to solutions to maintain diversity.
 
-For Double Solutions
-~~~~~~~~~~~~~~~~~~~
+For Double Solutions (Mutation)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **PolynomialMutation**: Polynomial mutation.
 - **NonUniformMutation**: Strength decreases over time.
@@ -75,19 +75,19 @@ For Double Solutions
 - **PowerLawMutation**: Based on power law distribution.
 - **SimpleRandomMutation**: Uniform random mutation.
 
-For Integer Solutions
-~~~~~~~~~~~~~~~~~~~~
+For Integer Solutions (Mutation)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **IntegerPolynomialMutation**: Integer version of polynomial mutation.
 - **SimpleRandomMutation**: Random perturbation of values.
 
-For Binary Solutions
-~~~~~~~~~~~~~~~~~~~
+For Binary Solutions (Mutation)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **BitFlipMutation**: Flips each bit with given probability.
 
-For Permutation Solutions
-~~~~~~~~~~~~~~~~~~~~~~~~
+For Permutation Solutions (Mutation)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **SwapMutation**: Swaps two elements.
 - **InsertMutation**: Moves element to new position.
@@ -97,7 +97,7 @@ For Permutation Solutions
 - **SimpleInversionMutation**: Inverts two elements.
 
 Selection Operators
-------------------
+-------------------
 
 - **BinaryTournamentSelection**: Better of two random solutions.
 - **NaryTournamentSelection**: Best of N random solutions.
@@ -108,12 +108,12 @@ Selection Operators
 - **StochasticUniversalSampling**: Improved roulette wheel.
 
 Local Search Operators
----------------------
+----------------------
 
 - **BasicLocalSearch**: Improves solutions locally.
 
 Using Operators in jMetal
-------------------------
+-------------------------
 
 Example of creating and using a crossover operator:
 
@@ -143,7 +143,7 @@ Example of creating and using a mutation operator:
    DoubleSolution mutatedSolution = mutation.execute(solution);
 
 Choosing the Right Operator
---------------------------
+---------------------------
 
 The choice of operators depends on several factors:
 
