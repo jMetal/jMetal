@@ -6,6 +6,7 @@ import org.uma.jmetal.algorithm.examples.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.agemoeaii.AGEMOEAIIBuilder;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -24,8 +25,8 @@ public class AGEMOEAIIRunner extends AbstractAlgorithmRunner {
 
   public static void main(String[] args) throws JMetalException, IOException {
 
-    var problem = new DTLZ7();
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ7.3D.csv";
+    var problem = new DTLZ3();
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ3.3D.csv";
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 30.0;
