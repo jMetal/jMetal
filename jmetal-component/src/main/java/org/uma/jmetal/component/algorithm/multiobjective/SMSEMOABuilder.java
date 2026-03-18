@@ -17,10 +17,9 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 
 /**
  * Class to configure and build an instance of the SMS-EMOA algorithm
@@ -41,12 +40,11 @@ public class SMSEMOABuilder<S extends Solution<?>> {
       CrossoverOperator<S> crossover, MutationOperator<S> mutation) {
     name = "SMS-EMOA";
 
-    ranking = new FastNonDominatedSortRanking<>();
+    ranking = createDefaultRanking(problem);
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    Hypervolume<S> hypervolume = new PISAHypervolume<>();
-    this.replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
+    this.replacement = createReplacement();
 
     this.variation =
         new CrossoverAndMutationVariation<>(1, crossover, mutation);
@@ -64,10 +62,10 @@ public class SMSEMOABuilder<S extends Solution<?>> {
     return this;
   }
 
+  @SuppressWarnings("deprecation")
   public SMSEMOABuilder<S> setRanking(Ranking<S> ranking) {
     this.ranking = ranking;
-    Hypervolume<S> hypervolume = new PISAHypervolume<>();
-    this.replacement = new SMSEMOAReplacement<>(ranking, hypervolume);
+    this.replacement = createReplacement();
 
     return this;
   }
@@ -81,5 +79,17 @@ public class SMSEMOABuilder<S extends Solution<?>> {
   public EvolutionaryAlgorithm<S> build() {
     return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
         selection, variation, replacement);
+  }
+
+  private Replacement<S> createReplacement() {
+    return new SMSEMOAReplacement<>(ranking);
+  }
+
+  private Ranking<S> createDefaultRanking(Problem<S> problem) {
+    if (problem.numberOfObjectives() == 3) {
+      return new FastNonDominatedSortRanking<>();
+    }
+
+    return new MergeNonDominatedSortRanking<>();
   }
 }
