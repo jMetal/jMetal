@@ -16,238 +16,244 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  * @param <S> Type of the solution
  */
 public class RVEAEnvironmentalSelection<S extends Solution<?>> {
+  private static final double EPSILON = 1.0e-64;
 
   private final int maxGenerations;
+  private final int adaptationFrequency;
   private int currentGeneration;
   private final double alpha;
-  private final double fr; // frequency of reference vector adaptation
   private final int numberOfObjectives;
   private double[][] referenceVectors;
   private final double[][] initialReferenceVectors;
-  private double[] zMin;
-  private double[] zMax;
+  private double[] idealPoint;
+  private double[] nadirPoint;
 
   public RVEAEnvironmentalSelection(int numberOfObjectives, int maxGenerations, double alpha, double fr, int H) {
+    Check.that(numberOfObjectives >= 2, "The number of objectives must be at least 2.");
+    Check.valueIsPositive(maxGenerations, "maxGenerations");
+    Check.valueIsNotNegative(alpha, "alpha");
+    Check.valueIsInRange(fr, EPSILON, 1.0, "fr");
+
     this.numberOfObjectives = numberOfObjectives;
     this.maxGenerations = maxGenerations;
     this.currentGeneration = 0;
     this.alpha = alpha;
-    this.fr = fr;
+    this.adaptationFrequency = Math.max(1, (int) Math.ceil(maxGenerations * fr));
 
-    // Generate initial reference vectors using ReferencePointGenerator (single layer or two layers)
-    List<double[]> generatedVectors;
-    if (numberOfObjectives <= 5) {
-      generatedVectors = ReferencePointGenerator.generateSingleLayer(numberOfObjectives, H);
-    } else {
-      // 2 layers for many-objective setups, but for simplicity we rely on H for single layer if not specific
-      // In jMetal's RVEA, often it's configured similar to NSGA-III
-      // For general cases, let's just use H as the number of divisions
-      generatedVectors = ReferencePointGenerator.generateSingleLayer(numberOfObjectives, H);
-    }
+    List<double[]> generatedVectors = ReferencePointGenerator.generateSingleLayer(numberOfObjectives, H);
 
     this.referenceVectors = new double[generatedVectors.size()][numberOfObjectives];
     this.initialReferenceVectors = new double[generatedVectors.size()][numberOfObjectives];
 
     for (int i = 0; i < generatedVectors.size(); i++) {
-        // Normalize the generated vector
-        double length = 0.0;
-        for (int j = 0; j < numberOfObjectives; j++) {
-            length += generatedVectors.get(i)[j] * generatedVectors.get(i)[j];
-        }
-        length = Math.sqrt(length);
-        for (int j = 0; j < numberOfObjectives; j++) {
-            this.referenceVectors[i][j] = generatedVectors.get(i)[j] / length;
-            this.initialReferenceVectors[i][j] = this.referenceVectors[i][j];
-        }
+      double length = calculateNorm(generatedVectors.get(i));
+      for (int j = 0; j < numberOfObjectives; j++) {
+        this.referenceVectors[i][j] = generatedVectors.get(i)[j] / length;
+        this.initialReferenceVectors[i][j] = this.referenceVectors[i][j];
+      }
     }
   }
 
   public List<S> execute(List<S> jointPopulation, int populationSize) {
     Check.notNull(jointPopulation);
-    Check.that(jointPopulation.size() >= populationSize, 
+    Check.that(jointPopulation.size() >= populationSize,
         "The joint population size must be at least the population size.");
 
     currentGeneration++;
 
-    updateIdealAndNadirPoints(jointPopulation);
-    
-    // RVA: Reference Vector Adaptation
-    if (currentGeneration % Math.ceil(maxGenerations * fr) == 0) {
-        adaptReferenceVectors();
-    }
+    updateIdealPoint(jointPopulation);
 
-    // Associate
     List<List<S>> subPopulations = new ArrayList<>(referenceVectors.length);
     for (int i = 0; i < referenceVectors.length; i++) {
-        subPopulations.add(new ArrayList<>());
+      subPopulations.add(new ArrayList<>());
     }
 
     for (S solution : jointPopulation) {
-        int closestVectorIndex = associateToReferenceVector(solution);
-        subPopulations.get(closestVectorIndex).add(solution);
+      int closestVectorIndex = associateToReferenceVector(solution);
+      subPopulations.get(closestVectorIndex).add(solution);
     }
 
-    // Calculate gamma (minimum angle between reference vectors)
     double[] gamma = calculateGamma();
 
-    // Select
     List<S> nextPopulation = new ArrayList<>();
     for (int i = 0; i < referenceVectors.length; i++) {
-        List<S> subPopulation = subPopulations.get(i);
-        if (!subPopulation.isEmpty()) {
-            S bestSolution = selectBestFromSubpopulation(subPopulation, i, gamma[i]);
-            nextPopulation.add(bestSolution);
-        }
+      List<S> subPopulation = subPopulations.get(i);
+      if (!subPopulation.isEmpty()) {
+        S bestSolution = selectBestFromSubpopulation(subPopulation, i, gamma[i]);
+        nextPopulation.add(bestSolution);
+      }
     }
 
-    // If nextPopulation is smaller than required (because some vectors have no associated solutions),
-    // fill with remaining solutions randomly or by APD to other vectors.
-    // In standard RVEA, empty vectors are just ignored, but to maintain exactly populationSize:
-    if (nextPopulation.size() < populationSize) {
-        fillWithRemaining(nextPopulation, jointPopulation, populationSize);
-    } else if (nextPopulation.size() > populationSize) {
-        // Just truncate if oversized (rare, because referenceVectors.length is typically ~populationSize)
-        nextPopulation = new ArrayList<>(nextPopulation.subList(0, populationSize));
+    updateNadirPoint(nextPopulation);
+
+    if (mustAdaptReferenceVectors()) {
+      adaptReferenceVectors();
     }
 
     return nextPopulation;
   }
 
-  private void updateIdealAndNadirPoints(List<S> population) {
-    if (zMin == null) {
-      zMin = new double[numberOfObjectives];
-      zMax = new double[numberOfObjectives];
-      Arrays.fill(zMin, Double.POSITIVE_INFINITY);
-      Arrays.fill(zMax, Double.NEGATIVE_INFINITY);
+  private void updateIdealPoint(List<S> population) {
+    if (idealPoint == null) {
+      idealPoint = new double[numberOfObjectives];
+      Arrays.fill(idealPoint, Double.POSITIVE_INFINITY);
     }
-    
-    // Always recalculate zMax every generation for RVA, and update zMin dynamically
-    Arrays.fill(zMax, Double.NEGATIVE_INFINITY);
-    
+
     for (S sol : population) {
-        for (int i = 0; i < numberOfObjectives; i++) {
-            double obj = sol.objectives()[i];
-            if (obj < zMin[i]) zMin[i] = obj;
-            if (obj > zMax[i]) zMax[i] = obj;
-        }
+      for (int i = 0; i < numberOfObjectives; i++) {
+        idealPoint[i] = Math.min(idealPoint[i], sol.objectives()[i]);
+      }
     }
+  }
+
+  private void updateNadirPoint(List<S> population) {
+    if (population.isEmpty()) {
+      nadirPoint = null;
+      return;
+    }
+
+    nadirPoint = new double[numberOfObjectives];
+    Arrays.fill(nadirPoint, Double.NEGATIVE_INFINITY);
+
+    for (S sol : population) {
+      for (int i = 0; i < numberOfObjectives; i++) {
+        nadirPoint[i] = Math.max(nadirPoint[i], sol.objectives()[i]);
+      }
+    }
+  }
+
+  private boolean mustAdaptReferenceVectors() {
+    return nadirPoint != null && currentGeneration % adaptationFrequency == 0;
   }
 
   private void adaptReferenceVectors() {
-      for (int i = 0; i < referenceVectors.length; i++) {
-          double length = 0.0;
-          for (int j = 0; j < numberOfObjectives; j++) {
-              referenceVectors[i][j] = initialReferenceVectors[i][j] * (zMax[j] - zMin[j]);
-              length += referenceVectors[i][j] * referenceVectors[i][j];
-          }
-          length = Math.sqrt(length);
-          if (length > 0) {
-              for (int j = 0; j < numberOfObjectives; j++) {
-                  referenceVectors[i][j] /= length;
-              }
-          }
+    for (int i = 0; i < referenceVectors.length; i++) {
+      double length = 0.0;
+      for (int j = 0; j < numberOfObjectives; j++) {
+        double scale = Math.max(nadirPoint[j] - idealPoint[j], EPSILON);
+        referenceVectors[i][j] = initialReferenceVectors[i][j] * scale;
+        length += referenceVectors[i][j] * referenceVectors[i][j];
       }
+
+      length = Math.sqrt(length);
+      for (int j = 0; j < numberOfObjectives; j++) {
+        referenceVectors[i][j] /= length;
+      }
+    }
   }
 
   private int associateToReferenceVector(S solution) {
-      double[] normalizedObj = new double[numberOfObjectives];
-      for (int i = 0; i < numberOfObjectives; i++) {
-          normalizedObj[i] = solution.objectives()[i] - zMin[i];
+    double[] translatedObjectives = new double[numberOfObjectives];
+    for (int i = 0; i < numberOfObjectives; i++) {
+      translatedObjectives[i] = solution.objectives()[i] - idealPoint[i];
+    }
+
+    double minAngle = Double.POSITIVE_INFINITY;
+    int bestIndex = 0;
+
+    double norm = calculateNorm(translatedObjectives);
+    if (norm == 0.0) {
+      return 0;
+    }
+
+    for (int i = 0; i < referenceVectors.length; i++) {
+      double cosine = calculateCosine(translatedObjectives, referenceVectors[i], norm);
+      double angle = Math.acos(Math.max(-1.0, Math.min(1.0, cosine)));
+      if (angle < minAngle) {
+        minAngle = angle;
+        bestIndex = i;
       }
-
-      double minAngle = Double.POSITIVE_INFINITY;
-      int bestIndex = 0;
-
-      double norm = calculateNorm(normalizedObj);
-      if (norm == 0.0) return 0;
-
-      for (int i = 0; i < referenceVectors.length; i++) {
-          double cosine = calculateCosine(normalizedObj, referenceVectors[i], norm);
-          // Angle is acos(cosine)
-          double angle = Math.acos(Math.max(-1.0, Math.min(1.0, cosine)));
-          if (angle < minAngle) {
-              minAngle = angle;
-              bestIndex = i;
-          }
-      }
-      return bestIndex;
+    }
+    return bestIndex;
   }
 
   private S selectBestFromSubpopulation(List<S> subPopulation, int referenceVectorIndex, double gamma) {
-      double minAPD = Double.POSITIVE_INFINITY;
-      S bestSolution = null;
+    double minAPD = Double.POSITIVE_INFINITY;
+    S bestSolution = null;
+    double progress = Math.pow((double) currentGeneration / maxGenerations, alpha);
+    double objectivePenaltyFactor = numberOfObjectives > 2 ? numberOfObjectives : 1.0;
 
-      double penaltyRatio = ((double) currentGeneration / maxGenerations);
-      
-      for (S solution : subPopulation) {
-          double[] normalizedObj = new double[numberOfObjectives];
-          for (int i = 0; i < numberOfObjectives; i++) {
-              normalizedObj[i] = solution.objectives()[i] - zMin[i];
-          }
-          
-          double norm = calculateNorm(normalizedObj);
-          double cosine = calculateCosine(normalizedObj, referenceVectors[referenceVectorIndex], norm);
-          double theta = Math.acos(Math.max(-1.0, Math.min(1.0, cosine)));
-          
-          // APD calculation
-          double pTheta = numberOfObjectives * Math.pow(penaltyRatio, alpha) * (theta / gamma);
-          double apd = (1.0 + pTheta) * norm;
-          
-          if (apd < minAPD) {
-              minAPD = apd;
-              bestSolution = solution;
-          }
+    for (S solution : subPopulation) {
+      double[] translatedObjectives = new double[numberOfObjectives];
+      for (int i = 0; i < numberOfObjectives; i++) {
+        translatedObjectives[i] = solution.objectives()[i] - idealPoint[i];
       }
-      return bestSolution;
+
+      double norm = calculateNorm(translatedObjectives);
+      double cosine = calculateCosine(translatedObjectives, referenceVectors[referenceVectorIndex], norm);
+      double theta = Math.acos(Math.max(-1.0, Math.min(1.0, cosine)));
+
+      double penalty = objectivePenaltyFactor * progress * (theta / gamma);
+      double apd = (1.0 + penalty) * norm;
+
+      if (apd < minAPD) {
+        minAPD = apd;
+        bestSolution = solution;
+      }
+    }
+    return bestSolution;
   }
 
   private double[] calculateGamma() {
-      // Gamma is the minimum angle between referenceVector i and any other referenceVector j
-      double[] gamma = new double[referenceVectors.length];
-      for (int i = 0; i < referenceVectors.length; i++) {
-          double minAngle = Double.POSITIVE_INFINITY;
-          for (int j = 0; j < referenceVectors.length; j++) {
-              if (i == j) continue;
-              double cosine = calculateCosine(referenceVectors[i], referenceVectors[j], 1.0); // Vectors are normalized
-              double angle = Math.acos(Math.max(-1.0, Math.min(1.0, cosine)));
-              if (angle < minAngle) {
-                  minAngle = angle;
-              }
-          }
-          gamma[i] = minAngle;
+    double[] gamma = new double[referenceVectors.length];
+    for (int i = 0; i < referenceVectors.length; i++) {
+      double minAngle = Double.POSITIVE_INFINITY;
+      for (int j = 0; j < referenceVectors.length; j++) {
+        if (i == j) {
+          continue;
+        }
+
+        double cosine = calculateCosine(referenceVectors[i], referenceVectors[j], 1.0);
+        double angle = Math.acos(Math.max(-1.0, Math.min(1.0, cosine)));
+        if (angle < minAngle) {
+          minAngle = angle;
+        }
       }
-      return gamma;
+
+      gamma[i] = Math.max(minAngle, EPSILON);
+    }
+    return gamma;
+  }
+
+  double[][] referenceVectors() {
+    double[][] copy = new double[referenceVectors.length][];
+    for (int i = 0; i < referenceVectors.length; i++) {
+      copy[i] = referenceVectors[i].clone();
+    }
+    return copy;
+  }
+
+  double[] idealPoint() {
+    return idealPoint == null ? null : idealPoint.clone();
+  }
+
+  double[] nadirPoint() {
+    return nadirPoint == null ? null : nadirPoint.clone();
+  }
+
+  int currentGeneration() {
+    return currentGeneration;
   }
 
   private double calculateNorm(double[] array) {
-      double sum = 0.0;
-      for (double v : array) {
-          sum += v * v;
-      }
-      return Math.sqrt(sum);
+    double sum = 0.0;
+    for (double v : array) {
+      sum += v * v;
+    }
+    return Math.sqrt(sum);
   }
 
   private double calculateCosine(double[] v1, double[] v2, double norm1) {
-      double dotProduct = 0;
-      for (int i = 0; i < v1.length; i++) {
-          dotProduct += v1[i] * v2[i];
-      }
-      // v2 is a reference vector, so its norm is 1.0
-      double denom = norm1 * 1.0; 
-      if (denom == 0) return 1.0;
-      return dotProduct / denom;
-  }
+    double dotProduct = 0;
+    for (int i = 0; i < v1.length; i++) {
+      dotProduct += v1[i] * v2[i];
+    }
 
-  private void fillWithRemaining(List<S> nextPopulation, List<S> jointPopulation, int targetSize) {
-      List<S> pool = new ArrayList<>(jointPopulation);
-      pool.removeAll(nextPopulation);
-      // For simplicity, shuffle or randomly pick. RVEA standard is typically strict about vector counts 
-      // but if population isn't full, we add random remaining solutions to maintain diversity.
-      // Easiest is to add them sequentially or by some simple metric.
-      // Here we randomly add remaining solutions
-      java.util.Collections.shuffle(pool);
-      while (nextPopulation.size() < targetSize && !pool.isEmpty()) {
-          nextPopulation.add(pool.remove(0));
-      }
+    double denominator = norm1;
+    if (denominator == 0.0) {
+      return 1.0;
+    }
+
+    return dotProduct / denominator;
   }
 }
