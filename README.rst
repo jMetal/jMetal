@@ -53,6 +53,8 @@ Related projects
 Changelog
 ---------
 
+* [03/18/2026] Add RVEA (contributed by @NicolasRodriguezUribe)
+
 * [03/02/2026] jMetal 7.0 is released.
 
 * [03/01/2026] Add new solution creations stragegies: SobolSolutionsCreation and CauchySolutionsCreation.
@@ -110,16 +112,4 @@ Changelog
 * [3/28/2022] The CF benchmark of constrained multi-objective problems, defined in `Constrained Multiobjective Optimization: Test Problem Construction and Performance Evaluations <https://doi.org/10.1109/TEVC.2020.3011829>`_, has been included.
 
 * [3/28/2022] The constraint handling code has been refactorized and the `documentation <https://jmetal.readthedocs.io/en/latest/constraints.html>`_ has been updated.
-
-* [9/6/2021] Release 5.11
-
-* [9/6/2021] The jMetal project adopts Java 13.
-
-* [7/6/2021] The `LSMOP benchmark <https://doi.org/10.1109/TCYB.2016.2600577>`_ is available. 
-
-* [2/19/2021] The `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface has been refactorized.
-
-* [2/19/2021] New implementation of quality indicators to remove the dependence of jMetal classes. Now, all of them accept as a parameter a matrix containing objective values.
-
-* [1/21/2021] Added the MicroFAME multi-objective genetic algorith, described in: Alejandro Santiago, Bernabé Dorronsoro, Héctor Fraire, Patricia Ruíz: Micro-Genetic algorithm with fuzzy selection of operators for multi-Objective optimization: microFAME. Swarm and Evolutionary Computation, V.61, March 2021. `DOI <https://doi.org/10.1016/j.swevo.2020.100818>`_. Contributed by Alejandro Santiago.
 

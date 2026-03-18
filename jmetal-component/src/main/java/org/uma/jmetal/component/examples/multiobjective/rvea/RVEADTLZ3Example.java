@@ -22,7 +22,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class RVEADTLZ3Example {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ3.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
@@ -36,7 +36,7 @@ public class RVEADTLZ3Example {
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 91;
-    int maxEvaluations = 100000;
+    int maxEvaluations = 30000;
     int h = 12;
     double alpha = 2.0;
     double fr = 0.1;
@@ -57,8 +57,8 @@ public class RVEADTLZ3Example {
     JMetalLogger.logger.info("Number of non-dominated solutions: " + paretoFront.size());
 
     new SolutionListOutput(paretoFront)
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR_DTLZ3.csv", ","))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN_DTLZ3.csv", ","))
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
         .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());

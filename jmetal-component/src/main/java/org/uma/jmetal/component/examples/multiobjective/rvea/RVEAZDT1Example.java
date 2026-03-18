@@ -26,7 +26,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class RVEAZDT1Example {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
@@ -40,7 +40,7 @@ public class RVEAZDT1Example {
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100; // H=99 in 2D gives 100 reference vectors
-    int maxEvaluations = 12000;
+    int maxEvaluations = 35000;
     int h = 99;
     double alpha = 2.0;
     double fr = 0.1;

@@ -36,7 +36,7 @@ public class RVEAZDT4Example {
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int maxEvaluations = 100000;
+    int maxEvaluations = 30000;
     int h = 99;
     double alpha = 2.0;
     double fr = 0.1;
