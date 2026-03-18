@@ -18,6 +18,8 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
 /**
  * Class to configure and build an instance of the RVEA (Reference Vector Guided Evolutionary Algorithm)
@@ -26,8 +28,12 @@ import org.uma.jmetal.solution.Solution;
  * @param <S>
  */
 public class RVEABuilder<S extends Solution<?>> {
-  private String name;
-  private Problem<S> problem;
+  private final String name;
+  private final Problem<S> problem;
+  private final int populationSize;
+  private final double alpha;
+  private final double fr;
+  private final int numberOfDivisions;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
@@ -39,14 +45,11 @@ public class RVEABuilder<S extends Solution<?>> {
       CrossoverOperator<S> crossover, MutationOperator<S> mutation, double alpha, double fr, int h) {
     this.name = "RVEA";
     this.problem = problem;
+    this.populationSize = populationSize;
+    this.alpha = alpha;
+    this.fr = fr;
+    this.numberOfDivisions = h;
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
-
-    int maxGenerations = maxEvaluations / populationSize; // estimation of maximum generations
-    
-    RVEAEnvironmentalSelection<S> environmentalSelection =
-        new RVEAEnvironmentalSelection<>(problem.numberOfObjectives(), maxGenerations, alpha, fr, h);
-
-    this.replacement = new RVEAReplacement<>(environmentalSelection);
 
     this.variation = new CrossoverAndMutationVariation<>(
         populationSize, crossover, mutation);
@@ -83,7 +86,35 @@ public class RVEABuilder<S extends Solution<?>> {
   }
 
   public EvolutionaryAlgorithm<S> build() {
+    Check.that(termination instanceof TerminationByEvaluations,
+        "RVEA requires termination by evaluations to compute APD progress and reference adaptation.");
+
+    int referenceVectorCount =
+        ReferencePointGenerator.calculateNumberOfReferencePoints(problem.numberOfObjectives(), numberOfDivisions);
+    Check.that(referenceVectorCount == populationSize,
+        "Population size must match the number of generated reference vectors. Expected "
+            + referenceVectorCount + " and found " + populationSize + ".");
+
+    int maxEvaluations = ((TerminationByEvaluations) termination).getMaximumNumberOfEvaluations();
+    int maxGenerations = estimateMaximumGenerations(maxEvaluations, populationSize,
+        variation.offspringPopulationSize());
+    RVEAEnvironmentalSelection<S> environmentalSelection =
+        new RVEAEnvironmentalSelection<>(problem.numberOfObjectives(), maxGenerations, alpha, fr,
+            numberOfDivisions);
+    replacement = new RVEAReplacement<>(environmentalSelection);
+
     return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
         selection, variation, replacement);
+  }
+
+  private int estimateMaximumGenerations(int maxEvaluations, int initialPopulationSize,
+      int offspringPopulationSize) {
+    Check.valueIsPositive(offspringPopulationSize, "offspringPopulationSize");
+
+    if (maxEvaluations <= initialPopulationSize) {
+      return 1;
+    }
+
+    return (int) Math.ceil((double) (maxEvaluations - initialPopulationSize) / offspringPopulationSize);
   }
 }

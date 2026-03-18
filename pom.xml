@@ -121,7 +121,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <release>22</release>
+                    <release>21</release>
                 </configuration>
                 <dependencies>
                     <dependency>
