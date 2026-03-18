@@ -46,7 +46,7 @@ public class AGEMOEABiObjectiveTSPRunner extends AbstractAlgorithmRunner {
         new AGEMOEABuilder<>(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
-            .setMaxIterations(100)
+            .setMaxIterations(1000)
             .setPopulationSize(populationSize)
             .build();
 

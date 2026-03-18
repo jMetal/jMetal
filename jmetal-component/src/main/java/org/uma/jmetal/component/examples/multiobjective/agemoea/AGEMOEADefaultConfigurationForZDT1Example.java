@@ -1,10 +1,9 @@
-package org.uma.jmetal.component.examples.multiobjective.rvea;
+package org.uma.jmetal.component.examples.multiobjective.agemoea;
 
 import java.io.IOException;
 import java.util.List;
-
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.component.algorithm.multiobjective.RVEABuilder;
+import org.uma.jmetal.component.algorithm.multiobjective.AGEMOEABuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -22,43 +21,40 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
- * Class to configure and run the RVEA algorithm using the components architecture.
+ * Class to configure and run the AGE-MOEA algorithm using the components architecture.
  *
- * @author 
+ * @author Annibale Panichella
  */
-public class RVEADefaultConfigurationExample {
+public class AGEMOEADefaultConfigurationForZDT1Example {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    double crossoverDistributionIndex = 30.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 91; // H=12 in 3D gives 91 reference vectors
-    int maxEvaluations = 30000;
-    int h = 12; // Divisions for standard RVEA 3D
-    double alpha = 2.0;
-    double fr = 0.1;
+    int populationSize = 100;
+    int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(maxEvaluations);
+    Termination termination = new TerminationByEvaluations(20000);
 
-    EvolutionaryAlgorithm<DoubleSolution> rvea =
-        new RVEABuilder<>(problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr, h)
+    EvolutionaryAlgorithm<DoubleSolution> agemoea =
+        new AGEMOEABuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation, AGEMOEABuilder.Variant.AGEMOEA)
             .setTermination(termination)
             .build();
 
-    rvea.run();
+    agemoea.run();
 
-    List<DoubleSolution> population = rvea.result();
-    JMetalLogger.logger.info("Total execution time : " + rvea.totalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + rvea.numberOfEvaluations());
+    List<DoubleSolution> population = agemoea.result();
+    JMetalLogger.logger.info("Total execution time : " + agemoea.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + agemoea.numberOfEvaluations());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
