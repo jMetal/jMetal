@@ -23,7 +23,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * Class to configure and run the AGE-MOEA algorithm using the components architecture.
  *
- * @author Annibale Panichella
+ * @author Antonio J. Nebro
  */
 public class AGEMOEADefaultConfigurationForZDT1Example {
   public static void main(String[] args) throws JMetalException, IOException {
