@@ -19,7 +19,9 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-import org.uma.jmetal.util.sequencegenerator.impl.CyclicIntegerSequence;
+import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
+import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
 
 /**
  * Class to configure and build an instance of the SMS-EMOA algorithm
@@ -33,6 +35,7 @@ public class SMSEMOADEBuilder {
   private Selection<DoubleSolution> selection;
   private Variation<DoubleSolution> variation;
   private Replacement<DoubleSolution> replacement;
+  private SequenceGenerator<Integer> sequenceGenerator;
 
   public SMSEMOADEBuilder(
           Problem<DoubleSolution> problem, 
@@ -43,12 +46,12 @@ public class SMSEMOADEBuilder {
           DifferentialEvolutionCrossover.DE_VARIANT differentialEvolutionVariant) {
     name = "SMS-EMOA-DE";
 
-    ranking = new FastNonDominatedSortRanking<>();
-    var sequenceGenerator = new CyclicIntegerSequence(populationSize);
+    ranking = createDefaultRanking(problem);
+    sequenceGenerator = new IntegerBoundedSequenceGenerator(populationSize);
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    this.replacement = new SMSEMOAReplacement<>(ranking);
+    this.replacement = createReplacement();
 
     DifferentialEvolutionCrossover crossover =
             new DifferentialEvolutionCrossover(
@@ -60,7 +63,7 @@ public class SMSEMOADEBuilder {
 
     int numberOfParentsToSelect = crossover.numberOfRequiredParents() ;
     this.selection =
-            new DifferentialEvolutionSelection(variation.matingPoolSize(), numberOfParentsToSelect, false,
+            new DifferentialEvolutionSelection(variation.getMatingPoolSize(), numberOfParentsToSelect, false,
                     sequenceGenerator);
     
     this.termination = new TerminationByEvaluations(25000);
@@ -76,7 +79,7 @@ public class SMSEMOADEBuilder {
 
   public SMSEMOADEBuilder setRanking(Ranking<DoubleSolution> ranking) {
     this.ranking = ranking;
-    this.replacement = new SMSEMOAReplacement<>(ranking);
+    this.replacement = createReplacement();
 
     return this;
   }
@@ -90,5 +93,17 @@ public class SMSEMOADEBuilder {
   public EvolutionaryAlgorithm<DoubleSolution> build() {
     return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
         selection, variation, replacement);
+  }
+
+  private Replacement<DoubleSolution> createReplacement() {
+    return new SMSEMOAReplacement<>(ranking);
+  }
+
+  private Ranking<DoubleSolution> createDefaultRanking(Problem<DoubleSolution> problem) {
+    if (problem.numberOfObjectives() == 3) {
+      return new FastNonDominatedSortRanking<>();
+    }
+
+    return new MergeNonDominatedSortRanking<>();
   }
 }
