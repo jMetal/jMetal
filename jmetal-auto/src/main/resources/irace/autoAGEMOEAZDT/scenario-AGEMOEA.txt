@@ -1,0 +1,16 @@
+###################################################### -*- mode: r -*- #####
+## Scenario setup for Iterated Race (irace).
+############################################################################
+
+parameterFile = "../parameters-AGEMOEA.txt"
+execDir = "./execdir"
+trainInstancesDir = ""
+trainInstancesFile = "../instances-list-ZDT.txt"
+testInstancesDir = ""
+testNbElites = 1
+testIterationElites = 1
+targetRunner = "../jmetal-auto-7.1-SNAPSHOT-jar-with-dependencies.jar"
+targetRunnerLauncher = "java"
+targetCmdline = "-cp {targetRunner} org.uma.jmetal.auto.irace.AutoAGEMOEAIraceNHV --randomGeneratorSeed {seed} --problemName {instance} {targetRunnerArgs}"
+maxExperiments = 100000
+sampleInstances = 0

@@ -68,6 +68,8 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
      * @param front
      */
     public void computeSurvivalScore(List<S> front){
+        resetState();
+
         // list to keep track of solutions selected when assigning the survival scores
         List<Integer> selected = new ArrayList<>();
 
@@ -221,7 +223,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         for (S solution : front){
             double[] normalizedObjective = solution.objectives().clone();
             for(int i=0; i<this.numberOfObjectives; i++){
-                if (intercepts != null && intercepts.size() == 0)
+                if (intercepts != null && !intercepts.isEmpty())
                     normalizedObjective[i] = normalizedObjective[i] / intercepts.get(i);
             }
             double value =  this.minkowskiDistance(normalizedObjective, idealPoint, P);
@@ -329,6 +331,11 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
 
     public static String getAttributeId() {
         return attributeId;
+    }
+
+    private void resetState() {
+        P = 1.0;
+        intercepts = null;
     }
 
     public List<Double> computeIdealPoint(List<S> population) {
