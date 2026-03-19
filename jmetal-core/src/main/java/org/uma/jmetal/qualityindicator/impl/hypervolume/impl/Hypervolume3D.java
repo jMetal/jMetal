@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -42,6 +44,11 @@ public class Hypervolume3D extends Hypervolume {
 
   public Hypervolume3D(double[][] referenceFront) {
     super(referenceFront);
+  }
+
+  @Override
+  public QualityIndicator newInstance() {
+    return new Hypervolume3D();
   }
 
   @Override

@@ -21,7 +21,7 @@ import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.CyclicIntegerSequence;
 
 /**
  * Class to configure and build an instance of the SMS-EMOA algorithm
@@ -47,7 +47,7 @@ public class SMSEMOADEBuilder {
     name = "SMS-EMOA-DE";
 
     ranking = createDefaultRanking(problem);
-    sequenceGenerator = new IntegerBoundedSequenceGenerator(populationSize);
+    sequenceGenerator = new CyclicIntegerSequence(populationSize);
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
@@ -63,7 +63,7 @@ public class SMSEMOADEBuilder {
 
     int numberOfParentsToSelect = crossover.numberOfRequiredParents() ;
     this.selection =
-            new DifferentialEvolutionSelection(variation.getMatingPoolSize(), numberOfParentsToSelect, false,
+            new DifferentialEvolutionSelection(variation.matingPoolSize(), numberOfParentsToSelect, false,
                     sequenceGenerator);
     
     this.termination = new TerminationByEvaluations(25000);

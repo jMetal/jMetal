@@ -22,11 +22,11 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
- * Class to configure and run the AGE-MOEA algorithm using the components architecture.
+ * Class to configure and run the AGE-MOEA algorithm using the component-based architecture.
  *
  * @author Annibale Panichella
  */
-public class AGEMOEADefaultConfigurationExample {
+public class AGEMOEADefaultConfigurationForDTLZ3 {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ3.3D.csv";
@@ -34,7 +34,7 @@ public class AGEMOEADefaultConfigurationExample {
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 30.0;
+    double crossoverDistributionIndex = 20.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
