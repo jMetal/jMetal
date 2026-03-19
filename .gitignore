@@ -152,3 +152,7 @@ docs/_templates
 
 testoutput
 
+.codex-age-cp.txt
+**/.codex-age-cp.txt
+plot_outputs/
+

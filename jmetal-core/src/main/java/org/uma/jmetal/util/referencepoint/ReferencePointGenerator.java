@@ -55,17 +55,13 @@ public class ReferencePointGenerator {
     // Generate inner layer
     List<double[]> innerLayer = generateSingleLayer(numberOfObjectives, innerDivisions);
 
-    // Shrink inner layer points towards center (0.5, 0.5, ..., 0.5)
+    // Shrink inner-layer points toward the simplex center so the shifted points remain on
+    // the unit simplex while covering the interior more uniformly.
     double shrinkFactor = 0.5;
+    double centerCoordinate = (1.0 - shrinkFactor) / numberOfObjectives;
     for (double[] point : innerLayer) {
-      double sum = 0.0;
       for (int i = 0; i < point.length; i++) {
-        point[i] = shrinkFactor + point[i] * shrinkFactor;
-        sum += point[i];
-      }
-      // Normalize to sum to 1
-      for (int i = 0; i < point.length; i++) {
-        point[i] = point[i] / sum;
+        point[i] = centerCoordinate + point[i] * shrinkFactor;
       }
     }
 

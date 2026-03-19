@@ -1,5 +1,7 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -34,12 +36,14 @@ public class RVEABuilder<S extends Solution<?>> {
   private final double alpha;
   private final double fr;
   private final int numberOfDivisions;
+  private List<double[]> referenceVectors;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
   private Selection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
+  private boolean customSelection;
 
   public RVEABuilder(Problem<S> problem, int populationSize, int maxEvaluations,
       CrossoverOperator<S> crossover, MutationOperator<S> mutation, double alpha, double fr, int h) {
@@ -49,12 +53,15 @@ public class RVEABuilder<S extends Solution<?>> {
     this.alpha = alpha;
     this.fr = fr;
     this.numberOfDivisions = h;
+    this.referenceVectors =
+        ReferencePointGenerator.generateSingleLayer(problem.numberOfObjectives(), numberOfDivisions);
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     this.variation = new CrossoverAndMutationVariation<>(
         populationSize, crossover, mutation);
 
     this.selection = new RandomSelection<>(variation.matingPoolSize());
+    this.customSelection = false;
 
     this.termination = new TerminationByEvaluations(maxEvaluations);
     this.evaluation = new SequentialEvaluation<>(problem);
@@ -77,6 +84,7 @@ public class RVEABuilder<S extends Solution<?>> {
 
   public RVEABuilder<S> setSelection(Selection<S> selection) {
     this.selection = selection;
+    this.customSelection = true;
     return this;
   }
 
@@ -85,12 +93,30 @@ public class RVEABuilder<S extends Solution<?>> {
     return this;
   }
 
+  /**
+   * Overrides the paper-default single-layer reference vector set with a caller-provided one.
+   * This advanced hook is intended for experimental configurations and benchmark helpers.
+   *
+   * @param referenceVectors Reference vectors to be used by environmental selection.
+   * @return The builder instance.
+   */
+  public RVEABuilder<S> setReferenceVectors(List<double[]> referenceVectors) {
+    Check.notNull(referenceVectors);
+
+    this.referenceVectors = new ArrayList<>(referenceVectors.size());
+    for (double[] referenceVector : referenceVectors) {
+      this.referenceVectors.add(referenceVector.clone());
+    }
+
+    return this;
+  }
+
   public EvolutionaryAlgorithm<S> build() {
     Check.that(termination instanceof TerminationByEvaluations,
         "RVEA requires termination by evaluations to compute APD progress and reference adaptation.");
+    Check.notNull(referenceVectors);
 
-    int referenceVectorCount =
-        ReferencePointGenerator.calculateNumberOfReferencePoints(problem.numberOfObjectives(), numberOfDivisions);
+    int referenceVectorCount = referenceVectors.size();
     Check.that(referenceVectorCount == populationSize,
         "Population size must match the number of generated reference vectors. Expected "
             + referenceVectorCount + " and found " + populationSize + ".");
@@ -100,11 +126,21 @@ public class RVEABuilder<S extends Solution<?>> {
         variation.offspringPopulationSize());
     RVEAEnvironmentalSelection<S> environmentalSelection =
         new RVEAEnvironmentalSelection<>(problem.numberOfObjectives(), maxGenerations, alpha, fr,
-            numberOfDivisions);
+            referenceVectors);
     replacement = new RVEAReplacement<>(environmentalSelection);
 
-    return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-        selection, variation, replacement);
+    Selection<S> finalSelection =
+        customSelection ? selection : new RandomSelection<>(variation.matingPoolSize());
+    SolutionsCreation<S> validatedInitialPopulationCreation = () -> {
+      var initialPopulation = createInitialPopulation.create();
+      Check.that(initialPopulation.size() == populationSize,
+          "The initial population size must be " + populationSize + " but is "
+              + initialPopulation.size() + ".");
+      return initialPopulation;
+    };
+
+    return new EvolutionaryAlgorithm<>(name, validatedInitialPopulationCreation, evaluation,
+        termination, finalSelection, variation, replacement);
   }
 
   private int estimateMaximumGenerations(int maxEvaluations, int initialPopulationSize,
