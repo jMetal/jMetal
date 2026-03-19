@@ -59,8 +59,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   private CategoricalParameter algorithmResultParameter;
   private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
-  private CategoricalIntegerParameter populationSizeWithArchiveParameter;
-  //private IntegerParameter offspringPopulationSizeParameter;
+  private IntegerParameter populationSizeWithArchiveParameter;
   private CategoricalIntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter<DoubleSolution> selectionParameter;
@@ -92,7 +91,6 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     fixedParameterList.add(referenceFrontFilename);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter);
-
 
     algorithmResult();
     createInitialSolution();
@@ -154,8 +152,6 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     //offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", 1,  400);
     offspringPopulationSizeParameter = new CategoricalIntegerParameter("offspringPopulationSize",
         List.of(1, 2, 5, 10, 20, 50, 100, 150, 200, 300, 400));
-    offspringPopulationSizeParameter = new CategoricalIntegerParameter("offspringPopulationSize",
-        List.of(100));
 
     variationParameter =
         new VariationParameter(List.of("crossoverAndMutationVariation"));
@@ -181,7 +177,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
   private void algorithmResult() {
     algorithmResultParameter =
         new CategoricalParameter("algorithmResult", List.of("externalArchive", "population"));
-    populationSizeWithArchiveParameter = new CategoricalIntegerParameter("populationSizeWithArchive", List.of(100));
+    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", 10, 200) ;
     externalArchiveParameter = new ExternalArchiveParameter(
         List.of("crowdingDistanceArchive", "unboundedArchive"));
     algorithmResultParameter.addSpecificParameter(
@@ -253,7 +249,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
 
     Selection<DoubleSolution> selection =
         selectionParameter.getParameter(
-            variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+            variation.matingPoolSize(), rankingAndCrowdingComparator);
 
     Evaluation<DoubleSolution> evaluation;
     if (algorithmResultParameter.value().equals("externalArchive")) {
@@ -266,7 +262,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
         ranking, densityEstimator);
     Replacement<DoubleSolution> replacement =
         new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement,
-            Replacement.RemovalPolicy.ONE_SHOT);
+            RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.value());

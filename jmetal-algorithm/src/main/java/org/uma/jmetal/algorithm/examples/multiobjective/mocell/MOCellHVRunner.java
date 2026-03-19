@@ -38,8 +38,8 @@ public class MOCellHVRunner extends AbstractAlgorithmRunner {
    *                               [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
-    var problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    var referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    var problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    var referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -72,6 +72,7 @@ public class MOCellHVRunner extends AbstractAlgorithmRunner {
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
+    printFinalSolutionSet(population);
     QualityIndicatorUtils.printQualityIndicators(
         SolutionListUtils.getMatrixWithObjectiveValues(population),
         VectorUtils.readVectors(referenceParetoFront, ","));

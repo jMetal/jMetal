@@ -48,13 +48,13 @@ public class MOEADConfiguredToSolveProblemZDT110F2 {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoMOEAD autoNSGAII = new AutoMOEAD();
-    autoNSGAII.parse(parameters);
+    AutoMOEAD autoMOEAD = new AutoMOEAD();
+    autoMOEAD.parse(parameters);
 
-    AutoNSGAII.print(autoNSGAII.fixedParameterList);
-    AutoNSGAII.print(autoNSGAII.autoConfigurableParameterList);
+    AutoNSGAII.print(autoMOEAD.fixedParameterList);
+    AutoNSGAII.print(autoMOEAD.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoMOEAD.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =

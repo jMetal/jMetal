@@ -19,7 +19,6 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  */
 @SuppressWarnings("serial")
 public class LinkedPolynomialMutation implements MutationOperator<DoubleSolution> {
-  private static final double DEFAULT_PROBABILITY = 0.01;
   private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0;
   private double distributionIndex;
   private double mutationProbability;
@@ -27,9 +26,12 @@ public class LinkedPolynomialMutation implements MutationOperator<DoubleSolution
 
   private RandomGenerator<Double> randomGenerator;
 
-  /** Constructor */
-  public LinkedPolynomialMutation() {
-    this(DEFAULT_PROBABILITY, DEFAULT_DISTRIBUTION_INDEX);
+  /**
+   * Constructor
+   * @param mutationProbability
+   */
+  public LinkedPolynomialMutation(double mutationProbability) {
+    this(mutationProbability, DEFAULT_DISTRIBUTION_INDEX);
   }
 
   /** Constructor */

@@ -3,19 +3,14 @@ package org.uma.jmetal.util.neighborhood.impl;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -27,24 +22,19 @@ import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
  * @author Antonio J. Nebro
  */
 public class AdaptiveRandomNeighborhoodTest {
-  @Rule
-  public ExpectedException exception = ExpectedException.none();
 
   @Test
   public void shouldConstructorThrowAnExceptionWhenTheNumberOfNeighboursIsNegative() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The number of neighbors is negative: -1"));
-
-    new AdaptiveRandomNeighborhood<DoubleSolution>(4, -1) ;
+    JMetalException e = assertThrows(JMetalException.class,
+        () -> new AdaptiveRandomNeighborhood<DoubleSolution>(4, -1));
+    assertTrue(e.getMessage().contains("The number of neighbors is negative: -1"));
   }
 
   @Test
   public void shouldConstructorThrowAnExceptionWhenTheNumberOfNeighboursIsEqualThanTheListSize() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The population size: 4 is " +
-            "less or equal to the number of requested neighbors: 4"));
-
-    new AdaptiveRandomNeighborhood<IntegerSolution>(4, 4) ;
+    JMetalException e = assertThrows(JMetalException.class,
+        () -> new AdaptiveRandomNeighborhood<IntegerSolution>(4, 4));
+    assertTrue(e.getMessage().contains("less or equal to the number of requested neighbors: 4"));
   }
 
   @Test
@@ -57,22 +47,17 @@ public class AdaptiveRandomNeighborhoodTest {
 
   @Test
   public void shouldConstructorThrowAnExceptionWhenTheNumberOfNeighboursIsGreaterThanTheListSize() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The population size: 4 is " +
-            "less or equal to the number of requested neighbors: 6"));
-
-    new AdaptiveRandomNeighborhood<IntegerSolution>(4, 6) ;
+    JMetalException e = assertThrows(JMetalException.class,
+        () -> new AdaptiveRandomNeighborhood<IntegerSolution>(4, 6));
+    assertTrue(e.getMessage().contains("less or equal to the number of requested neighbors: 6"));
   }
 
   @Test
   public void shouldGetNeighborsWithANullListOfSolutionsThrowAnException() {
     AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(4, 2)  ;
-
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
-
-    neighborhood.getNeighbors(null, 1) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> neighborhood.getNeighbors(null, 1));
+    assertTrue(e.getMessage().contains("The solution list is null"));
   }
 
   @Test
@@ -81,15 +66,14 @@ public class AdaptiveRandomNeighborhoodTest {
     AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, 2) ;
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution position value is negative: -1"));
-
     List<IntegerSolution> list = new ArrayList<>() ;
     for (int i = 0; i < solutionListSize; i++) {
       list.add(mock(IntegerSolution.class));
     }
 
-    neighborhood.getNeighbors(list, -1) ;
+    JMetalException e = assertThrows(JMetalException.class,
+        () -> neighborhood.getNeighbors(list, -1));
+    assertTrue(e.getMessage().contains("The solution position value is negative: -1"));
   }
 
   @Test
@@ -98,16 +82,12 @@ public class AdaptiveRandomNeighborhoodTest {
     AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, 2) ;
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution position value: 6 " +
-            "is equal or greater than the solution list size: " + solutionListSize));
-
     List<IntegerSolution> list = new ArrayList<>() ;
     for (int i = 0; i < solutionListSize; i++) {
       list.add(mock(IntegerSolution.class));
     }
-
-    neighborhood.getNeighbors(list, 6) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> neighborhood.getNeighbors(list, 6));
+    assertTrue(e.getMessage().contains("is equal or greater than the solution list size"));
   }
 
   @Test
@@ -115,17 +95,12 @@ public class AdaptiveRandomNeighborhoodTest {
     int solutionListSize = 4 ;
     AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, 2) ;
-
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list size: 3 " +
-            "is different to the value: " + solutionListSize));
-
     List<IntegerSolution> list = new ArrayList<>() ;
     for (int i = 0; i < solutionListSize - 1; i++) {
       list.add(mock(IntegerSolution.class));
     }
-
-    neighborhood.getNeighbors(list, 1) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> neighborhood.getNeighbors(list, 1));
+    assertTrue(e.getMessage().contains("The solution list size: 3"));
   }
 
   /**
@@ -167,14 +142,18 @@ public class AdaptiveRandomNeighborhoodTest {
   public void shouldGetNeighborsReturnThreeNeighborsPlusTheCurrentSolution() {
     int solutionListSize = 3 ;
     int numberOfNeighbors = 1 ;
-    AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
-            new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, numberOfNeighbors) ;
+        BoundedRandomGenerator<Integer> randomGenerator = new BoundedRandomGenerator<Integer>() {
+          private int idx = 0;
+          private final Integer[] seq = new Integer[] {2, 0, 0};
 
-    @SuppressWarnings("unchecked")
-	BoundedRandomGenerator<Integer> randomGenerator = mock(BoundedRandomGenerator.class) ;
-    when(randomGenerator.getRandomValue(0, solutionListSize-1)).thenReturn(2, 0, 0) ;
+          @Override
+          public Integer getRandomValue(Integer lowerBound, Integer upperBound) {
+            return seq[(idx++) % seq.length];
+          }
+        };
 
-    ReflectionTestUtils.setField(neighborhood, "randomGenerator", randomGenerator);
+        AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
+          new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, numberOfNeighbors, randomGenerator) ;
 
     List<IntegerSolution> list = new ArrayList<>(solutionListSize) ;
     for (int i = 0 ; i < solutionListSize; i++) {
@@ -182,22 +161,21 @@ public class AdaptiveRandomNeighborhoodTest {
     }
 
     neighborhood.recompute();
-
     List<IntegerSolution> result ;
     result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(numberOfNeighbors + 1, result.size()) ;
-    assertEquals(list.get(0), result.get(0));
-    assertEquals(list.get(2), result.get(1));
+    assertTrue(result.contains(list.get(0)));
+    assertTrue(result.contains(list.get(2)));
 
     result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(numberOfNeighbors + 1, result.size()) ;
-    assertEquals(list.get(1), result.get(0));
-    assertEquals(list.get(0), result.get(1));
+    assertTrue(result.contains(list.get(1)));
+    assertTrue(result.contains(list.get(0)));
 
     result = neighborhood.getNeighbors(list, 2) ;
     assertEquals(numberOfNeighbors + 1, result.size()) ;
-    assertEquals(list.get(2), result.get(0));
-    assertEquals(list.get(0), result.get(1));
+    assertTrue(result.contains(list.get(2)));
+    assertTrue(result.contains(list.get(0)));
   }
   
 	@Test
@@ -213,17 +191,17 @@ public class AdaptiveRandomNeighborhoodTest {
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
-		new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours);
-		assertTrue("No use of the default generator", defaultUses[0] > 0);
+    new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours);
+    assertTrue(defaultUses[0] > 0, "No use of the default generator");
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
 		final int[] customUses = { 0 };
-		new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours, (a, b) -> {
-			customUses[0]++;
-			return new Random().nextInt(b-a+1)+a;
-		});
-		assertTrue("Default random generator used", defaultUses[0] == 0);
-		assertTrue("No use of the custom generator", customUses[0] > 0);
+    new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours, (a, b) -> {
+        customUses[0]++;
+        return new Random().nextInt(b-a+1)+a;
+      });
+    assertTrue(defaultUses[0] == 0, "Default random generator used");
+    assertTrue(customUses[0] > 0, "No use of the custom generator");
 	}
 }

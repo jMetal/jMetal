@@ -49,6 +49,12 @@ public class ErrorRatio extends QualityIndicator {
     this.referenceFront = referenceFront ;
   }
 
+
+  @Override
+  public QualityIndicator newInstance() {
+    return new ErrorRatio();
+  }
+
   /**
    * Evaluate() method
    * @param front

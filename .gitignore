@@ -1,3 +1,4 @@
+.vscode
 .idea
 jMetal.log
 jMetal.log.ini
@@ -150,4 +151,8 @@ docs/_static
 docs/_templates
 
 testoutput
+
+.codex-age-cp.txt
+**/.codex-age-cp.txt
+plot_outputs/
 

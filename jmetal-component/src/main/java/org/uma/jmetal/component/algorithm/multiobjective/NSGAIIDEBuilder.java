@@ -23,7 +23,7 @@ import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimato
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.CyclicIntegerSequence;
 
 /**
  * Class to configure and build an instance of the NSGA-II algorithm using DE operators
@@ -44,7 +44,6 @@ public class NSGAIIDEBuilder {
   public NSGAIIDEBuilder(
       Problem<DoubleSolution> problem,
       int populationSize,
-      int offspringPopulationSize,
       double cr,
       double f,
       MutationOperator<DoubleSolution> mutation,
@@ -53,13 +52,14 @@ public class NSGAIIDEBuilder {
 
     densityEstimator = new CrowdingDistanceDensityEstimator<>();
     ranking = new FastNonDominatedSortRanking<>();
-    sequenceGenerator = new IntegerBoundedSequenceGenerator(populationSize);
+
+    sequenceGenerator = new CyclicIntegerSequence(populationSize);
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
+            ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     DifferentialEvolutionCrossover crossover =
         new DifferentialEvolutionCrossover(
@@ -67,11 +67,11 @@ public class NSGAIIDEBuilder {
 
     this.variation =
         new DifferentialEvolutionCrossoverVariation(
-            offspringPopulationSize, crossover, mutation, sequenceGenerator);
+            1, crossover, mutation, sequenceGenerator);
 
     int numberOfParentsToSelect = crossover.numberOfRequiredParents() ;
     this.selection =
-        new DifferentialEvolutionSelection(variation.getMatingPoolSize(), numberOfParentsToSelect, false,
+        new DifferentialEvolutionSelection(variation.matingPoolSize(), numberOfParentsToSelect, false,
             sequenceGenerator);
 
     this.termination = new TerminationByEvaluations(25000);
@@ -89,7 +89,7 @@ public class NSGAIIDEBuilder {
     this.ranking = ranking;
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
+            ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     return this;
   }

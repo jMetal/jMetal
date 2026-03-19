@@ -1,28 +1,29 @@
 package org.uma.jmetal.operator.mutation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
 import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 public class PermutationSwapMutationTest {
 
-	@Test (expected = NullParameterException.class)
+	@Test
 	public void shouldExecuteWithNullParameterThrowAnException() {
 		PermutationSwapMutation<Integer> mutation = new PermutationSwapMutation<>(0.1) ;
 
-		mutation.execute(null) ;
+		assertThrows(NullParameterException.class, () -> mutation.execute(null));
 	}
 
-	@Test (expected = InvalidProbabilityValueException.class)
+	@Test
 	public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
 		double mutationProbability = -0.1 ;
-		new PermutationSwapMutation<>(mutationProbability) ;
+		assertThrows(InvalidProbabilityValueException.class, () -> new PermutationSwapMutation<>(mutationProbability));
 	}
 
-	@Test (expected = InvalidProbabilityValueException.class)
+	@Test
 	public void shouldConstructorFailWhenPassedAValueHigherThanOne() {
 		double mutationProbability = 1.1 ;
-		new PermutationSwapMutation<>(mutationProbability) ;
+		assertThrows(InvalidProbabilityValueException.class, () -> new PermutationSwapMutation<>(mutationProbability));
 	}
 }

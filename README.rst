@@ -18,11 +18,11 @@ jMetal project Web site
    :target: https://jmetal.readthedocs.io/?badge=latest
 
 jMetal is a Java-based framework for multi-objective optimization with metaheuristics.
-The last stable version is 6.6.
+The last stable version is 7.0.
 The most recent documentation is hosted in https://jmetal.readthedocs.io.
 
 
-The current development version (6.7-SNAPSHOT) is a Maven project structured in the following sub-projects:
+jMetal 7.0 is a Maven project structured in the following sub-projects:
 
 +---------------------+------------------------------------+
 | Sub-project         |  Contents                          | 
@@ -44,10 +44,49 @@ The current development version (6.7-SNAPSHOT) is a Maven project structured in 
 | jmetal-component    |  Component-based algorithms        |
 +---------------------+------------------------------------+
 
-Comments and suggestions are welcome.
+
+Related projects
+----------------
+* `jMetalPy <https://github.com/jMetal/jmetalpy>`_: jMetal in Python
+* `SAES <https://github.com/jMetal/SAES>`_: Python library to analyse and compare the performance of multi-objective algorithms
 
 Changelog
 ---------
+
+* [03/18/2026] Add RVEA (contributed by @NicolasRodriguezUribe)
+
+* [03/02/2026] jMetal 7.0 is released.
+
+* [03/01/2026] Add new solution creations stragegies: SobolSolutionsCreation and CauchySolutionsCreation.
+
+* [02/23/2026] Refactored `Check` utility: added parameter-name-aware overloads and introduced several specific exceptions for clearer errors.
+
+* [02/22/2026] All the unit and integration tests have been updated to jUnit6.
+
+* [02/02/2026] Added the AverageHausdorffDistance quality indicator
+
+* [12/18/2025] jMetal 6.10 is released.
+
+* [12/18/2025] Added new selection (TruncationSelection, RankingSelection, StochasticUniversalSampling, BoltzmannSelection), replacement (RandomReplacement, TournamentReplacement), and solutions creation (OppositionBasedSolutionsCreation) components.
+
+* [07/09/2025] jMetal 6.9 is released.
+
+* [07/07/2025] jMetal 6.8 is released.
+
+* [07/07/2025] Added new crossover (BLX-Alpha-Beta, Laplace, Arithmetic, Fuzzy recombination, UNDX) and mutation (Power Law, Levy Flight, Simple Random) operators for continuous problems.
+
+* [06/18/2025] A new folder *resources/referenceFrontsRSG* have been added. It contains Pareto front approximations produced with the `Reference Set Generator (DOI: https://doi.org/10.3390/math13101626) <https://doi.org/10.3390/math13101626>`_  method. Contribution of Oliver Schütze.
+
+* [05/09/2025] jMetal 6.7 is released.
+
+* [05/09/2025] The jMetal project adopts Java 22.
+
+* [01/17/2025] Added a variant of SMS-EMOA using differential evolution.
+
+* [11/30/2024] Added single and multi-objective versions of the Knapsack problem.
+
+* [11/22/2024] Added new crossover (Cycle, EdgeRecombination, ODX, Population-Based) and mutation (Displacement, Insert, Inversion, Scamble, SimpleInversion) operators for permutations. Contribution of Nicolas R. Uribe (@NicolasRodriguezUribe)
+
 * [06/27/2024] The jMetal project adopts Java 19.
 
 * [11/30/2023] The Zapotecas-Coello-Aguirre-benchmark (ZCAT) (https://doi.org/10.1016/j.swevo.2023.101350) is included in jMetal.
@@ -74,14 +113,3 @@ Changelog
 
 * [3/28/2022] The constraint handling code has been refactorized and the `documentation <https://jmetal.readthedocs.io/en/latest/constraints.html>`_ has been updated.
 
-* [9/6/2021] Release 5.11
-
-* [9/6/2021] The jMetal project adopts Java 13.
-
-* [7/6/2021] The `LSMOP benchmark <https://doi.org/10.1109/TCYB.2016.2600577>`_ is available. 
-
-* [2/19/2021] The `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface has been refactorized.
-
-* [2/19/2021] New implementation of quality indicators to remove the dependence of jMetal classes. Now, all of them accept as a parameter a matrix containing objective values.
-
-* [1/21/2021] Added the MicroFAME multi-objective genetic algorith, described in: Alejandro Santiago, Bernabé Dorronsoro, Héctor Fraire, Patricia Ruíz: Micro-Genetic algorithm with fuzzy selection of operators for multi-Objective optimization: microFAME. Swarm and Evolutionary Computation, V.61, March 2021. `DOI <https://doi.org/10.1016/j.swevo.2020.100818>`_. Contributed by Alejandro Santiago.

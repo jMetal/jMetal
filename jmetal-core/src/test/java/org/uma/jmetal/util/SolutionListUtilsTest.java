@@ -1,9 +1,6 @@
 package org.uma.jmetal.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -16,9 +13,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.Solution;
@@ -38,38 +33,32 @@ public class SolutionListUtilsTest {
 
   private static final double EPSILON = 0.0000000001;
 
-  @Rule public ExpectedException exception = ExpectedException.none();
+  
 
   /** *** Unit tests to method findBestSolution *** */
   @Test
   public void shouldFindBestSolutionRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(NullParameterException.class);
-
     @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class);
 
-    SolutionListUtils.findBestSolution(null, comparator);
+    assertThrows(NullParameterException.class, () -> SolutionListUtils.findBestSolution(null, comparator));
   }
 
   @Test
   public void shouldFindBestSolutionRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(EmptyCollectionException.class);
-
     @SuppressWarnings("unchecked")
     Comparator<DoubleSolution> comparator = mock(Comparator.class);
     List<DoubleSolution> list = new ArrayList<>();
 
-    SolutionListUtils.findBestSolution(list, comparator);
+    assertThrows(EmptyCollectionException.class, () -> SolutionListUtils.findBestSolution(list, comparator));
   }
 
   @Test
   public void shouldFindBestSolutionRaiseAnExceptionIfTheComparatorIsNull() {
-    exception.expect(NullParameterException.class);
-
     List<DoubleSolution> list = new ArrayList<>();
     list.add(mock(DoubleSolution.class));
 
-    SolutionListUtils.findBestSolution(list, null);
+    assertThrows(NullParameterException.class, () -> SolutionListUtils.findBestSolution(list, null));
   }
 
   @Test
@@ -119,33 +108,27 @@ public class SolutionListUtilsTest {
   /** *** Unit tests to method findIndexOfBestSolution *** */
   @Test
   public void shouldFindIndexOfBestSolutionRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(NullParameterException.class);
-
     @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class);
 
-    SolutionListUtils.findIndexOfBestSolution(null, comparator);
+    assertThrows(NullParameterException.class, () -> SolutionListUtils.findIndexOfBestSolution(null, comparator));
   }
 
   @Test
   public void shouldFindIndexOfBestSolutionRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(EmptyCollectionException.class);
-
     @SuppressWarnings("unchecked")
     Comparator<DoubleSolution> comparator = mock(Comparator.class);
     List<DoubleSolution> list = new ArrayList<>();
 
-    SolutionListUtils.findIndexOfBestSolution(list, comparator);
+    assertThrows(EmptyCollectionException.class, () -> SolutionListUtils.findIndexOfBestSolution(list, comparator));
   }
 
   @Test
   public void shouldFindIndexOfBestSolutionRaiseAnExceptionIfTheComparatorIsNull() {
-    exception.expect(NullParameterException.class);
-
     List<DoubleSolution> list = new ArrayList<>();
     list.add(mock(DoubleSolution.class));
 
-    SolutionListUtils.findIndexOfBestSolution(list, null);
+    assertThrows(NullParameterException.class, () -> SolutionListUtils.findIndexOfBestSolution(list, null));
   }
 
   @Test
@@ -273,7 +256,7 @@ public class SolutionListUtilsTest {
     auditor.addListener((a) -> defaultUses[0]++);
 
     ListUtils.randomSelectionWithoutReplacement(3, solutions);
-    assertTrue("No use of the default generator", defaultUses[0] > 0);
+    assertTrue(defaultUses[0] > 0, "No use of the default generator");
 
     // Test same configuration uses custom generator instead
     defaultUses[0] = 0;
@@ -285,8 +268,8 @@ public class SolutionListUtilsTest {
           customUses[0]++;
           return new Random().nextInt(b + 1 - a) + a;
         });
-    assertTrue("Default random generator used", defaultUses[0] == 0);
-    assertTrue("No use of the custom generator", customUses[0] > 0);
+    assertTrue(defaultUses[0] == 0, "Default random generator used");
+    assertTrue(customUses[0] > 0, "No use of the custom generator");
   }
 
   /** If the list contains 4 solutions, the result list must return all of them */

@@ -15,7 +15,7 @@ import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 public class RandomSearch<S extends Solution<?>> implements Algorithm<List<S>> {
   private Problem<S> problem ;
   private int maxEvaluations ;
-  NonDominatedSolutionListArchive<S> nonDominatedArchive ;
+  private NonDominatedSolutionListArchive<S> nonDominatedArchive ;
 
   /** Constructor */
   public RandomSearch(Problem<S> problem, int maxEvaluations) {
@@ -47,5 +47,9 @@ public class RandomSearch<S extends Solution<?>> implements Algorithm<List<S>> {
 
   @Override public String description() {
     return "Multi-objective random search algorithm" ;
+  }
+
+  public NonDominatedSolutionListArchive<S> archive() {
+    return nonDominatedArchive ;
   }
 } 

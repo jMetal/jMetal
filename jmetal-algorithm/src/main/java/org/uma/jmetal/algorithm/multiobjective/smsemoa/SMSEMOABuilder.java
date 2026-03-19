@@ -45,7 +45,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
 
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
-    this.selectionOperator = new RandomSelection<S>() ;
+    this.selectionOperator = new RandomSelection<>() ;
     this.dominanceComparator = new DominanceWithConstraintsComparator<>()  ;
   }
 

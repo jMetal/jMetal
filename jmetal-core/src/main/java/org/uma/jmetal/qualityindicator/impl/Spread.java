@@ -33,6 +33,11 @@ public class Spread extends QualityIndicator {
     super(referenceFront) ;
   }
 
+  @Override
+  public QualityIndicator newInstance() {
+    return new Spread();
+  }
+
   /**
    * Evaluate() method
    * @param front

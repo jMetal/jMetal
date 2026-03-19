@@ -16,6 +16,8 @@ import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutation
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
@@ -49,7 +51,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
     this.variation =
         new CrossoverAndMutationVariation<>(1, crossover, mutation);
 
-    this.selection = new RandomSelection<>(variation.getMatingPoolSize());
+    this.selection = new RandomSelection<>(variation.matingPoolSize());
 
     this.termination = new TerminationByEvaluations(25000);
 

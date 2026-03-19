@@ -21,7 +21,6 @@ import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 
-
 /**
  * Class representing a {@link ArchiveWithReferencePoint} archive using a hypervolume contribution based
  * density estimator.

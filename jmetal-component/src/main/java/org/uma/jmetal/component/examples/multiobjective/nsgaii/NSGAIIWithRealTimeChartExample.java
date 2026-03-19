@@ -48,7 +48,7 @@ public class NSGAIIWithRealTimeChartExample {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(10000);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
         problem,
@@ -61,7 +61,7 @@ public class NSGAIIWithRealTimeChartExample {
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(100);
     var chartObserver =
-        new FrontPlotObserver<DoubleSolution>("NSGA-II", "F1", "F2", problem.name(), 500);
+        new FrontPlotObserver<DoubleSolution>("NSGA-II", "F1", "F2", problem.name(), 100);
 
     chartObserver.setFront(readVectors(referenceParetoFront, ","), "Reference front");
 

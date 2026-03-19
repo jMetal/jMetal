@@ -27,13 +27,9 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
     this.mutation = mutation ;
     this.offspringPopulationSize = offspringPopulationSize ;
 
-    this.matingPoolSize = offspringPopulationSize *
-        crossover.numberOfRequiredParents() / crossover.numberOfGeneratedChildren();
-
-    int remainder = matingPoolSize % crossover.numberOfRequiredParents();
-    if (remainder != 0) {
-      matingPoolSize += remainder;
-    }
+    this.matingPoolSize =
+        crossover.numberOfRequiredParents()
+            * (int)Math.ceil((double) offspringPopulationSize / crossover.numberOfGeneratedChildren());
   }
 
   @Override
@@ -87,12 +83,12 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
   }
 
   @Override
-  public int getMatingPoolSize() {
+  public int matingPoolSize() {
     return matingPoolSize ;
   }
 
   @Override
-  public int getOffspringPopulationSize() {
+  public int offspringPopulationSize() {
     return offspringPopulationSize ;
   }
 }

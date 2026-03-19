@@ -1,0 +1,70 @@
+package org.uma.jmetal.component.examples.multiobjective.rvea;
+
+import java.io.IOException;
+import java.util.List;
+import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.component.algorithm.multiobjective.RVEABuilder;
+import org.uma.jmetal.component.catalogue.common.termination.Termination;
+import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+
+public class RVEAZDT4Example {
+  public static void main(String[] args) throws JMetalException, IOException {
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
+
+    double crossoverProbability = 0.9;
+    double crossoverDistributionIndex = 30.0;
+    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+
+    double mutationProbability = 1.0 / problem.numberOfVariables();
+    double mutationDistributionIndex = 20.0;
+    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+
+    int populationSize = 100;
+    int maxEvaluations = 30000;
+    int h = 99;
+    double alpha = 2.0;
+    double fr = 0.1;
+
+    Termination termination = new TerminationByEvaluations(maxEvaluations);
+
+    EvolutionaryAlgorithm<DoubleSolution> rvea =
+        new RVEABuilder<>(problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr, h)
+            .setTermination(termination)
+            .build();
+
+    rvea.run();
+
+    List<DoubleSolution> population = rvea.result();
+    List<DoubleSolution> paretoFront = SolutionListUtils.getNonDominatedSolutions(population);
+    JMetalLogger.logger.info("Total execution time : " + rvea.totalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + rvea.numberOfEvaluations());
+    JMetalLogger.logger.info("Number of non-dominated solutions: " + paretoFront.size());
+
+    new SolutionListOutput(paretoFront)
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR_ZDT4.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN_ZDT4.csv", ","))
+        .print();
+
+    JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
+
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(paretoFront),
+        VectorUtils.readVectors(referenceParetoFront, ","));
+  }
+}

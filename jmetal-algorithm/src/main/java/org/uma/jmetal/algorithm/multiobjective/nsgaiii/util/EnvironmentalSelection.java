@@ -51,7 +51,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
       for (List<S> list : fronts) {
         for (S s : list) {
           if (f == 0) // in the first objective we create the vector of conv_objs
-          setAttribute(s, new ArrayList<Double>());
+            setAttribute(s, new ArrayList<Double>());
 
           getAttribute(s).add(s.objectives()[f] - minf);
         }
@@ -62,16 +62,18 @@ public class EnvironmentalSelection<S extends Solution<?>>
   }
 
   // ----------------------------------------------------------------------
-  // ASF: Achivement Scalarization Function
-  // I implement here a effcient version of it, which only receives the index
-  // of the objective which uses 1.0; the rest will use 0.00001. This is
-  // different to the one impelemented in C++
+  // ASF: Achievement Scalarization Function
+  // This implementation uses translated objectives (after subtracting ideal
+  // point)
+  // as per the original NSGA-III paper. The weight vector has 1.0 for the target
+  // objective and a small epsilon (0.000001) for others.
   // ----------------------------------------------------------------------
   private double ASF(S s, int index) {
     double max_ratio = Double.NEGATIVE_INFINITY;
-    for (int i = 0; i < s.objectives().length; i++) {
+    List<Double> translatedObjectives = getAttribute(s);
+    for (int i = 0; i < translatedObjectives.size(); i++) {
       double weight = (index == i) ? 1.0 : 0.000001;
-      max_ratio = Math.max(max_ratio, s.objectives()[i] / weight);
+      max_ratio = Math.max(max_ratio, translatedObjectives.get(i) / weight);
     }
     return max_ratio;
   }
@@ -112,7 +114,8 @@ public class EnvironmentalSelection<S extends Solution<?>>
       }
     }
 
-    for (int i = 0; i < N; i++) x.add(0.0);
+    for (int i = 0; i < N; i++)
+      x.add(0.0);
 
     for (int i = N - 1; i >= 0; i -= 1) {
       for (int known = i + 1; known < N; known += 1) {
@@ -125,7 +128,8 @@ public class EnvironmentalSelection<S extends Solution<?>>
 
   public List<Double> constructHyperplane(List<S> population, List<S> extreme_points) {
     // Check whether there are duplicate extreme points.
-    // This might happen but the original paper does not mention how to deal with it.
+    // This might happen but the original paper does not mention how to deal with
+    // it.
     boolean duplicate = false;
     for (int i = 0; !duplicate && i < extreme_points.size(); i += 1) {
       for (int j = i + 1; !duplicate && j < extreme_points.size(); j += 1) {
@@ -139,18 +143,21 @@ public class EnvironmentalSelection<S extends Solution<?>>
                    // the condition)
     {
       for (int f = 0; f < numberOfObjectives; f += 1) {
-        // extreme_points[f] stands for the individual with the largest value of objective f
+        // extreme_points[f] stands for the individual with the largest value of
+        // objective f
         intercepts.add(extreme_points.get(f).objectives()[f]);
       }
     } else {
       // Find the equation of the hyperplane
       List<Double> b = new ArrayList<>(); // (pop[0].objs().size(), 1.0);
-      for (int i = 0; i < numberOfObjectives; i++) b.add(1.0);
+      for (int i = 0; i < numberOfObjectives; i++)
+        b.add(1.0);
 
       List<List<Double>> A = new ArrayList<>();
       for (S s : extreme_points) {
         List<Double> aux = new ArrayList<>();
-        for (int i = 0; i < numberOfObjectives; i++) aux.add(s.objectives()[i]);
+        for (int i = 0; i < numberOfObjectives; i++)
+          aux.add(s.objectives()[i]);
         A.add(aux);
       }
       List<Double> x = guassianElimination(A, b);
@@ -202,9 +209,8 @@ public class EnvironmentalSelection<S extends Solution<?>>
         int min_rp = -1;
         double min_dist = Double.MAX_VALUE;
         for (int r = 0; r < this.referencePoints.size(); r++) {
-          double d =
-              perpendicularDistance(
-                  this.referencePoints.get(r).position, (List<Double>) getAttribute(s));
+          double d = perpendicularDistance(
+              this.referencePoints.get(r).position, (List<Double>) getAttribute(s));
           if (d < min_dist) {
             min_dist = d;
             min_rp = r;
@@ -250,12 +256,16 @@ public class EnvironmentalSelection<S extends Solution<?>>
   }
 
   @Override
-  /* This method performs the environmental Selection indicated in the paper describing NSGAIII*/
+  /*
+   * This method performs the environmental Selection indicated in the paper
+   * describing NSGAIII
+   */
   public List<S> execute(List<S> source) throws JMetalException {
     // The comments show the C++ code
 
     // ---------- Steps 9-10 in Algorithm 1 ----------
-    if (source.size() == this.solutionsToSelect) return source;
+    if (source.size() == this.solutionsToSelect)
+      return source;
 
     // ---------- Step 14 / Algorithm 2 ----------
     // vector<double> ideal_point = TranslateObjectives(&cur, fronts);
@@ -280,7 +290,8 @@ public class EnvironmentalSelection<S extends Solution<?>>
       final var first = this.referencePointsTree.firstEntry().getValue();
       final var min_rp_index = 1 == first.size() ? 0 : rand.nextInt(0, first.size() - 1);
       final var min_rp = first.remove(min_rp_index);
-      if (first.isEmpty()) this.referencePointsTree.pollFirstEntry();
+      if (first.isEmpty())
+        this.referencePointsTree.pollFirstEntry();
       S chosen = SelectClusterMember(min_rp);
       if (chosen != null) {
         min_rp.AddMember();

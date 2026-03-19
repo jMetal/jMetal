@@ -245,6 +245,13 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       double[] maximumValues = FrontUtils.getMaximumValues(referenceFront);
       double[] minimumValues = FrontUtils.getMinimumValues(referenceFront);
 
+      for (int i = 0; i < maximumValues.length; i++) {
+        if (minimumValues[i] == maximumValues[i]) {
+          String message = "The minimum and maximum values of index " + i + " are the same: " + maximumValues[i] ;
+          throw new JMetalException(message) ;
+        }
+      }
+
       // STEP 2. Get the normalized front
       FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
       Front normalizedFront = frontNormalizer.normalize(front);
@@ -275,7 +282,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
         hvContribution.setAttribute(solutionList.get(i), contributions[i]);
       }
 
-      Collections.sort(solutionList, new HypervolumeContributionComparator<S>());
+      solutionList.sort(new HypervolumeContributionComparator<S>());
     }
     return solutionList;
   }

@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.operator.mutation.MutationOperator;
+
 /**
  * Abstract class representing an evolution strategy algorithm
  *

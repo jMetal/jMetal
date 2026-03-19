@@ -1,12 +1,12 @@
 package org.uma.jmetal.operator.crossover;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.operator.crossover.impl.HUXCrossover;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
@@ -31,7 +31,7 @@ public class HUXCrossoverTest {
 		auditor.addListener((a) -> defaultUses[0]++);
 
 		new HUXCrossover(0.5).execute(parents);
-		assertTrue("No use of the default generator", defaultUses[0] > 0);
+		assertTrue(defaultUses[0] > 0, "No use of the default generator");
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
@@ -40,7 +40,7 @@ public class HUXCrossoverTest {
 			customUses[0]++;
 			return new Random().nextDouble();
 		}).execute(parents);
-		assertTrue("Default random generator used", defaultUses[0] == 0);
-		assertTrue("No use of the custom generator", customUses[0] > 0);
+		assertTrue(defaultUses[0] == 0, "Default random generator used");
+		assertTrue(customUses[0] > 0, "No use of the custom generator");
 	}
 }

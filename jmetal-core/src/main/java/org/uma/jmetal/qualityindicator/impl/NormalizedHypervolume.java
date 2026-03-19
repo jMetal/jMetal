@@ -3,6 +3,7 @@ package org.uma.jmetal.qualityindicator.impl;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.util.JMetalLogger;
 
 /**
  * Class providing an implementation of the normalized hypervolume, which is calculated as follows:
@@ -19,18 +20,18 @@ public class NormalizedHypervolume extends QualityIndicator {
   }
 
   public NormalizedHypervolume(double[] referencePoint) {
-    // TODO: add a unit test
     double[][] referenceFront = {referencePoint};
     hypervolume = new PISAHypervolume(referenceFront);
-
-    //referenceFrontHypervolume = hypervolume.compute(referenceFront);
   }
 
   public NormalizedHypervolume(double[][] referenceFront) {
     super(referenceFront);
     hypervolume = new PISAHypervolume(referenceFront);
+  }
 
-    //referenceFrontHypervolume = hypervolume.compute(referenceFront);
+  @Override
+  public QualityIndicator newInstance() {
+    return new NormalizedHypervolume();
   }
 
   @Override
@@ -38,7 +39,6 @@ public class NormalizedHypervolume extends QualityIndicator {
     super.referenceFront(referenceFront);
 
     hypervolume = new PISAHypervolume(referenceFront);
-    //referenceFrontHypervolume = hypervolume.compute(referenceFront);
   }
 
   @Override
@@ -62,6 +62,14 @@ public class NormalizedHypervolume extends QualityIndicator {
     referenceFrontHypervolume = hypervolume.compute(referenceFront);
     double hypervolumeValue = hypervolume.compute(front);
 
-    return 1 - (hypervolumeValue / referenceFrontHypervolume);
+    double result = 1 - (hypervolumeValue / referenceFrontHypervolume);
+
+    if  (result < 0) {
+      JMetalLogger.logger.info("The normalized hypervolume value is negative: ");
+      JMetalLogger.logger.info("- HV reference front: " + referenceFrontHypervolume) ;
+      JMetalLogger.logger.info("- HV current front  : " + hypervolumeValue) ;
+    }
+
+    return result ;
   }
 }

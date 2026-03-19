@@ -11,6 +11,7 @@ import org.uma.jmetal.util.ranking.Ranking;
 
 public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     implements Replacement<S> {
+  public enum RemovalPolicy {SEQUENTIAL, ONE_SHOT}
 
   private Ranking<S> ranking;
   private DensityEstimator<S> densityEstimator;
@@ -86,9 +87,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
           sequentialTruncation(
               rankingId + 1, sizeOfTheResultingSolutionList - currentRankSolutions.size()));
     } else {
-      for (S solution : currentRankSolutions) {
-        resultList.add(solution);
-      }
+      resultList.addAll(currentRankSolutions);
       while (resultList.size() > sizeOfTheResultingSolutionList) {
         resultList.sort(Comparator.comparing(densityEstimator::value).reversed());
 

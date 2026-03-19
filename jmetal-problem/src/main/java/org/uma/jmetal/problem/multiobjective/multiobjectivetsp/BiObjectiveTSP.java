@@ -6,10 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
-
 import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -18,6 +14,8 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * Class representing a bi-objective TSP (Traveling Salesman Problem) problem.
  * It accepts data files from TSPLIB:
  *   http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/tsp/
+ *
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class BiObjectiveTSP extends AbstractIntegerPermutationProblem {

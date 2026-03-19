@@ -8,15 +8,15 @@ import org.uma.jmetal.solution.Solution;
  * Created by FlapKap on 27-05-2017.
  */
 @SuppressWarnings("serial")
-public class TwoPointCrossover<T> implements CrossoverOperator<Solution<T>> {
-  NPointCrossover<T> operator;
+public class TwoPointCrossover<T extends Solution<S>, S extends Number> implements CrossoverOperator<T> {
+  NPointCrossover<T,S> operator;
 
   public TwoPointCrossover(double probability) {
-    this.operator = new NPointCrossover<>(probability, 2);
+    this.operator = new NPointCrossover<T,S>(probability, 2);
   }
 
   @Override
-  public List<Solution<T>> execute(List<Solution<T>> solutions) {
+  public List<T> execute(List<T> solutions) {
     return operator.execute(solutions);
   }
 

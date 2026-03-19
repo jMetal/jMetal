@@ -1,11 +1,11 @@
 package org.uma.jmetal.solution;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.problem.permutationproblem.impl.FakeIntegerPermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;

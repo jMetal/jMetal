@@ -46,13 +46,13 @@ public class AsynchronousMasterWorkerBasedNSGAIIZDT1Example {
                     "NSGA-II",
                     80, 10, "resources/referenceFrontsCSV/ZDT1.csv");
 
-    nsgaii.getObservable().register(runTimeChartObserver);
+    nsgaii.observable().register(runTimeChartObserver);
 
     nsgaii.run();
 
     long endTime = System.currentTimeMillis();
 
-    List<DoubleSolution> resultList = nsgaii.getResult();
+    List<DoubleSolution> resultList = nsgaii.result();
 
     JMetalLogger.logger.info("Computing time: " + (endTime - initTime));
     new SolutionListOutput(resultList)

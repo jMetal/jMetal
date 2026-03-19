@@ -31,6 +31,11 @@ public class SetCoverage extends QualityIndicator {
   }
 
   @Override
+  public QualityIndicator newInstance() {
+    return new SetCoverage();
+  }
+
+  @Override
   public double compute(double[][] front) {
     Check.notNull(front);
 

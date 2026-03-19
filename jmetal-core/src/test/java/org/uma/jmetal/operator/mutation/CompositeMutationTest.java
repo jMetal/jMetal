@@ -2,11 +2,12 @@ package org.uma.jmetal.operator.mutation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.operator.mutation.impl.CompositeMutation;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -18,14 +19,14 @@ import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 public class CompositeMutationTest {
 
-  @Test(expected = NullParameterException.class)
+  @Test
   public void shouldConstructorRaiseAnExceptionIfTheParameterListIsNull() {
-    new CompositeMutation(null);
+    assertThrows(NullParameterException.class, () -> new CompositeMutation(null));
   }
 
-  @Test(expected = EmptyCollectionException.class)
+  @Test
   public void shouldConstructorRaiseAnExceptionIfTheParameterListIsEmtpy() {
-    new CompositeMutation(new ArrayList<>());
+    assertThrows(EmptyCollectionException.class, () -> new CompositeMutation(new ArrayList<>()));
   }
 
   @Test
@@ -86,7 +87,7 @@ public class CompositeMutationTest {
     assertEquals(2, mutatedSolution.variables().size());
   }
 
-  @Test (expected = ClassCastException.class)
+  @Test
   public void shouldExecuteRaiseAnExceptionIfTheTypesOfTheSolutionsDoNotMatchTheMutationOperators() {
     CompositeMutation operator =
             new CompositeMutation(
@@ -99,6 +100,6 @@ public class CompositeMutationTest {
                             doubleProblem.createSolution(),
                             doubleProblem.createSolution())) ;
 
-    operator.execute(solution);
+    assertThrows(ClassCastException.class, () -> operator.execute(solution));
   }
 }

@@ -13,7 +13,6 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
@@ -46,9 +45,11 @@ public class NaryRandomSelectionTest {
   public void shouldDefaultConstructorReturnASingleSolution() {
     NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>() ;
 
-    int result = (int)ReflectionTestUtils.getField(selection, "numberOfSolutionsToBeReturned");
-    int expectedResult = 1 ;
-    assertEquals(expectedResult, result) ;
+    List<Solution<?>> list = new ArrayList<>();
+    list.add(mock(Solution.class));
+
+    List<Solution<?>> result = selection.execute(list);
+    assertEquals(1, result.size());
   }
 
   @Test
@@ -56,8 +57,13 @@ public class NaryRandomSelectionTest {
     int solutionsToBeReturned = 4 ;
     NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>(solutionsToBeReturned) ;
 
-    int result = (int)ReflectionTestUtils.getField(selection, "numberOfSolutionsToBeReturned");
-    assertEquals(solutionsToBeReturned, result) ;
+    List<Solution<?>> list = new ArrayList<>();
+    for (int i = 0; i < solutionsToBeReturned; i++) {
+      list.add(mock(Solution.class));
+    }
+
+    List<Solution<?>> result = selection.execute(list);
+    assertEquals(solutionsToBeReturned, result.size());
   }
 
   @Test

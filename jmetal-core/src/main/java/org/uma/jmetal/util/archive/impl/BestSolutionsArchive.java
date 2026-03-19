@@ -6,7 +6,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
 
 /**
- * Archive that select the best solutions of another archive by applying the
+ * Archive that selects the best solutions of another archive by applying the
  * {@link SolutionListUtils#distanceBasedSubsetSelection(List, int)}} function.
  *
  * @param <S> Existing archive

@@ -1,11 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Comparator;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -38,7 +38,7 @@ public class ABYSSConstrainedProblemIT {
   LocalSearchOperator<DoubleSolution> localSearchOperator;
   Archive<DoubleSolution> archive;
 
-  @Before
+  @BeforeEach
   public void setup() {
     problem = new Tanaka();
 

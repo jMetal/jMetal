@@ -1,14 +1,13 @@
 package org.uma.jmetal.solution;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.pointsolution.PointSolution;
 
 /**
@@ -22,21 +21,21 @@ public class PointSolutionTest {
     int numberOfObjectives = 10 ;
     PointSolution solution = new PointSolution(numberOfObjectives) ;
 
-    assertEquals(numberOfObjectives, ReflectionTestUtils.getField(solution, "numberOfObjectives"));
-    assertNotNull(ReflectionTestUtils.getField(solution, "objectives")) ;
+    assertEquals(numberOfObjectives, solution.objectives().length);
+    assertNotNull(solution.objectives());
   }
 
   @Test public void shouldCopyConstructorCreateAnIdenticalObject() {
     int numberOfObjectives = 3 ;
     double [] values = {1.0, 2.0, 3.0} ;
     PointSolution solution = new PointSolution(numberOfObjectives) ;
-    ReflectionTestUtils.setField(solution, "objectives", values);
+    System.arraycopy(values, 0, solution.objectives(), 0, values.length);
 
     PointSolution newSolution = new PointSolution(solution) ;
 
-    assertEquals(numberOfObjectives, ReflectionTestUtils.getField(newSolution, "numberOfObjectives"));
+    assertEquals(numberOfObjectives, newSolution.objectives().length);
 
-    double [] resultValues = (double [])ReflectionTestUtils.getField(solution, "objectives") ;
+    double[] resultValues = solution.objectives();
     assertArrayEquals(values, resultValues, EPSILON) ;
   }
 
@@ -44,7 +43,7 @@ public class PointSolutionTest {
     int numberOfObjectives = 3 ;
     double [] values = {1.0, 2.0, 3.0} ;
     PointSolution solution = new PointSolution(numberOfObjectives) ;
-    ReflectionTestUtils.setField(solution, "objectives", values);
+    System.arraycopy(values, 0, solution.objectives(), 0, values.length);
 
     assertEquals(values[0], solution.objectives()[0], EPSILON) ;
     assertEquals(values[1], solution.objectives()[1], EPSILON) ;
@@ -60,7 +59,7 @@ public class PointSolutionTest {
     solution.objectives()[1] = values[1];
     solution.objectives()[2] = values[2];
 
-    double [] resultValues = (double [])ReflectionTestUtils.getField(solution, "objectives") ;
+    double [] resultValues = solution.objectives();
     assertArrayEquals(values, resultValues, EPSILON) ;
   }
 
@@ -68,7 +67,7 @@ public class PointSolutionTest {
     int numberOfObjectives = 3 ;
     double [] values = {1.0, 2.0, 3.0} ;
     PointSolution solution = new PointSolution(numberOfObjectives) ;
-    ReflectionTestUtils.setField(solution, "objectives", values);
+    System.arraycopy(values, 0, solution.objectives(), 0, values.length);
 
     assertEquals(numberOfObjectives, solution.objectives().length) ;
   }
@@ -77,7 +76,7 @@ public class PointSolutionTest {
     int numberOfObjectives = 3 ;
     double [] values = {1.0, 2.0, 3.0} ;
     PointSolution solution = new PointSolution(numberOfObjectives) ;
-    ReflectionTestUtils.setField(solution, "objectives", values);
+    System.arraycopy(values, 0, solution.objectives(), 0, values.length);
 
     PointSolution newSolution = (PointSolution)solution.copy() ;
     assertEquals(solution, newSolution) ;
@@ -88,7 +87,7 @@ public class PointSolutionTest {
     int numberOfObjectives = 3 ;
     double [] values = {1.0, 2.0, 3.0} ;
     PointSolution solution = new PointSolution(numberOfObjectives) ;
-    ReflectionTestUtils.setField(solution, "objectives", values);
+    System.arraycopy(values, 0, solution.objectives(), 0, values.length);
 
     PointSolution newSolution = (PointSolution)solution.copy() ;
     assertTrue(solution.equals(newSolution));
@@ -115,7 +114,7 @@ public class PointSolutionTest {
     int numberOfObjectives = 3 ;
     double [] values = {1.0, 2.0, 3.0} ;
     PointSolution solution = new PointSolution(numberOfObjectives) ;
-    ReflectionTestUtils.setField(solution, "objectives", values);
+    System.arraycopy(values, 0, solution.objectives(), 0, values.length);
 
     PointSolution newSolution = solution.copy() ;
     newSolution.objectives()[0] = 23424;
@@ -145,7 +144,7 @@ public class PointSolutionTest {
     int numberOfObjectives = 3 ;
     double [] values = {1.0, 2.0, 3.0} ;
     PointSolution solution = new PointSolution(numberOfObjectives) ;
-    ReflectionTestUtils.setField(solution, "objectives", values);
+    System.arraycopy(values, 0, solution.objectives(), 0, values.length);
 
     assertEquals(Arrays.hashCode(values), solution.hashCode());
   }

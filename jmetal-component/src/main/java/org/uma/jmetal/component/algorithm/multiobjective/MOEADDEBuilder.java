@@ -84,7 +84,7 @@ public class MOEADDEBuilder {
 
     this.selection =
         new PopulationAndNeighborhoodSelection<>(
-            variation.getMatingPoolSize(),
+            variation.matingPoolSize(),
             sequenceGenerator,
             neighborhood,
             neighborhoodSelectionProbability,

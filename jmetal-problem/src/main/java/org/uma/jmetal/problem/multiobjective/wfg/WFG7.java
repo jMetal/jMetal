@@ -5,21 +5,22 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 @SuppressWarnings("serial")
 public class WFG7 extends WFG {
   /**
-   * Creates a default WFG7 problem with
-   * 2 position-related parameters,
-   * 4 distance-related parameters,
-   * and 2 objectives
+   * Creates a default WFG7 problem with 2 position-related parameters, 4 distance-related
+   * parameters, and 2 objectives
    */
   public WFG7() {
-    this(2, 4, 2);
+    this(
+        DefaultWFGSettings.numberOfPositionParameters,
+        DefaultWFGSettings.numberOfDistanceParameters,
+        DefaultWFGSettings.numberOfObjectives);
   }
 
   /**
    * Creates a WFG7 problem instance
    *
-   * @param k            Number of position parameters
-   * @param l            Number of distance parameters
-   * @param m            Number of objective functions
+   * @param k Number of position parameters
+   * @param l Number of distance parameters
+   * @param m Number of objective functions
    */
   public WFG7(Integer k, Integer l, Integer m) {
     super(k, l, m);
@@ -54,9 +55,7 @@ public class WFG7 extends WFG {
     return result;
   }
 
-  /**
-   * WFG7 t1 transformation
-   */
+  /** WFG7 t1 transformation */
   public float[] t1(float[] z, int k) {
     float[] result = new float[z.length];
     float[] w = new float[z.length];
@@ -72,8 +71,9 @@ public class WFG7 extends WFG {
       float[] subW = subVector(w, head, tail);
       float aux = (new Transformations()).rSum(subZ, subW);
 
-      result[i] = (new Transformations())
-        .bParam(z[i], aux, (float) 0.98 / (float) 49.98, (float) 0.02, (float) 50);
+      result[i] =
+          (new Transformations())
+              .bParam(z[i], aux, (float) 0.98 / (float) 49.98, (float) 0.02, (float) 50);
     }
 
     System.arraycopy(z, k, result, k, z.length - k);
@@ -81,9 +81,7 @@ public class WFG7 extends WFG {
     return result;
   }
 
-  /**
-   * WFG7 t2 transformation
-   */
+  /** WFG7 t2 transformation */
   public float[] t2(float[] z, int k) {
     float[] result = new float[z.length];
 
@@ -96,9 +94,7 @@ public class WFG7 extends WFG {
     return result;
   }
 
-  /**
-   * WFG7 t3 transformation
-   */
+  /** WFG7 t3 transformation */
   public float[] t3(float[] z, int k, int M) {
     float[] result = new float[M];
     float[] w = new float[z.length];
@@ -135,7 +131,7 @@ public class WFG7 extends WFG {
     }
 
     for (int i = 0; i < numberOfVariables(); i++) {
-      variables[i] = (float) x[i] ;
+      variables[i] = (float) x[i];
     }
 
     float[] sol2 = evaluate(variables);
@@ -143,7 +139,6 @@ public class WFG7 extends WFG {
     for (int i = 0; i < sol2.length; i++) {
       solution.objectives()[i] = sol2[i];
     }
-    return solution ;
+    return solution;
   }
 }
-

@@ -1,11 +1,12 @@
 package org.uma.jmetal.operator.crossover;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.operator.crossover.impl.NullCrossover;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
@@ -18,14 +19,14 @@ import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
  */
 public class NullCrossoverTest {
 
-  @Test (expected = NullParameterException.class)
+  @Test
   public void shouldExecuteRaiseAnExceptionIfTheParameterListIsNull() {
-    new NullCrossover<DoubleSolution>().execute(null) ;
+    assertThrows(NullParameterException.class, () -> new NullCrossover<DoubleSolution>().execute(null));
   }
 
-  @Test (expected = InvalidConditionException.class)
+  @Test
   public void shouldExecuteRaiseAnExceptionIfTheParameterListHasNotTwoElements() {
-    new NullCrossover<DoubleSolution>().execute(new ArrayList<>()) ;
+    assertThrows(InvalidConditionException.class, () -> new NullCrossover<DoubleSolution>().execute(new ArrayList<>()));
   }
 
   @Test

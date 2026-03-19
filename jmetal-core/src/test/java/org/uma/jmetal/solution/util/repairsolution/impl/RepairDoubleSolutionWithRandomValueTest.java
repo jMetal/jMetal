@@ -1,12 +1,13 @@
 package org.uma.jmetal.solution.util.repairsolution.impl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.doublesolution.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.doublesolution.repairsolution.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
@@ -20,13 +21,14 @@ import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 public class RepairDoubleSolutionWithRandomValueTest {
   private RepairDoubleSolution repair;
 
-  @Before public void setup() {
+  @BeforeEach public void setup() {
     repair = new RepairDoubleSolutionWithRandomValue();
   }
 
-  @Test(expected = InvalidConditionException.class)
+  @Test
   public void shouldRRepairRaiseAnExceptionIfTheBoundsAreIncorrect() {
-    repair.repairSolutionVariableValue(0.0, 1.0, -1.0);
+    assertThrows(InvalidConditionException.class,
+        () -> repair.repairSolutionVariableValue(0.0, 1.0, -1.0));
   }
 
   @Test
@@ -65,8 +67,8 @@ public class RepairDoubleSolutionWithRandomValueTest {
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
-		new RepairDoubleSolutionWithRandomValue().repairSolutionVariableValue(value, lowerBound, upperBound);
-		assertTrue("No use of the default generator", defaultUses[0] > 0);
+    new RepairDoubleSolutionWithRandomValue().repairSolutionVariableValue(value, lowerBound, upperBound);
+    assertTrue(defaultUses[0] > 0, "No use of the default generator");
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
@@ -74,8 +76,8 @@ public class RepairDoubleSolutionWithRandomValueTest {
 		new RepairDoubleSolutionWithRandomValue((a, b) -> {
 			customUses[0]++;
 			return new Random().nextDouble()*(b-a)+a;
-		}).repairSolutionVariableValue(value, lowerBound, upperBound);
-		assertTrue("Default random generator used", defaultUses[0] == 0);
-		assertTrue("No use of the custom generator", customUses[0] > 0);
+    }).repairSolutionVariableValue(value, lowerBound, upperBound);
+    assertTrue(defaultUses[0] == 0, "Default random generator used");
+    assertTrue(customUses[0] > 0, "No use of the custom generator");
 	}
 }

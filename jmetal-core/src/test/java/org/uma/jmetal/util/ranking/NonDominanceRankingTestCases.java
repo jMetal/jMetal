@@ -64,7 +64,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
   }
 
   @Test
-  public void shouldRankingOfAPopulationWithTwoDominatedSolutionsReturnTwoSubfronts() {
+  public void shouldRankingOfAPopulationWithTwoDominatedSolutionsReturnTwoSubFronts() {
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
 
     List<DoubleSolution> population = new ArrayList<>();
@@ -483,5 +483,70 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     assertEquals(5, ranking.getSubFront(2).size());
     assertEquals(2, ranking.getSubFront(3).size());
     assertEquals(1, ranking.getSubFront(4).size());
+  }
+
+  @Test
+  public void shouldRankingOfAPopulationWithTwoEqualSolutionsReturnASubFrontWithTheRepeatedSolutions() {
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
+
+    List<DoubleSolution> population = new ArrayList<>();
+
+    DoubleSolution solution = problem.createSolution();
+    solution.objectives()[0] = 2.0;
+    solution.objectives()[1] = 3.0;
+    DoubleSolution solution2 = problem.createSolution();
+    solution2.objectives()[0] = 3.0;
+    solution2.objectives()[1] = 6.0;
+    DoubleSolution solution3 = problem.createSolution();
+    solution3.objectives()[0] = 2.0;
+    solution3.objectives()[1] = 3.0;
+    population.add(solution);
+    population.add(solution2);
+    population.add(solution3);
+
+    ranking.compute(population);
+
+    assertEquals(2, ranking.getNumberOfSubFronts());
+
+
+    assertNotNull(ranking.getSubFront(0));
+    assertEquals(2, ranking.getSubFront(0).size());
+    assertEquals(1, ranking.getSubFront(1).size());
+
+    assertEquals(0, ranking.getRank(population.get(0)));
+    assertEquals(1, ranking.getRank(population.get(1)));
+    assertEquals(0, ranking.getRank(population.get(2)));
+  }
+
+  @Test
+  public void shouldRankingOfAPopulationWithTwoEqualSolutionsReturnTheRightSubFronts() {
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
+
+    List<DoubleSolution> population = new ArrayList<>();
+
+    DoubleSolution solution = problem.createSolution();
+    solution.objectives()[0] = 2.0;
+    solution.objectives()[1] = 3.0;
+    DoubleSolution solution2 = problem.createSolution();
+    solution2.objectives()[0] = 1.0;
+    solution2.objectives()[1] = 0.0;
+    DoubleSolution solution3 = problem.createSolution();
+    solution3.objectives()[0] = 2.0;
+    solution3.objectives()[1] = 3.0;
+    population.add(solution);
+    population.add(solution2);
+    population.add(solution3);
+
+    ranking.compute(population);
+
+    assertEquals(2, ranking.getNumberOfSubFronts());
+
+    assertNotNull(ranking.getSubFront(0));
+    assertEquals(1, ranking.getSubFront(0).size());
+    assertEquals(2, ranking.getSubFront(1).size());
+
+    assertEquals(1, ranking.getRank(population.get(0)));
+    assertEquals(0, ranking.getRank(population.get(1)));
+    assertEquals(1, ranking.getRank(population.get(2)));
   }
 }

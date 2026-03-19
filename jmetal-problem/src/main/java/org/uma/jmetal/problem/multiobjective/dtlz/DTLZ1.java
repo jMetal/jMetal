@@ -52,7 +52,7 @@ public class DTLZ1 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives];
     double[] x = new double[numberOfVariables];
 
-    int k = numberOfVariables() - solution.objectives().length + 1;
+    int k = numberOfVariables() - numberOfObjectives + 1;
 
     for (int i = 0; i < numberOfVariables; i++) {
       x[i] = solution.variables().get(i);
@@ -71,13 +71,7 @@ public class DTLZ1 extends AbstractDoubleProblem {
         f[i] *= x[j];
       }
       if (i != 0) {
-        int aux = numberOfObjectives - (i + 1);
-        /*
-        1
-        0
-        */
-
-        f[i] *= 1 - x[aux];
+        f[i] *= 1 - x[numberOfObjectives - (i + 1)];
       }
     }
 

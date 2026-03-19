@@ -1,10 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -52,7 +52,7 @@ public class MOEADDRAIT {
     assertTrue(population.size() == 100);
   }
 
-  @Ignore("fail when making a deployment")
+  @Disabled("fail when making a deployment")
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
     LZ09F3 problem = new LZ09F3();

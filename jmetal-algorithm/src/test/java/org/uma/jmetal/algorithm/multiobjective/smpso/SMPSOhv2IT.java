@@ -1,10 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
@@ -21,7 +21,7 @@ public class SMPSOhv2IT {
   private Algorithm<List<DoubleSolution>> algorithm;
   private BoundedArchive<DoubleSolution> archive;
 
-  @Before
+  @BeforeEach
   public void setup() {
     archive = new HypervolumeArchive<DoubleSolution>(100, new WFGHypervolume<DoubleSolution>());
   }

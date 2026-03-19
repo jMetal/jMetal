@@ -1,9 +1,10 @@
 package org.uma.jmetal.solution.util.repairsolution.impl;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.doublesolution.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.doublesolution.repairsolution.impl.RepairDoubleSolutionWithOppositeBoundValue;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
@@ -12,14 +13,15 @@ public class RepairDoubleSolutionWithOppositeBoundValueTest {
   private static final double EPSILON = 0.0000000000001 ;
   private RepairDoubleSolution repair ;
 
-  @Before
+  @BeforeEach
   public void setup() {
     repair = new RepairDoubleSolutionWithOppositeBoundValue() ;
   }
 
-  @Test(expected = InvalidConditionException.class)
+  @Test
   public void shouldRepairRaiseAnExceptionIfTheBoundsAreIncorrect() {
-    repair.repairSolutionVariableValue(0.0, 1.0, -1.0) ;
+    assertThrows(InvalidConditionException.class,
+        () -> repair.repairSolutionVariableValue(0.0, 1.0, -1.0));
   }
 
   @Test

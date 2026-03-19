@@ -31,8 +31,8 @@ public class SMSEMOARunner extends AbstractAlgorithmRunner {
    * @param args Command line arguments.
    */
   public static void main(String[] args) throws IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -52,9 +52,9 @@ public class SMSEMOARunner extends AbstractAlgorithmRunner {
     hypervolume = new PISAHypervolume<>();
     hypervolume.setOffset(100.0);
 
-    var algorithm = new SMSEMOABuilder<DoubleSolution>(problem, crossover, mutation)
+    var algorithm = new SMSEMOABuilder<>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxEvaluations(25000)
+        .setMaxEvaluations(40000)
         .setPopulationSize(100)
         .setHypervolumeImplementation(hypervolume)
         .build();

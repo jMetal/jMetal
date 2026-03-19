@@ -24,7 +24,7 @@ import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.RandomPermutationCycle;
 
 /**
  * Class to configure and run the NSGA-II algorithm configured with standard settings.
@@ -52,7 +52,7 @@ public class MOEADWithRealTimeChartExample {
     Termination termination = new TerminationByEvaluations(35000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
+    SequenceGenerator<Integer> sequenceGenerator = new RandomPermutationCycle(populationSize) ;
     boolean normalizeObjectives = false ;
 
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(

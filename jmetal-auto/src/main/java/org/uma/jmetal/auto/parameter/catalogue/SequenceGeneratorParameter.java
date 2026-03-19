@@ -4,8 +4,8 @@ import java.util.List;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.CyclicIntegerSequence;
+import org.uma.jmetal.util.sequencegenerator.impl.RandomPermutationCycle;
 
 public class SequenceGeneratorParameter extends CategoricalParameter {
   int sequenceLength;
@@ -21,10 +21,10 @@ public class SequenceGeneratorParameter extends CategoricalParameter {
     SequenceGenerator<Integer> sequenceGenerator ;
     switch (value()) {
       case "permutation":
-        sequenceGenerator = new IntegerPermutationGenerator(sequenceLength) ;
+        sequenceGenerator = new RandomPermutationCycle(sequenceLength) ;
         break;
       case "integerSequence":
-        sequenceGenerator = new IntegerBoundedSequenceGenerator(sequenceLength);
+        sequenceGenerator = new CyclicIntegerSequence(sequenceLength);
         break;
       default:
         throw new JMetalException("Sequence generator does not exist: " + name());

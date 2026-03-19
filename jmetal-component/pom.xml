@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.uma.jmetal</groupId>
         <artifactId>jmetal</artifactId>
-        <version>6.7-SNAPSHOT</version>
+        <version>7.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>jmetal-component</artifactId>
@@ -13,14 +13,10 @@
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Component based algorithms</description>
-    <url>http://jmetal.sourceforge.net</url>
-
-    <build>
-        <plugins>
-        </plugins>
-    </build>
+    <url>https://github.com/jMetal/jMetal.git</url>
 
     <dependencies>
+        <!-- JMetal Dependencies -->
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-core</artifactId>
@@ -29,34 +25,34 @@
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-lab</artifactId>
         </dependency>
+        
+        <!-- Apache Commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        
+        <!-- Test Dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.6.0</version>
+            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.12.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.22.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>5.3.21</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- spring-test removed to avoid reflection utilities in tests; add back only if needed -->
     </dependencies>
 </project>

@@ -25,12 +25,12 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @author Antonio J. Nebro
  */
 public class NSGAIIBinaryProblemExample {
-  public static void main(String[] args) throws JMetalException, IOException {
+  public static void main(String[] args) throws JMetalException {
 
     BinaryProblem problem = new ZDT5() ;
 
-    var  crossover = new SinglePointCrossover(0.9);
-    var mutation = new BitFlipMutation(1.0 / problem.totalNumberOfBits());
+    var  crossover = new SinglePointCrossover<>(0.9);
+    var mutation = new BitFlipMutation<>(1.0 / problem.totalNumberOfBits());
 
     int populationSize = 100;
     int offspringPopulationSize = 100;

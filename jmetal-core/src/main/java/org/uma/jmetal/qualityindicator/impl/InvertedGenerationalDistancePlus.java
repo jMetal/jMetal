@@ -32,6 +32,11 @@ public class InvertedGenerationalDistancePlus extends QualityIndicator {
     super(referenceFront) ;
   }
 
+  @Override
+  public QualityIndicator newInstance() {
+    return new InvertedGenerationalDistancePlus();
+  }
+
   /**
    * Evaluate() method
    * @param front

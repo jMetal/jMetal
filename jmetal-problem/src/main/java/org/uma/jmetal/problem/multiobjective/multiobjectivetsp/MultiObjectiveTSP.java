@@ -9,7 +9,6 @@ import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-
 import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -18,11 +17,13 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
  * Class representing a multi-objective TSP (Traveling Salesman Problem) problem.
  * It accepts data files from TSPLIB:
  *   http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/tsp/
+ *
+ * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class MultiObjectiveTSP extends AbstractIntegerPermutationProblem {
   protected int numberOfCities ;
-  List<double[][]> distanceMatrices ;
+  protected List<double[][]> distanceMatrices ;
 
   /**
    * Creates a new MultiobjectiveTSP problem instance. It is assumed that all the distance files represent

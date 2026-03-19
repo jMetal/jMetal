@@ -1,11 +1,10 @@
 package org.uma.jmetal.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
-import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -40,11 +39,14 @@ public class AdaptiveGridTest {
     adaptiveGrid = new AdaptiveGrid<>(bisections, objectives) ;
 
     int[] hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
-    for (int i: hypercubes) {
+    for (int i = 0; i < hypercubes.length; i++) {
       hypercubes[i] = 0 ;
     }
 
-    ReflectionTestUtils.setField(adaptiveGrid, "hypercubes", hypercubes);
+    int[] internal = adaptiveGrid.getHypercubes();
+    for (int i = 0; i < Math.min(internal.length, hypercubes.length); i++) {
+      internal[i] = hypercubes[i];
+    }
     adaptiveGrid.calculateOccupied();
 
     assertEquals(0, adaptiveGrid.occupiedHypercubes()) ;
@@ -59,7 +61,7 @@ public class AdaptiveGridTest {
     adaptiveGrid = new AdaptiveGrid<>(bisections, objectives) ;
 
     int[] hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
-    for (int i: hypercubes) {
+    for (int i = 0; i < hypercubes.length; i++) {
       hypercubes[i] = 0 ;
     }
 
@@ -67,7 +69,10 @@ public class AdaptiveGridTest {
     hypercubes[1] = 3 ;
     hypercubes[3] = 5 ;
 
-    ReflectionTestUtils.setField(adaptiveGrid, "hypercubes", hypercubes);
+    int[] internal2 = adaptiveGrid.getHypercubes();
+    for (int i = 0; i < Math.min(internal2.length, hypercubes.length); i++) {
+      internal2[i] = hypercubes[i];
+    }
     adaptiveGrid.calculateOccupied();
 
     assertEquals(3, adaptiveGrid.occupiedHypercubes()) ;
@@ -82,11 +87,14 @@ public class AdaptiveGridTest {
     adaptiveGrid = new AdaptiveGrid<>(bisections, objectives) ;
 
     int[] hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
-    for (int i: hypercubes) {
+    for (int i = 0; i < hypercubes.length; i++) {
       hypercubes[i] = 0 ;
     }
 
-    ReflectionTestUtils.setField(adaptiveGrid, "hypercubes", hypercubes);
+    int[] internal3 = adaptiveGrid.getHypercubes();
+    for (int i = 0; i < Math.min(internal3.length, hypercubes.length); i++) {
+      internal3[i] = hypercubes[i];
+    }
 
     assertEquals(0.0, adaptiveGrid.getAverageOccupation(), EPSILON) ;
   }
@@ -100,7 +108,7 @@ public class AdaptiveGridTest {
     adaptiveGrid = new AdaptiveGrid<>(bisections, objectives) ;
 
     int[] hypercubes = new int[(int)Math.pow(2.0, bisections * objectives)] ;
-    for (int i: hypercubes) {
+    for (int i = 0; i < hypercubes.length; i++) {
       hypercubes[i] = 0 ;
     }
 
@@ -108,7 +116,10 @@ public class AdaptiveGridTest {
     hypercubes[1] = 3 ;
     hypercubes[3] = 5 ;
 
-    ReflectionTestUtils.setField(adaptiveGrid, "hypercubes", hypercubes);
+    int[] internal4 = adaptiveGrid.getHypercubes();
+    for (int i = 0; i < Math.min(internal4.length, hypercubes.length); i++) {
+      internal4[i] = hypercubes[i];
+    }
 
     assertEquals(9.0/3.0, adaptiveGrid.getAverageOccupation(), EPSILON) ;
   }
@@ -125,8 +136,8 @@ public class AdaptiveGridTest {
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
-		grid.rouletteWheel();
-		assertTrue("No use of the default generator", defaultUses[0] > 0);
+    grid.rouletteWheel();
+    assertTrue(defaultUses[0] > 0, "No use of the default generator");
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
@@ -135,23 +146,27 @@ public class AdaptiveGridTest {
 			customUses[0]++;
 			return new Random().nextDouble()*(b-a)+a;
 		});
-		assertTrue("Default random generator used", defaultUses[0] == 0);
-		assertTrue("No use of the custom generator", customUses[0] > 0);
+    assertTrue(defaultUses[0] == 0, "Default random generator used");
+    assertTrue(customUses[0] > 0, "No use of the custom generator");
 	}
 	
 	@Test
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvidedInRandomOccupiedHypercube() {
 		// Configuration
 		AdaptiveGrid<Solution<?>> grid = new AdaptiveGrid<>(5, 2);
-		int[] hypercubes = new int[1024];
-		for (int i : hypercubes) {
-			hypercubes[i] = 0;
-		}
-		hypercubes[0] = 1;
-		hypercubes[1] = 3;
-		hypercubes[3] = 5;
-		ReflectionTestUtils.setField(grid, "hypercubes", hypercubes);
-		grid.calculateOccupied();
+    int[] hypercubes = new int[1024];
+    for (int i = 0; i < hypercubes.length; i++) {
+      hypercubes[i] = 0;
+    }
+    hypercubes[0] = 1;
+    hypercubes[1] = 3;
+    hypercubes[3] = 5;
+
+    int[] internal = grid.getHypercubes();
+    for (int i = 0; i < Math.min(internal.length, hypercubes.length); i++) {
+      internal[i] = hypercubes[i];
+    }
+    grid.calculateOccupied();
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };
@@ -160,8 +175,8 @@ public class AdaptiveGridTest {
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
-		grid.randomOccupiedHypercube();
-		assertTrue("No use of the default generator", defaultUses[0] > 0);
+    grid.randomOccupiedHypercube();
+    assertTrue(defaultUses[0] > 0, "No use of the default generator");
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
@@ -170,7 +185,7 @@ public class AdaptiveGridTest {
 			customUses[0]++;
 			return new Random().nextInt(b+1-a)+a;
 		});
-		assertTrue("Default random generator used", defaultUses[0] == 0);
-		assertTrue("No use of the custom generator", customUses[0] > 0);
+    assertTrue(defaultUses[0] == 0, "Default random generator used");
+    assertTrue(customUses[0] > 0, "No use of the custom generator");
 	}
 }

@@ -22,7 +22,7 @@ public class SPSO2011VelocityInitialization implements VelocityInitialization {
    * @return A matrix with the initial velocity of the particles
    */
   public double[][] initialize(List<DoubleSolution> swarm) {
-    Check.notNull(swarm);
+    Check.notNull(swarm, "swarm");
     Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());
 
     int numberOfVariables = swarm.get(0).variables().size() ;

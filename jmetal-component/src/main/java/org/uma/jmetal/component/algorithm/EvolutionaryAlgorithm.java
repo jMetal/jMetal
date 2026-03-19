@@ -103,7 +103,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   }
 
   protected void updateProgress() {
-    evaluations += variation.getOffspringPopulationSize();
+    evaluations += variation.offspringPopulationSize();
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
@@ -173,5 +173,21 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
 
   public Evaluation<S> evaluation() {
     return evaluation;
+  }
+
+  public SolutionsCreation<S> createInitialPopulation() {
+    return createInitialPopulation;
+  }
+
+  public Selection<S> selection() {
+    return selection;
+  }
+
+  public Variation<S> variation() {
+    return variation;
+  }
+
+  public Replacement<S> replacement() {
+    return replacement;
   }
 }

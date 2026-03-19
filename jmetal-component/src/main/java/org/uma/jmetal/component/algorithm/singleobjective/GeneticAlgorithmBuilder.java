@@ -52,7 +52,7 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
     this.selection =
         new NaryTournamentSelection<>(
             2,
-            variation.getMatingPoolSize(),
+            variation.matingPoolSize(),
             new ObjectiveComparator<>(0));
 
     this.termination = new TerminationByEvaluations(25000);

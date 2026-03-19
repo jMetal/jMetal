@@ -1,16 +1,13 @@
 package org.uma.jmetal.auto.autoconfigurablealgorithm;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.uma.jmetal.auto.parameter.BooleanParameter;
-import org.uma.jmetal.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.auto.parameter.IntegerParameter;
-import org.uma.jmetal.auto.parameter.Parameter;
-import org.uma.jmetal.auto.parameter.PositiveIntegerValue;
-import org.uma.jmetal.auto.parameter.RealParameter;
-import org.uma.jmetal.auto.parameter.StringParameter;
+import java.util.stream.Stream;
+
+import org.uma.jmetal.auto.parameter.*;
 import org.uma.jmetal.auto.parameter.catalogue.AggregationFunctionParameter;
 import org.uma.jmetal.auto.parameter.catalogue.CreateInitialSolutionsParameter;
 import org.uma.jmetal.auto.parameter.catalogue.CrossoverParameter;
@@ -59,7 +56,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   private CategoricalParameter algorithmResultParameter;
   private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
-  private PositiveIntegerValue offspringPopulationSizeParameter;
+  private CategoricalIntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter<DoubleSolution> selectionParameter;
   private VariationParameter variationParameter;
@@ -67,8 +64,10 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   private IntegerParameter neighborhoodSizeParameter;
   private IntegerParameter maximumNumberOfReplacedSolutionsParameter;
   private AggregationFunctionParameter aggregationFunctionParameter;
-  private BooleanParameter normalizeObjectivesParameter ;
+  private CategoricalParameter normalizeObjectivesParameter ;
   private SequenceGeneratorParameter subProblemIdGeneratorParameter ;
+
+  private String weightVectorsDirectory ;
 
   @Override
   public List<Parameter<?>> configurableParameterList() {
@@ -81,13 +80,18 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
   }
 
   public AutoMOEAD() {
+    this("resources/weightVectorFiles/moead") ;
+  }
+
+  public AutoMOEAD(String weightVectorsDirectory) {
+    this.weightVectorsDirectory = weightVectorsDirectory ;
     this.configure() ;
   }
 
   public void configure() {
     subProblemIdGeneratorParameter = new SequenceGeneratorParameter(List.of("permutation","integerSequence")) ;
 
-    normalizeObjectivesParameter = new BooleanParameter("normalizeObjectives") ;
+    normalizeObjectivesParameter = new CategoricalParameter("normalizeObjectives", List.of("TRUE", "FALSE")) ;
     RealParameter epsilonParameterForNormalizing = new RealParameter("epsilonParameterForNormalizing", 0.0000001, 25.0) ;
     normalizeObjectivesParameter.addSpecificParameter("TRUE", epsilonParameterForNormalizing);
 
@@ -100,18 +104,20 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     populationSizeParameter = new PositiveIntegerValue("populationSize");
 
+    offspringPopulationSizeParameter = new CategoricalIntegerParameter("offspringPopulationSize", List.of(1));
+
     fixedParameterList.add(populationSizeParameter);
     fixedParameterList.add(problemNameParameter);
     fixedParameterList.add(referenceFrontFilenameParameter);
     fixedParameterList.add(maximumNumberOfEvaluationsParameter);
     fixedParameterList.add(randomGeneratorSeedParameter) ;
+    fixedParameterList.add(offspringPopulationSizeParameter) ;
 
     neighborhoodSizeParameter = new IntegerParameter("neighborhoodSize",5, 50);
     neighborhoodSelectionProbabilityParameter =
         new ProbabilityParameter("neighborhoodSelectionProbability");
     maximumNumberOfReplacedSolutionsParameter =
         new IntegerParameter("maximumNumberOfReplacedSolutions",1, 5);
-
 
     aggregationFunctionParameter =
         new AggregationFunctionParameter(
@@ -188,9 +194,6 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     deCrossoverParameter.addGlobalParameter(crParameter);
     deCrossoverParameter.addGlobalParameter(fParameter);
 
-    offspringPopulationSizeParameter = new PositiveIntegerValue("offspringPopulationSize") ;
-    offspringPopulationSizeParameter.value(1) ;
-
     variationParameter =
         new VariationParameter(List.of("crossoverAndMutationVariation", "differentialEvolutionVariation"));
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
@@ -198,6 +201,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("differentialEvolutionVariation", mutationParameter);
     variationParameter.addSpecificParameter("differentialEvolutionVariation", deCrossoverParameter);
+    variationParameter.addSpecificParameter("differentialEvolutionVariation", offspringPopulationSizeParameter);
   }
 
   private void selection() {
@@ -224,11 +228,15 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
   @Override
   public void parse(String[] arguments) {
+    String [] offspringPopulationSizeValue = new String[]{"--offspringPopulationSize", "1"} ;
+    String [] extendedArguments = Stream.concat(Arrays.stream(arguments), Arrays.stream(offspringPopulationSizeValue))
+            .toArray(size -> (String[]) Array.newInstance(arguments.getClass().getComponentType(), size));
+
     for (Parameter<?> parameter : fixedParameterList) {
-      parameter.parse(arguments).check();
+      parameter.parse(extendedArguments).check();
     }
     for (Parameter<?> parameter : configurableParameterList()) {
-      parameter.parse(arguments).check();
+      parameter.parse(extendedArguments).check();
     }
   }
 
@@ -287,7 +295,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
                 populationSizeParameter.value(),
                 problem.numberOfObjectives(),
                 neighborhoodSizeParameter.value(),
-                "resources/weightVectorFiles/moead");
+                weightVectorsDirectory);
       } catch (FileNotFoundException exception) {
         exception.printStackTrace();
       }
@@ -304,11 +312,12 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     var selection =
         (PopulationAndNeighborhoodSelection<DoubleSolution>)
-            selectionParameter.getParameter(variation.getMatingPoolSize(), null);
+            selectionParameter.getParameter(variation.matingPoolSize(), null);
 
     int maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutionsParameter.value();
 
-    aggregationFunctionParameter.normalizedObjectives(normalizeObjectivesParameter.value());
+    boolean normalizeObjectives = Boolean.valueOf(normalizeObjectivesParameter.value());
+    aggregationFunctionParameter.normalizedObjectives(normalizeObjectives);
     AggregationFunction aggregativeFunction = aggregationFunctionParameter.getParameter();
     var replacement =
         new MOEADReplacement<>(
@@ -316,7 +325,7 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
             (WeightVectorNeighborhood<DoubleSolution>) neighborhood,
             aggregativeFunction,
             subProblemIdGenerator,
-            maximumNumberOfReplacedSolutions, normalizeObjectivesParameter.value());
+            maximumNumberOfReplacedSolutions, normalizeObjectives);
 
     class EvolutionaryAlgorithmWithArchive extends EvolutionaryAlgorithm<DoubleSolution> {
       private Archive<DoubleSolution> archive ;

@@ -3,17 +3,19 @@ package org.uma.jmetal.qualityindicator.impl.hypervolume.impl;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.HypervolumeContribution2D;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * This class implements the hypervolume indicator developed by the WFG
- *
- * @author Alejandro Santiago
  */
 @SuppressWarnings("serial")
 public class WFGHypervolume extends Hypervolume {
+
+  public WFGHypervolume() {
+  }
 
   /**
    * Constructor with reference point
@@ -32,6 +34,11 @@ public class WFGHypervolume extends Hypervolume {
    */
   public WFGHypervolume(double[][] referenceFront) {
     super(referenceFront);
+  }
+
+  @Override
+  public QualityIndicator newInstance() {
+    return new WFGHypervolume();
   }
 
   @Override
@@ -76,9 +83,7 @@ public class WFGHypervolume extends Hypervolume {
       this.nPoints = frente.length;
       for (int x = 0; x < frente.length; x++) {
         points[x] = new Point(frente[0].length);
-        for (int j = 0; j < frente[0].length; j++) {
-          points[x].objectives[j] = frente[x][j];
-        }
+        System.arraycopy(frente[x], 0, points[x].objectives, 0, frente[0].length);
       }
     }
   }
@@ -521,17 +526,107 @@ public class WFGHypervolume extends Hypervolume {
    * Returns the hypervolume value of a front of points
    *
    * @param front          The front
-   * @param referenceFront The true pareto front
+   * @param referenceFront The reference front (used to get number of objectives)
    */
   private double hypervolume(double[][] front, double[][] referenceFront) {
-    double[][] invertedFront;
-    invertedFront = VectorUtils.getInvertedFront(front);
-
     int numberOfObjectives = referenceFront[0].length;
+    
+    // Get the reference point from the reference front
+    double[] referencePoint = getReferencePoint();
+    
+    // Translate points so that the reference point becomes the origin
+    // WFG algorithm assumes the reference point is at the origin
+    double[][] translatedFront = new double[front.length][numberOfObjectives];
+    for (int i = 0; i < front.length; i++) {
+      for (int j = 0; j < numberOfObjectives; j++) {
+        translatedFront[i][j] = referencePoint[j] - front[i][j];
+        // If the point is dominated by (worse than) the reference point, set to 0
+        if (translatedFront[i][j] < 0) {
+          translatedFront[i][j] = 0;
+        }
+      }
+    }
 
+    // The hypervolume (control is passed to the Java version of WFG code)
+    return CalculateHypervolume(translatedFront, translatedFront.length, numberOfObjectives);
+  }
 
-    // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
-    return CalculateHypervolume(invertedFront, invertedFront.length, numberOfObjectives);
+  /**
+   * Computes the hypervolume contribution of each point in the front.
+   * 
+   * This method uses different strategies based on the number of objectives:
+   * - For 2D: Uses the efficient O(n log n) dimension-sweep algorithm via HypervolumeContribution2D
+   * - For 3D+: Uses the WFG exclusion method (HV(all) - HV(all\point))
+   * 
+   * @param front The front of points
+   * @return An array where contributions[i] is the hypervolume contribution of point i
+   */
+  public double[] computeHypervolumeContribution(double[][] front) {
+    Check.notNull(front);
+    Check.that(front.length > 0, "The front cannot be empty");
+    
+    int numberOfObjectives = referenceFront[0].length;
+    
+    // For 2D, use the efficient dimension-sweep algorithm
+    if (numberOfObjectives == 2) {
+      double[] referencePoint = getReferencePoint();
+      return HypervolumeContribution2D.compute(front, referencePoint);
+    }
+    
+    // For 3D+, use the exclusion method
+    return computeHypervolumeContributionND(front, numberOfObjectives);
+  }
+  
+  /**
+   * Computes hypervolume contributions for 3D+ using the exclusion method.
+   * 
+   * @param front The front of points
+   * @param numObjectives Number of objectives
+   * @return Array of contributions for each point
+   */
+  private double[] computeHypervolumeContributionND(double[][] front, int numObjectives) {
+    int numberOfPoints = front.length;
+    double[] contributions = new double[numberOfPoints];
+    
+    // Get the reference point
+    double[] referencePoint = getReferencePoint();
+    
+    // Translate the entire front once (shared computation)
+    double[][] translatedFront = new double[numberOfPoints][numObjectives];
+    for (int i = 0; i < numberOfPoints; i++) {
+      for (int j = 0; j < numObjectives; j++) {
+        translatedFront[i][j] = referencePoint[j] - front[i][j];
+        if (translatedFront[i][j] < 0) {
+          translatedFront[i][j] = 0;
+        }
+      }
+    }
+    
+    // Calculate total hypervolume once
+    double totalHV = CalculateHypervolume(translatedFront, translatedFront.length, numObjectives);
+    
+    // For each point, calculate contribution efficiently
+    for (int i = 0; i < numberOfPoints; i++) {
+      // Create front without point i using the already translated values
+      double[][] frontWithoutPoint = new double[numberOfPoints - 1][numObjectives];
+      int idx = 0;
+      for (int j = 0; j < numberOfPoints; j++) {
+        if (j != i) {
+          System.arraycopy(translatedFront[j], 0, frontWithoutPoint[idx], 0, numObjectives);
+          idx++;
+        }
+      }
+      
+      // Calculate HV without this point
+      double hvWithoutPoint = (frontWithoutPoint.length > 0) 
+          ? CalculateHypervolume(frontWithoutPoint, frontWithoutPoint.length, numObjectives)
+          : 0.0;
+      
+      // Contribution is the difference
+      contributions[i] = totalHV - hvWithoutPoint;
+    }
+    
+    return contributions;
   }
 
   @Override

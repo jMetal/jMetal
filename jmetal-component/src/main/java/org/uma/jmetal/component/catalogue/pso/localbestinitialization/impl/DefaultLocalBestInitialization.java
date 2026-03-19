@@ -16,7 +16,7 @@ public class DefaultLocalBestInitialization implements LocalBestInitialization {
    * @return A list of the best local solutions.
    */
   public DoubleSolution[] initialize(List<DoubleSolution> swarm) {
-    Check.notNull(swarm);
+    Check.notNull(swarm, "swarm");
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
     DoubleSolution[] localBest = new DoubleSolution[swarm.size()] ;

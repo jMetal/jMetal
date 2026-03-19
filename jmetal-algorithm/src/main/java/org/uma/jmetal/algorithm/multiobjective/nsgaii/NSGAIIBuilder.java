@@ -143,7 +143,7 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
     return problem;
   }
 
-  public int getMaxIterations() {
+  public int getMaxEvaluations() {
     return maxEvaluations;
   }
 

@@ -14,7 +14,7 @@ Requirements
 
 The software requirements to use jMetal are:
 
-* Java 17+ JDK
+* Java 22+ JDK
 * Maven
 * Optional: R, Latex.
 

@@ -81,7 +81,7 @@ public class GeneticAlgorithmTSPWithConstraintsExample extends AbstractAlgorithm
     var selection =
         new NaryTournamentSelection<PermutationSolution<Integer>>(
             2,
-            variation.getMatingPoolSize(),
+            variation.matingPoolSize(),
             new ObjectiveComparator<>(0));
 
     var termination = new TerminationByEvaluations(500000);

@@ -27,9 +27,9 @@ public class AggregationFunctionParameter extends CategoricalParameter {
   public AggregationFunction getParameter() {
     AggregationFunction aggregationFunction;
 
-    BooleanParameter normalizeObjectivesParameter = ((BooleanParameter) findGlobalParameter(
+    CategoricalParameter normalizeObjectivesParameter = ((CategoricalParameter) findGlobalParameter(
         "normalizeObjectives"));
-    boolean normalizeObjectives = normalizeObjectivesParameter.value();
+    boolean normalizeObjectives = Boolean.valueOf(normalizeObjectivesParameter.value());
     double epsilon = 0.00000001;
 
     switch (value()) {

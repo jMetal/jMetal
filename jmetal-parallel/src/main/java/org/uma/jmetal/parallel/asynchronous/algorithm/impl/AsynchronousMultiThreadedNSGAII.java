@@ -1,7 +1,6 @@
 package org.uma.jmetal.parallel.asynchronous.algorithm.impl;
 
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
-import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -26,6 +25,6 @@ public class AsynchronousMultiThreadedNSGAII<S extends Solution<?>>
             new RankingAndDensityEstimatorReplacement<>(
                     new MergeNonDominatedSortRanking<>(),
                     new CrowdingDistanceDensityEstimator<>(),
-                    Replacement.RemovalPolicy.ONE_SHOT),termination);
+                    RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT),termination);
   }
 }

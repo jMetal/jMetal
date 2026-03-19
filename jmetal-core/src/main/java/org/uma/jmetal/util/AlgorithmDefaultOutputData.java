@@ -1,6 +1,5 @@
 package org.uma.jmetal.util;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;

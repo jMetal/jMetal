@@ -65,13 +65,13 @@ public class AsynchronousMultiThreadedGeneticAlgorithmExample {
             numberOfCores, problem, populationSize, crossover, mutation, selection, replacement, new TerminationByEvaluations(maxEvaluations));
 
     FitnessObserver printObjectivesObserver = new FitnessObserver(100) ;
-    geneticAlgorithm.getObservable().register(printObjectivesObserver);
+    geneticAlgorithm.observable().register(printObjectivesObserver);
 
     geneticAlgorithm.run();
 
     long endTime = System.currentTimeMillis();
 
-    List<BinarySolution> resultList = geneticAlgorithm.getResult();
+    List<BinarySolution> resultList = geneticAlgorithm.result();
 
     JMetalLogger.logger.info("Computing time: " + (endTime - initTime));
     new SolutionListOutput(resultList)

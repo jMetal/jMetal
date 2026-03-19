@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.uma.jmetal.operator.crossover.impl.CompositeCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
@@ -18,14 +19,14 @@ import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 public class CompositeCrossoverTest {
-  @Test(expected = NullParameterException.class)
+  @Test
   public void shouldConstructorRaiseAnExceptionIfTheParameterListIsNull() {
-    new CompositeCrossover(null);
+    assertThrows(NullParameterException.class, () -> new CompositeCrossover(null));
   }
 
-  @Test(expected = EmptyCollectionException.class)
+  @Test
   public void shouldConstructorRaiseAnExceptionIfTheParameterListIsEmpty() {
-    new CompositeCrossover(Collections.emptyList());
+    assertThrows(EmptyCollectionException.class, () -> new CompositeCrossover(Collections.emptyList()));
   }
 
   @Test
@@ -95,7 +96,7 @@ public class CompositeCrossoverTest {
     assertEquals(2, children.get(1).variables().size());
   }
 
-  @Test (expected = ClassCastException.class)
+  @Test
   public void shouldExecuteRaiseAnExceptionIfTheTypesOfTheSolutionsDoNotMatchTheCrossoverOperators() {
     CompositeCrossover operator =
             new CompositeCrossover(
@@ -113,6 +114,6 @@ public class CompositeCrossoverTest {
                             doubleProblem.createSolution(),
                             doubleProblem.createSolution()));
 
-    operator.execute(Arrays.asList(solution1, solution2));
+    assertThrows(ClassCastException.class, () -> operator.execute(Arrays.asList(solution1, solution2)));
   }
 }

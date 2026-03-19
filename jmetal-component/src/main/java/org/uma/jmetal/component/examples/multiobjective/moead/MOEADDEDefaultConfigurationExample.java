@@ -21,7 +21,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.RandomPermutationCycle;
 
 /**
  * Class to configure and run the NSGA-II algorithm configured with standard settings.
@@ -31,7 +31,7 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 public class MOEADDEDefaultConfigurationExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
+    String problemName = "org.uma.jmetal.problem.multiobjective.uf.UF4";
     String referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
@@ -48,7 +48,7 @@ public class MOEADDEDefaultConfigurationExample {
     Termination termination = new TerminationByEvaluations(175000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
+    SequenceGenerator<Integer> sequenceGenerator = new RandomPermutationCycle(populationSize) ;
 
     boolean normalizeObjectives = false ;
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADDEBuilder(

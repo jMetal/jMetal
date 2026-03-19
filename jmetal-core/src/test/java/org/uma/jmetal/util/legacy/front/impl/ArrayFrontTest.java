@@ -2,12 +2,12 @@ package org.uma.jmetal.util.legacy.front.impl;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileInputStream;
@@ -21,7 +21,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
@@ -55,10 +54,8 @@ public class ArrayFrontTest {
   @Test
   public void shouldDefaultConstructorCreateAnEmptyArrayFront() {
     Front front = new ArrayFront();
-
-    assertNull(ReflectionTestUtils.getField(front, "points"));
-    assertEquals(0, ReflectionTestUtils.getField(front, "numberOfPoints"));
-    assertEquals(0, ReflectionTestUtils.getField(front, "pointDimensions"));
+    assertEquals(0, front.getNumberOfPoints());
+    assertEquals(0, front.getPointDimensions());
   }
 
   @Test
@@ -110,9 +107,9 @@ public class ArrayFrontTest {
         Arrays.asList(new DefaultDoubleSolution(bounds, numberOfObjectives, 0));
     Front front = new ArrayFront(list);
 
-    assertNotNull(ReflectionTestUtils.getField(front, "points"));
-    assertEquals(1, ReflectionTestUtils.getField(front, "numberOfPoints"));
-    assertEquals(numberOfObjectives, ReflectionTestUtils.getField(front, "pointDimensions"));
+    assertNotNull(front.getPoint(0));
+    assertEquals(1, front.getNumberOfPoints());
+    assertEquals(numberOfObjectives, front.getPointDimensions());
   }
 
   @Test
@@ -126,9 +123,9 @@ public class ArrayFrontTest {
             new DefaultDoubleSolution(bounds, numberOfObjectives, 0));
     Front front = new ArrayFront(list);
 
-    assertNotNull(ReflectionTestUtils.getField(front, "points"));
-    assertEquals(2, ReflectionTestUtils.getField(front, "numberOfPoints"));
-    assertEquals(numberOfObjectives, ReflectionTestUtils.getField(front, "pointDimensions"));
+    assertNotNull(front.getPoint(0));
+    assertEquals(2, front.getNumberOfPoints());
+    assertEquals(numberOfObjectives, front.getPointDimensions());
   }
 
   @Test
@@ -142,9 +139,9 @@ public class ArrayFrontTest {
             new DefaultIntegerSolution(bounds, numberOfObjectives, 0)) ;
     Front front = new ArrayFront(list);
 
-    assertNotNull(ReflectionTestUtils.getField(front, "points"));
-    assertEquals(1, ReflectionTestUtils.getField(front, "numberOfPoints"));
-    assertEquals(numberOfObjectives, ReflectionTestUtils.getField(front, "pointDimensions"));
+    assertNotNull(front.getPoint(0));
+    assertEquals(1, front.getNumberOfPoints());
+    assertEquals(numberOfObjectives, front.getPointDimensions());
   }
 
   @Test
@@ -180,9 +177,9 @@ public class ArrayFrontTest {
 
     Front front = new ArrayFront(list);
 
-    assertNotNull(ReflectionTestUtils.getField(front, "points"));
-    assertEquals(2, ReflectionTestUtils.getField(front, "numberOfPoints"));
-    assertEquals(numberOfObjectives, ReflectionTestUtils.getField(front, "pointDimensions"));
+    assertNotNull(front.getPoint(0));
+    assertEquals(2, front.getNumberOfPoints());
+    assertEquals(numberOfObjectives, front.getPointDimensions());
 
     assertEquals(list.get(0).objectives()[0], front.getPoint(0).value(0), EPSILON);
     assertEquals(list.get(0).objectives()[1], front.getPoint(0).value(1), EPSILON);
@@ -210,9 +207,9 @@ public class ArrayFrontTest {
 
     Front newFront = new ArrayFront(front);
 
-    assertNotNull(ReflectionTestUtils.getField(newFront, "points"));
-    assertEquals(numberOfPoints, ReflectionTestUtils.getField(newFront, "numberOfPoints"));
-    assertEquals(pointDimensions, ReflectionTestUtils.getField(newFront, "pointDimensions"));
+    assertNotNull(newFront.getPoint(0));
+    assertEquals(numberOfPoints, newFront.getNumberOfPoints());
+    assertEquals(pointDimensions, newFront.getPointDimensions());
 
     assertEquals(front.getPoint(0).value(0), newFront.getPoint(0).value(0), EPSILON);
     assertEquals(front.getPoint(0).value(1), newFront.getPoint(0).value(1), EPSILON);
@@ -446,7 +443,7 @@ public class ArrayFrontTest {
     Front front = new ArrayFront(fileName);
 
     assertEquals(1, front.getNumberOfPoints());
-    assertEquals(3, ReflectionTestUtils.getField(front, "pointDimensions"));
+    assertEquals(3, front.getPointDimensions());
     assertEquals(1.0, front.getPoint(0).value(0), EPSILON);
     assertEquals(2.0, front.getPoint(0).value(1), EPSILON);
     assertEquals(-3.0, front.getPoint(0).value(2), EPSILON);
@@ -480,7 +477,7 @@ public class ArrayFrontTest {
     Front front = new ArrayFront(fileName);
 
     assertEquals(4, front.getNumberOfPoints());
-    assertEquals(4, ReflectionTestUtils.getField(front, "pointDimensions"));
+    assertEquals(4, front.getPointDimensions());
     assertEquals(1, front.getPoint(0).value(0), EPSILON);
     assertEquals(6, front.getPoint(1).value(1), EPSILON);
     assertEquals(11, front.getPoint(2).value(2), EPSILON);

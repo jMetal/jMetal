@@ -18,19 +18,18 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  */
 public class MOEADConfiguredFromToSolveABiObjectiveTSP {
   public static void main(String[] args) {
-    String referenceFrontFileName = null;
+    String referenceFrontFileName = "resources/referenceFrontsTSP/KroAB100TSP.csv";
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.multiobjectivetsp.instance.KroAB100TSP "
-                + "--referenceFrontFileName refereceFrontFileNameToBeIndicated "
+                + "--referenceFrontFileName " + referenceFrontFileName + " "
                 + "--randomGeneratorSeed 124 "
-                + "--maximumNumberOfEvaluations 200000 "
+                + "--maximumNumberOfEvaluations 1500000 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
-                + "--offspringPopulationSize 1 "
                 + "--sequenceGenerator integerSequence "
                 + "--createInitialSolutions random "
-                + "--normalizeObjectives false "
+                + "--normalizeObjectives FALSE "
                 + "--neighborhoodSize 20 "
                 + "--maximumNumberOfReplacedSolutions 2 "
                 + "--aggregationFunction penaltyBoundaryIntersection "
@@ -41,7 +40,7 @@ public class MOEADConfiguredFromToSolveABiObjectiveTSP {
                 + "--crossover PMX "
                 + "--crossoverProbability 0.9 "
                 + "--mutation swap "
-                + "--mutationProbabilityFactor 1.0 ")
+                + "--mutationProbability 0.08 ")
             .split("\\s+");
 
     AutoMOEADPermutation autoMOEAD = new AutoMOEADPermutation();

@@ -192,7 +192,7 @@ Anyway, its main drawback from our point of view is that it lacks the required f
 
 You can find many examples of metaheuristics that use this approach in the ``org.uma.jmetal.algorithm.examples`` package located in ``jmetal-algorithm``.
 
-Component-based template: NSGA-II in jMetal 6.0
+Component-based template: NSGA-II in jMetal 7.0
 -----------------------------------------------
 
 The idea of using a component-based template is to use delegation instead of inheritance, so that the template is not an abstract class but a concrete class where the algorithm steps are implemented with objects instead of methods. In the case of evolutionary algorithms, the template is included in class ``EvolutionaryAlgorithm`` (package ``org.uma.jmetal.component.algorithm``, sub-project ``jmetal-component``). We show a code snippet of this class next:

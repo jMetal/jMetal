@@ -1,14 +1,13 @@
 package org.uma.jmetal.util.legacy.front.util;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.pointsolution.PointSolution;
@@ -25,103 +24,76 @@ public class FrontNormalizerTest {
 
   private static final double EPSILON = 0.0000000000001 ;
 
-  @Rule
-  public ExpectedException exception = ExpectedException.none();
+  
 
   @Test
   public void shouldFrontNormalizerConstructorRaiseAnExceptionIsTheReferenceFrontIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The reference front is null"));
-
-    new FrontNormalizer((Front) null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> new FrontNormalizer((Front) null));
+    assertTrue(e.getMessage().contains("The reference front is null"));
   }
 
   @Test
   public void shouldFrontNormalizerConstructorRaiseAnExceptionIsTheReferenceSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The reference front is null"));
-
-    new FrontNormalizer((List<DoubleSolution>) null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> new FrontNormalizer((List<DoubleSolution>) null));
+    assertTrue(e.getMessage().contains("The reference front is null"));
   }
 
   @Test
   public void shouldFrontNormalizerConstructorRaiseAnExceptionIsTheVectorOfMinimumValuesIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The array of minimum values is null"));
-
-    new FrontNormalizer(null, new double[1]) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> new FrontNormalizer(null, new double[1]));
+    assertTrue(e.getMessage().contains("The array of minimum values is null"));
   }
 
   @Test
   public void shouldFrontNormalizerConstructorRaiseAnExceptionIsTheVectorOfMaximumValuesIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The array of maximum values is null"));
-
-    new FrontNormalizer(new double[1], null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> new FrontNormalizer(new double[1], null));
+    assertTrue(e.getMessage().contains("The array of maximum values is null"));
   }
 
   @Test
   public void shouldFrontNormalizerContructorRaiseAnExceptionTheDimensionOfTheMaximumAndMinimumArrayIsNotEqual() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The length of the maximum array (2) "
-        + "is different from the length of the minimum array (1)"));
-
-    new FrontNormalizer(new double[1], new double[2]) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> new FrontNormalizer(new double[1], new double[2]));
+    assertTrue(e.getMessage().contains("The length of the maximum array (2) is different from the length of the minimum array (1)"));
   }
 
   @Test
   public void shouldNormalizeRaiseAnExceptionTheFrontIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is null"));
-
     FrontNormalizer frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
-    frontNormalizer.normalize((Front) null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> frontNormalizer.normalize((Front) null));
+    assertTrue(e.getMessage().contains("The front is null"));
   }
 
   @Test
   public void shouldNormalizeRaiseAnExceptionTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is null"));
-
     FrontNormalizer frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
-    frontNormalizer.normalize((List<DoubleSolution>) null) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> frontNormalizer.normalize((List<DoubleSolution>) null));
+    assertTrue(e.getMessage().contains("The front is null"));
   }
 
   @Test
   public void shouldNormalizeRaiseAnExceptionIfTheFrontIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front is empty"));
-
     Front front = new ArrayFront(0, 0);
-
     FrontNormalizer frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
-    frontNormalizer.normalize(front) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> frontNormalizer.normalize(front));
+    assertTrue(e.getMessage().contains("The front is empty"));
   }
 
   @Test
   public void shouldNormalizeRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The list of solutions is empty"));
-
     List<DoubleSolution> solutionList = Collections.emptyList() ;
-
     FrontNormalizer frontNormalizer = new FrontNormalizer(new double[1], new double[1]) ;
-    frontNormalizer.normalize(solutionList) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> frontNormalizer.normalize(solutionList));
+    assertTrue(e.getMessage().contains("The list of solutions is empty"));
   }
 
 
   @Test
   public void shouldNormalizeRaiseAnExceptionTheDimensionOfTheMaximumArrayPointsIsNotCorrect() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The length of the point dimensions (2) " +
-        "is different from the length of the maximum array (4)"));
-
     int numberOfPointDimensions = 2 ;
-
     Front front = new ArrayFront(1, numberOfPointDimensions);
-
     FrontNormalizer frontNormalizer = new FrontNormalizer(new double[4], new double[4]) ;
-    frontNormalizer.normalize(front) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> frontNormalizer.normalize(front));
+    assertTrue(e.getMessage().contains("The length of the point dimensions (2) is different from the length of the maximum array (4)"));
   }
 
   /**
@@ -160,24 +132,18 @@ public class FrontNormalizerTest {
    */
   @Test
   public void shouldNormalizeRaiseAnExceptionIfTheMaxAndMinValuesAreTheSame() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("Maximum and minimum values of index 0 are the same: 2"));
-
     int numberOfPoints = 1 ;
     int numberOfDimensions = 2 ;
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
-
     Point point = new ArrayPoint(numberOfDimensions) ;
     point.value(0, 2);
     point.value(1, 4);
-
     front.setPoint(0, point);
-
     double[] minimum = {2, 4} ;
     double[] maximum = {2, 4} ;
-
     FrontNormalizer frontNormalizer = new FrontNormalizer(minimum, maximum) ;
-    frontNormalizer.normalize(front) ;
+    JMetalException e = assertThrows(JMetalException.class, () -> frontNormalizer.normalize(front));
+    assertTrue(e.getMessage().contains("Maximum and minimum values of index 0 are the same: 2"));
   }
 
   /**

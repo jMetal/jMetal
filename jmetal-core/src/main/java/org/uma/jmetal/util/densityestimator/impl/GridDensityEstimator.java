@@ -22,7 +22,7 @@ public class GridDensityEstimator<S extends Solution<?>> implements DensityEstim
   }
 
   /**
-   * Assigns the KNN distance to all the solutions in a list
+   * Assigns the distance to all the solutions in a list
    *
    * @param solutionList
    */

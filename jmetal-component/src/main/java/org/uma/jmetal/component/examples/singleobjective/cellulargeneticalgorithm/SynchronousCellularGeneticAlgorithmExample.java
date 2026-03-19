@@ -25,7 +25,7 @@ import org.uma.jmetal.util.neighborhood.impl.C9;
 import org.uma.jmetal.util.observer.impl.FitnessObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.CyclicIntegerSequence;
 
 /**
  * Class to configure and run a synchronous cellular genetic algorithm to solve a {@link DoubleProblem}
@@ -51,13 +51,13 @@ public class SynchronousCellularGeneticAlgorithmExample {
     int columns = 10 ;
     Neighborhood<DoubleSolution> neighborhood = new C9<>(rows, columns) ;
 
-    SequenceGenerator<Integer> solutionIndexGenerator = new IntegerBoundedSequenceGenerator(populationSize);
+    SequenceGenerator<Integer> solutionIndexGenerator = new CyclicIntegerSequence(populationSize);
 
     var variation = new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation) ;
 
     var selection =
         new NeighborhoodSelection<>(
-            variation.getMatingPoolSize(),
+            variation.matingPoolSize(),
             solutionIndexGenerator,
             neighborhood,
             new NaryTournamentSelection<>(2, new ObjectiveComparator<>(0)),

@@ -10,8 +10,6 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.CosineSimilarityBetweenVectors;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.point.Point;
 
 /**
  * This class implements a density estimator based on the cosine similarity
@@ -20,22 +18,28 @@ import org.uma.jmetal.util.point.Point;
  */
 public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
   private final String attributeId = getClass().getName();
-  private final Distance<double[], double[]> distance;
-  private final Point referencePoint;
+  private final double[] referencePoint;
   private final boolean normalize;
 
-  public CosineSimilarityDensityEstimator(Point referencePoint) {
-    this(referencePoint, true);
-  }
-
-  public CosineSimilarityDensityEstimator(Point referencePoint, boolean normalize) {
-    this.referencePoint = referencePoint;
-    distance = new CosineSimilarityBetweenVectors(referencePoint.values());
+  public CosineSimilarityDensityEstimator(double[] referencePoint, boolean normalize) {
+    this.referencePoint = referencePoint != null ? referencePoint.clone() : null;
     this.normalize = normalize;
   }
 
+  public CosineSimilarityDensityEstimator(double[] referencePoint) {
+    this(referencePoint, false);
+  }
+
+  public CosineSimilarityDensityEstimator(boolean normalize) {
+    this(null, normalize);
+  }
+
+  public CosineSimilarityDensityEstimator() {
+    this(null, false);
+  }
+
   /**
-   * Assigns the KNN distance to all the solutions in a list
+   * Assigns the distance to all the solutions in a list
    *
    * @param solutionList
    */
@@ -61,21 +65,16 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       return;
     }
 
-    for (S solution : solutionList) {
-      referencePoint.update(solution.objectives());
-    }
-
-    double[][] distanceMatrix = new double[solutionList.size()][solutionList.size()];
-    double[][] solutionMatrix = null;
+    double[][] solutionMatrix;
     if (normalize) {
-      try {
-        solutionMatrix = NormalizeUtils.normalize(SolutionListUtils.getMatrixWithObjectiveValues(solutionList));
-      } catch (JMetalException e) {
-        e.printStackTrace();
-      }
+      solutionMatrix = NormalizeUtils.normalize(SolutionListUtils.getMatrixWithObjectiveValues(solutionList));
     } else {
       solutionMatrix = SolutionListUtils.getMatrixWithObjectiveValues(solutionList);
     }
+
+    double[] effectiveReferencePoint = referencePoint != null ? referencePoint : new double[numberOfObjectives];
+    Distance<double[], double[]> distance = new CosineSimilarityBetweenVectors(effectiveReferencePoint);
+    double[][] distanceMatrix = new double[solutionList.size()][solutionList.size()];
 
     for (int i = 0; i < solutionList.size(); i++) {
       for (int j = i + 1; j < solutionList.size(); j++) {
@@ -84,34 +83,36 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       }
     }
 
+    // Calculate angular diversity: for each solution, find the sum of angular distances
+    // to its two nearest angular neighbors
     for (int i = 0; i < solutionList.size(); i++) {
-      double currentMaximumDistance = 0.0;
-      double secondCurrentMaximumDistance = 0.0;
+      double highestSimilarity = Double.NEGATIVE_INFINITY;
+      double secondHighestSimilarity = Double.NEGATIVE_INFINITY;
 
       for (int j = 0; j < solutionList.size(); j++) {
         if (i != j) {
-          double d = distanceMatrix[i][j];
+          double similarity = distanceMatrix[i][j];
 
-          if (d >= currentMaximumDistance) {
-            secondCurrentMaximumDistance = currentMaximumDistance;
-            currentMaximumDistance = d;
-          } else if (d > secondCurrentMaximumDistance) {
-            secondCurrentMaximumDistance = d;
+          if (similarity > highestSimilarity) {
+            secondHighestSimilarity = highestSimilarity;
+            highestSimilarity = similarity;
+          } else if (similarity > secondHighestSimilarity) {
+            secondHighestSimilarity = similarity;
           }
         }
       }
 
-      solutionList
-          .get(i)
-          .attributes().put(attributeId, (currentMaximumDistance + secondCurrentMaximumDistance));
-      solutionList
-          .get(i)
-          .attributes().put("DIFF", Math.abs(currentMaximumDistance - secondCurrentMaximumDistance));
+      // Convert similarity to angular distance: 1 - similarity
+      // Higher angular distance = more diverse = higher density value (should be kept)
+      double angularDistance = (2.0 - highestSimilarity - secondHighestSimilarity);
+      solutionList.get(i).attributes().put(attributeId, angularDistance);
     }
 
+    // Protect extreme solutions by setting their density to maximum (most diverse)
     for (int i = 0; i < solutionList.get(0).objectives().length; i++) {
       solutionList.sort(new ObjectiveComparator<>(i));
-      solutionList.get(solutionList.size() - 1).attributes().put(attributeId, 0.0);
+      solutionList.get(0).attributes().put(attributeId, Double.POSITIVE_INFINITY);
+      solutionList.get(solutionList.size() - 1).attributes().put(attributeId, Double.POSITIVE_INFINITY);
     }
   }
 

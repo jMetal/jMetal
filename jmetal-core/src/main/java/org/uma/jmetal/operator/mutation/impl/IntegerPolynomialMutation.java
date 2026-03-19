@@ -32,6 +32,14 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
 
   private RandomGenerator<Double> randomGenerator ;
 
+  /**
+   * Constructor
+   * @param mutationProbability
+   */
+  public IntegerPolynomialMutation(double mutationProbability) {
+    this(mutationProbability, DEFAULT_DISTRIBUTION_INDEX) ;
+}
+
   /** Constructor */
   public IntegerPolynomialMutation() {
     this(DEFAULT_PROBABILITY, DEFAULT_DISTRIBUTION_INDEX) ;

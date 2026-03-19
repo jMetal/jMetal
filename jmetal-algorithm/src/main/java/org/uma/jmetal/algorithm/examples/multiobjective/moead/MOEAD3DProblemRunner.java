@@ -47,7 +47,7 @@ public class MOEAD3DProblemRunner extends AbstractAlgorithmRunner {
             .setCrossover(crossover)
             .setMutation(mutation)
             .setMaxEvaluations(175000)
-            .setPopulationSize(91)
+            .setPopulationSize(300)
             .setResultPopulationSize(100)
             .setNeighborhoodSelectionProbability(0.9)
             .setMaximumNumberOfReplacedSolutions(2)

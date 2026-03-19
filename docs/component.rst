@@ -4,8 +4,8 @@ Component-based algorithms
 ==========================
 
 :Author: Antonio J. Nebro
-:Version: 1.0
-:Date: 2022-12-12
+:Version: 1.1
+:Date: 2026-03-02
 
 The design and architecture of the metaheuristics included in jMetal is probably the feature that has evolved
 the most since the start of the project in 2006. In first versions, the implementation of a metaheuristic required
@@ -26,7 +26,7 @@ and particle swarm optimization techniques. In this way, code reuse was signific
 at the cost of having to take into account the use of templates, which has proved cumbersome for some researchers,
 and the consequence is that there are still people using jMetal 4.5.
 
-Now, in the current release of jMetal (version 6.0), we propose a new architecture for the
+Now, in the current release of jMetal (version 7.0), we propose a new architecture for the
 design and implementation of metaheuristics. The main reason has to do with the fact that we are
 currently interested in using jMetal for the auto-configuration and auto-design of algorithms,
 and the current architecture has limitations for this, as discussed in the paper
@@ -39,7 +39,7 @@ Furthermore, the templates are observable entities, according to the Observer pa
 can register into them and be notified when the state of the algorithm changes (e.g., a real chart observer
 can receive the population after each algorithm iteration to plot it).
 
-Contrarily to the approach adopted in jMetal 5.0, in jMetal 6.0 the new architecture is not going
+Contrarily to the approach adopted in jMetal 5.0, in jMetal 7.0 the new architecture is not going
 to replace the former one. There are some reasons for taking this decision, starting with
 the aforementioned comment about jMetal users who are comfortable with the current implementation
 and are probably not interested
@@ -79,20 +79,20 @@ the information that will be notified to observers):
 
 .. code-block:: java
 
-  package org.uma.jmetal.solution;
+  package org.uma.jmetal.component.algorithm;
 
   public class EvolutionaryAlgorithm<S extends Solution<?>>
     implements Algorithm<List<S>>, ObservableEntity<Map<String, Object>> {
 
     private List<S> population;
   
-    private final Evaluation<S> evaluation;
-    private final SolutionsCreation<S> createInitialPopulation;
-    private final Termination termination;
-    private final Selection<S> selection;
-    private final Variation<S> variation;
-    private final Replacement<S> replacement;
-  
+    private Evaluation<S> evaluation;
+    private SolutionsCreation<S> createInitialPopulation;
+    private Termination termination;
+    private Selection<S> selection;
+    private Variation<S> variation;
+    private Replacement<S> replacement;
+
     private final Map<String, Object> attributes;
   
     private long initTime;
@@ -136,20 +136,20 @@ The state of the algorithm is updated with methods ``initProgress()``  and ``upd
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("COMPUTING_TIME", currentComputingTime());
   }
 
   protected void updateProgress() {
-    evaluations += variation.getOffspringPopulationSize();
+    evaluations += variation.offspringPopulationSize();
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("COMPUTING_TIME", currentComputingTime());
 
     observable.setChanged();
     observable.notifyObservers(attributes);
 
-    totalComputingTime = getCurrentComputingTime();
+    totalComputingTime = currentComputingTime();
   }
 
 
@@ -173,21 +173,21 @@ class is the following one:
 
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+            ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     this.variation =
         new CrossoverAndMutationVariation<>(
             offspringPopulationSize, crossover, mutation);
 
-    int tournamentSize = 2 ;
+    int tournamentSize = 2;
     this.selection =
         new NaryTournamentSelection<>(
             tournamentSize,
-            variation.getMatingPoolSize(),
+            variation.matingPoolSize(),
             new MultiComparator<>(
                 Arrays.asList(
                     Comparator.comparing(ranking::getRank),
-                    Comparator.comparing(densityEstimator::getValue).reversed())));
+                    Comparator.comparing(densityEstimator::value).reversed())));
 
     this.termination = new TerminationByEvaluations(25000);
 
@@ -220,9 +220,9 @@ Its ``run()`` method is included in this code snippet:
 
     initProgress();
     while (!termination.isMet(attributes)) {
-      velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection,
+      speed = velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection,
           inertiaWeightComputingStrategy);
-      positionUpdate.update(swarm, speed);
+      swarm = positionUpdate.update(swarm, speed);
       swarm = perturbation.perturb(swarm);
       swarm = evaluation.evaluate(swarm);
       globalBest = globalBestUpdate.update(swarm, globalBest);
@@ -245,7 +245,45 @@ The key of having a component-based architecture is to provide a catalogue of co
    :alt: Component catalogue.
 
 Each component type is included in a package containing an interface with the component name and an ``impl``
-sub-package where all the implementations of the interface are stored. For example, the ``Termination``
+sub-package where all the implementations of the interface are stored.
+
+Available Components
+~~~~~~~~~~~~~~~~~~~~
+
+**Selection Components** (``ea.selection``):
+
+- ``NaryTournamentSelection``: Best of N random solutions.
+- ``RandomSelection``: Uniform random selection.
+- ``TruncationSelection``: Deterministic selection of top-ranked solutions.
+- ``RankingSelection``: Linear ranking-based roulette wheel selection.
+- ``StochasticUniversalSampling``: Lower variance than standard roulette wheel.
+- ``BoltzmannSelection``: Temperature-controlled selection pressure (control parameter: ``temperature``).
+
+**Replacement Components** (``ea.replacement``):
+
+- ``RankingAndDensityEstimatorReplacement``: NSGA-II style replacement using ranking and crowding distance.
+- ``MuPlusLambdaReplacement``: (μ+λ) replacement strategy.
+- ``MuCommaLambdaReplacement``: (μ,λ) replacement strategy.
+- ``RandomReplacement``: Zero selection pressure baseline (random replacement).
+- ``TournamentReplacement``: Configurable pressure via tournament size.
+
+**Solutions Creation Components** (``common.solutionscreation``):
+
+- ``RandomSolutionsCreation``: Standard random initialization.
+- ``LatinHypercubeSamplingSolutionsCreation``: Stratified sampling for better coverage.
+- ``ScatterSearchSolutionsCreation``: Diverse initial population.
+- ``OppositionBasedSolutionsCreation``: Creates pairs (original + opposite mirrored across bounds center). Reference: Tizhoosh (2005) DOI:10.1109/CIMCA.2005.1631345
+- ``SobolSolutionsCreation``: Creates quasi-random solutions using Sobol sequences for uniform space coverage. Reference: Sobol (1967) DOI:10.1016/0041-5553(67)90144-9
+- ``CauchySolutionsCreation``: Creates solutions using a heavy-tailed Cauchy distribution to balance local and distant exploration. Reference: Yao et al. (1999) DOI:10.1109/4235.771163
+
+**Termination Components** (``common.termination``):
+
+- ``TerminationByEvaluations``: Stop after a maximum number of evaluations.
+- ``TerminationByComputingTime``: Stop after a given computing time.
+- ``TerminationByKeyboard``: Stop when a key is pressed.
+- ``TerminationByQualityIndicator``: Stop when quality indicator exceeds threshold.
+
+For example, the ``Termination``
 interface for termination components is as follows:
 
 .. code-block:: java

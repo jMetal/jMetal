@@ -47,6 +47,11 @@ public class InvertedGenerationalDistance extends QualityIndicator {
     this.pow = pow ;
   }
 
+  @Override
+  public QualityIndicator newInstance() {
+    return new InvertedGenerationalDistance();
+  }
+
   /**
    * Evaluate() method
    * @param front

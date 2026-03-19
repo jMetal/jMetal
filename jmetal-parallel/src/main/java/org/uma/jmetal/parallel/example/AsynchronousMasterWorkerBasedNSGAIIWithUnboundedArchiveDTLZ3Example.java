@@ -44,7 +44,7 @@ public class AsynchronousMasterWorkerBasedNSGAIIWithUnboundedArchiveDTLZ3Example
 
     long endTime = System.currentTimeMillis();
 
-    List<DoubleSolution> resultList = nsgaii.getResult();
+    List<DoubleSolution> resultList = nsgaii.result();
 
     JMetalLogger.logger.info("Computing time: " + (endTime - initTime));
     new SolutionListOutput(resultList)
