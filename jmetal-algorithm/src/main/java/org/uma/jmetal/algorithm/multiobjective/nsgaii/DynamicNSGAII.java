@@ -23,7 +23,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
   private DynamicProblem<S, Integer> problem;
   private Observable<Map<String, Object>> observable;
   private int completedIterations;
-  private CoverageChangeDetector coverageFront;
+  private CoverageChangeDetector coverageChangeDetector;
   private List<S> lastReceivedFront;
   /**
    * Constructor
@@ -52,7 +52,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       SolutionListEvaluator<S> evaluator,
       RestartStrategy<S> restartStrategy,
       Observable<Map<String, Object>> observable,
-      CoverageChangeDetector coverageFront) {
+      CoverageChangeDetector coverageChangeDetector) {
     super(
         problem,
         maxEvaluations,
@@ -67,36 +67,38 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
     this.problem = problem;
     this.observable = observable;
     this.completedIterations = 0;
-    this.coverageFront = coverageFront;
+    this.coverageChangeDetector = coverageChangeDetector;
     this.lastReceivedFront = null;
   }
 
   @Override
   protected boolean isStoppingConditionReached() {
     if (evaluations >= maxEvaluations) {
-
       boolean coverage = false;
-      if (lastReceivedFront != null) {
-        coverageFront.updateReferenceFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
+      if (lastReceivedFront != null && coverageChangeDetector != null) {
+        coverageChangeDetector.updateReferenceFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
         List<PointSolution> pointSolutionList = new ArrayList<>();
         List<S> list = getPopulation();
         for (S s : list) {
           PointSolution pointSolution = new PointSolution(s);
           pointSolutionList.add(pointSolution);
         }
-        coverage = coverageFront.hasSignificantChange(pointSolutionList);
+        coverage = coverageChangeDetector.hasSignificantChange(
+          SolutionListUtils.getMatrixWithObjectiveValues(pointSolutionList));
       }
 
       if (coverage) {
-        observable.setChanged();
+        if (observable != null) {
+          observable.setChanged();
 
-        Map<String, Object> algorithmData = new HashMap<>();
+          Map<String, Object> algorithmData = new HashMap<>();
 
-        algorithmData.put("EVALUATIONS", completedIterations);
-        algorithmData.put("POPULATION", getPopulation());
+          algorithmData.put("EVALUATIONS", completedIterations);
+          algorithmData.put("POPULATION", getPopulation());
 
-        observable.notifyObservers(algorithmData);
-        observable.clearChanged();
+          observable.notifyObservers(algorithmData);
+          observable.clearChanged();
+        }
       }
       lastReceivedFront = getPopulation();
       completedIterations++;
@@ -110,17 +112,14 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
     return false;
   }
 
-  @Override
-  protected void updateProgress() {
-    super.updateProgress();
-  }
-
   public DynamicProblem<S, ?> getDynamicProblem() {
     return problem;
   }
 
   public void restart() {
-    this.restartStrategy.restart(getPopulation(), (DynamicProblem<S, ?>) getProblem());
+    if (this.restartStrategy != null) {
+      this.restartStrategy.restart(getPopulation(), (DynamicProblem<S, ?>) getProblem());
+    }
   }
 
   public RestartStrategy<?> getRestartStrategy() {

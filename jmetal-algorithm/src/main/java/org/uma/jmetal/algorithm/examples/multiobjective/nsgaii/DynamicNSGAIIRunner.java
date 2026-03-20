@@ -38,7 +38,7 @@ public class DynamicNSGAIIRunner {
         new BinaryTournamentSelection<>();
 
     InvertedGenerationalDistance igd = new InvertedGenerationalDistance();
-    CoverageChangeDetector<DoubleSolution> coverageChangeDetector = new CoverageChangeDetector<>(0.055, igd);
+    CoverageChangeDetector coverageChangeDetector = new CoverageChangeDetector(0.055, igd);
     var algorithm =
         new DynamicNSGAII<>(
             problem,

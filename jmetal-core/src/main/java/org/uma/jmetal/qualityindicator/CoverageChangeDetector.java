@@ -1,31 +1,46 @@
 package org.uma.jmetal.qualityindicator;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.SolutionListUtils;
 
 /**
- * Utility class to detect coverage changes between solution fronts using a
- * {@link QualityIndicator}.
+ * Detects meaningful changes in coverage values computed over solution fronts.
  *
- * <p>Behaviors:
- * - `hasSignificantChange(List<S>)` compares the current coverage value with the
- *   last observed value and returns true when the absolute difference exceeds
- *   the configured threshold.
- * - `exceedsThreshold(List<S>)` returns true when the coverage computed for the
- *   given front is greater than the configured threshold.
+ * <p>This class wraps a {@link QualityIndicator} and provides two convenience
+ * predicates that operate on numeric fronts represented as a matrix of double
+ * values {@code double[][]} (each row is a solution objective vector):
  *
- * Note: this class is not thread-safe.
+ * <ul>
+ *   <li>{@link #hasSignificantChange(double[][])} — returns {@code true} when the
+ *       absolute difference between the coverage computed for the provided
+ *       front and the last observed coverage is greater than the configured
+ *       threshold.</li>
+ *   <li>{@link #exceedsThreshold(double[][])} — returns {@code true} when the
+ *       coverage computed for the provided front is greater than the configured
+ *       threshold.</li>
+ * </ul>
+ *
+ * <p>The detector stores the last evaluated front (defensively copied) and the
+ * last coverage value to support comparisons. The underlying
+ * {@link QualityIndicator} is used directly to compute coverage values and to
+ * update the reference front via {@link #updateReferenceFront(double[][])}.
+ *
+ * <p>Usage example:
+ * <pre>
+ * CoverageChangeDetector detector = new CoverageChangeDetector(0.05, igd);
+ * double[][] front = SolutionListUtils.getMatrixWithObjectiveValues(solutions);
+ * if (detector.hasSignificantChange(front)) { ... }
+ * </pre>
+ *
+ * <p>Thread-safety: this class is not thread-safe. Callers must synchronize
+ * externally if accessed from multiple threads.
  */
-public class CoverageChangeDetector<S extends Solution<?>> {
+public class CoverageChangeDetector {
 
   private final double coverageValue;
   private double lastCoverageValue;
   private final QualityIndicator indicator;
 
-  private List<S> lastFront;
+  private double[][] lastFront;
 
   /**
    * Create a detector with a coverage threshold and a quality indicator.
@@ -51,23 +66,23 @@ public class CoverageChangeDetector<S extends Solution<?>> {
    * @return true if a significant change was detected
    * @throws IllegalArgumentException if {@code front} is null
    */
-  public boolean hasSignificantChange(List<S> front) {
+  public boolean hasSignificantChange(double[][] front) {
     if (front == null) {
       throw new IllegalArgumentException("front must not be null");
     }
 
-    double coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(front));
+    double coverage = this.indicator.compute(front);
     double aux = Math.abs(coverage - lastCoverageValue);
     lastCoverageValue = coverage;
     boolean result = aux > coverageValue;
     if (result) {
-      lastFront = new ArrayList<>(front);
+      lastFront = copyMatrix(front);
     } else if (lastFront != null) {
-      coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(lastFront));
+      coverage = this.indicator.compute(lastFront);
       aux = Math.abs(coverage - lastCoverageValue);
       result = aux > coverageValue;
       if (result) {
-        lastFront = new ArrayList<>(front);
+        lastFront = copyMatrix(front);
       }
     }
     return result;
@@ -81,20 +96,20 @@ public class CoverageChangeDetector<S extends Solution<?>> {
    * @return true if coverage &gt; threshold
    * @throws IllegalArgumentException if {@code front} is null
    */
-  public boolean exceedsThreshold(List<S> front) {
+  public boolean exceedsThreshold(double[][] front) {
     if (front == null) {
       throw new IllegalArgumentException("front must not be null");
     }
 
-    double coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(front));
+    double coverage = this.indicator.compute(front);
     boolean result = coverage > coverageValue;
     if (result) {
-      lastFront = new ArrayList<>(front);
+      lastFront = copyMatrix(front);
     } else if (lastFront != null) {
-      coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(lastFront));
+      coverage = this.indicator.compute(lastFront);
       result = coverage > coverageValue;
       if (result) {
-        lastFront = new ArrayList<>(front);
+        lastFront = copyMatrix(front);
       }
     }
     return result;
@@ -111,6 +126,17 @@ public class CoverageChangeDetector<S extends Solution<?>> {
     } catch (Exception ex) {
       ex.printStackTrace();
     }
+  }
+
+  private static double[][] copyMatrix(double[][] matrix) {
+    if (matrix == null) {
+      return null;
+    }
+    double[][] copy = new double[matrix.length][];
+    for (int i = 0; i < matrix.length; i++) {
+      copy[i] = matrix[i] == null ? null : matrix[i].clone();
+    }
+    return copy;
   }
 }
 
