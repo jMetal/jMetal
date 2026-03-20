@@ -39,7 +39,7 @@ public class GeneticAlgorithmTSPExample extends AbstractAlgorithmRunner {
     double mutationProbability = 1.0 / problem.numberOfVariables() ;
     var mutation = new PermutationSwapMutation<Integer>(mutationProbability) ;
 
-    Termination termination = new TerminationByEvaluations(1500000);
+    Termination termination = new TerminationByEvaluations(250000);
 
     EvolutionaryAlgorithm<PermutationSolution<Integer>> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
         "GGA",
@@ -51,7 +51,7 @@ public class GeneticAlgorithmTSPExample extends AbstractAlgorithmRunner {
         .setTermination(termination)
         .build();
 
-    geneticAlgorithm.observable().register(new FitnessObserver(20000));
+    geneticAlgorithm.observable().register(new FitnessObserver(1000));
     var chartObserver = new FitnessPlotObserver("Genetic algorithm", "Evaluations", "Fitness",
         "fitness", 100) ;
     geneticAlgorithm.observable().register(chartObserver);

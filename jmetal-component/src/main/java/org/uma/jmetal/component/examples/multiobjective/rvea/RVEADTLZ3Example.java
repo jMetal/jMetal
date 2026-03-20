@@ -22,7 +22,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class RVEADTLZ3Example {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ3.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);

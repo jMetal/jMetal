@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
+import org.uma.jmetal.qualityindicator.CoverageChangeDetector;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -23,7 +23,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
   private DynamicProblem<S, Integer> problem;
   private Observable<Map<String, Object>> observable;
   private int completedIterations;
-  private CoverageFront coverageFront;
+  private CoverageChangeDetector coverageFront;
   private List<S> lastReceivedFront;
   /**
    * Constructor
@@ -52,7 +52,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       SolutionListEvaluator<S> evaluator,
       RestartStrategy<S> restartStrategy,
       Observable<Map<String, Object>> observable,
-      CoverageFront coverageFront) {
+      CoverageChangeDetector coverageFront) {
     super(
         problem,
         maxEvaluations,
@@ -77,14 +77,14 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
 
       boolean coverage = false;
       if (lastReceivedFront != null) {
-        coverageFront.updateFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
+        coverageFront.updateReferenceFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
         List<PointSolution> pointSolutionList = new ArrayList<>();
         List<S> list = getPopulation();
         for (S s : list) {
           PointSolution pointSolution = new PointSolution(s);
           pointSolutionList.add(pointSolution);
         }
-        coverage = coverageFront.isCoverageWithLast(pointSolutionList);
+        coverage = coverageFront.hasSignificantChange(pointSolutionList);
       }
 
       if (coverage) {

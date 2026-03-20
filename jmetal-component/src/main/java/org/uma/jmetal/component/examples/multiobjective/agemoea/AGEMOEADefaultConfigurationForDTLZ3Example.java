@@ -34,7 +34,7 @@ public class AGEMOEADefaultConfigurationForDTLZ3Example {
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    double crossoverDistributionIndex = 100.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.numberOfVariables();

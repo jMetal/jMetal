@@ -85,6 +85,10 @@ public class PMXCrossover implements
 
     int permutationLength = parents.get(0).variables().size() ;
 
+    if (permutationLength < 2) {
+      return offspring;
+    }
+
     if (crossoverRandomGenerator.getRandomValue() < probability) {
       int cuttingPoint1;
       int cuttingPoint2;
