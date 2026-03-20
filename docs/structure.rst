@@ -40,7 +40,7 @@ file of your project would contain then:
     <dependency>
       <groupId>org.uma.jmetal</groupId>
       <artifactId>jmetal-algorithm</artifactId>
-      <version>7.0</version>
-    </dependency>
+      <version>7.1</version>
+     </dependency>
    </dependencies>
 
