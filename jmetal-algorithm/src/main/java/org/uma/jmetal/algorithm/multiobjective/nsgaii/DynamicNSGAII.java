@@ -10,8 +10,8 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.restartstrategy.RestartStrategy;
@@ -63,6 +63,11 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
         mutationOperator,
         selectionOperator,
         evaluator);
+    Check.notNull(problem);
+    Check.notNull(restartStrategy);
+    Check.notNull(observable);
+    Check.notNull(coverageChangeDetector);
+
     this.restartStrategy = restartStrategy;
     this.problem = problem;
     this.observable = observable;
@@ -71,11 +76,12 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
     this.lastReceivedFront = null;
   }
 
+
   @Override
   protected boolean isStoppingConditionReached() {
     if (evaluations >= maxEvaluations) {
       boolean coverage = false;
-      if (lastReceivedFront != null && coverageChangeDetector != null) {
+      if (lastReceivedFront != null) {
         coverageChangeDetector.updateReferenceFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
 
         // Use the current population directly to compute the objective matrix
@@ -84,17 +90,15 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       }
 
       if (coverage) {
-        if (observable != null) {
-          observable.setChanged();
+        observable.setChanged();
 
-          Map<String, Object> algorithmData = new HashMap<>();
+        Map<String, Object> algorithmData = new HashMap<>();
 
-          algorithmData.put("EVALUATIONS", completedIterations);
-          algorithmData.put("POPULATION", getPopulation());
+        algorithmData.put("EVALUATIONS", completedIterations);
+        algorithmData.put("POPULATION", getPopulation());
 
-          observable.notifyObservers(algorithmData);
-          observable.clearChanged();
-        }
+        observable.notifyObservers(algorithmData);
+        observable.clearChanged();
       }
       lastReceivedFront = getPopulation();
       completedIterations++;
@@ -113,9 +117,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
   }
 
   public void restart() {
-    if (this.restartStrategy != null) {
-      this.restartStrategy.restart(getPopulation(), (DynamicProblem<S, ?>) getProblem());
-    }
+    this.restartStrategy.restart(getPopulation(), (DynamicProblem<S, ?>) getProblem());
   }
 
   public RestartStrategy<?> getRestartStrategy() {
