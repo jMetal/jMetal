@@ -77,14 +77,10 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       boolean coverage = false;
       if (lastReceivedFront != null && coverageChangeDetector != null) {
         coverageChangeDetector.updateReferenceFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
-        List<PointSolution> pointSolutionList = new ArrayList<>();
-        List<S> list = getPopulation();
-        for (S s : list) {
-          PointSolution pointSolution = new PointSolution(s);
-          pointSolutionList.add(pointSolution);
-        }
+
+        // Use the current population directly to compute the objective matrix
         coverage = coverageChangeDetector.hasSignificantChange(
-          SolutionListUtils.getMatrixWithObjectiveValues(pointSolutionList));
+          SolutionListUtils.getMatrixWithObjectiveValues(getPopulation()));
       }
 
       if (coverage) {
