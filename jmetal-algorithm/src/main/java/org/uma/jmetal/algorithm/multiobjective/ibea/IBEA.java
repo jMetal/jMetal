@@ -10,6 +10,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.solutionattribute.impl.Fitness;
 
 /**
@@ -90,12 +91,12 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
         int j = 0;
         do {
           j++;
-          parent1 = selectionOperator.execute(archive);
+          parent1 = selectParentFromArchive();
         } while (j < IBEA.TOURNAMENTS_ROUNDS);
         int k = 0;
         do {
           k++;
-          parent2 = selectionOperator.execute(archive);
+          parent2 = selectParentFromArchive();
         } while (k < IBEA.TOURNAMENTS_ROUNDS);
 
         List<S> parents = new ArrayList<>(2);
@@ -112,6 +113,23 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
       }
       solutionSet = offSpringSolutionSet;
     }
+  }
+
+  /**
+   * Selects a parent from the current archive while handling singleton archives safely.
+   *
+   * @return a selected parent
+   */
+  protected S selectParentFromArchive() {
+    if (archive.isEmpty()) {
+      throw new JMetalException(
+          "The archive is empty. At least one solution is required for parent selection.");
+    }
+    if (archive.size() == 1) {
+      return archive.get(0);
+    }
+
+    return selectionOperator.execute(archive);
   }
 
   @Override public List<S> result() {
