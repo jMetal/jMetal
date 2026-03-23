@@ -2,60 +2,143 @@
 
 Purpose
 -------
-This document provides minimal guidance for automated contributors (human-in-the-loop or AI assistants) working on the jMetal repository.
+This document provides guidance for automated contributors (human-in-the-loop or AI assistants) working on the jMetal repository. jMetal is a Java-based framework for multi-objective optimization with metaheuristics.
 
-General principles
-------------------
-- Always follow the rules in `JAVA_CODING_GUIDELINES.md` when modifying Java sources or writing tests.
-- Prioritise safety, readability, and reproducible tests over rapid or large-scale edits.
-- Ask a human maintainer for clarification when a guideline conflicts with a special requirement.
+## Project Structure
 
-Conventions for assistants
---------------------------
-- Before changing code, read `README.rst` and `JAVA_CODING_GUIDELINES.md` to understand project layout and coding rules.
-- Make small, atomic changes and document the purpose in the commit message.
-- For changes that affect public APIs or behaviour, require human review and do not merge automatically.
-- Avoid large refactors or dependency upgrades without an approved plan.
-
-Tests and CI
------------
-- Run the test suite locally before proposing changes:
-
-```bash
-mvn test
+```
+jMetal/
+├── jmetal-core/        # Core classes (Algorithm, Solution, Problem, Operator)
+├── jmetal-algorithm/   # Algorithm implementations
+├── jmetal-problem/     # Benchmark problems
+├── jmetal-lab/         # Experimentation and visualization
+├── jmetal-parallel/    # Parallel extensions
+├── jmetal-auto/        # Auto-design and configuration
+└── jmetal-component/   # Component-based algorithms
 ```
 
-- Generate coverage reports with JaCoCo:
+**Java Version:** 21 (requires JDK 21+)
+**Build Tool:** Maven
+
+---
+
+## Build Commands
 
 ```bash
+# Build entire project (skip tests)
+mvn clean package -DskipTests
+
+# Build with tests
+mvn clean test
+
+# Run a single test class
+mvn test -Dtest=MyTestClass
+
+# Run a single test method
+mvn test -Dtest=MyTestClass#myTestMethod
+
+# Run tests in a specific module
+mvn test -pl jmetal-core
+
+# Run tests in specific module with dependencies
+mvn test -pl jmetal-core -am
+
+# Run integration tests
+mvn integration-test
+
+# Generate coverage report
 mvn test jacoco:report
 ```
 
-- If you change tests or the build configuration, provide clear reproduction steps in the PR description.
+---
 
-Commit messages and PRs
-----------------------
-- Use the repository commit style (prefixes: `feat:`, `fix:`, `chore:`, `test:`).
-- In the commit/PR body include:
-  - What changed
-  - Why it changed
-  - How to verify locally (commands)
+## Code Style Guidelines
 
-Minimal PR checklist
---------------------
-- [ ] Build locally: `mvn -DskipTests=false clean package`
-- [ ] Run relevant tests: `mvn -Dtest=MyTest test`
-- [ ] Verify `JAVA_CODING_GUIDELINES.md` rules are respected
-- [ ] Update documentation if public behaviour changes
+**ALWAYS follow the rules in `JAVA_CODING_GUIDELINES.md`.** Key points:
 
-References
-----------
-- `JAVA_CODING_GUIDELINES.md` — Java style and practices for the project
-- `README.rst` — project overview and module structure
+### Language
+- Write all code, comments, and documentation in **English** (US spelling)
 
-Contact
--------
-If in doubt or proposing large changes, open an issue describing the proposal and tag the maintainers.
+### Java 21+ Features
+- Use **records** for immutable DTOs and value objects
+- Use **sealed interfaces/classes** for controlled type hierarchies
+- Use **pattern matching** with switch expressions
+- Use **Optional<T>** instead of null returns
+
+### Naming Conventions
+- Classes: `UpperCamelCase` (e.g., `MyAlgorithm`)
+- Methods/variables: `lowerCamelCase` (e.g., `myMethod`)
+- Constants: `UPPER_SNAKE_CASE` (e.g., `MAX_ITERATIONS`)
+- Test classes: `*Test.java` (e.g., `NSGAIIITest`)
+
+### Imports
+- Group in order: `java.*`, `javax.*`, `org.*`, `com.*`, `static` imports
+- Use **static imports** for test assertions and fluent APIs
+
+### Testing Conventions
+- Use **JUnit 5** (Jupiter)
+- Use **AssertJ** for fluent assertions
+- Use **Mockito** for mocking
+- Test naming: descriptive, focus on behavior
+- Follow **Given-When-Then** pattern in test names
+- Use `@Nested` classes to group related tests
+- Use `@DisplayName` for human-readable descriptions
+
+### Error Handling
+- Use **specific exceptions** (not generic RuntimeException)
+- Provide descriptive error messages with context
+- Use **guard clauses** for early validation returns
+
+### Code Quality
+- **Single Responsibility**: methods < 20 lines
+- **Complete Javadoc** for all public APIs
+- **Immutability** by default (final fields, immutable collections)
+- Use **try-with-resources** for all Closeable resources
+- **No magic numbers** - use named constants
 
 ---
-This file may be extended with CI/formatter rules (Spotless, Checkstyle) as they are adopted in the repository.
+
+## Commit Messages
+
+Prefix format: `feat:`, `fix:`, `chore:`, `test:`, `docs:`, `refactor:`
+
+Example:
+```
+feat: add RVEA algorithm implementation
+
+- Added Reference Vector Guided Evolutionary Algorithm
+- Includes adaptive scalarization approach
+- Tests: mvn test -Dtest=RVEAIT
+```
+
+---
+
+## Pull Request Checklist
+
+- [ ] Build: `mvn -DskipTests=false clean package`
+- [ ] Test: `mvn test -Dtest=MyTest test`
+- [ ] Coverage: `mvn test jacoco:report` (verify coverage maintained)
+- [ ] Code follows `JAVA_CODING_GUIDELINES.md`
+- [ ] Documentation updated if public API changes
+- [ ] Commit message follows convention
+
+---
+
+## Important Notes
+
+- **DO NOT** commit secrets, API keys, or credentials
+- **DO NOT** skip tests in pull requests without justification
+- **DO ASK** for clarification when guidelines conflict with requirements
+- Large refactors or dependency upgrades need approval
+
+---
+
+## References
+
+- `JAVA_CODING_GUIDELINES.md` — Detailed Java style guide
+- `README.rst` — Project overview
+- pom.xml — Build configuration
+
+---
+
+*Last updated: March 2026*
