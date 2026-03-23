@@ -6,8 +6,6 @@ import org.uma.jmetal.algorithm.multiobjective.ibea.IBEA;
 import org.uma.jmetal.algorithm.multiobjective.ibea.IBEABuilder;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
@@ -18,7 +16,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 
 /**
- * Class for configuring and running the IBEA algorithm
+ * Class for configuring and running the IBEA algorithm on a real-coded problem.
  *
  * @author Antonio J. Nebro
  */
@@ -42,15 +40,12 @@ public class IBEARunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>();
-
     IBEA<DoubleSolution> algorithm = new IBEABuilder(problem)
         .setArchiveSize(100)
         .setPopulationSize(100)
         .setMaxEvaluations(25000)
         .setCrossover(crossover)
         .setMutation(mutation)
-        .setSelection(selection)
         .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

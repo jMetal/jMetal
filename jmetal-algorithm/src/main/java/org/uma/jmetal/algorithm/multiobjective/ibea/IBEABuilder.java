@@ -10,11 +10,18 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.comparator.FitnessComparator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
- * This class implements the IBEA algorithm
+ * Builder for the IBEA family of algorithms.
+ *
+ * <p>The default configuration builds the plain {@link IBEA} variant and uses a fitness-based
+ * binary tournament selection. Use {@link #setVariant(IBEAVariant)} to opt in to {@link mIBEA}.
  */
 public class IBEABuilder implements AlgorithmBuilder<IBEA<DoubleSolution>> {
+  public enum IBEAVariant {IBEA, MIBEA}
+
   private Problem<DoubleSolution> problem;
   private int populationSize;
   private int archiveSize;
@@ -23,10 +30,12 @@ public class IBEABuilder implements AlgorithmBuilder<IBEA<DoubleSolution>> {
   private CrossoverOperator<DoubleSolution> crossover;
   private MutationOperator<DoubleSolution> mutation;
   private SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
+  private IBEAVariant variant;
 
   /**
-   * Constructor
-   * @param problem
+   * Constructor.
+   *
+   * @param problem the problem to solve
    */
   public IBEABuilder(Problem<DoubleSolution> problem) {
     this.problem = problem;
@@ -42,7 +51,8 @@ public class IBEABuilder implements AlgorithmBuilder<IBEA<DoubleSolution>> {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>();
+    selection = new BinaryTournamentSelection<>(new FitnessComparator<>());
+    variant = IBEAVariant.IBEA;
   }
 
   /* Getters */
@@ -68,6 +78,15 @@ public class IBEABuilder implements AlgorithmBuilder<IBEA<DoubleSolution>> {
 
   public SelectionOperator<List<DoubleSolution>, DoubleSolution> getSelection() {
     return selection;
+  }
+
+  /**
+   * Returns the configured IBEA variant.
+   *
+   * @return the configured variant
+   */
+  public IBEAVariant getVariant() {
+    return variant;
   }
 
   /* Setters */
@@ -107,8 +126,34 @@ public class IBEABuilder implements AlgorithmBuilder<IBEA<DoubleSolution>> {
     return this;
   }
 
+  /**
+   * Sets the IBEA variant to build.
+   *
+   * @param variant the variant to build
+   * @return this builder
+   */
+  public IBEABuilder setVariant(IBEAVariant variant) {
+    this.variant = variant;
+
+    return this;
+  }
+
+  /**
+   * Builds the configured IBEA variant.
+   *
+   * @return the configured algorithm instance
+   */
   public IBEA<DoubleSolution> build() {
-    return new mIBEA<>(problem, populationSize, archiveSize, maxEvaluations, selection, crossover,
-        mutation);
+    if (variant == null) {
+      throw new JMetalException("Unknown variant: null");
+    }
+
+    return switch (variant) {
+      case IBEA -> new IBEA<>(
+          problem, populationSize, archiveSize, maxEvaluations, selection, crossover, mutation);
+      case MIBEA -> new mIBEA<>(
+          problem, populationSize, archiveSize, maxEvaluations, selection, crossover, mutation);
+      default -> throw new JMetalException("Unknown variant: " + variant);
+    };
   }
 }

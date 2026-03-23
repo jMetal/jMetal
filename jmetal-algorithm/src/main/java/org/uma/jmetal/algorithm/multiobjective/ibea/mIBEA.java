@@ -9,7 +9,12 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 
-/** This class implements the IBEA algorithm */
+/**
+ * Modified IBEA variant that filters the union archive to non-dominated solutions before computing
+ * fitness.
+ *
+ * <p>Use this variant explicitly through {@link IBEABuilder#setVariant(IBEABuilder.IBEAVariant)}.
+ */
 @SuppressWarnings("serial")
 public class mIBEA<S extends Solution<?>> extends IBEA<S> {
 
@@ -70,12 +75,12 @@ public class mIBEA<S extends Solution<?>> extends IBEA<S> {
         int j = 0;
         do {
           j++;
-          parent1 = selectionOperator.execute(archive);
+          parent1 = selectParentFromArchive();
         } while (j < IBEA.TOURNAMENTS_ROUNDS);
         int k = 0;
         do {
           k++;
-          parent2 = selectionOperator.execute(archive);
+          parent2 = selectParentFromArchive();
         } while (k < IBEA.TOURNAMENTS_ROUNDS);
 
         List<S> parents = new ArrayList<>(2);
@@ -101,6 +106,6 @@ public class mIBEA<S extends Solution<?>> extends IBEA<S> {
 
   @Override
   public String description() {
-    return "Modificated Indicator based Evolutionary Algorithm";
+    return "Modified Indicator based Evolutionary Algorithm";
   }
 }
