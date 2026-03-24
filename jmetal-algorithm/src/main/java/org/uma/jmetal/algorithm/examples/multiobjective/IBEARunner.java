@@ -27,8 +27,8 @@ public class IBEARunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws Exception {
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
@@ -40,16 +40,17 @@ public class IBEARunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    IBEA<DoubleSolution> algorithm = new IBEABuilder(problem)
-        .setArchiveSize(100)
-        .setPopulationSize(100)
-        .setMaxEvaluations(25000)
-        .setCrossover(crossover)
-        .setMutation(mutation)
-        .build();
+    IBEA<DoubleSolution> algorithm =
+        new IBEABuilder(problem)
+            .setArchiveSize(100)
+            .setPopulationSize(100)
+            .setMaxEvaluations(50000)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setVariant(IBEABuilder.IBEAVariant.MIBEA)
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.result();
     long computingTime = algorithmRunner.getComputingTime();

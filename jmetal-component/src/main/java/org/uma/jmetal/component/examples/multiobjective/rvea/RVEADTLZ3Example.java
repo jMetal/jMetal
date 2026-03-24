@@ -36,7 +36,7 @@ public class RVEADTLZ3Example {
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 91;
-    int maxEvaluations = 30000;
+    int maxEvaluations = 40000;
     int h = 12;
     double alpha = 2.0;
     double fr = 0.1;
