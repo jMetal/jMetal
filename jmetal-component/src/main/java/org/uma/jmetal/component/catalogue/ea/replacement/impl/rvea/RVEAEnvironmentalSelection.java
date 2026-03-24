@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
 /**
  * Environmental Selection component for the RVEA algorithm.
@@ -28,7 +27,19 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
   private double[] idealPoint;
   private double[] nadirPoint;
 
-  public RVEAEnvironmentalSelection(int numberOfObjectives, int maxGenerations, double alpha, double fr, int H) {
+  /**
+   * Creates the environmental selection component of RVEA.
+   *
+   * @param referenceVectors Reference vectors provided by the caller
+   * @param maxGenerations Maximum number of generations
+   * @param alpha APD penalty exponent
+   * @param fr Reference vector adaptation frequency ratio
+   */
+  public RVEAEnvironmentalSelection(double[][] referenceVectors, int maxGenerations, double alpha, double fr) {
+    Check.arrayIsNotEmpty(referenceVectors, "referenceVectors");
+    Check.notNull(referenceVectors[0], "referenceVectors[0]");
+
+    int numberOfObjectives = referenceVectors[0].length;
     Check.that(numberOfObjectives >= 2, "The number of objectives must be at least 2.");
     Check.valueIsPositive(maxGenerations, "maxGenerations");
     Check.valueIsNotNegative(alpha, "alpha");
@@ -40,24 +51,17 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
     this.alpha = alpha;
     this.adaptationFrequency = Math.max(1, (int) Math.ceil(maxGenerations * fr));
 
-    List<double[]> generatedVectors = ReferencePointGenerator.generateSingleLayer(numberOfObjectives, H);
-
-    this.referenceVectors = new double[generatedVectors.size()][numberOfObjectives];
-    this.initialReferenceVectors = new double[generatedVectors.size()][numberOfObjectives];
-
-    for (int i = 0; i < generatedVectors.size(); i++) {
-      double length = calculateNorm(generatedVectors.get(i));
-      for (int j = 0; j < numberOfObjectives; j++) {
-        this.referenceVectors[i][j] = generatedVectors.get(i)[j] / length;
-        this.initialReferenceVectors[i][j] = this.referenceVectors[i][j];
-      }
-    }
+    validateReferenceVectors(referenceVectors);
+    this.referenceVectors = normalizedReferenceVectors(referenceVectors);
+    this.initialReferenceVectors = copyReferenceVectors(this.referenceVectors);
   }
 
   public List<S> execute(List<S> jointPopulation, int populationSize) {
     Check.notNull(jointPopulation);
     Check.that(jointPopulation.size() >= populationSize,
         "The joint population size must be at least the population size.");
+    Check.that(populationSize <= referenceVectors.length,
+        "Population size must be less than or equal to the number of reference vectors.");
 
     currentGeneration++;
 
@@ -233,6 +237,47 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
 
   int currentGeneration() {
     return currentGeneration;
+  }
+
+  private void validateReferenceVectors(double[][] vectors) {
+    for (int i = 0; i < vectors.length; i++) {
+      double[] vector = vectors[i];
+      Check.notNull(vector, "referenceVectors[" + i + "]");
+      Check.that(vector.length == numberOfObjectives,
+          "All reference vectors must have " + numberOfObjectives + " components.");
+
+      double norm = 0.0;
+      for (int j = 0; j < vector.length; j++) {
+        Check.valueIsFinite(vector[j], "referenceVectors[" + i + "][" + j + "]");
+        Check.that(vector[j] >= 0.0, "Reference vectors must contain non-negative values.");
+        norm += vector[j] * vector[j];
+      }
+
+      Check.that(norm > 0.0, "Reference vectors must not be the zero vector.");
+    }
+  }
+
+  private double[][] normalizedReferenceVectors(double[][] vectors) {
+    double[][] normalizedVectors = new double[vectors.length][numberOfObjectives];
+
+    for (int i = 0; i < vectors.length; i++) {
+      double length = calculateNorm(vectors[i]);
+      for (int j = 0; j < numberOfObjectives; j++) {
+        normalizedVectors[i][j] = vectors[i][j] / length;
+      }
+    }
+
+    return normalizedVectors;
+  }
+
+  private double[][] copyReferenceVectors(double[][] vectors) {
+    double[][] copiedVectors = new double[vectors.length][];
+
+    for (int i = 0; i < vectors.length; i++) {
+      copiedVectors[i] = vectors[i].clone();
+    }
+
+    return copiedVectors;
   }
 
   private double calculateNorm(double[] array) {

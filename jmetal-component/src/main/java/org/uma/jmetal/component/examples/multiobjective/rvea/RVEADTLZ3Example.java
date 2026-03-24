@@ -16,13 +16,14 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class RVEADTLZ3Example {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ3.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
@@ -35,16 +36,16 @@ public class RVEADTLZ3Example {
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 91;
     int maxEvaluations = 30000;
-    int h = 12;
+    double[][] referenceVectors =
+        VectorFileUtils.readVectors("resources/weightVectorFiles/moead/W3D_100.dat");
     double alpha = 2.0;
     double fr = 0.1;
 
     Termination termination = new TerminationByEvaluations(maxEvaluations);
 
     EvolutionaryAlgorithm<DoubleSolution> rvea =
-        new RVEABuilder<>(problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr, h)
+        new RVEABuilder<>(problem, maxEvaluations, crossover, mutation, alpha, fr, referenceVectors)
             .setTermination(termination)
             .build();
 

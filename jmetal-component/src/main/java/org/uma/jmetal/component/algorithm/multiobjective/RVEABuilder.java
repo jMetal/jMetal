@@ -33,7 +33,7 @@ public class RVEABuilder<S extends Solution<?>> {
   private final int populationSize;
   private final double alpha;
   private final double fr;
-  private final int numberOfDivisions;
+  private final double[][] referenceVectors;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
@@ -41,14 +41,50 @@ public class RVEABuilder<S extends Solution<?>> {
   private Variation<S> variation;
   private Replacement<S> replacement;
 
+  /**
+   * Creates a builder for RVEA generating the reference vectors from Das-Dennis divisions.
+   *
+   * @param problem The optimization problem
+   * @param populationSize Expected population size
+   * @param maxEvaluations Maximum number of evaluations
+   * @param crossover Crossover operator
+   * @param mutation Mutation operator
+   * @param alpha APD penalty exponent
+   * @param fr Reference vector adaptation frequency ratio
+   * @param h Number of Das-Dennis divisions
+   */
   public RVEABuilder(Problem<S> problem, int populationSize, int maxEvaluations,
       CrossoverOperator<S> crossover, MutationOperator<S> mutation, double alpha, double fr, int h) {
+    this(problem, maxEvaluations, crossover, mutation, alpha, fr,
+        generateReferenceVectors(problem.numberOfObjectives(), h));
+
+    Check.that(this.populationSize == populationSize,
+        "Population size must match the number of generated reference vectors. Expected "
+            + this.populationSize + " and found " + populationSize + ".");
+  }
+
+  /**
+   * Creates a builder for RVEA using caller-provided reference vectors.
+   *
+   * @param problem The optimization problem
+   * @param maxEvaluations Maximum number of evaluations
+   * @param crossover Crossover operator
+   * @param mutation Mutation operator
+   * @param alpha APD penalty exponent
+   * @param fr Reference vector adaptation frequency ratio
+   * @param referenceVectors Reference vectors used by RVEA
+   */
+  public RVEABuilder(Problem<S> problem, int maxEvaluations,
+      CrossoverOperator<S> crossover, MutationOperator<S> mutation, double alpha, double fr,
+      double[][] referenceVectors) {
+    Check.arrayIsNotEmpty(referenceVectors, "referenceVectors");
+
     this.name = "RVEA";
     this.problem = problem;
-    this.populationSize = populationSize;
     this.alpha = alpha;
     this.fr = fr;
-    this.numberOfDivisions = h;
+    this.referenceVectors = copyReferenceVectors(referenceVectors);
+    this.populationSize = referenceVectors.length;
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     this.variation = new CrossoverAndMutationVariation<>(
@@ -88,19 +124,15 @@ public class RVEABuilder<S extends Solution<?>> {
   public EvolutionaryAlgorithm<S> build() {
     Check.that(termination instanceof TerminationByEvaluations,
         "RVEA requires termination by evaluations to compute APD progress and reference adaptation.");
-
-    int referenceVectorCount =
-        ReferencePointGenerator.calculateNumberOfReferencePoints(problem.numberOfObjectives(), numberOfDivisions);
-    Check.that(referenceVectorCount == populationSize,
-        "Population size must match the number of generated reference vectors. Expected "
-            + referenceVectorCount + " and found " + populationSize + ".");
+    Check.notNull(referenceVectors[0], "referenceVectors[0]");
+    Check.that(referenceVectors[0].length == problem.numberOfObjectives(),
+        "Each reference vector must have " + problem.numberOfObjectives() + " components.");
 
     int maxEvaluations = ((TerminationByEvaluations) termination).getMaximumNumberOfEvaluations();
     int maxGenerations = estimateMaximumGenerations(maxEvaluations, populationSize,
         variation.offspringPopulationSize());
     RVEAEnvironmentalSelection<S> environmentalSelection =
-        new RVEAEnvironmentalSelection<>(problem.numberOfObjectives(), maxGenerations, alpha, fr,
-            numberOfDivisions);
+        new RVEAEnvironmentalSelection<>(referenceVectors, maxGenerations, alpha, fr);
     replacement = new RVEAReplacement<>(environmentalSelection);
 
     return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
@@ -116,5 +148,21 @@ public class RVEABuilder<S extends Solution<?>> {
     }
 
     return (int) Math.ceil((double) (maxEvaluations - initialPopulationSize) / offspringPopulationSize);
+  }
+
+  private double[][] copyReferenceVectors(double[][] sourceReferenceVectors) {
+    double[][] copiedReferenceVectors = new double[sourceReferenceVectors.length][];
+
+    for (int i = 0; i < sourceReferenceVectors.length; i++) {
+      Check.notNull(sourceReferenceVectors[i], "referenceVectors[" + i + "]");
+      copiedReferenceVectors[i] = sourceReferenceVectors[i].clone();
+    }
+
+    return copiedReferenceVectors;
+  }
+
+  private static double[][] generateReferenceVectors(int numberOfObjectives, int numberOfDivisions) {
+    return ReferencePointGenerator.generateSingleLayer(numberOfObjectives, numberOfDivisions)
+        .toArray(new double[0][]);
   }
 }

@@ -22,8 +22,13 @@ class RVEAEnvironmentalSelectionTest {
     @DisplayName("Given empty niches, when execute is called, then result size equals the number of occupied reference vectors")
     void givenEmptyNiches_whenExecuteIsCalled_thenResultSizeEqualsTheNumberOfOccupiedReferenceVectors() {
       // Arrange
+      double[][] referenceVectors = {
+          {0.0, 0.0, 1.0},
+          {0.0, 1.0, 0.0},
+          {1.0, 0.0, 0.0}
+      };
       RVEAEnvironmentalSelection<DoubleSolution> environmentalSelection =
-          new RVEAEnvironmentalSelection<>(3, 10, 2.0, 0.5, 1);
+          new RVEAEnvironmentalSelection<>(referenceVectors, 10, 2.0, 0.5);
 
       DoubleSolution solution1 = solutionWithObjectives(1.0, 10.0, 10.0);
       DoubleSolution solution2 = solutionWithObjectives(10.0, 1.0, 10.0);
@@ -43,8 +48,13 @@ class RVEAEnvironmentalSelectionTest {
     @DisplayName("Given an adaptation generation, when execute is called, then reference vectors adapt using the survivor nadir point")
     void givenAnAdaptationGeneration_whenExecuteIsCalled_thenReferenceVectorsAdaptUsingTheSurvivorNadirPoint() {
       // Arrange
+      double[][] referenceVectors = {
+          {0.0, 1.0},
+          {0.5, 0.5},
+          {1.0, 0.0}
+      };
       RVEAEnvironmentalSelection<DoubleSolution> environmentalSelection =
-          new RVEAEnvironmentalSelection<>(2, 1, 2.0, 1.0, 2);
+          new RVEAEnvironmentalSelection<>(referenceVectors, 1, 2.0, 1.0);
 
       DoubleSolution idealSolution = solutionWithObjectives(1.0, 1.0);
       DoubleSolution xAxisSolution = solutionWithObjectives(11.0, 1.0);
