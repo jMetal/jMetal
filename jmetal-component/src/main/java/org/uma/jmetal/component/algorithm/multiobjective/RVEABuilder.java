@@ -111,24 +111,6 @@ public class RVEABuilder<S extends Solution<?>> {
     return this;
   }
 
-  /**
-   * Overrides the paper-default single-layer reference vector set with a caller-provided one.
-   * This variant accepts a 2D array for convenient initialization.
-   *
-   * @param referenceVectors Reference vectors to be used by environmental selection.
-   * @return The builder instance.
-   */
-  public RVEABuilder<S> setReferenceVectors(double[][] referenceVectors) {
-    Check.notNull(referenceVectors);
-
-    this.referenceVectors = new ArrayList<>(referenceVectors.length);
-    for (double[] referenceVector : referenceVectors) {
-      this.referenceVectors.add(referenceVector.clone());
-    }
-
-    return this;
-  }
-
   public EvolutionaryAlgorithm<S> build() {
     Check.that(termination instanceof TerminationByEvaluations,
         "RVEA requires termination by evaluations to compute APD progress and reference adaptation.");
