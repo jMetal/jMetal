@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
 /**
  * Environmental Selection component for the RVEA algorithm.
@@ -29,19 +30,17 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
   private double[] nadirPoint;
   private double[] gamma;
 
-  /**
-   * Creates the environmental selection component of RVEA.
-   *
-   * @param referenceVectors Reference vectors provided by the caller
-   * @param maxGenerations Maximum number of generations
-   * @param alpha APD penalty exponent
-   * @param fr Reference vector adaptation frequency ratio
-   */
-  public RVEAEnvironmentalSelection(double[][] referenceVectors, int maxGenerations, double alpha, double fr) {
-    Check.arrayIsNotEmpty(referenceVectors, "referenceVectors");
-    Check.notNull(referenceVectors[0], "referenceVectors[0]");
+  public RVEAEnvironmentalSelection(int numberOfObjectives, int maxGenerations, double alpha, double fr, int H) {
+    this(numberOfObjectives, maxGenerations, alpha, fr,
+        ReferencePointGenerator.generateSingleLayer(numberOfObjectives, H));
+  }
 
-    int numberOfObjectives = referenceVectors[0].length;
+  public RVEAEnvironmentalSelection(
+      int numberOfObjectives,
+      int maxGenerations,
+      double alpha,
+      double fr,
+      List<double[]> generatedVectors) {
     Check.that(numberOfObjectives >= 2, "The number of objectives must be at least 2.");
     Check.valueIsPositive(maxGenerations, "maxGenerations");
     Check.valueIsNotNegative(alpha, "alpha");
@@ -55,17 +54,32 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
     this.alpha = alpha;
     this.adaptationFrequency = Math.max(1, (int) Math.ceil(maxGenerations * fr));
 
-    validateReferenceVectors(referenceVectors);
-    this.referenceVectors = normalizedReferenceVectors(referenceVectors);
-    this.initialReferenceVectors = copyReferenceVectors(this.referenceVectors);
+    this.referenceVectors = new double[generatedVectors.size()][numberOfObjectives];
+    this.initialReferenceVectors = new double[generatedVectors.size()][numberOfObjectives];
+    this.referenceVectorNorms = new double[generatedVectors.size()];
+
+    for (int i = 0; i < generatedVectors.size(); i++) {
+      Check.that(generatedVectors.get(i).length == numberOfObjectives,
+          "Reference vector dimension " + generatedVectors.get(i).length
+              + " does not match the number of objectives " + numberOfObjectives + ".");
+      double length = calculateNorm(generatedVectors.get(i));
+      for (int j = 0; j < numberOfObjectives; j++) {
+        this.referenceVectors[i][j] = generatedVectors.get(i)[j] / length;
+        this.initialReferenceVectors[i][j] = this.referenceVectors[i][j];
+      }
+      this.referenceVectorNorms[i] = calculateNorm(this.referenceVectors[i]);
+    }
+
+    this.gamma = calculateGammaValues();
   }
 
   public List<S> execute(List<S> jointPopulation, int populationSize) {
     Check.notNull(jointPopulation);
     Check.that(jointPopulation.size() >= populationSize,
         "The joint population size must be at least the population size.");
-    Check.that(populationSize <= referenceVectors.length,
-        "Population size must be less than or equal to the number of reference vectors.");
+    Check.that(referenceVectors.length == populationSize,
+        "The population size must match the number of reference vectors. Expected "
+            + referenceVectors.length + " and found " + populationSize + ".");
 
     currentGeneration++;
 
@@ -284,45 +298,52 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
     return currentGeneration;
   }
 
-  private void validateReferenceVectors(double[][] vectors) {
-    for (int i = 0; i < vectors.length; i++) {
-      double[] vector = vectors[i];
-      Check.notNull(vector, "referenceVectors[" + i + "]");
-      Check.that(vector.length == numberOfObjectives,
-          "All reference vectors must have " + numberOfObjectives + " components.");
+  private double[] calculateMinimumValues(List<S> population) {
+    double[] minimumValues = new double[numberOfObjectives];
+    Arrays.fill(minimumValues, Double.POSITIVE_INFINITY);
 
-      double norm = 0.0;
-      for (int j = 0; j < vector.length; j++) {
-        Check.valueIsFinite(vector[j], "referenceVectors[" + i + "][" + j + "]");
-        Check.that(vector[j] >= 0.0, "Reference vectors must contain non-negative values.");
-        norm += vector[j] * vector[j];
+    for (S solution : population) {
+      for (int i = 0; i < numberOfObjectives; i++) {
+        minimumValues[i] = Math.min(minimumValues[i], solution.objectives()[i]);
       }
-
-      Check.that(norm > 0.0, "Reference vectors must not be the zero vector.");
     }
+
+    return minimumValues;
   }
 
-  private double[][] normalizedReferenceVectors(double[][] vectors) {
-    double[][] normalizedVectors = new double[vectors.length][numberOfObjectives];
+  private double[] calculateMaximumValues(List<S> population) {
+    double[] maximumValues = new double[numberOfObjectives];
+    Arrays.fill(maximumValues, Double.NEGATIVE_INFINITY);
 
-    for (int i = 0; i < vectors.length; i++) {
-      double length = calculateNorm(vectors[i]);
+    for (S solution : population) {
+      for (int i = 0; i < numberOfObjectives; i++) {
+        maximumValues[i] = Math.max(maximumValues[i], solution.objectives()[i]);
+      }
+    }
+
+    return maximumValues;
+  }
+
+  private double[][] translatedObjectives(List<S> population, double[] currentIdealPoint) {
+    double[][] translatedObjectives = new double[population.size()][numberOfObjectives];
+
+    for (int i = 0; i < population.size(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
-        normalizedVectors[i][j] = vectors[i][j] / length;
+        translatedObjectives[i][j] = population.get(i).objectives()[j] - currentIdealPoint[j];
       }
     }
 
-    return normalizedVectors;
+    return translatedObjectives;
   }
 
-  private double[][] copyReferenceVectors(double[][] vectors) {
-    double[][] copiedVectors = new double[vectors.length][];
+  private double[] translatedObjectiveNorms(double[][] translatedObjectives) {
+    double[] norms = new double[translatedObjectives.length];
 
-    for (int i = 0; i < vectors.length; i++) {
-      copiedVectors[i] = vectors[i].clone();
+    for (int i = 0; i < translatedObjectives.length; i++) {
+      norms[i] = calculateNorm(translatedObjectives[i]);
     }
 
-    return copiedVectors;
+    return norms;
   }
 
   private double calculateNorm(double[] array) {

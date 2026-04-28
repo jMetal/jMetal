@@ -22,13 +22,8 @@ class RVEAEnvironmentalSelectionTest {
     @DisplayName("Given empty niches, when execute is called, then the configured population size is preserved without duplicates")
     void givenEmptyNiches_whenExecuteIsCalled_thenTheConfiguredPopulationSizeIsPreservedWithoutDuplicates() {
       // Arrange
-      double[][] referenceVectors = {
-          {0.0, 0.0, 1.0},
-          {0.0, 1.0, 0.0},
-          {1.0, 0.0, 0.0}
-      };
       RVEAEnvironmentalSelection<DoubleSolution> environmentalSelection =
-          new RVEAEnvironmentalSelection<>(referenceVectors, 10, 2.0, 0.5);
+          new RVEAEnvironmentalSelection<>(3, 10, 2.0, 0.5, 1);
 
       DoubleSolution solution1 = solutionWithObjectives(1.0, 10.0, 10.0);
       DoubleSolution solution2 = solutionWithObjectives(10.0, 1.0, 10.0);
@@ -47,13 +42,18 @@ class RVEAEnvironmentalSelectionTest {
     @DisplayName("Given multiple executions, when execute is called, then the ideal point is recomputed from the current candidate population")
     void givenMultipleExecutions_whenExecuteIsCalled_thenTheIdealPointIsRecomputedFromTheCurrentCandidatePopulation() {
       // Arrange
-      double[][] referenceVectors = {
-          {0.0, 1.0},
-          {0.5, 0.5},
-          {1.0, 0.0}
-      };
       RVEAEnvironmentalSelection<DoubleSolution> environmentalSelection =
-          new RVEAEnvironmentalSelection<>(referenceVectors, 1, 2.0, 1.0);
+          new RVEAEnvironmentalSelection<>(
+              2,
+              5,
+              2.0,
+              0.1,
+              List.of(new double[] {1.0, 0.0}, new double[] {0.0, 1.0}));
+
+      List<DoubleSolution> firstPopulation =
+          List.of(solutionWithObjectives(1.0, 2.0), solutionWithObjectives(2.0, 1.0));
+      List<DoubleSolution> secondPopulation =
+          List.of(solutionWithObjectives(5.0, 6.0), solutionWithObjectives(7.0, 5.0));
 
       // Act
       environmentalSelection.execute(firstPopulation, 2);

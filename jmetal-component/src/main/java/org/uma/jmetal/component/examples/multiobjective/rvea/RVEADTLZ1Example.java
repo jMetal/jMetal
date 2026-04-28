@@ -1,6 +1,7 @@
 package org.uma.jmetal.component.examples.multiobjective.rvea;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.RVEABuilder;
@@ -16,15 +17,10 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-/**
- * Class to configure and run the RVEA algorithm on the DTLZ1 problem using the
- * component-based architecture.
- */
 public class RVEADTLZ1Example {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
@@ -33,24 +29,28 @@ public class RVEADTLZ1Example {
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
+    double crossoverDistributionIndex = 30.0;
     var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.numberOfVariables();
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int maxEvaluations = 25000;
-    double[][] referenceVectors =
-        VectorFileUtils.readVectors("resources/weightVectorFiles/moead/W3D_100.dat");
+    double[][] weightVectors = VectorUtils.readVectors("resources/weightVectorFiles/moead/W3D_100.dat");
+
+    int populationSize = weightVectors.length;
+    int maxEvaluations = 40000;
+    int h = 12;
     double alpha = 2.0;
     double fr = 0.1;
 
     Termination termination = new TerminationByEvaluations(maxEvaluations);
 
     EvolutionaryAlgorithm<DoubleSolution> rvea =
-        new RVEABuilder<>(problem, maxEvaluations, crossover, mutation, alpha, fr, referenceVectors)
+        new RVEABuilder<>(
+                problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr, h)
             .setTermination(termination)
+            .setReferenceVectors(Arrays.asList(weightVectors))
             .build();
 
     rvea.run();
@@ -67,8 +67,6 @@ public class RVEADTLZ1Example {
         .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
-    JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
-    JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
     QualityIndicatorUtils.printQualityIndicators(
         SolutionListUtils.getMatrixWithObjectiveValues(paretoFront),
