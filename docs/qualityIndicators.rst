@@ -93,7 +93,7 @@ The list of available quality indicators can be obtained by calling the class wi
 
 .. code-block:: bash
 
-  % java -cp jmetal-core/target/jmetal-core-7.1-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool
+  % java -cp jmetal-core/target/jmetal-core-7.2-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool
 
   INFO: Loggers configured with null [org.uma.jmetal.util.JMetalLogger configureLoggers]
   INFO: Parameters: indicatorName referenceFrontFile frontFile 
@@ -117,7 +117,7 @@ We can compute a single indicator, as the inverted generational distance:
 
 .. code-block:: bash
 
- % java -cp jmetal-core/target/jmetal-core-7.1-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool IGD resources/referenceFrontsCSV/ZDT1.csv FUN.csv
+ % java -cp jmetal-core/target/jmetal-core-7.2-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool IGD resources/referenceFrontsCSV/ZDT1.csv FUN.csv
  
   INFO: Loggers configured with null [org.uma.jmetal.util.JMetalLogger configureLoggers]
   INFO: The fronts are normalized before computing the indicators [org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators]
@@ -127,7 +127,7 @@ Or all the quality indicators if we use ``ALL`` as indicator:
 
 .. code-block:: bash
 
-  % java -cp jmetal-core/target/jmetal-core-7.1-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool ALL resources/referenceFrontsCSV/ZDT1.csv FUN.csv
+  % java -cp jmetal-core/target/jmetal-core-7.2-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool ALL resources/referenceFrontsCSV/ZDT1.csv FUN.csv
 
   INFO: Loggers configured with null [org.uma.jmetal.util.JMetalLogger configureLoggers]
   INFO: The fronts are normalized before computing the indicators [org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators]

@@ -76,4 +76,4 @@ Hardware and software details:
 * Memory: 64 GB
 * Operating System: Windows 10 Pro (Version	10.0.18363)
 * Java SE version: 1.8.0_221 (build 1.8.0_221-b11)
-* jMetal 7.1
+* jMetal 7.2

@@ -23,5 +23,5 @@ published in 2011, is based on single Java package. the algorithms were implemen
 method (i.e., a monolithic architecture). The second version (jMetal 5), presented in
 `Redesigning the jMetal Multi-Objective Optimization Framework <https://doi.org/10.1145/2739482.2768462>`_ in
 2015, is a Maven Java project, containing unit tests, and the algorithms are implemented by inheriting from
-algorithm templates. The most recent release, jMetal 7.1, is an extension of jMetal 5.0, adding a package for developing
+algorithm templates. The most recent release, jMetal 7.2, is an extension of jMetal 5.0, adding a package for developing
 algorithms from :doc:`component-based templates </component>` and another package for :doc:`automatic algorithm configuration and design </autoconfiguration>`.
