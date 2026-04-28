@@ -16,7 +16,6 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -36,16 +35,16 @@ public class RVEAZDT4Example {
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
+    int populationSize = 100;
     int maxEvaluations = 30000;
-    double[][] referenceVectors =
-        VectorFileUtils.readVectors("resources/weightVectorFiles/moead/W2D_300.dat");
+    int h = 99;
     double alpha = 2.0;
     double fr = 0.1;
 
     Termination termination = new TerminationByEvaluations(maxEvaluations);
 
     EvolutionaryAlgorithm<DoubleSolution> rvea =
-        new RVEABuilder<>(problem, maxEvaluations, crossover, mutation, alpha, fr, referenceVectors)
+        new RVEABuilder<>(problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr, h)
             .setTermination(termination)
             .build();
 
