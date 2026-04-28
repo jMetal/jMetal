@@ -17,6 +17,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -41,16 +42,16 @@ public class RVEADefaultConfigurationExample {
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 91; // H=12 in 3D gives 91 reference vectors
     int maxEvaluations = 30000;
-    int h = 12; // Divisions for standard RVEA 3D
+    double[][] referenceVectors =
+        VectorFileUtils.readVectors("resources/weightVectorFiles/moead/W3D_100.dat");
     double alpha = 2.0;
     double fr = 0.1;
 
     Termination termination = new TerminationByEvaluations(maxEvaluations);
 
     EvolutionaryAlgorithm<DoubleSolution> rvea =
-        new RVEABuilder<>(problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr, h)
+        new RVEABuilder<>(problem, maxEvaluations, crossover, mutation, alpha, fr, referenceVectors)
             .setTermination(termination)
             .build();
 

@@ -39,16 +39,15 @@ public class RVEAZDT1Example {
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100; // H=99 in 2D gives 100 reference vectors
-    int maxEvaluations = 35000;
-    int h = 99;
+    int populationSize = 100;
+    int maxEvaluations = 25000;
     double alpha = 2.0;
     double fr = 0.1;
 
     Termination termination = new TerminationByEvaluations(maxEvaluations);
 
     EvolutionaryAlgorithm<DoubleSolution> rvea =
-        new RVEABuilder<>(problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr, h)
+        new RVEABuilder<>(problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr, 99)
             .setTermination(termination)
             .build();
 
