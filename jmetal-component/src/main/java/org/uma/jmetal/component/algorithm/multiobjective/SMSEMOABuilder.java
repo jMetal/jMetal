@@ -21,6 +21,7 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 
 /**
  * Class to configure and build an instance of the SMS-EMOA algorithm
@@ -41,11 +42,11 @@ public class SMSEMOABuilder<S extends Solution<?>> {
       CrossoverOperator<S> crossover, MutationOperator<S> mutation) {
     name = "SMS-EMOA";
 
-    ranking = new FastNonDominatedSortRanking<>();
+    ranking = createDefaultRanking(problem);
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    this.replacement = new SMSEMOAReplacement<>(ranking);
+    this.replacement = createReplacement();
 
     this.variation =
         new CrossoverAndMutationVariation<>(1, crossover, mutation);
@@ -66,7 +67,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
   @SuppressWarnings("deprecation")
   public SMSEMOABuilder<S> setRanking(Ranking<S> ranking) {
     this.ranking = ranking;
-    this.replacement = new SMSEMOAReplacement<>(ranking);
+    this.replacement = createReplacement();
 
     return this;
   }
@@ -80,5 +81,17 @@ public class SMSEMOABuilder<S extends Solution<?>> {
   public EvolutionaryAlgorithm<S> build() {
     return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
         selection, variation, replacement);
+  }
+
+  private Replacement<S> createReplacement() {
+    return new SMSEMOAReplacement<>(ranking);
+  }
+
+  private Ranking<S> createDefaultRanking(Problem<S> problem) {
+    if (problem.numberOfObjectives() == 3) {
+      return new FastNonDominatedSortRanking<>();
+    }
+
+    return new MergeNonDominatedSortRanking<>();
   }
 }

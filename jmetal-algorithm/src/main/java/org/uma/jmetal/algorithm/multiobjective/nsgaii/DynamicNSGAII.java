@@ -1,17 +1,16 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
+import org.uma.jmetal.qualityindicator.CoverageChangeDetector;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.pointsolution.PointSolution;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.restartstrategy.RestartStrategy;
@@ -23,7 +22,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
   private DynamicProblem<S, Integer> problem;
   private Observable<Map<String, Object>> observable;
   private int completedIterations;
-  private CoverageFront coverageFront;
+  private CoverageChangeDetector coverageChangeDetector;
   private List<S> lastReceivedFront;
   /**
    * Constructor
@@ -52,7 +51,7 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       SolutionListEvaluator<S> evaluator,
       RestartStrategy<S> restartStrategy,
       Observable<Map<String, Object>> observable,
-      CoverageFront coverageFront) {
+      CoverageChangeDetector coverageChangeDetector) {
     super(
         problem,
         maxEvaluations,
@@ -63,28 +62,30 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
         mutationOperator,
         selectionOperator,
         evaluator);
+    Check.notNull(problem);
+    Check.notNull(restartStrategy);
+    Check.notNull(observable);
+    Check.notNull(coverageChangeDetector);
+
     this.restartStrategy = restartStrategy;
     this.problem = problem;
     this.observable = observable;
     this.completedIterations = 0;
-    this.coverageFront = coverageFront;
+    this.coverageChangeDetector = coverageChangeDetector;
     this.lastReceivedFront = null;
   }
+
 
   @Override
   protected boolean isStoppingConditionReached() {
     if (evaluations >= maxEvaluations) {
-
       boolean coverage = false;
       if (lastReceivedFront != null) {
-        coverageFront.updateFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
-        List<PointSolution> pointSolutionList = new ArrayList<>();
-        List<S> list = getPopulation();
-        for (S s : list) {
-          PointSolution pointSolution = new PointSolution(s);
-          pointSolutionList.add(pointSolution);
-        }
-        coverage = coverageFront.isCoverageWithLast(pointSolutionList);
+        coverageChangeDetector.updateReferenceFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
+
+        // Use the current population directly to compute the objective matrix
+        coverage = coverageChangeDetector.hasSignificantChange(
+          SolutionListUtils.getMatrixWithObjectiveValues(getPopulation()));
       }
 
       if (coverage) {
@@ -108,11 +109,6 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
       initProgress();
     }
     return false;
-  }
-
-  @Override
-  protected void updateProgress() {
-    super.updateProgress();
   }
 
   public DynamicProblem<S, ?> getDynamicProblem() {

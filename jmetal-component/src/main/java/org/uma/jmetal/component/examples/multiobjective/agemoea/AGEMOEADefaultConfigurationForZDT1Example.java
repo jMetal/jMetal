@@ -23,11 +23,11 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * Class to configure and run the AGE-MOEA algorithm using the components architecture.
  *
- * @author Annibale Panichella
+ * @author Antonio J. Nebro
  */
 public class AGEMOEADefaultConfigurationForZDT1Example {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);

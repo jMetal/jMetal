@@ -9,7 +9,7 @@ It includes a wide set of resources, including state-of-the-art multi-objective 
 solution encodings, benchmark problems, quality indicators, and utilities for performing experimental
 studies.
 
-The current stable version is 7.0 (https://github.com/jMetal/jMetal).
+The current stable version is 7.1 (https://github.com/jMetal/jMetal).
 
 jMetal is described in the following papers:
 

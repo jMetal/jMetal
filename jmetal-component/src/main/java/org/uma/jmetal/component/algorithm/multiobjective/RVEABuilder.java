@@ -1,5 +1,7 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -40,6 +42,7 @@ public class RVEABuilder<S extends Solution<?>> {
   private Selection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
+  private boolean customSelection;
 
   /**
    * Creates a builder for RVEA generating the reference vectors from Das-Dennis divisions.
@@ -91,6 +94,7 @@ public class RVEABuilder<S extends Solution<?>> {
         populationSize, crossover, mutation);
 
     this.selection = new RandomSelection<>(variation.matingPoolSize());
+    this.customSelection = false;
 
     this.termination = new TerminationByEvaluations(maxEvaluations);
     this.evaluation = new SequentialEvaluation<>(problem);
@@ -113,11 +117,30 @@ public class RVEABuilder<S extends Solution<?>> {
 
   public RVEABuilder<S> setSelection(Selection<S> selection) {
     this.selection = selection;
+    this.customSelection = true;
     return this;
   }
 
   public RVEABuilder<S> setVariation(Variation<S> variation) {
     this.variation = variation;
+    return this;
+  }
+
+  /**
+   * Overrides the paper-default single-layer reference vector set with a caller-provided one.
+   * This advanced hook is intended for experimental configurations and benchmark helpers.
+   *
+   * @param referenceVectors Reference vectors to be used by environmental selection.
+   * @return The builder instance.
+   */
+  public RVEABuilder<S> setReferenceVectors(List<double[]> referenceVectors) {
+    Check.notNull(referenceVectors);
+
+    this.referenceVectors = new ArrayList<>(referenceVectors.size());
+    for (double[] referenceVector : referenceVectors) {
+      this.referenceVectors.add(referenceVector.clone());
+    }
+
     return this;
   }
 
@@ -135,8 +158,18 @@ public class RVEABuilder<S extends Solution<?>> {
         new RVEAEnvironmentalSelection<>(referenceVectors, maxGenerations, alpha, fr);
     replacement = new RVEAReplacement<>(environmentalSelection);
 
-    return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-        selection, variation, replacement);
+    Selection<S> finalSelection =
+        customSelection ? selection : new RandomSelection<>(variation.matingPoolSize());
+    SolutionsCreation<S> validatedInitialPopulationCreation = () -> {
+      var initialPopulation = createInitialPopulation.create();
+      Check.that(initialPopulation.size() == populationSize,
+          "The initial population size must be " + populationSize + " but is "
+              + initialPopulation.size() + ".");
+      return initialPopulation;
+    };
+
+    return new EvolutionaryAlgorithm<>(name, validatedInitialPopulationCreation, evaluation,
+        termination, finalSelection, variation, replacement);
   }
 
   private int estimateMaximumGenerations(int maxEvaluations, int initialPopulationSize,
