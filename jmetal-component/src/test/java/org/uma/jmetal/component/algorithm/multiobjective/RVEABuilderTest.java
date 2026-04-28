@@ -19,29 +19,123 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.exception.NegativeValueException;
+import org.uma.jmetal.util.errorchecking.exception.NonPositiveValueException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.ValueOutOfRangeException;
 import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
 @DisplayName("RVEABuilder tests")
 class RVEABuilderTest {
 
   @Nested
+  @DisplayName("Constructor validation tests")
+  class ConstructorValidationTests {
+
+    @Test
+    @DisplayName("Given null problem, when builder is created, then throw NullParameterException")
+    void givenNullProblem_whenBuilderIsCreated_thenThrowNullParameterException() {
+      var crossover = new SBXCrossover(0.9, 20.0);
+      var mutation = new PolynomialMutation(0.1, 20.0);
+
+      assertThrows(NullParameterException.class,
+          () -> new RVEABuilder<>(null, 6, 1000, crossover, mutation, 2.0, 0.1, 2));
+    }
+
+    @Test
+    @DisplayName("Given null crossover, when builder is created, then throw NullParameterException")
+    void givenNullCrossover_whenBuilderIsCreated_thenThrowNullParameterException() {
+      var problem = new DTLZ2(12, 3);
+      var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+
+      assertThrows(NullParameterException.class,
+          () -> new RVEABuilder<>(problem, 6, 1000, null, mutation, 2.0, 0.1, 2));
+    }
+
+    @Test
+    @DisplayName("Given null mutation, when builder is created, then throw NullParameterException")
+    void givenNullMutation_whenBuilderIsCreated_thenThrowNullParameterException() {
+      var problem = new DTLZ2(12, 3);
+      var crossover = new SBXCrossover(0.9, 20.0);
+
+      assertThrows(NullParameterException.class,
+          () -> new RVEABuilder<>(problem, 6, 1000, crossover, null, 2.0, 0.1, 2));
+    }
+
+    @Test
+    @DisplayName("Given non-positive population size, when builder is created, then throw NonPositiveValueException")
+    void givenNonPositivePopulationSize_whenBuilderIsCreated_thenThrowNonPositiveValueException() {
+      var problem = new DTLZ2(12, 3);
+      var crossover = new SBXCrossover(0.9, 20.0);
+      var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+
+      assertThrows(NonPositiveValueException.class,
+          () -> new RVEABuilder<>(problem, 0, 1000, crossover, mutation, 2.0, 0.1, 2));
+    }
+
+    @Test
+    @DisplayName("Given non-positive max evaluations, when builder is created, then throw NonPositiveValueException")
+    void givenNonPositiveMaxEvaluations_whenBuilderIsCreated_thenThrowNonPositiveValueException() {
+      var problem = new DTLZ2(12, 3);
+      var crossover = new SBXCrossover(0.9, 20.0);
+      var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+
+      assertThrows(NonPositiveValueException.class,
+          () -> new RVEABuilder<>(problem, 6, 0, crossover, mutation, 2.0, 0.1, 2));
+    }
+
+    @Test
+    @DisplayName("Given non-positive divisions, when builder is created, then throw NonPositiveValueException")
+    void givenNonPositiveDivisions_whenBuilderIsCreated_thenThrowNonPositiveValueException() {
+      var problem = new DTLZ2(12, 3);
+      var crossover = new SBXCrossover(0.9, 20.0);
+      var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+
+      assertThrows(NonPositiveValueException.class,
+          () -> new RVEABuilder<>(problem, 6, 1000, crossover, mutation, 2.0, 0.1, 0));
+    }
+
+    @Test
+    @DisplayName("Given a negative alpha, when builder is created, then throw NegativeValueException")
+    void givenNegativeAlpha_whenBuilderIsCreated_thenThrowNegativeValueException() {
+      var problem = new DTLZ2(12, 3);
+      var crossover = new SBXCrossover(0.9, 20.0);
+      var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+
+      assertThrows(NegativeValueException.class,
+          () -> new RVEABuilder<>(problem, 6, 1000, crossover, mutation, -0.1, 0.1, 2));
+    }
+
+    @Test
+    @DisplayName("Given an invalid frequency ratio, when builder is created, then throw ValueOutOfRangeException")
+    void givenInvalidFrequencyRatio_whenBuilderIsCreated_thenThrowValueOutOfRangeException() {
+      var problem = new DTLZ2(12, 3);
+      var crossover = new SBXCrossover(0.9, 20.0);
+      var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+
+      assertThrows(ValueOutOfRangeException.class,
+          () -> new RVEABuilder<>(problem, 6, 1000, crossover, mutation, 2.0, 0.0, 2));
+      assertThrows(ValueOutOfRangeException.class,
+          () -> new RVEABuilder<>(problem, 6, 1000, crossover, mutation, 2.0, 1.1, 2));
+    }
+  }
+
+  @Nested
   @DisplayName("Build method validation tests")
   class BuildMethodValidationTests {
 
     @Test
-    @DisplayName("Given mismatched population size and reference vectors, when build is called, then throw an exception")
-    void givenMismatchedPopulationSizeAndReferenceVectors_whenBuildIsCalled_thenThrowAnException() {
+    @DisplayName("Given mismatched population size and generated reference vectors, when builder is created, then throw an exception")
+    void givenMismatchedPopulationSizeAndGeneratedReferenceVectors_whenBuilderIsCreated_thenThrowAnException() {
       // Arrange
       var problem = new DTLZ2(12, 3);
       var crossover = new SBXCrossover(0.9, 20.0);
       var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
 
-      RVEABuilder<DoubleSolution> builder =
-          new RVEABuilder<>(problem, 5, 1000, crossover, mutation, 2.0, 0.1, 2);
-
       // Act + Assert
-      assertThrows(InvalidConditionException.class, builder::build);
+      assertThrows(InvalidConditionException.class,
+          () -> new RVEABuilder<>(problem, 5, 1000, crossover, mutation, 2.0, 0.1, 2));
     }
 
     @Test
@@ -134,8 +228,27 @@ class RVEABuilderTest {
           ReferencePointGenerator.generateTwoLayers(problem.numberOfObjectives(), 9, 8);
 
       RVEABuilder<DoubleSolution> builder =
-          new RVEABuilder<>(problem, 100, 1000, crossover, mutation, 2.0, 0.1, 12)
-              .setReferenceVectors(referenceVectors);
+          new RVEABuilder<>(problem, 100, 1000, crossover, mutation, 2.0, 0.1,
+            referenceVectors);
+
+      // Act
+      var algorithm = builder.build();
+
+      // Assert
+      assertNotNull(algorithm);
+    }
+
+    @Test
+    @DisplayName("Given max evaluations lower than population size, when build is called, then an algorithm instance is returned")
+    void givenMaxEvaluationsLowerThanPopulationSize_whenBuildIsCalled_thenAnAlgorithmInstanceIsReturned() {
+      // Arrange
+      var problem = new DTLZ2(12, 3);
+      var crossover = new SBXCrossover(0.9, 20.0);
+      var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+
+      RVEABuilder<DoubleSolution> builder =
+          new RVEABuilder<>(problem, 6, 5, crossover, mutation, 2.0, 0.1, 2)
+              .setTermination(new TerminationByEvaluations(5));
 
       // Act
       var algorithm = builder.build();

@@ -27,15 +27,22 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  * Class to configure and build an instance of the RVEA (Reference Vector Guided Evolutionary Algorithm)
  * using the component-based architecture.
  *
+ * <p>Two constructor modes are supported:
+ * <ul>
+ *   <li>Provide {@code h} to generate paper-default reference vectors from the number of objectives.</li>
+ *   <li>Provide preloaded reference vectors directly when the vector set is externally defined.</li>
+ * </ul>
+ *
  * @param <S>
  */
 public class RVEABuilder<S extends Solution<?>> {
+  private static final double MINIMUM_FREQUENCY_RATIO = 1.0e-64;
+
   private final String name;
   private final Problem<S> problem;
   private final int populationSize;
   private final double alpha;
   private final double fr;
-  private final int numberOfDivisions;
   private List<double[]> referenceVectors;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
@@ -45,16 +52,74 @@ public class RVEABuilder<S extends Solution<?>> {
   private Replacement<S> replacement;
   private boolean customSelection;
 
+  /**
+   * Creates a builder for the RVEA algorithm using reference vectors generated from
+   * the number of objectives and {@code h}.
+   *
+   * <p>Parameter constraints:
+   * <ul>
+   *   <li>{@code problem}, {@code crossover}, and {@code mutation} must be non-null.</li>
+   *   <li>{@code populationSize}, {@code maxEvaluations}, and {@code h} must be greater than 0.</li>
+   *   <li>{@code alpha} must be greater than or equal to 0.</li>
+   *   <li>{@code fr} must be in [{@value #MINIMUM_FREQUENCY_RATIO}, 1.0].</li>
+   * </ul>
+   *
+   * <p>RVEA requires termination by evaluations in {@link #build()} to compute APD progress and
+   * reference adaptation.
+   */
   public RVEABuilder(Problem<S> problem, int populationSize, int maxEvaluations,
       CrossoverOperator<S> crossover, MutationOperator<S> mutation, double alpha, double fr, int h) {
+    this(problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr,
+        ReferencePointGenerator.generateSingleLayer(
+            validateProblem(problem).numberOfObjectives(), validateNumberOfDivisions(h)));
+  }
+
+  /**
+   * Creates a builder for the RVEA algorithm using caller-provided reference vectors.
+   *
+   * <p>Parameter constraints:
+   * <ul>
+   *   <li>{@code problem}, {@code crossover}, {@code mutation}, and {@code referenceVectors} must be non-null.</li>
+   *   <li>{@code referenceVectors} must not be empty and must not contain null entries.</li>
+   *   <li>{@code populationSize}, {@code maxEvaluations} must be greater than 0.</li>
+   *   <li>{@code alpha} must be greater than or equal to 0.</li>
+   *   <li>{@code fr} must be in [{@value #MINIMUM_FREQUENCY_RATIO}, 1.0].</li>
+   *   <li>The number of vectors must match {@code populationSize}.</li>
+   * </ul>
+   *
+   * <p>RVEA requires termination by evaluations in {@link #build()} to compute APD progress and
+   * reference adaptation.
+   */
+  public RVEABuilder(Problem<S> problem, int populationSize, int maxEvaluations,
+      CrossoverOperator<S> crossover, MutationOperator<S> mutation, double alpha, double fr,
+      List<double[]> referenceVectors) {
+    Check.notNull(problem, "problem");
+    Check.notNull(crossover, "crossover");
+    Check.notNull(mutation, "mutation");
+    Check.notNull(referenceVectors, "referenceVectors");
+    Check.notNullAndNotEmpty(referenceVectors, "referenceVectors");
+    Check.noNullElements(referenceVectors, "referenceVectors");
+    Check.valueIsPositive(populationSize, "populationSize");
+    Check.valueIsPositive(maxEvaluations, "maxEvaluations");
+    Check.valueIsNotNegative(alpha, "alpha");
+    Check.valueIsInRange(fr, MINIMUM_FREQUENCY_RATIO, 1.0, "fr");
+    Check.that(referenceVectors.size() == populationSize,
+      "Population size must match the number of generated reference vectors. Expected "
+        + referenceVectors.size() + " and found " + populationSize + ".");
+
+    int numberOfObjectives = problem.numberOfObjectives();
+    for (double[] referenceVector : referenceVectors) {
+      Check.that(referenceVector.length == numberOfObjectives,
+        "Reference vector dimension " + referenceVector.length
+          + " does not match the number of objectives " + numberOfObjectives + ".");
+    }
+
     this.name = "RVEA";
     this.problem = problem;
     this.populationSize = populationSize;
     this.alpha = alpha;
     this.fr = fr;
-    this.numberOfDivisions = h;
-    this.referenceVectors =
-        ReferencePointGenerator.generateSingleLayer(problem.numberOfObjectives(), numberOfDivisions);
+    this.referenceVectors = cloneReferenceVectors(referenceVectors);
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     this.variation = new CrossoverAndMutationVariation<>(
@@ -65,6 +130,25 @@ public class RVEABuilder<S extends Solution<?>> {
 
     this.termination = new TerminationByEvaluations(maxEvaluations);
     this.evaluation = new SequentialEvaluation<>(problem);
+  }
+
+  private static <S extends Solution<?>> Problem<S> validateProblem(Problem<S> problem) {
+    Check.notNull(problem, "problem");
+    return problem;
+  }
+
+  private static int validateNumberOfDivisions(int numberOfDivisions) {
+    Check.valueIsPositive(numberOfDivisions, "numberOfDivisions");
+    return numberOfDivisions;
+  }
+
+  private List<double[]> cloneReferenceVectors(List<double[]> referenceVectors) {
+    List<double[]> clonedReferenceVectors = new ArrayList<>(referenceVectors.size());
+    for (double[] referenceVector : referenceVectors) {
+      clonedReferenceVectors.add(referenceVector.clone());
+    }
+
+    return clonedReferenceVectors;
   }
 
   public RVEABuilder<S> setTermination(Termination termination) {
@@ -93,28 +177,9 @@ public class RVEABuilder<S extends Solution<?>> {
     return this;
   }
 
-  /**
-   * Overrides the paper-default single-layer reference vector set with a caller-provided one.
-   * This advanced hook is intended for experimental configurations and benchmark helpers.
-   *
-   * @param referenceVectors Reference vectors to be used by environmental selection.
-   * @return The builder instance.
-   */
-  public RVEABuilder<S> setReferenceVectors(List<double[]> referenceVectors) {
-    Check.notNull(referenceVectors);
-
-    this.referenceVectors = new ArrayList<>(referenceVectors.size());
-    for (double[] referenceVector : referenceVectors) {
-      this.referenceVectors.add(referenceVector.clone());
-    }
-
-    return this;
-  }
-
   public EvolutionaryAlgorithm<S> build() {
     Check.that(termination instanceof TerminationByEvaluations,
         "RVEA requires termination by evaluations to compute APD progress and reference adaptation.");
-    Check.notNull(referenceVectors);
 
     int referenceVectorCount = referenceVectors.size();
     Check.that(referenceVectorCount == populationSize,

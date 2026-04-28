@@ -40,17 +40,17 @@ public class RVEADTLZ1Example {
 
     int populationSize = weightVectors.length;
     int maxEvaluations = 40000;
-    int h = 12;
     double alpha = 2.0;
     double fr = 0.1;
 
     Termination termination = new TerminationByEvaluations(maxEvaluations);
 
     EvolutionaryAlgorithm<DoubleSolution> rvea =
+        // Uses the preloaded-reference-vectors constructor.
         new RVEABuilder<>(
-                problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr, h)
+          problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr,
+          Arrays.asList(weightVectors))
             .setTermination(termination)
-            .setReferenceVectors(Arrays.asList(weightVectors))
             .build();
 
     rvea.run();

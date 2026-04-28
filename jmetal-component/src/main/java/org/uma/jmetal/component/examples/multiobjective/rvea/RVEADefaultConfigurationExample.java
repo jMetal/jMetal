@@ -23,8 +23,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Class to configure and run the RVEA algorithm using the components architecture.
- *
- * @author 
+ * Uses the h-based constructor to generate reference vectors from the number of objectives.
  */
 public class RVEADefaultConfigurationExample {
   public static void main(String[] args) throws JMetalException, IOException {

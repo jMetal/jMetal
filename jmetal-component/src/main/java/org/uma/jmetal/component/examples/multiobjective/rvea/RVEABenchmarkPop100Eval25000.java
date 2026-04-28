@@ -79,8 +79,7 @@ public class RVEABenchmarkPop100Eval25000 {
 
     EvolutionaryAlgorithm<DoubleSolution> rvea =
         new RVEABuilder<>(problem, POPULATION_SIZE, MAX_EVALUATIONS, crossover, mutation, ALPHA,
-            FR, benchmarkRun.divisions())
-            .setReferenceVectors(benchmarkRun.referenceVectors())
+        FR, benchmarkRun.referenceVectors())
             .setTermination(termination)
             .build();
 

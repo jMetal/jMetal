@@ -48,6 +48,7 @@ public class RVEAZDT1Example {
     Termination termination = new TerminationByEvaluations(maxEvaluations);
 
     EvolutionaryAlgorithm<DoubleSolution> rvea =
+      // Uses the h-based constructor to generate reference vectors.
         new RVEABuilder<>(problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr, h)
             .setTermination(termination)
             .build();
