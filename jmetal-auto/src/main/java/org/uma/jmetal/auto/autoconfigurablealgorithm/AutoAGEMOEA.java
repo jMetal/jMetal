@@ -245,7 +245,7 @@ public class AutoAGEMOEA implements AutoConfigurableAlgorithm {
             variation.offspringPopulationSize(),
             crossover,
             mutation,
-            variant())
+            environmentalSelection)
             .setCreateInitialPopulation(initialSolutionsCreation)
             .setTermination(new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.value()))
             .setEnvironmentalSelection(environmentalSelection)
@@ -262,15 +262,6 @@ public class AutoAGEMOEA implements AutoConfigurableAlgorithm {
     }
 
     return builder.build();
-  }
-
-  private AGEMOEABuilder.Variant variant() {
-    return switch (algorithmVariantParameter.value()) {
-      case "agemoea" -> AGEMOEABuilder.Variant.AGEMOEA;
-      case "agemoeaii" -> AGEMOEABuilder.Variant.AGEMOEAII;
-      default -> throw new JMetalException(
-          "Algorithm variant unknown: " + algorithmVariantParameter.value());
-    };
   }
 
   private AGEMOEAEnvironmentalSelection<DoubleSolution> environmentalSelection(

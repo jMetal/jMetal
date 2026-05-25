@@ -5,6 +5,7 @@ import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.AGEMOEABuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.agemoea.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -27,7 +28,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class AGEMOEADefaultConfigurationForZDT1Example {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
@@ -46,7 +47,8 @@ public class AGEMOEADefaultConfigurationForZDT1Example {
     Termination termination = new TerminationByEvaluations(20000);
 
     EvolutionaryAlgorithm<DoubleSolution> agemoea =
-        new AGEMOEABuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation, AGEMOEABuilder.Variant.AGEMOEA)
+        new AGEMOEABuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation,
+            new AGEMOEAEnvironmentalSelection<>(problem.numberOfObjectives()))
             .setTermination(termination)
             .build();
 

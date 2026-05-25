@@ -6,6 +6,7 @@ import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.AGEMOEABuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.agemoea.AGEMOEA2EnvironmentalSelection;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -46,9 +47,9 @@ public class AGEMOEA2DefaultConfigurationExample {
 
     Termination termination = new TerminationByEvaluations(40000);
 
-    // Notice the Variant.AGEMOEAII argument used here
     EvolutionaryAlgorithm<DoubleSolution> agemoea2 =
-        new AGEMOEABuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation, AGEMOEABuilder.Variant.AGEMOEAII)
+        new AGEMOEABuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation,
+            new AGEMOEA2EnvironmentalSelection<>(problem.numberOfObjectives()))
             .setTermination(termination)
             .build();
 

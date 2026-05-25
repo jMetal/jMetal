@@ -24,18 +24,15 @@ import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Class to configure and build an instance of the AGE-MOEA or AGE-MOEA-II algorithm
- * using the component-based architecture.
+ * using the component-based architecture. The specific algorithm variant is determined
+ * by the {@link AGEMOEAEnvironmentalSelection} component injected via the constructor:
+ * use {@link AGEMOEAEnvironmentalSelection} for AGE-MOEA and
+ * {@link AGEMOEA2EnvironmentalSelection} for AGE-MOEA-II.
  *
  * @param <S>
  */
 public class AGEMOEABuilder<S extends Solution<?>> {
-  public enum Variant {
-    AGEMOEA,
-    AGEMOEAII
-  }
-
   private String name;
-  private Variant variant;
   private Problem<S> problem;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
@@ -49,13 +46,14 @@ public class AGEMOEABuilder<S extends Solution<?>> {
   private boolean customReplacementConfigured;
 
   public AGEMOEABuilder(Problem<S> problem, int populationSize, int offspringPopulationSize,
-      CrossoverOperator<S> crossover, MutationOperator<S> mutation, Variant variant) {
-    this.name = variant == Variant.AGEMOEA ? "AGE-MOEA" : "AGE-MOEA-II";
-    this.variant = variant;
+      CrossoverOperator<S> crossover, MutationOperator<S> mutation,
+      AGEMOEAEnvironmentalSelection<S> environmentalSelection) {
+    this.name = environmentalSelection instanceof AGEMOEA2EnvironmentalSelection
+        ? "AGE-MOEA-II" : "AGE-MOEA";
     this.problem = problem;
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    this.environmentalSelection = createEnvironmentalSelection();
+    this.environmentalSelection = environmentalSelection;
     this.replacement = new AGEMOEAReplacement<>(environmentalSelection);
 
     this.variation = new CrossoverAndMutationVariation<>(
@@ -170,9 +168,4 @@ public class AGEMOEABuilder<S extends Solution<?>> {
         new SurvivalScoreComparator<>());
   }
 
-  private AGEMOEAEnvironmentalSelection<S> createEnvironmentalSelection() {
-    return variant == Variant.AGEMOEA
-        ? new AGEMOEAEnvironmentalSelection<>(problem.numberOfObjectives())
-        : new AGEMOEA2EnvironmentalSelection<>(problem.numberOfObjectives());
-  }
 }

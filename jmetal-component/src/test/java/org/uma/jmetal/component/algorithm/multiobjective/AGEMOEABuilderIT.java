@@ -63,7 +63,7 @@ class AGEMOEABuilderIT {
             variation.offspringPopulationSize(),
             crossover,
             mutation,
-            AGEMOEABuilder.Variant.AGEMOEA)
+            new AGEMOEAEnvironmentalSelection<>(problem.numberOfObjectives()))
             .setCreateInitialPopulation(() -> initialPopulation)
             .setSelection(selection)
             .setVariation(variation)
@@ -95,7 +95,7 @@ class AGEMOEABuilderIT {
             2,
             crossover,
             mutation,
-            AGEMOEABuilder.Variant.AGEMOEA)
+            new AGEMOEAEnvironmentalSelection<>(problem.numberOfObjectives()))
             .setCreateInitialPopulation(() -> initialPopulation)
             .setTournamentSize(initialPopulation.size() + 1)
             .setTermination(new TerminationByEvaluations(initialPopulation.size() + 2))
@@ -138,7 +138,7 @@ class AGEMOEABuilderIT {
             variation.offspringPopulationSize(),
             crossover,
             mutation,
-            AGEMOEABuilder.Variant.AGEMOEA)
+            new AGEMOEAEnvironmentalSelection<>(problem.numberOfObjectives()))
             .setCreateInitialPopulation(() -> initialPopulation)
             .setSelection(selection)
             .setVariation(variation)
@@ -187,7 +187,7 @@ class AGEMOEABuilderIT {
             variation.offspringPopulationSize(),
             crossover,
             mutation,
-            AGEMOEABuilder.Variant.AGEMOEA)
+            new AGEMOEAEnvironmentalSelection<>(problem.numberOfObjectives()))
             .setCreateInitialPopulation(() -> initialPopulation)
             .setSelection(selection)
             .setVariation(variation)

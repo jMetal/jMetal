@@ -5,6 +5,7 @@ import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.AGEMOEABuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.agemoea.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.PMXCrossover;
@@ -44,7 +45,8 @@ public class AGEMOEABiObjectiveTSPExample {
     Termination termination = new TerminationByEvaluations(10000);
 
     EvolutionaryAlgorithm<PermutationSolution<Integer>> agemoea =
-        new AGEMOEABuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation, AGEMOEABuilder.Variant.AGEMOEA)
+        new AGEMOEABuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation,
+            new AGEMOEAEnvironmentalSelection<>(problem.numberOfObjectives()))
             .setTermination(termination)
             .build();
 
