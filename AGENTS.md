@@ -100,15 +100,16 @@ mvn test jacoco:report
 
 ## Commit Messages
 
-Prefix format: `feat:`, `fix:`, `chore:`, `test:`, `docs:`, `refactor:`
+**ALWAYS follow the rules in `GIT_GUIDELINES.md`.** Key points:
+
+- Follow [Conventional Commits](https://www.conventionalcommits.org/): `<type>: <short imperative description>`
+- Allowed types: `feat`, `fix`, `test`, `refactor`, `docs`, `chore`
+- Each commit must represent **one single logical change** — never mix production code, tests and docs in the same commit
+- The project must build and all tests must pass before committing
 
 Example:
 ```
 feat: add RVEA algorithm implementation
-
-- Added Reference Vector Guided Evolutionary Algorithm
-- Includes adaptive scalarization approach
-- Tests: mvn test -Dtest=RVEAIT
 ```
 
 ---
@@ -136,9 +137,10 @@ feat: add RVEA algorithm implementation
 ## References
 
 - `JAVA_CODING_GUIDELINES.md` — Detailed Java style guide
+- `GIT_GUIDELINES.md` — Conventional Commits rules, atomic commit policy, allowed types
 - `README.rst` — Project overview
 - pom.xml — Build configuration
 
 ---
 
-*Last updated: March 2026*
+*Last updated: May 2026*
