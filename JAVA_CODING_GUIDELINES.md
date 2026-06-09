@@ -5,16 +5,70 @@ This document defines Java coding standards for projects using Java 21+ and Mave
 
 ---
 
-## Language and Comments
+## 0. Code Formatting: Google Java Style
+
+This project enforces the [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) via `maven-checkstyle-plugin` with `google_checks.xml`. Formatting violations are reported during the `validate` phase (`mvn validate`).
+
+### Key rules
+
+| Rule | Value |
+|---|---|
+| Indentation | 2 spaces (no tabs) |
+| Continuation indent | 4 spaces |
+| Column limit | 100 characters |
+| Braces | Egyptian style — opening brace on same line, always present even for single-statement blocks |
+| Blank lines | 1 between members, 2 between top-level type declarations |
+| Imports | No wildcard imports; static imports before regular imports; grouped and separated by a blank line |
+
+### Naming conventions
+
+| Element | Style | Example |
+|---|---|---|
+| Package | lowercase, no underscores | `org.uma.evolver.meta` |
+| Class / Interface / Enum | UpperCamelCase | `MetaOptimizationProblem` |
+| Method / Variable | lowerCamelCase | `evaluateSolution` |
+| Constant (`static final`) | UPPER_SNAKE_CASE | `MAX_EVALUATIONS` |
+| Type parameter | Single uppercase letter or UpperCamelCase + T | `T`, `SolutionT` |
 
 ### ✅ DO
-- Write all source code, identifiers (packages, classes, methods, variables), comments, commit messages and PR descriptions in English.
-- Use consistent English spelling (prefer US English) across the project.
+
+```java
+// 2-space indent, opening brace on same line, space after keyword
+if (solution == null) {
+  throw new IllegalArgumentException("Solution cannot be null");
+}
+
+// Continuation: 4-space indent
+String result = someObject
+    .methodA()
+    .methodB();
+
+// Constant naming
+private static final int MAX_POPULATION_SIZE = 100;
+
+// Grouped imports (static first, then regular, no wildcards)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+```
 
 ### ❌ DON'T
-- Use non-English comments, identifiers, or documentation text in the repository.
-- Mix languages inside comments or docs that are intended to be consumed by contributors.
 
+```java
+// Tabs or 4-space indent
+if (solution == null)
+{                          // Brace on new line — not allowed
+    throw new ...;
+}
+
+// Wildcard imports
+import org.uma.jmetal.solution.*;
+
+// Constant in lowerCamelCase
+private static final int maxPopulationSize = 100;
+```
+
+---
 
 ## 1. Records for DTOs and Value Objects
 
@@ -39,51 +93,41 @@ public record UserDTO(String name, String email) {
 
 ---
 
-## 2. Sealed Classes for Controlled Hierarchies
+## 2. Pattern Matching and Switch Expressions
 
 ### ✅ DO
-- Use `sealed interface/class` for known and limited type hierarchies
-- Combine with pattern matching in switch expressions
-- Explicitly permit all subtypes
+- Use pattern matching with `instanceof` to avoid manual casting
+- Use switch expressions that return values instead of switch statements
+- Use switch over enums for exhaustiveness
 
 ```java
-public sealed interface PaymentMethod permits CreditCard, PayPal, BankTransfer {}
-
-public record CreditCard(String number) implements PaymentMethod {}
-public record PayPal(String email) implements PaymentMethod {}
-public record BankTransfer(String iban) implements PaymentMethod {}
-```
-
-### ❌ DON'T
-- Use open hierarchies with cascading `instanceof` checks
-- Allow unlimited subclassing when types are known
-
----
-
-## 3. Pattern Matching and Switch Expressions
-
-### ✅ DO
-- Use pattern matching with `switch` and `instanceof`
-- Use switch expressions that return values
-- Leverage exhaustiveness checking with sealed types
-
-```java
-String processPayment(PaymentMethod method) {
-    return switch (method) {
-        case CreditCard(var number) -> "Processing credit card: " + number;
-        case PayPal(var email) -> "Processing PayPal: " + email;
-        case BankTransfer(var iban) -> "Processing transfer: " + iban;
-    };
+// Pattern matching instanceof — no explicit cast needed
+if (solution instanceof DoubleSolution ds) {
+    double value = ds.variables().get(0);
 }
+
+// Switch expression returning a value
+String label = switch (status) {
+    case PENDING  -> "Waiting";
+    case APPROVED -> "Done";
+    case REJECTED -> "Failed";
+};
 ```
 
 ### ❌ DON'T
 - Use if-else chains with `instanceof` and manual casting
-- Use traditional switch statements when expressions are cleaner
+- Use traditional switch statements when a switch expression is cleaner
+
+```java
+// Bad: manual cast after instanceof
+if (solution instanceof DoubleSolution) {
+    DoubleSolution ds = (DoubleSolution) solution; // unnecessary cast
+}
+```
 
 ---
 
-## 4. Optional Instead of null
+## 3. Optional Instead of null
 
 ### ✅ DO
 - Return `Optional<T>` when a value may be absent
@@ -108,7 +152,7 @@ String userName = findUserById("123")
 
 ---
 
-## 5. Streams API
+## 4. Streams API
 
 ### ✅ DO
 - Use streams for collection operations
@@ -130,7 +174,7 @@ List<String> activeUserNames = users.stream()
 
 ---
 
-## 6. Try-with-Resources
+## 5. Try-with-Resources
 
 ### ✅ DO
 - Use try-with-resources for ALL closeable resources
@@ -151,39 +195,42 @@ try (var connection = dataSource.getConnection();
 
 ---
 
-## 7. Single Return Point + Guard Clauses
+## 6. Single Return Point with Guard Clauses
 
 ### ✅ DO
-- Prefer guard clauses and early returns for validations and fast-fail checks; they improve readability by avoiding deep nesting.
-- Keep the method body focused on the primary flow after validation.
-- Use a single return at the end only when it improves clarity (for example, when assembling a complex result); do not force a single-return style at the cost of readability.
+- Use guard clauses at the top of the method to validate preconditions and fail fast
+- After the guard clauses, the method body has a single return point at the end
+- Declare a result variable at the start of the main logic when it aids clarity
 
 ```java
 public String processOrder(Order order) {
+    // Guard clauses: validate preconditions at the top
     if (order == null) {
-        return "Invalid order";
+        throw new IllegalArgumentException("Order cannot be null");
     }
     if (!order.isValid()) {
         return "Order validation failed";
     }
-    if (order.isEmpty()) {
-        return "Empty order";
-    }
 
-    return fulfillOrder(order);
+    // Main logic: single return point
+    String result;
+    if (order.isEmpty()) {
+        result = "Empty order";
+    } else {
+        result = fulfillOrder(order);
+    }
+    return result;
 }
 ```
 
 ### ❌ DON'T
-- Create deeply nested if-else pyramids (pyramid of doom).
-- Force a single return point when guard clauses would make the logic clearer.
-- Mix validation logic with business logic; extract validation where it improves readability.
+- Return from the middle of the method body (after the guard clause section)
 - Create nested if-else pyramids (pyramid of doom)
 - Mix validation logic with business logic
 
 ---
 
-## 8. Single Responsibility Principle
+## 7. Single Responsibility Principle
 
 ### ✅ DO
 - Each method does ONE thing
@@ -208,38 +255,32 @@ public void registerUser(UserDTO dto) {
 
 ---
 
-## 9. Complete Javadoc
+## 8. Javadoc
 
 ### ✅ DO
-- Document all public classes, interfaces, and methods
-- Include description, parameters, return values, and exceptions
-- Use `@param`, `@return`, `@throws` tags appropriately
-- Write clear, concise descriptions
+- Write Javadoc for public classes and interfaces
+- Document public methods when the name and signature alone do not fully convey intent, preconditions, or non-obvious behaviour
+- Use `@param`, `@return`, `@throws` when they add information not already obvious from the signature
 
 ```java
 /**
- * Retrieves a user by their unique identifier.
+ * Evaluates a set of solutions on all training problems and returns the
+ * aggregated quality indicator values. Modifies the solutions in place.
  *
- * @param userId the unique identifier of the user
- * @return an Optional containing the user if found, empty otherwise
- * @throws IllegalArgumentException if userId is null or blank
+ * @param solutions non-empty list of solutions to evaluate
+ * @throws IllegalArgumentException if solutions is null or empty
  */
-public Optional<User> findUserById(String userId) {
-    if (userId == null || userId.isBlank()) {
-        throw new IllegalArgumentException("User ID cannot be null or blank");
-    }
-    return userRepository.findById(userId);
-}
+public void evaluate(List<S> solutions) { ... }
 ```
 
 ### ❌ DON'T
-- Leave public APIs undocumented
-- Write vague or redundant documentation
-- Forget to update Javadoc when changing method signatures
+- Write Javadoc that just restates the method name (`/** Returns the name. */`)
+- Add `@param` / `@return` tags whose content is already obvious from the type and name
+- Leave Javadoc stale when changing method signatures
 
 ---
 
-## 10. Specific Exceptions
+## 9. Specific Exceptions
 
 ### ✅ DO
 - Create custom exceptions for different error types
@@ -269,7 +310,7 @@ public class InvalidEmailException extends IllegalArgumentException {
 
 ---
 
-## 11. Immutability by Default
+## 10. Immutability by Default
 
 ### ✅ DO
 - Make fields `final` whenever possible
@@ -297,7 +338,7 @@ public class OrderService {
 
 ---
 
-## 12. Variable Naming with `var`
+## 11. Variable Naming with `var`
 
 ### ✅ DO
 - Use `var` when type is obvious from context
@@ -316,7 +357,7 @@ var result = new HashMap<String, List<UserDTO>>(); // Reduces verbosity
 
 ---
 
-## 13. Maven Project Structure
+## 12. Maven Project Structure
 
 ### ✅ DO
 - Follow standard Maven directory layout
@@ -327,8 +368,7 @@ var result = new HashMap<String, List<UserDTO>>(); // Reduces verbosity
 ```xml
 <properties>
     <java.version>21</java.version>
-    <junit.version>5.10.1</junit.version>
-    <spring.version>6.1.0</spring.version>
+    <junit.version>6.1.0</junit.version>
 </properties>
 
 <dependencies>
@@ -349,106 +389,60 @@ var result = new HashMap<String, List<UserDTO>>(); // Reduces verbosity
 
 ---
 
-## 14. Testing
+## 13. Testing
 
 ### ✅ DO
-- Write tests using JUnit 5
-- Use Given-When-Then naming convention for test methods
-- Use `@DisplayName` for readable test descriptions
-- Use `@Nested` classes to group related tests
-- Follow AAA pattern (Arrange, Act, Assert)
-    - Aim for appropriate, module-specific coverage targets (see Coverage policy)
+- Write tests using JUnit 6 (Jupiter)
+- Follow the Given-When-Then naming convention (see subsection below)
+- Use `@Nested` and `@DisplayName` to structure tests (see subsection below)
+- Follow AAA pattern (Arrange, Act, Assert) inside each test (see subsection below)
+- Declare the class under test as an uninitialized field; create its instance in `@BeforeEach void setUp()`
+- Use field initializers only for immutable test constants (`private final List<X> VALUES = List.of(...)`)
+- Use `@BeforeEach` / `@AfterEach` for setup and teardown shared across all tests in a class
 - Test both happy paths and edge cases
+- Aim for high code coverage (>80%)
 
 ```java
-@DisplayName("User Service Tests")
+@DisplayName("Unit tests for class UserService")
 class UserServiceTest {
-    
+
     private UserService userService;
     private UserRepository userRepository;
-    
+
     @BeforeEach
     void setUp() {
         userRepository = mock(UserRepository.class);
         userService = new UserService(userRepository);
     }
-    
+
     @Nested
     @DisplayName("When finding user by ID")
     class FindUserById {
-        
+
         @Test
-        @DisplayName("Given valid ID, when user exists, then return user")
+        @DisplayName("given valid ID, when user exists, then return user")
         void givenValidId_whenUserExists_thenReturnUser() {
-            // Given
+            // Arrange
             String userId = "123";
             User expectedUser = new User(userId, "John Doe");
             when(userRepository.findById(userId)).thenReturn(Optional.of(expectedUser));
-            
-            // When
+
+            // Act
             Optional<User> result = userService.findUserById(userId);
-            
-            // Then
+
+            // Assert
             assertTrue(result.isPresent());
             assertEquals(expectedUser, result.get());
         }
-        
+
         @Test
-        @DisplayName("Given valid ID, when user does not exist, then return empty")
-        void givenValidId_whenUserDoesNotExist_thenReturnEmpty() {
-            // Given
-            String userId = "999";
-            when(userRepository.findById(userId)).thenReturn(Optional.empty());
-            
-            // When
-            Optional<User> result = userService.findUserById(userId);
-            
-            // Then
-            assertTrue(result.isEmpty());
-        }
-        
-        @Test
-        @DisplayName("Given null ID, when finding user, then throw exception")
-        void givenNullId_whenFindingUser_thenThrowException() {
-            // Given
-            String userId = null;
-            
-            // When & Then
-            assertThrows(IllegalArgumentException.class, 
-                () -> userService.findUserById(userId));
-        }
-    }
-    
-    @Nested
-    @DisplayName("When creating new user")
-    class CreateUser {
-        
-        @Test
-        @DisplayName("Given valid data, when creating user, then save and return user")
-        void givenValidData_whenCreatingUser_thenSaveAndReturnUser() {
-            // Given
-            UserDTO dto = new UserDTO("Jane Doe", "jane@example.com");
-            User expectedUser = new User("456", "Jane Doe");
-            when(userRepository.save(any(User.class))).thenReturn(expectedUser);
-            
-            // When
-            User result = userService.createUser(dto);
-            
-            // Then
-            assertNotNull(result);
-            assertEquals(expectedUser.name(), result.name());
-            verify(userRepository, times(1)).save(any(User.class));
-        }
-        
-        @Test
-        @DisplayName("Given invalid email, when creating user, then throw exception")
-        void givenInvalidEmail_whenCreatingUser_thenThrowException() {
-            // Given
-            UserDTO dto = new UserDTO("Jane Doe", "invalid-email");
-            
-            // When & Then
-            assertThrows(InvalidEmailException.class, 
-                () -> userService.createUser(dto));
+        @DisplayName("given null ID, when finding user, then throw IllegalArgumentException")
+        void givenNullId_whenFindingUser_thenIllegalArgumentExceptionIsThrown() {
+            // Arrange
+            Executable executable = () -> userService.findUserById(null);
+
+            // Act & Assert
+            assertThrows(IllegalArgumentException.class, executable);
         }
     }
 }
@@ -456,51 +450,97 @@ class UserServiceTest {
 
 ### Test Naming Convention
 
-Follow the **Given-When-Then** pattern:
-- **Given**: Initial context/preconditions
-- **When**: The action being tested
-- **Then**: Expected outcome
+Use **Given-When-Then** for method names and `@DisplayName`:
+- **given**: initial context / preconditions
+- **when**: the action being tested
+- **then**: expected outcome
 
-Method naming format: `given[Context]_when[Action]_then[Outcome]`
+Method format: `given[Context]_when[Action]_then[Outcome]`  
+`@DisplayName` format: `given [context], when [action], then [outcome]` (lowercase, sentence style)
+
+### Internal structure: AAA
+
+Inside each test method, use `// Arrange / Act / Assert` comments to delimit the three phases.  
+When act and assert cannot be separated (e.g. `assertThrows`), use `// Act & Assert`.
 
 ### Using @Nested and @DisplayName
 
-- Use `@Nested` to group tests by functionality or scenario
-- Use `@DisplayName` at class level to describe the test suite
-- Use `@DisplayName` at method level for human-readable test descriptions
-- Nested classes improve test report readability and organization
+- Use `@Nested` to group tests by scenario or method under test.
+- `@DisplayName` on the class: `"Unit tests for class ClassName"`
+- `@DisplayName` on `@Nested`: `"When <scenario>"` (sentence describing the context)
+- `@DisplayName` on `@Test`: `"given ..., when ..., then ..."` (lowercase GWT summary)
+
+### Mocking with Mockito
+
+Use only `mock()`, `when()`, and `verify()`. Create mocks manually in `@BeforeEach`, never via annotations.
+
+- `mock(Type.class)` — create a mock dependency
+- `when(mock.method(...)).thenReturn(value)` — stub a return value
+- `verify(mock, times(n)).method(...)` — assert an interaction occurred
+
+```java
+UserRepository repo = mock(UserRepository.class);
+when(repo.findById("123")).thenReturn(Optional.of(user));
+
+// ... act ...
+
+verify(repo, times(1)).findById("123");
+```
+
+### Parameterized tests
+
+Use `@ParameterizedTest` to avoid duplicating test methods for multiple inputs:
+
+```java
+@ParameterizedTest
+@ValueSource(strings = {"", " ", "  "})
+@DisplayName("given blank ID, when finding user, then throw IllegalArgumentException")
+void givenBlankId_whenFindingUser_thenIllegalArgumentExceptionIsThrown(String blankId) {
+    assertThrows(IllegalArgumentException.class, () -> userService.findUserById(blankId));
+}
+
+@ParameterizedTest
+@CsvSource({"john@example.com, true", "not-an-email, false"})
+@DisplayName("given email, when validating, then return expected result")
+void givenEmail_whenValidating_thenReturnExpectedResult(String email, boolean expected) {
+    assertEquals(expected, userService.isValidEmail(email));
+}
+```
+
+### Integration tests
+
+- Name integration test classes with the `IT` suffix: `UserServiceIT`
+- Run with `mvn integration-test` (not included in `mvn test`)
+- Use for testing interactions with real infrastructure (database, file system, external APIs)
+- Do not mix unit and integration tests in the same class
 
 ### ❌ DON'T
-- Write tests without clear Given-When-Then structure
-- Use vague test method names like `test1()`, `testUser()`
+- Use "JUnit 4" style (`@RunWith`, `Assert.*` static imports from `org.junit`)
+- Use vague test method names like `test1()`, `testUser()`, or `shouldDoSomething()`
+- Initialize the class under test directly as a field initializer (`private X subject = new X(...)`) — always use `@BeforeEach` instead
+- Use Mockito annotations (`@Mock`, `@InjectMocks`, `@Spy`, `@Captor`, `MockitoExtension`) — create mocks manually
 - Skip edge cases and error scenarios
 - Write tests that depend on execution order
 - Test multiple unrelated things in a single test method
 
 ---
 
-## Coverage policy
+## Review Checklist
 
-To keep expectations realistic and actionable across a multi-module repository, use module-specific coverage targets and measure with JaCoCo.
-
-- Recommended defaults (adjust per module):
-    - Core algorithm modules: 80% line coverage
-    - Utility and library modules: 85% line coverage
-    - Integration/IT-heavy modules: 65–75% line coverage
-
-- Measurement and enforcement:
-    - Add JaCoCo reporting to `pom.xml` for each module or in the parent `pom.xml`.
-    - Use the Maven `jacoco:report` goal to generate reports locally.
-    - Enforce thresholds in CI (e.g., Maven `jacoco:check`) with module-specific limits.
-
-Example to run locally:
-
-```bash
-mvn test jacoco:report
-```
-
-CI suggestion: fail the pipeline only if a module drops below its agreed threshold; prefer warnings for marginal changes and require a remediation plan when coverage decreases significantly.
-
+Before submitting code, verify:
+- [ ] Code passes `mvn validate` (Google Java Style checkstyle)
+- [ ] Records used for DTOs and value objects
+- [ ] Pattern matching used instead of instanceof chains
+- [ ] Optional returned instead of null
+- [ ] Streams used for collection operations
+- [ ] Try-with-resources used for all closeable resources
+- [ ] Single return point per method (guard clauses at top are allowed)
+- [ ] Each method has single responsibility
+- [ ] Javadoc present where behaviour is non-obvious
+- [ ] Specific custom exceptions used
+- [ ] Fields are final where possible
+- [ ] Tests follow §13 conventions (GWT naming, @DisplayName, @Nested, AAA, @BeforeEach, mocks manual)
+- [ ] Test coverage is above 80%
 
 ---
 
@@ -511,8 +551,7 @@ When AI assistants work on this codebase:
 2. Reference AGENTS.md for project-specific context and conventions
 3. Prioritize code quality and readability over brevity
 4. Ask for clarification when guidelines conflict with specific requirements
-5. When writing tests, always use Given-When-Then naming and @DisplayName
-6. Organize related tests using @Nested classes
+5. Follow §13 for all testing conventions (naming, structure, mocking, parameterized tests, integration tests)
 
 ---
 
