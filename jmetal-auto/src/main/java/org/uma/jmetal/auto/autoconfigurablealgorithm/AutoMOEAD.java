@@ -121,9 +121,14 @@ public class AutoMOEAD implements AutoConfigurableAlgorithm {
 
     aggregationFunctionParameter =
         new AggregationFunctionParameter(
-            List.of("tschebyscheff", "weightedSum", "penaltyBoundaryIntersection", "modifiedTschebyscheff"));
+            List.of("tschebyscheff", "weightedSum", "penaltyBoundaryIntersection",
+                "modifiedTschebyscheff", "augmentedTschebyscheff",
+                "invertedPenaltyBoundaryIntersection"));
     RealParameter pbiTheta = new RealParameter("pbiTheta",1.0, 200);
     aggregationFunctionParameter.addSpecificParameter("penaltyBoundaryIntersection", pbiTheta);
+    RealParameter ipbiTheta = new RealParameter("ipbiTheta", 0.001, 1.0);
+    aggregationFunctionParameter.addSpecificParameter("invertedPenaltyBoundaryIntersection",
+        ipbiTheta);
     aggregationFunctionParameter.addGlobalParameter(normalizeObjectivesParameter);
 
     algorithmResult();

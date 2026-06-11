@@ -4,6 +4,8 @@ import java.util.List;
 import org.uma.jmetal.auto.parameter.BooleanParameter;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
+import org.uma.jmetal.util.aggregationfunction.impl.AugmentedTschebyscheff;
+import org.uma.jmetal.util.aggregationfunction.impl.InvertedPenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregationfunction.impl.ModifiedTschebyscheff;
 import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
@@ -45,6 +47,13 @@ public class AggregationFunctionParameter extends CategoricalParameter {
       case "penaltyBoundaryIntersection":
         double theta = (double) findSpecificParameter("pbiTheta").value();
         aggregationFunction = new PenaltyBoundaryIntersection(theta, normalizedObjectives);
+        break;
+      case "augmentedTschebyscheff":
+        aggregationFunction = new AugmentedTschebyscheff(normalizedObjectives);
+        break;
+      case "invertedPenaltyBoundaryIntersection":
+        double ipbiTheta = (double) findSpecificParameter("ipbiTheta").value();
+        aggregationFunction = new InvertedPenaltyBoundaryIntersection(ipbiTheta, normalizedObjectives);
         break;
       default:
         throw new JMetalException("Aggregation function does not exist: " + name());
