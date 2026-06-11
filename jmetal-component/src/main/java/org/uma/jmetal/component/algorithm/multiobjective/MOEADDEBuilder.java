@@ -20,7 +20,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
 import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
-import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
@@ -30,7 +30,6 @@ import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
  */
 public class MOEADDEBuilder {
   private String name;
-  private Archive<DoubleSolution> externalArchive;
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialPopulation;
   private Termination termination;
@@ -42,7 +41,7 @@ public class MOEADDEBuilder {
   private int maximumNumberOfReplacedSolutions = 2;
   private SequenceGenerator<Integer> sequenceGenerator ;
   private WeightVectorNeighborhood<DoubleSolution> neighborhood ;
-  private AggregationFunction aggregationFunction = new Tschebyscheff(true);
+  private AggregationFunction aggregationFunction;
   private boolean normalize ;
 
 
@@ -78,7 +77,8 @@ public class MOEADDEBuilder {
                 neighborhoodSize,
                 weightVectorDirectory);
       } catch (FileNotFoundException exception) {
-        exception.printStackTrace();
+        throw new JMetalException(
+            "Weight vector files not found in directory: " + weightVectorDirectory, exception);
       }
     }
 
@@ -105,12 +105,6 @@ public class MOEADDEBuilder {
 
   public MOEADDEBuilder setTermination(Termination termination) {
     this.termination = termination;
-
-    return this;
-  }
-
-  public MOEADDEBuilder setArchive(Archive<DoubleSolution> externalArchive) {
-    this.externalArchive = externalArchive;
 
     return this;
   }
@@ -142,6 +136,7 @@ public class MOEADDEBuilder {
 
   public MOEADDEBuilder setAggregationFunction(AggregationFunction aggregationFunction) {
     this.aggregationFunction = aggregationFunction;
+    this.normalize = aggregationFunction.normalizeObjectives();
 
     this.replacement =
         new MOEADReplacement<>(
@@ -149,7 +144,7 @@ public class MOEADDEBuilder {
             neighborhood,
             this.aggregationFunction,
             sequenceGenerator,
-            maximumNumberOfReplacedSolutions, aggregationFunction.normalizeObjectives());
+            maximumNumberOfReplacedSolutions, this.normalize);
 
     return this;
   }

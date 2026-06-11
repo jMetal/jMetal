@@ -19,6 +19,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
@@ -75,7 +76,8 @@ public class MOEADBuilder<S extends Solution<?>> {
                 neighborhoodSize,
                 this.weightVectorDirectory);
       } catch (FileNotFoundException exception) {
-        exception.printStackTrace();
+        throw new JMetalException(
+            "Weight vector files not found in directory: " + this.weightVectorDirectory, exception);
       }
     }
 
@@ -135,6 +137,7 @@ public class MOEADBuilder<S extends Solution<?>> {
 
   public MOEADBuilder<S> setAggregationFunction(AggregationFunction aggregationFunction) {
     this.aggregationFunction = aggregationFunction;
+    this.normalize = aggregationFunction.normalizeObjectives();
 
     this.replacement =
         new MOEADReplacement<>(
@@ -143,7 +146,7 @@ public class MOEADBuilder<S extends Solution<?>> {
             this.aggregationFunction,
             sequenceGenerator,
             maximumNumberOfReplacedSolutions,
-            aggregationFunction.normalizeObjectives());
+            this.normalize);
     return this;
   }
 
