@@ -10,6 +10,8 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.MOEADReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.SubproblemUpdateCriterion;
+import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.impl.AggregationCriterion;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
@@ -45,6 +47,7 @@ public class MOEADBuilder<S extends Solution<?>> {
   private AggregationFunction aggregationFunction;
   private SequenceGenerator<Integer> sequenceGenerator;
   private WeightVectorNeighborhood<S> neighborhood;
+  private SubproblemUpdateCriterion<S> subproblemUpdateCriterion = new AggregationCriterion<>();
   private boolean normalize;
 
   public MOEADBuilder(Problem<S> problem, int populationSize,
@@ -89,14 +92,7 @@ public class MOEADBuilder<S extends Solution<?>> {
             neighborhoodSelectionProbability,
             true);
 
-    this.replacement =
-        new MOEADReplacement<>(
-            (PopulationAndNeighborhoodSelection<S>) selection,
-            neighborhood,
-            aggregationFunction,
-            sequenceGenerator,
-            maximumNumberOfReplacedSolutions,
-            this.normalize);
+    this.replacement = createMOEADReplacement();
 
     this.termination = new TerminationByEvaluations(25000);
 
@@ -139,15 +135,27 @@ public class MOEADBuilder<S extends Solution<?>> {
     this.aggregationFunction = aggregationFunction;
     this.normalize = aggregationFunction.normalizeObjectives();
 
-    this.replacement =
-        new MOEADReplacement<>(
-            (PopulationAndNeighborhoodSelection<S>) selection,
-            neighborhood,
-            this.aggregationFunction,
-            sequenceGenerator,
-            maximumNumberOfReplacedSolutions,
-            this.normalize);
+    this.replacement = createMOEADReplacement();
     return this;
+  }
+
+  public MOEADBuilder<S> setSubproblemUpdateCriterion(
+      SubproblemUpdateCriterion<S> subproblemUpdateCriterion) {
+    this.subproblemUpdateCriterion = subproblemUpdateCriterion;
+
+    this.replacement = createMOEADReplacement();
+    return this;
+  }
+
+  private Replacement<S> createMOEADReplacement() {
+    return new MOEADReplacement<>(
+        (PopulationAndNeighborhoodSelection<S>) selection,
+        neighborhood,
+        aggregationFunction,
+        sequenceGenerator,
+        maximumNumberOfReplacedSolutions,
+        normalize,
+        subproblemUpdateCriterion);
   }
 
   public MOEADBuilder<S> setVariation(Variation<S> variation) {

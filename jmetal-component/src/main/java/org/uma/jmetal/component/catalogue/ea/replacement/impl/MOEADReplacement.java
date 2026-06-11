@@ -2,6 +2,8 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl;
 
 import java.util.List;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.SubproblemUpdateCriterion;
+import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.impl.AggregationCriterion;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
@@ -20,6 +22,7 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
   private final AggregationFunction aggregationFunction;
   private final SequenceGenerator<Integer> sequenceGenerator;
   private final int maximumNumberOfReplacedSolutions;
+  private final SubproblemUpdateCriterion<S> subproblemUpdateCriterion;
   private boolean normalize;
 
   private IdealPoint idealPoint = null;
@@ -34,11 +37,30 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
       SequenceGenerator<Integer> sequenceGenerator,
       int maximumNumberOfReplacedSolutions,
       boolean normalize) {
+    this(
+        matingPoolSelection,
+        weightVectorNeighborhood,
+        aggregationFunction,
+        sequenceGenerator,
+        maximumNumberOfReplacedSolutions,
+        normalize,
+        new AggregationCriterion<>());
+  }
+
+  public MOEADReplacement(
+      PopulationAndNeighborhoodSelection<S> matingPoolSelection,
+      WeightVectorNeighborhood<S> weightVectorNeighborhood,
+      AggregationFunction aggregationFunction,
+      SequenceGenerator<Integer> sequenceGenerator,
+      int maximumNumberOfReplacedSolutions,
+      boolean normalize,
+      SubproblemUpdateCriterion<S> subproblemUpdateCriterion) {
     this.matingPoolSelection = matingPoolSelection;
     this.weightVectorNeighborhood = weightVectorNeighborhood;
     this.aggregationFunction = aggregationFunction;
     this.sequenceGenerator = sequenceGenerator;
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
+    this.subproblemUpdateCriterion = subproblemUpdateCriterion;
 
     this.normalize = normalize;
   }
@@ -50,6 +72,8 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
 
     updateIdealPoint(population, newSolution);
     updateNadirPoint(population, newSolution);
+
+    subproblemUpdateCriterion.update(population, newSolution);
 
     Neighborhood.NeighborType neighborType = matingPoolSelection.getNeighborType();
     RandomPermutationCycle randomPermutation =
@@ -86,7 +110,7 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
               newSolution.objectives(), weightVectorNeighborhood.getWeightVector()[k], idealPoint,
               nadirPoint);
 
-      if (f2 < f1) {
+      if (subproblemUpdateCriterion.replaces(newSolution, f2, population.get(k), f1)) {
         population.set(k, (S) newSolution.copy());
         replacements++;
       }
