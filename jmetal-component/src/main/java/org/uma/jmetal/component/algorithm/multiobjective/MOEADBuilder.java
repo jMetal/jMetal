@@ -122,7 +122,7 @@ public class MOEADBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public MOEADBuilder<S> setMaximumNumberOfReplacedSolutionsy(
+  public MOEADBuilder<S> setMaximumNumberOfReplacedSolutions(
       int maximumNumberOfReplacedSolutions) {
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
 

@@ -60,7 +60,7 @@ public class MOEADDEDefaultConfigurationExample {
         weightVectorDirectory,
         sequenceGenerator, normalizeObjectives)
         .setTermination(termination)
-        .setMaximumNumberOfReplacedSolutionsy(2)
+        .setMaximumNumberOfReplacedSolutions(2)
         .setNeighborhoodSelectionProbability(0.9)
         .setNeighborhoodSize(20)
         .setAggregationFunction(new Tschebyscheff(normalizeObjectives))

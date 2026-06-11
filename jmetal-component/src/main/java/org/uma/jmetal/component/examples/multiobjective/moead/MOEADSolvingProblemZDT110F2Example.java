@@ -62,7 +62,7 @@ public class MOEADSolvingProblemZDT110F2Example {
         sequenceGenerator,
         normalizeObjectives)
         .setTermination(termination)
-        .setMaximumNumberOfReplacedSolutionsy(2)
+        .setMaximumNumberOfReplacedSolutions(2)
         .setNeighborhoodSelectionProbability(0.9)
         .setNeighborhoodSize(20)
         .setAggregationFunction(new PenaltyBoundaryIntersection(5.0, normalizeObjectives))

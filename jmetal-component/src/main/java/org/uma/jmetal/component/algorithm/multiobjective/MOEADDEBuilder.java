@@ -122,7 +122,7 @@ public class MOEADDEBuilder {
     return this;
   }
 
-  public MOEADDEBuilder setMaximumNumberOfReplacedSolutionsy(int maximumNumberOfReplacedSolutions) {
+  public MOEADDEBuilder setMaximumNumberOfReplacedSolutions(int maximumNumberOfReplacedSolutions) {
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
 
     return this;
