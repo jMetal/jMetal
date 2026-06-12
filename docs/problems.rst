@@ -23,7 +23,7 @@ All the problems in jMetal implement the `Problem <https://github.com/jMetal/jMe
     public interface Problem<S> extends Serializable {
       /* Getters */
       int numberOfVariables() ;
-      int numberbjectives() ;
+      int numberOfObjectives() ;
       int numberOfConstraints() ;
       String name() ;
 
@@ -36,7 +36,9 @@ All the problems in jMetal implement the `Problem <https://github.com/jMetal/jMe
 Every problem is characterized by the number of decision variables, the number of objective functions and the number of constraints, so getter methods for returning those values have to be defined. The genetic type `S` allows to determine the encoding of the solutions of the problem. This way, a problem must include a method for evaluating any solution of class `S` as well as providing a `createSolution()` method for creating a new solution. A class named 
 `AbstractGenericProblem <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/AbstractGenericProblem.java>`_ containing setter and getter method implementations for the problem fields is provided.
 
-If a problem has side constraints, it is assumed that the overall constraint degree of a given solution is computed inside the ``evaluate()`` method.
+If a problem has side constraints, it is assumed that the overall constraint degree of a given solution is computed inside the ``evaluate()`` method. The values stored in the ``constraints()`` array of the solutions must follow the jMetal sign convention: a value lower than 0.0 means that the corresponding constraint is violated, and the overall constraint violation degree is the (negative) sum of the values of the violated constraints. Problems whose constraints have non-standard semantics can precompute the number of violated constraints and the overall violation degree as solution attributes by using the setter methods of the ``ConstraintHandling`` utility class (see :ref:`constraints`); in that case, the precomputed degree must be negative for infeasible solutions and 0.0 for feasible ones.
+
+Among the constrained benchmarks included in ``jmetal-problem``, the ``org.uma.jmetal.problem.multiobjective.cf`` package contains the CF1-CF16 problem suite defined in "Constrained Multiobjective Optimization: Test Problem Construction and Performance Evaluations" (Y. Xiang et al., IEEE TEVC, 2021), which is scalable in the number of objectives; CF9-CF16 precompute their constraint violation attributes due to their band-type constraints. The reference fronts of these problems (three-objective formulations) are located in the ``resources/referenceFrontsRSG`` directory. The ``org.uma.jmetal.problem.multiobjective.cdtlz`` package provides the C-DTLZ problems (C1_DTLZ1, C1_DTLZ3, C2_DTLZ2, C3_DTLZ1, C3_DTLZ4) proposed in the NSGA-III paper.
 
 jMetal provides currently the following interfaces representing types of problems (all of them extending ``Problem``), and the available implementations of them:
 

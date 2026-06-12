@@ -28,7 +28,7 @@ Summary of features:
 
   - Problem families: ZDT, DTLZ, WFG, RE, CRE, FDA, CEC2009, LZ09, GLT, MOP, LIRCMOP, MOP, UF, ZCAT
   - Classical problems: Kursawe, Fonseca, Schaffer, Viennet2, Viennet3
-  - Constrained problems: Srinivas, Tanaka, Osyczka2, Constr_Ex, Golinski, Water, Viennet4
+  - Constrained problems: Srinivas, Tanaka, Osyczka2, Constr_Ex, Golinski, Water, Viennet4, CF1-CF16 (Xiang et al. suite), C-DTLZ
   - Combinatorial problems: multi-objective TSP
   - Academic problems: OneMax, OneZeroMax
 

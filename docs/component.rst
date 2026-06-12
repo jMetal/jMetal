@@ -201,6 +201,8 @@ We provide many examples of using this class to configure NSGA-II (included the 
 * ``ParallelNSGAIIExample``: NSGA-II with a multi-threaded evaluator
 * ``NSGAIIStoppingByHypervolume``: NSGA-II using a terminator to stop the computation when the hypervolume of the current population achieves a particular value.
 
+Other algorithms are provided with their corresponding builders, such as ``MOEADBuilder``, ``MOEADDEBuilder``, ``SMSEMOABuilder``, or ``RVEABuilder``. In the case of the MOEA/D builders, constrained problems can be solved by setting a constraint handling subproblem update criterion (see :ref:`constraints`); examples are included in the ``org.uma.jmetal.component.examples.multiobjective.moead`` package (e.g., ``MOEADWithFeasibilityRulesExample``, ``MOEADDEWithImprovedEpsilonExample``, ``MOEADSolvingCF4Example``, and ``MOEADDESolvingCF10Example``).
+
 The ``ParticleSwarmOptimizationAlgorithm`` template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Following the same methodology for designing a component-based template for evolutionary computation, we have designed and implemented a `ParticleSwarmOptimizationAlgorithm` class. This template was used in the paper "Automatic Design of Multi-Objective Particle Swarm Optimizers", accepted in the ANTs 2022 conference.
@@ -258,6 +260,7 @@ Available Components
 - ``RankingSelection``: Linear ranking-based roulette wheel selection.
 - ``StochasticUniversalSampling``: Lower variance than standard roulette wheel.
 - ``BoltzmannSelection``: Temperature-controlled selection pressure (control parameter: ``temperature``).
+- ``PopulationAndNeighborhoodSelection``: MOEA/D style mating selection from the neighborhood of a subproblem or from the whole population.
 
 **Replacement Components** (``ea.replacement``):
 
@@ -266,6 +269,20 @@ Available Components
 - ``MuCommaLambdaReplacement``: (μ,λ) replacement strategy.
 - ``RandomReplacement``: Zero selection pressure baseline (random replacement).
 - ``TournamentReplacement``: Configurable pressure via tournament size.
+- ``MOEADReplacement``: MOEA/D subproblem update based on an aggregation function; the update rule is delegated to a ``SubproblemUpdateCriterion`` component.
+
+**Subproblem Update Criterion Components** (``ea.replacement.subproblemupdate``): rule used by ``MOEADReplacement`` to decide whether a new solution replaces the current solution of a subproblem, enabling constraint handling in MOEA/D (see :ref:`constraints`):
+
+- ``AggregationCriterion``: default unconstrained criterion (better aggregation value wins).
+- ``FeasibilityRulesCriterion``: feasibility rules of the constrained dominance principle (Deb, 2000).
+- ``ViolationThresholdCriterion``: adaptive violation threshold (Jan and Khanum, 2013).
+- ``ImprovedEpsilonCriterion``: improved epsilon constraint handling (Fan et al., 2019).
+
+**Evaluation Components** (``common.evaluation``):
+
+- ``SequentialEvaluation``: evaluates the solutions one at a time.
+- ``MultiThreadedEvaluation``: parallel evaluation using threads.
+- ``SequentialEvaluationWithArchive`` / ``MultiThreadedEvaluationWithArchive``: variants that additionally store every evaluated solution in an external archive, allowing the result of an algorithm to be taken from the archive instead of from the population.
 
 **Solutions Creation Components** (``common.solutionscreation``):
 
