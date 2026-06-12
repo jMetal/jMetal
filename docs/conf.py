@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'jmetal'
-copyright = '2025, Antonio J. Nebro'
+copyright = '2026, Antonio J. Nebro'
 author = 'Antonio J. Nebro'
 
 highlight_language = 'java'

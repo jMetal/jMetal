@@ -18,11 +18,11 @@ jMetal project Web site
    :target: https://jmetal.readthedocs.io/?badge=latest
 
 jMetal is a Java-based framework for multi-objective optimization with metaheuristics.
-The last stable version is 7.3 (the current development version is 7.4-SNAPSHOT).
+The last stable version is 7.4.
 The most recent documentation is hosted in https://jmetal.readthedocs.io.
 
 
-jMetal 7.3 is a Maven project structured in the following sub-projects:
+jMetal 7.4 is a Maven project structured in the following sub-projects:
 
 +---------------------+------------------------------------+
 | Sub-project         |  Contents                          | 
@@ -54,6 +54,8 @@ Changelog
 * [06/12/2026] Added constraint handling components (feasibility rules, adaptive violation threshold, and improved epsilon) for the component-based MOEA/D and MOEA/D-DE algorithms, with examples combining them with unbounded external archives to solve constrained problems with three or more objectives. The `constraint handling documentation <https://jmetal.readthedocs.io/en/latest/constraints.html>`_ has been updated.
 
 * [06/12/2026] Fixed the constraint sign conventions of the CF benchmark suite and the handling of precomputed constraint violation degrees in the ``ConstraintHandling`` utility class.
+
+* [06/12/2026] jMetal 7.4 is released.
 
 * [05/25/2026] jMetal 7.3 is released.
 
