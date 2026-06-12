@@ -145,6 +145,16 @@ public class ConstraintHandlingTest {
   }
 
   @Test
+  public void shouldOverallConstraintViolationDegreeReturnZeroIfAZeroValueHasBeenPrecomputed() {
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
+    solution.constraints()[0] = -1.0 ;
+    solution.constraints()[1] = -2.0 ;
+    ConstraintHandling.overallConstraintViolationDegree(solution, 0.0);
+
+    assertEquals(0.0, ConstraintHandling.overallConstraintViolationDegree(solution), EPSILON);
+  }
+
+  @Test
   public void shouldOverallNumberOfViolatedConstraintsProperly() {
     DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     int numberOfViolatedConstraints = 2 ;
