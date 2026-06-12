@@ -70,8 +70,9 @@ public class ConstraintHandling {
   }
 
   /**
-   * Returns the overall constraint violation degree of a solution. A check is made to determine
-   * whether that number has been precomputed; if not, it is calculated as the sum of the
+   * Returns the overall constraint violation degree of a solution. If that number has been
+   * precomputed (i.e., the corresponding solution attribute is present), it is returned as is,
+   * including the 0.0 value of feasible solutions; otherwise, it is calculated as the sum of the
    * values of the constraints having a negative value.
    *
    * @param solution
@@ -79,16 +80,14 @@ public class ConstraintHandling {
    * @return
    */
   public static <S extends Solution<?>> double overallConstraintViolationDegree(S solution) {
-    double overallConstraintViolation =
-        (double) solution.attributes().getOrDefault(
-            PRECOMPUTED.OVERALL_CONSTRAINT_VIOLATION,
-            0.0);
-    if (overallConstraintViolation == 0.0) {
-      overallConstraintViolation = IntStream.range(0, solution.constraints().length)
-          .filter(i -> solution.constraints()[i] < 0.0).mapToDouble(i -> solution.constraints()[i])
-          .sum();
+    Object precomputedValue = solution.attributes().get(PRECOMPUTED.OVERALL_CONSTRAINT_VIOLATION);
+    if (precomputedValue instanceof Double overallConstraintViolation) {
+      return overallConstraintViolation;
     }
-    return overallConstraintViolation;
+    return IntStream.range(0, solution.constraints().length)
+        .filter(i -> solution.constraints()[i] < 0.0)
+        .mapToDouble(i -> solution.constraints()[i])
+        .sum();
   }
 
   /**
