@@ -137,7 +137,7 @@ public class CF8 extends AbstractDoubleProblem {
 
     // Set constraints
     IntStream.range(0, numberOfConstraints())
-        .forEach(i -> solution.constraints()[i] = constraint[i]);
+        .forEach(i -> solution.constraints()[i] = -constraint[i]);
     /* ----------------------Evaluate constraints (end)--------------------------*/
     return solution;
   }
