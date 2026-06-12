@@ -87,7 +87,7 @@ Changelog
 
 * [05/09/2025] jMetal 6.7 is released.
 
-* [05/09/2025] The jMetal project adopts Java 22.
+* [05/09/2025] The jMetal project adopts Java 21.
 
 * [01/17/2025] Added a variant of SMS-EMOA using differential evolution.
 
