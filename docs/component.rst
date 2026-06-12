@@ -240,11 +240,70 @@ the search.
 
 The ``Component`` catalogue
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The key of having a component-based architecture is to provide a catalogue of components to allow to generate a number of different algorithms by selecting and combining particular components in some way. The following picture shows the current components included in the `common` and `ea` packages:
+The key of having a component-based architecture is to provide a catalogue of components to allow to generate a number of different algorithms by selecting and combining particular components in some way. The following table shows the current components included in the `common` and `ea` packages:
 
-.. figure:: resources/figures/ComponentCatalogue.png
-   :scale: 90 %
-   :alt: Component catalogue.
+.. list-table:: Component catalogue (``common`` and ``ea`` packages)
+   :header-rows: 1
+   :widths: 12 22 66
+
+   * - Package
+     - Component type
+     - Implementations
+   * - ``common``
+     - ``Evaluation``
+     - * ``SequentialEvaluation``
+       * ``MultiThreadedEvaluation``
+       * ``SequentialEvaluationWithArchive``
+       * ``MultiThreadedEvaluationWithArchive``
+   * - ``common``
+     - ``SolutionsCreation``
+     - * ``RandomSolutionsCreation``
+       * ``LatinHypercubeSamplingSolutionsCreation``
+       * ``ScatterSearchSolutionsCreation``
+       * ``OppositionBasedSolutionsCreation``
+       * ``SobolSolutionsCreation``
+       * ``CauchySolutionsCreation``
+   * - ``common``
+     - ``Termination``
+     - * ``TerminationByEvaluations``
+       * ``TerminationByComputingTime``
+       * ``TerminationByKeyboard``
+       * ``TerminationByQualityIndicator``
+   * - ``ea``
+     - ``Selection``
+     - * ``NaryTournamentSelection``
+       * ``RandomSelection``
+       * ``TruncationSelection``
+       * ``RankingSelection``
+       * ``StochasticUniversalSampling``
+       * ``BoltzmannSelection``
+       * ``DifferentialEvolutionSelection``
+       * ``NeighborhoodSelection``
+       * ``PopulationAndNeighborhoodSelection``
+   * - ``ea``
+     - ``Variation``
+     - * ``CrossoverAndMutationVariation``
+       * ``DifferentialEvolutionCrossoverVariation``
+   * - ``ea``
+     - ``Replacement``
+     - * ``RankingAndDensityEstimatorReplacement``
+       * ``MuPlusLambdaReplacement``
+       * ``MuCommaLambdaReplacement``
+       * ``RandomReplacement``
+       * ``TournamentReplacement``
+       * ``PairwiseReplacement``
+       * ``SingleSolutionReplacement``
+       * ``MOEADReplacement``
+       * ``NSGAIIIReplacement``
+       * ``SMSEMOAReplacement``
+       * ``RVEAReplacement``
+       * ``AGEMOEAReplacement``
+   * - ``ea``
+     - ``SubproblemUpdateCriterion``
+     - * ``AggregationCriterion``
+       * ``FeasibilityRulesCriterion``
+       * ``ViolationThresholdCriterion``
+       * ``ImprovedEpsilonCriterion``
 
 Each component type is included in a package containing an interface with the component name and an ``impl``
 sub-package where all the implementations of the interface are stored.
