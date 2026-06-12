@@ -56,6 +56,7 @@ Summary of features:
     problems.rst
     operators.rst
     constraints.rst
+    aggregationFunctions.rst
     qualityIndicators.rst
 
 .. toctree::

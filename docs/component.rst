@@ -328,7 +328,7 @@ Available Components
 - ``MuCommaLambdaReplacement``: (μ,λ) replacement strategy.
 - ``RandomReplacement``: Zero selection pressure baseline (random replacement).
 - ``TournamentReplacement``: Configurable pressure via tournament size.
-- ``MOEADReplacement``: MOEA/D subproblem update based on an aggregation function; the update rule is delegated to a ``SubproblemUpdateCriterion`` component.
+- ``MOEADReplacement``: MOEA/D subproblem update based on an aggregation function (see :ref:`aggregationFunctions`); the update rule is delegated to a ``SubproblemUpdateCriterion`` component.
 
 **Subproblem Update Criterion Components** (``ea.replacement.subproblemupdate``): rule used by ``MOEADReplacement`` to decide whether a new solution replaces the current solution of a subproblem, enabling constraint handling in MOEA/D (see :ref:`constraints`):
 
