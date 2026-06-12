@@ -29,8 +29,6 @@ jMetal 7.3 is a Maven project structured in the following sub-projects:
 +=====================+====================================+
 | jmetal-core         |  Core classes                      |
 +---------------------+------------------------------------+
-| jmetal-solution     |  Solution encodings                |
-+---------------------+------------------------------------+
 | jmetal-algorithm    |  Algorithm implementations         |
 +---------------------+------------------------------------+
 | jmetal-problem      |  Benchmark problems                |
@@ -52,6 +50,10 @@ Related projects
 
 Changelog
 ---------
+
+* [06/12/2026] Added constraint handling components (feasibility rules, adaptive violation threshold, and improved epsilon) for the component-based MOEA/D and MOEA/D-DE algorithms, with examples combining them with unbounded external archives to solve constrained problems with three or more objectives. The `constraint handling documentation <https://jmetal.readthedocs.io/en/latest/constraints.html>`_ has been updated.
+
+* [06/12/2026] Fixed the constraint sign conventions of the CF benchmark suite and the handling of precomputed constraint violation degrees in the ``ConstraintHandling`` utility class.
 
 * [05/25/2026] jMetal 7.3 is released.
 
