@@ -4,8 +4,8 @@ Component-based algorithms
 ==========================
 
 :Author: Antonio J. Nebro
-:Version: 1.1
-:Date: 2026-03-02
+:Version: 1.2
+:Date: 2026-6-12
 
 The design and architecture of the metaheuristics included in jMetal is probably the feature that has evolved
 the most since the start of the project in 2006. In first versions, the implementation of a metaheuristic required

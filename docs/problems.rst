@@ -4,7 +4,7 @@ Problems
 ========
 
 :Author: Antonio J. Nebro
-:Date: 2023-09-14
+:Date: 2026-6-12
 
 All the problems in jMetal implement the `Problem <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/Problem.java>`_ interface:
 
