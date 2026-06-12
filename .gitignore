@@ -138,7 +138,9 @@ jmetal-core/jmetal-core.iml
 jmetal-algorithm/*.iml
 jmetal-problem/*.iml
 FUN.*
+FUN_*.csv
 VAR.*
+VAR
 coverage
 *.iml
 *Backup
