@@ -45,15 +45,18 @@ public class PAESReplacement<S extends Solution<?>> implements Replacement<S> {
       paesArchive.add(offspring);
       population.set(0, offspring);
     } else if (flag == 0) {
-      // neither dominates the other: use archive as tiebreaker.
-      // Density estimators are intentionally NOT recomputed here. They are refreshed by
-      // BoundedArchive.prune() only when the archive overflows; while the archive is still
-      // filling up the density attributes stay at their default, the comparator ties, and the
-      // current solution is kept. This conservative behaviour provides the convergence pressure
-      // of the (1+1) strategy: density-based moves only start once the archive is full. Forcing
-      // the computation on every call makes the search drift before it converges (severely so
-      // with the continuous crowding-distance estimator).
-      if (paesArchive.add(offspring)) {
+      // Neither dominates the other: use the archive density as a tiebreaker, but only once the
+      // archive is full. While it is still filling up the current solution is always kept, which
+      // provides the convergence pressure of the (1+1) strategy: density-based moves only start
+      // after the archive is full (this mirrors classic PAES, where BoundedArchive.prune() refreshes
+      // the density only on overflow). Computing density on every call instead makes the search
+      // drift before it converges (severely so with the continuous crowding-distance estimator).
+      // The density is recomputed explicitly here so that every estimator type has its attributes
+      // set before the comparator reads them (some estimators, e.g. angle or spatial spread, have no
+      // default value and would otherwise fail on a missing attribute).
+      if (paesArchive.add(offspring)
+          && paesArchive.solutions().size() >= paesArchive.maximumSize()) {
+        paesArchive.computeDensityEstimator();
         if (paesArchive.comparator().compare(current, offspring) > 0) {
           population.set(0, offspring);
         }
