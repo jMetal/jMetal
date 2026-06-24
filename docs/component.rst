@@ -201,7 +201,7 @@ We provide many examples of using this class to configure NSGA-II (included the 
 * ``ParallelNSGAIIExample``: NSGA-II with a multi-threaded evaluator
 * ``NSGAIIStoppingByHypervolume``: NSGA-II using a terminator to stop the computation when the hypervolume of the current population achieves a particular value.
 
-Other algorithms are provided with their corresponding builders, such as ``MOEADBuilder``, ``MOEADDEBuilder``, ``SMSEMOABuilder``, or ``RVEABuilder``. In the case of the MOEA/D builders, constrained problems can be solved by setting a constraint handling subproblem update criterion (see :ref:`constraints`); examples are included in the ``org.uma.jmetal.component.examples.multiobjective.moead`` package (e.g., ``MOEADWithFeasibilityRulesExample``, ``MOEADDEWithImprovedEpsilonExample``, ``MOEADSolvingCF4Example``, and ``MOEADDESolvingCF10Example``).
+Other algorithms are provided with their corresponding builders, such as ``MOEADBuilder``, ``MOEADDEBuilder``, ``SMSEMOABuilder``, ``RVEABuilder``, or ``PAESBuilder``. In the case of the MOEA/D builders, constrained problems can be solved by setting a constraint handling subproblem update criterion (see :ref:`constraints`); examples are included in the ``org.uma.jmetal.component.examples.multiobjective.moead`` package (e.g., ``MOEADWithFeasibilityRulesExample``, ``MOEADDEWithImprovedEpsilonExample``, ``MOEADSolvingCF4Example``, and ``MOEADDESolvingCF10Example``). ``PAESBuilder`` configures a (1+1) evolution strategy (mutation-only variation with a bounded density archive that is both the result and the tiebreaker); examples are included in the ``org.uma.jmetal.component.examples.multiobjective.paes`` package (``PAESExample`` with an adaptive-grid archive, and ``PAESWithCrowdingDistanceArchiveExample`` with a crowding-distance archive).
 
 The ``ParticleSwarmOptimizationAlgorithm`` template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -280,10 +280,12 @@ The key of having a component-based architecture is to provide a catalogue of co
        * ``DifferentialEvolutionSelection``
        * ``NeighborhoodSelection``
        * ``PopulationAndNeighborhoodSelection``
+       * ``PAESSelection``
    * - ``ea``
      - ``Variation``
      - * ``CrossoverAndMutationVariation``
        * ``DifferentialEvolutionCrossoverVariation``
+       * ``MutationOnlyVariation``
    * - ``ea``
      - ``Replacement``
      - * ``RankingAndDensityEstimatorReplacement``
@@ -298,6 +300,7 @@ The key of having a component-based architecture is to provide a catalogue of co
        * ``SMSEMOAReplacement``
        * ``RVEAReplacement``
        * ``AGEMOEAReplacement``
+       * ``PAESReplacement``
    * - ``ea``
      - ``SubproblemUpdateCriterion``
      - * ``AggregationCriterion``
@@ -320,6 +323,13 @@ Available Components
 - ``StochasticUniversalSampling``: Lower variance than standard roulette wheel.
 - ``BoltzmannSelection``: Temperature-controlled selection pressure (control parameter: ``temperature``).
 - ``PopulationAndNeighborhoodSelection``: MOEA/D style mating selection from the neighborhood of a subproblem or from the whole population.
+- ``PAESSelection``: PAES mating selection; returns the current solution or, with a configurable ``archiveSelectionProbability``, a random member of the bounded archive.
+
+**Variation Components** (``ea.variation``):
+
+- ``CrossoverAndMutationVariation``: applies a crossover operator followed by a mutation operator.
+- ``DifferentialEvolutionCrossoverVariation``: differential evolution variation.
+- ``MutationOnlyVariation``: applies only mutation (no crossover); used by PAES.
 
 **Replacement Components** (``ea.replacement``):
 
@@ -329,6 +339,7 @@ Available Components
 - ``RandomReplacement``: Zero selection pressure baseline (random replacement).
 - ``TournamentReplacement``: Configurable pressure via tournament size.
 - ``MOEADReplacement``: MOEA/D subproblem update based on an aggregation function (see :ref:`aggregationFunctions`); the update rule is delegated to a ``SubproblemUpdateCriterion`` component.
+- ``PAESReplacement``: PAES three-way rule for a (1+1) strategy; accepts the offspring if it dominates the current solution, rejects it if dominated, or breaks ties using the bounded archive's density estimator.
 
 **Subproblem Update Criterion Components** (``ea.replacement.subproblemupdate``): rule used by ``MOEADReplacement`` to decide whether a new solution replaces the current solution of a subproblem, enabling constraint handling in MOEA/D (see :ref:`constraints`):
 
