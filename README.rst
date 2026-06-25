@@ -43,8 +43,13 @@ jMetal 7.4 is a Maven project structured in the following sub-projects:
 +---------------------+------------------------------------+
 
 
-Python scripts
---------------
+Related projects
+----------------
+* `jMetalPy <https://github.com/jMetal/jmetalpy>`_: jMetal in Python
+* `SAES <https://github.com/jMetal/SAES>`_: Python library to analyse and compare the performance of multi-objective algorithms
+
+Python scripts (NEW)
+--------------------
 
 The ``scripts/`` directory contains Python utilities for visualising Pareto fronts produced by
 jMetal algorithms (any ``FUN.csv`` file):
@@ -75,10 +80,7 @@ Install dependencies and run::
     python scripts/plot_front_interactive.py FUN.csv referenceFront.csv --mode both
 
 
-Related projects
-----------------
-* `jMetalPy <https://github.com/jMetal/jmetalpy>`_: jMetal in Python
-* `SAES <https://github.com/jMetal/SAES>`_: Python library to analyse and compare the performance of multi-objective algorithms
+
 
 Changelog
 ---------
