@@ -1,0 +1,12 @@
+# Python dependencies for jMetal analysis scripts
+# Python 3.11+ required
+
+# Core data manipulation
+pandas>=1.5.0
+numpy>=1.21.0
+
+# Static visualization (plot_front.py)
+matplotlib>=3.5.0
+
+# Interactive visualization (plot_front_interactive.py)
+plotly>=5.0.0
