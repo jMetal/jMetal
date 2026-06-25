@@ -43,6 +43,38 @@ jMetal 7.4 is a Maven project structured in the following sub-projects:
 +---------------------+------------------------------------+
 
 
+Python scripts
+--------------
+
+The ``scripts/`` directory contains Python utilities for visualising Pareto fronts produced by
+jMetal algorithms (any ``FUN.csv`` file):
+
++------------------------------+----------------------------------------------------------+
+| Script                       | Description                                              |
++==============================+==========================================================+
+| ``plot_front.py``            | Static matplotlib figure (2D/3D scatter, parallel        |
+|                              | coordinates for >3 objectives). Saves to PNG/PDF/SVG.   |
++------------------------------+----------------------------------------------------------+
+| ``plot_front_interactive.py``| Interactive Plotly viewer (rotate 3D fronts, hover for  |
+|                              | values). Opens in the browser or saves as HTML.          |
++------------------------------+----------------------------------------------------------+
+
+Install dependencies and run::
+
+    # venv
+    python -m venv .venv && source .venv/bin/activate
+    pip install -r scripts/requirements.txt
+
+    # conda
+    conda create -n jmetal python=3.11 && conda activate jmetal
+    pip install -r scripts/requirements.txt
+
+    # Usage examples
+    python scripts/plot_front.py FUN.csv
+    python scripts/plot_front.py FUN.csv referenceFront.csv --mode side --output fig.png
+    python scripts/plot_front_interactive.py FUN.csv referenceFront.csv --mode both
+
+
 Related projects
 ----------------
 * `jMetalPy <https://github.com/jMetal/jmetalpy>`_: jMetal in Python
@@ -50,6 +82,8 @@ Related projects
 
 Changelog
 ---------
+
+* [06/25/2026] Added Python scripts for Pareto front visualisation (``scripts/plot_front.py`` and ``scripts/plot_front_interactive.py``).
 
 * [06/12/2026] Added constraint handling components (feasibility rules, adaptive violation threshold, and improved epsilon) for the component-based MOEA/D and MOEA/D-DE algorithms, with examples combining them with unbounded external archives to solve constrained problems with three or more objectives. The `constraint handling documentation <https://jmetal.readthedocs.io/en/latest/constraints.html>`_ has been updated.
 
