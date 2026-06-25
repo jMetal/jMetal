@@ -43,9 +43,9 @@ public class MOEADDefaultConfigurationExample {
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 91;
+    int populationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(40000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
     SequenceGenerator<Integer> sequenceGenerator = new RandomPermutationCycle(populationSize);

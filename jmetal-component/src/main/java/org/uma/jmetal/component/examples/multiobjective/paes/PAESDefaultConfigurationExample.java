@@ -30,7 +30,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *
  * @author Antonio J. Nebro
  */
-public class PAESExample extends AbstractAlgorithmRunner {
+public class PAESDefaultConfigurationExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
@@ -47,7 +47,7 @@ public class PAESExample extends AbstractAlgorithmRunner {
         new GenericBoundedArchive<>(
             archiveSize, new GridDensityEstimator<>(biSections, problem.numberOfObjectives()));
 
-    Termination termination = new TerminationByEvaluations(35000);
+    Termination termination = new TerminationByEvaluations(25000);
 
     var algorithm = new PAESBuilder<>(
             problem,
