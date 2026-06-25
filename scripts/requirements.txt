@@ -1,5 +1,17 @@
 # Python dependencies for jMetal analysis scripts
 # Python 3.11+ required
+#
+# Create and activate a virtual environment before installing:
+#
+#   venv:
+#     python -m venv .venv
+#     source .venv/bin/activate        # Windows: .venv\Scripts\activate
+#     pip install -r scripts/requirements.txt
+#
+#   conda:
+#     conda create -n jmetal python=3.11
+#     conda activate jmetal
+#     pip install -r scripts/requirements.txt
 
 # Core data manipulation
 pandas>=1.5.0
