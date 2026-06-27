@@ -61,6 +61,16 @@ For Permutation Solutions
 - **OXDCrossover**: Order-based crossover.
 - **EdgeRecombinationCrossover**: Preserves adjacency information.
 
+The **PMX** (Partially Mapped Crossover) operator exchanges the segment between two
+random cut points and then repairs the offspring, following the mapping defined by the
+exchanged segment, so that each child remains a valid permutation:
+
+.. figure:: resources/figures/pmx_crossover.png
+   :align: center
+   :width: 90%
+
+   PMX crossover step by step (Goldberg and Lingle, 1985).
+
 Mutation Operators
 ------------------
 Mutation operators introduce random changes to solutions to maintain diversity.
