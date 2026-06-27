@@ -106,6 +106,15 @@ For Permutation Solutions (Mutation)
 - **DisplacementMutation**: Moves subsequence.
 - **SimpleInversionMutation**: Inverts two elements.
 
+The **swap mutation** picks two distinct random positions and exchanges their
+elements, which always yields a valid permutation:
+
+.. figure:: resources/figures/permutation_swap_mutation.png
+   :align: center
+   :width: 75%
+
+   Swap mutation on a permutation.
+
 Selection Operators
 -------------------
 
