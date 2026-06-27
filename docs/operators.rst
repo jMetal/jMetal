@@ -62,6 +62,15 @@ For Binary Solutions
 - **NPointCrossover**: General N-point crossover.
 - **UniformCrossover**: Random bit selection from parents.
 
+The **single-point crossover** chooses a crossover point and swaps the bits from
+that point onwards between the two parents, producing two children:
+
+.. figure:: resources/figures/single_point_crossover.png
+   :align: center
+   :width: 85%
+
+   Single-point crossover on binary strings.
+
 For Permutation Solutions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -116,6 +125,15 @@ For Binary Solutions (Mutation)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **BitFlipMutation**: Flips each bit with given probability.
+
+The **bit-flip mutation** inverts each bit independently with probability *p*
+(typically ``1 / number_of_bits``):
+
+.. figure:: resources/figures/bit_flip_mutation.png
+   :align: center
+   :width: 85%
+
+   Bit-flip mutation on a binary string.
 
 For Permutation Solutions (Mutation)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
