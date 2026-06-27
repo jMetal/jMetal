@@ -136,6 +136,26 @@ escape local optima:
    A realization of Lévy steps and the resulting heavy-tailed distribution of the
    mutated value (compared with a Gaussian).
 
+The **uniform mutation** replaces a variable with a value drawn uniformly from a
+window of fixed width (the ``perturbation`` parameter) centred on the current value:
+
+.. figure:: resources/figures/uniform_mutation.png
+   :align: center
+   :width: 90%
+
+   Distribution of the mutated value produced by uniform mutation for two
+   perturbation widths.
+
+The **power-law mutation** perturbs a variable with a power-distributed strength and
+chooses the direction from the variable's relative position, so the perturbation
+stays within the bounds and is symmetric in the interior of the range:
+
+.. figure:: resources/figures/power_law_mutation.png
+   :align: center
+   :width: 90%
+
+   Distribution of the mutated value produced by power-law mutation for two exponents.
+
 For Integer Solutions (Mutation)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
