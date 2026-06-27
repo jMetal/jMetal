@@ -37,6 +37,16 @@ For Double Solutions
 - **FuzzyRecombinationCrossover**: Implements fuzzy recombination.
 - **UnimodalNormalDistributionCrossover**: Uses unimodal normal distribution.
 
+The **SBX** (Simulated Binary Crossover) operator generates offspring around the
+parents following a distribution controlled by the distribution index: a larger
+index keeps the offspring closer to the parents, a smaller one spreads them out:
+
+.. figure:: resources/figures/sbx_crossover.png
+   :align: center
+   :width: 90%
+
+   Offspring distribution produced by SBX for two distribution indices.
+
 For Integer Solutions
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -84,6 +94,17 @@ For Double Solutions (Mutation)
 - **LevyFlightMutation**: Uses Lévy flights.
 - **PowerLawMutation**: Based on power law distribution.
 - **SimpleRandomMutation**: Uniform random mutation.
+
+The **polynomial mutation** operator perturbs a variable around its current value
+following a polynomial distribution controlled by the distribution index: a larger
+index produces smaller perturbations, a smaller one larger ones:
+
+.. figure:: resources/figures/polynomial_mutation.png
+   :align: center
+   :width: 90%
+
+   Distribution of the mutated value produced by polynomial mutation for two
+   distribution indices.
 
 For Integer Solutions (Mutation)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
