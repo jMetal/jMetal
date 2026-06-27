@@ -15,18 +15,25 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * favoring smaller perturbations, which is beneficial for both exploration and exploitation in
  * optimization.
  *
- * <p>The mutation follows the formula: tempDelta = rnd^(-delta) deltaq = 0.5 * (rnd - 0.5) * (1 -
- * tempDelta) newValue = oldValue + deltaq * (upperBound - lowerBound)
+ * <p>The mutation strength is power-distributed, {@code s = rnd^delta} with {@code rnd} uniform in
+ * [0, 1], and the direction is chosen from the relative position {@code t = (x - lb) / (ub - lb)} of
+ * the value within its range: with a uniform random {@code r}, {@code x' = x - s*(x - lb)} when
+ * {@code t < r} and {@code x' = x + s*(ub - x)} otherwise. This keeps the perturbation within the
+ * bounds by construction and symmetric in the interior of the range.
+ *
+ * <p>Reference: K. Deep and M. Thakur, "A new mutation operator for real coded genetic algorithms",
+ * Applied Mathematics and Computation, 193(1), 211-230, 2007.
  *
  * <p><b>Parameters:</b>
  * <ul>
  * <li><b>mutationProbability:</b> The probability of mutating each variable. Must be in [0, 1].</li>
- * <li><b>delta:</b> The power-law exponent parameter (controls distribution shape).
+ * <li><b>delta:</b> The power-law exponent that shapes the mutation strength {@code s = rnd^delta}.
  *     Must be positive (> 0). Typical values range from 0.1 to 10.0:
  *     <ul>
- *     <li>Values < 1.0 create more uniform distributions with moderate perturbations</li>
- *     <li>Values around 1.0 provide balanced exploration/exploitation</li>
- *     <li>Values > 1.0 create heavy-tailed distributions favoring small perturbations
+ *     <li>Values &lt; 1.0 bias the strength towards large values, producing wide perturbations
+ *         that spread towards the bounds</li>
+ *     <li>Values around 1.0 give a uniform strength</li>
+ *     <li>Values &gt; 1.0 bias the strength towards small values, favouring small perturbations
  *         with occasional large jumps</li>
  *     </ul>
  * </li>
@@ -133,23 +140,29 @@ public class PowerLawMutation implements MutationOperator<DoubleSolution> {
         double lowerBound = bounds.getLowerBound();
         double upperBound = bounds.getUpperBound();
 
-        // Generate power-law distributed perturbation
-        double rnd = randomGenerator.getRandomValue();
-
-        // Avoid division by zero or extreme values
-        if (rnd < 1e-10) {
-          rnd = 1e-10;
-        } else if (rnd > 1 - 1e-10) {
-          rnd = 1 - 1e-10;
+        if (upperBound == lowerBound) {
+          solution.variables().set(i, lowerBound);
+          continue;
         }
 
-        double tempDelta = Math.pow(rnd, -delta);
-        double deltaq = 0.5 * (rnd - 0.5) * (1 - tempDelta);
+        // Power-distributed mutation strength s in [0, 1]. Larger delta concentrates s near 0
+        // (small perturbations) while still allowing occasional values near 1 (large jumps).
+        double s = Math.pow(randomGenerator.getRandomValue(), delta);
 
-        // Apply perturbation scaled by variable range
-        double newValue = currentValue + deltaq * (upperBound - lowerBound);
+        // Choose the direction from the relative position of the value within its range. This
+        // keeps the perturbation symmetric in the interior of the range and always within bounds:
+        // a step towards a bound is scaled by the distance to that bound.
+        double t = (currentValue - lowerBound) / (upperBound - lowerBound);
+        double r = randomGenerator.getRandomValue();
 
-        // Repair the solution if it goes out of bounds
+        double newValue;
+        if (t < r) {
+          newValue = currentValue - s * (currentValue - lowerBound);
+        } else {
+          newValue = currentValue + s * (upperBound - currentValue);
+        }
+
+        // Repair just in case a custom repair strategy or rounding pushes the value out of range.
         newValue = solutionRepair.repairSolutionVariableValue(newValue, lowerBound, upperBound);
 
         solution.variables().set(i, newValue);
