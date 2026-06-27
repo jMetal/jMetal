@@ -47,6 +47,16 @@ index keeps the offspring closer to the parents, a smaller one spreads them out:
 
    Offspring distribution produced by SBX for two distribution indices.
 
+The **BLX-αβ** (Blend) crossover draws offspring uniformly from an interval that
+extends beyond the parents, asymmetrically: by ``α·d`` below the smaller parent and
+``β·d`` above the larger one, where ``d`` is the distance between parents:
+
+.. figure:: resources/figures/blx_alpha_beta_crossover.png
+   :align: center
+   :width: 90%
+
+   Sampling interval and (uniform) offspring distribution of BLX-αβ.
+
 For Integer Solutions
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -114,6 +124,17 @@ index produces smaller perturbations, a smaller one larger ones:
 
    Distribution of the mutated value produced by polynomial mutation for two
    distribution indices.
+
+The **Lévy flight mutation** perturbs a variable with a heavy-tailed step generated
+by Mantegna's algorithm: mostly small steps with occasional large jumps, which helps
+escape local optima:
+
+.. figure:: resources/figures/levy_flight_mutation.png
+   :align: center
+   :width: 90%
+
+   A realization of Lévy steps and the resulting heavy-tailed distribution of the
+   mutated value (compared with a Gaussian).
 
 For Integer Solutions (Mutation)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
