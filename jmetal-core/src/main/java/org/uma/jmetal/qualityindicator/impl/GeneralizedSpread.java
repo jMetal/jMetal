@@ -67,14 +67,21 @@ public class GeneralizedSpread extends QualityIndicator {
   public double generalizedSpread(double[][] front, double[][] referenceFront) {
     int numberOfObjectives = front[0].length ;
 
+    // Sort a local copy of the reference front, not the shared field: QualityIndicator instances
+    // are reused across parallel computations (e.g. jmetal-lab's ComputeQualityIndicators runs
+    // one compute() per independent run on a parallel stream), and sorting the shared array
+    // in-place from multiple threads at once corrupts it mid-sort, which Arrays.sort reports as
+    // "Comparison method violates its general contract!".
+    double[][] sortedReferenceFront = referenceFront.clone();
+
     double[][] extremeValues = new double[numberOfObjectives][] ;
     for (int i = 0; i < numberOfObjectives; i++) {
       //Arrays.sort(referenceFront, new VectorPositionComparator(i));
       int finalI = i;
-      Arrays.sort(referenceFront, Comparator.comparingDouble(x -> x[finalI])) ;
+      Arrays.sort(sortedReferenceFront, Comparator.comparingDouble(x -> x[finalI])) ;
       double[] newPoint = new double[numberOfObjectives] ;
       for (int j = 0 ; j < numberOfObjectives; j++) {
-        newPoint[j] = referenceFront[referenceFront.length -1][j];
+        newPoint[j] = sortedReferenceFront[sortedReferenceFront.length -1][j];
       }
       extremeValues[i] = newPoint ;
     }
