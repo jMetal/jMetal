@@ -11,8 +11,8 @@ public class RCM03TwoBarTrussDesignProblem extends AbstractDoubleProblem {
     numberOfConstraints(3);
     name("TwoBarTrussDesignProblem");
 
-    List<Double> lowerLimit = Arrays.asList(0.05, 0.2, 0.2, 0.35, 3.0);
-    List<Double> upperLimit = Arrays.asList(0.5, 0.5, 0.6, 0.5, 6.0);
+    List<Double> lowerLimit = Arrays.asList(1e-5, 1e-5, 1.0);
+    List<Double> upperLimit = Arrays.asList(100.0, 100.0, 3.0);
 
     variableBounds(lowerLimit, upperLimit);
   }
@@ -23,12 +23,16 @@ public class RCM03TwoBarTrussDesignProblem extends AbstractDoubleProblem {
     double x2 = solution.variables().get(1);
     double x3 = solution.variables().get(2);
 
-    solution.objectives()[0] = x1 * (16 + x3 * x3) * Math.sqrt(1 + x3 * x3) + x2 * (1 + x3 * x3);
-    solution.objectives()[1] = (20 * (16 + x3 * x3) * Math.sqrt(1 + x3 * x3)) / (x3 * x1);
+    solution.objectives()[0] = x1 * Math.sqrt(16 + x3 * x3) + x2 * Math.sqrt(1 + x3 * x3);
+    solution.objectives()[1] = (20 * Math.sqrt(16 + x3 * x3)) / (x3 * x1);
 
-    solution.constraints()[0] =  solution.objectives()[0] - 0.1;
-    solution.constraints()[1] = solution.objectives()[1] - 1e5;
-    solution.constraints()[2] =  (80 * (1 + x3 * x3) * Math.sqrt(1 + x3 * x3)) / (x3 * x2) - 1e5;
+    double g1 = solution.objectives()[0] - 0.1;
+    double g2 = solution.objectives()[1] - 1e5;
+    double g3 = (80 * Math.sqrt(1 + x3 * x3)) / (x3 * x2) - 1e5;
+
+    solution.constraints()[0] = -g1;
+    solution.constraints()[1] = -g2;
+    solution.constraints()[2] = -g3;
 
     return solution ;
   }

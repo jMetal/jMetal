@@ -32,7 +32,6 @@ public class RCM02VibratingPlatformProblem extends AbstractDoubleProblem {
 
     double E1 = 1.6;
     double E2 = 70;
-    double E3 = 200;
 
     double c1 = 500;
     double c2 = 1500;
@@ -40,10 +39,10 @@ public class RCM02VibratingPlatformProblem extends AbstractDoubleProblem {
 
     double mu = 2 * b * (rho1 * d1 + rho2 * (d2 - d1) + rho3 * (d3 - d2));
     double EI =
-        (2 * b / 3) * (E1 * Math.pow(d1, 3) + E2 * (Math.pow(d2, 3) - Math.pow(d1, 3)) + E3 * (d3
+        (2 * b / 3) * (E1 * Math.pow(d1, 3) + E2 * (Math.pow(d2, 3) - Math.pow(d1, 3)) + rho3 * (d3
             - d2));
 
-    double f1 = (-Math.PI) / (2 * L * L) * Math.pow(Math.abs(EI / mu), 0.5);
+    double f1 = (-Math.PI) / Math.pow(2 * L, 2) * Math.pow(Math.abs(EI / mu), 0.5);
     double f2 = 2 * b * L * (c1 * d1 + c2 * (d2 - d1) + c3 * (d3 - d2));
 
     solution.objectives()[0] = f1;
@@ -55,11 +54,11 @@ public class RCM02VibratingPlatformProblem extends AbstractDoubleProblem {
     double g4 = d2 - d3;
     double g5 = d3 - d2 - 0.01;
 
-    solution.constraints()[0] = g1;
-    solution.constraints()[1] = g2;
-    solution.constraints()[2] = g3;
-    solution.constraints()[3] = g4;
-    solution.constraints()[4] = g5;
+    solution.constraints()[0] = -g1;
+    solution.constraints()[1] = -g2;
+    solution.constraints()[2] = -g3;
+    solution.constraints()[3] = -g4;
+    solution.constraints()[4] = -g5;
 
     return solution ;
   }

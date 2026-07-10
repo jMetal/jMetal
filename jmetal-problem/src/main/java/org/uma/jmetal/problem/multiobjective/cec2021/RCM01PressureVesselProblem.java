@@ -20,8 +20,8 @@ public class RCM01PressureVesselProblem extends AbstractDoubleProblem {
     numberOfConstraints(2);
     name("PressureVesselProblem");
 
-    List<Double> lowerLimit = Arrays.asList(1.0, 1.0, 10.0, 10.0);
-    List<Double> upperLimit = Arrays.asList(99.0, 99.0, 200.0, 200.0);
+    List<Double> lowerLimit = Arrays.asList(0.51, 0.51, 10.0, 10.0);
+    List<Double> upperLimit = Arrays.asList(99.49, 99.49, 200.0, 200.0);
 
     variableBounds(lowerLimit, upperLimit);
   }
@@ -41,8 +41,10 @@ public class RCM01PressureVesselProblem extends AbstractDoubleProblem {
     solution.objectives()[1] =
         -Math.PI * Math.pow(x3, 2) * x4 - (4.0 / 3.0) * Math.PI * Math.pow(x3, 3);
 
-    solution.constraints()[0] = 0.00954 * x3 - z2;
-    solution.constraints()[1] = 0.0193 * x3 - z1;
+    double g1 = 0.00954 * x3 - z2;
+    double g2 = 0.0193 * x3 - z1;
+    solution.constraints()[0] = -g1;
+    solution.constraints()[1] = -g2;
 
     return solution;
   }
