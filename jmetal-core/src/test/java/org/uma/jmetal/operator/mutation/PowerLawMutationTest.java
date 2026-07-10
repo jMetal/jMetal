@@ -347,4 +347,119 @@ class PowerLawMutationTest {
       assertSame(newRepair, mutation.solutionRepair());
     }
   }
+
+  @Nested
+  @DisplayName("Corrected behaviour tests")
+  class CorrectedBehaviourTests {
+
+    /** A random generator that returns the given values in order. */
+    private RandomGenerator<Double> sequence(double... values) {
+      int[] index = {0};
+      return () -> values[index[0]++];
+    }
+
+    private void boundsAndIdentityRepair(double lowerBound, double upperBound) {
+      when(mockSolution.getBounds(0)).thenReturn(mockBounds);
+      when(mockBounds.getLowerBound()).thenReturn(lowerBound);
+      when(mockBounds.getUpperBound()).thenReturn(upperBound);
+      when(mockRepair.repairSolutionVariableValue(anyDouble(), anyDouble(), anyDouble()))
+          .thenAnswer(invocation -> invocation.getArgument(0));
+    }
+
+    @Test
+    @DisplayName("given t < r, when mutating, then the value moves towards the lower bound")
+    void givenTLessThanR_whenMutating_thenValueMovesDown() {
+      List<Double> variables = new ArrayList<>(List.of(4.0));
+      when(mockSolution.variables()).thenReturn(variables);
+      boundsAndIdentityRepair(0.0, 10.0);
+      // draws: probability=0.0, s=0.25 (delta=1 -> 0.25), r=0.9
+      PowerLawMutation mutation =
+          new PowerLawMutation(1.0, 1.0, mockRepair, sequence(0.0, 0.25, 0.9));
+
+      mutation.execute(mockSolution);
+
+      // t = 0.4 < r = 0.9 -> x - s*(x - lb) = 4 - 0.25*4 = 3.0
+      assertEquals(3.0, variables.get(0), 1e-10);
+    }
+
+    @Test
+    @DisplayName("given t >= r, when mutating, then the value moves towards the upper bound")
+    void givenTGreaterOrEqualR_whenMutating_thenValueMovesUp() {
+      List<Double> variables = new ArrayList<>(List.of(4.0));
+      when(mockSolution.variables()).thenReturn(variables);
+      boundsAndIdentityRepair(0.0, 10.0);
+      // draws: probability=0.0, s=0.25, r=0.1
+      PowerLawMutation mutation =
+          new PowerLawMutation(1.0, 1.0, mockRepair, sequence(0.0, 0.25, 0.1));
+
+      mutation.execute(mockSolution);
+
+      // t = 0.4 >= r = 0.1 -> x + s*(ub - x) = 4 + 0.25*6 = 5.5
+      assertEquals(5.5, variables.get(0), 1e-10);
+    }
+
+    @Test
+    @DisplayName("given delta, when mutating, then the mutation strength is rnd^delta")
+    void givenDelta_whenMutating_thenStrengthIsRndPowDelta() {
+      List<Double> variables = new ArrayList<>(List.of(4.0));
+      when(mockSolution.variables()).thenReturn(variables);
+      boundsAndIdentityRepair(0.0, 10.0);
+      // delta=2, s draw=0.5 -> s = 0.5^2 = 0.25 ; t = 0.4 < r = 0.9 -> 4 - 0.25*4 = 3.0
+      PowerLawMutation mutation =
+          new PowerLawMutation(1.0, 2.0, mockRepair, sequence(0.0, 0.5, 0.9));
+
+      mutation.execute(mockSolution);
+
+      assertEquals(3.0, variables.get(0), 1e-10);
+    }
+
+    @Test
+    @DisplayName("given many mutations, when no repair is applied, then values stay within bounds")
+    void givenManyMutations_whenNoRepair_thenValuesStayWithinBounds() {
+      List<Double> variables = new ArrayList<>(List.of(5.0));
+      when(mockSolution.variables()).thenReturn(variables);
+      boundsAndIdentityRepair(0.0, 10.0);
+      java.util.Random random = new java.util.Random(42);
+      PowerLawMutation mutation =
+          new PowerLawMutation(1.0, 1.5, mockRepair, random::nextDouble);
+
+      for (int iteration = 0; iteration < 10_000; iteration++) {
+        mutation.execute(mockSolution);
+        double value = variables.get(0);
+        assertTrue(
+            value >= 0.0 && value <= 10.0, "value out of bounds before repair: " + value);
+      }
+    }
+
+    @Test
+    @DisplayName("given a mid-range value, when mutating repeatedly, then the perturbation is symmetric")
+    void givenMidRangeValue_whenMutatingRepeatedly_thenPerturbationIsSymmetric() {
+      List<Double> variables = new ArrayList<>(List.of(5.0));
+      when(mockSolution.variables()).thenReturn(variables);
+      boundsAndIdentityRepair(0.0, 10.0);
+      java.util.Random random = new java.util.Random(7);
+      PowerLawMutation mutation =
+          new PowerLawMutation(1.0, 1.0, mockRepair, random::nextDouble);
+
+      int up = 0;
+      int down = 0;
+      double sum = 0.0;
+      int runs = 20_000;
+      for (int iteration = 0; iteration < runs; iteration++) {
+        variables.set(0, 5.0);
+        mutation.execute(mockSolution);
+        double value = variables.get(0);
+        sum += value;
+        if (value > 5.0) {
+          up++;
+        } else if (value < 5.0) {
+          down++;
+        }
+      }
+
+      double upRatio = up / (double) (up + down);
+      assertEquals(0.5, upRatio, 0.05, "mutation direction is biased");
+      assertEquals(5.0, sum / runs, 0.15, "mutation is not centred on the original value");
+    }
+  }
 }

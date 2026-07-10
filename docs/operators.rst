@@ -37,6 +37,26 @@ For Double Solutions
 - **FuzzyRecombinationCrossover**: Implements fuzzy recombination.
 - **UnimodalNormalDistributionCrossover**: Uses unimodal normal distribution.
 
+The **SBX** (Simulated Binary Crossover) operator generates offspring around the
+parents following a distribution controlled by the distribution index: a larger
+index keeps the offspring closer to the parents, a smaller one spreads them out:
+
+.. figure:: resources/figures/sbx_crossover.png
+   :align: center
+   :width: 90%
+
+   Offspring distribution produced by SBX for two distribution indices.
+
+The **BLX-αβ** (Blend) crossover draws offspring uniformly from an interval that
+extends beyond the parents, asymmetrically: by ``α·d`` below the smaller parent and
+``β·d`` above the larger one, where ``d`` is the distance between parents:
+
+.. figure:: resources/figures/blx_alpha_beta_crossover.png
+   :align: center
+   :width: 90%
+
+   Sampling interval and (uniform) offspring distribution of BLX-αβ.
+
 For Integer Solutions
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -52,6 +72,15 @@ For Binary Solutions
 - **NPointCrossover**: General N-point crossover.
 - **UniformCrossover**: Random bit selection from parents.
 
+The **single-point crossover** chooses a crossover point and swaps the bits from
+that point onwards between the two parents, producing two children:
+
+.. figure:: resources/figures/single_point_crossover.png
+   :align: center
+   :width: 85%
+
+   Single-point crossover on binary strings.
+
 For Permutation Solutions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -60,6 +89,16 @@ For Permutation Solutions
 - **PositionBasedCrossover**: Preserves relative ordering.
 - **OXDCrossover**: Order-based crossover.
 - **EdgeRecombinationCrossover**: Preserves adjacency information.
+
+The **PMX** (Partially Mapped Crossover) operator exchanges the segment between two
+random cut points and then repairs the offspring, following the mapping defined by the
+exchanged segment, so that each child remains a valid permutation:
+
+.. figure:: resources/figures/pmx_crossover.png
+   :align: center
+   :width: 90%
+
+   PMX crossover step by step (Goldberg and Lingle, 1985).
 
 Mutation Operators
 ------------------
@@ -75,6 +114,48 @@ For Double Solutions (Mutation)
 - **PowerLawMutation**: Based on power law distribution.
 - **SimpleRandomMutation**: Uniform random mutation.
 
+The **polynomial mutation** operator perturbs a variable around its current value
+following a polynomial distribution controlled by the distribution index: a larger
+index produces smaller perturbations, a smaller one larger ones:
+
+.. figure:: resources/figures/polynomial_mutation.png
+   :align: center
+   :width: 90%
+
+   Distribution of the mutated value produced by polynomial mutation for two
+   distribution indices.
+
+The **Lévy flight mutation** perturbs a variable with a heavy-tailed step generated
+by Mantegna's algorithm: mostly small steps with occasional large jumps, which helps
+escape local optima:
+
+.. figure:: resources/figures/levy_flight_mutation.png
+   :align: center
+   :width: 90%
+
+   A realization of Lévy steps and the resulting heavy-tailed distribution of the
+   mutated value (compared with a Gaussian).
+
+The **uniform mutation** replaces a variable with a value drawn uniformly from a
+window of fixed width (the ``perturbation`` parameter) centred on the current value:
+
+.. figure:: resources/figures/uniform_mutation.png
+   :align: center
+   :width: 90%
+
+   Distribution of the mutated value produced by uniform mutation for two
+   perturbation widths.
+
+The **power-law mutation** perturbs a variable with a power-distributed strength and
+chooses the direction from the variable's relative position, so the perturbation
+stays within the bounds and is symmetric in the interior of the range:
+
+.. figure:: resources/figures/power_law_mutation.png
+   :align: center
+   :width: 90%
+
+   Distribution of the mutated value produced by power-law mutation for two exponents.
+
 For Integer Solutions (Mutation)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -86,6 +167,15 @@ For Binary Solutions (Mutation)
 
 - **BitFlipMutation**: Flips each bit with given probability.
 
+The **bit-flip mutation** inverts each bit independently with probability *p*
+(typically ``1 / number_of_bits``):
+
+.. figure:: resources/figures/bit_flip_mutation.png
+   :align: center
+   :width: 85%
+
+   Bit-flip mutation on a binary string.
+
 For Permutation Solutions (Mutation)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -95,6 +185,15 @@ For Permutation Solutions (Mutation)
 - **InversionMutation**: Inverts subsequence order.
 - **DisplacementMutation**: Moves subsequence.
 - **SimpleInversionMutation**: Inverts two elements.
+
+The **swap mutation** picks two distinct random positions and exchanges their
+elements, which always yields a valid permutation:
+
+.. figure:: resources/figures/permutation_swap_mutation.png
+   :align: center
+   :width: 75%
+
+   Swap mutation on a permutation.
 
 Selection Operators
 -------------------

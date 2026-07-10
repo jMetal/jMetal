@@ -10,7 +10,19 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 /**
- * This class allows to apply a PMX crossover operator using two parent solutions.
+ * Partially Mapped Crossover (PMX) operator for permutation-encoded solutions.
+ *
+ * <p>PMX recombines two parent permutations by exchanging the segment between two randomly chosen
+ * cutting points and then repairing the resulting offspring, following the mapping defined by the
+ * exchanged segment, so that each child remains a valid permutation (no repeated or missing
+ * elements). The operator requires exactly two parents and produces two children.
+ *
+ * <p>The crossover is applied with probability {@link #crossoverProbability()}; if it is not
+ * applied, the offspring are plain copies of the parents. Permutations shorter than two elements
+ * are returned unchanged.
+ *
+ * <p>Reference: D. E. Goldberg and R. Lingle, "Alleles, loci, and the traveling salesman problem",
+ * Proceedings of the 1st International Conference on Genetic Algorithms, 1985.
  *
  * @author Antonio J. Nebro
  * @author Juan J. Durillo
@@ -23,21 +35,35 @@ public class PMXCrossover implements
   private RandomGenerator<Double> crossoverRandomGenerator ;
 
   /**
-   * Constructor
+   * Creates a PMX crossover operator using the default {@link JMetalRandom} generator for both the
+   * crossover decision and the selection of the cutting points.
+   *
+   * @param crossoverProbability probability of applying the crossover (in [0, 1])
    */
   public PMXCrossover(double crossoverProbability) {
 	  this(crossoverProbability, () -> JMetalRandom.getInstance().nextDouble(), (a, b) -> JMetalRandom.getInstance().nextInt(a, b));
   }
 
   /**
-   * Constructor
+   * Creates a PMX crossover operator using the given random generator for the crossover decision;
+   * the cutting points are derived from the same generator.
+   *
+   * @param crossoverProbability probability of applying the crossover (in [0, 1])
+   * @param randomGenerator generator of uniform values in [0, 1) used both for the crossover
+   *     decision and, after conversion, for the cutting points
    */
   public PMXCrossover(double crossoverProbability, RandomGenerator<Double> randomGenerator) {
 	  this(crossoverProbability, randomGenerator, BoundedRandomGenerator.fromDoubleToInteger(randomGenerator));
   }
 
   /**
-   * Constructor
+   * Creates a PMX crossover operator with separate random generators for the crossover decision and
+   * for the cutting points.
+   *
+   * @param crossoverProbability probability of applying the crossover (in [0, 1])
+   * @param crossoverRandomGenerator generator of uniform values in [0, 1) used to decide whether the
+   *     crossover is applied
+   * @param cuttingPointRandomGenerator bounded generator used to select the two cutting points
    */
   public PMXCrossover(double crossoverProbability, RandomGenerator<Double> crossoverRandomGenerator, BoundedRandomGenerator<Integer> cuttingPointRandomGenerator) {
     Check.probabilityIsValid(crossoverProbability );
@@ -59,9 +85,10 @@ public class PMXCrossover implements
   }
 
   /**
-   * Executes the operation
+   * Applies the PMX crossover to the given parents.
    *
-   * @param parents An object containing an array of two solutions
+   * @param parents a list containing exactly two parent permutations
+   * @return a list with the two offspring permutations
    */
   public List<PermutationSolution<Integer>> execute(List<PermutationSolution<Integer>> parents) {
     Check.notNull(parents);
@@ -71,11 +98,12 @@ public class PMXCrossover implements
   }
 
   /**
-   * Perform the crossover operation
+   * Performs the crossover operation.
    *
-   * @param probability Crossover probability
-   * @param parents     Parents
-   * @return An array containing the two offspring
+   * @param probability probability of applying the crossover (in [0, 1])
+   * @param parents a list containing exactly two parent permutations
+   * @return a list with the two offspring permutations; if the crossover is not applied or the
+   *     permutation length is smaller than two, the offspring are copies of the parents
    */
   public List<PermutationSolution<Integer>> doCrossover(double probability, List<PermutationSolution<Integer>> parents) {
     List<PermutationSolution<Integer>> offspring = new ArrayList<>(2);
