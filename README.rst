@@ -85,7 +85,7 @@ Install dependencies and run::
 Changelog
 ---------
 
-* [07/10/2026] Added 35 of the 50 problems (RCM01-RCM35) of the CEC2021 real-world constrained multi-objective optimization benchmark suite (RWMOP), fixing several correctness bugs (wrong bounds, inverted constraint signs, mistranscribed formulas) present in the 3 problems already in the codebase. Reference: Kumar, Wu, Ali, Luo, Mallipeddi, Suganthan, Das, "A Benchmark-Suite of Real-World Constrained Multi-Objective Optimization Problems and some Baseline Results", Swarm and Evolutionary Computation, 67, 100961 (2021). The remaining problems (RCM36-RCM50, involving large admittance matrices and complex-number power-flow arithmetic) are left for a follow-up contribution.
+* [07/10/2026] Added the full 50-problem CEC2021 real-world constrained multi-objective optimization benchmark suite (RWMOP, RCM01-RCM50), fixing several correctness bugs (wrong bounds, inverted constraint signs, mistranscribed formulas) present in the 3 problems already in the codebase. Reference: Kumar, Wu, Ali, Luo, Mallipeddi, Suganthan, Das, "A Benchmark-Suite of Real-World Constrained Multi-Objective Optimization Problems and some Baseline Results", Swarm and Evolutionary Computation, 67, 100961 (2021).
 
 * [07/10/2026] Added the SDX (Synthetic Differences Crossover) operator for real-coded problems, contributed by Alejandro Santiago (`A synthetic differences crossover operator for real-coded evolutionary algorithms, Evolutionary Intelligence 19(4), 110, 2026 <https://doi.org/10.1007/s12065-026-01220-4>`_).
 
