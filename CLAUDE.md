@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-jMetal is a Java 21 Maven framework for multi-objective optimization with metaheuristics (version 7.4-SNAPSHOT). All code, comments, and documentation must be written in English.
+jMetal is a Java 21 Maven framework for multi-objective optimization with metaheuristics (version 7.6-SNAPSHOT). All code, comments, and documentation must be written in English.
 
 ## Build Commands
 
