@@ -85,6 +85,12 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [07/13/2026] Fixed the constraint sign convention of the CRE benchmark suite (CRE21-25, CRE31,
+  CRE32, CRE51): constraint values were clamped so that every solution appeared feasible to
+  ``ConstraintHandling`` and the constraint comparators, regardless of the actual degree of
+  constraint violation. Same class of bug already fixed for the CF suite (see the 06/12/2026
+  entry below), missed in that pass.
+
 * [07/13/2026] jMetal 7.5 is released.
 
 * [07/10/2026] Added the full 50-problem CEC2021 real-world constrained multi-objective optimization benchmark suite (RWMOP, RCM01-RCM50), fixing several correctness bugs (wrong bounds, inverted constraint signs, mistranscribed formulas) present in the 3 problems already in the codebase. Reference: Kumar, Wu, Ali, Luo, Mallipeddi, Suganthan, Das, "A Benchmark-Suite of Real-World Constrained Multi-Objective Optimization Problems and some Baseline Results", Swarm and Evolutionary Computation, 67, 100961 (2021).
