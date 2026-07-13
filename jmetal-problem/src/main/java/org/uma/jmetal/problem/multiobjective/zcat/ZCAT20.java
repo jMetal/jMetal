@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.zcat;
 
+import java.util.function.Function;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.multiobjective.zcat.ffunction.F20;
 import org.uma.jmetal.problem.multiobjective.zcat.gfunction.G0;
@@ -43,27 +44,32 @@ public class ZCAT20 extends ZCAT1 {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] normalizedVariables = zcatGetY(solution.variables());
-    paretoSetDimension =
+    // Local, not the inherited paretoSetDimension/gFunction fields: this value is
+    // solution-dependent (recomputed per evaluate() call), so mutating the shared instance
+    // fields is not thread-safe when the same problem instance is evaluated concurrently
+    // (e.g. Evolver's async multi-threaded meta-optimizer reuses one Problem instance across
+    // worker threads).
+    int localParetoSetDimension =
         (zcatValueIn(normalizedVariables[0], 0.1, 0.4)
                 || zcatValueIn(normalizedVariables[0], 0.6, 0.9))
             ? 1
             : numberOfObjectives - 1;
 
-    gFunction =
+    Function<double[], double[]> localGFunction =
         complicatedParetoSet
-            ? new G3(numberOfVariables(), paretoSetDimension)
-            : new G0(numberOfVariables(), paretoSetDimension);
+            ? new G3(numberOfVariables(), localParetoSetDimension)
+            : new G0(numberOfVariables(), localParetoSetDimension);
 
     double[] alpha = zcatGetAlpha(normalizedVariables, numberOfObjectives(), fFunction);
     double[] beta =
         zcatGetBeta(
             normalizedVariables,
             numberOfVariables(),
-            paretoSetDimension,
+            localParetoSetDimension,
             bias,
             imbalance,
             level,
-            gFunction);
+            localGFunction);
 
     double[] f = zcatMopDefinition(alpha, beta, numberOfObjectives);
     IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
