@@ -59,14 +59,6 @@ public class CRE51 extends AbstractDoubleProblem {
     constraint[6] = 550 - (0.164 / (x[0] * x[1]) + 631.13 * x[2] - 54.48);
 
     for (int i = 0; i < numberOfConstraints(); i++) {
-      if (constraint[i] < 0.0) {
-        constraint[i] = -constraint[i];
-      } else {
-        constraint[i] = 0;
-      }
-    }
-
-    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

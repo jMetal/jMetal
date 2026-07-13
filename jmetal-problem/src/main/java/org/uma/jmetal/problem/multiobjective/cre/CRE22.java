@@ -80,14 +80,6 @@ public class CRE22 extends AbstractDoubleProblem {
     constraint[3] = PC - P;
 
     for (int i = 0; i < numberOfConstraints(); i++) {
-      if (constraint[i] < 0.0) {
-        constraint[i] = -constraint[i];
-      } else {
-        constraint[i] = 0;
-      }
-    }
-
-    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

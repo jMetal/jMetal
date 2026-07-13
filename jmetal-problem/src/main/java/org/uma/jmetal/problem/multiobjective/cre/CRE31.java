@@ -76,14 +76,6 @@ public class CRE31 extends AbstractDoubleProblem {
     constraint[9] = 15.7 - Vfd ;
 
     for (int i = 0; i < numberOfConstraints(); i++) {
-      if (constraint[i] < 0.0) {
-        constraint[i] = -constraint[i];
-      } else {
-        constraint[i] = 0;
-      }
-    }
-
-    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }

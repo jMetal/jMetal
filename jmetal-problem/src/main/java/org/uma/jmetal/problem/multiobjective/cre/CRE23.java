@@ -58,14 +58,6 @@ public class CRE23 extends AbstractDoubleProblem {
     constraint[3] = (2.66 * 1e-2 * x3 * x4 * (x2 * x2 * x2 - x1 * x1 * x1)) / (x2 * x2 - x1 * x1) - 900.0;
 
     for (int i = 0; i < numberOfConstraints(); i++) {
-      if (constraint[i] < 0.0) {
-        constraint[i] = -constraint[i];
-      } else {
-        constraint[i] = 0;
-      }
-    }
-
-    for (int i = 0; i < numberOfConstraints(); i++) {
       solution.constraints()[i] = constraint[i];
     }
   }
