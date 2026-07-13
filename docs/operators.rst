@@ -36,6 +36,9 @@ For Double Solutions
 - **WholeArithmeticCrossover**: Uses all parents in arithmetic recombination.
 - **FuzzyRecombinationCrossover**: Implements fuzzy recombination.
 - **UnimodalNormalDistributionCrossover**: Uses unimodal normal distribution.
+- **SDXCrossover**: Synthetic Differences Crossover; combines scaled synthetic differences of the
+  parents, in the spirit of differential-evolution schemes, applying the crossover probability
+  per variable instead of per pair of parents.
 
 The **SBX** (Simulated Binary Crossover) operator generates offspring around the
 parents following a distribution controlled by the distribution index: a larger

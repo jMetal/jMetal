@@ -30,8 +30,6 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  */
 @SuppressWarnings("serial")
 public class SDXCrossover implements CrossoverOperator<DoubleSolution> {
-  private static final double DEFAULT_F = 0.5;
-
   private double crossoverProbability;
   private double f;
   private final RepairDoubleSolution solutionRepair;
