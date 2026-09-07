@@ -27,7 +27,7 @@ public class MuPlusLambdaReplacement<S extends Solution<?>> implements Replaceme
     jointPopulation.sort(comparator);
 
     while (jointPopulation.size() > population.size()) {
-      jointPopulation.remove(jointPopulation.size() - 1);
+      jointPopulation.removeLast();
     }
 
     return jointPopulation;

@@ -50,8 +50,8 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
     offspringPopulation.add(population.get(0));
     offspringPopulation.add(population.get(1));
     offspringPopulation.sort(comparator);
-    offspringPopulation.remove(offspringPopulation.size() - 1);
-    offspringPopulation.remove(offspringPopulation.size() - 1);
+    offspringPopulation.removeLast();
+    offspringPopulation.removeLast();
 
     return offspringPopulation;
   }
@@ -64,7 +64,7 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
 
   @Override public S result() {
     getPopulation().sort(comparator);
-    return getPopulation().get(0);
+    return getPopulation().getFirst();
   }
 
   @Override public void initProgress() {
