@@ -35,7 +35,7 @@ public class MuCommaLambdaReplacement<S extends Solution<?>> implements Replacem
     resultPopulation.sort(comparator);
 
     while (resultPopulation.size() > population.size()) {
-      resultPopulation.remove(resultPopulation.size() - 1);
+      resultPopulation.removeLast();
     }
 
     return resultPopulation;

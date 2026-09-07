@@ -91,7 +91,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
       while (resultList.size() > sizeOfTheResultingSolutionList) {
         resultList.sort(Comparator.comparing(densityEstimator::value).reversed());
 
-        resultList.remove(resultList.size() - 1);
+        resultList.removeLast();
         densityEstimator.compute(resultList);
       }
     }

@@ -33,8 +33,8 @@ public class PAESReplacement<S extends Solution<?>> implements Replacement<S> {
 
   @Override
   public List<S> replace(List<S> population, List<S> offspringPopulation) {
-    S current = population.get(0);
-    S offspring = offspringPopulation.get(0);
+    S current = population.getFirst();
+    S offspring = offspringPopulation.getFirst();
 
     // Ensure current is tracked (handles the initial solution on the first call; no-op thereafter)
     paesArchive.add(current);
