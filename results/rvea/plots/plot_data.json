@@ -1,0 +1,57 @@
+[
+  {
+    "problem": "DTLZ2",
+    "algorithm": "RVEA*",
+    "seed": 42,
+    "evaluations": 25025,
+    "metadata_source": "docs/rvea-variants.md (recorded execution settings)",
+    "nondominated_points": 91,
+    "igd_plus": 0.02379580731103096,
+    "source": "results/rvea/data/FUN.RVEAStar.DTLZ2.csv",
+    "sha256": "2d06bcc8919133508921f1f0497d7e6366b34a3747ff1e0e18c6d8e5267e5000"
+  },
+  {
+    "problem": "DTLZ7",
+    "algorithm": "iRVEA",
+    "seed": 42,
+    "evaluations": 25025,
+    "metadata_source": "docs/rvea-variants.md (recorded execution settings)",
+    "nondominated_points": 90,
+    "igd_plus": 0.03918892236340499,
+    "source": "results/rvea/data/FUN.iRVEA.DTLZ7.csv",
+    "sha256": "7eeef90e7887ac5ddfd34eca8a761c763230c1b7e00af66b4635f6a37304c823"
+  },
+  {
+    "problem": "DTLZ5",
+    "algorithm": "RVEA",
+    "seed": 42,
+    "evaluations": 25025,
+    "metadata_source": "docs/rvea-variants.md (recorded execution settings)",
+    "nondominated_points": 10,
+    "igd_plus": 0.03687673371099749,
+    "source": "results/rvea/data/FUN.RVEA.DTLZ5.csv",
+    "sha256": "527f0a53cbbbee8e391b0fe4458ff7410d9249e18817dc23dda1c61f7682aa04"
+  },
+  {
+    "problem": "DTLZ5",
+    "algorithm": "RVEA*",
+    "seed": 42,
+    "evaluations": 25025,
+    "metadata_source": "docs/rvea-variants.md (recorded execution settings)",
+    "nondominated_points": 85,
+    "igd_plus": 0.0030191789954133064,
+    "source": "results/rvea/data/FUN.RVEAStar.DTLZ5.csv",
+    "sha256": "a7b2710c2e62b7bea9ffb4dbf02080930a2f4751fcac188c10d5704ae4ec4324"
+  },
+  {
+    "problem": "DTLZ5",
+    "algorithm": "iRVEA",
+    "seed": 42,
+    "evaluations": 25025,
+    "metadata_source": "docs/rvea-variants.md (recorded execution settings)",
+    "nondominated_points": 90,
+    "igd_plus": 0.002880172359409609,
+    "source": "results/rvea/data/FUN.iRVEA.DTLZ5.csv",
+    "sha256": "fdca0279b4fdc6307b9acba61f895f568023b8e549b93f41d846cac7d29a86e0"
+  }
+]

@@ -1,0 +1,28 @@
+RVEA* DTLZ2: seed=42, evaluations=25025, survivors=91, nondominated=91, IGD+=0.023796, time=1981 ms
+Saved FUN.RVEAStar.DTLZ2.csv and VAR.RVEAStar.DTLZ2.csv
+iRVEA DTLZ7: seed=42, evaluations=25025, survivors=91, nondominated=90, IGD+=0.039189, time=2898 ms
+Saved FUN.iRVEA.DTLZ7.csv and VAR.iRVEA.DTLZ7.csv
+RVEA DTLZ5: seed=42, evaluations=25025, survivors=50, nondominated=10, IGD+=0.036877, time=375 ms
+Saved FUN.RVEA.DTLZ5.csv and VAR.RVEA.DTLZ5.csv
+RVEA* DTLZ5: seed=42, evaluations=25025, survivors=85, nondominated=85, IGD+=0.003019, time=920 ms
+Saved FUN.RVEAStar.DTLZ5.csv and VAR.RVEAStar.DTLZ5.csv
+iRVEA DTLZ5: seed=42, evaluations=25025, survivors=91, nondominated=90, IGD+=0.002880, time=2401 ms
+Saved FUN.iRVEA.DTLZ5.csv and VAR.iRVEA.DTLZ5.csv
+RVEA ZDT1: seed=42, evaluations=25000, survivors=100, nondominated=68, IGD+=0.038176, time=367 ms
+Saved FUN.RVEA.ZDT1.csv and VAR.RVEA.ZDT1.csv
+RVEA* ZDT1: seed=42, evaluations=25000, survivors=100, nondominated=100, IGD+=0.003824, time=1114 ms
+Saved FUN.RVEAStar.ZDT1.csv and VAR.RVEAStar.ZDT1.csv
+iRVEA ZDT1: seed=42, evaluations=25000, survivors=100, nondominated=100, IGD+=0.003330, time=1384 ms
+Saved FUN.iRVEA.ZDT1.csv and VAR.iRVEA.ZDT1.csv
+RVEA ZDT2: seed=42, evaluations=25000, survivors=100, nondominated=44, IGD+=0.043022, time=453 ms
+Saved FUN.RVEA.ZDT2.csv and VAR.RVEA.ZDT2.csv
+RVEA* ZDT2: seed=42, evaluations=25000, survivors=100, nondominated=100, IGD+=0.003357, time=1040 ms
+Saved FUN.RVEAStar.ZDT2.csv and VAR.RVEAStar.ZDT2.csv
+iRVEA ZDT2: seed=42, evaluations=25000, survivors=100, nondominated=100, IGD+=0.003046, time=1322 ms
+Saved FUN.iRVEA.ZDT2.csv and VAR.iRVEA.ZDT2.csv
+RVEA ZDT3: seed=42, evaluations=25000, survivors=100, nondominated=41, IGD+=0.054089, time=408 ms
+Saved FUN.RVEA.ZDT3.csv and VAR.RVEA.ZDT3.csv
+RVEA* ZDT3: seed=42, evaluations=25000, survivors=100, nondominated=100, IGD+=0.003358, time=971 ms
+Saved FUN.RVEAStar.ZDT3.csv and VAR.RVEAStar.ZDT3.csv
+iRVEA ZDT3: seed=42, evaluations=25000, survivors=100, nondominated=93, IGD+=0.004571, time=1734 ms
+Saved FUN.iRVEA.ZDT3.csv and VAR.iRVEA.ZDT3.csv

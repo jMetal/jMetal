@@ -1,6 +1,5 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
@@ -9,9 +8,10 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCrea
 import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RVEAReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea.IRVEAEnvironmentalSelection;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea.RVEAEnvironmentalSelection;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea.RVEAStarEnvironmentalSelection;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
@@ -21,201 +21,209 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
 /**
- * Class to configure and build an instance of the RVEA (Reference Vector Guided Evolutionary Algorithm)
- * using the component-based architecture.
+ * Builds component-based RVEA algorithms for unconstrained minimization.
  *
- * <p>Two constructor modes are supported:
- * <ul>
- *   <li>Provide {@code h} to generate paper-default reference vectors from the number of objectives.</li>
- *   <li>Provide preloaded reference vectors directly when the vector set is externally defined.</li>
- * </ul>
+ * <p>The initial population and each offspring batch contain N solutions, where N is the number of
+ * predefined vectors. Survivor populations can vary in size. Termination must be by evaluations to
+ * define the APD schedule; the final offspring batch may exceed the budget by fewer than N
+ * evaluations. Each call to {@link #build()} creates fresh vector and archive state.
  *
- * @param <S>
+ * @param <S> solution type
  */
 public class RVEABuilder<S extends Solution<?>> {
-  private static final double MINIMUM_FREQUENCY_RATIO = 1.0e-64;
+  protected enum Variant {
+    RVEA,
+    RVEA_STAR,
+    IRVEA
+  }
 
-  private final String name;
+  private final Variant variant;
   private final Problem<S> problem;
   private final int populationSize;
   private final double alpha;
   private final double fr;
-  private List<double[]> referenceVectors;
+  private final List<double[]> referenceVectors;
   private Evaluation<S> evaluation;
-  private SolutionsCreation<S> createInitialPopulation;
+  private SolutionsCreation<S> initialPopulation;
   private Termination termination;
   private Selection<S> selection;
   private Variation<S> variation;
-  private Replacement<S> replacement;
   private boolean customSelection;
+  protected int numberOfSubregions = 40;
 
-  /**
-   * Creates a builder for the RVEA algorithm using reference vectors generated from
-   * the number of objectives and {@code h}.
-   *
-   * <p>Parameter constraints:
-   * <ul>
-   *   <li>{@code problem}, {@code crossover}, and {@code mutation} must be non-null.</li>
-   *   <li>{@code populationSize}, {@code maxEvaluations}, and {@code h} must be greater than 0.</li>
-   *   <li>{@code alpha} must be greater than or equal to 0.</li>
-   *   <li>{@code fr} must be in [{@value #MINIMUM_FREQUENCY_RATIO}, 1.0].</li>
-   * </ul>
-   *
-   * <p>RVEA requires termination by evaluations in {@link #build()} to compute APD progress and
-   * reference adaptation.
-   */
-  public RVEABuilder(Problem<S> problem, int populationSize, int maxEvaluations,
-      CrossoverOperator<S> crossover, MutationOperator<S> mutation, double alpha, double fr, int h) {
-    this(problem, populationSize, maxEvaluations, crossover, mutation, alpha, fr,
-        ReferencePointGenerator.generateSingleLayer(
-            validateProblem(problem).numberOfObjectives(), validateNumberOfDivisions(h)));
+  public RVEABuilder(
+      Problem<S> problem,
+      int populationSize,
+      int maxEvaluations,
+      CrossoverOperator<S> crossover,
+      MutationOperator<S> mutation,
+      double alpha,
+      double fr,
+      int divisions) {
+    this(
+        problem,
+        populationSize,
+        maxEvaluations,
+        crossover,
+        mutation,
+        alpha,
+        fr,
+        generateVectors(problem, divisions));
   }
 
-  /**
-   * Creates a builder for the RVEA algorithm using caller-provided reference vectors.
-   *
-   * <p>Parameter constraints:
-   * <ul>
-   *   <li>{@code problem}, {@code crossover}, {@code mutation}, and {@code referenceVectors} must be non-null.</li>
-   *   <li>{@code referenceVectors} must not be empty and must not contain null entries.</li>
-   *   <li>{@code populationSize}, {@code maxEvaluations} must be greater than 0.</li>
-   *   <li>{@code alpha} must be greater than or equal to 0.</li>
-   *   <li>{@code fr} must be in [{@value #MINIMUM_FREQUENCY_RATIO}, 1.0].</li>
-   *   <li>The number of vectors must match {@code populationSize}.</li>
-   * </ul>
-   *
-   * <p>RVEA requires termination by evaluations in {@link #build()} to compute APD progress and
-   * reference adaptation.
-   */
-  public RVEABuilder(Problem<S> problem, int populationSize, int maxEvaluations,
-      CrossoverOperator<S> crossover, MutationOperator<S> mutation, double alpha, double fr,
-      List<double[]> referenceVectors) {
-    Check.notNull(problem, "problem");
-    Check.notNull(crossover, "crossover");
-    Check.notNull(mutation, "mutation");
-    Check.notNull(referenceVectors, "referenceVectors");
-    Check.notNullAndNotEmpty(referenceVectors, "referenceVectors");
-    Check.noNullElements(referenceVectors, "referenceVectors");
+  public RVEABuilder(
+      Problem<S> problem,
+      int populationSize,
+      int maxEvaluations,
+      CrossoverOperator<S> crossover,
+      MutationOperator<S> mutation,
+      double alpha,
+      double fr,
+      List<double[]> vectors) {
+    this(
+        Variant.RVEA,
+        problem,
+        populationSize,
+        maxEvaluations,
+        crossover,
+        mutation,
+        alpha,
+        fr,
+        vectors);
+  }
+
+  protected RVEABuilder(
+      Variant variant,
+      Problem<S> problem,
+      int populationSize,
+      int maxEvaluations,
+      CrossoverOperator<S> crossover,
+      MutationOperator<S> mutation,
+      double alpha,
+      double fr,
+      List<double[]> vectors) {
+    Check.notNull(problem);
+    Check.notNull(crossover);
+    Check.notNull(mutation);
+    Check.that(problem.numberOfConstraints() == 0, "RVEA requires an unconstrained problem");
     Check.valueIsPositive(populationSize, "populationSize");
     Check.valueIsPositive(maxEvaluations, "maxEvaluations");
     Check.valueIsNotNegative(alpha, "alpha");
-    Check.valueIsInRange(fr, MINIMUM_FREQUENCY_RATIO, 1.0, "fr");
-    Check.that(referenceVectors.size() == populationSize,
-      "Population size must match the number of generated reference vectors. Expected "
-        + referenceVectors.size() + " and found " + populationSize + ".");
-
-    int numberOfObjectives = problem.numberOfObjectives();
-    for (double[] referenceVector : referenceVectors) {
-      Check.that(referenceVector.length == numberOfObjectives,
-        "Reference vector dimension " + referenceVector.length
-          + " does not match the number of objectives " + numberOfObjectives + ".");
-    }
-
-    this.name = "RVEA";
+    Check.valueIsInRange(fr, 1.0e-64, 1.0, "fr");
+    Check.that(maxEvaluations >= populationSize, "The budget must cover the initial population");
+    var validation =
+        new RVEAEnvironmentalSelection<S>(problem.numberOfObjectives(), 1, alpha, fr, vectors);
+    Check.that(
+        vectors.size() == populationSize,
+        "Population size must match the number of reference vectors");
+    this.referenceVectors = List.of(validation.referenceVectors());
+    this.variant = variant;
     this.problem = problem;
     this.populationSize = populationSize;
     this.alpha = alpha;
     this.fr = fr;
-    this.referenceVectors = cloneReferenceVectors(referenceVectors);
-    this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
-
-    this.variation = new CrossoverAndMutationVariation<>(
-        populationSize, crossover, mutation);
-
-    this.selection = new RandomSelection<>(variation.matingPoolSize());
-    this.customSelection = false;
-
-    this.termination = new TerminationByEvaluations(maxEvaluations);
     this.evaluation = new SequentialEvaluation<>(problem);
+    this.initialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
+    this.termination = new TerminationByEvaluations(maxEvaluations);
+    this.variation = new CrossoverAndMutationVariation<>(populationSize, crossover, mutation);
+    this.selection = new RandomSelection<>(variation.matingPoolSize());
   }
 
-  private static <S extends Solution<?>> Problem<S> validateProblem(Problem<S> problem) {
-    Check.notNull(problem, "problem");
-    return problem;
-  }
-
-  private static int validateNumberOfDivisions(int numberOfDivisions) {
-    Check.valueIsPositive(numberOfDivisions, "numberOfDivisions");
-    return numberOfDivisions;
-  }
-
-  private List<double[]> cloneReferenceVectors(List<double[]> referenceVectors) {
-    List<double[]> clonedReferenceVectors = new ArrayList<>(referenceVectors.size());
-    for (double[] referenceVector : referenceVectors) {
-      clonedReferenceVectors.add(referenceVector.clone());
-    }
-
-    return clonedReferenceVectors;
+  protected static List<double[]> generateVectors(Problem<?> problem, int divisions) {
+    Check.notNull(problem);
+    Check.valueIsPositive(divisions, "divisions");
+    return ReferencePointGenerator.generateSingleLayer(problem.numberOfObjectives(), divisions);
   }
 
   public RVEABuilder<S> setTermination(Termination termination) {
+    Check.notNull(termination);
     this.termination = termination;
     return this;
   }
 
   public RVEABuilder<S> setEvaluation(Evaluation<S> evaluation) {
+    Check.notNull(evaluation);
     this.evaluation = evaluation;
     return this;
   }
 
-  public RVEABuilder<S> setCreateInitialPopulation(SolutionsCreation<S> solutionsCreation) {
-    this.createInitialPopulation = solutionsCreation;
+  public RVEABuilder<S> setCreateInitialPopulation(SolutionsCreation<S> creation) {
+    Check.notNull(creation);
+    this.initialPopulation = creation;
     return this;
   }
 
   public RVEABuilder<S> setSelection(Selection<S> selection) {
+    Check.notNull(selection);
     this.selection = selection;
     this.customSelection = true;
     return this;
   }
 
   public RVEABuilder<S> setVariation(Variation<S> variation) {
+    Check.notNull(variation);
     this.variation = variation;
     return this;
   }
 
   public EvolutionaryAlgorithm<S> build() {
-    Check.that(termination instanceof TerminationByEvaluations,
-        "RVEA requires termination by evaluations to compute APD progress and reference adaptation.");
-
-    int referenceVectorCount = referenceVectors.size();
-    Check.that(referenceVectorCount == populationSize,
-        "Population size must match the number of generated reference vectors. Expected "
-            + referenceVectorCount + " and found " + populationSize + ".");
-
-    int maxEvaluations = ((TerminationByEvaluations) termination).getMaximumNumberOfEvaluations();
-    int maxGenerations = estimateMaximumGenerations(maxEvaluations, populationSize,
-        variation.offspringPopulationSize());
-    RVEAEnvironmentalSelection<S> environmentalSelection =
-        new RVEAEnvironmentalSelection<>(problem.numberOfObjectives(), maxGenerations, alpha, fr,
-            referenceVectors);
-    replacement = new RVEAReplacement<>(environmentalSelection);
-
-    Selection<S> finalSelection =
-        customSelection ? selection : new RandomSelection<>(variation.matingPoolSize());
-    SolutionsCreation<S> validatedInitialPopulationCreation = () -> {
-      var initialPopulation = createInitialPopulation.create();
-      Check.that(initialPopulation.size() == populationSize,
-          "The initial population size must be " + populationSize + " but is "
-              + initialPopulation.size() + ".");
-      return initialPopulation;
-    };
-
-    return new EvolutionaryAlgorithm<>(name, validatedInitialPopulationCreation, evaluation,
-        termination, finalSelection, variation, replacement);
-  }
-
-  private int estimateMaximumGenerations(int maxEvaluations, int initialPopulationSize,
-      int offspringPopulationSize) {
-    Check.valueIsPositive(offspringPopulationSize, "offspringPopulationSize");
-
-    if (maxEvaluations <= initialPopulationSize) {
-      return 1;
+    if (!(termination instanceof TerminationByEvaluations byEvaluations)) {
+      throw new InvalidConditionException("RVEA requires termination by evaluations");
     }
-
-    return (int) Math.ceil((double) (maxEvaluations - initialPopulationSize) / offspringPopulationSize);
+    int budget = byEvaluations.getMaximumNumberOfEvaluations();
+    int offspringSize = variation.offspringPopulationSize();
+    Check.that(budget >= populationSize, "The budget must cover the initial population");
+    Check.that(offspringSize > 0, "The offspring population size must be positive");
+    Check.that(variation.matingPoolSize() > 0, "The mating pool size must be positive");
+    int generations =
+        Math.max(1, (int) Math.ceil((double) (budget - populationSize) / offspringSize));
+    RVEAEnvironmentalSelection<S> environmentalSelection =
+        switch (variant) {
+          case RVEA ->
+              new RVEAEnvironmentalSelection<>(
+                  problem.numberOfObjectives(), generations, alpha, fr, referenceVectors);
+          case RVEA_STAR ->
+              new RVEAStarEnvironmentalSelection<>(
+                  problem.numberOfObjectives(), generations, alpha, fr, referenceVectors);
+          case IRVEA ->
+              new IRVEAEnvironmentalSelection<>(
+                  problem.numberOfObjectives(),
+                  generations,
+                  alpha,
+                  fr,
+                  referenceVectors,
+                  numberOfSubregions);
+        };
+    String name =
+        switch (variant) {
+          case RVEA -> "RVEA";
+          case RVEA_STAR -> "RVEA*";
+          case IRVEA -> "iRVEA";
+        };
+    // Capture the components now, so subsequent builder changes cannot alter this algorithm.
+    SolutionsCreation<S> creation = initialPopulation;
+    SolutionsCreation<S> validatedCreation =
+        () -> {
+          List<S> population = creation.create();
+          Check.notNull(population);
+          Check.that(
+              population.size() == populationSize,
+              "The initial population must contain N solutions");
+          return population;
+        };
+    Selection<S> matingSelection =
+        customSelection ? selection : new RandomSelection<>(variation.matingPoolSize());
+    return new EvolutionaryAlgorithm<>(
+        name,
+        validatedCreation,
+        evaluation,
+        termination,
+        matingSelection,
+        variation,
+        new RVEAReplacement<>(environmentalSelection));
   }
 }

@@ -336,3 +336,9 @@ The flexibility of this approach as allowed us to solve the aforementioned issue
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
         .print();
 
+RVEA family
+-----------
+
+The component module provides RVEA, RVEA* (reference-vector regeneration), and
+iRVEA (adaptive vectors, regional protection, and an epsilon archive). See the
+:download:`implementation notes and runnable DTLZ/ZDT examples <rvea-variants.md>`.
