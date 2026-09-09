@@ -95,6 +95,11 @@ Changelog
   Congress on Evolutionary Computation (CEC), 2019 <https://doi.org/10.1109/CEC.2019.8790214>`_.
   See ``docs/rvea-variants.md`` for implementation notes.
 
+* [09/09/2026] Fixed ``MultiObjectiveKnapsack.evaluate()`` so that constraint values are reset
+  before being recomputed: re-evaluating the same solution instance previously accumulated its
+  constraint violation degree across calls. Also added validation for empty objective/constraint
+  matrices and for a mismatch between the number of capacities and the number of constraints.
+
 * [07/13/2026] Fixed the constraint sign convention of the CRE benchmark suite (CRE21-25, CRE31,
   CRE32, CRE51): constraint values were clamped so that every solution appeared feasible to
   ``ConstraintHandling`` and the constraint comparators, regardless of the actual degree of
