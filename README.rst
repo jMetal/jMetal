@@ -85,6 +85,16 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [09/09/2026] Added RVEA* and iRVEA, two variants of RVEA for problems with irregular Pareto
+  fronts, contributed by Nicolás Rodríguez Uribe (@NicolasRodriguezUribe). RVEA* implements the
+  reference vector regeneration strategy from `Cheng, Jin, Olhofer, Sendhoff, "A Reference Vector
+  Guided Evolutionary Algorithm for Many-objective Optimization", IEEE Transactions on
+  Evolutionary Computation 20(5), 773-791, 2016 <https://doi.org/10.1109/TEVC.2016.2519378>`_
+  (Section VI); iRVEA implements `Liu, Jin, Heiderich, Rodemann, "Adaptation of Reference Vectors
+  for Evolutionary Many-objective Optimization of Problems with Irregular Pareto Fronts", IEEE
+  Congress on Evolutionary Computation (CEC), 2019 <https://doi.org/10.1109/CEC.2019.8790214>`_.
+  See ``docs/rvea-variants.md`` for implementation notes.
+
 * [07/13/2026] Fixed the constraint sign convention of the CRE benchmark suite (CRE21-25, CRE31,
   CRE32, CRE51): constraint values were clamped so that every solution appeared feasible to
   ``ConstraintHandling`` and the constraint comparators, regardless of the actual degree of
