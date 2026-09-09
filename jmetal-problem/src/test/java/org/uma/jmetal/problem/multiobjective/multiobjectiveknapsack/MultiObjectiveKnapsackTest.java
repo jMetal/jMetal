@@ -117,10 +117,38 @@ class MultiObjectiveKnapsackTest {
               InvalidConditionException.class,
               () -> new MultiObjectiveKnapsack(profits, weights, capacities));
       String expectedMessage =
-          "The number of objectives ("
+          "The number of items in objectives and constraints must be the same ("
               + profits[0].length
-              + ") must be equal to the number of constraints ("
+              + " != "
               + weights[0].length
+              + ")";
+      assertEquals(expectedMessage, exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("An exception is raised if the number of capacities is not equal to the number of constraints")
+    void whenTheNumberOfCapacitiesIsNotEqualToTheNumberOfConstraintsThenAnExceptionIsRaised() {
+      // Arrange
+      int[] profitsA = {10, 5, 3, 5};
+      int[] profitsB = {2, 6, 3, 4};
+      int[][] profits = {profitsA, profitsB};
+      int[] weightsA = {2, 3, 5, 7};
+      int[] weightsB = {1, 5, 6, 3};
+      int[] weightsC = {4, 1, 2, 4};
+      int[][] weights = {weightsA, weightsB, weightsC};
+
+      int[] capacities = {5, 10};
+
+      // Assert
+      Exception exception =
+          assertThrows(
+              InvalidConditionException.class,
+              () -> new MultiObjectiveKnapsack(profits, weights, capacities));
+      String expectedMessage =
+          "The number of capacities ("
+              + capacities.length
+              + ") must be equal to the number of constraints ("
+              + weights.length
               + ")";
       assertEquals(expectedMessage, exception.getMessage());
     }
