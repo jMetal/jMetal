@@ -56,6 +56,8 @@ public class MultiObjectiveKnapsack extends AbstractBinaryProblem {
   private final int[] capacities;
 
   public MultiObjectiveKnapsack(int[][] objectives, int[][] constraints, int[] capacities) {
+    Check.that(objectives.length > 0, "The objective matrix cannot be empty");
+    Check.that(constraints.length > 0, "The constraint matrix cannot be empty");
     Check.that(
         Arrays.stream(objectives).mapToInt(vector -> vector.length).distinct().count() == 1,
         "The objective vectors must have the same size");
@@ -64,11 +66,18 @@ public class MultiObjectiveKnapsack extends AbstractBinaryProblem {
         "The constraint vectors must have the same size");
     Check.that(
         objectives[0].length == constraints[0].length,
-        "The number of objectives ("
+      "The number of items in objectives and constraints must be the same ("
             + objectives[0].length
-            + ") must be equal to the number of constraints ("
+        + " != "
             + constraints[0].length
             + ")");
+    Check.that(
+      capacities.length == constraints.length,
+      "The number of capacities ("
+        + capacities.length
+        + ") must be equal to the number of constraints ("
+        + constraints.length
+        + ")");
 
     Check.that(
         Arrays.stream(capacities).allMatch(capacity -> capacity > 0),
@@ -132,6 +141,10 @@ public class MultiObjectiveKnapsack extends AbstractBinaryProblem {
           totalConstraints[j] += constraints[j][i];
         }
       }
+    }
+
+    for (int i = 0; i < solution.constraints().length; i++) {
+      solution.constraints()[i] = 0.0;
     }
 
     IntStream.range(0, capacities.length)
