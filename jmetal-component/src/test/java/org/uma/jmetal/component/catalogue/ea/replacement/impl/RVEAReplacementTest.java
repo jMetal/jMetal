@@ -14,8 +14,10 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 class RVEAReplacementTest {
 
   @Test
-  @DisplayName("Given empty niches, when replace is called, then the result size matches the current population size")
-  void givenEmptyNiches_whenReplaceIsCalled_thenTheResultSizeMatchesTheCurrentPopulationSize() {
+  @DisplayName(
+      "given empty niches, when replacing twice, then the nominal vector count survives population"
+          + " shrinkage")
+  void givenEmptyNiches_whenReplacingTwice_thenNominalVectorCountSurvivesPopulationShrinkage() {
     // Arrange
     RVEAReplacement<DoubleSolution> replacement =
         new RVEAReplacement<>(new RVEAEnvironmentalSelection<>(3, 10, 2.0, 0.5, 1));
@@ -27,22 +29,21 @@ class RVEAReplacementTest {
 
     List<DoubleSolution> currentPopulation = List.of(solution1, solution2, solution3);
     List<DoubleSolution> offspringPopulation = List.of(solution4);
-    List<DoubleSolution> jointPopulation =
-        List.of(solution1, solution2, solution3, solution4);
+    List<DoubleSolution> jointPopulation = List.of(solution1, solution2, solution3, solution4);
 
     // Act
     List<DoubleSolution> result = replacement.replace(currentPopulation, offspringPopulation);
+    List<DoubleSolution> nextResult = replacement.replace(result, offspringPopulation);
 
     // Assert
-    assertThat(result)
-        .hasSize(currentPopulation.size())
-        .allMatch(jointPopulation::contains)
-        .doesNotHaveDuplicates();
+    assertThat(result).hasSize(2).allMatch(jointPopulation::contains).doesNotHaveDuplicates();
+    assertThat(nextResult).containsExactly(solution3, solution4);
   }
 
   private DoubleSolution solutionWithObjectives(double... objectives) {
     DoubleSolution solution = mock(DoubleSolution.class);
     when(solution.objectives()).thenReturn(objectives);
+    when(solution.constraints()).thenReturn(new double[0]);
 
     return solution;
   }

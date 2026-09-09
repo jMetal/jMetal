@@ -1,0 +1,3 @@
+# Keep the recorded inputs used by the committed plots.
+!FUN.*.csv
+!VAR.*.csv
