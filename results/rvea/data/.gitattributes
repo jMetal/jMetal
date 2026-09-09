@@ -1,0 +1,2 @@
+# Preserve the bytes referenced by plot_data.json hashes on every platform.
+*.csv -text whitespace=trailing-space,space-before-tab,cr-at-eol
