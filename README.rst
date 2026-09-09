@@ -93,7 +93,7 @@ Changelog
   (Section VI); iRVEA implements `Liu, Jin, Heiderich, Rodemann, "Adaptation of Reference Vectors
   for Evolutionary Many-objective Optimization of Problems with Irregular Pareto Fronts", IEEE
   Congress on Evolutionary Computation (CEC), 2019 <https://doi.org/10.1109/CEC.2019.8790214>`_.
-  See ``docs/rvea-variants.md`` for implementation notes.
+  See ``docs/rvea-variants.rst`` for implementation notes.
 
 * [09/09/2026] Fixed ``MultiObjectiveKnapsack.evaluate()`` so that constraint values are reset
   before being recomputed: re-evaluating the same solution instance previously accumulated its

@@ -67,6 +67,7 @@ Summary of features:
     experimentation.rst
     parallel.rst
     component.rst
+    rvea-variants.rst
     autoconfiguration.rst
     mnds.rst
     api.rst

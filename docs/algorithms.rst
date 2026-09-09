@@ -340,5 +340,5 @@ RVEA family
 -----------
 
 The component module provides RVEA, RVEA* (reference-vector regeneration), and
-iRVEA (adaptive vectors, regional protection, and an epsilon archive). See the
-:download:`implementation notes and runnable DTLZ/ZDT examples <rvea-variants.md>`.
+iRVEA (adaptive vectors, regional protection, and an epsilon archive). See
+:ref:`rvea-variants` for implementation notes and runnable DTLZ/ZDT examples.
