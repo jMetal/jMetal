@@ -164,6 +164,16 @@ public class IRVEAEnvironmentalSelection<S extends Solution<?>>
     return survivors;
   }
 
+  @Override
+  protected int survivorCapacity() {
+    return populationSize();
+  }
+
+  @Override
+  protected List<S> survivorsWithoutFeasibleCandidates() {
+    return archive();
+  }
+
   /** Returns copies so that callers cannot modify the archive used by future generations. */
   public List<S> archive() {
     return archive.stream().map(this::copySolution).toList();

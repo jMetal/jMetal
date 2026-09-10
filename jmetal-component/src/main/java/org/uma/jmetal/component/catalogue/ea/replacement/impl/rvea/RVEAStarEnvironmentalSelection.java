@@ -51,6 +51,16 @@ public class RVEAStarEnvironmentalSelection<S extends Solution<?>>
   }
 
   @Override
+  protected double[][] selectionReferenceVectors() {
+    return allVectors();
+  }
+
+  @Override
+  protected int survivorCapacity() {
+    return currentGeneration() + 1 >= maxGenerations ? populationSize() : 2 * populationSize();
+  }
+
+  @Override
   protected void afterSelection(List<S> survivors) {
     double[][] points = RVEAGeometry.translate(nondominated(survivors));
     boolean[] active = RVEAGeometry.active(points, adaptiveVectors);
