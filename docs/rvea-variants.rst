@@ -24,9 +24,23 @@ objectives grows past three or four (almost every solution in a small
 population is mutually nondominated), it breaks the objective space into a
 handful of angular subspaces, one per **reference vector**, and picks a single
 survivor per subspace. A reference vector is just a unit vector radiating out
-from the ideal point; jMetal generates a uniformly spread set of them with the
-simplex-lattice construction already used by NSGA-III
-(``ReferencePointGenerator``).
+from the ideal point. jMetal's default is to generate a uniformly spread set
+of them with the simplex-lattice construction already used by NSGA-III
+(``ReferencePointGenerator``), but that construction can only produce the
+combinatorial counts ``C(H + M - 1, M - 1)`` dictated by its divisions
+parameter ``H``. Every RVEA builder also accepts a caller-supplied
+``List<double[]>`` of vectors instead, exactly as MOEA/D does: any set of
+uniformly distributed weight vectors works, which lets the population size be
+whatever the vector set's size is, rather than the nearest simplex-lattice
+count. jMetal ships several precomputed sets under
+``resources/weightVectorFiles/moead/`` (e.g. ``W3D_100.dat``, one vector per
+line); MOEA/D locates these by their ``W<M>D_<N>.dat`` naming convention, and
+while RVEA has no such convenience wrapper, the same file can be loaded with
+``VectorFileUtils.readVectors(...)`` and passed straight in as the
+``List<double[]>``. These particular files were generated with the Riesz
+s-Energy method of `Blank, Deb, Dhebar, Bandaru, and Seada, TEVC 2021
+<https://doi.org/10.1109/TEVC.2020.2992387>`_, which — unlike the Das-Dennis
+simplex lattice — can target an arbitrary number of well-spaced points.
 
 Every generation, RVEA does four things:
 
