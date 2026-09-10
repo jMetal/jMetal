@@ -13,7 +13,8 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  *
  * <p>Implements Cheng et al., IEEE TEVC (2016), doi:10.1109/TEVC.2016.2519378. Empty niches
  * contribute no survivor, so the population can shrink. This component is stateful; create a new
- * instance for each run. Objectives must be finite and minimized, without constraints.
+ * instance for each run. Objectives must be finite and minimized. jMetal's feasibility-first
+ * constraint support preserves the original selection when every candidate is feasible.
  *
  * @param <S> solution type
  */
@@ -25,6 +26,8 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
   private final double alpha;
   private final int adaptationFrequency;
   private int currentGeneration = -1;
+  private final FeasibilityFirstSelection<S> constraintSelection =
+      new FeasibilityFirstSelection<>();
 
   public RVEAEnvironmentalSelection(
       int objectives, int maxGenerations, double alpha, double fr, int divisions) {
@@ -60,7 +63,22 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
         populationSize == initialReferenceVectors.length,
         "Population size must match the number of predefined reference vectors");
     currentGeneration++;
-    List<S> survivors = select(jointPopulation);
+    var partition = constraintSelection.partition(jointPopulation);
+    if (partition.infeasible().isEmpty()) {
+      return selectFeasiblePopulation(jointPopulation);
+    }
+    // Count occupied slots before adaptation/regeneration, without mutating geometry or RNG state.
+    int capacity =
+        partition.feasible().size() >= survivorCapacity() ? 0 : occupiedCapacity(jointPopulation);
+    List<S> survivors =
+        partition.feasible().isEmpty()
+            ? survivorsWithoutFeasibleCandidates()
+            : selectFeasiblePopulation(partition.feasible());
+    return constraintSelection.supplement(partition, survivors, capacity);
+  }
+
+  private List<S> selectFeasiblePopulation(List<S> population) {
+    List<S> survivors = select(population);
     if (currentGeneration % adaptationFrequency == 0) {
       adaptReferenceVectors(survivors);
     }
@@ -73,7 +91,9 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
     Check.that(!population.isEmpty(), "The candidate population must not be empty");
     for (S solution : population) {
       Check.notNull(solution);
-      Check.that(solution.constraints().length == 0, "RVEA supports unconstrained solutions only");
+      Check.that(
+          Arrays.stream(solution.constraints()).allMatch(Double::isFinite),
+          "Constraint values must be finite");
       Check.that(
           solution.objectives().length == numberOfObjectives,
           "Solution objective count must match the reference vectors");
@@ -85,6 +105,33 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
 
   protected List<S> select(List<S> population) {
     return selectByApd(population, referenceVectors);
+  }
+
+  private int occupiedCapacity(List<S> population) {
+    boolean[] active =
+        RVEAGeometry.active(RVEAGeometry.translate(population), selectionReferenceVectors());
+    int occupied = 0;
+    for (boolean present : active) {
+      if (present) {
+        occupied++;
+      }
+    }
+    return Math.min(occupied, survivorCapacity());
+  }
+
+  /** Reference directions used only to bound infeasible fallback by occupied niches. */
+  protected double[][] selectionReferenceVectors() {
+    return referenceVectors;
+  }
+
+  /** Upper bound on survivors at this generation, independent of current parent count. */
+  protected int survivorCapacity() {
+    return populationSize();
+  }
+
+  /** Keeps objective-space state unchanged when there is no feasible input to select/adapt. */
+  protected List<S> survivorsWithoutFeasibleCandidates() {
+    return List.of();
   }
 
   protected final List<S> selectByApd(List<S> population, double[][] vectors) {
@@ -153,5 +200,23 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
   /** Returns a defensive copy of the current predefined vectors. */
   public final double[][] referenceVectors() {
     return RVEAGeometry.copy(referenceVectors);
+  }
+
+  /**
+   * Counts candidate visits (parents may be visited repeatedly), not problem evaluations. Affected
+   * selections contain at least one infeasible candidate; comparisons count fallback comparator
+   * calls, and infeasible survivors count the appended fallback solutions.
+   */
+  public record ConstraintStatistics(
+      long candidateVisits,
+      long feasibleVisits,
+      long infeasibleVisits,
+      long affectedSelections,
+      long violationComparisons,
+      long infeasibleSurvivors) {}
+
+  /** Returns cumulative, immutable constraint-layer counters for this selection instance. */
+  public final ConstraintStatistics constraintStatistics() {
+    return constraintSelection.statistics();
   }
 }
