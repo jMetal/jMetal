@@ -7,6 +7,144 @@ RVEA, RVEA*, and iRVEA
 :Version: 1.0
 :Date: 2026-09-09
 
+RVEA in a nutshell
+--------------------
+
+This section is a short, self-contained tutorial on the base RVEA algorithm
+(`Cheng et al., TEVC 2016 <https://doi.org/10.1109/TEVC.2016.2519378>`_) for
+readers who have not met it before. RVEA* and iRVEA (described later in this
+document) only add mechanisms on top of what follows.
+
+Why reference vectors
+^^^^^^^^^^^^^^^^^^^^^^^
+
+RVEA is a *decomposition-based* algorithm: instead of ranking solutions by
+Pareto dominance, which quickly becomes uninformative once the number of
+objectives grows past three or four (almost every solution in a small
+population is mutually nondominated), it breaks the objective space into a
+handful of angular subspaces, one per **reference vector**, and picks a single
+survivor per subspace. A reference vector is just a unit vector radiating out
+from the ideal point; jMetal generates a uniformly spread set of them with the
+simplex-lattice construction already used by NSGA-III
+(``ReferencePointGenerator``).
+
+Every generation, RVEA does four things:
+
+#. **Translate.** Estimate the ideal point as the componentwise minimum of the
+   current candidate population and subtract it from every objective vector,
+   so the ideal point sits at the origin.
+#. **Associate.** Assign each translated solution to the reference vector it
+   is closest to in angle. This partitions the population into as many
+   niches as there are reference vectors (some niches may end up empty).
+#. **Score.** Inside each niche, rank the candidates with the Angle-Penalized
+   Distance (APD, see below) instead of raw distance to the ideal point.
+#. **Select.** Keep only the best-scoring candidate of each *occupied* niche.
+   Since empty niches contribute nothing, the surviving population can be
+   smaller than the number of reference vectors.
+
+Angle-Penalized Distance (APD)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Picking the single closest-to-ideal solution in every niche would converge
+fast but leave the niches uneven, because two very similar, tightly-clustered
+solutions can both be closer to the ideal point than a lone solution
+elsewhere in the niche. RVEA countered this with a scalarizing function that
+penalizes a candidate in proportion to how far it drifts from the *centre* of
+its own niche:
+
+.. code-block:: text
+
+  APD(f, v, t) = ||f|| * (1 + M * (t / T)^alpha * angle(f, v) / gamma(v))
+
+where, for a translated objective vector ``f`` associated with reference
+vector ``v``:
+
+.. list-table:: APD symbols
+   :header-rows: 1
+   :widths: 18 82
+
+   * - Symbol
+     - Meaning
+   * - ``||f||``
+     - Distance from the (translated) solution to the ideal point: the
+       **convergence** term. This is the whole score early in the run.
+   * - ``angle(f, v)``
+     - Angle between the solution and its reference vector: how far off-centre
+       it sits inside its niche. This is the **diversity** term.
+   * - ``gamma(v)``
+     - The angle from ``v`` to its closest neighboring reference vector. It
+       rescales the angular penalty to the local density of vectors, so
+       tightly packed and sparsely packed regions of the objective space are
+       penalized on a comparable scale.
+   * - ``M``
+     - Number of objectives.
+   * - ``t``, ``T``
+     - Current generation index and the generation horizon (see the
+       *Configuration* section below for how jMetal derives ``T`` from
+       the evaluation budget).
+   * - ``alpha``
+     - User parameter controlling how quickly the diversity term is phased in.
+
+The ``(t / T)^alpha`` factor is the crux of the design: at generation zero it
+is ``0``, so ``APD`` reduces to plain distance to the ideal point and the
+search behaves like a greedy convergence-only method; as ``t`` approaches
+``T`` the factor tends to ``1`` and off-centre candidates are pushed down the
+ranking even if they are nominally closer to the ideal point, which spreads
+the final population evenly along the front. ``alpha`` controls how fast that
+transition happens (``2.0`` is the value used throughout this document's
+examples).
+
+A small worked example
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Take two objectives and three reference vectors at 0°, 45°, and 90° from the
+first-objective axis, so ``gamma`` is 45° for all of them. Consider two
+translated candidates that both associate with the 45° vector:
+
+.. list-table:: Two candidates competing for the same niche
+   :header-rows: 1
+   :widths: 15 20 20 20 25
+
+   * - Candidate
+     - Objectives ``f``
+     - ``||f||``
+     - Angle to niche (``theta``)
+     - Reads as
+   * - P
+     - (1, 1.73)
+     - 2.00
+     - 15°
+     - closer to ideal, off-centre
+   * - Q
+     - (2, 2)
+     - 2.83
+     - 0°
+     - farther from ideal, perfectly centred
+
+With ``M=2`` and ``alpha=2.0``, ``APD(P, t) = 2 + 1.33 * (t/T)^2`` while
+``APD(Q, t) = 2.83`` stays constant (its angle penalty is always zero).
+At ``t=0`` both formulas reduce to plain distance, so P wins (``2.00 <
+2.83``): early on, being closer to the front simply matters more than being
+centred. Solving for the crossover point shows Q overtakes P once
+``t/T ≈ 0.79``, i.e. only in roughly the last fifth of the run does
+alignment with the reference vector start to outweigh raw convergence. This
+is exactly the trade-off exercised by the
+``givenCompetingConvergenceAndAngle_whenTimePasses_thenWinnerChanges`` test
+in ``RVEASelectionBehaviorTest``.
+
+Keeping the reference vectors useful
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A fixed, uniformly spread set of reference vectors only produces a uniformly
+spread population when every objective is scaled the same way. RVEA
+periodically (every ``ceil(fr * T)`` generations, ``fr`` being a user
+parameter) rescales each predefined vector by the objective ranges observed
+in the current survivors and renormalizes it, so badly scaled objectives
+still get evenly covered. The *Implemented behavior* section below states
+the exact formulas; RVEA* and iRVEA build directly on this
+translate/associate/score/select/adapt loop, adding their own strategies for
+what happens to reference vectors that end up covering no solutions at all.
+
 Repository review
 ------------------
 
