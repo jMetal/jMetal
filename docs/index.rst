@@ -68,6 +68,7 @@ Summary of features:
     parallel.rst
     component.rst
     rvea-variants.rst
+    constrained-rvea.rst
     autoconfiguration.rst
     mnds.rst
     api.rst
