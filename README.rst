@@ -85,6 +85,17 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [09/26/2026] Fixed ``DTLZ1Minus``-``DTLZ4Minus``: negating the objectives alone (the previous
+  implementation) makes solutions with a larger distance-function value ``g(x_m)`` Pareto-dominate
+  solutions with ``g(x_m) = 0``, moving the true optimum to the decision-space boundary instead of
+  ``x_m = 0.5`` as in plain DTLZ. These problems now apply the ideal/nadir rescaling of Eq. (9) in
+  `Ishibuchi, Setoguchi, Masuda, Nojima, "Performance of Decomposition-Based Many-Objective
+  Algorithms Strongly Depends on Pareto Front Shapes", IEEE Transactions on Evolutionary
+  Computation 21(2), 169-190, 2017 <https://doi.org/10.1109/TEVC.2016.2587749>`_, which keeps
+  ``g(x_m) = 0`` Pareto-optimal. Also added the reference fronts for these four problems (2, 3, 4,
+  6 and 8 objectives), derived from jMetal's existing DTLZ1-4 reference fronts since the corrected
+  front is exactly ``1 - z`` for every point ``z`` of the corresponding plain DTLZ front.
+
 * [09/09/2026] Added RVEA* and iRVEA, two variants of RVEA for problems with irregular Pareto
   fronts, contributed by Nicolás Rodríguez Uribe (@NicolasRodriguezUribe). RVEA* implements the
   reference vector regeneration strategy from `Cheng, Jin, Olhofer, Sendhoff, "A Reference Vector
