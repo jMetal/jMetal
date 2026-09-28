@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util.CMAESUtils;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -12,6 +11,8 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.impl.ExtendedPseudoRandomGenerator;
 
 /**
  * Class implementing the CMA-ES algorithm
@@ -92,7 +93,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private DoubleSolution bestSolutionEver = null;
 
-  private Random rand;
+  private ExtendedPseudoRandomGenerator rand;
 
   /** Constructor */
   private CovarianceMatrixAdaptationEvolutionStrategy (Builder builder) {
@@ -102,8 +103,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     this.typicalX = builder.typicalX;
     this.sigma = builder.sigma;
 
-    long seed = System.currentTimeMillis();
-    rand = new Random(seed);
+    rand = new ExtendedPseudoRandomGenerator(JMetalRandom.getInstance().getRandomGenerator());
     comparator = new ObjectiveComparator<DoubleSolution>(0);
 
     initializeInternalParameters();
@@ -504,7 +504,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     for (int i = 0; i < numberOfVariables; i++) {
       //TODO: Check the correctness of this random (http://en.wikipedia.org/wiki/CMA-ES)
-      artmp[i] = diagD[i] * rand.nextGaussian();
+      artmp[i] = diagD[i] * rand.randNormal(0.0, 1.0);
     }
     for (int i = 0; i < numberOfVariables; i++) {
       sum = 0.0;
