@@ -1,11 +1,13 @@
 package org.uma.jmetal.solution.permutationsolution.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Defines an implementation of solution composed of a permutation of integers. A permutation is
@@ -28,7 +30,11 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
       randomSequence.add(j);
     }
 
-    java.util.Collections.shuffle(randomSequence);
+    // Fisher-Yates shuffle with JMetalRandom, so that the permutation depends on its seed
+    JMetalRandom random = JMetalRandom.getInstance();
+    for (int j = permutationLength - 1; j > 0; j--) {
+      Collections.swap(randomSequence, j, random.nextInt(0, j));
+    }
 
     IntStream.range(0, permutationLength).forEach(i -> variables().set(i, randomSequence.get(i)));
   }
