@@ -9,7 +9,7 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * 
@@ -22,7 +22,7 @@ public class CoralReefsOptimization<S>
 	private Problem<S> problem;
 	private int maxIterations;
 	private int iterations;
-	private MersenneTwisterGenerator random;
+	private JMetalRandom random;
 
 	public CoralReefsOptimization(Problem<S> problem,
                                   int maxIterations, Comparator<S> comparator,
@@ -36,7 +36,7 @@ public class CoralReefsOptimization<S>
 
 		this.problem = problem;
 		this.maxIterations = maxIterations;
-		this.random = new MersenneTwisterGenerator();
+		this.random = JMetalRandom.getInstance();
 
 	}
 
@@ -73,7 +73,6 @@ public class CoralReefsOptimization<S>
 	@Override
 	protected List<Coordinate> generateCoordinates() {
 		int popSize = getPopulationSize();
-		MersenneTwisterGenerator random = new MersenneTwisterGenerator();
 
 		ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>(popSize);
 
