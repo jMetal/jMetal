@@ -317,7 +317,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     // track update of b and D
     eigenEval = 0;
 
-    chiN = Math.sqrt(numberOfVariables) * (1 - 1 / (4 * numberOfVariables) + 1 / (21
+    chiN = Math.sqrt(numberOfVariables) * (1 - 1.0 / (4.0 * numberOfVariables) + 1.0 / (21.0
         * numberOfVariables * numberOfVariables));
 
   }
