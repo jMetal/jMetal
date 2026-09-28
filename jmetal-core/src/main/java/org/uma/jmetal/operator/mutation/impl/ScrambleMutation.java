@@ -64,8 +64,10 @@ public class ScrambleMutation<T> implements MutationOperator<PermutationSolution
       // Extract the subsequence to scramble
       List<T> sublist = new ArrayList<>(solution.variables().subList(pos1, pos2 + 1));
 
-      // Shuffle the subsequence
-      Collections.shuffle(sublist);
+      // Shuffle the subsequence (Fisher-Yates, with the seeded JMetalRandom)
+      for (int i = sublist.size() - 1; i > 0; i--) {
+        Collections.swap(sublist, i, randomNumberGenerator.nextInt(0, i));
+      }
 
       // Replace the original subsequence with the scrambled one
       for (int i = pos1; i <= pos2; i++) {
