@@ -116,7 +116,8 @@ public class CoralReefsOptimization<S>
 		List<S> parents = new ArrayList<S>(2);
 		List<S> larvae = new ArrayList<S>(broadcastSpawners.size() / 2);
 
-		while (broadcastSpawners.size() > 0) {
+		// A single spawner left can't be paired: it produces no larva
+		while (broadcastSpawners.size() > 1) {
 			parents.add(selectionOperator.execute(broadcastSpawners));
 			parents.add(selectionOperator.execute(broadcastSpawners));
 
