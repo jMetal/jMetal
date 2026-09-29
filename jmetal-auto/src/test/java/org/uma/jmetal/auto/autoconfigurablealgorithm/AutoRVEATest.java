@@ -15,6 +15,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.uma.jmetal.auto.parameter.CategoricalIntegerParameter;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
@@ -90,6 +91,41 @@ class AutoRVEATest {
           .extracting(parameter -> parameter.name())
           .doesNotContain("populationSize", "populationSizeWithArchive")
           .contains("replacement", "alpha", "fr", "numberOfSubregions", "epsilonKappa");
+    }
+  }
+
+  @Nested
+  @DisplayName("When inspecting the offspring population size")
+  class OffspringPopulationSize {
+    @Test
+    @DisplayName(
+        "given a new instance, when reading the offspring sizes, then they range from 10 to 200")
+    void givenNewInstance_whenReadingOffspringSizes_thenTheyRangeFrom10To200() {
+      // Act
+      var parameter =
+          (CategoricalIntegerParameter)
+              AutoConfigurableAlgorithm.parameterFlattening(subject.configurableParameterList())
+                  .stream()
+                  .filter(p -> p.name().equals("offspringPopulationSize"))
+                  .findFirst()
+                  .orElseThrow();
+
+      // Assert
+      assertThat(parameter.validValues()).containsExactly(10, 20, 50, 100, 150, 200);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 5, 400})
+    @DisplayName("given an excluded offspring size, when parsing, then an exception is thrown")
+    void givenExcludedOffspringSize_whenParsing_thenExceptionIsThrown(int offspringSize) {
+      // Arrange
+      String[] arguments =
+          String.join(" ", zdt1(RVEA_DEFAULTS))
+              .replace("--offspringPopulationSize 100", "--offspringPopulationSize " + offspringSize)
+              .split("\\s+");
+
+      // Act and Assert
+      assertThatThrownBy(() -> subject.parse(arguments)).isInstanceOf(RuntimeException.class);
     }
   }
 
