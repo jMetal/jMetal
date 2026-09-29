@@ -174,9 +174,11 @@ public class AutoRVEA implements AutoConfigurableAlgorithm {
         new RealParameter("nonUniformMutationPerturbation", 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
+    // Values below 10 multiply the running time (the selection cost per generation hardly depends
+    // on the offspring size) without improving the results, and values above 200 degrade them.
     offspringPopulationSizeParameter =
         new CategoricalIntegerParameter(
-            "offspringPopulationSize", List.of(1, 2, 5, 10, 20, 50, 100, 150, 200, 300, 400));
+            "offspringPopulationSize", List.of(10, 20, 50, 100, 150, 200));
 
     variationParameter = new VariationParameter(List.of("crossoverAndMutationVariation"));
     variationParameter.addSpecificParameter(
