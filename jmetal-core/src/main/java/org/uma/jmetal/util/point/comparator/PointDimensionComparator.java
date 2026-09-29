@@ -38,10 +38,10 @@ public class PointDimensionComparator implements Comparator<Point> {
   public int compare(Point pointOne, Point pointTwo) {
     Check.notNull(pointOne);
     Check.notNull(pointTwo);
-    Check.that(index < pointOne.dimension(), "The index value " + index
+    Check.that(index < pointOne.dimension(), () -> "The index value " + index
         + " is out of range (0,  " + (pointOne.dimension()-1) + ")");
     Check.that(index < pointTwo.dimension(),
-      "The index value " + index
+      () -> "The index value " + index
           + " is out of range (0,  " + (pointTwo.dimension()-1) + ")") ;
 
     return Double.compare(pointOne.value(index), pointTwo.value(index));

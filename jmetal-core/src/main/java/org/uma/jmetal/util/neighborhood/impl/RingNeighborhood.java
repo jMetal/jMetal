@@ -19,9 +19,9 @@ public class RingNeighborhood<S extends Solution<?>> implements Neighborhood<S> 
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(solutionList.size() > 1,
-        "The solution list size " + solutionList.size() + " is not higher than one");
+        () -> "The solution list size " + solutionList.size() + " is not higher than one");
     Check.that(solutionIndex < solutionList.size(),
-        "The index " + solutionIndex + " is equal or higher than the"
+        () -> "The index " + solutionIndex + " is equal or higher than the"
         + "solution list size " + solutionList.size());
 
     int next = solutionIndex == 0 ? solutionList.size() - 1 : solutionIndex - 1;

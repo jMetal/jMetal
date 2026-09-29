@@ -32,7 +32,7 @@ public class NaryRandomSelection<S> implements SelectionOperator<List<S>, List<S
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
         solutionList.size() >= numberOfSolutionsToBeReturned,
-        "The solution list size ("
+        () -> "The solution list size ("
             + solutionList.size()
             + ") is less than "
             + "the number of requested solutions ("

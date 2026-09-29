@@ -52,9 +52,9 @@ public class ObjectiveComparator<S extends Solution<?>> implements Comparator<S>
     Check.notNull(solution1);
     Check.notNull(solution2);
 
-    Check.that(solution1.objectives().length > objectiveId, "The solution1 has "
+    Check.that(solution1.objectives().length > objectiveId, () -> "The solution1 has "
         + solution1.objectives().length + " objectives and the objective to sort is" + objectiveId);
-    Check.that(solution2.objectives().length > objectiveId, "The solution2 has "
+    Check.that(solution2.objectives().length > objectiveId, () -> "The solution2 has "
         + solution2.objectives().length + " objectives and the objective to sort is" + objectiveId);
 
     double objective1 = solution1.objectives()[this.objectiveId];

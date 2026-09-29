@@ -14,7 +14,7 @@ public class EuclideanDistanceBetweenVectors implements Distance<double[], doubl
   public double compute(double[] vector1, double[] vector2) {
     Check.notNull(vector1);
     Check.notNull(vector2);
-    Check.that(vector1.length == vector2.length, "The vectors have different" +
+    Check.that(vector1.length == vector2.length, () -> "The vectors have different" +
         "dimension: " + vector1.length + " and " + vector2.length);
 
     double distance = 0.0;

@@ -72,7 +72,7 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
 
   /* Setters */
   public void setCurrentIteration(int currentIteration) {
-    Check.that(currentIteration >= 0, "The iteration number cannot be a negative value: " + currentIteration);
+    Check.that(currentIteration >= 0, () -> "The iteration number cannot be a negative value: " + currentIteration);
 
     this.currentIteration = currentIteration;
   }

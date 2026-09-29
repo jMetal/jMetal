@@ -46,7 +46,7 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
   public List<S> execute(List<S> solutionList) throws JMetalException {
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
-    Check.that(solutionList.size() > solutionsToSelect, "The population size ("+solutionList.size()+") is smaller than" +
+    Check.that(solutionList.size() > solutionsToSelect, () -> "The population size ("+solutionList.size()+") is smaller than" +
         "the solutions to selected ("+solutionsToSelect+")");
 
     Ranking<S> ranking = new FastNonDominatedSortRanking<>(dominanceComparator);

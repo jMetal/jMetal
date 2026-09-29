@@ -129,7 +129,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
   public List<S> getSubFront(int rank) {
     Check.that(
         rank < rankedSubPopulations.size(),
-        "Invalid rank: " + rank + ". Max rank = " + (rankedSubPopulations.size() - 1));
+        () -> "Invalid rank: " + rank + ". Max rank = " + (rankedSubPopulations.size() - 1));
 
     return rankedSubPopulations.get(rank);
   }

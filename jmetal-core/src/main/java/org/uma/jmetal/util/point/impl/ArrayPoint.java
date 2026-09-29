@@ -69,7 +69,7 @@ public class ArrayPoint implements Point {
 
   @Override
   public double value(int index) {
-    Check.that((index >= 0) && (index < point.length), "Index value invalid: " + index +
+    Check.that((index >= 0) && (index < point.length), () -> "Index value invalid: " + index +
             ". The point length is: " + point.length);
 
     return point[index] ;
@@ -77,7 +77,7 @@ public class ArrayPoint implements Point {
 
   @Override
   public void value(int index, double value) {
-    Check.that((index >= 0) && (index < point.length), "Index value invalid: " + index +
+    Check.that((index >= 0) && (index < point.length), () -> "Index value invalid: " + index +
             ". The point length is: " + point.length);
 
     point[index] = value ;
@@ -90,7 +90,7 @@ public class ArrayPoint implements Point {
 
   @Override
   public void set(double[] point) {
-    Check.that(point.length == this.point.length, "The point to be update have a dimension of " + point.length + " "
+    Check.that(point.length == this.point.length, () -> "The point to be update have a dimension of " + point.length + " "
             + "while the parameter point has a dimension of " + point.length);
 
     System.arraycopy(point, 0, this.point, 0, point.length);

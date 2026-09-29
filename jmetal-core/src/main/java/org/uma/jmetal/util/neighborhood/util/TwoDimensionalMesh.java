@@ -118,10 +118,10 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
   public List<S> getNeighbors(List<S> solutionList, int solutionPosition) {
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
-    Check.that(solutionPosition >= 0, "The solution position value is negative: " + solutionPosition);
-    Check.that(solutionList.size() == rows * columns, "The solution list size " + solutionList.size() + " is not"
+    Check.that(solutionPosition >= 0, () -> "The solution position value is negative: " + solutionPosition);
+    Check.that(solutionList.size() == rows * columns, () -> "The solution list size " + solutionList.size() + " is not"
             + "equal to the grid size: " + rows + " * " + columns);
-    Check.that(solutionPosition < solutionList.size(), "The solution position value " + solutionPosition +
+    Check.that(solutionPosition < solutionList.size(), () -> "The solution position value " + solutionPosition +
             " is equal or greater than the solution list size "
             + solutionList.size()) ;
 

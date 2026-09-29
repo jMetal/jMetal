@@ -39,7 +39,7 @@ public class NaryTournamentSelection<S extends Solution<?>>
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
         solutionList.size() >= tournamentSize,
-        "The solution list size ("
+        () -> "The solution list size ("
             + solutionList.size()
             + ") is less than "
             + "the number of requested solutions ("

@@ -36,7 +36,7 @@ public class NPointCrossover<T extends Solution<S>, S extends Number> implements
   public List<T> execute(List<T> solutions) {
     Check.that(
         numberOfRequiredParents() == solutions.size(),
-        "Point Crossover requires + "
+        () -> "Point Crossover requires + "
             + numberOfRequiredParents()
             + " parents, but got "
             + solutions.size());
