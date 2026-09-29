@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.doublesolution.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.doublesolution.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 
 /**
  * @author Antonio J. Nebro
@@ -23,6 +24,13 @@ public class RepairDoubleSolutionWithBoundValueTest {
   @Test
   public void shouldRepairDoubleSolutionAtBoundsRaiseAnExceptionIfTheBoundsAreIncorrect() {
     assertThrows(RuntimeException.class, () -> repair.repairSolutionVariableValue(0.0, 1.0, -1.0));
+  }
+
+  @Test
+  public void shouldRepairDoubleSolutionAtBoundsReportTheBoundsInTheExceptionMessageIfTheBoundsAreIncorrect() {
+    InvalidConditionException exception = assertThrows(InvalidConditionException.class,
+        () -> repair.repairSolutionVariableValue(0.0, 1.0, -1.0));
+    assertEquals("The lower bound (1.0) is greater than the upper bound (-1.0)", exception.getMessage());
   }
 
   @Test
