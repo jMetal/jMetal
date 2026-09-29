@@ -3,6 +3,7 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.solution.pointsolution.PointSolution;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 @DisplayName("Unit tests for class IRVEAEnvironmentalSelection")
@@ -159,6 +161,58 @@ class IRVEAEnvironmentalSelectionTest {
 
       // Act
       for (int generation = 0; generation < 10; generation++) {
+        for (int i = 0; i < subject.populationSize(); i++) {
+          subject.adaptiveVectors[i] = new double[] {1, 0};
+        }
+        selected = subject.execute(candidates, 3);
+      }
+
+      // Assert
+      assertEquals(3, selected.size());
+      assertTrue(selected.containsAll(candidates));
+    }
+  }
+
+  @Nested
+  @DisplayName("When configuring the late stage fraction and the epsilon kappa")
+  class Configuration {
+    @ParameterizedTest
+    @CsvSource({"-0.1, 0.05", "1.1, 0.05", "NaN, 0.05", "0.8, 0.0", "0.8, -1.0", "0.8, Infinity"})
+    @DisplayName("given an invalid value, when constructing, then an exception is thrown")
+    void givenInvalidValue_whenConstructing_thenAnExceptionIsThrown(
+        double lateStageFraction, double epsilonKappa) {
+      // Arrange
+      List<double[]> vectors = List.of(new double[] {1, 0}, new double[] {0, 1});
+
+      // Act and Assert
+      assertThrows(
+          InvalidConditionException.class,
+          () ->
+              new IRVEAEnvironmentalSelection<PointSolution>(
+                  2, 10, 2, 1, vectors, 40, lateStageFraction, epsilonKappa));
+    }
+
+    @Test
+    @DisplayName(
+        "given a zero late stage fraction, when niches are insufficient in the second"
+            + " generation, then epsilon fills from candidates")
+    void givenZeroLateStageFraction_whenNichesAreInsufficientEarly_thenEpsilonFills() {
+      // Arrange
+      subject =
+          new IRVEAEnvironmentalSelection<>(
+              2,
+              10,
+              2,
+              1,
+              List.of(new double[] {1, 0}, new double[] {1, 0}, new double[] {1, 0}),
+              40,
+              0.0,
+              IRVEAEnvironmentalSelection.DEFAULT_EPSILON_KAPPA);
+      var candidates = List.of(point(0, 1), point(0.5, 0.5), point(1, 0));
+      List<PointSolution> selected = List.of();
+
+      // Act
+      for (int generation = 0; generation < 2; generation++) {
         for (int i = 0; i < subject.populationSize(); i++) {
           subject.adaptiveVectors[i] = new double[] {1, 0};
         }

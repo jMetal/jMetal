@@ -2,13 +2,17 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.uma.jmetal.solution.pointsolution.PointSolution;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 
 @DisplayName("Unit tests for RVEA supplementary selection strategies")
 class RVEASupplementarySelectionTest {
@@ -68,6 +72,39 @@ class RVEASupplementarySelectionTest {
       // Assert
       assertEquals(List.of(point(3, 3)), selected);
       assertTrue(EpsilonIndicatorSelection.select(candidates, 0).isEmpty());
+    }
+  }
+
+  @Nested
+  @DisplayName("When selecting by additive epsilon with an explicit kappa")
+  class EpsilonSelectionWithKappa {
+    @Test
+    @DisplayName(
+        "given the default kappa, when selecting explicitly, then the result equals the default"
+            + " selection")
+    void givenDefaultKappa_whenSelectingExplicitly_thenResultEqualsDefaultSelection() {
+      // Arrange
+      var candidates = List.of(point(0, 1), point(1, 0), point(0.4, 0.4), point(0.8, 0.9));
+
+      // Act
+      var explicit =
+          EpsilonIndicatorSelection.select(candidates, 2, EpsilonIndicatorSelection.DEFAULT_KAPPA);
+
+      // Assert
+      assertEquals(EpsilonIndicatorSelection.select(candidates, 2), explicit);
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {0.0, -0.05, Double.NaN, Double.POSITIVE_INFINITY})
+    @DisplayName("given an invalid kappa, when selecting, then an exception is thrown")
+    void givenInvalidKappa_whenSelecting_thenAnExceptionIsThrown(double kappa) {
+      // Arrange
+      var candidates = List.of(point(0, 1), point(1, 0));
+
+      // Act and Assert
+      assertThrows(
+          InvalidConditionException.class,
+          () -> EpsilonIndicatorSelection.select(candidates, 1, kappa));
     }
   }
 
