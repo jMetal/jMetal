@@ -37,7 +37,7 @@ public class DifferentialEvolutionSelection
 
     Check.that(
         matingPoolSize == matingPool.size(),
-        "The mating pool size "
+        () -> "The mating pool size "
             + matingPool.size()
             + " is not equal to the required size "
             + matingPoolSize);

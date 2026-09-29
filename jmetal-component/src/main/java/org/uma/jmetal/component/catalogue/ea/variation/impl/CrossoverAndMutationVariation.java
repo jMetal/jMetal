@@ -58,7 +58,7 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
 
     Check.that(
             offspringPopulation.size() == offspringPopulationSize,
-            "The size of the"
+            () -> "The size of the"
                     + "offspring population is not correct: "
                     + offspringPopulation.size()
                     + " instead of "

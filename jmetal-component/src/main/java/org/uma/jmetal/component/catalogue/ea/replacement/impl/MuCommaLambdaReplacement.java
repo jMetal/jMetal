@@ -24,7 +24,7 @@ public class MuCommaLambdaReplacement<S extends Solution<?>> implements Replacem
   public List<S> replace(List<S> population, List<S> offspringPopulation) {
     Check.that(
         population.size() < offspringPopulation.size(),
-        "Mu ("
+        () -> "Mu ("
             + population.size()
             + ") must be lower than lambda ("
             + offspringPopulation.size()

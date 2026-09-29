@@ -23,7 +23,7 @@ public class PairwiseReplacement<S extends Solution<?>> implements Replacement<S
   public List<S> replace(List<S> population, List<S> offspringPopulation) {
     Check.that(
         population.size() == offspringPopulation.size(),
-        "The sizes of both populations is not the same: "
+        () -> "The sizes of both populations is not the same: "
             + population.size()
             + ", "
             + offspringPopulation.size());
