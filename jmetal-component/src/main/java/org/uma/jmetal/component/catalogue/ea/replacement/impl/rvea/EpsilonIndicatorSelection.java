@@ -6,19 +6,24 @@ import java.util.stream.IntStream;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 
-/** Additive epsilon indicator fitness and iterative deletion for iRVEA, with kappa = 0.05. */
+/** Additive epsilon indicator fitness and iterative deletion for iRVEA (default kappa = 0.05). */
 final class EpsilonIndicatorSelection {
-  private static final double KAPPA = 0.05;
+  static final double DEFAULT_KAPPA = 0.05;
 
   private EpsilonIndicatorSelection() {}
 
   static <S extends Solution<?>> List<S> select(List<S> population, int size) {
+    return select(population, size, DEFAULT_KAPPA);
+  }
+
+  static <S extends Solution<?>> List<S> select(List<S> population, int size, double kappa) {
     Check.that(size >= 0, "The requested archive size must be nonnegative");
+    Check.that(Double.isFinite(kappa) && kappa > 0.0, "Kappa must be finite and positive");
     if (population.size() <= size) {
       return new ArrayList<>(population);
     }
     double[][] objectives = RVEAGeometry.normalize(RVEAGeometry.translate(population));
-    double[][] contributions = contributions(objectives);
+    double[][] contributions = contributions(objectives, kappa);
     double[] loss = new double[population.size()];
     for (int j = 0; j < loss.length; j++) {
       for (int i = 0; i < loss.length; i++) {
@@ -44,7 +49,7 @@ final class EpsilonIndicatorSelection {
         .toList();
   }
 
-  private static double[][] contributions(double[][] objectives) {
+  private static double[][] contributions(double[][] objectives, double kappa) {
     int size = objectives.length;
     double[][] indicator = new double[size][size];
     for (int j = 0; j < size; j++) {
@@ -53,7 +58,7 @@ final class EpsilonIndicatorSelection {
         indicator[i][j] = epsilon(objectives[i], objectives[j]);
         scale = Math.max(scale, Math.abs(indicator[i][j]));
       }
-      double denominator = KAPPA * (scale == 0.0 ? 1.0 : scale);
+      double denominator = kappa * (scale == 0.0 ? 1.0 : scale);
       for (int i = 0; i < size; i++) {
         indicator[i][j] = i == j ? 0.0 : Math.exp(-indicator[i][j] / denominator);
       }

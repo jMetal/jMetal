@@ -21,7 +21,12 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  */
 public class IRVEAEnvironmentalSelection<S extends Solution<?>>
     extends RVEAStarEnvironmentalSelection<S> {
+  public static final double DEFAULT_LATE_STAGE_FRACTION = 0.8;
+  public static final double DEFAULT_EPSILON_KAPPA = EpsilonIndicatorSelection.DEFAULT_KAPPA;
+
   private final double[][] regionVectors;
+  private final double lateStageFraction;
+  private final double epsilonKappa;
   private List<S> archive = List.of();
 
   public IRVEAEnvironmentalSelection(
@@ -47,8 +52,43 @@ public class IRVEAEnvironmentalSelection<S extends Solution<?>>
       double fr,
       List<double[]> vectors,
       int numberOfSubregions) {
+    this(
+        objectives,
+        maxGenerations,
+        alpha,
+        fr,
+        vectors,
+        numberOfSubregions,
+        DEFAULT_LATE_STAGE_FRACTION,
+        DEFAULT_EPSILON_KAPPA);
+  }
+
+  /**
+   * Creates an iRVEA selection with explicit values for the constants the paper leaves fixed.
+   *
+   * @param lateStageFraction fraction of the generations after which a shrunken APD selection is
+   *     completed with epsilon-indicator selection, in [0, 1]
+   * @param epsilonKappa scaling factor of the epsilon-indicator fitness, positive
+   */
+  public IRVEAEnvironmentalSelection(
+      int objectives,
+      int maxGenerations,
+      double alpha,
+      double fr,
+      List<double[]> vectors,
+      int numberOfSubregions,
+      double lateStageFraction,
+      double epsilonKappa) {
     super(objectives, maxGenerations, alpha, fr, vectors);
     Check.that(numberOfSubregions > 0, "The number of subregions must be positive");
+    Check.that(
+        Double.isFinite(lateStageFraction) && lateStageFraction >= 0.0 && lateStageFraction <= 1.0,
+        "The late stage fraction must be in [0, 1]");
+    Check.that(
+        Double.isFinite(epsilonKappa) && epsilonKappa > 0.0,
+        "The epsilon kappa must be finite and positive");
+    this.lateStageFraction = lateStageFraction;
+    this.epsilonKappa = epsilonKappa;
     regionVectors =
         objectives <= 3
             ? coarseVectors(objectives, Math.min(numberOfSubregions, populationSize()))
@@ -63,10 +103,13 @@ public class IRVEAEnvironmentalSelection<S extends Solution<?>>
     List<S> candidates = union(front, protectedSolutions);
     List<S> apd = selectByApd(candidates, allVectors());
     List<S> selected;
-    if (apd.size() < populationSize() && currentGeneration() > 0.8 * maxGenerations) {
+    if (apd.size() < populationSize() && currentGeneration() > lateStageFraction * maxGenerations) {
       List<S> remaining = candidates.stream().filter(solution -> !apd.contains(solution)).toList();
       selected =
-          union(apd, EpsilonIndicatorSelection.select(remaining, populationSize() - apd.size()));
+          union(
+              apd,
+              EpsilonIndicatorSelection.select(
+                  remaining, populationSize() - apd.size(), epsilonKappa));
     } else if (apd.size() > populationSize()) {
       selected = reduceWithProtection(apd, protectedSolutions, true);
     } else {
@@ -154,7 +197,8 @@ public class IRVEAEnvironmentalSelection<S extends Solution<?>>
   @Override
   protected void afterSelection(List<S> survivors) {
     archive =
-        EpsilonIndicatorSelection.select(union(archive, survivors), populationSize()).stream()
+        EpsilonIndicatorSelection.select(union(archive, survivors), populationSize(), epsilonKappa)
+            .stream()
             .map(this::copySolution)
             .toList();
   }
