@@ -44,6 +44,7 @@ Summary of features:
     about.rst
     installation.rst
     quickStart.rst
+    changelog.rst
 
 .. toctree::
     :maxdepth: 2
