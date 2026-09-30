@@ -388,6 +388,9 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
       case "RAND_2_BIN":
         deVariant = DE_VARIANT.RAND_2_BIN;
         break;
+      case "RAND_2_EXP":
+        deVariant = DE_VARIANT.RAND_2_EXP;
+        break;
       case "BEST_1_BIN":
         deVariant = DE_VARIANT.BEST_1_BIN;
         break;

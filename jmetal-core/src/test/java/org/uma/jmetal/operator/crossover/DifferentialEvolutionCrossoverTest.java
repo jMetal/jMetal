@@ -48,6 +48,14 @@ public class DifferentialEvolutionCrossoverTest {
   }
 
   @Test
+  public void shouldGetVariantFromStringParseTheNameOfEveryVariant() {
+    for (DifferentialEvolutionCrossover.DE_VARIANT variant :
+        DifferentialEvolutionCrossover.DE_VARIANT.values()) {
+      assertEquals(variant, DifferentialEvolutionCrossover.getVariantFromString(variant.name()));
+    }
+  }
+
+  @Test
   public void shouldRAND_1_BINVariantBeCorrectlyParsed() {
     DifferentialEvolutionCrossover crossover =
         new DifferentialEvolutionCrossover(

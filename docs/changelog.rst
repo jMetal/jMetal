@@ -4,6 +4,9 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [09/30/2026] ``DifferentialEvolutionCrossover.getVariantFromString`` recognizes ``RAND_2_EXP``,
+  which was in the ``DE_VARIANT`` enum but raised an exception when given by name.
+
 * [09/30/2026] jMetal 7.6 is released.
 
 * [09/30/2026] jMetal 7.6 is the last version in which ``jmetal-auto`` is updated. This sub-project is
