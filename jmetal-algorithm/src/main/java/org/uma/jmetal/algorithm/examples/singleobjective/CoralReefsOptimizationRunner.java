@@ -44,6 +44,7 @@ public class CoralReefsOptimizationRunner {
 				.setM(10).setN(10).setRho(0.6).setFbs(0.9).setFbr(0.1)
 				.setFa(0.1).setPd(0.1).setAttemptsToSettle(3)
 				.setComparator(new ObjectiveComparator<BinarySolution>(0))
+				.setMaxEvaluations(1000)
 				.build();
 
 		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(
