@@ -29,6 +29,11 @@ The jMetal project is a Maven project structured in the following sub-projects:
 | jmetal-component    |  Component-based algorithms        |
 +---------------------+------------------------------------+
 
+.. note::
+
+  jMetal 7.6 is the last version in which ``jmetal-auto`` is updated. From now on this sub-project is
+  frozen, as its functionality is covered by the Evolver project, which is under active development.
+
 If you intend to use jMetal as dependence of your project, you do not need to import all the
 sub-projects. For example, if you are only interested in using some of the provided algorithms, then
 ``jmetal-algorithm`` or ``jmetal-component`` should be required. The dependencies section of the ``pom.xml``

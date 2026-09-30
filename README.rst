@@ -42,6 +42,11 @@ jMetal 7.6 is a Maven project structured in the following sub-projects:
 | jmetal-component    |  Component-based algorithms        |
 +---------------------+------------------------------------+
 
+.. note::
+
+  jMetal 7.6 is the last version in which ``jmetal-auto`` is updated. From now on this sub-project is
+  frozen, as its functionality is covered by the Evolver project, which is under active development.
+
 
 Related projects
 ----------------
@@ -87,6 +92,10 @@ Changelog
 
 * [09/30/2026] jMetal 7.6 is released.
 
+* [09/30/2026] jMetal 7.6 is the last version in which ``jmetal-auto`` is updated. This sub-project is
+  frozen from now on, as its functionality is covered by the Evolver project, which is under active
+  development.
+
 * [09/30/2026] Added ``AutoRVEA`` to ``jmetal-auto``, an auto-configurable version of RVEA that
   covers RVEA, RVEA* and iRVEA: the variant is the ``replacement`` component of the parameter
   space (``rvea``, ``rveaStar``, ``iRVEA``), together with ``alpha``, ``fr`` and the crossover,
@@ -108,17 +117,6 @@ Changelog
   and ``ScrambleMutation`` now draw their random numbers from ``JMetalRandom`` instead of
   clock-seeded generators, so runs follow the configured seed. Also fixed a crash in
   ``CoralReefsOptimization`` when a single broadcast spawner was left.
-
-* [09/26/2026] Fixed ``DTLZ1Minus``-``DTLZ4Minus``: negating the objectives alone (the previous
-  implementation) makes solutions with a larger distance-function value ``g(x_m)`` Pareto-dominate
-  solutions with ``g(x_m) = 0``, moving the true optimum to the decision-space boundary instead of
-  ``x_m = 0.5`` as in plain DTLZ. These problems now apply the ideal/nadir rescaling of Eq. (9) in
-  `Ishibuchi, Setoguchi, Masuda, Nojima, "Performance of Decomposition-Based Many-Objective
-  Algorithms Strongly Depends on Pareto Front Shapes", IEEE Transactions on Evolutionary
-  Computation 21(2), 169-190, 2017 <https://doi.org/10.1109/TEVC.2016.2587749>`_, which keeps
-  ``g(x_m) = 0`` Pareto-optimal. Also added the reference fronts for these four problems (2, 3, 4,
-  6 and 8 objectives), derived from jMetal's existing DTLZ1-4 reference fronts since the corrected
-  front is exactly ``1 - z`` for every point ``z`` of the corresponding plain DTLZ front.
 
 The complete list of changes is available in the `changelog section of the documentation
 <https://jmetal.readthedocs.io/en/latest/changelog.html>`_.

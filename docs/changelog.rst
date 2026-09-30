@@ -6,6 +6,10 @@ only includes the latest entries.
 
 * [09/30/2026] jMetal 7.6 is released.
 
+* [09/30/2026] jMetal 7.6 is the last version in which ``jmetal-auto`` is updated. This sub-project is
+  frozen from now on, as its functionality is covered by the Evolver project, which is under active
+  development.
+
 * [09/30/2026] Added ``AutoRVEA`` to ``jmetal-auto``, an auto-configurable version of RVEA that
   covers RVEA, RVEA* and iRVEA: the variant is the ``replacement`` component of the parameter
   space (``rvea``, ``rveaStar``, ``iRVEA``), together with ``alpha``, ``fr`` and the crossover,
