@@ -45,13 +45,15 @@ jMetal 7.6 is a Maven project structured in the following sub-projects:
 .. note::
 
   jMetal 7.6 is the last version in which ``jmetal-auto`` is updated. From now on this sub-project is
-  frozen, as its functionality is covered by the Evolver project, which is under active development.
+  frozen, as its functionality is covered by the `Evolver <https://github.com/jMetal/Evolver>`_ project, which is under active development.
 
 
 Related projects
 ----------------
 * `jMetalPy <https://github.com/jMetal/jmetalpy>`_: jMetal in Python
 * `SAES <https://github.com/jMetal/SAES>`_: Python library to analyse and compare the performance of multi-objective algorithms
+* `Evolver <https://github.com/jMetal/Evolver>`_: Java framework for the automated meta-optimization of multi-objective metaheuristics, which formulates their automatic configuration and design as a multi-objective optimization problem
+* `Evolver-Studio <https://github.com/jMetal/Evolver-Studio>`_: graphical interface for Evolver (Python/Streamlit application)
 
 Python scripts (NEW)
 --------------------
@@ -93,7 +95,7 @@ Changelog
 * [09/30/2026] jMetal 7.6 is released.
 
 * [09/30/2026] jMetal 7.6 is the last version in which ``jmetal-auto`` is updated. This sub-project is
-  frozen from now on, as its functionality is covered by the Evolver project, which is under active
+  frozen from now on, as its functionality is covered by the `Evolver <https://github.com/jMetal/Evolver>`_ project, which is under active
   development.
 
 * [09/30/2026] Added ``AutoRVEA`` to ``jmetal-auto``, an auto-configurable version of RVEA that

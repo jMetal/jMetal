@@ -9,7 +9,7 @@ Automatic design and configuration of multi-objective metaheuristics
 .. important::
 
   jMetal 7.6 is the last version in which the ``jmetal-auto`` sub-project is updated. From now on it is frozen:
-  no new features or algorithms will be added, as its functionality is covered by the Evolver project, which is
+  no new features or algorithms will be added, as its functionality is covered by the `Evolver <https://github.com/jMetal/Evolver>`_ project, which is
   under active development. The classes, examples and irace resources described in this section remain available
   in the 7.6 release.
 
