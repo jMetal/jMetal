@@ -4,6 +4,11 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [09/30/2026] Fixed the decision space of ``MaF08``: the variables were bounded to ``[0, 1]``, which
+  contains only a fifth of the polygon that is its Pareto set, so most of its Pareto front could not be
+  reached; the bounds are now ``[-10000, 10000]``, as in the definition of the MaF test suite (Cheng et al.,
+  2017). The results of ``MaF08`` obtained with earlier versions are not comparable with those of this one.
+
 * [09/30/2026] ``DifferentialEvolutionCrossover.getVariantFromString`` recognizes ``RAND_2_EXP``,
   which was in the ``DE_VARIANT`` enum but raised an exception when given by name.
 

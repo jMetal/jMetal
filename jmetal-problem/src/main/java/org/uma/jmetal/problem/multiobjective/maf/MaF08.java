@@ -23,7 +23,7 @@ public class MaF08 extends AbstractDoubleProblem {
   }
 
   /**
-   * Creates a MaF03 problem instance
+   * Creates a MaF08 problem instance
    *
    * @param numberOfVariables Number of variables
    * @param numberOfObjectives Number of objective functions
@@ -37,12 +37,15 @@ public class MaF08 extends AbstractDoubleProblem {
     double r = 1;
     const8 = polygonpoints(numberOfObjectives, r);
 
+    // Decision space of the MaF test suite (Cheng et al., 2017, doi:10.1007/s40747-017-0039-7):
+    // [-10000, 10000]^2. It contains the regular polygon (radius 1, centered at the origin) whose
+    // points are the Pareto optimal solutions; bounds of [0, 1] contain only a fifth of it.
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
     IntStream.range(0, numberOfVariables).forEach(i -> {
-      lower.add(0.0);
-      upper.add(1.0);
+      lower.add(-10000.0);
+      upper.add(10000.0);
     });
 
     variableBounds(lower, upper);
