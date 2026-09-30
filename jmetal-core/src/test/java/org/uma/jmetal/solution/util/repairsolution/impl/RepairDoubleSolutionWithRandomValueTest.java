@@ -1,6 +1,7 @@
 package org.uma.jmetal.solution.util.repairsolution.impl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -29,6 +30,13 @@ public class RepairDoubleSolutionWithRandomValueTest {
   public void shouldRRepairRaiseAnExceptionIfTheBoundsAreIncorrect() {
     assertThrows(InvalidConditionException.class,
         () -> repair.repairSolutionVariableValue(0.0, 1.0, -1.0));
+  }
+
+  @Test
+  public void shouldRepairReportTheBoundsInTheExceptionMessageIfTheBoundsAreIncorrect() {
+    InvalidConditionException exception = assertThrows(InvalidConditionException.class,
+        () -> repair.repairSolutionVariableValue(0.0, 1.0, -1.0));
+    assertEquals("The lower bound (1.0) is greater than the upper bound (-1.0)", exception.getMessage());
   }
 
   @Test

@@ -138,6 +138,22 @@ class CheckTest {
     }
 
     @Test
+    @DisplayName("given false expression, when using that() with a message supplier, then throw with the supplied message")
+    void givenFalseExpression_whenUsingThatWithSupplier_thenThrowWithSuppliedMessage() {
+      InvalidConditionException ex = assertThrows(InvalidConditionException.class,
+          () -> Check.that(false, () -> "The value " + 3 + " is invalid"));
+      org.junit.jupiter.api.Assertions.assertEquals("The value 3 is invalid", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("given true expression, when using that() with a message supplier, then the supplier is not called")
+    void givenTrueExpression_whenUsingThatWithSupplier_thenSupplierIsNotCalled() {
+      assertDoesNotThrow(() -> Check.that(true, () -> {
+        throw new AssertionError("the message must not be built when the check passes");
+      }));
+    }
+
+    @Test
     @DisplayName("given negative value, when checking not negative, then throw NegativeValueException")
     void givenNegativeValue_whenCheckingNotNegative_thenThrowNegativeValueException() {
       assertThrows(NegativeValueException.class, () -> Check.valueIsNotNegative(-1));

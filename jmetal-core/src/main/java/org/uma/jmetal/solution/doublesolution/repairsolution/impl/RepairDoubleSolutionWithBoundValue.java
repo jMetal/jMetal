@@ -18,7 +18,7 @@ public class RepairDoubleSolutionWithBoundValue implements RepairDoubleSolution 
    * @return The same value if it is in the limits or a repaired value otherwise
    */
   public double repairSolutionVariableValue(double value, double lowerBound, double upperBound) {
-    Check.that(lowerBound < upperBound, "The lower bound (" + lowerBound + ") is greater than the "
+    Check.that(lowerBound < upperBound, () -> "The lower bound (" + lowerBound + ") is greater than the "
             + "upper bound (" + upperBound+")");
 
     double result = value ;

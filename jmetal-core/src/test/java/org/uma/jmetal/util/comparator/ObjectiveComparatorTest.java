@@ -146,4 +146,28 @@ public class ObjectiveComparatorTest {
 
     assertThrows(InvalidConditionException.class, () -> comparator.compare(solution1, solution2));
   }
+
+  @Test
+  public void shouldCompareReportTheNumberOfObjectivesOfSolution1WhenItHasFewerThanRequested() {
+    comparator = new ObjectiveComparator<Solution<?>>(5);
+
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 3, 0).createSolution();
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 6, 0).createSolution();
+
+    InvalidConditionException exception = assertThrows(InvalidConditionException.class,
+        () -> comparator.compare(solution1, solution2));
+    assertEquals("The solution1 has 3 objectives and the objective to sort is5", exception.getMessage());
+  }
+
+  @Test
+  public void shouldCompareReportTheNumberOfObjectivesOfSolution2WhenItHasFewerThanRequested() {
+    comparator = new ObjectiveComparator<Solution<?>>(5);
+
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 6, 0).createSolution();
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 3, 0).createSolution();
+
+    InvalidConditionException exception = assertThrows(InvalidConditionException.class,
+        () -> comparator.compare(solution1, solution2));
+    assertEquals("The solution2 has 3 objectives and the objective to sort is5", exception.getMessage());
+  }
 }

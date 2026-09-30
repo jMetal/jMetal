@@ -41,7 +41,7 @@ public class ListUtils {
     Check.collectionIsNotEmpty(list);
     Check.that(
         list.size() >= numberOfElementsToSelect,
-        "The solution list size ("
+        () -> "The solution list size ("
             + list.size()
             + ") is less than "
             + "the number of requested solutions ("

@@ -69,10 +69,10 @@ public class DifferentialEvolutionSelection
     Check.notNull(solutionList);
     Check.that(
         (currentSolutionIndex >= 0) && (currentSolutionIndex <= solutionList.size()),
-        "Index value invalid: " + currentSolutionIndex);
+        () -> "Index value invalid: " + currentSolutionIndex);
     Check.that(
         solutionList.size() >= numberOfSolutionsToSelect,
-        "The population has less than "
+        () -> "The population has less than "
             + numberOfSolutionsToSelect
             + " solutions: "
             + solutionList.size());

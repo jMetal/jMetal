@@ -37,10 +37,10 @@ public class DefaultPositionUpdate implements PositionUpdate {
    */
   public List<DoubleSolution> update(List<DoubleSolution> swarm, double[][] speed) {
     Check.notNull(swarm);
-    Check.that(!swarm.isEmpty(), "The swarm is empty: " + swarm.size());
-    Check.that(swarm.get(0).variables().size() == positionBounds.size(), "The sizes of the list of " +
+    Check.that(!swarm.isEmpty(), () -> "The swarm is empty: " + swarm.size());
+    Check.that(swarm.get(0).variables().size() == positionBounds.size(), () -> "The sizes of the list of " +
             "bounds and variables do not match: " + positionBounds.size() + " vs " + swarm.get(0).variables().size());
-    Check.that(swarm.size() == speed.length, "The sizes of the list of particles and the speed matrix " +
+    Check.that(swarm.size() == speed.length, () -> "The sizes of the list of particles and the speed matrix " +
             "do not match: " + swarm.size() + " vs " + speed.length);
 
     for (int i = 0; i < swarm.size(); i++) {

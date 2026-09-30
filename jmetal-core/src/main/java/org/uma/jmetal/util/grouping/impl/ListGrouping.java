@@ -75,7 +75,7 @@ public abstract class ListGrouping<C extends Comparable<C>> implements Collectio
   public List<Integer> group(int groupIndex) {
     Check.that(
             ((groupIndex >= 0) && (groupIndex < numberOfGroups)),
-            "The group index " + groupIndex + " is invalid");
+            () -> "The group index " + groupIndex + " is invalid");
     return groups.get(groupIndex);
   }
 }

@@ -92,7 +92,7 @@ public class PMXCrossover implements
    */
   public List<PermutationSolution<Integer>> execute(List<PermutationSolution<Integer>> parents) {
     Check.notNull(parents);
-    Check.that(parents.size() == 2, "There must be two parents instead of " + parents.size());
+    Check.that(parents.size() == 2, () -> "There must be two parents instead of " + parents.size());
 
     return doCrossover(crossoverProbability, parents) ;
   }

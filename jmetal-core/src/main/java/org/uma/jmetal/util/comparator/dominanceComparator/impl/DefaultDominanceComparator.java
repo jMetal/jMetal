@@ -26,7 +26,7 @@ public class DefaultDominanceComparator<S extends Solution<?>> implements Domina
     Check.notNull(solution2);
     Check.that(
         solution1.objectives().length == solution2.objectives().length,
-        "Cannot compare because solution1 has "
+        () -> "Cannot compare because solution1 has "
             + solution1.objectives().length
             + " objectives and solution2 has "
             + solution2.objectives().length);

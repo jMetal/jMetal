@@ -264,7 +264,7 @@ public class SolutionListUtils {
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
         (percentageOfSolutionsToRemove >= 0) && (percentageOfSolutionsToRemove <= 100),
-        "The percentage of solutions to remove is invalid: " + percentageOfSolutionsToRemove);
+        () -> "The percentage of solutions to remove is invalid: " + percentageOfSolutionsToRemove);
 
     int solutionListOriginalSize = solutionList.size();
     int numberOfSolutionsToRemove =

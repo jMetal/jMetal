@@ -23,7 +23,7 @@ public class DefaultGlobalBestUpdate implements GlobalBestUpdate {
       BoundedArchive<DoubleSolution> globalBest) {
     Check.notNull(swarm);
     Check.notNull(globalBest);
-    Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());
+    Check.that(!swarm.isEmpty(), () -> "The swarm size is empty: " + swarm.size());
 
     swarm.stream().map(particle -> (DoubleSolution) particle.copy()).forEach(globalBest::add);
     return globalBest;

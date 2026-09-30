@@ -19,7 +19,7 @@ public class IdealPoint extends ArrayPoint {
 
   @Override
   public void update(double[] point) {
-    Check.that(point.length == this.point.length, "The point to be update have a dimension of " + point.length + " "
+    Check.that(point.length == this.point.length, () -> "The point to be update have a dimension of " + point.length + " "
             + "while the parameter point has a dimension of " + point.length);
 
     for (int i = 0; i < point.length; i++) {

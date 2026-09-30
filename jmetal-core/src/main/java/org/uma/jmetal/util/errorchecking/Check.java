@@ -2,6 +2,7 @@ package org.uma.jmetal.util.errorchecking;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Supplier;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
@@ -355,6 +356,24 @@ public class Check {
   public static void that(boolean expression, String message) {
     if (!expression) {
       throw new InvalidConditionException(message);
+    }
+  }
+
+  /**
+   * Variant of {@link #that(boolean, String)} that builds the message only when
+   * the expression is false. Use it when the message is computed (e.g. by
+   * string concatenation) and the check runs often, such as once per variable
+   * or per comparison: the message is then not built when the check passes.
+   *
+   * @param expression the boolean condition expected to be true
+   * @param messageSupplier supplies the message to include in the thrown
+   *     exception; called only when the condition is false
+   * @throws org.uma.jmetal.util.errorchecking.exception.InvalidConditionException
+   *     if {@code expression} is {@code false}
+   */
+  public static void that(boolean expression, Supplier<String> messageSupplier) {
+    if (!expression) {
+      throw new InvalidConditionException(messageSupplier.get());
     }
   }
 

@@ -40,7 +40,7 @@ public class IterativeSelection<S extends Solution<?>> implements Selection<S> {
   public List<S> select(List<S> solutionList) {
     Check.that(
         solutionList.size() == sequenceGenerator.getSequenceLength(),
-        "The solution list size "
+        () -> "The solution list size "
             + solutionList.size()
             + " does not match the sequence generator length "
             + sequenceGenerator.getSequenceLength());
