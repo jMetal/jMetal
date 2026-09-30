@@ -365,9 +365,9 @@ Build from the repository root with Maven and Java 21 or later.
 .. code-block:: bash
 
   mvn -DskipTests=false clean package
-  java -cp jmetal-auto/target/jmetal-auto-7.6-SNAPSHOT-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.RVEAStarDTLZ2Example
-  java -cp jmetal-auto/target/jmetal-auto-7.6-SNAPSHOT-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.IRVEADTLZ7Example
-  java -cp jmetal-auto/target/jmetal-auto-7.6-SNAPSHOT-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.RVEAVariantsExample DTLZ5 25000 42
+  java -cp jmetal-auto/target/jmetal-auto-7.6-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.RVEAStarDTLZ2Example
+  java -cp jmetal-auto/target/jmetal-auto-7.6-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.IRVEADTLZ7Example
+  java -cp jmetal-auto/target/jmetal-auto-7.6-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.RVEAVariantsExample DTLZ5 25000 42
 
 The existing ``jmetal-auto`` distribution JAR includes ``jmetal-component`` and
 its dependencies. Alternatively, run these main classes directly in an IDE.
@@ -516,9 +516,9 @@ After rebuilding the distribution JAR, run from the repository root:
 
 .. code-block:: bash
 
-  java -cp jmetal-auto/target/jmetal-auto-7.6-SNAPSHOT-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.RVEAVariantsExample ZDT1 25000 42
-  java -cp jmetal-auto/target/jmetal-auto-7.6-SNAPSHOT-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.RVEAVariantsExample ZDT2 25000 42
-  java -cp jmetal-auto/target/jmetal-auto-7.6-SNAPSHOT-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.RVEAVariantsExample ZDT3 25000 42
+  java -cp jmetal-auto/target/jmetal-auto-7.6-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.RVEAVariantsExample ZDT1 25000 42
+  java -cp jmetal-auto/target/jmetal-auto-7.6-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.RVEAVariantsExample ZDT2 25000 42
+  java -cp jmetal-auto/target/jmetal-auto-7.6-jar-with-dependencies.jar org.uma.jmetal.component.examples.multiobjective.rvea.RVEAVariantsExample ZDT3 25000 42
   python results/rvea/zdt/plot_results.py --input-dir .
 
 The plotting script verifies the CSV dimensions, variable bounds, nondominance,
