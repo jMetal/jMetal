@@ -458,6 +458,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
         if (diagD[i] > 0) {
           diagD[i] = Math.sqrt(diagD[i]);
         }
+      }
+      for (int i = 0; i < numberOfVariables; i++) {
         for (int j = 0; j < numberOfVariables; j++) {
           artmp2[i][j] = b[i][j] * (1 / diagD[j]);
         }

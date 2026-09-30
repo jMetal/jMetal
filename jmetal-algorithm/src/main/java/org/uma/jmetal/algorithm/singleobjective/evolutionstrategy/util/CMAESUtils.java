@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util;
 
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.errorchecking.Check;
 
 public class CMAESUtils {
 
@@ -165,6 +166,8 @@ public class CMAESUtils {
         }
         m++;
       }
+      // Only reached if the comparisons above are false, i.e., with NaN values
+      Check.that(m < n, "The matrix to decompose contains NaN values");
 
       // If m == l, d[l] is an eigenvalue,
       // otherwise, iterate.
