@@ -54,15 +54,15 @@ Python scripts (NEW)
 The ``scripts/`` directory contains Python utilities for visualising Pareto fronts produced by
 jMetal algorithms (any ``FUN.csv`` file):
 
-+------------------------------+----------------------------------------------------------+
-| Script                       | Description                                              |
-+==============================+==========================================================+
-| ``plot_front.py``            | Static matplotlib figure (2D/3D scatter, parallel        |
-|                              | coordinates for >3 objectives). Saves to PNG/PDF/SVG.   |
-+------------------------------+----------------------------------------------------------+
-| ``plot_front_interactive.py``| Interactive Plotly viewer (rotate 3D fronts, hover for  |
-|                              | values). Opens in the browser or saves as HTML.          |
-+------------------------------+----------------------------------------------------------+
++-------------------------------+--------------------------------------------------------+
+| Script                        | Description                                            |
++===============================+========================================================+
+| ``plot_front.py``             | Static matplotlib figure (2D/3D scatter, parallel      |
+|                               | coordinates for >3 objectives). Saves to PNG/PDF/SVG.  |
++-------------------------------+--------------------------------------------------------+
+| ``plot_front_interactive.py`` | Interactive Plotly viewer (rotate 3D fronts, hover for |
+|                               | values). Opens in the browser or saves as HTML.        |
++-------------------------------+--------------------------------------------------------+
 
 Install dependencies and run::
 
