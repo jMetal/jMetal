@@ -4,7 +4,7 @@ Automatic design and configuration of multi-objective metaheuristics
 ====================================================================
 
 :Author: Antonio J. Nebro <ajnebro@uma.es>
-:Date: 2025-12-18
+:Date: 2026-09-30
 
 Before reading this section, readers are referred to the papers :ref:`[NLB+19] <NLB+19>` and :ref:`[DNL+22]<DNL+22>`. Please, take into account that this is a research line that is currently guiding the evolution of jMetal,
 so changes are expected in the incoming releases.
@@ -32,8 +32,64 @@ Using the already existing algorithms in jMetal is not feasible as their design 
 the requirements of the integration with irace (see again :ref:`[NLB+19] <NLB+19>`).
 Our strategy has been to develop two jMetal sub-projects: ``jmetal-component`` and ``jmetal-auto``.
 
-We describe next the two auto-configurable algorithms that are currently available: AutoNSGAII and
-AutoMOPSO.
+Available algorithms
+--------------------
+
+The following auto-configurable algorithms are currently available. All of them are located in the
+``org.uma.jmetal.auto.autoconfigurablealgorithm`` package of the ``jmetal-auto`` sub-project:
+
++----------------------------+-------------------------------------+-------------+---------------------------------------------------------+
+| Class                      | Algorithm                           | Encoding    | irace parameter file generator                          |
++============================+=====================================+=============+=========================================================+
+| ``AutoNSGAII``             | NSGA-II                             | Real        | ``AutoNSGAIIIraceParameterFileGenerator``               |
++----------------------------+-------------------------------------+-------------+---------------------------------------------------------+
+| ``AutoNSGAIIPermutation``  | NSGA-II                             | Permutation | ``AutoNSGAIIPermutationIraceParameterFileGenerator``    |
++----------------------------+-------------------------------------+-------------+---------------------------------------------------------+
+| ``AutoMOPSO``              | MOPSO (SMPSO and OMOPSO components) | Real        | ``AutoMOPSOIraceFileGenerator``                         |
++----------------------------+-------------------------------------+-------------+---------------------------------------------------------+
+| ``AutoMOEAD``              | MOEA/D and MOEA/D-DE                | Real        | ``AutoMOEADIraceParameterFileGenerator``                |
++----------------------------+-------------------------------------+-------------+---------------------------------------------------------+
+| ``AutoMOEADPermutation``   | MOEA/D                              | Permutation | ``AutoMOEADPermutationIraceParameterFileGenerator``     |
++----------------------------+-------------------------------------+-------------+---------------------------------------------------------+
+| ``AutoSMSEMOA``            | SMS-EMOA                            | Real        | ``AutoSMSEMOAIIIraceParameterFileGenerator``            |
++----------------------------+-------------------------------------+-------------+---------------------------------------------------------+
+| ``AutoSMSEMOAPermutation`` | SMS-EMOA                            | Permutation | ``AutoSMSEMOAIIIracePermutationParameterFileGenerator`` |
++----------------------------+-------------------------------------+-------------+---------------------------------------------------------+
+| ``AutoAGEMOEA``            | AGE-MOEA and AGE-MOEA-II            | Real        | ``AutoAGEMOEAIraceParameterFileGenerator``              |
++----------------------------+-------------------------------------+-------------+---------------------------------------------------------+
+| ``AutoRVEA``               | RVEA, RVEA* and iRVEA               | Real        | ``AutoRVEAIraceParameterFileGenerator``                 |
++----------------------------+-------------------------------------+-------------+---------------------------------------------------------+
+
+The generators are located in the ``org.uma.jmetal.auto.irace.parameterfilegeneration`` package. We
+describe next AutoNSGAII and AutoMOPSO, which were the first ones to be developed and which we use
+to explain the whole process, and then the rest of the algorithms.
+
+Structure of an auto-configurable algorithm
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+All the classes implement the ``AutoConfigurableAlgorithm`` interface, and they share the same
+structure:
+
+* A list of *fixed parameters* (``fixedParameterList()``): the problem to solve, its reference Pareto
+  front, the maximum number of evaluations and the seed of the random generator (and, in some
+  algorithms, the population size). They are not tuned; they describe the problem instance.
+* A list of *configurable parameters* (``configurableParameterList()``): the components and parameters
+  that a configurator such as irace can modify. A parameter can have *global* sub-parameters, which are
+  required whatever its value is, and *specific* sub-parameters, which are only required for some of its
+  values (e.g., the distribution index of the SBX crossover). ``AutoConfigurableAlgorithm.parameterFlattening()``
+  returns all of them in a single list.
+* A ``parse()`` method that receives an array of strings with pairs "--parameterName parameterValue" and
+  checks their values.
+* A ``create()`` method that builds an instance of the algorithm (an ``EvolutionaryAlgorithm`` or a
+  ``ParticleSwarmOptimizationAlgorithm``) from the catalogue of components of ``jmetal-component``.
+
+The parameter file required by irace can be obtained from the configurable parameters of any of these
+classes, by running its generator. For example, for AutoRVEA:
+
+.. code-block:: bash
+
+  java -cp jmetal-auto/target/jmetal-auto-7.6-jar-with-dependencies.jar \
+    org.uma.jmetal.auto.irace.parameterfilegeneration.AutoRVEAIraceParameterFileGenerator > parameters-RVEA.txt
 
 AutoNSGA-II
 -----------
@@ -52,53 +108,52 @@ step can be considered as a variant of NSGA-II.
 
 The components and parameters of NSGA-II (i.e., the parameter space) that can be tuned are included in this table: 
 
-+---------------------------------------+-----------------------------------------------------+
-| Parameter name                        | Allowed values                                      |
-+=======================================+=====================================================+
-| *populationSize*                      | 100                                                 |
-+---------------------------------------+-----------------------------------------------------+
-+---------------------------------------+-----------------------------------------------------+
-| *algorithmResult*                     | *externalArchive*, *population*                     |
-+---------------------------------------+-----------------------------------------------------+
-| *populationSizeWithArchive*           | [10, 200]                                           |
-+---------------------------------------+-----------------------------------------------------+
-| *externalArchive*                     | *crowdingDistanceArchive*, *unboundedArchive*       |
-+---------------------------------------+-----------------------------------------------------+
-+---------------------------------------+-----------------------------------------------------+
-| *createInitialSolutions*              | *random*, *latinHypercubeSampling*, *scatterSearch* |
-+---------------------------------------+-----------------------------------------------------+
-+---------------------------------------+-----------------------------------------------------+
-| *variation*                           | *crossoverAndMutationVariation*                     |
-+---------------------------------------+-----------------------------------------------------+
-| *offspringPopulationSize*             | [1, 400]                                            |
-+---------------------------------------+-----------------------------------------------------+
-| *crossover*                           | *SBX*, *BLX_ALPHA*                                  |
-+---------------------------------------+-----------------------------------------------------+
-| *crossoverProbability*                | [0.0, 1.0]                                          |
-+---------------------------------------+-----------------------------------------------------+
-| *crossoverRepairStrategy*             | *random*, *round*, *bounds*                         |
-+---------------------------------------+-----------------------------------------------------+
-| *sbxCrossoverDistributionIndex*       | [5.0, 400.0]                                        |
-+---------------------------------------+-----------------------------------------------------+
-| *blxAlphaCrossoverAlphaValue*         | [0.0, 1.0]                                          |
-+---------------------------------------+-----------------------------------------------------+
-| *mutation*                            | *uniform*, *polynomial*, *nonuniform*               |
-+---------------------------------------+-----------------------------------------------------+
-| *mutationProbabilityFactor*           | [0.0, 2.0]                                          |
-+---------------------------------------+-----------------------------------------------------+
-| *mutationRepairStrategy*              | *random*, *round*, *bounds*                         |
-+---------------------------------------+-----------------------------------------------------+
-| *polynomialMutationDistributionIndex* | [5.0, 400.0]                                        |
-+---------------------------------------+-----------------------------------------------------+
-| *uniformMutationPerturbation*         | [0.0, 1.0]                                          |
-+---------------------------------------+-----------------------------------------------------+
-| *nonUniformMutationPerturbation*      | [0.0, 1.0]                                          |
-+---------------------------------------+-----------------------------------------------------+
-+---------------------------------------+-----------------------------------------------------+
-| *selection*                           | *random*, *tournament*                              |
-+---------------------------------------+-----------------------------------------------------+
-| *selectionTournamentSize*             | [2, 10]                                             |
-+---------------------------------------+-----------------------------------------------------+
++---------------------------------------------+-----------------------------------------------------------+
+| Parameter name                              | Allowed values                                            |
++=============================================+===========================================================+
+| *populationSize*                            | 100                                                       |
++---------------------------------------------+-----------------------------------------------------------+
+| *algorithmResult*                           | *externalArchive*, *population*                           |
++---------------------------------------------+-----------------------------------------------------------+
+| *populationSizeWithArchive*                 | [10, 200]                                                 |
++---------------------------------------------+-----------------------------------------------------------+
+| *externalArchive*                           | *crowdingDistanceArchive*, *unboundedArchive*             |
++---------------------------------------------+-----------------------------------------------------------+
+| *createInitialSolutions*                    | *random*, *latinHypercubeSampling*, *scatterSearch*       |
++---------------------------------------------+-----------------------------------------------------------+
+| *variation*                                 | *crossoverAndMutationVariation*                           |
++---------------------------------------------+-----------------------------------------------------------+
+| *offspringPopulationSize*                   | 1, 2, 5, 10, 20, 50, 100, 150, 200, 300, 400              |
++---------------------------------------------+-----------------------------------------------------------+
+| *crossover*                                 | *SBX*, *BLX_ALPHA*, *wholeArithmetic*                     |
++---------------------------------------------+-----------------------------------------------------------+
+| *crossoverProbability*                      | [0.0, 1.0]                                                |
++---------------------------------------------+-----------------------------------------------------------+
+| *crossoverRepairStrategy*                   | *random*, *round*, *bounds*                               |
++---------------------------------------------+-----------------------------------------------------------+
+| *sbxDistributionIndex*                      | [5.0, 400.0]                                              |
++---------------------------------------------+-----------------------------------------------------------+
+| *blxAlphaCrossoverAlphaValue*               | [0.0, 1.0]                                                |
++---------------------------------------------+-----------------------------------------------------------+
+| *mutation*                                  | *uniform*, *polynomial*, *linkedPolynomial*, *nonUniform* |
++---------------------------------------------+-----------------------------------------------------------+
+| *mutationProbabilityFactor*                 | [0.0, 2.0]                                                |
++---------------------------------------------+-----------------------------------------------------------+
+| *mutationRepairStrategy*                    | *random*, *round*, *bounds*                               |
++---------------------------------------------+-----------------------------------------------------------+
+| *polynomialMutationDistributionIndex*       | [5.0, 400.0]                                              |
++---------------------------------------------+-----------------------------------------------------------+
+| *linkedPolynomialMutationDistributionIndex* | [5.0, 400.0]                                              |
++---------------------------------------------+-----------------------------------------------------------+
+| *uniformMutationPerturbation*               | [0.0, 1.0]                                                |
++---------------------------------------------+-----------------------------------------------------------+
+| *nonUniformMutationPerturbation*            | [0.0, 1.0]                                                |
++---------------------------------------------+-----------------------------------------------------------+
+| *selection*                                 | *random*, *tournament*                                    |
++---------------------------------------------+-----------------------------------------------------------+
+| *selectionTournamentSize*                   | [2, 10]                                                   |
++---------------------------------------------+-----------------------------------------------------------+
+
 
 Our *autoNSGAII* can adopt an external archive to store the non-dominated solutions found during the search process. There are two choices for this archive:
 
@@ -109,11 +164,11 @@ In case of using no archive, the result of the algorithm is the population, whic
 
 The initial population is typically filled with randomly created solutions, but we also allows to use a latin hypercube sampling scheme and a strategy similar to the one used in the scatter search algorithm.
 
-In the classical NSGA-II, the offspring population size is equal to the population size, but we can set its value from 1 (which leads to a steady-state selection scheme) to 400.
+In the classical NSGA-II, the offspring population size is equal to the population size, but we can select a value from the set {1, 2, 5, 10, 20, 50, 100, 150, 200, 300, 400}; the value 1 leads to a steady-state selection scheme.
 
-The *autoNSGAII* has a *variation* component than can take a single value named *crossoverAndMutationVariation*. It is intended to represent the typical crossover and mutation operators of a genetic algorithm (additional values, e.g., *DifferentialiEvolutionVariation* are expected to be added in the future). The *crossover* operators included are *SBX* (simulated binary crossover) and *BLX_ALPHA*, which are featured by a given probability and a *crossoverRepairStrategy*, which defines what to do when the crossover produces a variable value out of the allowed bounds (please, refer to Section 3.2 and Figure 3 in the paper). The *SBX* and *BLX_ALPHA* require, if selected, a distribution index (a value within the range [5.0, 400]) and an alpha value (range [0.0, 1.0]), respectively. 
+The *autoNSGAII* has a *variation* component than can take a single value named *crossoverAndMutationVariation*. It is intended to represent the typical crossover and mutation operators of a genetic algorithm (additional values, e.g., *DifferentialiEvolutionVariation* are expected to be added in the future). The *crossover* operators included are *SBX* (simulated binary crossover), *BLX_ALPHA* and *wholeArithmetic*, which are featured by a given probability and a *crossoverRepairStrategy*, which defines what to do when the crossover produces a variable value out of the allowed bounds (please, refer to Section 3.2 and Figure 3 in the paper). The *SBX* and *BLX_ALPHA* require, if selected, a distribution index (a value within the range [5.0, 400]) and an alpha value (range [0.0, 1.0]), respectively. 
 
-Similarly, there are several mutation operators to choose from, including *polynomial*, *uniform*, and *nonUniform*, requiring all of them a mutation probability and a repairing strategy; the polynomial mutation has, as the SBX crossover, a distribution index parameter (in the range [5.0, 400]) and the *uniform* and *nonUniform* mutation operators need a perturbation value in the range [0.0, 1.0]. The mutation probability is defined by using a mutation probability factor (a value in the range [0.0, 2.0]), so that the effective mutation probability is the multiplication of that factor with 1.0/N, where N is the number of variables of the problem being optimized.
+Similarly, there are several mutation operators to choose from, including *polynomial*, *linkedPolynomial*, *uniform*, and *nonUniform*, requiring all of them a mutation probability and a repairing strategy; the polynomial and linked polynomial mutations have, as the SBX crossover, a distribution index parameter (in the range [5.0, 400]) and the *uniform* and *nonUniform* mutation operators need a perturbation value in the range [0.0, 1.0]. The mutation probability is defined by using a mutation probability factor (a value in the range [0.0, 2.0]), so that the effective mutation probability is the multiplication of that factor with 1.0/N, where N is the number of variables of the problem being optimized.
 
 Finally, the *selection* operator be *random* or *tournament*; this last one can take a value between 2 (i.e., binary tournament) and 10.
 
@@ -150,6 +205,13 @@ We have created then a file called ``parameters-NSGAII.txt`` containing the para
 
 To know about the syntax of irace configuration files, please refer to the irace documentation.
 
+.. note::
+
+  The file ``parameters-NSGAII.txt`` included in the project fixes *offspringPopulationSize* to 100, as in
+  the study presented in :ref:`[NLB+19] <NLB+19>`. The ``AutoNSGAII`` class accepts all the values listed
+  in the table above, and the complete parameter space can be generated with
+  ``AutoNSGAIIIraceParameterFileGenerator``.
+
 
 The ``AutoNSGAII`` class
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -166,40 +228,41 @@ An example can be found in the ``NSGAIIConfiguredFromAParameterString`` class
   public class NSGAIIConfiguredFromAParameterString {
 
     public static void main(String[] args) {
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
+      String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-            + "--randomGeneratorSeed 12 "
-            + "--referenceFrontFileName " + referenceFrontFileName + " "
-            + "--maximumNumberOfEvaluations 10000 "
-            + "--populationSize 100 "
-            + "--algorithmResult population  "
-            + "--createInitialSolutions random "
-            + "--offspringPopulationSize 100 "
-            + "--variation crossoverAndMutationVariation --crossover SBX "
-            + "--crossoverProbability 0.9 "
-            + "--crossoverRepairStrategy bounds "
-            + "--sbxDistributionIndex 20.0 "
-            + "--mutation polynomial "
-            + "--mutationProbabilityFactor 1.0 "
-            + "--polynomialMutationDistributionIndex 20.0 "
-            + "--mutationRepairStrategy bounds "
-            + "--selection tournament "
-            + "--selectionTournamentSize 2 \n")
-            .split("\\s+");
+      String[] parameters =
+          ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+              + "--randomGeneratorSeed 12 "
+              + "--referenceFrontFileName " + referenceFrontFileName + " "
+              + "--maximumNumberOfEvaluations 10000 "
+              + "--populationSize 100 "
+              + "--algorithmResult population "
+              + "--createInitialSolutions random "
+              + "--offspringPopulationSize 100 "
+              + "--variation crossoverAndMutationVariation "
+              + "--crossover SBX "
+              + "--crossoverProbability 0.9 "
+              + "--crossoverRepairStrategy bounds "
+              + "--sbxDistributionIndex 20.0 "
+              + "--mutation polynomial "
+              + "--mutationProbabilityFactor 1.0 "
+              + "--polynomialMutationDistributionIndex 20.0 "
+              + "--mutationRepairStrategy bounds "
+              + "--selection tournament "
+              + "--selectionTournamentSize 2 ")
+              .split("\\s+");
 
       AutoNSGAII autoNSGAII = new AutoNSGAII();
-      NSGAII.parseAndCheckParameters(parameters);
+      autoNSGAII.parse(parameters);
 
-      EvolutionaryAlgorithm<DoubleSolution> nsgaII = NSGAII.create();
+      EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
       nsgaII.run();
 
-      new SolutionListOutput(nsgaII.getResult())
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
-        .print();
+      new SolutionListOutput(nsgaII.result())
+          .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+          .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+          .print();
     }
   }
 
@@ -210,7 +273,7 @@ To replicate the study presented in :ref:`[NLB+19] <NLB+19>` you must follow the
 
 The software requirements are the following:
 
-* Java JDK (19+)
+* Java JDK (21+)
 * R
 
 
@@ -496,7 +559,7 @@ To replicate the study presented in :ref:`[DNL+22]<DNL+22>` we have just to repe
 
 .. code-block:: bash
 
-  ./run.sh autoNSGAIIZDT/scenario-MOPSO.txt 1
+  ./run.sh autoMOPSOZDT/scenario-MOPSO.txt 1
 
 When irace finishes, the best found configuration can be found by typing:
 
@@ -512,6 +575,253 @@ At the end of the output file, we can find something similar to this piece of te
   2464  --swarmSize 11 --archiveSize 100 --externalArchive hypervolumeArchive --swarmInitialization scatterSearch --velocityInitialization defaultVelocityInitialization --perturbation frequencySelectionMutationBasedPerturbation --mutation uniform --mutationProbabilityFactor 0.1791 --mutationRepairStrategy random --uniformMutationPerturbation 0.7245 --frequencyOfApplicationOfMutationOperator 8 --inertiaWeightComputingStrategy constantValue --weight 0.1081 --velocityUpdate constrainedVelocityUpdate --c1Min 1.7965 --c1Max 2.4579 --c2Min 1.0514 --c2Max 2.5417 --localBestInitialization defaultLocalBestInitialization --globalBestInitialization defaultGlobalBestInitialization --globalBestSelection binaryTournament --globalBestUpdate defaultGlobalBestUpdate --localBestUpdate defaultLocalBestUpdate --positionUpdate defaultPositionUpdate --velocityChangeWhenLowerLimitIsReached 0.1399 --velocityChangeWhenUpperLimitIsReached -0.7488
 
 This configuration can be used in the ``SMPSOConfiguredFromAParameterString`` program, replacing the existing one, to run *AutoMOPSO* with those settings.
+
+AutoMOEAD
+---------
+
+``AutoMOEAD`` covers MOEA/D and MOEA/D-DE. The aggregation function, the neighborhood, the number of
+solutions that an offspring can replace, and the way of generating the sub-problem indices are
+configurable. The variation component can be a genetic one (crossover and mutation) or a differential
+evolution one; the *pbiTheta* and *ipbiTheta* parameters are only required with the *penaltyBoundaryIntersection*
+and *invertedPenaltyBoundaryIntersection* aggregation functions, and *epsilonParameterForNormalizing* when the
+objectives are normalized.
+
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Parameter name                     | Allowed values                                                                                                                                          |
++====================================+=========================================================================================================================================================+
+| *neighborhoodSize*                 | [5, 50]                                                                                                                                                 |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *maximumNumberOfReplacedSolutions* | [1, 5]                                                                                                                                                  |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *aggregationFunction*              | *tschebyscheff*, *weightedSum*, *penaltyBoundaryIntersection*, *modifiedTschebyscheff*, *augmentedTschebyscheff*, *invertedPenaltyBoundaryIntersection* |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *normalizeObjectives*              | *TRUE*, *FALSE*                                                                                                                                         |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *epsilonParameterForNormalizing*   | [1.0E-7, 25.0]                                                                                                                                          |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *pbiTheta*                         | [1.0, 200.0]                                                                                                                                            |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *ipbiTheta*                        | [0.001, 1.0]                                                                                                                                            |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *sequenceGenerator*                | *permutation*, *integerSequence*                                                                                                                        |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *algorithmResult*                  | *externalArchive*, *population*                                                                                                                         |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *externalArchive*                  | *crowdingDistanceArchive*, *unboundedArchive*                                                                                                           |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *createInitialSolutions*           | *random*, *latinHypercubeSampling*, *scatterSearch*                                                                                                     |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *variation*                        | *crossoverAndMutationVariation*, *differentialEvolutionVariation*                                                                                       |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *offspringPopulationSize*          | 1                                                                                                                                                       |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *crossover*                        | *SBX*, *BLX_ALPHA*, *wholeArithmetic*                                                                                                                   |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *mutation*                         | *uniform*, *polynomial*, *linkedPolynomial*, *nonUniform*                                                                                               |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *differentialEvolutionCrossover*   | *RAND_1_BIN*, *RAND_1_EXP*, *RAND_2_BIN*                                                                                                                |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *CR*, *F*                          | [0.0, 1.0]                                                                                                                                              |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *selection*                        | *populationAndNeighborhoodMatingPoolSelection*                                                                                                          |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *neighborhoodSelectionProbability* | [0.0, 1.0]                                                                                                                                              |
++------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+The population size is a fixed parameter. For problems with more than two objectives the weight vectors are
+read from the ``resources/weightVectorFiles/moead`` folder (the ``AutoMOEAD(String weightVectorsDirectory)``
+constructor allows to indicate another folder), so the population size must match one of the available files
+(e.g., 100 for the file ``W3D_100.dat``). Examples of use can be found in the ``MOEADConfiguredFromAParameterString``
+and ``MOEADDEConfiguredFromAParameterString`` classes.
+
+AutoSMSEMOA
+-----------
+
+``AutoSMSEMOA`` configures SMS-EMOA, a steady-state algorithm (one offspring per iteration) whose replacement
+is based on the hypervolume contribution. It shares with AutoNSGAII the initial solutions, the variation and the
+selection components, and it can also use an external archive to return the result (in which case the population size
+is taken from *populationSizeWithArchive*):
+
++-----------------------------+-----------------------------------------------------------+
+| Parameter name              | Allowed values                                            |
++=============================+===========================================================+
+| *algorithmResult*           | *externalArchive*, *population*                           |
++-----------------------------+-----------------------------------------------------------+
+| *populationSizeWithArchive* | [10, 200]                                                 |
++-----------------------------+-----------------------------------------------------------+
+| *externalArchive*           | *crowdingDistanceArchive*, *unboundedArchive*             |
++-----------------------------+-----------------------------------------------------------+
+| *createInitialSolutions*    | *random*, *latinHypercubeSampling*, *scatterSearch*       |
++-----------------------------+-----------------------------------------------------------+
+| *offspringPopulationSize*   | 1                                                         |
++-----------------------------+-----------------------------------------------------------+
+| *variation*                 | *crossoverAndMutationVariation*                           |
++-----------------------------+-----------------------------------------------------------+
+| *crossover*                 | *SBX*, *BLX_ALPHA*, *wholeArithmetic*                     |
++-----------------------------+-----------------------------------------------------------+
+| *mutation*                  | *uniform*, *polynomial*, *linkedPolynomial*, *nonUniform* |
++-----------------------------+-----------------------------------------------------------+
+| *selection*                 | *random*, *tournament*                                    |
++-----------------------------+-----------------------------------------------------------+
+| *selectionTournamentSize*   | [2, 10]                                                   |
++-----------------------------+-----------------------------------------------------------+
+
+The crossover and mutation sub-parameters are the same as in AutoNSGAII. An example can be found in the
+``SMSEMOAConfiguredFromAParameterString`` class.
+
+AutoAGEMOEA
+-----------
+
+``AutoAGEMOEA`` configures AGE-MOEA and AGE-MOEA-II. As the algorithm variant and the environmental selection are
+independent parameters, the configurator can also explore combinations of both. The rest of the components are
+the same as in AutoNSGAII, without an external archive:
+
++---------------------------+-----------------------------------------------------------+
+| Parameter name            | Allowed values                                            |
++===========================+===========================================================+
+| *algorithmVariant*        | *agemoea*, *agemoeaii*                                    |
++---------------------------+-----------------------------------------------------------+
+| *environmentalSelection*  | *agemoea*, *agemoeaii*                                    |
++---------------------------+-----------------------------------------------------------+
+| *replacement*             | *agemoeaReplacement*                                      |
++---------------------------+-----------------------------------------------------------+
+| *createInitialSolutions*  | *random*, *latinHypercubeSampling*, *scatterSearch*       |
++---------------------------+-----------------------------------------------------------+
+| *offspringPopulationSize* | 1, 2, 5, 10, 20, 50, 100, 150, 200, 300, 400              |
++---------------------------+-----------------------------------------------------------+
+| *variation*               | *crossoverAndMutationVariation*                           |
++---------------------------+-----------------------------------------------------------+
+| *crossover*               | *SBX*, *BLX_ALPHA*, *wholeArithmetic*                     |
++---------------------------+-----------------------------------------------------------+
+| *mutation*                | *uniform*, *polynomial*, *linkedPolynomial*, *nonUniform* |
++---------------------------+-----------------------------------------------------------+
+| *selection*               | *random*, *tournament*                                    |
++---------------------------+-----------------------------------------------------------+
+| *selectionTournamentSize* | [2, 10]                                                   |
++---------------------------+-----------------------------------------------------------+
+
+The files ``parameters-AGEMOEA.txt`` and ``autoAGEMOEAZDT/scenario-AGEMOEA.txt``, located in the
+``jmetal-auto/src/main/resources/irace`` folder, can be used to configure it with irace.
+
+AutoRVEA
+--------
+
+``AutoRVEA`` configures the RVEA family: RVEA, RVEA* (with reference vector regeneration for problems with irregular
+Pareto fronts) and iRVEA (see :doc:`rvea-variants`). Following the component-based scheme, the variant is
+the *replacement* component of the algorithm: the three of them share the initial population creation, the
+selection and the variation components, and only the environmental selection changes. The *alpha* and *fr*
+parameters (the penalty rate of the angle-penalized distance, and the frequency of adaptation of the reference
+vectors) are required by the three variants, while *numberOfSubregions*, *lateStageFraction* and *epsilonKappa* are
+specific of iRVEA:
+
++---------------------------+-----------------------------------------------------------+
+| Parameter name            | Allowed values                                            |
++===========================+===========================================================+
+| *replacement*             | *rvea*, *rveaStar*, *iRVEA*                               |
++---------------------------+-----------------------------------------------------------+
+| *alpha*                   | [0.5, 10.0]                                               |
++---------------------------+-----------------------------------------------------------+
+| *fr*                      | [0.01, 1.0]                                               |
++---------------------------+-----------------------------------------------------------+
+| *numberOfSubregions*      | [10, 100]                                                 |
++---------------------------+-----------------------------------------------------------+
+| *lateStageFraction*       | [0.5, 1.0]                                                |
++---------------------------+-----------------------------------------------------------+
+| *epsilonKappa*            | [0.01, 0.2]                                               |
++---------------------------+-----------------------------------------------------------+
+| *algorithmResult*         | *population*, *externalArchive*                           |
++---------------------------+-----------------------------------------------------------+
+| *externalArchive*         | *crowdingDistanceArchive*, *unboundedArchive*             |
++---------------------------+-----------------------------------------------------------+
+| *createInitialSolutions*  | *random*, *latinHypercubeSampling*, *scatterSearch*       |
++---------------------------+-----------------------------------------------------------+
+| *offspringPopulationSize* | 10, 20, 50, 100, 150, 200                                 |
++---------------------------+-----------------------------------------------------------+
+| *variation*               | *crossoverAndMutationVariation*                           |
++---------------------------+-----------------------------------------------------------+
+| *crossover*               | *SBX*, *BLX_ALPHA*, *wholeArithmetic*                     |
++---------------------------+-----------------------------------------------------------+
+| *mutation*                | *uniform*, *polynomial*, *linkedPolynomial*, *nonUniform* |
++---------------------------+-----------------------------------------------------------+
+| *selection*               | *random*, *tournament*                                    |
++---------------------------+-----------------------------------------------------------+
+| *selectionTournamentSize* | [2, 10]                                                   |
++---------------------------+-----------------------------------------------------------+
+
+The crossover and mutation sub-parameters are the same as in AutoNSGAII.
+
+Some remarks on the differences with the other auto-configurable algorithms:
+
+* **The population size is not a parameter.** In RVEA the population size is the number of reference vectors.
+  By default, they are generated from the number of objectives of the problem: 100, 105, 120 and 126 vectors for
+  2, 3, 4 and 5 objectives (simplex lattices with 99, 13, 7 and 5 divisions), and two layers of vectors (3 and 2
+  divisions) for six or more objectives (e.g., 77 vectors for six objectives and 156 for eight). Any other population
+  size can be used by giving a file of uniformly distributed weight vectors, with one vector per line, through the
+  optional parameter ``--referenceVectorsFile`` (e.g., ``resources/weightVectorFiles/moead/W3D_100.dat``). The number of
+  components of the vectors must be the number of objectives. There is no *populationSizeWithArchive* parameter: when an
+  external archive is used, its size is the number of reference vectors.
+* **The number of generations is computed from the budget:** ``(maximumNumberOfEvaluations - N) / offspringPopulationSize``,
+  where N is the number of reference vectors. It determines the penalty schedule and the moments when the vectors are
+  adapted, so the budget must be at least N.
+* **The offspring population size is limited to the range [10, 200].** Contrarily to what happens in NSGA-II, smaller values
+  hardly improve the quality of the results (a new solution only enters the population if it beats the current one of its
+  region) and they multiply the running time, since the cost of the environmental selection of each generation
+  depends mainly on N; larger values degrade the results on some problems.
+* **Tournament selection:** as the population of RVEA can shrink when some regions are empty, a tournament
+  selection falls back to random selection when the population is smaller than the tournament size.
+* **Only unconstrained problems are supported.**
+
+The ``AutoRVEA`` class is used as the others; the ``RVEAConfiguredFromAParameterString`` example solves DTLZ2 with the
+default reference vectors and with the ones of a file:
+
+.. code-block:: java
+
+  String[] parameters =
+      ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
+          + "--randomGeneratorSeed 12 "
+          + "--referenceFrontFileName resources/referenceFrontsCSV/DTLZ2.3D.csv "
+          + "--maximumNumberOfEvaluations 40000 "
+          + "--algorithmResult population "
+          + "--createInitialSolutions random "
+          + "--variation crossoverAndMutationVariation "
+          + "--offspringPopulationSize 100 "
+          + "--crossover SBX "
+          + "--crossoverProbability 1.0 "
+          + "--crossoverRepairStrategy bounds "
+          + "--sbxDistributionIndex 30.0 "
+          + "--mutation polynomial "
+          + "--mutationProbabilityFactor 1.0 "
+          + "--polynomialMutationDistributionIndex 20.0 "
+          + "--mutationRepairStrategy bounds "
+          + "--selection random "
+          + "--replacement rvea "
+          + "--alpha 2.0 "
+          + "--fr 0.1 "
+          + "--referenceVectorsFile resources/weightVectorFiles/moead/W3D_100.dat")
+          .split("\\s+");
+
+  AutoRVEA autoRVEA = new AutoRVEA();
+  autoRVEA.parse(parameters);
+
+  EvolutionaryAlgorithm<DoubleSolution> rvea = autoRVEA.create();
+  rvea.run();
+
+The project does not include an irace scenario for AutoRVEA yet: the parameter file can be obtained with the
+``AutoRVEAIraceParameterFileGenerator`` class (see the previous section), and the scenario of AutoNSGAII can be used
+as a template.
+
+Algorithms for permutation problems
+-----------------------------------
+
+The classes ``AutoNSGAIIPermutation``, ``AutoMOEADPermutation`` and ``AutoSMSEMOAPermutation`` are the versions of
+NSGA-II, MOEA/D and SMS-EMOA for problems whose solutions are permutations, such as the multi-objective traveling salesman problem.
+The variation operators are replaced by permutation operators. For example, in AutoNSGAIIPermutation the
+*crossover* can be *PMX*, *CX*, *OXD*, *positionBased* or *edgeRecombination*, with a probability in [0.6, 0.9], and the
+*mutation* can be *swap*, *displacement*, *insert*, *scramble*, *inversion* or *simpleInversion*, with a probability in [0.05, 0.1].
+The rest of the components follow those of the corresponding real-coded algorithm, with some restrictions: for example, the
+initial solutions are always created randomly, and AutoMOEADPermutation offers four aggregation functions (*tschebyscheff*,
+*weightedSum*, *penaltyBoundaryIntersection* and *modifiedTschebyscheff*) and no differential evolution variation. Examples of use are the
+``NSGAIIConfiguredToSolveABiObjectiveTSP`` and ``MOEADConfiguredFromToSolveATriObjectiveTSP`` classes.
 
 References
 ----------
