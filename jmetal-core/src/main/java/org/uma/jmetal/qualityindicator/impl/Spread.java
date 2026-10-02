@@ -56,14 +56,21 @@ public class Spread extends QualityIndicator {
   public double spread(double[][] front, double[][] referenceFront) {
     var distance = new EuclideanDistanceBetweenVectors() ;
 
-    // STEP 1. Sort normalizedFront and normalizedParetoFront;
+    // STEP 1. Sort normalizedFront and normalizedParetoFront. The reference front is sorted in a
+    // local copy, not in the shared field: QualityIndicator instances are reused across parallel
+    // computations (e.g. jmetal-lab's ComputeQualityIndicators runs one compute() per independent
+    // run on a parallel stream, and Evolver evaluates configurations in parallel), and sorting the
+    // shared array in-place from multiple threads at once corrupts it mid-sort, which Arrays.sort
+    // reports as "Comparison method violates its general contract!".
+    double[][] sortedReferenceFront = referenceFront.clone() ;
     Arrays.sort(front, 0, front.length, new LexicographicalVectorComparator()) ;
-    Arrays.sort(referenceFront, 0, referenceFront.length, new LexicographicalVectorComparator()) ;
+    Arrays.sort(
+        sortedReferenceFront, 0, sortedReferenceFront.length, new LexicographicalVectorComparator()) ;
 
     // STEP 2. Compute df and dl (See specifications in Deb's description of the metric)
-    double df = distance.compute(front[0], referenceFront[0]) ;
+    double df = distance.compute(front[0], sortedReferenceFront[0]) ;
     double dl = distance.compute(front[front.length - 1],
-            referenceFront[referenceFront.length - 1]) ;
+            sortedReferenceFront[sortedReferenceFront.length - 1]) ;
 
     double mean = 0.0;
     double diversitySum = df + dl;
