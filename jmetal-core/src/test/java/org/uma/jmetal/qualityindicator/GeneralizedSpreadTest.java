@@ -7,9 +7,9 @@ import java.util.Random;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.qualityindicator.impl.Spread;
+import org.uma.jmetal.qualityindicator.impl.GeneralizedSpread;
 
-public class SpreadTest {
+public class GeneralizedSpreadTest {
   private static final double EPSILON = 1.0e-12;
 
   /** A bi-objective front f2 = 1 - sqrt(f1), with its points in random order. */
@@ -29,7 +29,7 @@ public class SpreadTest {
     double[][] copyOfTheReferenceFront = referenceFront.clone();
     double[][] front = shuffledFront(50, 0.05, 2L);
 
-    new Spread(referenceFront).compute(front);
+    new GeneralizedSpread(referenceFront).compute(front);
 
     for (int i = 0; i < referenceFront.length; i++) {
       Assertions.assertSame(copyOfTheReferenceFront[i], referenceFront[i], "row " + i + " moved");
@@ -42,7 +42,7 @@ public class SpreadTest {
     double[][] front = shuffledFront(50, 0.05, 2L);
     double[][] copyOfTheFront = front.clone();
 
-    new Spread(referenceFront).compute(front);
+    new GeneralizedSpread(referenceFront).compute(front);
 
     for (int i = 0; i < front.length; i++) {
       Assertions.assertSame(copyOfTheFront[i], front[i], "row " + i + " moved");
@@ -52,8 +52,8 @@ public class SpreadTest {
   @Test
   public void shouldComputeGiveTheSameValueWhenAnInstanceIsSharedByParallelComputations() {
     double[][] referenceFront = shuffledFront(2000, 0.0, 3L);
-    Spread shared = new Spread(referenceFront);
-    double expected = new Spread(referenceFront.clone()).compute(shuffledFront(300, 0.05, 4L));
+    GeneralizedSpread shared = new GeneralizedSpread(referenceFront);
+    double expected = new GeneralizedSpread(referenceFront.clone()).compute(shuffledFront(300, 0.05, 4L));
 
     double[] values =
         IntStream.range(0, 200)

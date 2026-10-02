@@ -88,6 +88,8 @@ public class GeneralizedSpread extends QualityIndicator {
 
     int numberOfPoints = front.length;
 
+    // Sort a copy too: the caller's front keeps its order.
+    front = front.clone();
     Arrays.sort(front, new LexicographicalVectorComparator());
     // front.sort(new LexicographicalPointComparator());
 

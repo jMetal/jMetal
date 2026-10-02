@@ -61,8 +61,10 @@ public class Spread extends QualityIndicator {
     // computations (e.g. jmetal-lab's ComputeQualityIndicators runs one compute() per independent
     // run on a parallel stream, and Evolver evaluates configurations in parallel), and sorting the
     // shared array in-place from multiple threads at once corrupts it mid-sort, which Arrays.sort
-    // reports as "Comparison method violates its general contract!".
+    // reports as "Comparison method violates its general contract!". The front is sorted in a copy
+    // too, so the caller's array keeps its order.
     double[][] sortedReferenceFront = referenceFront.clone() ;
+    front = front.clone() ;
     Arrays.sort(front, 0, front.length, new LexicographicalVectorComparator()) ;
     Arrays.sort(
         sortedReferenceFront, 0, sortedReferenceFront.length, new LexicographicalVectorComparator()) ;
