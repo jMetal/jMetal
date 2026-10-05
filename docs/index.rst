@@ -9,7 +9,7 @@ It includes a wide set of resources, including state-of-the-art multi-objective 
 solution encodings, benchmark problems, quality indicators, and utilities for performing experimental
 studies.
 
-The current stable version is 7.6 (https://github.com/jMetal/jMetal).
+The current stable version is 7.7 (https://github.com/jMetal/jMetal).
 
 jMetal is described in the following papers:
 
@@ -20,21 +20,22 @@ jMetal is described in the following papers:
 
 Summary of features:
 
-* Multi-objective algorithms: NSGA-II, SPEA2, PAES, PESA-II, OMOPSO, MOCell, AbYSS, MOEA/D, GDE3, IBEA, SMPSO, SMPSOhv, SMS-EMOA, MOEA/D-STM, MOEA/D-DE, MOCHC, MOMBI, MOMBI-II, NSGA-III, WASF-GA, GWASF-GA, R-NSGA-II, CDG-MOEA, ESPEA, SMSPO/RP, AGEMOEA, CDG, FAME, MicroFAME, MOSA.
-* Single-objective algorithms: genetic algorithm (variants: generational, steady-state), evolution strategy (variants: elitist or mu+lambda, non-elitist or mu, lambda), DE, CMA-ES, PSO (Stantard 2007, Standard 2011), Coral reef optimization.
+* Multi-objective algorithms: NSGA-II, SPEA2, PAES, PESA-II, OMOPSO, MOCell, AbYSS, MOEA/D, GDE3, IBEA, SMPSO, SMPSOhv, SMS-EMOA, MOEA/D-STM, MOEA/D-DE, MOEA/D-DRA, MOEA/D-D, MOEA/D-IEpsilon, MOCHC, MOMBI, MOMBI-II, NSGA-III, WASF-GA, GWASF-GA, R-NSGA-II, CDG-MOEA, ESPEA, SMSPO/RP, AGEMOEA, AGEMOEA-II, CDG, FAME, MicroFAME, MOSA, DMOPSO, RVEA, RVEA*, iRVEA, RDS-MOEA, random search.
+* Single-objective algorithms: genetic algorithm (variants: generational, steady-state), evolution strategy (variants: elitist or mu+lambda, non-elitist or mu, lambda), DE, CMA-ES, PSO (Standard 2007, Standard 2011), Coral reef optimization.
 * Parallel models: Synchronous (multi-threaded, Apache Spark), asynchronous
 * Variable representations (encodings): binary, real, integer, permutation, mixed
 * Problems:
 
-  - Problem families: ZDT, DTLZ, WFG, RE, CRE, FDA, CEC2009, LZ09, GLT, MOP, LIRCMOP, MOP, UF, ZCAT
+  - Problem families: ZDT, DTLZ (including the DTLZ-Minus variants), WFG, MaF, LSMOP, RE, CRE, RWA, FDA, CEC2009, LZ09, GLT, MOP, LIRCMOP, UF, ZCAT, EBES
+  - Real-world constrained problems: the 50 problems of the CEC2021 RWMOP suite (RCM01-RCM50)
   - Classical problems: Kursawe, Fonseca, Schaffer, Viennet2, Viennet3
-  - Constrained problems: Srinivas, Tanaka, Osyczka2, Constr_Ex, Golinski, Water, Viennet4, CF1-CF16 (Xiang et al. suite), C-DTLZ
-  - Combinatorial problems: multi-objective TSP
+  - Constrained problems: Srinivas, Tanaka, Osyczka2, Constr_Ex, Golinski, Water, Viennet4, CF1-CF16 (Xiang et al. suite), C-DTLZ, RCM01-RCM50
+  - Combinatorial problems: multi-objective TSP, multi-objective knapsack
   - Academic problems: OneMax, OneZeroMax
 
-* Quality indicators: hypervolume, normalized hypervolume, spread, generational distance, inverted generational distance, inverted generational distance plus, additive epsilon.
+* Quality indicators: hypervolume, normalized hypervolume, spread, generalized spread, generational distance, inverted generational distance, inverted generational distance plus, additive epsilon, R2, set coverage, error ratio, average Hausdorff distance.
 * Support for experimental studies
-* Support for automatic algorithm configuration and design
+* Support for automatic algorithm configuration and design (the ``jmetal-auto`` sub-project, which is frozen since jMetal 7.6; see `Evolver <https://github.com/jMetal/Evolver>`_)
 
 .. toctree::
     :maxdepth: 2

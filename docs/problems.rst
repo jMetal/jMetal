@@ -4,7 +4,7 @@ Problems
 ========
 
 :Author: Antonio J. Nebro
-:Date: 2026-6-12
+:Date: 2026-10-05
 
 All the problems in jMetal implement the `Problem <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/Problem.java>`_ interface:
 
@@ -79,6 +79,14 @@ jMetal provides currently the following interfaces representing types of problem
 
 All the problems provided by jMetal are included in the ``org.uma.jmetal.problem`` package located in the ``jmetal-problem`` sub-project. The package includes the sub-packages ``multiobjective`` and ``singleobjective``, which contains the codes of the problems. You can find both individual
 problems (e.g., *Kursawe*, *Sphere*, etc.) and benchmarks suites (such as *ZDT*, *DTLZ* or *LZ09*).
+
+The benchmark suites and problem families of the ``multiobjective`` package (each one in its own sub-package) are:
+
+* *Unconstrained*: ``zdt``, ``dtlz`` (including ``DTLZ1Minus``-``DTLZ4Minus``, the inverted versions used with decomposition-based algorithms), ``wfg``, ``maf`` (MaF1-MaF15), ``lsmop`` (large-scale), ``lz09``, ``uf`` (CEC2009), ``fda`` (dynamic problems), ``glt``, ``mop``, ``zcat`` and ``cec2015OptBigDataCompetition``.
+* *Constrained benchmarks*: ``cf`` (CF1-CF16), ``cdtlz`` (C-DTLZ) and ``lircmop``.
+* *Engineering problems*: ``re`` and ``cre`` (with and without constraints) and ``ebes``.
+* *Real-world problems*: ``rwa`` (RWA1-RWA10, box-constrained) and ``cec2021`` (the 50 constrained problems of the RWMOP suite, RCM01-RCM50, from "A Benchmark-Suite of Real-World Constrained Multi-Objective Optimization Problems and some Baseline Results").
+* *Combinatorial*: ``multiobjectivetsp`` and ``multiobjectiveknapsack``.
 
 The lists of single- and multi-objective problems are included in the next figures:
 
