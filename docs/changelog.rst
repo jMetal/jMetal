@@ -4,6 +4,10 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/05/2026] ``JMetalException(String, Exception)`` and ``JMetalException(Exception)`` keep their
+  message and their cause. They used to only log the error, so the exception they created had
+  neither, and whoever caught it got ``null`` instead of what went wrong; they no longer log it.
+
 * [09/30/2026] Fixed the decision space of ``MaF08``: the variables were bounded to ``[0, 1]``, which
   contains only a fifth of the polygon that is its Pareto set, so most of its Pareto front could not be
   reached; the bounds are now ``[-10000, 10000]``, as in the definition of the MaF test suite (Cheng et al.,
