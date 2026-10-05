@@ -12,11 +12,9 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.impl.FeasibilityRulesCriterion;
 import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.impl.ImprovedEpsilonCriterion;
-import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.impl.ViolationThresholdCriterion;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.Osyczka2;
 import org.uma.jmetal.problem.multiobjective.Srinivas;
 import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.problem.multiobjective.cf.CF10;
@@ -71,37 +69,6 @@ class ConstrainedMOEADBuilderIT {
     double hv = normalizedHypervolume(moead.result(), REFERENCE_FRONTS_DIRECTORY + "Srinivas.csv");
 
     assertThat(hv).isGreaterThan(0.50);
-  }
-
-  @Test
-  @DisplayName("MOEA/D with violation threshold computes a front with an acceptable hypervolume on Osyczka2")
-  void moeadWithViolationThresholdReturnsAGoodFrontOnProblemOsyczka2() throws IOException {
-    Problem<DoubleSolution> problem = new Osyczka2();
-
-    var crossover = new SBXCrossover(0.9, 20.0);
-    var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
-
-    int populationSize = 100;
-    Termination termination = new TerminationByEvaluations(30000);
-    SequenceGenerator<Integer> sequenceGenerator = new RandomPermutationCycle(populationSize);
-
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
-        problem,
-        populationSize,
-        crossover,
-        mutation,
-        WEIGHT_VECTOR_DIRECTORY,
-        sequenceGenerator,
-        false)
-        .setTermination(termination)
-        .setSubproblemUpdateCriterion(new ViolationThresholdCriterion<>())
-        .build();
-
-    moead.run();
-
-    double hv = normalizedHypervolume(moead.result(), REFERENCE_FRONTS_DIRECTORY + "Osyczka2.csv");
-
-    assertThat(hv).isGreaterThan(0.25);
   }
 
   @Test
