@@ -4,6 +4,10 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/05/2026] Fixed the multi-objective TSP instances ``KroBC100TSP`` and ``KroBD100TSP``: they read
+  ``kroAC100.tsp`` and ``kroAD100.tsp``, files that do not exist, so they could not be created; they
+  now read ``kroC100.tsp`` and ``kroD100.tsp``.
+
 * [10/05/2026] jMetal 7.7 is released.
 
 * [10/05/2026] ``JMetalException(String, Exception)`` and ``JMetalException(Exception)`` keep their

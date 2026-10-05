@@ -7,7 +7,7 @@ public class KroBC100TSP extends BiObjectiveTSP {
 
   /** Creates a new MultiobjectiveTSP problem instance */
   public KroBC100TSP() throws IOException {
-    super("resources/tspInstances/kroB100.tsp", "resources/tspInstances/kroAC100.tsp");
+    super("resources/tspInstances/kroB100.tsp", "resources/tspInstances/kroC100.tsp");
   }
 
   @Override
