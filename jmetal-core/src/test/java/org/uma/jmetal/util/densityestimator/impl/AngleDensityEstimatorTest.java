@@ -212,13 +212,13 @@ class AngleDensityEstimatorTest {
     }
 
     @Test
-    @DisplayName("Value throws exception when attribute not computed")
-    void valueThrowsExceptionWhenAttributeNotComputed() {
+    @DisplayName("Value is 0.0, the worst one, when the density has not been computed")
+    void valueIsZeroWhenAttributeNotComputed() {
       AngleDensityEstimator<DoubleSolution> estimator = new AngleDensityEstimator<>();
       FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
       DoubleSolution solution = problem.createSolution();
-      
-      assertThrows(NullParameterException.class, () -> estimator.value(solution));
+
+      assertEquals(0.0, estimator.value(solution));
     }
 
     @Test

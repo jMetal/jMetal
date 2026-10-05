@@ -4,6 +4,13 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/05/2026] ``AngleDensityEstimator.value`` returns 0.0, the worst density, for a solution whose
+  density has not been computed, as the crowding, kNN and shifted estimators do, instead of throwing
+  an exception. A selection that compares the population by density before the estimator has
+  computed it (a tournament, a ranking or a stochastic universal sampling in an algorithm such as
+  RDEMOEA or SSMOEA) failed with ``The parameter 'object' is null``, so the estimator could not
+  replace the others.
+
 * [10/05/2026] Fixed the multi-objective TSP instances ``KroBC100TSP`` and ``KroBD100TSP``: they read
   ``kroAC100.tsp`` and ``kroAD100.tsp``, files that do not exist, so they could not be created; they
   now read ``kroC100.tsp`` and ``kroD100.tsp``.

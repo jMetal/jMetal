@@ -205,12 +205,22 @@ public class AngleDensityEstimator<S extends Solution<?>> implements DensityEsti
     return Math.acos(cosAngle);
   }
 
+  /**
+   * The density of a solution, as computed by {@link #compute}.
+   *
+   * <p>As the other estimators do, a solution whose density has not been computed (the algorithm
+   * compares a population before computing it, or compares solutions that were not in the list
+   * given to {@code compute}) has the value 0.0, the worst one: a higher density is a more diverse
+   * solution, and a better one.
+   *
+   * @param solution the solution
+   * @return its density, or 0.0 if it has none
+   */
   @Override
   public Double value(S solution) {
     Check.notNull(solution);
     Object value = solution.attributes().get(attributeId);
-    Check.notNull(value);
-    return (Double) value;
+    return value == null ? 0.0 : (Double) value;
   }
 
   @Override
