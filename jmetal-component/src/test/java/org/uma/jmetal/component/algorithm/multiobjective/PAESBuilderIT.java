@@ -3,6 +3,7 @@ package org.uma.jmetal.component.algorithm.multiobjective;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -16,8 +17,15 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 class PAESBuilderIT {
+
+  @BeforeEach
+  void setUp() {
+    // The results of the runs are random: a fixed seed keeps the thresholds from failing by chance
+    JMetalRandom.getInstance().setSeed(12);
+  }
   @Test
   void PAESWithDefaultSettingsReturnsANonEmptyFrontWithHVHigherThanZeroPointOneFiveOnProblemZDT1() {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";

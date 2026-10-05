@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -21,8 +22,15 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class PAESIT {
+
+  @BeforeEach
+  void setUp() {
+    // The results of the runs are random: a fixed seed keeps the thresholds from failing by chance
+    JMetalRandom.getInstance().setSeed(12);
+  }
   Algorithm<List<DoubleSolution>> algorithm;
 
   @Test

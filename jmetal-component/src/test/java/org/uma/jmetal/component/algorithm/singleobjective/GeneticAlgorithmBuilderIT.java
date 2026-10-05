@@ -2,6 +2,7 @@ package org.uma.jmetal.component.algorithm.singleobjective;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -11,8 +12,15 @@ import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 class GeneticAlgorithmBuilderIT {
+
+  @BeforeEach
+  void setUp() {
+    // The results of the runs are random: a fixed seed keeps the thresholds from failing by chance
+    JMetalRandom.getInstance().setSeed(12);
+  }
 
   @Test
   void AGenerationalGeneticAlgorithmReturnTheCorrectSolutionWhenSolvingProblemOneMax() {

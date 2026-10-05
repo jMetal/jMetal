@@ -16,6 +16,7 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class SMPSOhvIT {
   private Algorithm<List<DoubleSolution>> algorithm;
@@ -23,6 +24,8 @@ public class SMPSOhvIT {
 
   @BeforeEach
   public void setup() {
+    // The results of the runs are random: a fixed seed keeps the thresholds from failing by chance
+    JMetalRandom.getInstance().setSeed(12);
     archive = new HypervolumeArchive<DoubleSolution>(100, new PISAHypervolume<DoubleSolution>());
   }
 

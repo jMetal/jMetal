@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.pesa2;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -17,8 +18,15 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class PESA2IT {
+
+  @BeforeEach
+  void setUp() {
+    // The results of the runs are random: a fixed seed keeps the thresholds from failing by chance
+    JMetalRandom.getInstance().setSeed(12);
+  }
   Algorithm<List<DoubleSolution>> algorithm;
 
   @Test

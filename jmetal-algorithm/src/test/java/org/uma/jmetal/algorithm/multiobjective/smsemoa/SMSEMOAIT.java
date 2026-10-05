@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.smsemoa;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -17,8 +18,15 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.legacy.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class SMSEMOAIT {
+
+  @BeforeEach
+  void setUp() {
+    // The results of the runs are random: a fixed seed keeps the thresholds from failing by chance
+    JMetalRandom.getInstance().setSeed(12);
+  }
   Algorithm<List<DoubleSolution>> algorithm;
 
   @Test

@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.io.IOException;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
@@ -20,10 +21,17 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.aggregationfunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.RandomPermutationCycle;
 
 class MOEADBuilderIT {
+
+  @BeforeEach
+  void setUp() {
+    // The results of the runs are random: a fixed seed keeps the thresholds from failing by chance
+    JMetalRandom.getInstance().setSeed(12);
+  }
   @Test
   void MOEADWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSeventySevenOnProblemDTLZ1()
       throws IOException {

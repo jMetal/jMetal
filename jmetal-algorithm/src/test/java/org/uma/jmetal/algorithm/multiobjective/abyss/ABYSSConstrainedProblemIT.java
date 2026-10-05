@@ -24,6 +24,7 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 
 /**
@@ -40,6 +41,8 @@ public class ABYSSConstrainedProblemIT {
 
   @BeforeEach
   public void setup() {
+    // The results of the runs are random: a fixed seed keeps the thresholds from failing by chance
+    JMetalRandom.getInstance().setSeed(12);
     problem = new Tanaka();
 
     double crossoverProbability = 1.0;

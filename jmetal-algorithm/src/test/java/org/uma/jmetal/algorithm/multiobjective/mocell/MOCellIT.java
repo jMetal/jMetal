@@ -18,6 +18,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class MOCellIT {
   Algorithm<List<DoubleSolution>> algorithm;
@@ -27,6 +28,8 @@ public class MOCellIT {
 
   @BeforeEach
   public void setup() {
+    // The results of the runs are random: a fixed seed keeps the thresholds from failing by chance
+    JMetalRandom.getInstance().setSeed(12);
     problem = new ZDT4();
 
     double crossoverProbability = 0.9;
