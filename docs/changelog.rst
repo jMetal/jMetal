@@ -4,9 +4,17 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/05/2026] jMetal 7.7 is released.
+
 * [10/05/2026] ``JMetalException(String, Exception)`` and ``JMetalException(Exception)`` keep their
   message and their cause. They used to only log the error, so the exception they created had
   neither, and whoever caught it got ``null`` instead of what went wrong; they no longer log it.
+
+* [10/02/2026] ``Spread`` and ``GeneralizedSpread`` no longer sort the arrays they receive: the front, and
+  in ``Spread`` the reference front, are sorted in local copies. The reference front is shared by all the
+  calls of an indicator instance, so sorting it in place from several threads at once (e.g., when computing
+  the indicators of independent runs in parallel) corrupted it and made ``Arrays.sort`` fail with
+  "Comparison method violates its general contract!"; the fronts of the callers also keep their order now.
 
 * [09/30/2026] Fixed the decision space of ``MaF08``: the variables were bounded to ``[0, 1]``, which
   contains only a fifth of the polygon that is its Pareto set, so most of its Pareto front could not be

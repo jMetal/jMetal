@@ -95,7 +95,7 @@ classes, by running its generator. For example, for AutoRVEA:
 
 .. code-block:: bash
 
-  java -cp jmetal-auto/target/jmetal-auto-7.6-jar-with-dependencies.jar \
+  java -cp jmetal-auto/target/jmetal-auto-7.7-jar-with-dependencies.jar \
     org.uma.jmetal.auto.irace.parameterfilegeneration.AutoRVEAIraceParameterFileGenerator > parameters-RVEA.txt
 
 AutoNSGA-II
@@ -286,7 +286,7 @@ The software requirements are the following:
 
 The first step is to create a directory for the experiment. Let us called is, for example, ``iraceJMetal``. This directory must contain:
 
-* File ``jmetal-auto-7.6-jar-with-dependencies.jar``. To generate this file, just type the following command at the root of the jMetal project:
+* File ``jmetal-auto-7.7-jar-with-dependencies.jar``. To generate this file, just type the following command at the root of the jMetal project:
 
     .. code-block:: bash
 

@@ -45,7 +45,7 @@ file of your project would contain then:
     <dependency>
       <groupId>org.uma.jmetal</groupId>
       <artifactId>jmetal-algorithm</artifactId>
-      <version>7.6</version>
+      <version>7.7</version>
      </dependency>
    </dependencies>
 
