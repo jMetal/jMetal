@@ -175,16 +175,6 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     return evaluation;
   }
 
-  /**
-   * Replaces the component that creates the initial population, e.g. to start the search from
-   * known solutions. It must be called before {@link #run()}.
-   *
-   * @param createInitialPopulation the component that creates the initial population
-   */
-  public void createInitialPopulation(SolutionsCreation<S> createInitialPopulation) {
-    this.createInitialPopulation = createInitialPopulation;
-  }
-
   public SolutionsCreation<S> createInitialPopulation() {
     return createInitialPopulation;
   }

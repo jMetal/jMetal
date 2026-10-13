@@ -10,11 +10,6 @@ only includes the latest entries.
   the simplex and mapped to the front of each problem) by ``scripts/maf_reference_fronts.py`` of
   Evolver, whose ``MaFReferenceFrontsIT`` checks them against the problems of jMetal.
 
-* [10/12/2026] ``EvolutionaryAlgorithm.createInitialPopulation(SolutionsCreation)`` replaces the
-  component that creates the initial population, as ``evaluation(...)`` and ``termination(...)`` do
-  for theirs, so that an algorithm already built can start from known solutions (Evolver seeds the
-  population of its meta-optimizers with it).
-
 * [10/05/2026] ``AngleDensityEstimator.value`` returns 0.0, the worst density, for a solution whose
   density has not been computed, as the crowding, kNN and shifted estimators do, instead of throwing
   an exception. A selection that compares the population by density before the estimator has

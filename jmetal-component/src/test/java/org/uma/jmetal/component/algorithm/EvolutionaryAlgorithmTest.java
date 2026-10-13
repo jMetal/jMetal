@@ -38,16 +38,4 @@ class EvolutionaryAlgorithmTest {
     assertThat(replacement).isSameAs(evolutionaryAlgorithm.replacement()) ;
   }
 
-  @Test
-  void createInitialPopulationReplacesTheComponentThatCreatesTheInitialPopulation() {
-    SolutionsCreation<DoubleSolution> solutionsCreation = mock(SolutionsCreation.class) ;
-    SolutionsCreation<DoubleSolution> otherSolutionsCreation = mock(SolutionsCreation.class) ;
-    EvolutionaryAlgorithm<DoubleSolution> evolutionaryAlgorithm = new EvolutionaryAlgorithm<>(
-        "EA", solutionsCreation, mock(Evaluation.class), mock(Termination.class),
-        mock(Selection.class), mock(Variation.class), mock(Replacement.class)) ;
-
-    evolutionaryAlgorithm.createInitialPopulation(otherSolutionsCreation) ;
-
-    assertThat(evolutionaryAlgorithm.createInitialPopulation()).isSameAs(otherSolutionsCreation) ;
-  }
 }
