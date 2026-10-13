@@ -4,6 +4,8 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/13/2026] jMetal 7.8 is released.
+
 * [10/13/2026] Reference fronts of the MaF problems with 3 objectives
   (``resources/referenceFrontsCSV/MaFxx.3D.csv``, MaF01 to MaF15), next to the existing ones for 5,
   10 and 15 objectives. They are written with PlatEMO's method for this benchmark (points spread on

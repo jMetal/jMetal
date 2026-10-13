@@ -18,11 +18,11 @@ jMetal project Web site
    :target: https://jmetal.readthedocs.io/?badge=latest
 
 jMetal is a Java-based framework for multi-objective optimization with metaheuristics.
-The last stable version is 7.7.
+The last stable version is 7.8.
 The most recent documentation is hosted in https://jmetal.readthedocs.io.
 
 
-jMetal 7.7 is a Maven project structured in the following sub-projects:
+jMetal 7.8 is a Maven project structured in the following sub-projects:
 
 +---------------------+------------------------------------+
 | Sub-project         |  Contents                          | 
@@ -91,6 +91,25 @@ Install dependencies and run::
 
 Changelog
 ---------
+
+* [10/13/2026] jMetal 7.8 is released.
+
+* [10/13/2026] Reference fronts of the MaF problems with 3 objectives
+  (``resources/referenceFrontsCSV/MaFxx.3D.csv``, MaF01 to MaF15), next to the existing ones for 5,
+  10 and 15 objectives. They are written with PlatEMO's method for this benchmark (points spread on
+  the simplex and mapped to the front of each problem) by ``scripts/maf_reference_fronts.py`` of
+  Evolver, whose ``MaFReferenceFrontsIT`` checks them against the problems of jMetal.
+
+* [10/05/2026] ``AngleDensityEstimator.value`` returns 0.0, the worst density, for a solution whose
+  density has not been computed, as the crowding, kNN and shifted estimators do, instead of throwing
+  an exception. A selection that compares the population by density before the estimator has
+  computed it (a tournament, a ranking or a stochastic universal sampling in an algorithm such as
+  RDEMOEA or SSMOEA) failed with ``The parameter 'object' is null``, so the estimator could not
+  replace the others.
+
+* [10/05/2026] Fixed the multi-objective TSP instances ``KroBC100TSP`` and ``KroBD100TSP``: they read
+  ``kroAC100.tsp`` and ``kroAD100.tsp``, files that do not exist, so they could not be created; they
+  now read ``kroC100.tsp`` and ``kroD100.tsp``.
 
 * [10/05/2026] jMetal 7.7 is released.
 
