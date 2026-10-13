@@ -13,7 +13,7 @@ jMetal project Web site
     :alt: Integration Test Status
     :target: https://github.com/jMetal/jMetal/actions/workflows/integration-test.yml
 
-.. image:: https://readthedocs.org/projects/jmetal/badge/?version=latest
+.. image:: https://app.readthedocs.org/projects/jmetal/badge/?version=latest
    :alt: Documentation Status
    :target: https://jmetal.readthedocs.io/?badge=latest
 
