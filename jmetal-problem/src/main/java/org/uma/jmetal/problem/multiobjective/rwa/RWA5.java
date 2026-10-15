@@ -61,24 +61,27 @@ public class RWA5 extends AbstractDoubleProblem {
         - 4.97 * B * B - 0.47 * C * C - 0.91 * D * D - 2.08 * E * E
         - 1.43 * F * F + 0.43 * G * G + 1.06 * H * H + 0.98 * J * J;
 
-    double Phi_ex = 0.81 - 9.26e-3 * A + 0.014 * B - 0.029 * C - 7.69e-4 * D
-        + 4.05e-3 * E + 0.029 * F + 0.075 * G - 0.012 * H
-        - 1.04e-3 * J - 2.63e-3 * A * B + 1.34e-4 * A * C
-        - 1.48e-3 * A * D - 7.04e-4 * A * E + 0.013 * A * F
-        + 6.55e-4 * A * G - 9.71e-3 * A * H + 1.08e-3 * A * J
-        + 2.54e-3 * B * C - 4.83e-4 * B * D + 9.63e-4 * B * E
-        + 1.21e-3 * B * F - 7.02e-3 * B * G - 1.21e-3 * B * H
-        + 1.94e-5 * B * J - 1.15e-3 * C * D + 3.60e-3 * C * E
-        + 5.60e-3 * C * F - 0.026 * C * G - 4.01e-3 * C * H
-        + 1.35e-3 * C * J - 6.93e-3 * D * E - 3.16e-3 * D * F
-        - 2.38e-4 * D * G + 7.32e-4 * D * H + 4.69e-4 * D * J
-        + 8.18e-3 * E * F - 5.74e-3 * E * G + 1.44e-4 * E * H
-        - 9.95e-5 * E * J - 2.09e-3 * F * G - 65e-4 * F * H
-        - 1.99e-3 * F * J + 4.95e-3 * G * H + 8.70e-4 * G * J
-        + 4.55e-4 * H * J - 9.32e-4 * A * A - 7.61e-4 * B * B
-        + 0.016 * C * C + 1.24e-3 * D * D + 9.61e-4 * E * E
-        - 0.024 * F * F - 8.63e-3 * G * G - 1.90e-4 * H * H
-        - 7.56e-4 * J * J;
+    // The coefficients are written as in the reference C implementation of the suite
+    // (https://github.com/evo-mx/MO-RWA), where 10e-3 is 0.01, not 0.001. The
+    // reference front of the suite was computed with this expression.
+    double Phi_ex = 0.81 - 9.26 * 10e-3 * A + 0.014 * B - 0.029 * C - 7.69 * 10e-4 * D
+        + 4.05 * 10e-3 * E + 0.029 * F + 0.075 * G - 0.012 * H
+        - 1.04 * 10e-3 * J - 2.63 * 10e-3 * A * B + 1.34 * 10e-4 * A * C
+        - 1.48 * 10e-3 * A * D - 7.04 * 10e-4 * A * E + 0.013 * A * F
+        + 6.55 * 10e-4 * A * G - 9.71 * 10e-3 * A * H + 1.08 * 10e-3 * A * J
+        + 2.54 * 10e-3 * B * C - 4.83 * 10e-4 * B * D + 9.63 * 10e-4 * B * E
+        + 1.21 * 10e-3 * B * F - 7.02 * 10e-3 * B * G - 1.21 * 10e-3 * B * H
+        + 1.94 * 10e-5 * B * J - 1.15 * 10e-3 * C * D + 3.60 * 10e-3 * C * E
+        + 5.60 * 10e-3 * C * F - 0.026 * C * G - 4.01 * 10e-3 * C * H
+        + 1.35 * 10e-3 * C * J - 6.93 * 10e-3 * D * E - 3.16 * 10e-3 * D * F
+        - 2.38 * 10e-4 * D * G + 7.32 * 10e-4 * D * H + 4.69 * 10e-4 * D * J
+        + 8.18 * 10e-3 * E * F - 5.74 * 10e-3 * E * G + 1.44 * 10e-4 * E * H
+        - 9.95 * 10e-5 * E * J - 2.09 * 10e-3 * F * G - 65 * 10e-4 * F * H
+        - 1.99 * 10e-3 * F * J + 4.95 * 10e-3 * G * H + 8.70 * 10e-4 * G * J
+        + 4.55 * 10e-4 * H * J - 9.32 * 10e-4 * A * A - 7.61 * 10e-4 * B * B
+        + 0.016 * C * C + 1.24 * 10e-3 * D * D + 9.61 * 10e-4 * E * E
+        - 0.024 * F * F - 8.63 * 10e-3 * G * G - 1.90 * 10e-4 * H * H
+        - 7.56 * 10e-4 * J * J;
 
     solution.objectives()[0] = t_eff; /* Minimize */
     solution.objectives()[1] = -Q_eff; /* Maximize */
