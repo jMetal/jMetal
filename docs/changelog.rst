@@ -4,6 +4,17 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/15/2026] The Maven build pins ``maven-surefire-plugin`` to 3.5.3 (and upgrades
+  ``maven-failsafe-plugin`` from 3.2.5 to 3.5.3). Its version was not set, so Maven used its
+  default, 3.0.2, which does not discover JUnit 6 tests: modules such as ``jmetal-problem`` ran no
+  tests at all.
+
+* [10/15/2026] Fixed ``RWA5`` (Gao2020) so that it matches the reference C implementation of the RWA
+  suite (https://github.com/evo-mx/MO-RWA): the C code writes 18 coefficients of the third objective
+  as, e.g., ``9.26 * 10e-3`` (0.0926), and ``RWA5`` had translated them as ``9.26e-3``, ten times
+  smaller. The third objective ranged in [-11420, -3530], while the reference front of the suite,
+  computed with the C code, covers [-121277, -50247], so no algorithm could reach it.
+
 * [10/15/2026] Fixed the LIR-CMOP problems 5 to 12: ``LIRCMOP5`` and ``LIRCMOP6`` added 7057
   instead of 0.7057 to their second objective, which moved their fronts (and those of
   ``LIRCMOP7`` and ``LIRCMOP8``, which extend them) far from their reference fronts;
