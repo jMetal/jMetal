@@ -4,6 +4,13 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/15/2026] Fixed the LIR-CMOP problems 5 to 12: ``LIRCMOP5`` and ``LIRCMOP6`` added 7057
+  instead of 0.7057 to their second objective, which moved their fronts (and those of
+  ``LIRCMOP7`` and ``LIRCMOP8``, which extend them) far from their reference fronts;
+  ``LIRCMOP7`` and ``LIRCMOP8`` declared two constraints but evaluated three, so evaluating a
+  solution failed. They now have their three constraints, and ``LIRCMOP9`` to ``LIRCMOP12``, which
+  extend ``LIRCMOP8``, keep their two.
+
 * [10/13/2026] jMetal 7.8 is released.
 
 * [10/13/2026] Reference fronts of the MaF problems with 3 objectives
