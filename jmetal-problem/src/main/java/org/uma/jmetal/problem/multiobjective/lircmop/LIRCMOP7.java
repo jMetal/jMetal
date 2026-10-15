@@ -18,7 +18,7 @@ public class LIRCMOP7 extends LIRCMOP5 {
   /** Constructor */
   public LIRCMOP7(int numberOfVariables) {
     super(numberOfVariables);
-    numberOfConstraints(2);
+    numberOfConstraints(3);
     name("LIRCMOP7");
   }
 
@@ -48,5 +48,6 @@ public class LIRCMOP7 extends LIRCMOP5 {
 
     solution.constraints()[0] = constraint[0];
     solution.constraints()[1] = constraint[1];
+    solution.constraints()[2] = constraint[2];
   }
 }

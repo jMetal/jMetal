@@ -46,7 +46,7 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
     }
 
     solution.objectives()[0] = x[0] + 10 * g1(x) + 0.7057;
-    solution.objectives()[1] = 1 - sqrt(x[0]) + 10 * g2(x) + 7057;
+    solution.objectives()[1] = 1 - sqrt(x[0]) + 10 * g2(x) + 0.7057;
 
     evaluateConstraints(solution);
     return solution ;

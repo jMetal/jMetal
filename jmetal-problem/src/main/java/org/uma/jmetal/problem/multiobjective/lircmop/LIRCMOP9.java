@@ -18,6 +18,7 @@ public class LIRCMOP9 extends LIRCMOP8 {
   /** Constructor */
   public LIRCMOP9(int numberOfVariables) {
     super(numberOfVariables);
+    numberOfConstraints(2);
     name("LIRCMOP9");
   }
 
