@@ -16,7 +16,7 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 
-@DisplayName("Unit tests of the default dominance comparator of the bounded archives")
+@DisplayName("Unit tests for the bounded archives on problems with constraints")
 class BoundedArchiveConstraintsTest {
   private static final int MAX_SIZE = 10;
 

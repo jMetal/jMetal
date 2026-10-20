@@ -3,6 +3,7 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,9 +28,13 @@ class SMSEMOAReplacementConstraintsTest {
     return solution;
   }
 
-  private static SMSEMOAReplacement<DoubleSolution> constrainedReplacement() {
-    return new SMSEMOAReplacement<>(
-        new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator<>()));
+  private SMSEMOAReplacement<DoubleSolution> replacement;
+
+  @BeforeEach
+  void setUp() {
+    replacement =
+        new SMSEMOAReplacement<>(
+            new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator<>()));
   }
 
   @Nested
@@ -41,7 +46,6 @@ class SMSEMOAReplacementConstraintsTest {
             + " objectives is inserted, then the offspring is removed")
     void givenAFeasiblePopulation_whenABetterInfeasibleOffspringIsInserted_thenItIsRemoved() {
       // Arrange
-      SMSEMOAReplacement<DoubleSolution> replacement = constrainedReplacement();
       List<DoubleSolution> population =
           List.of(
               solution(0.2, 0.8, 1, 0.0), solution(0.5, 0.5, 1, 0.0), solution(0.8, 0.2, 1, 0.0));
@@ -60,7 +64,6 @@ class SMSEMOAReplacementConstraintsTest {
             + " solution is removed each time")
     void givenAnInfeasiblePopulation_whenOffspringAreInserted_thenTheMostViolatedIsRemoved() {
       // Arrange
-      SMSEMOAReplacement<DoubleSolution> replacement = constrainedReplacement();
       DoubleSolution slightlyViolated = solution(0.9, 0.9, 1, -0.1);
       DoubleSolution badlyViolated = solution(0.1, 0.1, 1, -5.0);
       List<DoubleSolution> population = List.of(slightlyViolated, badlyViolated);
@@ -83,7 +86,6 @@ class SMSEMOAReplacementConstraintsTest {
             + " removed")
     void givenAPopulation_whenADominatedOffspringIsInserted_thenItIsRemoved() {
       // Arrange
-      SMSEMOAReplacement<DoubleSolution> replacement = constrainedReplacement();
       List<DoubleSolution> population =
           List.of(
               solution(0.2, 0.8, 0, 0.0), solution(0.5, 0.5, 0, 0.0), solution(0.8, 0.2, 0, 0.0));
