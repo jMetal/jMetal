@@ -233,9 +233,9 @@ selection code is independently implemented from the mathematical description.
 Implemented behavior
 ----------------------
 
-All objectives are minimized. The builders automatically support constrained
-problems through jMetal's :ref:`feasibility-first extension <constrained-rvea>`.
-With all-feasible candidates, the original behavior below is unchanged.
+All objectives are minimized. RVEA and RVEA* also accept constrained problems,
+which they handle as PlatEMO (see :ref:`constrained-rvea`); iRVEA requires an
+unconstrained problem. Without constraints, the behavior below is unchanged.
 ``RVEABuilder``, ``RVEAStarBuilder``, and ``IRVEABuilder`` return the existing
 ``EvolutionaryAlgorithm<S>`` and use its evaluation, variation, replacement,
 termination, and observer components.

@@ -4,6 +4,16 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/20/2026] RVEA and RVEA* handle constraints as PlatEMO's RVEA: every solution takes part in
+  the translation and in the association with reference vectors, and each vector keeps its feasible
+  solution with the smallest APD or, without feasible solutions, its least violated one. RVEA*
+  applies its nondominated filter to the feasible solutions only (PlatEMO's RVEAa filters the whole
+  population by objectives, which removes every feasible solution on problems such as LIR-CMOP1).
+  This replaces the feasibility-first layer of #489, which kept infeasible solutions only up to a
+  bound and out of the translation; on LIR-CMOP1 and LIR-CMOP2 the median IGD+ of RVEA falls from
+  0.25 to 0.06 and from 0.17 to 0.05. iRVEA, which has no reference constraint handling, requires
+  an unconstrained problem again.
+
 * [10/20/2026] Fixed ``LIRCMOP14``: it declared three constraints and computed the third one, the
   ring between radii 1.6 and 1.75, but did not store it, so that constraint was never violated.
 
