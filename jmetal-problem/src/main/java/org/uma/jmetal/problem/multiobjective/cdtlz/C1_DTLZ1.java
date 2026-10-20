@@ -13,6 +13,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  */
 @SuppressWarnings("serial")
 public class C1_DTLZ1 extends DTLZ1 {
+  /** Creates the problem with 3 objectives and 7 variables. */
+  public C1_DTLZ1() {
+    this(7, 3);
+  }
+
   /**
    * Constructor
    * @param numberOfVariables
