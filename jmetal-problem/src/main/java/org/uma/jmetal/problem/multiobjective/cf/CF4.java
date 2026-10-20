@@ -20,9 +20,9 @@ import org.uma.jmetal.util.VectorUtils;
 public class CF4 extends AbstractDoubleProblem {
   private final double r = 3.0 / 4.0; // The parameter determines the radius
 
-  /** Create a default CF4 problem (3 variables and 3 objectives) */
+  /** Create a default CF4 problem (13 variables and 3 objectives) */
   public CF4() {
-    this(3, 3);
+    this(13, 3);
   }
 
   /**

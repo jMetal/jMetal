@@ -24,9 +24,9 @@ public class CF14 extends AbstractDoubleProblem {
   private double belta = 3.0 / 4.0;
   private double r = 1.0 / 4.0; // The parameter determines the radius
 
-  /** Create a default CF14 problem (3 variables and 3 objectives) */
+  /** Create a default CF14 problem (13 variables and 3 objectives) */
   public CF14() {
-    this(3, 3); // 3 objectives and 3 decision variables
+    this(13, 3);
   }
 
   /**

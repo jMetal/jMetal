@@ -22,10 +22,10 @@ public class CF3 extends AbstractDoubleProblem {
   private final double r = 1.0 / 2.0; // The parameter determines the radius
 
   /**
-   * Create a default CF3 problem (3 variables and 3 objectives)
+   * Create a default CF3 problem (13 variables and 3 objectives)
    */
   public CF3() {
-    this(3, 3);
+    this(13, 3);
   }
 
   /**

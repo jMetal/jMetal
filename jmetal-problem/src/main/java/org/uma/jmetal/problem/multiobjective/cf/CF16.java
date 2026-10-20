@@ -25,10 +25,10 @@ public class CF16 extends AbstractDoubleProblem {
   private double r = 3.0 / 4.0; // The parameter determines the radius
 
   /**
-   * Create a default CF16 problem (3 variables and 3 objectives)
+   * Create a default CF16 problem (13 variables and 3 objectives)
    */
   public CF16() {
-    this(3, 3);
+    this(13, 3);
   }
 
   /**

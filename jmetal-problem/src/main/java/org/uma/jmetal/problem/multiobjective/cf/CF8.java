@@ -23,9 +23,9 @@ public class CF8 extends AbstractDoubleProblem {
   private double belta = 3.0 / 4.0;
   private double r = 3.0 / 4.0; // The parameter determines the radius
 
-  /** Create a default CF8 problem (3 variables and 3 objectives) */
+  /** Create a default CF8 problem (13 variables and 3 objectives) */
   public CF8() {
-    this(3, 3);
+    this(13, 3);
   }
 
   /**

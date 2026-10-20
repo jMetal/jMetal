@@ -18,14 +18,14 @@ import org.uma.jmetal.util.VectorUtils;
  */
 public class CF1 extends AbstractDoubleProblem {
   /**
-   * Create a default CF1 problem (3 variables and 3 objectives), as the other CF problems
+   * Create a default CF1 problem (13 variables and 3 objectives), as the other CF problems
    */
   public CF1() {
-    this(3, 3);
+    this(13, 3);
   }
 
   /**
-   * Create a default CF1 problem (3 variables and 3 objectives)
+   * Create a default CF1 problem (13 variables and 3 objectives)
    *
    * @param solutionType ignored
    * @deprecated use {@link #CF1()}
