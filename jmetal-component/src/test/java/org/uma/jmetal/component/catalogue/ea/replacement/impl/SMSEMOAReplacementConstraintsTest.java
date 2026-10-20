@@ -43,7 +43,8 @@ class SMSEMOAReplacementConstraintsTest {
       // Arrange
       SMSEMOAReplacement<DoubleSolution> replacement = constrainedReplacement();
       List<DoubleSolution> population =
-          List.of(solution(0.2, 0.8, 1, 0.0), solution(0.5, 0.5, 1, 0.0), solution(0.8, 0.2, 1, 0.0));
+          List.of(
+              solution(0.2, 0.8, 1, 0.0), solution(0.5, 0.5, 1, 0.0), solution(0.8, 0.2, 1, 0.0));
       DoubleSolution infeasible = solution(0.1, 0.1, 1, -1.0);
 
       // Act
@@ -74,26 +75,25 @@ class SMSEMOAReplacementConstraintsTest {
   }
 
   @Nested
-  @DisplayName("When choosing how to update the fronts")
-  class WhenChoosingHowToUpdateTheFronts {
+  @DisplayName("When the solutions have no constraints")
+  class WhenTheSolutionsHaveNoConstraints {
     @Test
-    @DisplayName("given solutions without constraints, then the incremental update is kept")
-    void givenSolutionsWithoutConstraints_whenChecked_thenTheyDoNotUseConstraints() {
+    @DisplayName(
+        "given a population, when a dominated offspring is inserted, then the offspring is"
+            + " removed")
+    void givenAPopulation_whenADominatedOffspringIsInserted_thenItIsRemoved() {
       // Arrange
       SMSEMOAReplacement<DoubleSolution> replacement = constrainedReplacement();
+      List<DoubleSolution> population =
+          List.of(
+              solution(0.2, 0.8, 0, 0.0), solution(0.5, 0.5, 0, 0.0), solution(0.8, 0.2, 0, 0.0));
+      DoubleSolution dominated = solution(0.9, 0.9, 0, 0.0);
 
-      // Act & Assert
-      assertThat(replacement.usesConstraints(solution(0.5, 0.5, 0, 0.0))).isFalse();
-    }
+      // Act
+      List<DoubleSolution> result = replacement.replace(population, List.of(dominated));
 
-    @Test
-    @DisplayName("given solutions with constraints, then the population is ranked in full")
-    void givenSolutionsWithConstraints_whenChecked_thenTheyUseConstraints() {
-      // Arrange
-      SMSEMOAReplacement<DoubleSolution> replacement = constrainedReplacement();
-
-      // Act & Assert
-      assertThat(replacement.usesConstraints(solution(0.5, 0.5, 1, 0.0))).isTrue();
+      // Assert
+      assertThat(result).containsExactlyInAnyOrderElementsOf(population);
     }
   }
 }
