@@ -4,6 +4,14 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/20/2026] The CF problems (Zhou, Xiang and He, 2021) default to 13 variables and 3 objectives,
+  M + 10 variables as in the code of the paper (``ZXH_CF`` in PlatEMO). With the former default of 3
+  variables they had no distance variables: ``CF3``, ``CF8``, ``CF9`` and ``CF14``, whose Ackley
+  distance function averages over them, evaluated every solution to NaN, and these four now reject
+  instances with no more variables than objectives. ``CF1`` also computed its last objective with
+  the number of variables instead of the number of objectives, so it threw an
+  ``ArrayIndexOutOfBoundsException`` with more variables than objectives.
+
 * [10/20/2026] Fixed the C-DTLZ problems (Jain and Deb, 2014). Their constraints did not follow the
   definition: ``C1_DTLZ1`` left out a term and the 0.6 factor, ``C1_DTLZ3`` subtracted its radii
   once per objective, ``C2_DTLZ2`` took a maximum instead of minus a minimum (almost every point was
