@@ -25,7 +25,10 @@ import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
 /**
- * Builds component-based RVEA algorithms for minimization with automatic constraint handling.
+ * Builds component-based RVEA algorithms for minimization.
+ *
+ * <p>RVEA and RVEA* accept problems with constraints and handle them as PlatEMO does (see {@link
+ * RVEAEnvironmentalSelection}); iRVEA requires an unconstrained problem.
  *
  * <p>The initial population and each offspring batch contain N solutions, where N is the number of
  * predefined vectors. Survivor populations can vary in size. Termination must be by evaluations to
@@ -109,6 +112,9 @@ public class RVEABuilder<S extends Solution<?>> {
     Check.notNull(problem);
     Check.notNull(crossover);
     Check.notNull(mutation);
+    Check.that(
+        variant != Variant.IRVEA || problem.numberOfConstraints() == 0,
+        "iRVEA requires an unconstrained problem");
     Check.valueIsPositive(populationSize, "populationSize");
     Check.valueIsPositive(maxEvaluations, "maxEvaluations");
     Check.valueIsNotNegative(alpha, "alpha");

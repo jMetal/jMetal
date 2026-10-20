@@ -17,6 +17,10 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  * Pareto/strengthened dominance, angular clustering, and an epsilon-indicator archive. See {@code
  * docs/rvea-variants.md} for choices resolving underspecified steps in the paper.
  *
+ * <p>Unlike RVEA and RVEA*, it supports unconstrained solutions only: its regional protection,
+ * epsilon-indicator selection and archive compare objectives alone, and there is no reference
+ * constraint handling for it (PlatEMO has no iRVEA).
+ *
  * @param <S> solution type
  */
 public class IRVEAEnvironmentalSelection<S extends Solution<?>>
@@ -93,6 +97,11 @@ public class IRVEAEnvironmentalSelection<S extends Solution<?>>
         objectives <= 3
             ? coarseVectors(objectives, Math.min(numberOfSubregions, populationSize()))
             : new double[0][];
+  }
+
+  @Override
+  protected boolean handlesConstraints() {
+    return false;
   }
 
   @Override
@@ -206,16 +215,6 @@ public class IRVEAEnvironmentalSelection<S extends Solution<?>>
   @Override
   protected List<S> finish(List<S> survivors) {
     return survivors;
-  }
-
-  @Override
-  protected int survivorCapacity() {
-    return populationSize();
-  }
-
-  @Override
-  protected List<S> survivorsWithoutFeasibleCandidates() {
-    return archive();
   }
 
   /** Returns copies so that callers cannot modify the archive used by future generations. */

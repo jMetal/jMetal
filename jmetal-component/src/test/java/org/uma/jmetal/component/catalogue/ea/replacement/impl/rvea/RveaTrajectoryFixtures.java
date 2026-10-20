@@ -14,7 +14,6 @@ import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
@@ -38,16 +37,6 @@ public final class RveaTrajectoryFixtures {
 
   static List<String> trajectory(
       String variant, int objectives, String shape, long seed, int constraints) {
-    return trajectory(variant, objectives, shape, seed, constraints, false);
-  }
-
-  static List<String> trajectory(
-      String variant,
-      int objectives,
-      String shape,
-      long seed,
-      int constraints,
-      boolean addInfeasible) {
     JMetalRandom.getInstance().setSeed(seed);
     var selection = selection(variant, objectives);
     List<TaggedSolution> survivors = List.of();
@@ -71,15 +60,7 @@ public final class RveaTrajectoryFixtures {
         Arrays.fill(solution.constraints(), 1.0);
         candidates.add(solution);
       }
-      if (addInfeasible) {
-        double[] misleadingIdeal = new double[objectives];
-        Arrays.fill(misleadingIdeal, -1000000.0);
-        candidates.add(new TaggedSolution(-generation - 1, misleadingIdeal, new double[] {-0.1}));
-      }
-      survivors =
-          selection.execute(candidates, selection.populationSize()).stream()
-              .filter(ConstraintHandling::isFeasible)
-              .toList();
+      survivors = selection.execute(candidates, selection.populationSize());
       String signature = signature(selection, survivors);
       if (generation == GENERATIONS - 1) {
         signature += ":rng=" + Double.toHexString(JMetalRandom.getInstance().nextDouble());

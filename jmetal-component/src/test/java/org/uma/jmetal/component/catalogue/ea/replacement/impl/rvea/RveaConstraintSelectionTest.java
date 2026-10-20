@@ -2,202 +2,185 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea.RveaTrajectoryFixtures.TaggedSolution;
 import org.uma.jmetal.util.ConstraintHandling;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-@DisplayName("RVEA-family feasibility-first selection")
+/**
+ * The constraint handling of RVEA and RVEA*, as PlatEMO's RVEA and RVEAa: each reference vector
+ * keeps its feasible solution with the smallest APD or, without feasible solutions, its solution
+ * with the smallest overall constraint violation.
+ */
+@DisplayName("RVEA-family selection with constraints")
 class RveaConstraintSelectionTest {
-  private FeasibilityFirstSelection<TaggedSolution> policy;
+  private static final List<double[]> AXES = List.of(new double[] {1, 0}, new double[] {0, 1});
 
   @BeforeEach
   void setUp() {
-    policy = new FeasibilityFirstSelection<>();
     JMetalRandom.getInstance().setSeed(71);
   }
 
-  private TaggedSolution solution(int id, double x, double y, double... constraints) {
+  private static TaggedSolution solution(int id, double x, double y, double... constraints) {
     return new TaggedSolution(id, new double[] {x, y}, constraints);
   }
 
-  private RVEAEnvironmentalSelection<TaggedSolution> selector(String variant) {
-    var vectors = List.of(new double[] {1, 0}, new double[] {0, 1});
-    return switch (variant) {
-      case "RVEA" -> new RVEAEnvironmentalSelection<>(2, 24, 2, 0.2, vectors);
-      case "RVEAStar" -> new RVEAStarEnvironmentalSelection<>(2, 24, 2, 0.2, vectors);
-      case "IRVEA" -> new IRVEAEnvironmentalSelection<>(2, 24, 2, 0.2, vectors, 2);
-      default -> throw new IllegalArgumentException(variant);
-    };
+  private static RVEAEnvironmentalSelection<TaggedSolution> rvea(List<double[]> vectors) {
+    return new RVEAEnvironmentalSelection<>(2, 24, 2, 0.2, vectors);
   }
 
   @Nested
-  @DisplayName("When aggregating canonical constraints")
-  class CanonicalConstraints {
+  @DisplayName("When RVEA selects one solution per reference vector")
+  class RveaTests {
+
     @Test
-    @DisplayName("given multiple constraints, when ordering fallback, then use negative sum")
-    void givenMultipleConstraints_whenOrdering_thenUseNegativeSum() {
-      // Arrange
-      var worse = solution(0, 0, 0, -2, 100, -3);
-      var firstTie = solution(1, 100, 100, -1, 0, -1);
-      var secondTie = solution(2, -100, -100, -2, 10, 0);
-      var best = solution(3, 1000, 1000, -0.1, 5, 0);
-      var partition = policy.partition(List.of(worse, firstTie, secondTie, best));
+    @DisplayName("given a feasible and an infeasible solution in a vector, then the feasible one stays")
+    void givenFeasibleAndInfeasibleInAVector_whenSelecting_thenTheFeasibleOneStays() {
+      // Arrange: the infeasible solution is closer to the ideal point, so it has the smaller APD
+      var feasible = solution(0, 0, 2, 0);
+      var infeasible = solution(1, 0, 1, -1);
+      var other = solution(2, 3, 0, 0);
 
       // Act
-      var result = policy.supplement(partition, List.of(), 3);
+      var survivors = rvea(AXES).execute(List.of(feasible, infeasible, other), 2);
 
       // Assert
-      assertEquals(-5, ConstraintHandling.overallConstraintViolationDegree(worse));
-      assertEquals(2, ConstraintHandling.numberOfViolatedConstraints(worse));
-      assertEquals(List.of(best, firstTie, secondTie), result);
+      assertEquals(List.of(other, feasible), survivors);
     }
 
     @Test
-    @DisplayName("given precomputed attributes, when selecting, then honor jMetal feasibility")
-    void givenPrecomputedAttributes_whenSelecting_thenHonorCanonicalValues() {
-      // Arrange
-      var feasible = solution(0, 5, 5, -20);
-      ConstraintHandling.numberOfViolatedConstraints(feasible, 0);
-      ConstraintHandling.overallConstraintViolationDegree(feasible, 0.0);
-      var best = solution(1, 5, 5, -100);
-      ConstraintHandling.overallConstraintViolationDegree(best, -0.1);
-      var worse = solution(2, 0, 0, -1);
+    @DisplayName(
+        "given only infeasible solutions in a vector, then the least violated stays, whatever"
+            + " its APD")
+    void givenOnlyInfeasibleInAVector_whenSelecting_thenTheLeastViolatedStays() {
+      // Arrange: the violation is the sum of the negative constraint values (-1.5 and -3);
+      // positive slack does not cancel a violation
+      var leastViolated = solution(0, 0, 2, -1, 2, -0.5);
+      var mostViolated = solution(1, 0, 1, -3, 0, 0);
+      var other = solution(2, 3, 0, 0, 0, 0);
 
       // Act
-      var partition = policy.partition(List.of(worse, feasible, best));
-      var result = policy.supplement(partition, partition.feasible(), 2);
+      var survivors = rvea(AXES).execute(List.of(mostViolated, leastViolated, other), 2);
 
       // Assert
-      assertEquals(List.of(feasible), partition.feasible());
-      assertEquals(List.of(feasible, best), result);
-      assertEquals(3, policy.statistics().candidateVisits());
-      assertEquals(1, policy.statistics().feasibleVisits());
-      assertEquals(2, policy.statistics().infeasibleVisits());
-      assertEquals(1, policy.statistics().affectedSelections());
-      assertEquals(1, policy.statistics().infeasibleSurvivors());
-      assertTrue(policy.statistics().violationComparisons() > 0);
+      assertEquals(-1.5, ConstraintHandling.overallConstraintViolationDegree(leastViolated));
+      assertEquals(List.of(other, leastViolated), survivors);
+    }
+
+    @Test
+    @DisplayName("given two equally violated solutions in a vector, then the first one stays")
+    void givenEquallyViolatedSolutions_whenSelecting_thenTheFirstOneStays() {
+      // Arrange: the second one has the smaller APD, which does not count between infeasible ones
+      var first = solution(0, 0, 2, -1);
+      var second = solution(1, 0, 1, -1);
+
+      // Act
+      var survivors = rvea(AXES).execute(List.of(first, second, solution(2, 3, 0, 0)), 2);
+
+      // Assert
+      assertEquals(first, survivors.get(1));
+    }
+
+    @Test
+    @DisplayName(
+        "given an infeasible solution beyond the ideal point, then it takes part in the"
+            + " translation")
+    void givenAnInfeasibleSolutionBeyondTheIdeal_whenSelecting_thenItTakesPartInTheTranslation() {
+      // Arrange: with three vectors, a and b fall in different vectors from the ideal (2, 2), but
+      // both in the diagonal one from the ideal (0, 0) of the infeasible solution c
+      List<double[]> vectors =
+          List.of(new double[] {1, 0}, new double[] {1, 1}, new double[] {0, 1});
+      var a = solution(0, 2, 3, 0);
+      var b = solution(1, 3, 2, 0);
+      var c = solution(2, 0, 0, -1);
+
+      // Act
+      var withoutC = rvea(vectors).execute(List.of(a, b), 3);
+      var withC = rvea(vectors).execute(List.of(a, b, c), 3);
+
+      // Assert: c is alone in its vector, so it stays; a and b share one, so only a stays
+      assertEquals(List.of(b, a), withoutC);
+      assertEquals(List.of(c, a), withC);
+    }
+
+    @Test
+    @DisplayName("given precomputed constraint attributes, then the selection uses them")
+    void givenPrecomputedAttributes_whenSelecting_thenTheSelectionUsesThem() {
+      // Arrange: the constraint values say infeasible, the precomputed attributes say feasible
+      var feasibleByAttributes = solution(0, 0, 2, -20);
+      ConstraintHandling.numberOfViolatedConstraints(feasibleByAttributes, 0);
+      ConstraintHandling.overallConstraintViolationDegree(feasibleByAttributes, 0.0);
+      var infeasible = solution(1, 0, 1, -1);
+
+      // Act
+      var survivors =
+          rvea(AXES).execute(List.of(infeasible, feasibleByAttributes, solution(2, 3, 0, 0)), 2);
+
+      // Assert
+      assertEquals(feasibleByAttributes, survivors.get(1));
     }
   }
 
-  @ParameterizedTest
-  @ValueSource(strings = {"RVEA", "RVEAStar", "IRVEA"})
-  @DisplayName("given enough feasible candidates, when selecting, then exclude infeasible ideals")
-  void givenEnoughFeasibleCandidates_whenSelecting_thenExcludeInfeasibleIdeals(String variant) {
-    // Arrange
-    var selection = selector(variant);
-    List<TaggedSolution> candidates = new ArrayList<>();
-    for (int i = 0; i < 8; i++) {
-      candidates.add(solution(i, 5, 5, 0, 1));
+  @Nested
+  @DisplayName("When RVEA* selects")
+  class RveaStarTests {
+
+    @Test
+    @DisplayName(
+        "given an infeasible solution that dominates a feasible one, then the feasible one stays"
+            + " (PlatEMO's RVEAa would filter it out)")
+    void givenAnInfeasibleDominatingAFeasible_whenSelecting_thenTheFeasibleOneStays() {
+      // Arrange
+      var feasible = solution(0, 0, 2, 0);
+      var infeasible = solution(1, 0, 1, -1);
+      var other = solution(2, 3, 0, 0);
+      var selection = new RVEAStarEnvironmentalSelection<TaggedSolution>(2, 24, 2, 0.2, AXES);
+
+      // Act
+      var survivors = selection.execute(List.of(feasible, infeasible, other), 2);
+
+      // Assert
+      assertEquals(Set.of(feasible, other), Set.copyOf(survivors));
     }
-    candidates.add(solution(99, 0, 0, -0.001));
 
-    // Act
-    var survivors = selection.execute(candidates, 2);
+    @Test
+    @DisplayName("given a feasible solution dominated by another feasible one, then it is filtered out")
+    void givenAFeasibleDominatedByAnotherFeasible_whenSelecting_thenItIsFilteredOut() {
+      // Arrange: alone in its vector, the dominated solution would otherwise stay
+      var dominated = solution(0, 1, 3, 0);
+      var dominating = solution(1, 0, 2, 0);
+      var other = solution(2, 3, 0, 0);
+      var selection = new RVEAStarEnvironmentalSelection<TaggedSolution>(2, 24, 2, 0.2, AXES);
 
-    // Assert: identical feasible points occupy only one niche; do not fill back to N.
-    assertEquals(1, survivors.size());
-    assertTrue(survivors.stream().allMatch(ConstraintHandling::isFeasible));
-    assertEquals(0, selection.constraintStatistics().infeasibleSurvivors());
-  }
+      // Act
+      var survivors = selection.execute(List.of(dominated, dominating, other), 2);
 
-  @ParameterizedTest
-  @ValueSource(strings = {"RVEA", "RVEAStar", "IRVEA"})
-  @DisplayName(
-      "given insufficient feasible candidates, when supplementing, then keep stable CV order")
-  void givenInsufficientFeasibleCandidates_whenSupplementing_thenKeepStableOrder(String variant) {
-    // Arrange
-    var selection = selector(variant);
-    var feasible = solution(0, 5, 5, 0);
-    var worse = solution(1, 1, 10, -3);
-    var best = solution(2, 10, 1, -1);
-    var tied = solution(3, 9, 2, -1);
-
-    // Act
-    var survivors = selection.execute(List.of(feasible, worse, best, tied), 2);
-
-    // Assert
-    assertEquals(feasible, survivors.getFirst());
-    assertTrue(survivors.size() >= 2);
-    assertEquals(best, survivors.get(1));
-    if (survivors.size() == 3) {
-      assertEquals(tied, survivors.get(2));
-    }
-    assertFalse(survivors.contains(worse));
-  }
-
-  @ParameterizedTest
-  @ValueSource(strings = {"RVEA", "RVEAStar", "IRVEA"})
-  @DisplayName("given all infeasible and empty niches, when selecting, then retain best CV only")
-  void givenAllInfeasibleAndEmptyNiches_whenSelecting_thenRetainBestOnly(String variant) {
-    // Arrange
-    var selection = selector(variant);
-    var best = solution(1, 1, 1, -1);
-    var tied = solution(2, 1, 1, -1);
-    var worse = solution(3, 1, 1, -10);
-    String vectors = Arrays.deepToString(selection.referenceVectors());
-    String adaptive =
-        selection instanceof RVEAStarEnvironmentalSelection<?> star
-            ? Arrays.deepToString(star.adaptiveReferenceVectors())
-            : "";
-
-    // Act
-    var survivors = selection.execute(List.of(worse, best, tied), 2);
-
-    // Assert
-    assertEquals(List.of(best), survivors);
-    assertEquals(vectors, Arrays.deepToString(selection.referenceVectors()));
-    assertEquals(0, selection.currentGeneration());
-    if (selection instanceof RVEAStarEnvironmentalSelection<?> star) {
-      assertEquals(adaptive, Arrays.deepToString(star.adaptiveReferenceVectors()));
-    }
-    if (selection instanceof IRVEAEnvironmentalSelection<?> improved) {
-      assertTrue(improved.archive().isEmpty());
+      // Assert
+      assertFalse(survivors.contains(dominated));
     }
   }
 
-  @ParameterizedTest
-  @ValueSource(strings = {"RVEA", "RVEAStar", "IRVEA"})
-  @DisplayName("given mixed candidates in one niche, when selecting, then preserve shrinkage")
-  void givenMixedCandidatesInOneNiche_whenSelecting_thenPreserveShrinkage(String variant) {
-    // Arrange
-    var selection = selector(variant);
-    var feasible = solution(1, 1, 1, 1);
+  @Nested
+  @DisplayName("When iRVEA selects")
+  class IrveaTests {
 
-    // Act
-    var survivors =
-        selection.execute(List.of(feasible, solution(2, 1, 1, -1), solution(3, 1, 1, -2)), 2);
+    @Test
+    @DisplayName("given solutions with constraints, then it rejects them")
+    void givenSolutionsWithConstraints_whenSelecting_thenTheyAreRejected() {
+      // Arrange
+      var selection = new IRVEAEnvironmentalSelection<TaggedSolution>(2, 24, 2, 0.2, AXES, 2);
+      var candidates = List.of(solution(0, 0, 2, 0), solution(1, 3, 0, 0));
 
-    // Assert
-    assertEquals(List.of(feasible), survivors);
-  }
-
-  @Test
-  @DisplayName(
-      "given an iRVEA feasible archive, when all new inputs violate, then reuse safe copies")
-  void givenFeasibleArchive_whenNewInputsViolate_thenReuseSafeCopies() {
-    // Arrange
-    var selection = (IRVEAEnvironmentalSelection<TaggedSolution>) selector("IRVEA");
-    selection.execute(List.of(solution(0, 0, 10, 0), solution(1, 10, 0, 0)), 2);
-    var expected = selection.archive();
-
-    // Act
-    var survivors = selection.execute(List.of(solution(99, -100, -100, -1)), 2);
-    survivors.getFirst().objectives()[0] = 999;
-
-    // Assert
-    assertEquals(expected, survivors);
-    assertTrue(survivors.stream().allMatch(ConstraintHandling::isFeasible));
-    assertTrue(selection.archive().stream().noneMatch(s -> s.objectives()[0] == 999));
+      // Act & Assert
+      assertThrows(InvalidConditionException.class, () -> selection.execute(candidates, 2));
+    }
   }
 }

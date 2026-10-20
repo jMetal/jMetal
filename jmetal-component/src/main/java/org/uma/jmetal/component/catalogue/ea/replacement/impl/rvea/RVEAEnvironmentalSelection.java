@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
@@ -13,8 +14,12 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  *
  * <p>Implements Cheng et al., IEEE TEVC (2016), doi:10.1109/TEVC.2016.2519378. Empty niches
  * contribute no survivor, so the population can shrink. This component is stateful; create a new
- * instance for each run. Objectives must be finite and minimized. jMetal's feasibility-first
- * constraint support preserves the original selection when every candidate is feasible.
+ * instance for each run. Objectives must be finite and minimized.
+ *
+ * <p>Constraints are handled as in PlatEMO's RVEA: every solution, feasible or not, takes part in
+ * the translation and is associated with its nearest reference vector; each vector keeps its
+ * feasible solution with the smallest APD or, if it has none, its solution with the smallest overall
+ * constraint violation. Without infeasible solutions the selection is that of the paper.
  *
  * @param <S> solution type
  */
@@ -26,8 +31,6 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
   private final double alpha;
   private final int adaptationFrequency;
   private int currentGeneration = -1;
-  private final FeasibilityFirstSelection<S> constraintSelection =
-      new FeasibilityFirstSelection<>();
 
   public RVEAEnvironmentalSelection(
       int objectives, int maxGenerations, double alpha, double fr, int divisions) {
@@ -63,22 +66,7 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
         populationSize == initialReferenceVectors.length,
         "Population size must match the number of predefined reference vectors");
     currentGeneration++;
-    var partition = constraintSelection.partition(jointPopulation);
-    if (partition.infeasible().isEmpty()) {
-      return selectFeasiblePopulation(jointPopulation);
-    }
-    // Count occupied slots before adaptation/regeneration, without mutating geometry or RNG state.
-    int capacity =
-        partition.feasible().size() >= survivorCapacity() ? 0 : occupiedCapacity(jointPopulation);
-    List<S> survivors =
-        partition.feasible().isEmpty()
-            ? survivorsWithoutFeasibleCandidates()
-            : selectFeasiblePopulation(partition.feasible());
-    return constraintSelection.supplement(partition, survivors, capacity);
-  }
-
-  private List<S> selectFeasiblePopulation(List<S> population) {
-    List<S> survivors = select(population);
+    List<S> survivors = select(jointPopulation);
     if (currentGeneration % adaptationFrequency == 0) {
       adaptReferenceVectors(survivors);
     }
@@ -92,6 +80,9 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
     for (S solution : population) {
       Check.notNull(solution);
       Check.that(
+          handlesConstraints() || solution.constraints().length == 0,
+          () -> getClass().getSimpleName() + " supports unconstrained solutions only");
+      Check.that(
           Arrays.stream(solution.constraints()).allMatch(Double::isFinite),
           "Constraint values must be finite");
       Check.that(
@@ -103,37 +94,20 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
     }
   }
 
+  /** Whether the selection accepts solutions with constraints; iRVEA does not. */
+  protected boolean handlesConstraints() {
+    return true;
+  }
+
   protected List<S> select(List<S> population) {
     return selectByApd(population, referenceVectors);
   }
 
-  private int occupiedCapacity(List<S> population) {
-    boolean[] active =
-        RVEAGeometry.active(RVEAGeometry.translate(population), selectionReferenceVectors());
-    int occupied = 0;
-    for (boolean present : active) {
-      if (present) {
-        occupied++;
-      }
-    }
-    return Math.min(occupied, survivorCapacity());
-  }
-
-  /** Reference directions used only to bound infeasible fallback by occupied niches. */
-  protected double[][] selectionReferenceVectors() {
-    return referenceVectors;
-  }
-
-  /** Upper bound on survivors at this generation, independent of current parent count. */
-  protected int survivorCapacity() {
-    return populationSize();
-  }
-
-  /** Keeps objective-space state unchanged when there is no feasible input to select/adapt. */
-  protected List<S> survivorsWithoutFeasibleCandidates() {
-    return List.of();
-  }
-
+  /**
+   * Keeps one solution per reference vector: the feasible one with the smallest APD or, in a
+   * vector without feasible solutions, the one with the smallest overall constraint violation (as
+   * PlatEMO). Ties keep the solution that comes first.
+   */
   protected final List<S> selectByApd(List<S> population, double[][] vectors) {
     double[][] translated = RVEAGeometry.translate(population);
     double[] gamma = RVEAGeometry.gamma(vectors);
@@ -141,6 +115,12 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
     int[] best = new int[vectors.length];
     Arrays.fill(bestApd, Double.POSITIVE_INFINITY);
     Arrays.fill(best, -1);
+    boolean[] feasible = new boolean[population.size()];
+    double[] violation = new double[population.size()];
+    for (int i = 0; i < population.size(); i++) {
+      feasible[i] = ConstraintHandling.isFeasible(population.get(i));
+      violation[i] = ConstraintHandling.overallConstraintViolationDegree(population.get(i));
+    }
     double progress = Math.pow(Math.min(1.0, (double) currentGeneration / maxGenerations), alpha);
     for (int i = 0; i < population.size(); i++) {
       int niche = RVEAGeometry.nearest(translated[i], vectors);
@@ -150,7 +130,19 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
               * RVEAGeometry.angle(translated[i], vectors[niche])
               / gamma[niche];
       double apd = (1.0 + penalty) * RVEAGeometry.norm(translated[i]);
-      if (best[niche] < 0 || apd < bestApd[niche]) {
+      int incumbent = best[niche];
+      boolean better;
+      if (incumbent < 0) {
+        better = true;
+      } else if (feasible[i] != feasible[incumbent]) {
+        better = feasible[i];
+      } else if (feasible[i]) {
+        better = apd < bestApd[niche];
+      } else {
+        // The overall constraint violation is negative: the larger, the less violated
+        better = violation[i] > violation[incumbent];
+      }
+      if (better) {
         bestApd[niche] = apd;
         best[niche] = i;
       }
@@ -200,23 +192,5 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
   /** Returns a defensive copy of the current predefined vectors. */
   public final double[][] referenceVectors() {
     return RVEAGeometry.copy(referenceVectors);
-  }
-
-  /**
-   * Counts candidate visits (parents may be visited repeatedly), not problem evaluations. Affected
-   * selections contain at least one infeasible candidate; comparisons count fallback comparator
-   * calls, and infeasible survivors count the appended fallback solutions.
-   */
-  public record ConstraintStatistics(
-      long candidateVisits,
-      long feasibleVisits,
-      long infeasibleVisits,
-      long affectedSelections,
-      long violationComparisons,
-      long infeasibleSurvivors) {}
-
-  /** Returns cumulative, immutable constraint-layer counters for this selection instance. */
-  public final ConstraintStatistics constraintStatistics() {
-    return constraintSelection.statistics();
   }
 }

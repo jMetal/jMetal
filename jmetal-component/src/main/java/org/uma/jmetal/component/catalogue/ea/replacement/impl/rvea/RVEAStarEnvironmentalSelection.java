@@ -1,9 +1,11 @@
 package org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
@@ -12,6 +14,13 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  *
  * <p>Cheng et al. (2016), Section VI and Algorithm 4. Selection can retain up to 2N solutions;
  * angular truncation limits the final population to N. Also known as RVEAa in PlatEMO.
+ *
+ * <p>Constraints are handled as in PlatEMO's RVEAa, with one difference. Each vector keeps a
+ * solution with the rule of {@link RVEAEnvironmentalSelection}, but the nondominated filter that
+ * precedes it compares the feasible solutions only, and every infeasible solution goes on to that
+ * rule. PlatEMO filters the whole population by its objectives, so once infeasible solutions
+ * dominate all the feasible ones (as on LIR-CMOP1 and LIR-CMOP2, or C3-DTLZ4) it removes every
+ * feasible solution, and the run ends without any.
  *
  * @param <S> solution type
  */
@@ -42,22 +51,17 @@ public class RVEAStarEnvironmentalSelection<S extends Solution<?>>
 
   @Override
   protected List<S> select(List<S> population) {
-    return selectByApd(nondominated(population), allVectors());
+    List<S> feasible = population.stream().filter(ConstraintHandling::isFeasible).toList();
+    List<S> candidates = new ArrayList<>(feasible.isEmpty() ? feasible : nondominated(feasible));
+    population.stream()
+        .filter(solution -> !ConstraintHandling.isFeasible(solution))
+        .forEach(candidates::add);
+    return selectByApd(candidates, allVectors());
   }
 
   protected final double[][] allVectors() {
     return Stream.concat(Arrays.stream(referenceVectors), Arrays.stream(adaptiveVectors))
         .toArray(double[][]::new);
-  }
-
-  @Override
-  protected double[][] selectionReferenceVectors() {
-    return allVectors();
-  }
-
-  @Override
-  protected int survivorCapacity() {
-    return currentGeneration() + 1 >= maxGenerations ? populationSize() : 2 * populationSize();
   }
 
   @Override

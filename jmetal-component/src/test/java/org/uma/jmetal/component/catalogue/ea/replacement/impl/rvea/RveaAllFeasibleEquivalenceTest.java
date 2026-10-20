@@ -36,7 +36,9 @@ class RveaAllFeasibleEquivalenceTest {
               entry -> {
                 String[] key = entry.getKey().split(",");
                 List<String> expected = entry.getValue().stream().map(row -> row[5]).toList();
-                return Stream.of(0, 3)
+                // iRVEA accepts no constraints; the others must ignore satisfied ones
+                Stream<Integer> counts = key[0].equals("IRVEA") ? Stream.of(0) : Stream.of(0, 3);
+                return counts
                     .map(
                         constraints ->
                             Arguments.of(
@@ -66,26 +68,6 @@ class RveaAllFeasibleEquivalenceTest {
     // RNG.
     // Act
     var actual = RveaTrajectoryFixtures.trajectory(variant, objectives, shape, seed, constraints);
-
-    // Assert
-    assertEquals(expected, actual);
-  }
-
-  @ParameterizedTest(name = "mixed {0}, M={1}, {2}, seed={3}, constraints={4}")
-  @MethodSource("cases")
-  @DisplayName(
-      "given infeasible ideals, when evolving, then preserve feasible geometry and archives")
-  void givenInfeasibleIdeals_whenEvolving_thenPreserveFeasibleGeometryAndArchives(
-      String variant,
-      int objectives,
-      String shape,
-      long seed,
-      int constraints,
-      List<String> expected) {
-    // Arrange: the same feasible inputs plus an infeasible point dominating every objective.
-    // Act: inspect the feasible survivors, all vectors, the entire archive, and final RNG state.
-    var actual =
-        RveaTrajectoryFixtures.trajectory(variant, objectives, shape, seed, constraints, true);
 
     // Assert
     assertEquals(expected, actual);
