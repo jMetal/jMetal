@@ -4,6 +4,15 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/20/2026] Bounded archives (``CrowdingDistanceArchive``, ``AngleArchive``,
+  ``CosineSimilarityArchive``), the replacement of the component-based SMS-EMOA and the replacement
+  of the component-based PAES honor constraints. They compared solutions with plain Pareto
+  dominance, so on constrained problems an infeasible solution could replace a feasible one. They
+  now use Deb's constrained-domination principle (``DominanceWithConstraintsComparator``), as
+  ``NonDominatedSolutionListArchive`` already did; ``SMSEMOAReplacement`` ranks the whole population
+  instead of updating it incrementally when the solutions have constraints. Results on problems
+  without constraints do not change.
+
 * [10/15/2026] The Maven build pins ``maven-surefire-plugin`` to 3.5.3 (and upgrades
   ``maven-failsafe-plugin`` from 3.2.5 to 3.5.3). Its version was not set, so Maven used its
   default, 3.0.2, which does not discover JUnit 6 tests: modules such as ``jmetal-problem`` ran no
