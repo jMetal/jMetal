@@ -4,7 +4,7 @@ import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CosineSimilarityDensityEstimator;
 
@@ -29,7 +29,7 @@ public class CosineSimilarityArchive<S extends Solution<?>> extends AbstractBoun
   }
 
   public CosineSimilarityArchive(int maxSize, double[] referencePoint, boolean normalize) {
-    this(maxSize, referencePoint, normalize, new DefaultDominanceComparator<>());
+    this(maxSize, referencePoint, normalize, new DominanceWithConstraintsComparator<>());
   }
 
   public CosineSimilarityArchive(int maxSize, double[] referencePoint) {

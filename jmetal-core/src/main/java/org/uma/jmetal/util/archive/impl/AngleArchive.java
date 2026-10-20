@@ -4,7 +4,7 @@ import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.AngleDensityEstimator;
 
@@ -50,7 +50,7 @@ public class AngleArchive<S extends Solution<?>> extends AbstractBoundedArchive<
    * @param numberOfNeighbors Number of nearest angular neighbors to consider
    */
   public AngleArchive(int maxSize, double[] referencePoint, boolean normalize, int numberOfNeighbors) {
-    this(maxSize, referencePoint, normalize, numberOfNeighbors, new DefaultDominanceComparator<>());
+    this(maxSize, referencePoint, normalize, numberOfNeighbors, new DominanceWithConstraintsComparator<>());
   }
 
   /**
