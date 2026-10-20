@@ -4,6 +4,10 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/20/2026] Each C-DTLZ problem has its own name. They inherited that of the DTLZ problem they
+  extend (``C1_DTLZ1`` was named ``DTLZ1``), so jMetal's experiments, which name output directories
+  and look up reference fronts by problem name, mixed them up with the DTLZ problems.
+
 * [10/20/2026] Fixed the C-DTLZ problems (Jain and Deb, 2014). Their constraints did not follow the
   definition: ``C1_DTLZ1`` left out a term and the 0.6 factor, ``C1_DTLZ3`` subtracted its radii
   once per objective, ``C2_DTLZ2`` took a maximum instead of minus a minimum (almost every point was
