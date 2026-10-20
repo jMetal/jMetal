@@ -2,6 +2,8 @@ package org.uma.jmetal.component.algorithm.multiobjective;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,8 +17,10 @@ import org.uma.jmetal.component.catalogue.ea.variation.impl.MutationOnlyVariatio
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.bounds.Bounds;
 
 @DisplayName("Unit tests for class PAESBuilder")
 class PAESBuilderTest {
@@ -110,6 +114,38 @@ class PAESBuilderTest {
 
       assertThat(algorithm.result()).isEqualTo(archive.solutions());
       assertThat(algorithm.result()).contains(solution);
+    }
+  }
+
+  @Nested
+  @DisplayName("When the problem has constraints")
+  class WhenTheProblemHasConstraints {
+    private DoubleSolution solution(double f1, double f2, double constraint) {
+      DoubleSolution solution =
+          new DefaultDoubleSolution(List.of(Bounds.create(0.0, 1.0)), 2, 1);
+      solution.objectives()[0] = f1;
+      solution.objectives()[1] = f2;
+      solution.constraints()[0] = constraint;
+      return solution;
+    }
+
+    @Test
+    @DisplayName(
+        "given a feasible current solution, when an infeasible mutant that dominates it in the"
+            + " objectives is compared, then the current solution stays")
+    void givenAFeasibleCurrentSolution_whenAnInfeasibleBetterMutantIsCompared_thenItStays() {
+      // Arrange
+      EvolutionaryAlgorithm<DoubleSolution> algorithm =
+          new PAESBuilder<>(problem, ARCHIVE_SIZE, mutation, archive).build();
+      DoubleSolution current = solution(0.5, 0.5, 0.0);
+      List<DoubleSolution> population = new ArrayList<>(List.of(current));
+
+      // Act
+      List<DoubleSolution> result =
+          algorithm.replacement().replace(population, List.of(solution(0.1, 0.1, -1.0)));
+
+      // Assert
+      assertThat(result).containsExactly(current);
     }
   }
 }
