@@ -4,6 +4,9 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/20/2026] Fixed ``LIRCMOP14``: it declared three constraints and computed the third one, the
+  ring between radii 1.6 and 1.75, but did not store it, so that constraint was never violated.
+
 * [10/20/2026] Fixed the C-DTLZ problems (Jain and Deb, 2014). Their constraints did not follow the
   definition: ``C1_DTLZ1`` left out a term and the 0.6 factor, ``C1_DTLZ3`` subtracted its radii
   once per objective, ``C2_DTLZ2`` took a maximum instead of minus a minimum (almost every point was
