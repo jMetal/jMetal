@@ -18,7 +18,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 
 /**
  * Class to configure and build a component-based instance of the PAES (Pareto Archived Evolution
@@ -62,7 +62,8 @@ public class PAESBuilder<S extends Solution<?>> {
 
     this.selection = new PAESSelection<>(archiveSelectionProbability, archive);
 
-    this.replacement = new PAESReplacement<>(archive, new DefaultDominanceComparator<>());
+    // Deb's constrained-domination principle: plain Pareto dominance without constraints
+    this.replacement = new PAESReplacement<>(archive, new DominanceWithConstraintsComparator<>());
 
     this.termination = new TerminationByEvaluations(25000);
 
