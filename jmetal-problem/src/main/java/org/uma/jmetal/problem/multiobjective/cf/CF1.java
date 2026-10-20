@@ -98,7 +98,7 @@ public class CF1 extends AbstractDoubleProblem {
     double sumProd = 1.0;
 
     for (int i = 0; i < numberOfObjectives(); i++) {
-      if (i != numberOfVariables() - 1) {
+      if (i != numberOfObjectives() - 1) {
         f[i] = sumProd * (1 - theta[i]);
         sumProd *= theta[i];
       } else {
