@@ -1,16 +1,8 @@
 package org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
 import org.uma.jmetal.solution.Solution;
@@ -18,7 +10,10 @@ import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
-/** Deterministic inputs and full-state signatures, captured before modifying upstream selection. */
+/**
+ * Deterministic candidate streams for the RVEA-family selections and a signature of the state of
+ * a selection after each generation: survivors, reference vectors and the iRVEA archive.
+ */
 public final class RveaTrajectoryFixtures {
   static final int GENERATIONS = 24;
 
@@ -84,7 +79,7 @@ public final class RveaTrajectoryFixtures {
       if (generation == GENERATIONS - 1) {
         signature += ":rng=" + Double.toHexString(JMetalRandom.getInstance().nextDouble());
       }
-      signatures.add(digest(signature));
+      signatures.add(signature);
     }
     return signatures;
   }
@@ -120,47 +115,6 @@ public final class RveaTrajectoryFixtures {
       }
       state.append(']');
     }
-  }
-
-  private static String digest(String value) {
-    try {
-      return HexFormat.of()
-          .formatHex(
-              MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8)));
-    } catch (NoSuchAlgorithmException e) {
-      throw new IllegalStateException("SHA-256 is required by the Java platform", e);
-    }
-  }
-
-  /**
-   * Writes a new oracle file; normal tests never call this method or regenerate expected values.
-   */
-  public static void main(String[] args) throws IOException {
-    StringBuilder csv = new StringBuilder("variant,objectives,shape,seed,generation,sha256\n");
-    for (String variant : List.of("RVEA", "RVEAStar", "IRVEA")) {
-      for (int objectives : List.of(2, 3, 4, 7)) {
-        for (String shape : List.of("curved", "disconnected", "collapsed")) {
-          for (long seed : List.of(17L, 314159L)) {
-            var trajectory = trajectory(variant, objectives, shape, seed, 0);
-            for (int g = 0; g < trajectory.size(); g++) {
-              csv.append(variant)
-                  .append(',')
-                  .append(objectives)
-                  .append(',')
-                  .append(shape)
-                  .append(',')
-                  .append(seed)
-                  .append(',')
-                  .append(g)
-                  .append(',')
-                  .append(trajectory.get(g))
-                  .append('\n');
-            }
-          }
-        }
-      }
-    }
-    Files.writeString(Path.of(args[0]), csv, StandardCharsets.UTF_8, StandardOpenOption.CREATE_NEW);
   }
 
   /** Identity is the decision ID, independently of the number of exposed constraints. */
