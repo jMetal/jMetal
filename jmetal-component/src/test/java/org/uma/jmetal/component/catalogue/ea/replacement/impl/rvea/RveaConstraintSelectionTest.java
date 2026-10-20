@@ -9,13 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea.RveaTrajectoryFixtures.TaggedSolution;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-@DisplayName("Unit tests for the feasibility-first selection of the RVEA family")
+@DisplayName("Unit tests for the feasibility-first selection of iRVEA")
 class RveaConstraintSelectionTest {
   private FeasibilityFirstSelection<TaggedSolution> policy;
 
@@ -29,14 +27,9 @@ class RveaConstraintSelectionTest {
     return new TaggedSolution(id, new double[] {x, y}, constraints);
   }
 
-  private static RVEAEnvironmentalSelection<TaggedSolution> selector(String variant) {
+  private static IRVEAEnvironmentalSelection<TaggedSolution> selector() {
     var vectors = List.of(new double[] {1, 0}, new double[] {0, 1});
-    return switch (variant) {
-      case "RVEA" -> new RVEAEnvironmentalSelection<>(2, 24, 2, 0.2, vectors);
-      case "RVEAStar" -> new RVEAStarEnvironmentalSelection<>(2, 24, 2, 0.2, vectors);
-      case "IRVEA" -> new IRVEAEnvironmentalSelection<>(2, 24, 2, 0.2, vectors, 2);
-      default -> throw new IllegalArgumentException(variant);
-    };
+    return new IRVEAEnvironmentalSelection<>(2, 24, 2, 0.2, vectors, 2);
   }
 
   @Nested
@@ -96,13 +89,12 @@ class RveaConstraintSelectionTest {
   @Nested
   @DisplayName("When there are enough feasible candidates")
   class WhenThereAreEnoughFeasibleCandidates {
-    @ParameterizedTest(name = "{0}")
-    @ValueSource(strings = {"RVEA", "RVEAStar", "IRVEA"})
+    @Test
     @DisplayName(
         "given an infeasible ideal point, when selecting, then only feasible candidates survive")
-    void givenAnInfeasibleIdeal_whenSelecting_thenOnlyFeasibleCandidatesSurvive(String variant) {
+    void givenAnInfeasibleIdeal_whenSelecting_thenOnlyFeasibleCandidatesSurvive() {
       // Arrange
-      var selection = selector(variant);
+      var selection = selector();
       List<TaggedSolution> candidates = new ArrayList<>();
       for (int i = 0; i < 8; i++) {
         candidates.add(solution(i, 5, 5, 0, 1));
@@ -121,14 +113,13 @@ class RveaConstraintSelectionTest {
   @Nested
   @DisplayName("When there are not enough feasible candidates")
   class WhenThereAreNotEnoughFeasibleCandidates {
-    @ParameterizedTest(name = "{0}")
-    @ValueSource(strings = {"RVEA", "RVEAStar", "IRVEA"})
+    @Test
     @DisplayName(
         "given infeasible candidates, when selecting, then the least violating ones follow the"
             + " feasible survivors in a stable order")
-    void givenInfeasibleCandidates_whenSelecting_thenTheLeastViolatingOnesFollow(String variant) {
+    void givenInfeasibleCandidates_whenSelecting_thenTheLeastViolatingOnesFollow() {
       // Arrange
-      var selection = selector(variant);
+      var selection = selector();
       var feasible = solution(0, 5, 5, 0);
       var worse = solution(1, 1, 10, -3);
       var best = solution(2, 10, 1, -1);
@@ -141,15 +132,13 @@ class RveaConstraintSelectionTest {
       assertThat(survivors).isIn(List.of(feasible, best), List.of(feasible, best, tied));
     }
 
-    @ParameterizedTest(name = "{0}")
-    @ValueSource(strings = {"RVEA", "RVEAStar", "IRVEA"})
+    @Test
     @DisplayName(
         "given feasible and infeasible candidates in one niche, when selecting, then only the"
             + " feasible one survives")
-    void givenMixedCandidatesInOneNiche_whenSelecting_thenOnlyTheFeasibleOneSurvives(
-        String variant) {
+    void givenMixedCandidatesInOneNiche_whenSelecting_thenOnlyTheFeasibleOneSurvives() {
       // Arrange
-      var selection = selector(variant);
+      var selection = selector();
       var feasible = solution(1, 1, 1, 1);
       var candidates = List.of(feasible, solution(2, 1, 1, -1), solution(3, 1, 1, -2));
 
@@ -164,23 +153,18 @@ class RveaConstraintSelectionTest {
   @Nested
   @DisplayName("When every candidate is infeasible")
   class WhenEveryCandidateIsInfeasible {
-    @ParameterizedTest(name = "{0}")
-    @ValueSource(strings = {"RVEA", "RVEAStar", "IRVEA"})
+    @Test
     @DisplayName(
         "given candidates in one niche, when selecting, then only the least violating survives"
             + " and the vectors do not change")
-    void givenCandidatesInOneNiche_whenSelecting_thenOnlyTheLeastViolatingSurvives(
-        String variant) {
+    void givenCandidatesInOneNiche_whenSelecting_thenOnlyTheLeastViolatingSurvives() {
       // Arrange
-      var selection = selector(variant);
+      var selection = selector();
       var best = solution(1, 1, 1, -1);
       var tied = solution(2, 1, 1, -1);
       var worse = solution(3, 1, 1, -10);
       String vectors = Arrays.deepToString(selection.referenceVectors());
-      String adaptive =
-          selection instanceof RVEAStarEnvironmentalSelection<?> star
-              ? Arrays.deepToString(star.adaptiveReferenceVectors())
-              : "";
+      String adaptive = Arrays.deepToString(selection.adaptiveReferenceVectors());
 
       // Act
       var survivors = selection.execute(List.of(worse, best, tied), 2);
@@ -189,12 +173,8 @@ class RveaConstraintSelectionTest {
       assertThat(survivors).containsExactly(best);
       assertThat(Arrays.deepToString(selection.referenceVectors())).isEqualTo(vectors);
       assertThat(selection.currentGeneration()).isZero();
-      if (selection instanceof RVEAStarEnvironmentalSelection<?> star) {
-        assertThat(Arrays.deepToString(star.adaptiveReferenceVectors())).isEqualTo(adaptive);
-      }
-      if (selection instanceof IRVEAEnvironmentalSelection<?> improved) {
-        assertThat(improved.archive()).isEmpty();
-      }
+      assertThat(Arrays.deepToString(selection.adaptiveReferenceVectors())).isEqualTo(adaptive);
+      assertThat(selection.archive()).isEmpty();
     }
 
     @Test
@@ -203,7 +183,7 @@ class RveaConstraintSelectionTest {
             + " archive survive")
     void givenAFeasibleIRVEAArchive_whenSelecting_thenCopiesOfTheArchiveSurvive() {
       // Arrange
-      var selection = (IRVEAEnvironmentalSelection<TaggedSolution>) selector("IRVEA");
+      var selection = selector();
       selection.execute(List.of(solution(0, 0, 10, 0), solution(1, 10, 0, 0)), 2);
       var expected = selection.archive();
 

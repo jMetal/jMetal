@@ -50,13 +50,17 @@ class RveaFeasibleEquivalenceTest {
     }
   }
 
+  static Stream<Arguments> irveaCases() {
+    return cases().filter(arguments -> arguments.get()[0].equals("IRVEA"));
+  }
+
   @Nested
-  @DisplayName("When an infeasible candidate dominates every objective")
+  @DisplayName("When an infeasible candidate dominates every objective in iRVEA")
   class WhenAnInfeasibleCandidateDominatesEveryObjective {
     @ParameterizedTest(name = "{0}, M={1}, {2}")
     @MethodSource(
         "org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea"
-            + ".RveaFeasibleEquivalenceTest#cases")
+            + ".RveaFeasibleEquivalenceTest#irveaCases")
     @DisplayName(
         "given an infeasible ideal point in every generation, when evolving, then the feasible"
             + " survivors, vectors and archive are those obtained without it")

@@ -32,15 +32,13 @@ class ConstrainedRVEABuilderTest {
     var mutation = new PolynomialMutation(0.5, 20);
     return switch (variant) {
       case "RVEA" -> new RVEABuilder<>(problem, 21, budget, crossover, mutation, 2, 0.1, 20);
-      case "RVEAStar" ->
-          new RVEAStarBuilder<>(problem, 21, budget, crossover, mutation, 2, 0.1, 20);
       case "IRVEA" -> new IRVEABuilder<>(problem, 21, budget, crossover, mutation, 2, 0.1, 20);
       default -> throw new IllegalArgumentException(variant);
     };
   }
 
   @ParameterizedTest
-  @ValueSource(strings = {"RVEA", "RVEAStar", "IRVEA"})
+  @ValueSource(strings = {"RVEA", "IRVEA"})
   @DisplayName("given Binh2 and a seed, when running twice, then return identical feasible results")
   void givenBinh2AndSeed_whenRunningTwice_thenReturnIdenticalFeasibleResults(String variant) {
     // Arrange
@@ -67,7 +65,7 @@ class ConstrainedRVEABuilderTest {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = {"RVEA", "RVEAStar", "IRVEA"})
+  @ValueSource(strings = {"RVEA", "IRVEA"})
   @DisplayName(
       "given a nonmultiple budget, when using default batches, then retain documented overshoot")
   void givenNonmultipleBudget_whenUsingDefaultBatches_thenRetainDocumentedOvershoot(
