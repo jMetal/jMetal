@@ -4,6 +4,16 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/20/2026] The evaluators reject a solution that a problem evaluates to NaN (an objective, a
+  constraint or a precomputed overall constraint violation degree) with an
+  ``InvalidConditionException`` that names the problem. A NaN has no order: Pareto dominance ignored
+  a NaN objective, so such solutions were never dominated, their crowding distance was NaN, and a
+  NaN constraint counted as satisfied. Algorithms kept them silently (they filled the population of
+  NSGA-II, for instance) or failed later with unrelated exceptions (NSGA-III). The check is in
+  ``EvaluationCheck`` and is called by ``SequentialSolutionListEvaluator``,
+  ``MultiThreadedSolutionListEvaluator`` and the ``Evaluation`` components of ``jmetal-component``.
+  Infinite values are still accepted.
+
 * [10/20/2026] Fixed the C-DTLZ problems (Jain and Deb, 2014). Their constraints did not follow the
   definition: ``C1_DTLZ1`` left out a term and the 0.6 factor, ``C1_DTLZ3`` subtracted its radii
   once per objective, ``C2_DTLZ2`` took a maximum instead of minus a minimum (almost every point was
