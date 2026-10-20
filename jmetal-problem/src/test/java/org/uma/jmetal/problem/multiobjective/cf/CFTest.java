@@ -1,8 +1,11 @@
 package org.uma.jmetal.problem.multiobjective.cf;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -10,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 @DisplayName("Unit tests for the CF problems")
@@ -78,6 +82,29 @@ class CFTest {
             Arrays.stream(solution.constraints()).allMatch(Double::isFinite),
             "constraints " + Arrays.toString(solution.constraints()));
       }
+    }
+  }
+
+  @Nested
+  @DisplayName("When creating a problem with an Ackley distance function")
+  class AckleyDistanceTests {
+
+    @ParameterizedTest(name = "CF{0}")
+    @ValueSource(ints = {3, 8, 9, 14})
+    @DisplayName("given as many variables as objectives, when created, then it is rejected")
+    void givenAsManyVariablesAsObjectives_whenCreated_thenItIsRejected(int id)
+        throws ReflectiveOperationException {
+      // Arrange
+      var constructor =
+          Class.forName("org.uma.jmetal.problem.multiobjective.cf.CF" + id)
+              .getConstructor(Integer.class, Integer.class);
+
+      // Act
+      var thrown =
+          assertThrows(InvocationTargetException.class, () -> constructor.newInstance(3, 3));
+
+      // Assert
+      assertInstanceOf(InvalidConditionException.class, thrown.getCause());
     }
   }
 }
