@@ -41,9 +41,22 @@ public class ConvexC2_DTLZ2 extends DTLZ2 {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     super.evaluate(solution);
+    convexify(solution);
     this.evaluateConstraints(solution);
 
     return solution ;
+  }
+
+  /**
+   * Turns the objectives of DTLZ2 into those of the convex DTLZ2 problem on which Jain and Deb
+   * define this one: f_i^4 for i < M and f_M^2.
+   */
+  private static void convexify(DoubleSolution solution) {
+    double[] f = solution.objectives();
+    for (int i = 0; i < f.length - 1; i++) {
+      f[i] = Math.pow(f[i], 4.0);
+    }
+    f[f.length - 1] = Math.pow(f[f.length - 1], 2.0);
   }
 
   public void evaluateConstraints(DoubleSolution solution) {
