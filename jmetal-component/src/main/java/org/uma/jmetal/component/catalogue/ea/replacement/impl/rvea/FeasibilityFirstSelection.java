@@ -6,7 +6,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
 
-/** Shared feasibility partition and stable violation fallback for RVEA-family selection. */
+/** Feasibility partition and stable violation fallback of the iRVEA selection. */
 final class FeasibilityFirstSelection<S extends Solution<?>> {
   private final OverallConstraintViolationDegreeComparator<S> comparator =
       new OverallConstraintViolationDegreeComparator<>();
@@ -55,8 +55,8 @@ final class FeasibilityFirstSelection<S extends Solution<?>> {
     return result;
   }
 
-  RVEAEnvironmentalSelection.ConstraintStatistics statistics() {
-    return new RVEAEnvironmentalSelection.ConstraintStatistics(
+  IRVEAEnvironmentalSelection.ConstraintStatistics statistics() {
+    return new IRVEAEnvironmentalSelection.ConstraintStatistics(
         candidateVisits,
         feasibleVisits,
         infeasibleVisits,
