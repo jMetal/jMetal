@@ -13,6 +13,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  */
 @SuppressWarnings("serial")
 public class C2_DTLZ2 extends DTLZ2 {
+  /** Creates the problem with 3 objectives and 12 variables. */
+  public C2_DTLZ2() {
+    this(12, 3);
+  }
+
   private double rValue ;
   /**
    * Constructor
@@ -39,24 +44,28 @@ public class C2_DTLZ2 extends DTLZ2 {
     return solution ;
   }
 
+  /**
+   * Evaluates the constraint c(x) = -min(min_i [(f_i - 1)^2 + sum_{j != i} f_j^2 - r^2],
+   * sum_i (f_i - 1/sqrt(M))^2 - r^2) >= 0: a solution is feasible inside a sphere of radius r
+   * centered at a corner of the front or at its center.
+   *
+   * @param solution the solution, with its objectives already evaluated
+   */
   public void evaluateConstraints(DoubleSolution solution) {
-    double sum2 = 0 ;
-    double maxSum1 = Double.MIN_VALUE ;
-    for (int i = 0; i < solution.objectives().length; i++) {
-      double sum1 = Math.pow(solution.objectives()[i]-1.0, 2.0) - Math.pow(rValue, 2.0) ;
-      for (int j = 0; j < solution.objectives().length; j++) {
-        if (i != j) {
-          sum1 += Math.pow(solution.objectives()[j], 2.0) ;
-        }
-      }
-
-      maxSum1 = Math.max(maxSum1, sum1) ;
-
-      sum2 += Math.pow((solution.objectives()[i] - 1.0/Math.sqrt(solution.objectives().length)), 2.0)  ;
+    double[] f = solution.objectives();
+    int m = f.length;
+    double squaredNorm = 0.0;
+    for (double value : f) {
+      squaredNorm += value * value;
     }
-
-    sum2 -= Math.pow(rValue, 2.0) ;
-
-    solution.constraints()[0] = Math.max(maxSum1, sum2) ;
+    double r2 = rValue * rValue;
+    double cornerSpheres = Double.POSITIVE_INFINITY;
+    double centerSphere = -r2;
+    for (int i = 0; i < m; i++) {
+      double corner = Math.pow(f[i] - 1.0, 2.0) + squaredNorm - f[i] * f[i] - r2;
+      cornerSpheres = Math.min(cornerSpheres, corner);
+      centerSphere += Math.pow(f[i] - 1.0 / Math.sqrt(m), 2.0);
+    }
+    solution.constraints()[0] = -Math.min(cornerSpheres, centerSphere);
   }
 }

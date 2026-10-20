@@ -4,6 +4,13 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/20/2026] Fixed the C-DTLZ problems (Jain and Deb, 2014). Their constraints did not follow the
+  definition: ``C1_DTLZ1`` left out a term and the 0.6 factor, ``C1_DTLZ3`` subtracted its radii
+  once per objective, ``C2_DTLZ2`` took a maximum instead of minus a minimum (almost every point was
+  feasible), and ``C3_DTLZ1`` and ``C3_DTLZ4`` accumulated wrong partial sums. ``ConvexC2_DTLZ2``
+  now evaluates the objectives of convex DTLZ2 (f_i^4 for i < M and f_M^2). They all get default
+  constructors with 3 objectives.
+
 * [10/20/2026] Bounded archives (``CrowdingDistanceArchive``, ``AngleArchive``,
   ``CosineSimilarityArchive``), the replacement of the component-based SMS-EMOA and the replacement
   of the component-based PAES honor constraints. They compared solutions with plain Pareto

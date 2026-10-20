@@ -13,6 +13,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  */
 @SuppressWarnings("serial")
 public class C3_DTLZ1 extends DTLZ1 {
+  /** Creates the problem with 3 objectives, 7 variables and 3 constraints. */
+  public C3_DTLZ1() {
+    this(7, 3, 3);
+  }
+
   /**
    * Constructor
    * @param numberOfVariables
@@ -32,22 +37,19 @@ public class C3_DTLZ1 extends DTLZ1 {
     return solution ;
   }
 
+  /**
+   * Evaluates the constraints c_j(x) = sum_{i != j} f_i + f_j / 0.5 - 1 >= 0, for j = 1..M.
+   *
+   * @param solution the solution, with its objectives already evaluated
+   */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.numberOfConstraints()];
-
-    for (int j = 0; j < numberOfConstraints(); j++) {
-      double sum = 0 ;
-      constraint[j] = 0.0 ;
-      for (int i = 0; i < solution.objectives().length; i++) {
-        if (i != j) {
-          sum += solution.objectives()[j] ;
-        }
-        constraint[j]+= sum + solution.objectives()[i]/0.5 - 1.0 ;
-      }
+    double[] f = solution.objectives();
+    double sum = 0.0;
+    for (double value : f) {
+      sum += value;
     }
-
-    for (int i = 0; i < numberOfConstraints(); i++) {
-      solution.constraints()[i] = constraint[i];
+    for (int j = 0; j < numberOfConstraints(); j++) {
+      solution.constraints()[j] = sum - f[j] + f[j] / 0.5 - 1.0;
     }
   }
 }

@@ -1,7 +1,5 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -15,15 +13,9 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  */
 @SuppressWarnings("serial")
 public class C1_DTLZ3 extends DTLZ3 {
-  private static Map<Integer, Double> rValue;
-
-  static {
-    rValue = new HashMap<Integer, Double>() ;
-    rValue.put(3, 9.0) ;
-    rValue.put(5, 12.5) ;
-    rValue.put(8, 12.5) ;
-    rValue.put(10, 15.0) ;
-    rValue.put(15, 15.0) ;
+  /** Creates the problem with 3 objectives and 12 variables. */
+  public C1_DTLZ3() {
+    this(12, 3);
   }
 
   /**
@@ -37,6 +29,21 @@ public class C1_DTLZ3 extends DTLZ3 {
     numberOfConstraints(1);
   }
 
+  /**
+   * The radius r of the constraint: 9 for 3 objectives, 12.5 for 5 and 8, and 15 for 10 and 15
+   * (Jain and Deb); 6 for 2 objectives, and the next listed value for the others, as PlatEMO.
+   */
+  static double radius(int numberOfObjectives) {
+    if (numberOfObjectives == 2) {
+      return 6.0;
+    } else if (numberOfObjectives <= 3) {
+      return 9.0;
+    } else if (numberOfObjectives <= 8) {
+      return 12.5;
+    }
+    return 15.0;
+  }
+
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     super.evaluate(solution);
@@ -45,15 +52,17 @@ public class C1_DTLZ3 extends DTLZ3 {
     return solution ;
   }
 
+  /**
+   * Evaluates the constraint c(x) = (sum f_i^2 - 16) (sum f_i^2 - r^2) >= 0.
+   *
+   * @param solution the solution, with its objectives already evaluated
+   */
   public void evaluateConstraints(DoubleSolution solution) {
-    double sum1 = 0 ;
-    double sum2 = 0 ;
-    for (int i = 0; i < solution.objectives().length; i++) {
-      double v = Math.pow(solution.objectives()[i], 2) ;
-      sum1 += v - 16.0 ;
-      sum2 += v - Math.pow(rValue.get(solution.objectives().length), 2.0) ;
+    double squaredNorm = 0.0;
+    for (double f : solution.objectives()) {
+      squaredNorm += f * f;
     }
-
-    solution.constraints()[0] = sum1 * sum2 ;
+    double r = radius(solution.objectives().length);
+    solution.constraints()[0] = (squaredNorm - 16.0) * (squaredNorm - r * r);
   }
 }
