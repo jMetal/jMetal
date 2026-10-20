@@ -1,23 +1,27 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.Binh2;
+import org.uma.jmetal.problem.multiobjective.Srinivas;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-@DisplayName("Constrained RVEA-family builder integration")
+@DisplayName("Unit tests for the RVEA-family builders on problems with constraints")
 class ConstrainedRVEABuilderTest {
   private Binh2 problem;
 
@@ -27,7 +31,8 @@ class ConstrainedRVEABuilderTest {
     JMetalRandom.getInstance().setSeed(42);
   }
 
-  private RVEABuilder<DoubleSolution> builder(String variant, int budget) {
+  private static RVEABuilder<DoubleSolution> builder(
+      String variant, Problem<DoubleSolution> problem, int budget) {
     var crossover = new SBXCrossover(1, 20);
     var mutation = new PolynomialMutation(0.5, 20);
     return switch (variant) {
@@ -37,46 +42,102 @@ class ConstrainedRVEABuilderTest {
     };
   }
 
-  @ParameterizedTest
-  @ValueSource(strings = {"RVEA", "IRVEA"})
-  @DisplayName("given Binh2 and a seed, when running twice, then return identical feasible results")
-  void givenBinh2AndSeed_whenRunningTwice_thenReturnIdenticalFeasibleResults(String variant) {
-    // Arrange
-    var first = builder(variant, 2100).build();
+  @Nested
+  @DisplayName("When running RVEA and iRVEA on Binh2")
+  class WhenRunningOnBinh2 {
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = {"RVEA", "IRVEA"})
+    @DisplayName("given a seed, when running twice, then the results are identical and feasible")
+    void givenASeed_whenRunningTwice_thenTheResultsAreIdenticalAndFeasible(String variant) {
+      // Arrange: iRVEA draws its adaptive vectors when it is built, so each run rebuilds it
+      var first = builder(variant, problem, 2100).build();
 
-    // Act
-    first.run();
-    JMetalRandom.getInstance().setSeed(42);
-    var second = builder(variant, 2100).build();
-    second.run();
+      // Act
+      first.run();
+      JMetalRandom.getInstance().setSeed(42);
+      var second = builder(variant, problem, 2100).build();
+      second.run();
 
-    // Assert
-    assertEquals(2, problem.numberOfConstraints());
-    assertEquals(2100, first.numberOfEvaluations());
-    assertFalse(first.result().isEmpty());
-    assertEquals(first.result().size(), second.result().size());
-    for (int i = 0; i < first.result().size(); i++) {
-      var solution = first.result().get(i);
-      assertTrue(ConstraintHandling.isFeasible(solution));
-      assertTrue(Arrays.stream(solution.objectives()).allMatch(Double::isFinite));
-      assertEquals(solution.variables(), second.result().get(i).variables());
-      assertArrayEquals(solution.objectives(), second.result().get(i).objectives());
+      // Assert
+      assertThat(first.numberOfEvaluations()).isEqualTo(2100);
+      assertThat(first.result())
+          .isNotEmpty()
+          .allMatch(ConstraintHandling::isFeasible)
+          .allMatch(solution -> Arrays.stream(solution.objectives()).allMatch(Double::isFinite));
+      assertThat(first.result()).hasSameSizeAs(second.result());
+      for (int i = 0; i < first.result().size(); i++) {
+        var solution = first.result().get(i);
+        var other = second.result().get(i);
+        assertThat(solution.variables()).isEqualTo(other.variables());
+        assertThat(solution.objectives()).containsExactly(other.objectives());
+      }
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = {"RVEA", "IRVEA"})
+    @DisplayName(
+        "given a budget that is not a multiple of the batch size, when running, then the last"
+            + " batch overshoots it")
+    void givenANonMultipleBudget_whenRunning_thenTheLastBatchOvershootsIt(String variant) {
+      // Arrange
+      var algorithm = builder(variant, problem, 100).build();
+
+      // Act
+      algorithm.run();
+
+      // Assert: changing the termination of the RVEA family is outside the constraint handling
+      assertThat(algorithm.numberOfEvaluations()).isEqualTo(105);
     }
   }
 
-  @ParameterizedTest
-  @ValueSource(strings = {"RVEA", "IRVEA"})
-  @DisplayName(
-      "given a nonmultiple budget, when using default batches, then retain documented overshoot")
-  void givenNonmultipleBudget_whenUsingDefaultBatches_thenRetainDocumentedOvershoot(
-      String variant) {
-    // Arrange
-    var algorithm = builder(variant, 100).build();
+  @Nested
+  @DisplayName("When running RVEA on a problem whose population keeps infeasible solutions")
+  class WhenThePopulationKeepsInfeasibleSolutions {
+    @Test
+    @DisplayName(
+        "given Srinivas, when running, then the result is the feasible non-dominated solutions of"
+            + " the population")
+    void givenSrinivas_whenRunning_thenTheResultIsTheFeasibleNonDominatedSolutions() {
+      // Arrange
+      var algorithm = builder("RVEA", new Srinivas(), 4200).build();
+      var dominance = new DefaultDominanceComparator<DoubleSolution>();
 
-    // Act
-    algorithm.run();
+      // Act
+      algorithm.run();
+      var result = algorithm.result();
 
-    // Assert: changing upstream termination/batching is outside the constraint-layer scope.
-    assertEquals(105, algorithm.numberOfEvaluations());
+      // Assert
+      assertThat(algorithm.population())
+          .anyMatch(solution -> !ConstraintHandling.isFeasible(solution));
+      assertThat(result)
+          .isNotEmpty()
+          .allMatch(ConstraintHandling::isFeasible)
+          .allMatch(solution -> algorithm.population().contains(solution));
+      for (var solution : result) {
+        assertThat(result).noneMatch(other -> dominance.compare(other, solution) < 0);
+      }
+    }
+  }
+
+  @Nested
+  @DisplayName("When building RVEA* for a problem with constraints")
+  class WhenBuildingRVEAStar {
+    @Test
+    @DisplayName("given Binh2, when building RVEA*, then the problem is rejected")
+    void givenBinh2_whenBuildingRVEAStar_thenTheProblemIsRejected() {
+      // Arrange
+      var crossover = new SBXCrossover(1, 20);
+      var mutation = new PolynomialMutation(0.5, 20);
+
+      // Act
+      Throwable thrown =
+          catchThrowable(
+              () -> new RVEAStarBuilder<>(problem, 21, 2100, crossover, mutation, 2, 0.1, 20));
+
+      // Assert
+      assertThat(thrown)
+          .isInstanceOf(InvalidConditionException.class)
+          .hasMessageContaining("RVEA* requires an unconstrained problem");
+    }
   }
 }
