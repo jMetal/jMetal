@@ -33,22 +33,19 @@ public class C3_DTLZ4 extends DTLZ4 {
     return solution ;
   }
 
+  /**
+   * Evaluates the constraints c_j(x) = f_j^2 / 4 + sum_{i != j} f_i^2 - 1 >= 0, for j = 1..M.
+   *
+   * @param solution the solution, with its objectives already evaluated
+   */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.numberOfConstraints()];
-
-    for (int j = 0; j < numberOfConstraints(); j++) {
-      double sum = 0;
-      constraint[j] = Math.pow(solution.objectives()[j], 2.0) / 4.0 - 1.0;
-      for (int i = 0; i < solution.objectives().length; i++) {
-        if (i != j) {
-          sum += Math.pow(solution.objectives()[j], 2.0);
-        }
-        constraint[j] += sum;
-      }
+    double[] f = solution.objectives();
+    double squaredNorm = 0.0;
+    for (double value : f) {
+      squaredNorm += value * value;
     }
-
-    for (int i = 0; i < numberOfConstraints(); i++) {
-      solution.constraints()[i] = constraint[i];
+    for (int j = 0; j < numberOfConstraints(); j++) {
+      solution.constraints()[j] = f[j] * f[j] / 4.0 + squaredNorm - f[j] * f[j] - 1.0;
     }
   }
 }

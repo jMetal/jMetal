@@ -32,12 +32,18 @@ public class C1_DTLZ1 extends DTLZ1 {
     return solution ;
   }
 
+  /**
+   * Evaluates the constraint c(x) = 1 - f_M / 0.6 - sum_{i < M} f_i / 0.5 >= 0.
+   *
+   * @param solution the solution, with its objectives already evaluated
+   */
   public void evaluateConstraints(DoubleSolution solution) {
-    double sum = 0 ;
-    for (int i = 0; i < solution.objectives().length - 2; i++) {
-      sum += solution.objectives()[i] / 0.5 ;
+    double[] f = solution.objectives();
+    int m = f.length;
+    double sum = 0.0;
+    for (int i = 0; i < m - 1; i++) {
+      sum += f[i] / 0.5;
     }
-
-    solution.constraints()[0] = 1.0 - solution.objectives()[(solution.objectives().length-1)] - sum ;
+    solution.constraints()[0] = 1.0 - f[m - 1] / 0.6 - sum;
   }
 }
