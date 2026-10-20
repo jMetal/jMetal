@@ -7,6 +7,7 @@ import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Class representing the constrained function CF9: C-type constraint + r=0 + Mixed PF + Ackley
@@ -34,6 +35,15 @@ public class CF9 extends AbstractDoubleProblem {
    * @param numberOfObjectives Number of objective functions
    */
   public CF9(Integer numberOfVariables, Integer numberOfObjectives) {
+    Check.that(
+        numberOfVariables > numberOfObjectives,
+        () ->
+            "CF9 needs more variables ("
+                + numberOfVariables
+                + ") than objectives ("
+                + numberOfObjectives
+                + "): its distance function averages over the variables after the first "
+                + numberOfObjectives);
     numberOfObjectives(numberOfObjectives);
     name("CF9");
 
