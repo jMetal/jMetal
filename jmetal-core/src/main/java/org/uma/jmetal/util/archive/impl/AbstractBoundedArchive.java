@@ -5,7 +5,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 
 /**
  * @author Antonio J. Nebro
@@ -20,8 +20,15 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
     this.archive = new NonDominatedSolutionListArchive<>(dominanceComparator);
   }
 
+  /**
+   * Creates the archive with Deb's constrained-domination principle, as {@link
+   * NonDominatedSolutionListArchive} does by default, so that an infeasible solution never replaces
+   * a feasible one; on problems without constraints it is plain Pareto dominance.
+   *
+   * @param maxSize the maximum number of solutions of the archive
+   */
   protected AbstractBoundedArchive(int maxSize) {
-    this(maxSize, new DefaultDominanceComparator<>()) ;
+    this(maxSize, new DominanceWithConstraintsComparator<>()) ;
   }
 
   @Override

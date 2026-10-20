@@ -18,7 +18,8 @@ import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
  *
  * <p>The replacement keeps the current front structure across generations when the configured
  * ranking supports standard non-dominated fronts, inserts a single offspring incrementally, and
- * computes hypervolume contributions only on the worst front.
+ * computes hypervolume contributions only on the worst front. On problems with constraints it ranks
+ * the whole population with the ranking instead, so that the ranking's comparator is honored.
  *
  * @param <S> Solution type
  */
@@ -84,12 +85,21 @@ public class SMSEMOAReplacement<S extends Solution<?>> implements Replacement<S>
       return replaceWithFullRanking(currentPopulation, offspring);
     }
 
-    if (!incrementalRankingSupported) {
+    if (!incrementalRankingSupported || usesConstraints(offspring)) {
       return replaceWithFullRanking(currentPopulation, offspring);
     }
 
     ensureCacheMatches(currentPopulation);
     return replaceIncrementally(offspring);
+  }
+
+  /**
+   * The incremental update compares objective vectors with plain Pareto dominance, which agrees
+   * with the ranking only without constraints; with them, the ranking's comparator (e.g. Deb's
+   * constrained-domination principle) has to decide, so the population is ranked in full.
+   */
+  boolean usesConstraints(S solution) {
+    return solution.constraints().length > 0;
   }
 
   boolean usesSpecializedExact3DPath(int numberOfObjectives) {
