@@ -1,81 +1,106 @@
 .. _constrained-rvea:
 
-Constraint support for the RVEA family
-====================================
+Constraint handling in the RVEA family
+======================================
 
-jMetal's constrained-problem support for RVEA, RVEA*, and iRVEA uses a shared
-feasibility-first layer. This is an implementation extension, not a claim that
-the original publications proposed this constraint-handling mechanism. The
-objective-space algorithms are described in :ref:`rvea-variants`.
+The three variants of the RVEA family treat constraints differently:
 
-Canonical jMetal semantics
--------------------------
+* **RVEA** handles them as **C-RVEA**, the constraint-handling technique that
+  Cheng et al. propose in the paper of RVEA (Section VII, Algorithm 5), which is
+  also the one of the RVEA of PlatEMO.
+* **RVEA*** does not handle them: ``RVEAStarBuilder`` rejects problems with
+  constraints.
+* **iRVEA** uses a feasibility-first layer of jMetal. PlatEMO has no iRVEA, and
+  this layer is not published, so it may change.
+
+Without constraints, or when every candidate is feasible, the three variants
+behave as described in :ref:`rvea-variants`.
+
+Constraint violation
+--------------------
 
 A negative constraint value represents a violation; zero and positive values
 satisfy a constraint. ``ConstraintHandling.isFeasible`` tests whether
-``numberOfViolatedConstraints`` is zero. Overall constraint violation is the
-sum of negative constraint values: -1 is better than -5. Positive slack cannot
-cancel a violation. Both canonical functions honor their precomputed attributes;
-evaluators that use these caches must keep them consistent when reevaluating.
-Constraints and objectives must be finite.
+``numberOfViolatedConstraints`` is zero, and the overall constraint violation is
+the sum of the negative constraint values, so -1 is better than -5. This is
+equation (13) of the paper of RVEA with the opposite sign. Both functions honor
+their precomputed attributes; evaluators that use these caches must keep them
+consistent when reevaluating. Constraints and objectives must be finite.
 
-``OverallConstraintViolationDegreeComparator`` orders infeasible fallback
-solutions. A stable sort retains candidate encounter order for equal violations,
-without objective tie-breakers or random draws. Replacement supplies parents
-before offspring, so equal violations retain that order.
+RVEA: C-RVEA
+------------
 
-Selection and variable population size
--------------------------------------
+``RVEAEnvironmentalSelection`` associates every candidate with its nearest
+reference vector and, in each niche:
 
-``RVEAEnvironmentalSelection.execute`` partitions candidates before invoking any
-variant-specific selection or state update. If every candidate is feasible, it
-passes the original list through the original select/adapt/afterSelection/finish
-pipeline in its original order. No constraint value changes APD or any objective.
+* if the niche has feasible candidates, the one with the lowest APD survives;
+* otherwise, the one with the lowest overall constraint violation survives.
 
-For mixed populations, that same pipeline operates on the feasible subsequence.
-This includes RVEA* regeneration and final truncation, and iRVEA vector replacement,
-regional protection, Pareto/strengthened dominance, epsilon selection and archive
-updates. Infeasible solutions are appended **after** the pipeline; they never
-enter its geometry or archives.
+The translation of the objectives and the association to the vectors use every
+candidate, feasible or not. Ties keep the first candidate, and empty niches
+contribute no survivor. Hence the population has at most N solutions, and
+during the search it mixes feasible solutions with the infeasible ones that keep
+the niches without feasible solutions.
 
-The extension does not fill every run back to the nominal vector count. Its
-explicit fallback rule is:
+The result of the algorithm is not the final population but its non-dominated
+solutions according to the constrained-domination principle, computed with a
+``NonDominatedSolutionListArchive``:
 
-* Let ``F`` be the number of feasible input candidates and ``Q`` the number of
-  survivors returned by the original feasible pipeline.
-* Let ``U`` be the variant's current upper bound: N for RVEA and iRVEA; 2N for
-  RVEA* until final truncation, then N.
-* When ``F < U``, count occupied niches of the translated **joint input** against
-  the current selection vectors, before vector updates. Use predefined vectors
-  for RVEA and both sets for RVEA*/iRVEA. Cap this count at U to obtain ``C``.
-  This read-only calculation uses the existing geometry and no RNG draws.
-* Append at most ``max(0, C - max(F, Q))`` infeasible candidates in violation order.
-  When ``F >= U``, append none.
+* the feasible non-dominated solutions, which is what PlatEMO returns as the best
+  solutions of a population;
+* if no solution is feasible, the least violating ones (PlatEMO returns no
+  solution in this case).
 
-Counting F as well as Q prevents infeasible fallback from replacing feasible
-candidates that the original algorithm discarded. Empty niches and feasible
-selection shrinkage remain unfilled. The joint-input occupancy count bounds
-fallback cardinality only: infeasible objectives do not rank fallback solutions
-or update the ideal point, reference vectors, or archive used for feasible selection.
-This occupancy-based fallback is an explicit jMetal constraint-support choice,
-not part of the unconstrained publications.
+The result is usually much smaller than N: in the integration tests below, it
+has from 13 to 24 solutions out of 100. To collect more solutions, evaluate the
+offspring with an external archive, as explained in :ref:`constraints`.
 
-If no current input is feasible, the generation index advances once, but no
-objective-space update runs. Vectors remain unchanged. iRVEA reuses copies from
-its feasible archive if available, without updating it; the other variants have
-no historical survivor archive. Any remaining occupied capacity uses violation
-fallback. With an initially empty archive and identical infeasible objectives,
-one occupied niche retains the least-violating candidate, rather than N copies.
+RVEA*: no constraint handling
+-----------------------------
 
-The extension does not guarantee discovery of a feasible solution for an
-arbitrary constrained problem. Constraint support adds no repair, penalty,
-violation objective, custom mating rule, or convergence claim.
+The paper of RVEA describes RVEA* (Section VI) and C-RVEA (Section VII)
+separately and does not define a constrained RVEA*. The RVEA* of jMetal, as the
+RVEAa of PlatEMO, keeps the non-dominated candidates before the APD selection.
+Combining that filter with C-RVEA, as PlatEMO does, lets infeasible solutions
+with better objectives remove every feasible one: on Golinski, Tanaka and
+Osyczka2 no feasible solution survived, and on Tanaka the population collapsed
+to a single infeasible solution. ``RVEAStarBuilder`` therefore rejects problems
+with constraints.
+
+iRVEA: feasibility-first layer
+------------------------------
+
+``IRVEAEnvironmentalSelection`` partitions the candidates before any selection
+or state update. If every candidate is feasible, the original selection runs on
+them. Otherwise, it runs on the feasible candidates (vector replacement, regional
+protection, Pareto/strengthened dominance, epsilon selection and archive
+updates), and infeasible candidates are appended **after** it; they never enter
+its geometry or archive:
+
+* Let ``F`` be the number of feasible candidates and ``Q`` the number of
+  survivors of the selection on them.
+* When ``F < N``, count the niches of both vector sets occupied by **all** the
+  candidates, before the vectors change and without random draws, and cap the
+  count at N to obtain ``C``. When ``F >= N``, ``C`` is 0.
+* Append at most ``max(0, C - max(F, Q))`` infeasible candidates, ordered by
+  their overall constraint violation with a stable sort.
+
+Counting F as well as Q prevents infeasible candidates from replacing feasible
+ones that the selection discarded. If no candidate is feasible, the generation
+index advances but the vectors do not change, and copies of the archive survive,
+followed by the least violating candidates.
+
+``constraintStatistics()`` exposes cumulative counters of this layer: candidate
+visits (which include revisited parents and are **not** evaluation counts),
+feasible and infeasible visits, selections with infeasible candidates,
+comparisons of violations, and appended infeasible survivors.
 
 API and example
 ---------------
 
-All three builders automatically accept constrained and unconstrained problems;
-existing constructors and setters remain source-compatible. For example:
+``RVEABuilder`` and ``IRVEABuilder`` accept problems with and without
+constraints; ``RVEAStarBuilder`` only accepts problems without them. For
+example:
 
 .. code-block:: java
 
@@ -85,34 +110,42 @@ existing constructors and setters remain source-compatible. For example:
       new SBXCrossover(1.0, 20.0), new PolynomialMutation(0.5, 20.0),
       2.0, 0.1, 20).build();
   algorithm.run();
-  var feasible = algorithm.result().stream()
-      .filter(ConstraintHandling::isFeasible).toList();
+  var result = algorithm.result(); // The feasible non-dominated solutions.
 
-``ConstrainedRVEAExample`` prints this small run and writes no result files.
-``RVEAStarBuilder`` and ``IRVEABuilder`` use the same automatic policy. Set the
-seed before construction, particularly for the initial adaptive vector set;
-use separate JVMs to isolate concurrent runs with the default shared RNG.
+``ConstrainedRVEAExample`` prints this small run and writes no result files. Set
+the seed before construction, particularly for the initial adaptive vector set of
+iRVEA; use separate JVMs to isolate concurrent runs with the default shared RNG.
 
-``constraintStatistics()`` on the environmental selector exposes cumulative
-candidate visits, feasible/infeasible visits, selections affected by infeasible
-input, fallback comparator calls, and appended infeasible survivors. Candidate
-visits include revisited parents and are **not** objective-evaluation counts.
+The default budget is a threshold checked between complete batches: the initial
+population counts, and the last batch may overshoot. Applications requiring an
+exact evaluation budget must shorten their final batch explicitly.
 
-The upstream default budget remains a threshold checked between complete batches:
-initialization counts, and the last batch may overshoot. Constraint support does
-not change this behavior. Applications requiring an exact evaluation budget must
-explicitly shorten their final batch and maintain the configured generation horizon.
+Tests
+-----
 
-Regression evidence
--------------------
+* ``RveaNicheConstraintSelectionTest`` checks the per-niche rule of C-RVEA,
+  including the cases where it differs from a global feasibility-first
+  selection.
+* ``ConstrainedRVEABuilderTest`` checks that RVEA returns the feasible
+  non-dominated solutions of a population that keeps infeasible ones, and that
+  ``RVEAStarBuilder`` rejects problems with constraints.
+* ``ConstrainedRVEABuilderIT`` (an integration test) runs RVEA on Srinivas,
+  ConstrEx, Golinski, Tanaka and Osyczka2, and checks that the result is feasible
+  and that its hypervolume, relative to that of the reference front, reaches a
+  threshold.
+* ``RveaFeasibleEquivalenceTest`` evolves 24 generations of deterministic
+  candidates for the three variants, 2/3/4/7 objectives and three objective
+  geometries, and checks that candidates with three satisfied constraints produce
+  the same states (survivors, vectors and iRVEA archive) as the same candidates
+  without constraints. For iRVEA, it also checks that an infeasible ideal point
+  added in every generation leaves the feasible states unchanged. Both runs of
+  each comparison are computed in the same JVM, so the test does not depend on
+  platform-specific floating-point results.
+* ``RveaConstraintSelectionTest`` checks the feasibility-first layer of iRVEA.
 
-The frozen ``rvea/unconstrained-438afd3.csv`` test oracle was captured from upstream
-commit ``438afd302d951f3f5e2c645ed5a688e4731682ea`` before modifying selection. It
-contains 72 trajectories of 24 generations across all three variants, 2/3/4/7
-objectives, three objective geometries, and two seeds. State signatures include
-survivor identities, counts and objective bits; predefined and adaptive vectors;
-the iRVEA archive; and the final RNG state probe. Tests compare both unconstrained
-inputs and inputs exposing three satisfied constraints to this fixed oracle.
-Additional mixed-input tests inject an infeasible objective-space ideal and
-check the same feasible geometry and archive signatures across all generations.
-The oracle is never regenerated by a normal test run.
+Reference
+---------
+
+R. Cheng, Y. Jin, M. Olhofer and B. Sendhoff, "A Reference Vector Guided
+Evolutionary Algorithm for Many-Objective Optimization", *IEEE Transactions on
+Evolutionary Computation*, 20(5):773-791, 2016, doi:10.1109/TEVC.2016.2519378.

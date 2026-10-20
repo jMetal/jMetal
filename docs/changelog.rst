@@ -4,6 +4,16 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/20/2026] ``RVEABuilder`` and ``IRVEABuilder`` accept problems with constraints, which they
+  rejected. RVEA handles them as C-RVEA, the technique of the paper of RVEA (Cheng et al., 2016,
+  Section VII) that PlatEMO also implements: in each niche, the feasible solution with the lowest
+  APD survives or, if there is none, the least violating one. Its result is the set of feasible
+  non-dominated solutions of the final population. iRVEA, which PlatEMO does not include, uses a
+  feasibility-first layer of jMetal. ``RVEAStarBuilder`` still rejects problems with constraints,
+  because C-RVEA combined with the non-dominated filter of RVEA* lets infeasible solutions remove
+  every feasible one (see the `documentation
+  <https://jmetal.readthedocs.io/en/latest/constrained-rvea.html>`_).
+
 * [10/20/2026] Fixed ``LIRCMOP14``: it declared three constraints and computed the third one, the
   ring between radii 1.6 and 1.75, but did not store it, so that constraint was never violated.
 
