@@ -6,6 +6,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.evaluator.EvaluationCheck;
 
 /**
  * Class that evaluates a list of solutions using threads.
@@ -41,7 +42,12 @@ public class MultiThreadedEvaluationWithArchive<S extends Solution<?>> implement
   @Override
   public List<S> evaluate(List<S> solutionList) {
     Check.notNull(solutionList);
-    solutionList.parallelStream().forEach(problem::evaluate);
+    solutionList.parallelStream()
+        .forEach(
+            solution -> {
+              problem.evaluate(solution);
+              EvaluationCheck.noNaNValues(solution, problem);
+            });
     computedEvaluations = solutionList.size();
 
     solutionList.forEach(solution -> archive.add((S)solution.copy()));

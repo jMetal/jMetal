@@ -3,6 +3,7 @@ package org.uma.jmetal.util.evaluator.impl;
 import java.util.List;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.evaluator.EvaluationCheck;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 /**
@@ -13,7 +14,11 @@ public class SequentialSolutionListEvaluator<S> implements SolutionListEvaluator
 
   @Override
   public List<S> evaluate(List<S> solutionList, Problem<S> problem) throws JMetalException {
-    solutionList.forEach(problem::evaluate);
+    solutionList.forEach(
+        solution -> {
+          problem.evaluate(solution);
+          EvaluationCheck.noNaNValues(solution, problem);
+        });
 
     return solutionList;
   }
