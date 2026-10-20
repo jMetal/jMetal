@@ -8,6 +8,7 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCrea
 import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RVEAReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea.IRVEAEnvironmentalSelection;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea.RVEAEnvironmentalSelection;
@@ -20,17 +21,22 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
 /**
- * Builds component-based RVEA algorithms for minimization with automatic constraint handling.
+ * Builds component-based RVEA algorithms for minimization.
  *
  * <p>The initial population and each offspring batch contain N solutions, where N is the number of
  * predefined vectors. Survivor populations can vary in size. Termination must be by evaluations to
  * define the APD schedule; the final offspring batch may exceed the budget by fewer than N
  * evaluations. Each call to {@link #build()} creates fresh vector and archive state.
+ *
+ * <p>On problems with constraints, RVEA selects as C-RVEA (Cheng et al., 2016, Section VII), and
+ * its result is the set of feasible non-dominated solutions of the final population or, if no
+ * solution is feasible, the least violating ones.
  *
  * @param <S> solution type
  */
@@ -216,13 +222,45 @@ public class RVEABuilder<S extends Solution<?>> {
         };
     Selection<S> matingSelection =
         customSelection ? selection : new RandomSelection<>(variation.matingPoolSize());
+    var replacement = new RVEAReplacement<>(environmentalSelection);
+    if (variant == Variant.RVEA && problem.numberOfConstraints() > 0) {
+      return new ConstrainedRVEAAlgorithm<>(
+          name,
+          validatedCreation,
+          evaluation,
+          termination,
+          matingSelection,
+          variation,
+          replacement);
+    }
     return new EvolutionaryAlgorithm<>(
-        name,
-        validatedCreation,
-        evaluation,
-        termination,
-        matingSelection,
-        variation,
-        new RVEAReplacement<>(environmentalSelection));
+        name, validatedCreation, evaluation, termination, matingSelection, variation, replacement);
+  }
+
+  /**
+   * Extends {@link EvolutionaryAlgorithm} to return, instead of the population, which keeps
+   * infeasible solutions in the niches without feasible ones, its non-dominated solutions according
+   * to the constrained-domination principle: the feasible non-dominated ones or, if no solution is
+   * feasible, the least violating ones.
+   */
+  private static class ConstrainedRVEAAlgorithm<S extends Solution<?>>
+      extends EvolutionaryAlgorithm<S> {
+    ConstrainedRVEAAlgorithm(
+        String name,
+        SolutionsCreation<S> createInitialPopulation,
+        Evaluation<S> evaluation,
+        Termination termination,
+        Selection<S> selection,
+        Variation<S> variation,
+        Replacement<S> replacement) {
+      super(
+          name, createInitialPopulation, evaluation, termination, selection, variation,
+          replacement);
+    }
+
+    @Override
+    public List<S> result() {
+      return new NonDominatedSolutionListArchive<S>().addAll(population()).solutions();
+    }
   }
 }
