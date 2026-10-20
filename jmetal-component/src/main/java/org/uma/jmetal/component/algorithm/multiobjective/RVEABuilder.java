@@ -25,7 +25,7 @@ import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
 
 /**
- * Builds component-based RVEA algorithms for unconstrained minimization.
+ * Builds component-based RVEA algorithms for minimization with automatic constraint handling.
  *
  * <p>The initial population and each offspring batch contain N solutions, where N is the number of
  * predefined vectors. Survivor populations can vary in size. Termination must be by evaluations to
@@ -109,7 +109,6 @@ public class RVEABuilder<S extends Solution<?>> {
     Check.notNull(problem);
     Check.notNull(crossover);
     Check.notNull(mutation);
-    Check.that(problem.numberOfConstraints() == 0, "RVEA requires an unconstrained problem");
     Check.valueIsPositive(populationSize, "populationSize");
     Check.valueIsPositive(maxEvaluations, "maxEvaluations");
     Check.valueIsNotNegative(alpha, "alpha");
