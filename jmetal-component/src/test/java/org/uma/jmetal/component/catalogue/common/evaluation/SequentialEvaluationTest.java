@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
@@ -55,7 +56,7 @@ class SequentialEvaluationTest {
     DoubleProblem problem = mock(DoubleProblem.class) ;
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
 
-    evaluation.evaluate(List.of(mock(DoubleSolution.class))) ;
+    evaluation.evaluate(List.of(new FakeDoubleProblem().createSolution())) ;
 
     assertThat(evaluation.computedEvaluations()).isEqualTo(1) ;
     verify(problem, times(1)).evaluate(Mockito.any()) ;
@@ -68,7 +69,7 @@ class SequentialEvaluationTest {
 
     int numberOfSolutions = 10 ;
     List<DoubleSolution> solutions = new ArrayList<>(numberOfSolutions) ;
-    IntStream.range(0,numberOfSolutions).forEach(i -> solutions.add(mock(DoubleSolution.class))) ;
+    IntStream.range(0,numberOfSolutions).forEach(i -> solutions.add(new FakeDoubleProblem().createSolution())) ;
 
     evaluation.evaluate(solutions) ;
 
