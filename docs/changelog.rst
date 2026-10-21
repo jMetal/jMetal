@@ -34,6 +34,16 @@ only includes the latest entries.
 * [10/20/2026] Fixed ``LIRCMOP14``: it declared three constraints and computed the third one, the
   ring between radii 1.6 and 1.75, but did not store it, so that constraint was never violated.
 
+* [10/20/2026] The evaluators reject a solution that a problem evaluates to NaN (an objective, a
+  constraint or a precomputed overall constraint violation degree) with an
+  ``InvalidConditionException`` that names the problem. A NaN has no order: Pareto dominance ignored
+  a NaN objective, so such solutions were never dominated, their crowding distance was NaN, and a
+  NaN constraint counted as satisfied. Algorithms kept them silently (they filled the population of
+  NSGA-II, for instance) or failed later with unrelated exceptions (NSGA-III). The check is in
+  ``EvaluationCheck`` and is called by ``SequentialSolutionListEvaluator``,
+  ``MultiThreadedSolutionListEvaluator`` and the ``Evaluation`` components of ``jmetal-component``.
+  Infinite values are still accepted.
+
 * [10/20/2026] Each C-DTLZ problem has its own name. They inherited that of the DTLZ problem they
   extend (``C1_DTLZ1`` was named ``DTLZ1``), so jMetal's experiments, which name output directories
   and look up reference fronts by problem name, mixed them up with the DTLZ problems.
