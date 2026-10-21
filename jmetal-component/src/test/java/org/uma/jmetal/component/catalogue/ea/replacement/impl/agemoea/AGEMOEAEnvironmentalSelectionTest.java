@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.catalogue.ea.replacement.impl.agemoea;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,95 @@ class AGEMOEAEnvironmentalSelectionTest {
     assertEquals(
         -1,
         new SurvivalScoreComparator<DoubleSolution>().compare(population.get(4), population.get(3)));
+  }
+
+  @Test
+  void theExtremePointsAndTheHyperplaneAreThoseOfTheFrontTranslatedToItsIdealPoint() {
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
+    List<DoubleSolution> front =
+        List.of(
+            solutionWithObjectives(problem, 2.0, -10.0),
+            solutionWithObjectives(problem, 5.0, -20.0),
+            solutionWithObjectives(problem, 10.0, -30.0),
+            solutionWithObjectives(problem, 20.0, -35.0));
+    AGEMOEAEnvironmentalSelection<DoubleSolution> environmentalSelection =
+        new AGEMOEAEnvironmentalSelection<>(2);
+
+    List<DoubleSolution> extremes = environmentalSelection.findExtremes(front);
+    List<Double> intercepts = environmentalSelection.constructHyperplane(front, extremes);
+
+    // Translated by the ideal point (2, -35), the front goes from (0, 25) to (18, 0); without the
+    // translation (2, -10) was the extreme point of both axes
+    assertEquals(List.of(front.get(3), front.get(0)), extremes);
+    assertEquals(18.0, intercepts.get(0), 1e-12);
+    assertEquals(25.0, intercepts.get(1), 1e-12);
+  }
+
+  @Test
+  void executeScoresAFrontWithANegativeObjective() {
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
+    List<DoubleSolution> front =
+        List.of(
+            solutionWithObjectives(problem, 2.0, -10.0),
+            solutionWithObjectives(problem, 5.0, -20.0),
+            solutionWithObjectives(problem, 10.0, -30.0),
+            solutionWithObjectives(problem, 20.0, -35.0));
+
+    new AGEMOEAEnvironmentalSelection<DoubleSolution>(2).execute(front, 4);
+
+    String score = AGEMOEAEnvironmentalSelection.getAttributeId();
+    assertTrue(Double.isInfinite((double) front.get(0).attributes().get(score)));
+    assertTrue(Double.isInfinite((double) front.get(3).attributes().get(score)));
+    for (DoubleSolution solution : front.subList(1, 3)) {
+      double value = (double) solution.attributes().get(score);
+      assertTrue(Double.isFinite(value) && value > 0.0, String.valueOf(value));
+    }
+  }
+
+  @Test
+  void constructHyperplaneFallsBackToTheMaximaWhenTheExtremePointsCoincide() {
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
+    List<DoubleSolution> front =
+        List.of(
+            solutionWithObjectives(problem, 1.0, 3.0),
+            solutionWithObjectives(problem, 2.0, 2.0),
+            solutionWithObjectives(problem, 4.0, 1.0));
+
+    List<Double> intercepts =
+        new AGEMOEAEnvironmentalSelection<DoubleSolution>(2)
+            .constructHyperplane(front, List.of(front.get(1), front.get(1)));
+
+    // The maxima of the front translated by its ideal point (1, 1)
+    assertEquals(List.of(3.0, 2.0), intercepts);
+  }
+
+  @Test
+  void constructHyperplaneFallsBackToTheMaximaWhenAnInterceptIsNegative() {
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
+    List<DoubleSolution> front =
+        List.of(
+            solutionWithObjectives(problem, 1.0, 0.0),
+            solutionWithObjectives(problem, 2.0, 0.5),
+            solutionWithObjectives(problem, 0.0, 1.0));
+
+    // The line through (1, 0) and (2, 0.5) cuts the second axis at -2
+    List<Double> intercepts =
+        new AGEMOEAEnvironmentalSelection<DoubleSolution>(2)
+            .constructHyperplane(front, List.of(front.get(0), front.get(1)));
+
+    assertEquals(List.of(2.0, 1.0), intercepts);
+  }
+
+  @Test
+  void computeGeometryWithoutACentralPointAssumesAFlatFront() {
+    TestEnvironmentalSelection environmentalSelection = new TestEnvironmentalSelection(2);
+
+    double p =
+        environmentalSelection.geometry(
+            List.of(new double[] {1.0, 0.0}, new double[] {0.0, 1.0}), List.of(0, 1));
+
+    assertEquals(1.0, p);
+    assertFalse(Double.isNaN(p));
   }
 
   @Test
@@ -123,6 +214,10 @@ class AGEMOEAEnvironmentalSelectionTest {
 
     void assignConvergenceScores(List<DoubleSolution> front) {
       assignConvergenceScore(front);
+    }
+
+    double geometry(List<double[]> normalizedFront, List<Integer> extremePoints) {
+      return computeGeometry(normalizedFront, extremePoints);
     }
   }
 }

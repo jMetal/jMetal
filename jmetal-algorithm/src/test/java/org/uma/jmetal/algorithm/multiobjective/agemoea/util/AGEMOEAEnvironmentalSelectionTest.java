@@ -236,6 +236,24 @@ public class AGEMOEAEnvironmentalSelectionTest {
         assertTrue(selected.contains(population.get(6)));
     }
 
+    @Test
+    public void testExecuteScoresAFrontWithANegativeObjective() {
+        FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
+        List<DoubleSolution> front = List.of(
+            solutionWithObjectives(problem, 2.0, -10.0),
+            solutionWithObjectives(problem, 5.0, -20.0),
+            solutionWithObjectives(problem, 10.0, -30.0),
+            solutionWithObjectives(problem, 20.0, -35.0));
+
+        new AGEMOEAEnvironmentalSelection<DoubleSolution>(2).execute(front, 4);
+
+        for (DoubleSolution solution : front.subList(1, 3)) {
+            double value =
+                (double) solution.attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId());
+            assertTrue(Double.isFinite(value) && value > 0.0, String.valueOf(value));
+        }
+    }
+
     private DoubleSolution solutionWithObjectives(
         FakeDoubleProblem problem, double firstObjective, double secondObjective) {
         DoubleSolution solution = problem.createSolution();
