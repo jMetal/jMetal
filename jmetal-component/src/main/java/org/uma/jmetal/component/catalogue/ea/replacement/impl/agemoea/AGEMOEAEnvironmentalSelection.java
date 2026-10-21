@@ -215,7 +215,10 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
 
     /**
      * This method assigns only the convergence/proximity score to solution in the non-dominated front.
-     * This score is assigned to non-dominated fronts with ranking index > 0
+     * This score is assigned to non-dominated fronts with ranking index > 0: the inverse of the
+     * Minkowski distance (of order P) of the normalized solution to the ideal point, so that the
+     * solutions closer to the ideal point have higher scores (Panichella, GECCO 2019, and the
+     * authors' code in PlatEMO)
      * @param front
      */
     protected void assignConvergenceScore(List<S> front){
@@ -226,8 +229,8 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
                 if (intercepts != null && !intercepts.isEmpty())
                     normalizedObjective[i] = normalizedObjective[i] / intercepts.get(i);
             }
-            double value =  this.minkowskiDistance(normalizedObjective, idealPoint, P);
-            solution.attributes().put(attributeId, value);
+            double distance = this.minkowskiDistance(normalizedObjective, idealPoint, P);
+            solution.attributes().put(attributeId, distance > 0.0 ? 1.0 / distance : Double.POSITIVE_INFINITY);
         }
     }
 
