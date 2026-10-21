@@ -15,7 +15,9 @@ only includes the latest entries.
   reduces to [0, 1]^n by scaling some variables (in MW6 by 1.0999, so that the end (1.1, 0) of the
   front is out of reach, and in MW11 without scaling x1 in the distance function); in MW4, whose
   position variables PlatEMO mirrors (with the same front); and in the order of the two constraints
-  of MW12 and MW13, which is that of pymoo.
+  of MW12 and MW13, which is that of pymoo. Their reference fronts are in
+  ``resources/referenceFronts`` (``MWk.csv``, or ``MWk.2D.csv`` and ``MWk.3D.csv`` for ``MW4``,
+  ``MW8`` and ``MW14``); every point is the objective vector of a feasible solution.
 
 * [10/21/2026] The reference fronts are all in ``resources/referenceFronts``, in CSV format. The
   directory ``resources/referenceFronts``, with older ``.pf`` copies of some of them (separated by
