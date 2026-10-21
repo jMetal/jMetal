@@ -4,6 +4,13 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/21/2026] The environmental selection of AGE-MOEA and AGE-MOEA-II
+  (``AGEMOEAEnvironmentalSelection`` and ``AGEMOEA2EnvironmentalSelection``) takes the ``Ranking``
+  that sorts the population into fronts as a constructor argument, so that AGE-MOEA can use other
+  constraint-handling techniques; by default, the non-dominated sorting with constrained dominance,
+  as before. ``SurvivalScoreComparator`` takes the ranking whose ranks it compares, and the default
+  tournament of ``AGEMOEABuilder`` uses that of its environmental selection.
+
 * [10/21/2026] The reference fronts are all in ``resources/referenceFronts``, in CSV format. The
   directory ``resources/referenceFronts``, with older ``.pf`` copies of some of them (separated by
   spaces or tabs, and in 27 cases different from their CSV counterparts), has been removed, and
