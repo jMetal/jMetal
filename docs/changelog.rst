@@ -4,15 +4,6 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
-* [10/21/2026] AGE-MOEA and AGE-MOEA-II follow the authors' code (PlatEMO) in two places of their
-  survival score. The solutions of the fronts after the first are scored with the inverse of their
-  distance to the ideal point, not with the distance, so that the closer ones survive the front that
-  does not fit and win the tournaments. The extreme points and the hyperplane that normalize the
-  first front are computed with the objectives translated to its ideal point, falling back to the
-  maxima of the translated front when the extreme points coincide or the hyperplane has no positive
-  intercepts; before, a front with a negative objective (e.g. Srinivas) could be normalized to
-  infinity. Both changes are in ``jmetal-component`` and in the copy of ``jmetal-algorithm``.
-
 * [10/21/2026] The reference fronts are all in ``resources/referenceFronts``, in CSV format. The
   directory ``resources/referenceFronts``, with older ``.pf`` copies of some of them (separated by
   spaces or tabs, and in 27 cases different from their CSV counterparts), has been removed, and
@@ -21,6 +12,15 @@ only includes the latest entries.
   ``referenceFrontsDirectory`` property of ``jmetal.properties`` has been updated. The fronts of
   Binh2, Fonseca, Viennet2, Viennet3 and Water, which only existed as ``.pf``, have been converted to
   CSV.
+
+* [10/21/2026] AGE-MOEA and AGE-MOEA-II follow the authors' code (PlatEMO) in two places of their
+  survival score. The solutions of the fronts after the first are scored with the inverse of their
+  distance to the ideal point, not with the distance, so that the closer ones survive the front that
+  does not fit and win the tournaments. The extreme points and the hyperplane that normalize the
+  first front are computed with the objectives translated to its ideal point, falling back to the
+  maxima of the translated front when the extreme points coincide or the hyperplane has no positive
+  intercepts; before, a front with a negative objective (e.g. Srinivas) could be normalized to
+  infinity. Both changes are in ``jmetal-component`` and in the copy of ``jmetal-algorithm``.
 
 * [10/21/2026] The DAS-CMOP problems (Fan et al., "Difficulty Adjustable and Scalable Constrained
   Multiobjective Test Problem Toolkit", Evolutionary Computation, 2020), ``DASCMOP1`` to
