@@ -19,7 +19,7 @@ The implementation of NSGA-II in jMetal allows to indicate the dominance ranking
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.csv";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

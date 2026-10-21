@@ -185,7 +185,7 @@ We can observe that there is an outer loop (line 106) and a inner loop (line 107
                     .setExperimentBaseDirectory(experimentBaseDirectory)
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
-                    .setReferenceFrontDirectory("resources/referenceFrontsCSV")
+                    .setReferenceFrontDirectory("resources/referenceFronts")
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
                     .setIndicatorList(List.of(

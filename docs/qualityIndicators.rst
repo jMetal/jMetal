@@ -86,7 +86,7 @@ If you need to compute the value of a quality indicator of a front of solutions 
 
 * The current working directory is the root of jMetal.
 * The obtained front is stored in a file calle ``FUN.csv``.
-* The solved problem is ZDT1, whose reference front is in ``resources/referenceFrontsCSV/ZDT1.csv``.
+* The solved problem is ZDT1, whose reference front is in ``resources/referenceFronts/ZDT1.csv``.
 * The instruction ``mvn package`` (or ``mvn package -DskipTests=True``) has been executed.
 
 The list of available quality indicators can be obtained by calling the class without parameters:
@@ -117,7 +117,7 @@ We can compute a single indicator, as the inverted generational distance:
 
 .. code-block:: bash
 
- % java -cp jmetal-core/target/jmetal-core-7.8-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool IGD resources/referenceFrontsCSV/ZDT1.csv FUN.csv
+ % java -cp jmetal-core/target/jmetal-core-7.8-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool IGD resources/referenceFronts/ZDT1.csv FUN.csv
  
   INFO: Loggers configured with null [org.uma.jmetal.util.JMetalLogger configureLoggers]
   INFO: The fronts are normalized before computing the indicators [org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators]
@@ -127,7 +127,7 @@ Or all the quality indicators if we use ``ALL`` as indicator:
 
 .. code-block:: bash
 
-  % java -cp jmetal-core/target/jmetal-core-7.8-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool ALL resources/referenceFrontsCSV/ZDT1.csv FUN.csv
+  % java -cp jmetal-core/target/jmetal-core-7.8-jar-with-dependencies.jar org.uma.jmetal.utilities.CommandLineQualityIndicatorTool ALL resources/referenceFronts/ZDT1.csv FUN.csv
 
   INFO: Loggers configured with null [org.uma.jmetal.util.JMetalLogger configureLoggers]
   INFO: The fronts are normalized before computing the indicators [org.uma.jmetal.utilities.CommandLineQualityIndicatorTool calculateAndPrintIndicators]

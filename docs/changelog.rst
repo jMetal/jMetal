@@ -4,6 +4,15 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/21/2026] The reference fronts are all in ``resources/referenceFronts``, in CSV format. The
+  directory ``resources/referenceFronts``, with older ``.pf`` copies of some of them (separated by
+  spaces or tabs, and in 27 cases different from their CSV counterparts), has been removed, and
+  ``resources/referenceFrontsCSV`` has been renamed to ``resources/referenceFronts``. Code that
+  builds paths to ``resources/referenceFrontsCSV`` must use the new name; the
+  ``referenceFrontsDirectory`` property of ``jmetal.properties`` has been updated. The fronts of
+  Binh2, Fonseca, Viennet2, Viennet3 and Water, which only existed as ``.pf``, have been converted to
+  CSV.
+
 * [10/21/2026] The DAS-CMOP problems (Fan et al., "Difficulty Adjustable and Scalable Constrained
   Multiobjective Test Problem Toolkit", Evolutionary Computation, 2020), ``DASCMOP1`` to
   ``DASCMOP9`` in the package ``org.uma.jmetal.problem.multiobjective.dascmop``, with the

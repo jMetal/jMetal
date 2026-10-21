@@ -235,7 +235,7 @@ An example can be found in the ``NSGAIIConfiguredFromAParameterString`` class
   public class NSGAIIConfiguredFromAParameterString {
 
     public static void main(String[] args) {
-      String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv";
+      String referenceFrontFileName = "resources/referenceFronts/ZDT1.csv";
 
       String[] parameters =
           ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
@@ -538,7 +538,7 @@ an example of how the SMPSO algorithm can be configured using it:
 
         RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
             new RunTimeChartObserver<>(
-                "SMPSO", 80, 500, "resources/referenceFrontsCSV/" + referenceFrontFileName);
+                "SMPSO", 80, 500, "resources/referenceFronts/" + referenceFrontFileName);
 
         smpso.getObservable().register(runTimeChartObserver);
 
@@ -786,7 +786,7 @@ default reference vectors and with the ones of a file:
   String[] parameters =
       ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
           + "--randomGeneratorSeed 12 "
-          + "--referenceFrontFileName resources/referenceFrontsCSV/DTLZ2.3D.csv "
+          + "--referenceFrontFileName resources/referenceFronts/DTLZ2.3D.csv "
           + "--maximumNumberOfEvaluations 40000 "
           + "--algorithmResult population "
           + "--createInitialSolutions random "

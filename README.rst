@@ -95,7 +95,7 @@ Changelog
 * [10/13/2026] jMetal 7.8 is released.
 
 * [10/13/2026] Reference fronts of the MaF problems with 3 objectives
-  (``resources/referenceFrontsCSV/MaFxx.3D.csv``, MaF01 to MaF15), next to the existing ones for 5,
+  (``resources/referenceFronts/MaFxx.3D.csv``, MaF01 to MaF15), next to the existing ones for 5,
   10 and 15 objectives. They are written with PlatEMO's method for this benchmark (points spread on
   the simplex and mapped to the front of each problem) by ``scripts/maf_reference_fronts.py`` of
   Evolver, whose ``MaFReferenceFrontsIT`` checks them against the problems of jMetal.
