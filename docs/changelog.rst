@@ -4,6 +4,14 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/21/2026] The DAS-CMOP problems (Fan et al., "Difficulty Adjustable and Scalable Constrained
+  Multiobjective Test Problem Toolkit", Evolutionary Computation, 2020), ``DASCMOP1`` to
+  ``DASCMOP9`` in the package ``org.uma.jmetal.problem.multiobjective.dascmop``, with the
+  difficulty triplet (eta, zeta, gamma) as a constructor argument. They follow Table 2 of the
+  paper; the default triplet of each problem is that of PlatEMO, whose distance function of
+  DAS-CMOP9 differs from the paper's, and whose Type-II constraint with zeta = 1 has its sign
+  reversed.
+
 * [10/21/2026] The environmental selection of RVEA, RVEA* and iRVEA discards the candidates with a
   non-finite objective value instead of failing. Such values appear, for instance, in RE22, whose
   second objective (the sum of the constraint violations) is infinite when a variable is exactly at
