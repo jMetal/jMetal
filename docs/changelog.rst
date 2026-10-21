@@ -16,7 +16,9 @@ only includes the latest entries.
   Section VII) that PlatEMO also implements: in each niche, the feasible solution with the lowest
   APD survives or, if there is none, the least violating one. Its result is the set of feasible
   non-dominated solutions of the final population. iRVEA, which PlatEMO does not include, uses a
-  feasibility-first layer of jMetal. ``RVEAStarBuilder`` still rejects problems with constraints,
+  feasibility-first layer of jMetal that is experimental and pending validation: it is not
+  published and has only been run on a few classic problems. ``RVEAStarBuilder`` still rejects
+  problems with constraints,
   because C-RVEA combined with the non-dominated filter of RVEA* lets infeasible solutions remove
   every feasible one (see the `documentation
   <https://jmetal.readthedocs.io/en/latest/constrained-rvea.html>`_).

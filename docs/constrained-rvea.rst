@@ -10,8 +10,9 @@ The three variants of the RVEA family treat constraints differently:
   also the one of the RVEA of PlatEMO.
 * **RVEA*** does not handle them: ``RVEAStarBuilder`` rejects problems with
   constraints.
-* **iRVEA** uses a feasibility-first layer of jMetal. PlatEMO has no iRVEA, and
-  this layer is not published, so it may change.
+* **iRVEA** uses a feasibility-first layer of jMetal that is **pending
+  validation**: it is not published, and PlatEMO has no iRVEA to compare with
+  (see :ref:`constrained-irvea`).
 
 Without constraints, or when every candidate is feasible, the three variants
 behave as described in :ref:`rvea-variants`.
@@ -67,8 +68,27 @@ Osyczka2 no feasible solution survived, and on Tanaka the population collapsed
 to a single infeasible solution. ``RVEAStarBuilder`` therefore rejects problems
 with constraints.
 
-iRVEA: feasibility-first layer
-------------------------------
+.. _constrained-irvea:
+
+iRVEA: feasibility-first layer (pending validation)
+---------------------------------------------------
+
+.. warning::
+
+  This layer is an experimental extension of jMetal, pending validation. Neither
+  the paper of iRVEA nor any other publication describes it, and PlatEMO has no
+  iRVEA to compare with. It has only been run on a few classic problems
+  (Srinivas, ConstrEx, Golinski, Tanaka and Osyczka2), where it returned feasible
+  fronts; it has not been studied on benchmarks such as C-DTLZ, LIR-CMOP or MW,
+  nor compared with other constraint-handling techniques. It may change or be
+  removed. Results of iRVEA on problems with constraints should state that they
+  use this layer.
+
+  Two known weaknesses are worth checking in such a study. Once there are N
+  feasible candidates, no infeasible one survives, even if the feasible ones
+  occupy a few niches, which may hinder problems with disconnected feasible
+  regions. And the infeasible survivors are the least violating candidates
+  overall, regardless of their niches, so they may concentrate in one region.
 
 ``IRVEAEnvironmentalSelection`` partitions the candidates before any selection
 or state update. If every candidate is feasible, the original selection runs on

@@ -7,7 +7,13 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 
-/** Builds iRVEA (Liu et al., CEC 2019), including regional protection and an epsilon archive. */
+/**
+ * Builds iRVEA (Liu et al., CEC 2019), including regional protection and an epsilon archive.
+ *
+ * <p>On problems with constraints, iRVEA uses an experimental feasibility-first layer of jMetal,
+ * which is not published and is pending validation (see {@link
+ * org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea.IRVEAEnvironmentalSelection}).
+ */
 public class IRVEABuilder<S extends Solution<?>> extends RVEABuilder<S> {
   public IRVEABuilder(
       Problem<S> problem,

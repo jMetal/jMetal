@@ -234,7 +234,8 @@ Implemented behavior
 ----------------------
 
 All objectives are minimized. On problems with constraints, RVEA selects as
-C-RVEA, iRVEA uses a feasibility-first layer of jMetal, and RVEA* rejects them
+C-RVEA, iRVEA uses a feasibility-first layer of jMetal pending validation, and
+RVEA* rejects them
 (see :ref:`constrained-rvea`). Without constraints, or when every candidate is
 feasible, the behavior below is unchanged.
 ``RVEABuilder``, ``RVEAStarBuilder``, and ``IRVEABuilder`` return the existing

@@ -17,6 +17,10 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  * Pareto/strengthened dominance, angular clustering, and an epsilon-indicator archive. See {@code
  * docs/rvea-variants.md} for choices resolving underspecified steps in the paper.
  *
+ * <p>Constraints are handled by an experimental feasibility-first layer of jMetal, pending
+ * validation: neither the paper nor any other publication describes it, PlatEMO has no iRVEA to
+ * compare with, and it has only been run on a few classic problems. It may change or be removed.
+ *
  * @param <S> solution type
  */
 public class IRVEAEnvironmentalSelection<S extends Solution<?>>
@@ -211,10 +215,11 @@ public class IRVEAEnvironmentalSelection<S extends Solution<?>>
   }
 
   /**
-   * jMetal's feasibility-first constraint handling, as PlatEMO has no iRVEA: the original
-   * selection runs on the feasible candidates, and the least violating infeasible ones fill the
-   * remaining niches occupied by the candidates. Without feasible candidates, copies of the archive
-   * survive. When every candidate is feasible, this is the original selection.
+   * Experimental feasibility-first constraint handling of jMetal, pending validation, as PlatEMO
+   * has no iRVEA: the original selection runs on the feasible candidates, and the least violating
+   * infeasible ones fill the remaining niches occupied by the candidates. Without feasible
+   * candidates, copies of the archive survive. When every candidate is feasible, this is the
+   * original selection.
    */
   @Override
   protected List<S> selectNextPopulation(List<S> population) {
