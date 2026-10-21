@@ -66,7 +66,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         if (ranking.getSubFront(0).size() <= solutionsToSelect){
             population.addAll(ranking.getSubFront(0));
         } else {
-            ranking.getSubFront(0).sort(new SurvivalScoreComparator<>());
+            ranking.getSubFront(0).sort(new SurvivalScoreComparator<>(ranking));
             population.addAll(ranking.getSubFront(0).subList(0, solutionsToSelect));
         }
 
@@ -77,7 +77,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             if ((population.size() + ranking.getSubFront(rankingIndex).size()) <= solutionsToSelect) {
                 population.addAll(ranking.getSubFront(rankingIndex));
             } else {
-                ranking.getSubFront(rankingIndex).sort(new SurvivalScoreComparator<>());
+                ranking.getSubFront(rankingIndex).sort(new SurvivalScoreComparator<>(ranking));
                 int nSolutions = solutionsToSelect - population.size();
                 population.addAll(ranking.getSubFront(rankingIndex).subList(0, nSolutions));
             }
