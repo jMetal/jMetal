@@ -27,6 +27,7 @@ public class C3_DTLZ1 extends DTLZ1 {
     super(numberOfVariables, numberOfObjectives) ;
 
     numberOfConstraints(numberOfConstraints);
+    name("C3_DTLZ1");
   }
 
   @Override
