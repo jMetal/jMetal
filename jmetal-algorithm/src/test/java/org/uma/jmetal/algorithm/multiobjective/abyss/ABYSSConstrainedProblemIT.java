@@ -118,7 +118,7 @@ public class ABYSSConstrainedProblemIT {
 
     QualityIndicator hypervolume =
         new PISAHypervolume(
-            VectorUtils.readVectors("../resources/referenceFrontsCSV/Tanaka.csv", ","));
+            VectorUtils.readVectors("../resources/referenceFronts/Tanaka.csv", ","));
 
     // Rationale: the default problem is Tanaka, and AbYSS, configured with standard settings,
     // should return find a front with a hypervolume value higher than 0.22

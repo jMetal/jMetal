@@ -31,7 +31,7 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
    * @param args Command line arguments.
    */
   public static void main(String[] args) throws IOException {
-    String referenceParetoFront = "resources/referenceFrontsCSV/Srinivas.csv";
+    String referenceParetoFront = "resources/referenceFronts/Srinivas.csv";
 
     var problem = new ComposableDoubleProblem()
         .name("Srinivas")

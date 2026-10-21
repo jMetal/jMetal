@@ -20,7 +20,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class SMSEMOAConfiguredFromZCAT1 {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZCAT1.3D.csv";
+    String referenceFrontFileName = "resources/referenceFronts/ZCAT1.3D.csv";
 
     DefaultZCATSettings.numberOfObjectives = 3 ;
 

@@ -34,7 +34,7 @@ public class NSGAIIWithTwoIndicatorsChartExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT4.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

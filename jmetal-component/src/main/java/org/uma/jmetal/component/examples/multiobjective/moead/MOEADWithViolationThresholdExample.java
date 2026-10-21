@@ -33,7 +33,7 @@ public class MOEADWithViolationThresholdExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
     Problem<DoubleSolution> problem = new Osyczka2();
-    String referenceParetoFront = "resources/referenceFrontsCSV/Osyczka2.csv";
+    String referenceParetoFront = "resources/referenceFronts/Osyczka2.csv";
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;

@@ -25,7 +25,7 @@ public class AGEMOEARunner extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {
 
     var problem = new DTLZ3();
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ3.3D.csv";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ3.3D.csv";
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 30.0;

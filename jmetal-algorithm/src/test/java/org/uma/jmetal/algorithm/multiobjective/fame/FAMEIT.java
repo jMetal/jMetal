@@ -77,7 +77,7 @@ public class FAMEIT {
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
-                    VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ","));
+                    VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ","));
 
     // Rationale: the default problem is ZDT1, and AbYSS, configured with standard settings,
     // should return find a front with a hypervolume value higher than 0.22

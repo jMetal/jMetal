@@ -23,7 +23,7 @@ import static java.lang.Math.sin;
 
 public class ParallelSMPSOExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT4.csv";
 
     DoubleProblem problem =
         new ZDT1() {

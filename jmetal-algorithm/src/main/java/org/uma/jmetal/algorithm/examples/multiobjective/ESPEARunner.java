@@ -28,7 +28,7 @@ public class ESPEARunner extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws IOException {
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT3.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT3.csv";
 
     var problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

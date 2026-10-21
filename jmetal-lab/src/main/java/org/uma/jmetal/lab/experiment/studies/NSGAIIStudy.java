@@ -79,7 +79,7 @@ public class NSGAIIStudy {
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory("resources/referenceFrontsCSV")
+            .setReferenceFrontDirectory("resources/referenceFronts")
             .setIndicatorList(
                 List.of(
                     new Epsilon(),

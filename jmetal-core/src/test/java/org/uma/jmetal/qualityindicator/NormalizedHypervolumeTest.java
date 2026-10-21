@@ -41,8 +41,8 @@ public class NormalizedHypervolumeTest {
       throws IOException {
     var normalizedHypervolume =
         new NormalizedHypervolume(
-            VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ","));
-    double[][] front = VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
+            VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ","));
+    double[][] front = VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ",");
 
     Assertions.assertEquals(0.0, normalizedHypervolume.compute(front), EPSILON);
   }

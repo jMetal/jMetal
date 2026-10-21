@@ -29,7 +29,7 @@ public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.Tanaka";
-    String referenceParetoFront = "resources/referenceFrontsCSV/Tanaka.csv";
+    String referenceParetoFront = "resources/referenceFronts/Tanaka.csv";
 
     DoubleProblem problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

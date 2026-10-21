@@ -86,7 +86,7 @@ public class DTLZStudy {
         new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("DTLZStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setReferenceFrontDirectory("resources/referenceFrontsCSV")
+            .setReferenceFrontDirectory("resources/referenceFronts")
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")

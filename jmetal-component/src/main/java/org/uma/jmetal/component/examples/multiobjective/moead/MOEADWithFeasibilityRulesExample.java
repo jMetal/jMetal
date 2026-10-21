@@ -33,7 +33,7 @@ public class MOEADWithFeasibilityRulesExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
     Problem<DoubleSolution> problem = new Srinivas();
-    String referenceParetoFront = "resources/referenceFrontsCSV/Srinivas.csv";
+    String referenceParetoFront = "resources/referenceFronts/Srinivas.csv";
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;

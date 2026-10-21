@@ -34,7 +34,7 @@ public class SMPSOHvRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT4.csv";
 
     DoubleProblem problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

@@ -33,7 +33,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
 
   public static void main(String[] args) throws IOException {
 
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.csv";
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);

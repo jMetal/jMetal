@@ -19,7 +19,7 @@ public class AutoMOPSOIraceNHV {
     ParticleSwarmOptimizationAlgorithm mopso = mopsoWithParameters.create();
     mopso.run();
 
-    String referenceFrontFile = "resources/referenceFrontsCSV/"
+    String referenceFrontFile = "resources/referenceFronts/"
         + mopsoWithParameters.referenceFrontFilenameParameter.value();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");

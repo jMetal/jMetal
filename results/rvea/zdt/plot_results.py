@@ -59,7 +59,7 @@ def read_runs(input_dir):
     if len(matches) != 9:
         raise ValueError("Expected exactly nine recorded successful runs")
     references = {
-        problem: read_points(ROOT / f"resources/referenceFrontsCSV/{problem}.csv", 2)
+        problem: read_points(ROOT / f"resources/referenceFronts/{problem}.csv", 2)
         for problem in PROBLEMS
     }
     fronts = {}

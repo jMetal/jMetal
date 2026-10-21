@@ -31,7 +31,7 @@ public class SMPSOSSolvingConstrainedProblemRunner extends AbstractAlgorithmRunn
    */
   public static void main(String[] args) throws IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.Golinski";
-    String referenceParetoFront = "resources/referenceFrontsCSV/Golinski.csv";
+    String referenceParetoFront = "resources/referenceFronts/Golinski.csv";
 
     DoubleProblem problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

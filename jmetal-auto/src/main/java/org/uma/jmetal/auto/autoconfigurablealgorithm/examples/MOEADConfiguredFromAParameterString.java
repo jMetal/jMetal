@@ -57,7 +57,7 @@ public class MOEADConfiguredFromAParameterString {
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "MOEAD", 80, 5000,"resources/referenceFrontsCSV/" + referenceFrontFileName);
+            "MOEAD", 80, 5000,"resources/referenceFronts/" + referenceFrontFileName);
 
     moead.observable().register(evaluationObserver);
     moead.observable().register(runTimeChartObserver);

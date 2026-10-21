@@ -29,7 +29,7 @@ public class MOSARunner extends AbstractAlgorithmRunner {
 
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT2.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 

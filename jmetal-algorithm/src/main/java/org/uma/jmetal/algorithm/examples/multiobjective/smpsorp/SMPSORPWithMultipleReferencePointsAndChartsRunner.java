@@ -36,7 +36,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
    * @author Antonio J. Nebro
    */
   public static void main(String[] args) throws IOException {
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT1.csv";
 
     var problem = new ZDT1();
 

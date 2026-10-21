@@ -19,7 +19,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class SMSEMOAConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT2.csv";
+    String referenceFrontFileName = "resources/referenceFronts/ZDT2.csv";
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT2 "

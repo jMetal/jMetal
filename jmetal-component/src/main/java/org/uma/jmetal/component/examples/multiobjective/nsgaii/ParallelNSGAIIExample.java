@@ -48,7 +48,7 @@ public class ParallelNSGAIIExample {
       }
     };
 
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT1.csv";
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;

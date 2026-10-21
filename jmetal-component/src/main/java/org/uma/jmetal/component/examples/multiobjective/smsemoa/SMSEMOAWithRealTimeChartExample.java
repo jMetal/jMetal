@@ -29,7 +29,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT3.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT3.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

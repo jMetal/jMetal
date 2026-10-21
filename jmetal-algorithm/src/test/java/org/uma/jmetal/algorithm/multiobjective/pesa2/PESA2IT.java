@@ -78,7 +78,7 @@ public class PESA2IT {
 
     List<DoubleSolution> population = algorithm.result() ;
 
-    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
+    String referenceFrontFileName = "../resources/referenceFronts/ConstrEx.csv" ;
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);

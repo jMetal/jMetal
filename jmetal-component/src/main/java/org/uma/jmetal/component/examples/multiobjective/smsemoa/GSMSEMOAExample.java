@@ -33,7 +33,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 public class GSMSEMOAExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT4.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

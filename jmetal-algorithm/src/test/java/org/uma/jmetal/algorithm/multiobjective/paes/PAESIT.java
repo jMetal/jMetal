@@ -74,7 +74,7 @@ public class PAESIT {
 
     org.uma.jmetal.qualityindicator.QualityIndicator hypervolume =
             new org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume(
-                    VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ","));
+                    VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ","));
 
     // Rationale: the default problem is ZDT1, and OMOPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
@@ -106,7 +106,7 @@ public class PAESIT {
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
-                    VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ","));
+                    VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ","));
 
     // Rationale: the default problem is ZDT1, and PAES, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.6
@@ -133,7 +133,7 @@ public class PAESIT {
 
     List<DoubleSolution> population = algorithm.result() ;
 
-    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
+    String referenceFrontFileName = "../resources/referenceFronts/ConstrEx.csv" ;
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);

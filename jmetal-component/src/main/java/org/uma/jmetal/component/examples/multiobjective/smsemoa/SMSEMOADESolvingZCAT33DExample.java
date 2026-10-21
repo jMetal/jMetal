@@ -36,7 +36,7 @@ public class SMSEMOADESolvingZCAT33DExample {
     DefaultZCATSettings.numberOfObjectives = 3 ;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zcat.ZCAT3";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZCAT3.3D.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZCAT3.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

@@ -25,7 +25,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 public class SMPSOSolvingConstrainedProblemExample {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.Tanaka";
-    String referenceParetoFront = "resources/referenceFrontsCSV/Tanaka.csv";
+    String referenceParetoFront = "resources/referenceFronts/Tanaka.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

@@ -31,7 +31,7 @@ public class NSGAIIComposableSchafferProblemRunner extends AbstractAlgorithmRunn
    */
   public static void main(String[] args) throws IOException {
 
-    String referenceParetoFront = "resources/referenceFrontsCSV/Schaffer.csv";
+    String referenceParetoFront = "resources/referenceFronts/Schaffer.csv";
 
     var problem = new ComposableDoubleProblem()
         .name("Schaffer")

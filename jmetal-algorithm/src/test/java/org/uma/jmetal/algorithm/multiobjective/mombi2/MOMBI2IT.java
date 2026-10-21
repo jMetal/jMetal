@@ -92,7 +92,7 @@ public class MOMBI2IT {
     */
     QualityIndicator hypervolume =
             new PISAHypervolume(
-                    VectorUtils.readVectors("../resources/referenceFrontsCSV/DTLZ1.3D.csv", ","));
+                    VectorUtils.readVectors("../resources/referenceFronts/DTLZ1.3D.csv", ","));
 
     // Rationale: the default problem is DTLZ1 (3 objectives), and MOMBI2, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96

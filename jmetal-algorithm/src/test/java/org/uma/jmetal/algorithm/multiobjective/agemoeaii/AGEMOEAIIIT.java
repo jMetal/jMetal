@@ -104,7 +104,7 @@ public class AGEMOEAIIIT {
 
     QualityIndicator hypervolume =
         new PISAHypervolume(
-            VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ","));
+            VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ","));
 
     // Rationale: the default problem is ZDT1, and AGE-MOEA-II, configured with standard settings,
     // should return find a front with a hypervolume value higher than 0.62
@@ -142,7 +142,7 @@ public class AGEMOEAIIIT {
 
     List<DoubleSolution> population = algorithm.result();
 
-    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv";
+    String referenceFrontFileName = "../resources/referenceFronts/ConstrEx.csv";
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",");
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);

@@ -18,7 +18,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 public class RVEAConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
+    String referenceFrontFileName = "resources/referenceFronts/DTLZ2.3D.csv";
 
     String parameters =
         "--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "

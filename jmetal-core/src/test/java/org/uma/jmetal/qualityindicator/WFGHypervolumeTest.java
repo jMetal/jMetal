@@ -135,7 +135,7 @@ public class WFGHypervolumeTest {
     double[] referencePoint = {1.0, 1.0};
 
     double[][] storedFront =
-        VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
+        VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ",");
 
     var hypervolume = new WFGHypervolume(referencePoint);
     double result = hypervolume.compute(storedFront);
@@ -275,7 +275,7 @@ public class WFGHypervolumeTest {
     double[] referencePoint = {1.0, 1.0};
     
     double[][] storedFront =
-        VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
+        VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ",");
 
     var wfgHypervolume = new WFGHypervolume(referencePoint);
     var pisaHypervolume = new org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume(referencePoint);

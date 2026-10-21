@@ -33,7 +33,7 @@ public class MOCellRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws JMetalException, IOException {
     var problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    var referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    var referenceParetoFront = "resources/referenceFronts/ZDT4.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

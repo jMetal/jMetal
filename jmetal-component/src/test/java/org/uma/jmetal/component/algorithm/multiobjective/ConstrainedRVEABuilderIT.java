@@ -24,7 +24,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 @DisplayName("Integration tests for RVEA (C-RVEA) on classic problems with constraints")
 class ConstrainedRVEABuilderIT {
-  private static final String REFERENCE_FRONTS_DIRECTORY = "../resources/referenceFrontsCSV/";
+  private static final String REFERENCE_FRONTS_DIRECTORY = "../resources/referenceFronts/";
   private static final int POPULATION_SIZE = 100;
   private static final int MAX_EVALUATIONS = 25000;
 

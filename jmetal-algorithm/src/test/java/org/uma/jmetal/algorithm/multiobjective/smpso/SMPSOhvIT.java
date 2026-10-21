@@ -58,7 +58,7 @@ public class SMPSOhvIT {
 
     QualityIndicator hypervolume =
             new org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume(
-                    VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT4.csv", ","));
+                    VectorUtils.readVectors("../resources/referenceFronts/ZDT4.csv", ","));
 
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64

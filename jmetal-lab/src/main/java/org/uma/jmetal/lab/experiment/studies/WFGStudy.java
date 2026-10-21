@@ -90,7 +90,7 @@ public class WFGStudy {
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("WFGStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
-                    .setReferenceFrontDirectory("resources/referenceFrontsCSV")
+                    .setReferenceFrontDirectory("resources/referenceFronts")
                     .setExperimentBaseDirectory(experimentBaseDirectory)
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")

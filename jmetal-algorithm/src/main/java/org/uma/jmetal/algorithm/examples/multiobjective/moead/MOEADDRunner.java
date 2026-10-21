@@ -28,7 +28,7 @@ public class MOEADDRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.UF.UF2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/UF2.csv";
+    String referenceParetoFront = "resources/referenceFronts/UF2.csv";
 
     DoubleProblem problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

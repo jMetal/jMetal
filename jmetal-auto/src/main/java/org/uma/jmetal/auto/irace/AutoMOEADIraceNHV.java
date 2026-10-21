@@ -19,7 +19,7 @@ public class AutoMOEADIraceNHV {
     EvolutionaryAlgorithm<DoubleSolution> moead = autoMOEAD.create();
     moead.run();
 
-    String referenceFrontFile = "resources/referenceFrontsCSV/"
+    String referenceFrontFile = "resources/referenceFronts/"
         + autoMOEAD.referenceFrontFilenameParameter.value();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");

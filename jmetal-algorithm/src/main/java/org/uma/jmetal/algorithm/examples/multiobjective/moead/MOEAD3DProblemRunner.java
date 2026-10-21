@@ -29,7 +29,7 @@ public class MOEAD3DProblemRunner extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws IOException {
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
-    String referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F6.csv";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F6.csv";
 
     var problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

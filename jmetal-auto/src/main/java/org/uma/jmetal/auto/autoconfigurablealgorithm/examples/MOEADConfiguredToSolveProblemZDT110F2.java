@@ -59,7 +59,7 @@ public class MOEADConfiguredToSolveProblemZDT110F2 {
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "MOEAD", 80, 1000,"resources/referenceFrontsCSV/" + referenceFrontFileName);
+            "MOEAD", 80, 1000,"resources/referenceFronts/" + referenceFrontFileName);
 
     nsgaII.observable().register(evaluationObserver);
     nsgaII.observable().register(runTimeChartObserver);

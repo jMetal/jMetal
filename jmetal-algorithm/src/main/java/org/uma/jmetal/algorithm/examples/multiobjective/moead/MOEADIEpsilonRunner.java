@@ -31,7 +31,7 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.lircmop.LIRCMOP2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/LIRCMOP2.csv";
+    String referenceParetoFront = "resources/referenceFronts/LIRCMOP2.csv";
 
     DoubleProblem problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

@@ -22,7 +22,7 @@ public class IRVEADTLZ7Example {
   public static void main(String[] args) throws IOException {
     JMetalRandom.getInstance().setSeed(42);
 
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ7.3D.csv";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ7.3D.csv";
     var problem = new DTLZ7(22, 3);
     var crossover = new SBXCrossover(1.0, 20.0);
     var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);

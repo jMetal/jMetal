@@ -46,7 +46,7 @@ public class RNSGAIIConstraintRunner extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws IOException {
 
     String problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
-    String referenceParetoFront = "resources/referenceFrontsCSV/Srinivas.csv";
+    String referenceParetoFront = "resources/referenceFronts/Srinivas.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

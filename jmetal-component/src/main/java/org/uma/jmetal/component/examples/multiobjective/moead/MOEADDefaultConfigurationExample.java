@@ -31,7 +31,7 @@ import org.uma.jmetal.util.sequencegenerator.impl.RandomPermutationCycle;
 public class MOEADDefaultConfigurationExample {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

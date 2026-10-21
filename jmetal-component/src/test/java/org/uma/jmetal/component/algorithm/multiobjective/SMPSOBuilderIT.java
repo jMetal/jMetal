@@ -97,7 +97,7 @@ class SMPSOBuilderIT {
 
     List<DoubleSolution> obtainedSolutions = archive.solutions();
 
-    String referenceFrontFile = "../resources/referenceFrontsCSV/" + referenceFrontFileName;
+    String referenceFrontFile = "../resources/referenceFronts/" + referenceFrontFileName;
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);

@@ -94,7 +94,7 @@ public class ConstraintMOEADIT {
     List<DoubleSolution> population = algorithm.result();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFrontsCSV/Tanaka.csv");
+        new PISAHypervolume<>("../resources/referenceFronts/Tanaka.csv");
 
     // Rationale: the default problem is Tanaka", and the constraint MOEA/D algoritm,
     // configured with standard settings, should return find a front with a hypervolume value higher

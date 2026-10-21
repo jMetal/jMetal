@@ -27,7 +27,7 @@ public class AGEMOEAZDT1Runner extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {
 
     var problem = new ZDT4();
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT4.csv";
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 30.0;

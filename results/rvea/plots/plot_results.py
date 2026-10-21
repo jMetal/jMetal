@@ -221,7 +221,7 @@ def main() -> None:
     parser.add_argument("--input-dir", type=Path, default=ROOT / "results/rvea/data")
     input_dir = parser.parse_args().input_dir.resolve()
     references = {
-        problem: read_points(ROOT / "resources/referenceFrontsCSV" / f"{problem}.3D.csv")
+        problem: read_points(ROOT / "resources/referenceFronts" / f"{problem}.3D.csv")
         for problem in ("DTLZ2", "DTLZ5", "DTLZ7")
     }
     fronts = {

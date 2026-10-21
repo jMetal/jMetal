@@ -35,7 +35,7 @@ public class PISAHypervolumeTest {
     double[][] referenceFront = new double[][] {{1.0, 0.1}, {0.0, 1.0}};
 
     double[][] storedFront =
-        VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
+        VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ",");
 
     var hypervolume = new PISAHypervolume(referenceFront);
     double result = hypervolume.compute(storedFront);
@@ -52,10 +52,10 @@ public class PISAHypervolumeTest {
   @Test
   void shouldEvaluateWorkProperlyCase2() throws IOException {
     double[][] referenceFront =
-        VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
+        VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ",");
 
     double[][] storedFront =
-        VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
+        VectorUtils.readVectors("../resources/referenceFronts/ZDT1.csv", ",");
 
     var hypervolume = new PISAHypervolume(referenceFront);
     double result = hypervolume.compute(storedFront);

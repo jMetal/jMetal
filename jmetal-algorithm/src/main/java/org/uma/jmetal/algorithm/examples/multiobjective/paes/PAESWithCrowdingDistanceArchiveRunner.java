@@ -29,7 +29,7 @@ public class PAESWithCrowdingDistanceArchiveRunner extends AbstractAlgorithmRunn
    */
   public static void main(String[] args) throws IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.Kursawe";
-    String referenceParetoFront = "resources/referenceFrontsCSV/Kursawe.csv";
+    String referenceParetoFront = "resources/referenceFronts/Kursawe.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 

@@ -32,7 +32,7 @@ public class MOEADDEWithImprovedEpsilonExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
     Problem<DoubleSolution> problem = new Tanaka();
-    String referenceParetoFront = "resources/referenceFrontsCSV/Tanaka.csv";
+    String referenceParetoFront = "resources/referenceFronts/Tanaka.csv";
 
     double cr = 1.0;
     double f = 0.5;

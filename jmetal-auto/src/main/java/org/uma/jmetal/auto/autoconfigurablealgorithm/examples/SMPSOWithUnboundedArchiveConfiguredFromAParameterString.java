@@ -67,7 +67,7 @@ public class SMPSOWithUnboundedArchiveConfiguredFromAParameterString {
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "SMPSO", 80, 500, "resources/referenceFrontsCSV/" + referenceFrontFileName);
+            "SMPSO", 80, 500, "resources/referenceFronts/" + referenceFrontFileName);
 
     smpso.observable().register(runTimeChartObserver);
 

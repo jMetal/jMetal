@@ -33,7 +33,7 @@ import static org.uma.jmetal.util.VectorUtils.readVectors;
 public class SMPSOStoppingByQualityIndicatorExample {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ7.3D.csv";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ7.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

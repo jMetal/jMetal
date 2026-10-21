@@ -44,7 +44,7 @@ public class AsynchronousMasterWorkerBasedNSGAIIZDT1Example {
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
             new RunTimeChartObserver<>(
                     "NSGA-II",
-                    80, 10, "resources/referenceFrontsCSV/ZDT1.csv");
+                    80, 10, "resources/referenceFronts/ZDT1.csv");
 
     nsgaii.observable().register(runTimeChartObserver);
 

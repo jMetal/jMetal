@@ -22,7 +22,7 @@ final class RVEAExampleOutput {
         problem.numberOfObjectives() == 2 ? "" : "." + problem.numberOfObjectives() + "D";
     double[][] referenceFront =
         VectorUtils.readVectors(
-            "resources/referenceFrontsCSV/" + problem.name() + dimensionSuffix + ".csv", ",");
+            "resources/referenceFronts/" + problem.name() + dimensionSuffix + ".csv", ",");
     algorithm.run();
     String suffix = algorithm.name().replace("*", "Star") + "." + problem.name() + ".csv";
     var front = SolutionListUtils.getNonDominatedSolutions(algorithm.result());

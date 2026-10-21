@@ -37,31 +37,31 @@ public class AGEMOEAComparisonExample {
     List<ProblemConfig> problems = List.of(
         new ProblemConfig(
             "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1",
-            "resources/referenceFrontsCSV/DTLZ1.3D.csv",
+            "resources/referenceFronts/DTLZ1.3D.csv",
             40000),
         new ProblemConfig(
             "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2",
-            "resources/referenceFrontsCSV/DTLZ2.3D.csv",
+            "resources/referenceFronts/DTLZ2.3D.csv",
             25000),
         new ProblemConfig(
             "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3",
-            "resources/referenceFrontsCSV/DTLZ3.3D.csv",
+            "resources/referenceFronts/DTLZ3.3D.csv",
             40000),
         new ProblemConfig(
             "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4",
-            "resources/referenceFrontsCSV/DTLZ4.3D.csv",
+            "resources/referenceFronts/DTLZ4.3D.csv",
             25000),
         new ProblemConfig(
             "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ5",
-            "resources/referenceFrontsCSV/DTLZ5.3D.csv",
+            "resources/referenceFronts/DTLZ5.3D.csv",
             25000),
         new ProblemConfig(
             "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ6",
-            "resources/referenceFrontsCSV/DTLZ6.3D.csv",
+            "resources/referenceFronts/DTLZ6.3D.csv",
             25000),
         new ProblemConfig(
             "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7",
-            "resources/referenceFrontsCSV/DTLZ7.3D.csv",
+            "resources/referenceFronts/DTLZ7.3D.csv",
             25000));
 
     List<Map.Entry<String, Function<Integer, AGEMOEAEnvironmentalSelection<DoubleSolution>>>> variants =

@@ -72,7 +72,7 @@ class AutoRVEAIT {
 
     // Assert
     double[][] referenceFront =
-        VectorUtils.readVectors("../resources/referenceFrontsCSV/" + referenceFrontFileName, ",");
+        VectorUtils.readVectors("../resources/referenceFronts/" + referenceFrontFileName, ",");
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
     double[][] normalizedFront =
         NormalizeUtils.normalize(

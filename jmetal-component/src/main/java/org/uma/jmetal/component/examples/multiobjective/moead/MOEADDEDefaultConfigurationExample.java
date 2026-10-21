@@ -32,7 +32,7 @@ public class MOEADDEDefaultConfigurationExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.uf.UF4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F2.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

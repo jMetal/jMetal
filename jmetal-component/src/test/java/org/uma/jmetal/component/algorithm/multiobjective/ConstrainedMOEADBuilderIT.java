@@ -45,7 +45,7 @@ class ConstrainedMOEADBuilderIT {
   }
 
   private static final String WEIGHT_VECTOR_DIRECTORY = "../resources/weightVectorFiles/moead";
-  private static final String REFERENCE_FRONTS_DIRECTORY = "../resources/referenceFrontsCSV/";
+  private static final String REFERENCE_FRONTS_DIRECTORY = "../resources/referenceFronts/";
   private static final String REFERENCE_FRONTS_RSG_DIRECTORY = "../resources/referenceFrontsRSG/";
 
   @Test

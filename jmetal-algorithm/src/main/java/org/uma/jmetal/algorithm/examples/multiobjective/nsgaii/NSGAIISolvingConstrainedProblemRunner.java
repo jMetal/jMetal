@@ -38,7 +38,7 @@ public class NSGAIISolvingConstrainedProblemRunner extends AbstractAlgorithmRunn
    */
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.Osyczka2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/Osyczka2.csv";
+    String referenceParetoFront = "resources/referenceFronts/Osyczka2.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

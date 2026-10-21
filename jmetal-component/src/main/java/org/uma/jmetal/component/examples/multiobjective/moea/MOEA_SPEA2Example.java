@@ -34,7 +34,7 @@ import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 public class MOEA_SPEA2Example {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 

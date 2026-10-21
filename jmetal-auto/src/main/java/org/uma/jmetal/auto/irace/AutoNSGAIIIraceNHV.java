@@ -19,7 +19,7 @@ public class AutoNSGAIIIraceNHV {
     nsgaII.run();
 
     String referenceFrontFile =
-        "resources/referenceFrontsCSV/" + nsgaiiWithParameters.referenceFrontFilename.value();
+        "resources/referenceFronts/" + nsgaiiWithParameters.referenceFrontFilename.value();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     double[][] front = getMatrixWithObjectiveValues(nsgaII.result()) ;

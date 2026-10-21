@@ -35,7 +35,7 @@ public class GMOCellRunner extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws IOException {
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String referenceParetoFront = "resources/referenceFronts/ZDT1.csv";
 
     DoubleProblem problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 

@@ -19,7 +19,7 @@ public class AutoSMSEMOAIraceNHV {
     smsemoa.run();
 
     String referenceFrontFile =
-        "resources/referenceFrontsCSV/" + smsemoaWithParameters.referenceFrontFilename.value();
+        "resources/referenceFronts/" + smsemoaWithParameters.referenceFrontFilename.value();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     double[][] front = getMatrixWithObjectiveValues(smsemoa.result()) ;

@@ -19,7 +19,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class SMSEMOAConfiguredFromDTLZ1 {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
+    String referenceFrontFileName = "resources/referenceFronts/DTLZ1.3D.csv";
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1 "

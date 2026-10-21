@@ -51,7 +51,7 @@ public class SMPSOIT {
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
-                    VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT4.csv", ","));
+                    VectorUtils.readVectors("../resources/referenceFronts/ZDT4.csv", ","));
 
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
@@ -71,7 +71,7 @@ public class SMPSOIT {
     algorithm.run();
     List<DoubleSolution> population = algorithm.result() ;
 
-    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
+    String referenceFrontFileName = "../resources/referenceFronts/ConstrEx.csv" ;
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);

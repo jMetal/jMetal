@@ -19,7 +19,7 @@ public class AutoAGEMOEAIraceNHV {
     ageMoea.run();
 
     String referenceFrontFile =
-        "resources/referenceFrontsCSV/" + ageMoeaWithParameters.referenceFrontFilename.value();
+        "resources/referenceFronts/" + ageMoeaWithParameters.referenceFrontFilename.value();
 
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     double[][] front = getMatrixWithObjectiveValues(ageMoea.result());

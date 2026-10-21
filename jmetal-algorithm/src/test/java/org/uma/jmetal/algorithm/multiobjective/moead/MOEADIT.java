@@ -89,7 +89,7 @@ public class MOEADIT {
 
     QualityIndicator hypervolume =
             new org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume(
-                    VectorUtils.readVectors("../resources/referenceFrontsCSV/LZ09_F2.csv", ","));
+                    VectorUtils.readVectors("../resources/referenceFronts/LZ09_F2.csv", ","));
 
     // Rationale: the default problem is LZ09F2", and MOEA/D, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96
@@ -134,7 +134,7 @@ public class MOEADIT {
 
     QualityIndicator hypervolume =
             new PISAHypervolume(
-                    VectorUtils.readVectors("../resources/referenceFrontsCSV/LZ09_F6.csv", ","));
+                    VectorUtils.readVectors("../resources/referenceFronts/LZ09_F6.csv", ","));
 
     // Rationale: the default problem is LZ09F6", and MOEA/D, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.25

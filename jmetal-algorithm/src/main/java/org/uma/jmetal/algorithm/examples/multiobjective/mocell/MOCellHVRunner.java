@@ -39,7 +39,7 @@ public class MOCellHVRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws JMetalException, IOException {
     var problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    var referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
+    var referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
