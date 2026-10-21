@@ -3,18 +3,34 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl.agemoea;
 import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 /**
- * Comparator based on the survival score of AGE-MOEA
+ * Comparator based on the survival score of AGE-MOEA: the solution of lower rank is preferred and,
+ * with the same rank, the one of higher survival score.
+ *
+ * <p>The ranks are read from the solutions, as left by the ranking of the
+ * {@link AGEMOEAEnvironmentalSelection}; the comparator does not compute them. By default, they are
+ * those of a {@link FastNonDominatedSortRanking}; when the environmental selection uses another
+ * ranking, the comparator must be given that ranking.
  *
  * @author Annibale Panichella
  */
 public class SurvivalScoreComparator<S extends Solution<?>> implements Comparator<S> {
-    private FastNonDominatedSortRanking<S> ranking;
+    private final Ranking<S> ranking;
 
     public SurvivalScoreComparator() {
-        ranking = new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator<>());
+        this(new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator<>()));
+    }
+
+    /**
+     * @param ranking the ranking of the environmental selection, whose ranks are compared
+     */
+    public SurvivalScoreComparator(Ranking<S> ranking) {
+        Check.notNull(ranking, "ranking");
+        this.ranking = ranking;
     }
 
     /**
