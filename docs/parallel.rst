@@ -25,6 +25,8 @@ The `evaluate()` method receives the list of solutions to be evaluated by a prob
 * `SequentialSolutionListEvaluator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/evaluator/impl/SequentialSolutionListEvaluator.java>`_: the solutions are evaluated sequentially.
 * `MultiThreadedSolutionListEvaluator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/evaluator/impl/MultiThreadedSolutionListEvaluator.java>`_: the solutions are evaluated in parallel, by using the processor cores.
 
+Both evaluators reject a solution evaluated to NaN with an ``InvalidConditionException`` that names the problem (see :ref:`problems`).
+
 An example is shown in the following code snippet:
 
 .. code-block:: java

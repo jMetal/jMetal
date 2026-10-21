@@ -354,6 +354,8 @@ Available Components
 - ``MultiThreadedEvaluation``: parallel evaluation using threads.
 - ``SequentialEvaluationWithArchive`` / ``MultiThreadedEvaluationWithArchive``: variants that additionally store every evaluated solution in an external archive, allowing the result of an algorithm to be taken from the archive instead of from the population.
 
+All of them reject a solution evaluated to NaN with an ``InvalidConditionException`` that names the problem (see :ref:`problems`).
+
 **Solutions Creation Components** (``common.solutionscreation``):
 
 - ``RandomSolutionsCreation``: Standard random initialization.
