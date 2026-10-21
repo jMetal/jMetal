@@ -4,6 +4,36 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/21/2026] The DAS-CMOP problems (Fan et al., "Difficulty Adjustable and Scalable Constrained
+  Multiobjective Test Problem Toolkit", Evolutionary Computation, 2020), ``DASCMOP1`` to
+  ``DASCMOP9`` in the package ``org.uma.jmetal.problem.multiobjective.dascmop``, with the
+  difficulty triplet (eta, zeta, gamma) as a constructor argument. They follow Table 2 of the
+  paper; the default triplet of each problem is that of PlatEMO, whose distance function of
+  DAS-CMOP9 differs from the paper's, and whose Type-II constraint with zeta = 1 has its sign
+  reversed.
+
+* [10/21/2026] The environmental selection of RVEA, RVEA* and iRVEA discards the candidates with a
+  non-finite objective value instead of failing. Such values appear, for instance, in RE22, whose
+  second objective (the sum of the constraint violations) is infinite when a variable is exactly at
+  its lower bound of 0, as it often is with the bound repair of some operators. The angles and
+  distances of the APD are not defined for these candidates, and they are worse than any finite one
+  in that objective. The selection still fails if no candidate is finite.
+
+* [10/20/2026] ``RVEABuilder`` and ``IRVEABuilder`` accept problems with constraints, which they
+  rejected. RVEA handles them as C-RVEA, the technique of the paper of RVEA (Cheng et al., 2016,
+  Section VII) that PlatEMO also implements: in each niche, the feasible solution with the lowest
+  APD survives or, if there is none, the least violating one. Its result is the set of feasible
+  non-dominated solutions of the final population. iRVEA, which PlatEMO does not include, uses a
+  feasibility-first layer of jMetal that is experimental and pending validation: it is not
+  published and has only been run on a few classic problems. ``RVEAStarBuilder`` still rejects
+  problems with constraints,
+  because C-RVEA combined with the non-dominated filter of RVEA* lets infeasible solutions remove
+  every feasible one (see the `documentation
+  <https://jmetal.readthedocs.io/en/latest/constrained-rvea.html>`_).
+
+* [10/20/2026] Fixed ``LIRCMOP14``: it declared three constraints and computed the third one, the
+  ring between radii 1.6 and 1.75, but did not store it, so that constraint was never violated.
+
 * [10/20/2026] The CF problems (Zhou, Xiang and He, 2021) default to 13 variables and 3 objectives,
   M + 10 variables as in the code of the paper (``ZXH_CF`` in PlatEMO). With the former default of 3
   variables they had no distance variables: ``CF3``, ``CF8``, ``CF9`` and ``CF14``, whose Ackley
@@ -20,13 +50,15 @@ only includes the latest entries.
   constructors with 3 objectives.
 
 * [10/20/2026] Bounded archives (``CrowdingDistanceArchive``, ``AngleArchive``,
-  ``CosineSimilarityArchive``), the replacement of the component-based SMS-EMOA and the replacement
-  of the component-based PAES honor constraints. They compared solutions with plain Pareto
-  dominance, so on constrained problems an infeasible solution could replace a feasible one. They
-  now use Deb's constrained-domination principle (``DominanceWithConstraintsComparator``), as
-  ``NonDominatedSolutionListArchive`` already did; ``SMSEMOAReplacement`` ranks the whole population
-  instead of updating it incrementally when the solutions have constraints. Results on problems
-  without constraints do not change.
+  ``CosineSimilarityArchive``) and the replacement of the component-based PAES honor constraints.
+  They compared solutions with plain Pareto dominance, so on constrained problems an infeasible
+  solution could replace a feasible one. They now use Deb's constrained-domination principle
+  (``DominanceWithConstraintsComparator``), as ``NonDominatedSolutionListArchive`` already did.
+  ``SMSEMOAReplacement`` ranks the whole population instead of updating it incrementally when the
+  solutions have constraints, so it honors the comparator of its ranking; the default ranking of
+  ``SMSEMOABuilder`` ignores constraints, so a constraint-aware ranking must be set to use it (see
+  the `documentation <https://jmetal.readthedocs.io/en/latest/constraints.html>`_). Results on
+  problems without constraints do not change.
 
 * [10/15/2026] The Maven build pins ``maven-surefire-plugin`` to 3.5.3 (and upgrades
   ``maven-failsafe-plugin`` from 3.2.5 to 3.5.3). Its version was not set, so Maven used its

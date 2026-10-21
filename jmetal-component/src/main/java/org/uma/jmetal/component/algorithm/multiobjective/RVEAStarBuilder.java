@@ -5,8 +5,12 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
 
-/** Builds RVEA* (Cheng et al., 2016) with reference-vector regeneration for irregular fronts. */
+/**
+ * Builds RVEA* (Cheng et al., 2016) with reference-vector regeneration for irregular fronts. RVEA*
+ * does not handle constraints, so problems with constraints are rejected.
+ */
 public class RVEAStarBuilder<S extends Solution<?>> extends RVEABuilder<S> {
   public RVEAStarBuilder(
       Problem<S> problem,
@@ -47,5 +51,6 @@ public class RVEAStarBuilder<S extends Solution<?>> extends RVEABuilder<S> {
         alpha,
         fr,
         vectors);
+    Check.that(problem.numberOfConstraints() == 0, "RVEA* requires an unconstrained problem");
   }
 }

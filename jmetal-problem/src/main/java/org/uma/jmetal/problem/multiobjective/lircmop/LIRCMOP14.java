@@ -34,6 +34,7 @@ public class LIRCMOP14 extends LIRCMOP13 {
 
     solution.constraints()[0] = constraint[0];
     solution.constraints()[1] = constraint[1];
+    solution.constraints()[2] = constraint[2];
   }
 
   protected double g1(double[] x) {

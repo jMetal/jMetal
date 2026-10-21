@@ -17,6 +17,10 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  * Pareto/strengthened dominance, angular clustering, and an epsilon-indicator archive. See {@code
  * docs/rvea-variants.md} for choices resolving underspecified steps in the paper.
  *
+ * <p>Constraints are handled by an experimental feasibility-first layer of jMetal, pending
+ * validation: neither the paper nor any other publication describes it, PlatEMO has no iRVEA to
+ * compare with, and it has only been run on a few classic problems. It may change or be removed.
+ *
  * @param <S> solution type
  */
 public class IRVEAEnvironmentalSelection<S extends Solution<?>>
@@ -28,6 +32,8 @@ public class IRVEAEnvironmentalSelection<S extends Solution<?>>
   private final double lateStageFraction;
   private final double epsilonKappa;
   private List<S> archive = List.of();
+  private final FeasibilityFirstSelection<S> constraintSelection =
+      new FeasibilityFirstSelection<>();
 
   public IRVEAEnvironmentalSelection(
       int objectives, int maxGenerations, double alpha, double fr, int divisions) {
@@ -206,6 +212,56 @@ public class IRVEAEnvironmentalSelection<S extends Solution<?>>
   @Override
   protected List<S> finish(List<S> survivors) {
     return survivors;
+  }
+
+  /**
+   * Experimental feasibility-first constraint handling of jMetal, pending validation, as PlatEMO
+   * has no iRVEA: the original selection runs on the feasible candidates, and the least violating
+   * infeasible ones fill the remaining niches occupied by the candidates. Without feasible
+   * candidates, copies of the archive survive. When every candidate is feasible, this is the
+   * original selection.
+   */
+  @Override
+  protected List<S> selectNextPopulation(List<S> population) {
+    var partition = constraintSelection.partition(population);
+    if (partition.infeasible().isEmpty()) {
+      return selectAndUpdate(population);
+    }
+    // Count the occupied niches before the vectors change, without drawing random numbers
+    int capacity =
+        partition.feasible().size() >= populationSize() ? 0 : occupiedNiches(population);
+    List<S> survivors =
+        partition.feasible().isEmpty() ? archive() : selectAndUpdate(partition.feasible());
+    return constraintSelection.supplement(partition, survivors, capacity);
+  }
+
+  private int occupiedNiches(List<S> population) {
+    boolean[] active = RVEAGeometry.active(RVEAGeometry.translate(population), allVectors());
+    int occupied = 0;
+    for (boolean present : active) {
+      if (present) {
+        occupied++;
+      }
+    }
+    return Math.min(occupied, populationSize());
+  }
+
+  /**
+   * Counts candidate visits (parents may be visited repeatedly), not problem evaluations. Affected
+   * selections contain at least one infeasible candidate; comparisons count fallback comparator
+   * calls, and infeasible survivors count the appended fallback solutions.
+   */
+  public record ConstraintStatistics(
+      long candidateVisits,
+      long feasibleVisits,
+      long infeasibleVisits,
+      long affectedSelections,
+      long violationComparisons,
+      long infeasibleSurvivors) {}
+
+  /** Returns cumulative, immutable constraint-layer counters for this selection instance. */
+  public final ConstraintStatistics constraintStatistics() {
+    return constraintSelection.statistics();
   }
 
   /** Returns copies so that callers cannot modify the archive used by future generations. */

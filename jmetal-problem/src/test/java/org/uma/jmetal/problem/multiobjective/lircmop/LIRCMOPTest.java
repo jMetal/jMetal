@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -92,6 +93,36 @@ class LIRCMOPTest {
       // Assert
       assertEquals(0.5 + 0.7057, solution.objectives()[0], 1e-12);
       assertEquals(1 - 0.25 + 0.7057, solution.objectives()[1], 1e-12);
+    }
+  }
+
+  @Nested
+  @DisplayName("When evaluating the constraints of LIRCMOP14")
+  class LIRCMOP14ConstraintTests {
+
+    @Test
+    @DisplayName(
+        "given objectives whose squared norm is between 1.6^2 and 1.75^2, when the constraints"
+            + " are evaluated, then only the third one is violated")
+    void givenObjectivesInTheThirdRing_whenEvaluated_thenOnlyTheThirdConstraintIsViolated() {
+      // Arrange: the squared norm of the objectives is 1.7^2
+      LIRCMOP14 problem = new LIRCMOP14();
+      DoubleSolution solution = problem.createSolution();
+      for (int i = 0; i < 3; i++) {
+        solution.objectives()[i] = Math.sqrt(1.7 * 1.7 / 3);
+      }
+
+      // Act
+      problem.evaluateConstraints(solution);
+
+      // Assert: c = (f - r1^2)(f - r2^2), with f = 1.7^2, for each pair of radii
+      double f = 1.7 * 1.7;
+      assertEquals((f - 3 * 3) * (f - 2 * 2), solution.constraints()[0], 1e-12);
+      assertEquals((f - 1.9 * 1.9) * (f - 1.8 * 1.8), solution.constraints()[1], 1e-12);
+      assertEquals((f - 1.75 * 1.75) * (f - 1.6 * 1.6), solution.constraints()[2], 1e-12);
+      assertTrue(solution.constraints()[0] > 0);
+      assertTrue(solution.constraints()[1] > 0);
+      assertTrue(solution.constraints()[2] < 0);
     }
   }
 }
