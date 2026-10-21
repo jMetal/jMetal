@@ -233,7 +233,11 @@ selection code is independently implemented from the mathematical description.
 Implemented behavior
 ----------------------
 
-All objectives are minimized. The builders reject constrained problems.
+All objectives are minimized. On problems with constraints, RVEA selects as
+C-RVEA, iRVEA uses a feasibility-first layer of jMetal pending validation, and
+RVEA* rejects them
+(see :ref:`constrained-rvea`). Without constraints, or when every candidate is
+feasible, the behavior below is unchanged.
 ``RVEABuilder``, ``RVEAStarBuilder``, and ``IRVEABuilder`` return the existing
 ``EvolutionaryAlgorithm<S>`` and use its evaluation, variation, replacement,
 termination, and observer components.
@@ -319,7 +323,7 @@ Configuration
 ---------------
 
 The existing RVEA constructors and component setters remain available. The
-builders now reject constrained problems, invalid numerical directions, and
+builders reject invalid numerical directions and
 budgets smaller than the initial population. Callers must also allow a survivor
 population smaller than N instead of assuming empty niches are filled.
 

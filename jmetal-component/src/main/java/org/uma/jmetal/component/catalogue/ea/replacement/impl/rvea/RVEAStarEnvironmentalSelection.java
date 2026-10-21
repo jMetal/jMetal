@@ -13,6 +13,10 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  * <p>Cheng et al. (2016), Section VI and Algorithm 4. Selection can retain up to 2N solutions;
  * angular truncation limits the final population to N. Also known as RVEAa in PlatEMO.
  *
+ * <p>RVEA* does not handle constraints, and {@code RVEAStarBuilder} rejects problems with them: the
+ * paper does not define a constrained RVEA*, and combining C-RVEA with the non-dominated filter of
+ * RVEAa, as PlatEMO does, lets infeasible solutions remove every feasible one.
+ *
  * @param <S> solution type
  */
 public class RVEAStarEnvironmentalSelection<S extends Solution<?>>
