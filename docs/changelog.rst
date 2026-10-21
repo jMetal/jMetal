@@ -34,13 +34,15 @@ only includes the latest entries.
   constructors with 3 objectives.
 
 * [10/20/2026] Bounded archives (``CrowdingDistanceArchive``, ``AngleArchive``,
-  ``CosineSimilarityArchive``), the replacement of the component-based SMS-EMOA and the replacement
-  of the component-based PAES honor constraints. They compared solutions with plain Pareto
-  dominance, so on constrained problems an infeasible solution could replace a feasible one. They
-  now use Deb's constrained-domination principle (``DominanceWithConstraintsComparator``), as
-  ``NonDominatedSolutionListArchive`` already did; ``SMSEMOAReplacement`` ranks the whole population
-  instead of updating it incrementally when the solutions have constraints. Results on problems
-  without constraints do not change.
+  ``CosineSimilarityArchive``) and the replacement of the component-based PAES honor constraints.
+  They compared solutions with plain Pareto dominance, so on constrained problems an infeasible
+  solution could replace a feasible one. They now use Deb's constrained-domination principle
+  (``DominanceWithConstraintsComparator``), as ``NonDominatedSolutionListArchive`` already did.
+  ``SMSEMOAReplacement`` ranks the whole population instead of updating it incrementally when the
+  solutions have constraints, so it honors the comparator of its ranking; the default ranking of
+  ``SMSEMOABuilder`` ignores constraints, so a constraint-aware ranking must be set to use it (see
+  the `documentation <https://jmetal.readthedocs.io/en/latest/constraints.html>`_). Results on
+  problems without constraints do not change.
 
 * [10/15/2026] The Maven build pins ``maven-surefire-plugin`` to 3.5.3 (and upgrades
   ``maven-failsafe-plugin`` from 3.2.5 to 3.5.3). Its version was not set, so Maven used its
