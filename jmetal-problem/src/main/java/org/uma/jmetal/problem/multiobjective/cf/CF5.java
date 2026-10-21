@@ -22,9 +22,9 @@ public class CF5 extends AbstractDoubleProblem {
   private double alpha = 1.0 / 4.0;
   private double belta = 3.0 / 4.0;
 
-  /** Create a default CF5 problem (3 variables and 3 objectives) */
+  /** Create a default CF5 problem (13 variables and 3 objectives) */
   public CF5() {
-    this(3, 3);
+    this(13, 3);
   }
 
   /**

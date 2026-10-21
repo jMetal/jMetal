@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Class representing the constrained function CF3: A-type constraint + r = 1/2 + Convex PF +
@@ -22,10 +23,10 @@ public class CF3 extends AbstractDoubleProblem {
   private final double r = 1.0 / 2.0; // The parameter determines the radius
 
   /**
-   * Create a default CF3 problem (3 variables and 3 objectives)
+   * Create a default CF3 problem (13 variables and 3 objectives)
    */
   public CF3() {
-    this(3, 3);
+    this(13, 3);
   }
 
   /**
@@ -35,6 +36,15 @@ public class CF3 extends AbstractDoubleProblem {
    * @param numberOfObjectives Number of objective functions
    */
   public CF3(Integer numberOfVariables, Integer numberOfObjectives) {
+    Check.that(
+        numberOfVariables > numberOfObjectives,
+        () ->
+            "CF3 needs more variables ("
+                + numberOfVariables
+                + ") than objectives ("
+                + numberOfObjectives
+                + "): its distance function averages over the variables after the first "
+                + numberOfObjectives);
     numberOfObjectives(numberOfObjectives);
     numberOfConstraints(2);
     name("CF3");

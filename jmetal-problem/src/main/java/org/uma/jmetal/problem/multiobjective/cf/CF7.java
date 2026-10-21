@@ -22,9 +22,9 @@ public class CF7 extends AbstractDoubleProblem {
   private double belta = 3.0 / 4.0;
   private double r = 1.0 / 2.0; // The parameter determines the radius
 
-  /** Create a default CF7 problem (3 variables and 3 objectives) */
+  /** Create a default CF7 problem (13 variables and 3 objectives) */
   public CF7() {
-    this(3, 3);
+    this(13, 3);
   }
 
   /**

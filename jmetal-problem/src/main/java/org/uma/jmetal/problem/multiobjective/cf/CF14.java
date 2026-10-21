@@ -7,6 +7,7 @@ import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Class representing the constrained function CF14: D-type constraint + r = 1/4 + Linear PF +
@@ -24,9 +25,9 @@ public class CF14 extends AbstractDoubleProblem {
   private double belta = 3.0 / 4.0;
   private double r = 1.0 / 4.0; // The parameter determines the radius
 
-  /** Create a default CF14 problem (3 variables and 3 objectives) */
+  /** Create a default CF14 problem (13 variables and 3 objectives) */
   public CF14() {
-    this(3, 3); // 3 objectives and 3 decision variables
+    this(13, 3);
   }
 
   /**
@@ -36,6 +37,15 @@ public class CF14 extends AbstractDoubleProblem {
    * @param numberOfObjectives Number of objective functions
    */
   public CF14(Integer numberOfVariables, Integer numberOfObjectives) {
+    Check.that(
+        numberOfVariables > numberOfObjectives,
+        () ->
+            "CF14 needs more variables ("
+                + numberOfVariables
+                + ") than objectives ("
+                + numberOfObjectives
+                + "): its distance function averages over the variables after the first "
+                + numberOfObjectives);
     numberOfObjectives(numberOfObjectives);
     name("CF14");
 
