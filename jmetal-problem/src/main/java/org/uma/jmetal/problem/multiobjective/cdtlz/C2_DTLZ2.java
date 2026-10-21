@@ -28,6 +28,7 @@ public class C2_DTLZ2 extends DTLZ2 {
     super(numberOfVariables, numberOfObjectives) ;
 
     numberOfConstraints(1);
+    name("C2_DTLZ2");
 
     if (numberOfObjectives() == 3) {
       rValue = 0.4 ;

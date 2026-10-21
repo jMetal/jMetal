@@ -34,6 +34,10 @@ only includes the latest entries.
 * [10/20/2026] Fixed ``LIRCMOP14``: it declared three constraints and computed the third one, the
   ring between radii 1.6 and 1.75, but did not store it, so that constraint was never violated.
 
+* [10/20/2026] Each C-DTLZ problem has its own name. They inherited that of the DTLZ problem they
+  extend (``C1_DTLZ1`` was named ``DTLZ1``), so jMetal's experiments, which name output directories
+  and look up reference fronts by problem name, mixed them up with the DTLZ problems.
+
 * [10/20/2026] The CF problems (Zhou, Xiang and He, 2021) default to 13 variables and 3 objectives,
   M + 10 variables as in the code of the paper (``ZXH_CF`` in PlatEMO). With the former default of 3
   variables they had no distance variables: ``CF3``, ``CF8``, ``CF9`` and ``CF14``, whose Ackley

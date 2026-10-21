@@ -48,6 +48,22 @@ class CDTLZTest {
       assertEquals(variables, problem.numberOfVariables());
       assertEquals(constraints, problem.numberOfConstraints());
     }
+
+    @ParameterizedTest(name = "{0}")
+    @CsvSource({"C1_DTLZ1", "C1_DTLZ3", "C2_DTLZ2", "ConvexC2_DTLZ2", "C3_DTLZ1", "C3_DTLZ4"})
+    @DisplayName("given a problem, when created, then it has its own name, not that of its DTLZ")
+    void givenAProblem_whenCreated_thenItHasItsOwnName(String name)
+        throws ReflectiveOperationException {
+      // Act
+      DoubleProblem problem =
+          (DoubleProblem)
+              Class.forName("org.uma.jmetal.problem.multiobjective.cdtlz." + name)
+                  .getConstructor()
+                  .newInstance();
+
+      // Assert
+      assertEquals(name, problem.name());
+    }
   }
 
   @Nested

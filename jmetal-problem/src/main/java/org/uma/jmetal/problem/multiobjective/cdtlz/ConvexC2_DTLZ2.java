@@ -41,6 +41,7 @@ public class ConvexC2_DTLZ2 extends DTLZ2 {
     super(numberOfVariables, numberOfObjectives);
 
     numberOfConstraints(1);
+    name("ConvexC2_DTLZ2");
   }
 
   @Override
