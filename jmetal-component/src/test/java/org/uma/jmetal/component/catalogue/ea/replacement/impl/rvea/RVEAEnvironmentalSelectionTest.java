@@ -1,6 +1,7 @@
 package org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.within;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -17,6 +18,48 @@ class RVEAEnvironmentalSelectionTest {
   @Nested
   @DisplayName("Execute method behavior tests")
   class ExecuteMethodBehaviorTests {
+
+    @Test
+    @DisplayName(
+        "given a candidate with an infinite objective, when selecting, then it is discarded and the rest are selected as without it")
+    void givenCandidateWithInfiniteObjective_whenSelecting_thenItIsDiscarded() {
+      // Arrange
+      RVEAEnvironmentalSelection<DoubleSolution> withoutIt =
+          new RVEAEnvironmentalSelection<>(3, 10, 2.0, 0.5, 1);
+      RVEAEnvironmentalSelection<DoubleSolution> withIt =
+          new RVEAEnvironmentalSelection<>(3, 10, 2.0, 0.5, 1);
+
+      DoubleSolution solution1 = solutionWithObjectives(1.0, 10.0, 10.0);
+      DoubleSolution solution2 = solutionWithObjectives(10.0, 1.0, 10.0);
+      DoubleSolution solution3 = solutionWithObjectives(2.0, 2.0, 10.0);
+      DoubleSolution infinite = solutionWithObjectives(0.5, Double.POSITIVE_INFINITY, 0.5);
+
+      // Act
+      List<DoubleSolution> expected =
+          withoutIt.execute(List.of(solution1, solution2, solution3), 3);
+      List<DoubleSolution> result =
+          withIt.execute(List.of(solution1, infinite, solution2, solution3), 3);
+
+      // Assert
+      assertThat(result).doesNotContain(infinite).containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    @DisplayName(
+        "given only candidates with non-finite objectives, when selecting, then it fails")
+    void givenOnlyNonFiniteCandidates_whenSelecting_thenItFails() {
+      // Arrange
+      RVEAEnvironmentalSelection<DoubleSolution> environmentalSelection =
+          new RVEAEnvironmentalSelection<>(2, 10, 2.0, 0.5, 1);
+      List<DoubleSolution> population =
+          List.of(
+              solutionWithObjectives(1.0, Double.POSITIVE_INFINITY),
+              solutionWithObjectives(Double.NaN, 1.0));
+
+      // Act and assert
+      assertThatThrownBy(() -> environmentalSelection.execute(population, 2))
+          .hasMessageContaining("At least one candidate must have finite objective values");
+    }
 
     @Test
     @DisplayName(

@@ -4,6 +4,13 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/21/2026] The environmental selection of RVEA, RVEA* and iRVEA discards the candidates with a
+  non-finite objective value instead of failing. Such values appear, for instance, in RE22, whose
+  second objective (the sum of the constraint violations) is infinite when a variable is exactly at
+  its lower bound of 0, as it often is with the bound repair of some operators. The angles and
+  distances of the APD are not defined for these candidates, and they are worse than any finite one
+  in that objective. The selection still fails if no candidate is finite.
+
 * [10/20/2026] ``RVEABuilder`` and ``IRVEABuilder`` accept problems with constraints, which they
   rejected. RVEA handles them as C-RVEA, the technique of the paper of RVEA (Cheng et al., 2016,
   Section VII) that PlatEMO also implements: in each niche, the feasible solution with the lowest

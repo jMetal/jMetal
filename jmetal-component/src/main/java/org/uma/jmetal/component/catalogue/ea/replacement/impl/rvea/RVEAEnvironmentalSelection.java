@@ -14,7 +14,10 @@ import org.uma.jmetal.util.referencepoint.ReferencePointGenerator;
  *
  * <p>Implements Cheng et al., IEEE TEVC (2016), doi:10.1109/TEVC.2016.2519378. Empty niches
  * contribute no survivor, so the population can shrink. This component is stateful; create a new
- * instance for each run. Objectives must be finite and minimized.
+ * instance for each run. Objectives must be minimized. Candidates with a non-finite objective value
+ * (for instance, an infinite constraint violation used as an objective) are discarded before the
+ * selection, since the angles and distances of the APD are not defined for them and they are worse
+ * than any finite candidate in that objective; at least one candidate must be finite.
  *
  * <p>Constraints are handled as in C-RVEA (Cheng et al., 2016, Section VII, Algorithm 5), which is
  * also the RVEA of PlatEMO: in each niche, the feasible candidate with the lowest APD survives or,
@@ -66,8 +69,14 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
     Check.that(
         populationSize == initialReferenceVectors.length,
         "Population size must match the number of predefined reference vectors");
+    List<S> finite = jointPopulation.stream().filter(RVEAEnvironmentalSelection::hasFiniteObjectives).toList();
+    Check.that(!finite.isEmpty(), "At least one candidate must have finite objective values");
     currentGeneration++;
-    return selectNextPopulation(jointPopulation);
+    return selectNextPopulation(finite.size() == jointPopulation.size() ? jointPopulation : finite);
+  }
+
+  private static boolean hasFiniteObjectives(Solution<?> solution) {
+    return Arrays.stream(solution.objectives()).allMatch(Double::isFinite);
   }
 
   /** Selects the survivors of a generation; subclasses may add their own constraint handling. */
@@ -96,9 +105,6 @@ public class RVEAEnvironmentalSelection<S extends Solution<?>> {
       Check.that(
           solution.objectives().length == numberOfObjectives,
           "Solution objective count must match the reference vectors");
-      Check.that(
-          Arrays.stream(solution.objectives()).allMatch(Double::isFinite),
-          "Objective values must be finite");
     }
   }
 
