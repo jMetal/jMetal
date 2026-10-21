@@ -28,6 +28,15 @@ only includes the latest entries.
   distances of the APD are not defined for these candidates, and they are worse than any finite one
   in that objective. The selection still fails if no candidate is finite.
 
+* [10/21/2026] Reference fronts of the C-DTLZ problems with 3 objectives (``C1_DTLZ1.3D.csv``,
+  ``C1_DTLZ3.3D.csv``, ``C2_DTLZ2.3D.csv``, ``ConvexC2_DTLZ2.3D.csv``, ``C3_DTLZ1.3D.csv`` and
+  ``C3_DTLZ4.3D.csv``) and of the DAS-CMOP problems with their default difficulty triplets
+  (``DASCMOP1.csv`` to ``DASCMOP6.csv``, and ``DASCMOP7.3D.csv`` to ``DASCMOP9.3D.csv``; another
+  triplet changes the front) in ``resources/referenceFronts``. They are written from the definitions
+  of the problems by ``scripts/cdtlz_reference_fronts.py`` and ``scripts/dascmop_reference_fronts.py``
+  of Evolver, every point is the objective vector of a feasible solution, and
+  ``CDTLZReferenceFrontsTest`` and ``DASCMOPReferenceFrontsTest`` check them against the problems.
+
 * [10/20/2026] ``RVEABuilder`` and ``IRVEABuilder`` accept problems with constraints, which they
   rejected. RVEA handles them as C-RVEA, the technique of the paper of RVEA (Cheng et al., 2016,
   Section VII) that PlatEMO also implements: in each niche, the feasible solution with the lowest
