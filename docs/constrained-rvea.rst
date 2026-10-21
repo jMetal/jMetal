@@ -132,7 +132,8 @@ example:
   algorithm.run();
   var result = algorithm.result(); // The feasible non-dominated solutions.
 
-``ConstrainedRVEAExample`` prints this small run and writes no result files. Set
+``ConstrainedRVEAExample`` runs RVEA in the same way on Srinivas, prints the
+feasible solutions and writes them to ``VAR.csv`` and ``FUN.csv``. Set
 the seed before construction, particularly for the initial adaptive vector set of
 iRVEA; use separate JVMs to isolate concurrent runs with the default shared RNG.
 
