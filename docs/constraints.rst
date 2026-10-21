@@ -174,7 +174,28 @@ Given two solutions, the `OverallConstraintViolationDegreeComparator <https://gi
 
 Note that the violation degree of a solution is a negative number.
 
-The constrained dominance principle of NSGA-II (feasible solutions dominate infeasible ones; among infeasible solutions, the one with the lowest violation dominates) is implemented by the `DominanceWithConstraintsComparator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/comparator/dominanceComparator/impl/DominanceWithConstraintsComparator.java>`_ class, which combines a constraint comparator (by default, ``OverallConstraintViolationDegreeComparator``) with Pareto dominance. This comparator is the default one used by the non-dominated sorting rankings and by the `NonDominatedSolutionListArchive <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/archive/impl/NonDominatedSolutionListArchive.java>`_ class, so both are constraint-aware out of the box. The bounded archives (``CrowdingDistanceArchive``, ``AngleArchive``, ``CosineSimilarityArchive`` and any subclass of ``AbstractBoundedArchive`` built without an explicit comparator), the replacement of the component-based SMS-EMOA (``SMSEMOAReplacement``, which ranks the whole population when the solutions have constraints) and the replacement of the component-based PAES (``PAESBuilder``) follow the same principle, so an infeasible solution never replaces a feasible one. Without constraints, ``DominanceWithConstraintsComparator`` is plain Pareto dominance.
+The constrained dominance principle of NSGA-II (feasible solutions dominate infeasible ones; among infeasible solutions, the one with the lowest violation dominates) is implemented by the `DominanceWithConstraintsComparator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/comparator/dominanceComparator/impl/DominanceWithConstraintsComparator.java>`_ class, which combines a constraint comparator (by default, ``OverallConstraintViolationDegreeComparator``) with Pareto dominance. Without constraints, ``DominanceWithConstraintsComparator`` is plain Pareto dominance.
+
+Whether a component uses this comparator by default depends on the component:
+
+* **Constraint-aware by default**: the `NonDominatedSolutionListArchive <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/archive/impl/NonDominatedSolutionListArchive.java>`_ class; the bounded archives (``CrowdingDistanceArchive``, ``AngleArchive``, ``CosineSimilarityArchive`` and any subclass of ``AbstractBoundedArchive`` built without an explicit comparator); ``StrengthRanking``; ``ExperimentalFastNonDominanceRanking``, which sorts the solutions by their overall constraint violation before the non-dominated sorting; and the replacement of the component-based PAES (``PAESBuilder``). In them, an infeasible solution never replaces a feasible one.
+* **Not constraint-aware by default**: `FastNonDominatedSortRanking <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/ranking/impl/FastNonDominatedSortRanking.java>`_, whose default constructor uses plain Pareto dominance (``DefaultDominanceComparator``), and ``MergeNonDominatedSortRanking``, which only compares objectives and accepts no comparator. Consequently, the builders that use these rankings by default, such as ``NSGAIIBuilder`` and ``SMSEMOABuilder``, **ignore the constraints** unless a constraint-aware ranking is set. The reason is efficiency: computing the constraint violation in every comparison would slow down the non-dominated sorting of problems without constraints, which are the most frequent ones.
+
+To solve a problem with constraints with these algorithms, set a ranking with ``DominanceWithConstraintsComparator``, as in `NSGAIISolvingConstrainedProblemExample <https://github.com/jMetal/jMetal/blob/master/jmetal-component/src/main/java/org/uma/jmetal/component/examples/multiobjective/nsgaii/NSGAIISolvingConstrainedProblemExample.java>`_:
+
+.. code-block:: java
+
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(
+        new DominanceWithConstraintsComparator<>(
+            new OverallConstraintViolationDegreeComparator<>()));
+
+    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+        problem, populationSize, offspringPopulationSize, crossover, mutation)
+        .setTermination(termination)
+        .setRanking(ranking)
+        .build();
+
+The same applies to ``SMSEMOABuilder``: its replacement (``SMSEMOAReplacement``) honors the comparator of the ranking, and ranks the whole population when the solutions have constraints, so it handles them only when it is given a constraint-aware ranking.
 
 Constraint handling in component-based MOEA/D
 ---------------------------------------------
