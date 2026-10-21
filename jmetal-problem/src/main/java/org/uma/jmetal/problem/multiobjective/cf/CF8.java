@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Class representing the constrained function CF8: B-type constraint + r = 3/4 + concave PF +
@@ -23,9 +24,9 @@ public class CF8 extends AbstractDoubleProblem {
   private double belta = 3.0 / 4.0;
   private double r = 3.0 / 4.0; // The parameter determines the radius
 
-  /** Create a default CF8 problem (3 variables and 3 objectives) */
+  /** Create a default CF8 problem (13 variables and 3 objectives) */
   public CF8() {
-    this(3, 3);
+    this(13, 3);
   }
 
   /**
@@ -35,6 +36,15 @@ public class CF8 extends AbstractDoubleProblem {
    * @param numberOfObjectives Number of objective functions
    */
   public CF8(Integer numberOfVariables, Integer numberOfObjectives) {
+    Check.that(
+        numberOfVariables > numberOfObjectives,
+        () ->
+            "CF8 needs more variables ("
+                + numberOfVariables
+                + ") than objectives ("
+                + numberOfObjectives
+                + "): its distance function averages over the variables after the first "
+                + numberOfObjectives);
     numberOfObjectives(numberOfObjectives);
     name("CF8");
 
