@@ -4,6 +4,19 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/21/2026] The MW problems (Z. Ma and Y. Wang, "Evolutionary Constrained Multiobjective
+  Optimization: Test Suite Construction and Performance Comparisons", IEEE Transactions on
+  Evolutionary Computation, 2019), ``MW1`` to ``MW14`` in the package
+  ``org.uma.jmetal.problem.multiobjective.mw``, with 15 variables by default and two objectives, or
+  three for ``MW4``, ``MW8`` and ``MW14``, which are scalable in the number of objectives. The
+  definitions follow the paper; MW7-MW14, which are not in the pages of the paper we could check,
+  follow pymoo, which transcribes the authors' code. They differ from PlatEMO in the decision
+  spaces of MW6 ([0, 1.1]^n), MW11 ([0, sqrt(2)]^n), MW13 and MW14 ([0, 1.5]^n), which PlatEMO
+  reduces to [0, 1]^n by scaling some variables (in MW6 by 1.0999, so that the end (1.1, 0) of the
+  front is out of reach, and in MW11 without scaling x1 in the distance function); in MW4, whose
+  position variables PlatEMO mirrors (with the same front); and in the order of the two constraints
+  of MW12 and MW13, which is that of pymoo.
+
 * [10/21/2026] The reference fronts are all in ``resources/referenceFronts``, in CSV format. The
   directory ``resources/referenceFronts``, with older ``.pf`` copies of some of them (separated by
   spaces or tabs, and in 27 cases different from their CSV counterparts), has been removed, and
