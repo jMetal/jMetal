@@ -57,6 +57,7 @@ public class CRE31 extends AbstractDoubleProblem {
     double x1 = solution.variables().get(0);
     double x2 = solution.variables().get(1);
     double x3 = solution.variables().get(2);
+    double x4 = solution.variables().get(3);
     double x5 = solution.variables().get(4);
     double x6 = solution.variables().get(5);
     double x7 = solution.variables().get(6);
@@ -64,7 +65,7 @@ public class CRE31 extends AbstractDoubleProblem {
     double Vmbp = 10.58 - 0.674 * x1 * x2 - 0.67275 * x2;
     double Vfd = 16.45 - 0.489 * x3 * x7 - 0.843 * x5 * x6;
 
-    constraint[0] = -(1.0 / (x1 * x2 * x2 * x3)) + 1.0 / 27.0;
+    constraint[0] = 1 - (1.16 - 0.3717 * x2 * x4 - 0.0092928 * x3);
     constraint[1] = 0.32 -(0.261 - 0.0159 * x1 * x2 - 0.06486 * x1 -  0.019 * x2 * x7 + 0.0144 * x3 * x5 + 0.0154464 * x6);
     constraint[2] =  0.32 -(0.214 + 0.00817 * x5 - 0.045195 * x1 - 0.0135168 * x1 + 0.03099 * x2 * x6 - 0.018 * x2 * x7  + 0.007176 * x3 + 0.023232 * x3 - 0.00364 * x5 * x6 - 0.018 * x2 * x2);
     constraint[3] = 0.32 -(0.74 - 0.61 * x2 - 0.031296 * x3 - 0.031872 * x7 + 0.227 * x2 * x2);

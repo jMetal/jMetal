@@ -19,8 +19,8 @@ public class CRE21 extends AbstractDoubleProblem {
     numberOfConstraints(3);
     name("CRE21");
 
-    List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);
-    List<Double> upperLimit = List.of(0.45, 0.10, 0.10);
+    List<Double> lowerLimit = List.of(0.00001, 0.00001, 1.0);
+    List<Double> upperLimit = List.of(100.0, 100.0, 3.0);
 
     variableBounds(lowerLimit, upperLimit);
   }
@@ -49,7 +49,7 @@ public class CRE21 extends AbstractDoubleProblem {
     x3 = solution.variables().get(2);
 
     constraint[0] = 0.1 - solution.objectives()[0];
-    constraint[1] = 100000.0 - -solution.objectives()[1];
+    constraint[1] = 100000.0 - solution.objectives()[1];
     constraint[2] = 100000 - ((80.0 * Math.sqrt(1.0 + x3 * x3)) / (x3 * x2));
 
     for (int i = 0; i < numberOfConstraints(); i++) {
