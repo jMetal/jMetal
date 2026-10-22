@@ -4,6 +4,16 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/22/2026] Fixed ``NormalizedHypervolume``. The constructor with a reference point
+  (``new NormalizedHypervolume(double[])``) never worked: ``compute`` always failed because the
+  reference front was null. It now takes the box between the origin and the point as its reference,
+  so the indicator is the fraction of the box that the front does not dominate (``PISAHypervolume``
+  assumes the reference point (1, ..., 1), so the front is scaled by the point). Computing the
+  indicator without a reference front, or with a reference front whose hypervolume is zero, now
+  throws an ``InvalidConditionException`` instead of a ``NullPointerException`` or returning
+  ``-Infinity``, and the hypervolume of the reference front is computed once instead of in every
+  call.
+
 * [10/22/2026] Fixed ``AdaptiveGrid``, the grid of PAES, PESA-II and the grid-based archives: it
   initialized the upper limit of each objective with ``Double.MIN_VALUE``, the smallest positive
   double, so for an objective whose values are all negative the grid covered [min, 0] instead of
