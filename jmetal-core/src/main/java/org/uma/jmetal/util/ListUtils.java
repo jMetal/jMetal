@@ -3,10 +3,8 @@ package org.uma.jmetal.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.permutation.PermutationFactory;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -48,12 +46,19 @@ public class ListUtils {
             + numberOfElementsToSelect
             + ")");
 
-    List<Integer> selectedIndices = PermutationFactory
-        .createIntegerPermutation(list.size(), randomGenerator)
-        .subList(0, numberOfElementsToSelect) ;
+    // A partial Fisher-Yates shuffle of the indices: only the selected positions are drawn, so the
+    // cost is one random number per selected element instead of a whole permutation of the list
+    int[] indices = IntStream.range(0, list.size()).toArray();
+    List<S> selectedElements = new ArrayList<>(numberOfElementsToSelect);
+    for (int i = 0; i < numberOfElementsToSelect; i++) {
+      int j = randomGenerator.getRandomValue(i, indices.length - 1);
+      int selectedIndex = indices[j];
+      indices[j] = indices[i];
+      indices[i] = selectedIndex;
+      selectedElements.add(list.get(selectedIndex));
+    }
 
-    return selectedIndices.stream().map(list::get).collect(
-        Collectors.toList());
+    return selectedElements;
   }
 
   /**
