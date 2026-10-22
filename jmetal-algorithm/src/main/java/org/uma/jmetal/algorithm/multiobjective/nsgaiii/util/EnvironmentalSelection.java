@@ -18,6 +18,9 @@ public class EnvironmentalSelection<S extends Solution<?>>
   private List<ReferencePoint<S>> referencePoints;
   private int numberOfObjectives;
 
+  /** The ideal point of the first front, set by {@link #translateObjectives(List)}. */
+  private List<Double> idealPoint;
+
   public EnvironmentalSelection(Builder<S> builder) {
     fronts = builder.getFronts();
     solutionsToSelect = builder.getSolutionsToSelet();
@@ -57,6 +60,8 @@ public class EnvironmentalSelection<S extends Solution<?>>
         }
       }
     }
+
+    idealPoint = ideal_point;
 
     return ideal_point;
   }
@@ -126,7 +131,26 @@ public class EnvironmentalSelection<S extends Solution<?>>
     return x;
   }
 
+  /**
+   * Computes the intercepts of the hyperplane through the extreme points with the axes that go
+   * through the ideal point, as the normalization of NSGA-III defines them (Deb and Jain, 2014):
+   * the hyperplane is built with the objectives translated by the ideal point, and each intercept
+   * is returned in the original objective space, that is, the ideal point plus the intercept of
+   * the translated hyperplane, so that {@link #normalizeObjectives(List, List, List)} subtracts the
+   * ideal point from it.
+   *
+   * <p>{@link #translateObjectives(List)} must have been called before, as it translates the
+   * objectives and sets the ideal point.
+   *
+   * @param population the population
+   * @param extreme_points the extreme points, one for each objective
+   * @return the intercepts, one for each objective
+   */
   public List<Double> constructHyperplane(List<S> population, List<S> extreme_points) {
+    if (idealPoint == null) {
+      throw new JMetalException("The objectives must be translated before building the hyperplane");
+    }
+
     // Check whether there are duplicate extreme points.
     // This might happen but the original paper does not mention how to deal with
     // it.
@@ -157,14 +181,14 @@ public class EnvironmentalSelection<S extends Solution<?>>
       for (S s : extreme_points) {
         List<Double> aux = new ArrayList<>();
         for (int i = 0; i < numberOfObjectives; i++)
-          aux.add(s.objectives()[i]);
+          aux.add(getAttribute(s).get(i)); // the objective translated by the ideal point
         A.add(aux);
       }
       List<Double> x = guassianElimination(A, b);
 
       // Find intercepts
       for (int f = 0; f < numberOfObjectives; f += 1) {
-        intercepts.add(1.0 / x.get(f));
+        intercepts.add(idealPoint.get(f) + 1.0 / x.get(f));
       }
     }
     return intercepts;
