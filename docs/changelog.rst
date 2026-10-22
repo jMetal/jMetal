@@ -49,6 +49,15 @@ only includes the latest entries.
   were wrong too. The coordinates are now translated before computing the contributions, and the
   reference point of a negative maximum is the maximum divided by 1.1.
 
+* [10/22/2026] Fixed the hypervolume with a reference point with negative coordinates:
+  ``ReferencePointUtils.createReferenceFrontFromReferencePoint`` put zeros out of the axes of the
+  front it builds, and ``Hypervolume3D`` started the maximum of the reference front from zero, so
+  the negative coordinates of a reference point became zero. With the reference point (-1, -1),
+  ``WFGHypervolume`` returned 9 for the point (-3, -3) instead of 4. Positive reference points are
+  not affected. The classic NSGA-III also uses the worst values of the first front as intercepts,
+  as the paper says, when the extreme points do not define a valid hyperplane (it was NaN, for
+  example, with an objective that is constant).
+
 * [10/22/2026] Fixed the normalization of the classic NSGA-III (``EnvironmentalSelection`` of
   ``jmetal-algorithm``). The hyperplane was built with the objectives of the extreme points as they
   are, instead of translated by the ideal point as the paper does, so when the ideal point was not
