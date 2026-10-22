@@ -38,6 +38,28 @@ only includes the latest entries.
   negative, such as RE42 and several problems of the RWA suite. It now uses ``-Double.MAX_VALUE``,
   and new unit tests cover matrices with negative columns.
 
+* [10/22/2026] Fixed the hypervolume contributions of the component-based SMS-EMOA
+  (``SMSEMOAReplacement``). With four or more objectives the contributions were wrong whenever the
+  reference point was not (1, ..., 1), which is almost always (it is 1.1 times the maximum values):
+  the points were normalized to the unit box but the hypervolume was computed with the original
+  reference point, so, for example, two points whose contributions are 1.62 got 23.52, and in some
+  fronts all of them were zero, so the last solution of the front was always removed. With negative
+  objective values the reference point (1.1 times the maximum, which is below it) was dominated by
+  the solutions and all the contributions were zero, and the contributions with three objectives
+  were wrong too. The coordinates are now translated before computing the contributions, and the
+  reference point of a negative maximum is the maximum divided by 1.1.
+
+* [10/22/2026] Fixed the normalization of the classic NSGA-III (``EnvironmentalSelection`` of
+  ``jmetal-algorithm``). The hyperplane was built with the objectives of the extreme points as they
+  are, instead of translated by the ideal point as the paper does, so when the ideal point was not
+  the origin the extreme points were normalized to 0.5 (ideal point (1, 1)) or to 0.0099 (ideal
+  point (100, 100)) instead of 1, and the solutions selected depended on the position of the front.
+
+* [10/22/2026] Fixed ``CommandLineQualityIndicatorTool``, which compared the indicator name with
+  ``"SC"`` using ``!=`` and never printed the set coverage of the fronts; and
+  ``GenerateLatexTablesWithStatistics``, which did not mark any algorithm as the best in the tables
+  of the indicators that are better when higher if their values were zero or negative.
+
 * [10/22/2026] Fixed ``CRE21``, ``CRE25`` and ``CRE31`` (Tanabe and Ishibuchi, 2020) to match the
   reference code of the suite. ``CRE21`` has the bounds of the reference code (x1 and x2 in
   [0.00001, 100], x3 in [1, 3]) instead of [0.01, 0.45] x [0.01, 0.10]^2, and its second
