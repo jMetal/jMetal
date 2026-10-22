@@ -106,7 +106,7 @@ public class NSGAIIIReplacement<S extends Solution<?>> implements Replacement<S>
     // Step 1: Normalize objectives
     double[] idealPoint = computeIdealPoint(fronts);
     List<double[]> extremePoints = findExtremePoints(fronts.get(0), idealPoint);
-    double[] intercepts = constructHyperplane(extremePoints, idealPoint);
+    double[] intercepts = constructHyperplane(extremePoints, fronts.get(0), idealPoint);
 
     // Step 2: Associate all solutions with reference points and compute niche
     // counts
@@ -252,15 +252,74 @@ public class NSGAIIIReplacement<S extends Solution<?>> implements Replacement<S>
     return maxRatio;
   }
 
-  private double[] constructHyperplane(List<double[]> extremePoints, double[] idealPoint) {
-    // Simplified: use extreme point values as intercepts
-    // Full implementation would use Gaussian elimination for hyperplane
-    double[] intercepts = new double[numberOfObjectives];
-    for (int f = 0; f < numberOfObjectives; f++) {
-      intercepts[f] = extremePoints.get(f)[f];
-      if (intercepts[f] < 1e-10) {
-        intercepts[f] = 1e-10;
+  /**
+   * Intercepts of the hyperplane through the extreme points, in the translated space. When the
+   * extreme points do not define a hyperplane with positive intercepts, the largest translated
+   * value of each objective in the first front is used instead, as the paper proposes.
+   */
+  private double[] constructHyperplane(List<double[]> extremePoints, List<S> firstFront,
+      double[] idealPoint) {
+    double[] intercepts = solveIntercepts(extremePoints);
+
+    if (intercepts == null) {
+      intercepts = new double[numberOfObjectives];
+      for (S solution : firstFront) {
+        for (int f = 0; f < numberOfObjectives; f++) {
+          intercepts[f] = Math.max(intercepts[f], solution.objectives()[f] - idealPoint[f]);
+        }
       }
+    }
+
+    for (int f = 0; f < numberOfObjectives; f++) {
+      intercepts[f] = Math.max(intercepts[f], 1e-10);
+    }
+    return intercepts;
+  }
+
+  /** Solves E x = 1 by Gaussian elimination and returns 1 / x, or null if it is not valid. */
+  private double[] solveIntercepts(List<double[]> extremePoints) {
+    int n = numberOfObjectives;
+    double[][] matrix = new double[n][n + 1];
+    for (int i = 0; i < n; i++) {
+      System.arraycopy(extremePoints.get(i), 0, matrix[i], 0, n);
+      matrix[i][n] = 1.0;
+    }
+
+    for (int column = 0; column < n; column++) {
+      int pivot = column;
+      for (int row = column + 1; row < n; row++) {
+        if (Math.abs(matrix[row][column]) > Math.abs(matrix[pivot][column])) {
+          pivot = row;
+        }
+      }
+      if (Math.abs(matrix[pivot][column]) < 1e-12) {
+        return null;
+      }
+      double[] swap = matrix[column];
+      matrix[column] = matrix[pivot];
+      matrix[pivot] = swap;
+      for (int row = column + 1; row < n; row++) {
+        double factor = matrix[row][column] / matrix[column][column];
+        for (int k = column; k <= n; k++) {
+          matrix[row][k] -= factor * matrix[column][k];
+        }
+      }
+    }
+
+    double[] intercepts = new double[n];
+    for (int row = n - 1; row >= 0; row--) {
+      double value = matrix[row][n];
+      for (int k = row + 1; k < n; k++) {
+        value -= matrix[row][k] * intercepts[k];
+      }
+      double x = value / matrix[row][row];
+      if (!Double.isFinite(x) || x <= 0.0) {
+        return null;
+      }
+      intercepts[row] = x;
+    }
+    for (int f = 0; f < n; f++) {
+      intercepts[f] = 1.0 / intercepts[f];
     }
     return intercepts;
   }
