@@ -40,8 +40,8 @@ public class RCM26ProcessSynthesisAndDesignProblem extends AbstractDoubleProblem
     double h1 = -2 * Math.exp(-x2) + x1;
     double g1 = x2 - x1 + x3;
 
-    solution.constraints()[0] = EQUALITY_CONSTRAINT_EPSILON - Math.abs(h1);
-    solution.constraints()[1] = -g1;
+    solution.constraints()[0] = -g1;
+    solution.constraints()[1] = EQUALITY_CONSTRAINT_EPSILON - Math.abs(h1);
 
     return solution;
   }
