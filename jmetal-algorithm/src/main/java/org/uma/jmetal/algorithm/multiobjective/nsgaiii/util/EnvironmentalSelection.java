@@ -139,6 +139,9 @@ public class EnvironmentalSelection<S extends Solution<?>>
    * the translated hyperplane, so that {@link #normalizeObjectives(List, List, List)} subtracts the
    * ideal point from it.
    *
+   * <p>If the hyperplane cannot be built (the system is singular) or has an intercept that is not
+   * positive, the intercepts are the worst values of each objective in the first front.
+   *
    * <p>{@link #translateObjectives(List)} must have been called before, as it translates the
    * objectives and sets the ideal point.
    *
@@ -187,11 +190,32 @@ public class EnvironmentalSelection<S extends Solution<?>>
       List<Double> x = guassianElimination(A, b);
 
       // Find intercepts
+      boolean valid = true;
       for (int f = 0; f < numberOfObjectives; f += 1) {
+        valid &= Double.isFinite(x.get(f)) && x.get(f) > 0.0;
         intercepts.add(idealPoint.get(f) + 1.0 / x.get(f));
+      }
+
+      if (!valid) {
+        // The hyperplane does not exist or has an intercept that is not positive: as the paper
+        // says, the worst value of each objective in the first front is used instead
+        intercepts = worstValuesOfTheFirstFront();
       }
     }
     return intercepts;
+  }
+
+  /** The largest value of each objective in the first front, in the original objective space. */
+  private List<Double> worstValuesOfTheFirstFront() {
+    List<Double> worst = new ArrayList<>();
+    for (int f = 0; f < numberOfObjectives; f += 1) {
+      double maximum = 0.0;
+      for (S s : fronts.get(0)) {
+        maximum = Math.max(maximum, getAttribute(s).get(f));
+      }
+      worst.add(idealPoint.get(f) + maximum);
+    }
+    return worst;
   }
 
   public void normalizeObjectives(
