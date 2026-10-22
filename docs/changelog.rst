@@ -4,6 +4,15 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/22/2026] ``NormalizeUtils`` rejects invalid input with an ``InvalidConditionException`` (a
+  ``NullParameterException`` for a null argument), as its Javadoc said it did: bounds with the lower
+  one greater than the upper one, and matrices without rows or columns, with rows of different
+  lengths or with a NaN or infinite value, which were normalized to NaN or silently ignored, and
+  bounds that are not finite or whose number is not that of the columns. Callers that normalize a
+  front with an infinite objective value, such as the ``ComputeQualityIndicators`` experiment
+  component or ``TerminationByQualityIndicator``, now fail with a clear message instead of
+  computing indicators that are NaN.
+
 * [10/22/2026] Fixed ``NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix``, which initialized the
   maximum of each column with ``Double.MIN_VALUE``, the smallest positive double, so the maximum of
   a column whose values are all negative was (almost) zero instead of its largest value. The
