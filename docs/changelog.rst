@@ -49,6 +49,14 @@ only includes the latest entries.
   were wrong too. The coordinates are now translated before computing the contributions, and the
   reference point of a negative maximum is the maximum divided by 1.1.
 
+* [10/22/2026] The quality indicators ``Spread``, ``GeneralizedSpread``, ``GenerationalDistance``,
+  ``InvertedGenerationalDistancePlus`` and ``AverageHausdorffDistance`` check their arguments and
+  throw a ``NullParameterException`` or an ``InvalidConditionException`` that says what is wrong for
+  a null or empty front, a missing reference front, or (``GeneralizedSpread``) a front with another
+  number of objectives. They threw an ``ArrayIndexOutOfBoundsException`` or a
+  ``NullPointerException`` and, in the case of ``GenerationalDistance``, returned ``NaN`` for an
+  empty front. Their values do not change, and they have tests of their values now.
+
 * [10/22/2026] Fixed the hypervolume with a reference point with negative coordinates:
   ``ReferencePointUtils.createReferenceFrontFromReferencePoint`` put zeros out of the axes of the
   front it builds, and ``Hypervolume3D`` started the maximum of the reference front from zero, so
