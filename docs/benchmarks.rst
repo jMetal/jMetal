@@ -1,9 +1,9 @@
 .. _benchmarks:
 
-Benchmarks and reference fronts
-===============================
+Constrained benchmarks and reference fronts
+===========================================
 
-This page lists the benchmarks with constrained problems included in ``jmetal-problem`` (see
+This page lists the benchmarks of constrained problems included in ``jmetal-problem`` (see
 :ref:`constraints`): how many problems each one has, the paper that defines it and whether jMetal
 provides reference fronts for them, which are needed to compute quality indicators such as the
 inverted generational distance or the hypervolume of the normalized fronts (see
