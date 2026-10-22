@@ -139,4 +139,63 @@ public class NormalizeUtilsTest {
         NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(matrix),
         0.00001);
   }
+
+  @Test
+  public void shouldGetMaxValuesOfTheColumnsOfAMatrixReturnTheRightValuesWhenAllTheValuesAreNegative() {
+    double[][] matrix = new double[2][];
+    matrix[0] = new double[] {-6295.7, -2258.1, -680.6};
+    matrix[1] = new double[] {-6060.4, -1612.0, -661.9};
+
+    assertArrayEquals(
+        new double[] {-6060.4, -1612.0, -661.9},
+        NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(matrix),
+        0.00001);
+  }
+
+  @Test
+  public void shouldGetMaxValuesOfTheColumnsOfAMatrixReturnTheRightValuesWhenOnlySomeColumnsAreNegative() {
+    double[][] matrix = new double[3][];
+    matrix[0] = new double[] {-3.0, 1.0, -1e-9};
+    matrix[1] = new double[] {-2.0, -5.0, -2e-9};
+    matrix[2] = new double[] {-4.0, 0.0, -3e-9};
+
+    assertArrayEquals(
+        new double[] {-2.0, 1.0, -1e-9},
+        NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(matrix),
+        1e-12);
+  }
+
+  @Test
+  public void shouldGetMaxValuesOfTheColumnsOfAMatrixReturnTheValueWhenTheMatrixHasOneNegativeRow() {
+    double[][] matrix = {{-1.0, -2.0}};
+
+    assertArrayEquals(
+        new double[] {-1.0, -2.0}, NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(matrix), 1e-12);
+  }
+
+  @Test
+  public void shouldNormalizeMapTheColumnsOfAMatrixToZeroAndOneWhenAllTheValuesAreNegative() {
+    double[][] matrix = {{-10.0, -4.0}, {-6.0, -2.0}, {-8.0, -3.0}};
+
+    double[][] normalized = NormalizeUtils.normalize(matrix);
+
+    assertArrayEquals(new double[] {0.0, 0.0}, normalized[0], 1e-12);
+    assertArrayEquals(new double[] {1.0, 1.0}, normalized[1], 1e-12);
+    assertArrayEquals(new double[] {0.5, 0.5}, normalized[2], 1e-12);
+  }
+
+  @Test
+  public void shouldNormalizeAFrontWithTheBoundsOfANegativeReferenceFrontMapTheReferenceToZeroAndOne() {
+    double[][] referenceFront = {{-6295.7, -2258.1}, {-6060.4, -1612.0}};
+    double[][] front = {{-6178.05, -1935.05}, {-6060.4, -2258.1}};
+
+    double[][] normalized =
+        NormalizeUtils.normalize(
+            front,
+            NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+            NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
+
+    assertArrayEquals(new double[] {0.5, 0.5}, normalized[0], 1e-9);
+    assertArrayEquals(new double[] {1.0, 0.0}, normalized[1], 1e-9);
+  }
 }

@@ -218,7 +218,9 @@ public class NormalizeUtils {
     int rowLength = matrix[0].length ;
     double[] maxValues = new double[rowLength] ;
 
-    Arrays.fill(maxValues, Double.MIN_VALUE);
+    // Not Double.MIN_VALUE, which is the smallest positive double: with it, the maximum of a column
+    // whose values are all negative would be (almost) zero
+    Arrays.fill(maxValues, -Double.MAX_VALUE);
 
     for (int j = 0; j < rowLength; j++) {
       for (double[] values : matrix) {

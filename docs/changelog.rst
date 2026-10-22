@@ -4,6 +4,15 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/22/2026] Fixed ``NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix``, which initialized the
+  maximum of each column with ``Double.MIN_VALUE``, the smallest positive double, so the maximum of
+  a column whose values are all negative was (almost) zero instead of its largest value. The
+  normalizations based on it (``NormalizeUtils.normalize(matrix)``, ``ComputeQualityIndicators``,
+  ``QualityIndicatorUtils``, among others) used the range [min, 0] for those objectives instead of
+  [min, max], which affects the quality indicators of problems with objectives that are always
+  negative, such as RE42 and several problems of the RWA suite. It now uses ``-Double.MAX_VALUE``,
+  and new unit tests cover matrices with negative columns.
+
 * [10/22/2026] Fixed ``CRE21``, ``CRE25`` and ``CRE31`` (Tanabe and Ishibuchi, 2020) to match the
   reference code of the suite. ``CRE21`` has the bounds of the reference code (x1 and x2 in
   [0.00001, 100], x3 in [1, 3]) instead of [0.01, 0.45] x [0.01, 0.10]^2, and its second
