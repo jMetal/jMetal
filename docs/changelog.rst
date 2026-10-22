@@ -4,6 +4,12 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/22/2026] ``NSGAIIIReplacement`` (component-based NSGA-III) normalizes with the intercepts of the
+  hyperplane through the extreme points, as in the paper, instead of the diagonal of the extreme points
+  (the largest translated value of each objective of the first front is used if the hyperplane is
+  singular or has a non-positive intercept). ``RVEAGeometry`` computes the angle between vectors
+  without ``acos``, which lost precision (about 4e-8) for nearly parallel vectors.
+
 * [10/22/2026] Fixed ``NormalizedHypervolume``. The constructor with a reference point
   (``new NormalizedHypervolume(double[])``) never worked: ``compute`` always failed because the
   reference front was null. It now takes the box between the origin and the point as its reference,
