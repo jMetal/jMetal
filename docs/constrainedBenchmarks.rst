@@ -99,8 +99,6 @@ Notes:
 * ``Ebes``, the classical problems and the engineering problems do not cite a paper in a single
   place; see the Javadoc of their classes. ``Ebes`` is by G. R. Zavala, A. J. Nebro and J. J.
   Durillo.
-* The reference of the RCM suite (CEC 2021) was written from memory, not from the code, and its
-  bibliographic details should be checked.
 
 References
 ----------
@@ -127,6 +125,8 @@ References
 .. [Tanabe2020] R. Tanabe and H. Ishibuchi, "An easy-to-use real-world multi-objective optimization problem
    suite", Applied Soft Computing 89:106078, 2020 (https://doi.org/10.1016/j.asoc.2020.106078).
 
-.. [Kumar2021] A. Kumar et al., "A benchmark-suite of real-world constrained multi-objective optimization
-   problems and some baseline results", Swarm and Evolutionary Computation, 2021.
+.. [Kumar2021] A. Kumar, G. Wu, M. Z. Ali, Q. Luo, R. Mallipeddi, P. N. Suganthan and S. Das, "A
+   Benchmark-Suite of real-World constrained multi-objective optimization problems and some
+   baseline results", Swarm and Evolutionary Computation 67:100961, 2021
+   (https://doi.org/10.1016/j.swevo.2021.100961).
 
