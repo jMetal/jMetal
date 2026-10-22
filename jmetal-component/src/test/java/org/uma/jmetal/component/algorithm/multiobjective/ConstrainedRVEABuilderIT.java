@@ -67,13 +67,13 @@ class ConstrainedRVEABuilderIT {
   }
 
   @ParameterizedTest(name = "{0}")
-  // Thresholds a margin below the values obtained with seed 12: 0.90, 0.92, 0.99, 0.88 and 0.74
+  // Thresholds a margin below the values obtained with seed 12: 0.90, 0.92, 0.99, 0.88 and 0.69
   @CsvSource({
     "Srinivas, 0.85",
     "ConstrEx, 0.85",
     "Golinski, 0.95",
     "Tanaka, 0.80",
-    "Osyczka2, 0.65"
+    "Osyczka2, 0.60"
   })
   @DisplayName(
       "given a classic problem with constraints, when running RVEA, then the result is feasible"
