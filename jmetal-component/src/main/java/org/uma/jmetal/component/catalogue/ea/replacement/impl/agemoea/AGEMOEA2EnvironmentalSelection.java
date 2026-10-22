@@ -2,6 +2,7 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl.agemoea;
 
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.ranking.Ranking;
 
 /**
  * Environmental Selection used in AGE-MOEA-II (Adaptive GEometry-based Many-Objective Evolutionary Algorithm II)
@@ -13,6 +14,15 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
 
     public AGEMOEA2EnvironmentalSelection(int numberOfObjectives) {
         super(numberOfObjectives);
+        ZERO = new double[numberOfObjectives];
+    }
+
+    /**
+     * @param numberOfObjectives the number of objectives of the problem
+     * @param ranking the ranking that sorts the population into fronts
+     */
+    public AGEMOEA2EnvironmentalSelection(int numberOfObjectives, Ranking<S> ranking) {
+        super(numberOfObjectives, ranking);
         ZERO = new double[numberOfObjectives];
     }
 

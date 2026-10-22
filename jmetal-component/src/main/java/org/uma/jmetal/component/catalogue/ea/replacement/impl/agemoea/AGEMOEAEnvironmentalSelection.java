@@ -8,12 +8,18 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 /**
  * Environmental Selection used in AGE-MOEA (Adaptive GEometry-based Many-Objective Evolutionary Algorithm)
+ *
+ * <p>The population is sorted into fronts with a {@link Ranking}: by default, the fast
+ * non-dominated sorting with the constrained dominance (Deb's constraint-domination principle).
+ * Another ranking, such as one with another constraint-handling technique, can be given to the
+ * constructor.
  *
  * @author Annibale Panichella
  */
@@ -22,14 +28,32 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     protected double P;
     protected List<Double> intercepts;
     protected int numberOfObjectives;
+    private final Ranking<S> ranking;
 
 
     public AGEMOEAEnvironmentalSelection(int numberOfObjectives) {
+        this(numberOfObjectives, new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator<>()));
+    }
+
+    /**
+     * @param numberOfObjectives the number of objectives of the problem
+     * @param ranking the ranking that sorts the population into fronts
+     */
+    public AGEMOEAEnvironmentalSelection(int numberOfObjectives, Ranking<S> ranking) {
+        Check.notNull(ranking, "ranking");
         this.numberOfObjectives = numberOfObjectives;
+        this.ranking = ranking;
+    }
+
+    /**
+     * @return the ranking that sorts the population into fronts, whose ranks the
+     *     {@link SurvivalScoreComparator} of the mating selection must read
+     */
+    public Ranking<S> ranking() {
+        return ranking;
     }
 
     public List<S> execute(List<S> solutionList, int solutionsToSelect) throws JMetalException {
-        Ranking<S> ranking = new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator()) ;
         ranking.compute(solutionList) ;
         return selectFromFronts(ranking, solutionsToSelect);
     }
@@ -42,7 +66,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         if (ranking.getSubFront(0).size() <= solutionsToSelect){
             population.addAll(ranking.getSubFront(0));
         } else {
-            ranking.getSubFront(0).sort(new SurvivalScoreComparator<>());
+            ranking.getSubFront(0).sort(new SurvivalScoreComparator<>(ranking));
             population.addAll(ranking.getSubFront(0).subList(0, solutionsToSelect));
         }
 
@@ -53,7 +77,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             if ((population.size() + ranking.getSubFront(rankingIndex).size()) <= solutionsToSelect) {
                 population.addAll(ranking.getSubFront(rankingIndex));
             } else {
-                ranking.getSubFront(rankingIndex).sort(new SurvivalScoreComparator<>());
+                ranking.getSubFront(rankingIndex).sort(new SurvivalScoreComparator<>(ranking));
                 int nSolutions = solutionsToSelect - population.size();
                 population.addAll(ranking.getSubFront(rankingIndex).subList(0, nSolutions));
             }

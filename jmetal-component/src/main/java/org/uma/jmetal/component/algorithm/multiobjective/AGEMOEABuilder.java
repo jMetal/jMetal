@@ -121,7 +121,8 @@ public class AGEMOEABuilder<S extends Solution<?>> {
 
   /**
    * Configures the AGE environmental selection used to assign the survival scores
-   * before the first parent selection and, by default, in the AGE replacement.
+   * before the first parent selection and, by default, in the AGE replacement. The default
+   * parent selection compares the ranks of its {@link AGEMOEAEnvironmentalSelection#ranking()}.
    *
    * @param environmentalSelection environmental selection strategy
    * @return this builder
@@ -133,6 +134,9 @@ public class AGEMOEABuilder<S extends Solution<?>> {
     this.environmentalSelection = environmentalSelection;
     if (!customReplacementConfigured) {
       this.replacement = new AGEMOEAReplacement<>(environmentalSelection);
+    }
+    if (!customSelectionConfigured) {
+      this.selection = createDefaultSelection();
     }
 
     return this;
@@ -165,7 +169,7 @@ public class AGEMOEABuilder<S extends Solution<?>> {
     return new NaryTournamentSelection<>(
         selectionTournamentSize,
         variation.matingPoolSize(),
-        new SurvivalScoreComparator<>());
+        new SurvivalScoreComparator<>(environmentalSelection.ranking()));
   }
 
 }
