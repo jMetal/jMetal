@@ -79,7 +79,7 @@ public class CommandLineQualityIndicatorTool {
     List<QualityIndicator> indicatorList = getAvailableIndicators(normalizedReferenceFront);
 
     if (!args[0].equals("ALL")) {
-      if (args[0] != "SC") {
+      if (!args[0].equals("SC")) {
         QualityIndicator indicator = getIndicatorFromName(args[0], indicatorList);
         JMetalLogger.logger.info(() -> "" + indicator.compute(normalizedFront));
       } else {
