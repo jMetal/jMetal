@@ -378,6 +378,7 @@ public class Hypervolume3D extends Hypervolume {
 
     int numberOfObjectives = referenceFront[0].length;
     double[] referencePoint = new double[numberOfObjectives];
+    Arrays.fill(referencePoint, Double.NEGATIVE_INFINITY);
     for (double[] referenceVector : referenceFront) {
       Check.that(
           referenceVector.length == numberOfObjectives,

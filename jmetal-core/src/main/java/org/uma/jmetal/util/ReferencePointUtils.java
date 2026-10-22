@@ -10,8 +10,10 @@ public class ReferencePointUtils {
 
   /**
    * Creates a reference front from a reference point. The reference front will have n points where
-   * n is the dimension of the reference point, with each point having all objectives at 0 except
-   * for one objective which is set to the reference point's corresponding value.
+   * n is the dimension of the reference point, with each point having all objectives at 0 (or at
+   * the value of the reference point, if it is negative) except for one objective which is set to
+   * the reference point's corresponding value. The maximum of each objective in the front is thus
+   * the coordinate of the reference point, whatever its sign.
    *
    * @param referencePoint The reference point
    * @return A reference front generated from the reference point
@@ -27,7 +29,7 @@ public class ReferencePointUtils {
     for (int i = 0; i < numberOfObjectives; i++) {
       double[] point = new double[numberOfObjectives];
       for (int j = 0; j < numberOfObjectives; j++) {
-        point[j] = (j == i) ? referencePoint[i] : 0.0;
+        point[j] = (j == i) ? referencePoint[i] : Math.min(0.0, referencePoint[j]);
       }
       referenceFront[i] = point;
     }
