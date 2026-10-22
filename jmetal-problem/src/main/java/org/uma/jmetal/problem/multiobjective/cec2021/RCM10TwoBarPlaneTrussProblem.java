@@ -32,7 +32,7 @@ public class RCM10TwoBarPlaneTrussProblem extends AbstractDoubleProblem {
 
     double rho = 0.283;
     double h = 100;
-    double p = 1e4;
+    double p = 104;
     double e = 3e7;
     double rho0 = 2e4;
 
