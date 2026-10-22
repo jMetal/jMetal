@@ -57,7 +57,9 @@ public class AdaptiveGrid<S extends Solution<?>> {
   private void updateLimits(List<S> solutionList) {
     for (int obj = 0; obj < numberOfObjectives; obj++) {
       gridLowerLimits[obj] = Double.MAX_VALUE;
-      gridUpperLimits[obj] = Double.MIN_VALUE;
+      // Not Double.MIN_VALUE, which is the smallest positive double: with it, the upper limit of
+      // an objective whose values are all negative would be (almost) zero
+      gridUpperLimits[obj] = -Double.MAX_VALUE;
     }
 
     //Find the max and min limits of objetives into the population
