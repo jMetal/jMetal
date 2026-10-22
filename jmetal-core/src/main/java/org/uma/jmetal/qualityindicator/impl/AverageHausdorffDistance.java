@@ -57,6 +57,11 @@ public class AverageHausdorffDistance extends QualityIndicator {
    * @param referenceFront The reference pareto front
    */
   public double averageHausdorffDistance(double[][] front, double[][] referenceFront) {
+    Check.notNull(front, "front");
+    Check.that(front.length > 0, "The front is empty");
+    Check.notNull(referenceFront, "referenceFront");
+    Check.that(referenceFront.length > 0, "The reference front is empty");
+
     double sumGD = 0.0;
     double sumIGD = 0.0;
 

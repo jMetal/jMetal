@@ -55,6 +55,10 @@ public class InvertedGenerationalDistancePlus extends QualityIndicator {
    * @param referenceFront The reference pareto front
    */
   public double invertedGenerationalDistancePlus(double[][] front, double[][] referenceFront) {
+    Check.notNull(front, "front");
+    Check.that(front.length > 0, "The front is empty");
+    Check.notNull(referenceFront, "referenceFront");
+    Check.that(referenceFront.length > 0, "The reference front is empty");
 
     double sum = 0.0;
     for (int i = 0 ; i < referenceFront.length; i++) {
