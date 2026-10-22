@@ -188,4 +188,70 @@ class NSGAIIIReplacementNormalizationTest {
       assertThat(solutions).containsAll(selected);
     }
   }
+
+  @Nested
+  @DisplayName("When there are three objectives")
+  class WhenThereAreThreeObjectives {
+    private static final double[][] PLANE = {
+      {0.9, 0.05, 0.05}, {0.05, 0.9, 0.05}, {0.05, 0.05, 0.9}, {0.34, 0.33, 0.33},
+      {0.4, 0.4, 0.2}, {0.2, 0.4, 0.4}, {0.4, 0.2, 0.4}, {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0},
+      {0.0, 0.0, 1.0}
+    };
+
+    private List<DoubleSolution> plane(double[] scales, double[] shifts) {
+      List<DoubleSolution> solutions = new ArrayList<>();
+      for (double[] point : PLANE) {
+        DoubleSolution solution =
+            new DefaultDoubleSolution(List.of(Bounds.create(0.0, 1.0)), 3, 0);
+        for (int i = 0; i < 3; i++) {
+          solution.objectives()[i] = point[i] * scales[i] + shifts[i];
+        }
+        solutions.add(solution);
+      }
+      return solutions;
+    }
+
+    private List<Integer> select(List<DoubleSolution> solutions) {
+      var threeObjectives =
+          new NSGAIIIReplacement<DoubleSolution>(
+              new FastNonDominatedSortRanking<>(),
+              List.of(
+                  new double[] {1, 0, 0},
+                  new double[] {0, 1, 0},
+                  new double[] {0, 0, 1},
+                  new double[] {1.0 / 3, 1.0 / 3, 1.0 / 3}),
+              3,
+              4);
+      JMetalRandom.getInstance().setSeed(23);
+      return threeObjectives
+          .replace(solutions.subList(0, 3), solutions.subList(3, solutions.size()))
+          .stream()
+          .map(solutions::indexOf)
+          .sorted()
+          .toList();
+    }
+
+    @ParameterizedTest(name = "scales ({0}, {1}, {2}) and shifts ({3}, {4}, {5})")
+    @CsvSource({
+      "1.0, 1.0, 1.0, 0.0, 0.0, 0.0",
+      "1000.0, 1.0, 0.01, 0.0, 0.0, 0.0",
+      "1.0, 50.0, 1.0, -30.0, 4.0, 100.0",
+      "0.001, 20.0, 300.0, 5.0, -5.0, 0.0"
+    })
+    @DisplayName("given a front on a plane, then the selection does not depend on the scales")
+    void givenAFrontOnAPlane_whenReplacing_thenTheSelectionDoesNotDependOnTheScales(
+        double scale1, double scale2, double scale3, double shift1, double shift2, double shift3) {
+      // Arrange
+      var reference = select(plane(new double[] {1, 1, 1}, new double[] {0, 0, 0}));
+
+      // Act
+      var transformed =
+          select(plane(
+              new double[] {scale1, scale2, scale3}, new double[] {shift1, shift2, shift3}));
+
+      // Assert
+      assertThat(reference).hasSize(4);
+      assertThat(transformed).isEqualTo(reference);
+    }
+  }
 }
