@@ -65,6 +65,14 @@ public class GeneralizedSpread extends QualityIndicator {
    *  @return the value of the generalized spread metric
    **/
   public double generalizedSpread(double[][] front, double[][] referenceFront) {
+    Check.notNull(front, "front");
+    Check.that(front.length > 0, "The front is empty");
+    Check.notNull(referenceFront, "referenceFront");
+    Check.that(referenceFront.length > 0, "The reference front is empty");
+    Check.that(
+        front[0].length == referenceFront[0].length,
+        "The front and the reference front must have the same number of objectives");
+
     int numberOfObjectives = front[0].length ;
 
     // Sort a local copy of the reference front, not the shared field: QualityIndicator instances

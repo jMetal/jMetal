@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.comparator.LexicographicalVectorComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * This class implements the spread quality indicator. It must be only applied to two bi-objective problems.
@@ -54,6 +55,11 @@ public class Spread extends QualityIndicator {
    * @param referenceFront    The true pareto front.
    */
   public double spread(double[][] front, double[][] referenceFront) {
+    Check.notNull(front, "front");
+    Check.that(front.length > 0, "The front is empty");
+    Check.notNull(referenceFront, "referenceFront");
+    Check.that(referenceFront.length > 0, "The reference front is empty");
+
     var distance = new EuclideanDistanceBetweenVectors() ;
 
     // STEP 1. Sort normalizedFront and normalizedParetoFront. The reference front is sorted in a
