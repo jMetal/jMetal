@@ -264,10 +264,12 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
           }
         }
       } else {
-        bestCentralTendencyValue = Double.MIN_VALUE;
-        bestDispersionValue = Double.MIN_VALUE;
-        secondBestCentralTendencyValue = Double.MIN_VALUE;
-        secondBestDispersionValue = Double.MIN_VALUE;
+        // Not Double.MIN_VALUE, which is the smallest positive double: with it, a central tendency
+        // of zero or negative would never be better than the initial value
+        bestCentralTendencyValue = -Double.MAX_VALUE;
+        bestDispersionValue = Double.MAX_VALUE;
+        secondBestCentralTendencyValue = -Double.MAX_VALUE;
+        secondBestDispersionValue = Double.MAX_VALUE;
         for (int j = 0; j < (experiment.getAlgorithmList().size()); j++) {
           if ((centralTendency[indicatorIndex][i][j] > bestCentralTendencyValue) ||
               ((centralTendency[indicatorIndex][i][j] ==
