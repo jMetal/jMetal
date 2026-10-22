@@ -1,4 +1,4 @@
-.. _benchmarks:
+.. _constrainedBenchmarks:
 
 Constrained benchmarks and reference fronts
 ===========================================
