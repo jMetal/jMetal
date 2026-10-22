@@ -36,11 +36,15 @@ final class RVEAGeometry {
     if (firstNorm == 0.0 || secondNorm == 0.0) {
       return 0.0;
     }
-    double dot = 0.0;
+    double sum = 0.0;
+    double difference = 0.0;
     for (int i = 0; i < first.length; i++) {
-      dot += (first[i] / firstNorm) * (second[i] / secondNorm);
+      double x = first[i] / firstNorm;
+      double y = second[i] / secondNorm;
+      sum = Math.hypot(sum, x + y);
+      difference = Math.hypot(difference, x - y);
     }
-    return Math.acos(Math.max(-1.0, Math.min(1.0, dot)));
+    return 2.0 * Math.atan2(difference, sum);
   }
 
   static double[][] copy(double[][] vectors) {
