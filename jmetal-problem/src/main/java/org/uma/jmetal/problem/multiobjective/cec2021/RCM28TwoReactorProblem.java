@@ -53,14 +53,14 @@ public class RCM28TwoReactorProblem extends AbstractDoubleProblem {
     double g3 = x1 - 20 * y1;
     double g4 = x2 - 20 * y2;
 
-    solution.constraints()[0] = EQUALITY_CONSTRAINT_EPSILON - Math.abs(h1);
-    solution.constraints()[1] = EQUALITY_CONSTRAINT_EPSILON - Math.abs(h2);
-    solution.constraints()[2] = EQUALITY_CONSTRAINT_EPSILON - Math.abs(h3);
-    solution.constraints()[3] = EQUALITY_CONSTRAINT_EPSILON - Math.abs(h4);
-    solution.constraints()[4] = -g1;
-    solution.constraints()[5] = -g2;
-    solution.constraints()[6] = -g3;
-    solution.constraints()[7] = -g4;
+    solution.constraints()[0] = -g1;
+    solution.constraints()[1] = -g2;
+    solution.constraints()[2] = -g3;
+    solution.constraints()[3] = -g4;
+    solution.constraints()[4] = EQUALITY_CONSTRAINT_EPSILON - Math.abs(h1);
+    solution.constraints()[5] = EQUALITY_CONSTRAINT_EPSILON - Math.abs(h2);
+    solution.constraints()[6] = EQUALITY_CONSTRAINT_EPSILON - Math.abs(h3);
+    solution.constraints()[7] = EQUALITY_CONSTRAINT_EPSILON - Math.abs(h4);
 
     return solution;
   }
