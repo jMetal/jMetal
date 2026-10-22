@@ -18,6 +18,14 @@ import org.uma.jmetal.util.errorchecking.Check;
  *   <li>Column-wise normalization for matrices</li>
  * </ul>
  *
+ * <p>Invalid arguments are rejected with an
+ * {@link org.uma.jmetal.util.errorchecking.exception.InvalidConditionException} (or a
+ * {@link org.uma.jmetal.util.errorchecking.exception.NullParameterException} for a null argument):
+ * a lower bound greater than the upper one; a matrix that is empty, has no columns, has rows of
+ * different lengths, or contains a NaN or infinite value; and bounds that are not finite or whose
+ * number is not that of the columns of the matrix. A value out of the range of the bounds is not
+ * rejected: it is mapped outside the target range.
+ *
  * <p>Example usage:
  * <pre>{@code
  * // Normalize a single value from [0, 100] to [0, 1]
@@ -32,7 +40,6 @@ import org.uma.jmetal.util.errorchecking.Check;
  * @since 1.0.0
  */
 public class NormalizeUtils {
-
   private NormalizeUtils() throws InstantiationException {
     throw new InstantiationException("Instances of this type are forbidden");
   }
@@ -55,11 +62,26 @@ public class NormalizeUtils {
    * @param min the minimum value of the source range (inclusive)
    * @param max the maximum value of the source range (inclusive)
    * @return the normalized value in the target range
-   * @throws IllegalArgumentException if min > max or minRangeValue > maxRangeValue
+   * @throws org.uma.jmetal.util.errorchecking.exception.InvalidConditionException if min > max or
+   *     minRangeValue > maxRangeValue (or any of them is NaN)
    */
   public static double normalize(
           double value, double minRangeValue, double maxRangeValue, double min, double max) {
+    Check.that(
+        minRangeValue <= maxRangeValue,
+        () -> "The lower bound of the target range (" + minRangeValue
+            + ") is greater than the upper bound (" + maxRangeValue + ")");
+    Check.that(
+        min <= max,
+        () -> "The lower bound of the source range (" + min
+            + ") is greater than the upper bound (" + max + ")");
 
+    return scale(value, minRangeValue, maxRangeValue, min, max);
+  }
+
+  /** Min-max scaling of a value, whose bounds have already been checked. */
+  private static double scale(
+      double value, double minRangeValue, double maxRangeValue, double min, double max) {
     // Handle the case where all source values are identical (min == max)
     if (max == min) {
       // Return the midpoint of the target range
@@ -85,7 +107,7 @@ public class NormalizeUtils {
    * @param min the minimum value in the source range (inclusive)
    * @param max the maximum value in the source range (inclusive)
    * @return the normalized value in the range [0, 1]
-   * @throws IllegalArgumentException if min > max
+   * @throws org.uma.jmetal.util.errorchecking.exception.InvalidConditionException if min > max
    * @see #normalize(double, double, double, double, double)
    */
   public static double normalize(double value, double min, double max) {
@@ -93,46 +115,107 @@ public class NormalizeUtils {
   }
 
   /**
-   * Normalize the vectors (rows) of bi-dimensional matrix
+   * Normalizes each column of a matrix to the range [0, 1], using the minimum and maximum values of
+   * the column. The values of a column whose values are all equal are mapped to 0.5. The matrix is
+   * not modified.
    *
-   * @param matrix
-   * @return A matrix with normalized values for each of its rows
+   * @param matrix the matrix, with at least one row and one column, rows of the same length and
+   *     finite values
+   * @return a new matrix with the normalized values
+   * @throws org.uma.jmetal.util.errorchecking.exception.NullParameterException if the matrix is null
+   * @throws org.uma.jmetal.util.errorchecking.exception.InvalidConditionException if the matrix is
+   *     empty, has no columns, has rows of different lengths or has a NaN or infinite value
    */
   public static double[][] normalize(double[][] matrix) {
-    Check.notNull(matrix);
+    checkMatrix(matrix);
 
+    return scaleColumns(matrix, columnMinimums(matrix), columnMaximums(matrix));
+  }
+
+  /**
+   * Normalizes each column of a matrix to the range [0, 1], using given minimum and maximum values
+   * for each column (for example, those of a reference front). The values of a column whose bounds
+   * are equal are mapped to 0.5, and a value out of its bounds is mapped out of [0, 1]. The matrix
+   * is not modified.
+   *
+   * @param matrix the matrix, with at least one row and one column, rows of the same length and
+   *     finite values
+   * @param minRangeValue the minimum value of each column
+   * @param maxRangeValue the maximum value of each column, not lower than the minimum
+   * @return a new matrix with the normalized values
+   * @throws org.uma.jmetal.util.errorchecking.exception.NullParameterException if any argument is
+   *     null
+   * @throws org.uma.jmetal.util.errorchecking.exception.InvalidConditionException if the matrix is
+   *     empty, has no columns, has rows of different lengths or has a NaN or infinite value; if
+   *     the bounds are not as many as the columns or are not finite; or if a minimum is greater
+   *     than its maximum
+   */
+  public static double[][] normalize(
+      double[][] matrix, double[] minRangeValue, double[] maxRangeValue) {
+    checkMatrix(matrix);
+    Check.notNull(minRangeValue, "minRangeValue");
+    Check.notNull(maxRangeValue, "maxRangeValue");
+    checkBounds(minRangeValue, "minRangeValue", matrix[0].length);
+    checkBounds(maxRangeValue, "maxRangeValue", matrix[0].length);
+    for (int j = 0; j < matrix[0].length; j++) {
+      int column = j;
+      Check.that(
+          minRangeValue[j] <= maxRangeValue[j],
+          () -> "The minimum of the column " + column + " (" + minRangeValue[column]
+              + ") is greater than its maximum (" + maxRangeValue[column] + ")");
+    }
+
+    return scaleColumns(matrix, minRangeValue, maxRangeValue);
+  }
+
+  private static double[][] scaleColumns(double[][] matrix, double[] min, double[] max) {
     double[][] normalizedMatrix = new double[matrix.length][matrix[0].length];
-
-    double[] minValue = getMinValuesOfTheColumnsOfAMatrix(matrix) ;
-    double[] maxValue = getMaxValuesOfTheColumnsOfAMatrix(matrix) ;
 
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[0].length; j++) {
-        normalizedMatrix[i][j] = NormalizeUtils.normalize(matrix[i][j], minValue[j], maxValue[j]) ;
+        normalizedMatrix[i][j] = scale(matrix[i][j], 0.0, 1.0, min[j], max[j]);
       }
     }
 
     return normalizedMatrix;
   }
 
-  /**
-   * Normalize the vectors (rows) of bi-dimensional matrix
-   *
-   * @param matrix
-   * @return A matrix with normalized values for each of its rows
-   */
-  public static double[][] normalize(double[][] matrix, double[] minRangeValue, double[] maxRangeValue) {
-    Check.notNull(matrix);
+  /** Checks that a matrix has at least one row and one column, rectangular, with finite values. */
+  private static void checkMatrix(double[][] matrix) {
+    Check.notNull(matrix, "matrix");
+    Check.that(matrix.length > 0, "The matrix has no rows");
+    Check.notNull(matrix[0], "matrix[0]");
+    Check.that(matrix[0].length > 0, "The matrix has no columns");
 
-    double[][] normalizedMatrix = new double[matrix.length][matrix[0].length];
-
+    int columns = matrix[0].length;
     for (int i = 0; i < matrix.length; i++) {
-      for (int j = 0; j < matrix[0].length; j++) {
-        normalizedMatrix[i][j] = normalize(matrix[i][j], minRangeValue[j], maxRangeValue[j]) ;
+      int row = i;
+      Check.notNull(matrix[i], "a row of the matrix");
+      Check.that(
+          matrix[i].length == columns,
+          () -> "The row " + row + " has " + matrix[row].length + " values, but the first one has "
+              + columns);
+      for (int j = 0; j < columns; j++) {
+        int column = j;
+        Check.that(
+            Double.isFinite(matrix[i][j]),
+            () -> "The value of the row " + row + " and column " + column + " is not finite: "
+                + matrix[row][column]);
       }
     }
+  }
 
-    return normalizedMatrix;
+  private static void checkBounds(double[] bounds, String name, int columns) {
+    Check.that(
+        bounds.length == columns,
+        () -> "The array " + name + " has " + bounds.length + " values, but the matrix has "
+            + columns + " columns");
+    for (int j = 0; j < bounds.length; j++) {
+      int column = j;
+      Check.that(
+          Double.isFinite(bounds[j]),
+          () -> "The value " + column + " of " + name + " is not finite: " + bounds[column]);
+    }
   }
 
   /**
@@ -150,11 +233,14 @@ public class NormalizeUtils {
    * @param min the minimum value to use for normalization
    * @param max the maximum value to use for normalization
    * @return a new array containing the normalized values
-   * @throws IllegalArgumentException if vector is null or min > max
+   * @throws org.uma.jmetal.util.errorchecking.exception.NullParameterException if the vector is
+   *     null
+   * @throws org.uma.jmetal.util.errorchecking.exception.InvalidConditionException if min > max
    */
   public static double[] getNormalizedVector(double[] vector, double min, double max) {
-    double[] normalizedVector = new double[vector.length];
+    Check.notNull(vector, "vector");
 
+    double[] normalizedVector = new double[vector.length];
     IntStream.range(0, vector.length)
             .forEach(i -> normalizedVector[i] = normalize(vector[i], min, max));
 
@@ -175,11 +261,20 @@ public class NormalizeUtils {
    * double[] mins = getMinValuesOfTheColumnsOfAMatrix(matrix);
    * }</pre>
    *
-   * @param matrix the input matrix (must not be null or empty)
+   * @param matrix the input matrix, with at least one row and one column, rows of the same length
+   *     and finite values
    * @return an array containing the minimum value of each column
-   * @throws IllegalArgumentException if matrix is null, empty, or contains rows of different lengths
+   * @throws org.uma.jmetal.util.errorchecking.exception.NullParameterException if the matrix is null
+   * @throws org.uma.jmetal.util.errorchecking.exception.InvalidConditionException if the matrix is
+   *     empty, has no columns, has rows of different lengths or has a NaN or infinite value
    */
-  public static double[]getMinValuesOfTheColumnsOfAMatrix(double[][] matrix) {
+  public static double[] getMinValuesOfTheColumnsOfAMatrix(double[][] matrix) {
+    checkMatrix(matrix);
+
+    return columnMinimums(matrix);
+  }
+
+  private static double[] columnMinimums(double[][] matrix) {
     int rowLength = matrix[0].length ;
     double[] minValues = new double[rowLength] ;
 
@@ -210,11 +305,20 @@ public class NormalizeUtils {
    * double[] maxs = getMaxValuesOfTheColumnsOfAMatrix(matrix);
    * }</pre>
    *
-   * @param matrix the input matrix (must not be null or empty)
+   * @param matrix the input matrix, with at least one row and one column, rows of the same length
+   *     and finite values
    * @return an array containing the maximum value of each column
-   * @throws IllegalArgumentException if matrix is null, empty, or contains rows of different lengths
+   * @throws org.uma.jmetal.util.errorchecking.exception.NullParameterException if the matrix is null
+   * @throws org.uma.jmetal.util.errorchecking.exception.InvalidConditionException if the matrix is
+   *     empty, has no columns, has rows of different lengths or has a NaN or infinite value
    */
-  public static double[]getMaxValuesOfTheColumnsOfAMatrix(double[][] matrix) {
+  public static double[] getMaxValuesOfTheColumnsOfAMatrix(double[][] matrix) {
+    checkMatrix(matrix);
+
+    return columnMaximums(matrix);
+  }
+
+  private static double[] columnMaximums(double[][] matrix) {
     int rowLength = matrix[0].length ;
     double[] maxValues = new double[rowLength] ;
 
