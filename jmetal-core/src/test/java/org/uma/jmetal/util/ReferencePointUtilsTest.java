@@ -2,9 +2,12 @@ package org.uma.jmetal.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
@@ -89,6 +92,44 @@ class ReferencePointUtilsTest {
 
       // Assert
       assertArrayEquals(expectedFront, result);
+    }
+
+    @Test
+    @DisplayName("keeps the coordinate of a negative reference point out of the axes")
+    void keepsTheNegativeCoordinatesOutOfTheAxes() {
+      // Arrange
+      double[] referencePoint = {-1.0, 2.0, -3.0};
+      double[][] expectedFront = {
+        {-1.0, 0.0, -3.0},
+        {-1.0, 2.0, -3.0},
+        {-1.0, 0.0, -3.0}
+      };
+
+      // Act
+      double[][] result = ReferencePointUtils.createReferenceFrontFromReferencePoint(referencePoint);
+
+      // Assert
+      assertArrayEquals(expectedFront, result);
+    }
+
+    @ParameterizedTest(name = "reference point {0}")
+    @ValueSource(
+        strings = {
+          "1.0,2.0", "-1.0,-2.0", "-1.0,2.0", "0.0,0.0", "-5.0,3.0,-0.5", "4.0,-4.0,0.0,1.0"
+        })
+    @DisplayName("the reference point is recovered from the front built from it")
+    void theReferencePointIsRecoveredFromTheFrontBuiltFromIt(String coordinates) {
+      // Arrange
+      double[] referencePoint =
+          Arrays.stream(coordinates.split(",")).mapToDouble(Double::parseDouble).toArray();
+
+      // Act
+      double[] recovered =
+          ReferencePointUtils.extractReferencePointFromReferenceFront(
+              ReferencePointUtils.createReferenceFrontFromReferencePoint(referencePoint));
+
+      // Assert
+      assertArrayEquals(referencePoint, recovered, 0.0);
     }
   }
 
