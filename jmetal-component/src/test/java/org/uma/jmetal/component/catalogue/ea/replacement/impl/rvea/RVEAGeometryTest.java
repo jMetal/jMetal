@@ -1,6 +1,7 @@
 package org.uma.jmetal.component.catalogue.ea.replacement.impl.rvea;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.offset;
 
@@ -122,7 +123,17 @@ class RVEAGeometryTest {
           RVEAGeometry.angle(new double[] {0.1, 0.2, 0.3}, new double[] {0.3, 0.6, 0.9});
 
       // Assert: the cosine can be a little greater than one
-      assertThat(angle).isBetween(0.0, 1e-7);
+      assertThat(angle).isBetween(0.0, 1e-15);
+    }
+
+    @Test
+    @DisplayName("given vectors that are almost parallel, then the angle is precise")
+    void givenAlmostParallelVectors_whenComputingTheAngle_thenItIsPrecise() {
+      // Act
+      double angle = RVEAGeometry.angle(new double[] {1, 0}, new double[] {1, 1e-9});
+
+      // Assert: acos of the cosine would give about 4.2e-8 here
+      assertThat(angle).isCloseTo(1e-9, within(1e-18));
     }
 
     @Test
