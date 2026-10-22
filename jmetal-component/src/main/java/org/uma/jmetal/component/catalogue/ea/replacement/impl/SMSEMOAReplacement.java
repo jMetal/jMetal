@@ -319,11 +319,21 @@ public class SMSEMOAReplacement<S extends Solution<?>> implements Replacement<S>
       for (S solution : solutionList) {
         maxValue = Math.max(maxValue, solution.objectives()[objective]);
       }
-      referencePointBuffer[objective] = maxValue * REFERENCE_POINT_OFFSET_FACTOR;
+      referencePointBuffer[objective] = referenceCoordinate(maxValue);
     }
 
     return referencePointBuffer;
   }
+  /**
+   * The coordinate of the reference point for the maximum value of an objective: 10% above it, that
+   * is, above the maximum also if it is negative.
+   */
+  private static double referenceCoordinate(double maxValue) {
+    return maxValue >= 0.0
+        ? maxValue * REFERENCE_POINT_OFFSET_FACTOR
+        : maxValue / REFERENCE_POINT_OFFSET_FACTOR;
+  }
+
   private double[] createJointReferencePoint(S offspring) {
     int numberOfObjectives = offspring.objectives().length;
     if (referencePointBuffer.length != numberOfObjectives) {
@@ -332,7 +342,7 @@ public class SMSEMOAReplacement<S extends Solution<?>> implements Replacement<S>
 
     for (int objective = 0; objective < numberOfObjectives; objective++) {
       double maxValue = Math.max(cachedMaxObjectives[objective], offspring.objectives()[objective]);
-      referencePointBuffer[objective] = maxValue * REFERENCE_POINT_OFFSET_FACTOR;
+      referencePointBuffer[objective] = referenceCoordinate(maxValue);
     }
 
     return referencePointBuffer;
