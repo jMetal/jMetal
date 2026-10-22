@@ -25,17 +25,24 @@ final class SMSEMOAHypervolumeContributionCalculator {
 
     int numberOfObjectives = referencePoint.length;
     copyObjectives(front, numberOfObjectives);
-    double[][] points = Arrays.copyOf(pointBuffer, front.size());
+    double[][] copiedPoints = Arrays.copyOf(pointBuffer, front.size());
+
+    // The contributions do not depend on the position of the objective space: the coordinates are
+    // translated if any of them is negative, so that the points are not below the origin and the
+    // reference point is positive, as the hypervolume of three objectives requires
+    double[] origin = origin(copiedPoints, numberOfObjectives);
+    double[][] points = translate(copiedPoints, origin);
+    double[] translatedReferencePoint = translate(referencePoint, origin);
 
     if (numberOfObjectives == 2) {
-      return computeExactTwoDimensionalContributions(points, referencePoint);
+      return computeExactTwoDimensionalContributions(points, translatedReferencePoint);
     }
 
     if (numberOfObjectives == 3) {
-      return new Hypervolume3D(referencePoint).computeContributions(points);
+      return new Hypervolume3D(translatedReferencePoint).computeContributions(points);
     }
 
-    return computeExactContributionsWithWfg(points, referencePoint);
+    return computeExactContributionsWithWfg(points, translatedReferencePoint);
   }
 
   private double[] computeExactTwoDimensionalContributions(
@@ -119,9 +126,14 @@ final class SMSEMOAHypervolumeContributionCalculator {
     }
 
     int numberOfObjectives = referencePoint.length;
+
+    // The points are normalized to the unit box, whose reference point is (1, ..., 1), and the
+    // hypervolume is scaled back with the volume of the box of the reference point
     double[][] normalizedFront = normalizeFront(points, referencePoint);
     double scaleFactor = referencePointVolume(referencePoint);
-    WFGHypervolume hypervolume = new WFGHypervolume(referencePoint);
+    double[] unitReferencePoint = new double[numberOfObjectives];
+    Arrays.fill(unitReferencePoint, 1.0);
+    WFGHypervolume hypervolume = new WFGHypervolume(unitReferencePoint);
 
     double totalHypervolume = hypervolume.compute(normalizedFront) * scaleFactor;
     if (points.length == 1) {
@@ -146,6 +158,33 @@ final class SMSEMOAHypervolumeContributionCalculator {
     }
 
     return contributions;
+  }
+
+  /** The origin of the objective space: zero, or the lowest value of the objective if negative. */
+  private double[] origin(double[][] points, int numberOfObjectives) {
+    double[] origin = new double[numberOfObjectives];
+    for (double[] point : points) {
+      for (int objective = 0; objective < numberOfObjectives; objective++) {
+        origin[objective] = Math.min(origin[objective], point[objective]);
+      }
+    }
+    return origin;
+  }
+
+  private double[][] translate(double[][] points, double[] origin) {
+    double[][] translated = new double[points.length][];
+    for (int index = 0; index < points.length; index++) {
+      translated[index] = translate(points[index], origin);
+    }
+    return translated;
+  }
+
+  private double[] translate(double[] point, double[] origin) {
+    double[] translated = new double[point.length];
+    for (int objective = 0; objective < point.length; objective++) {
+      translated[objective] = point[objective] - origin[objective];
+    }
+    return translated;
   }
 
   private double[][] normalizeFront(double[][] points, double[] referencePoint) {
