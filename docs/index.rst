@@ -67,6 +67,7 @@ Summary of features:
     :caption: Advanced
 
     experimentation.rst
+    benchmarks.rst
     parallel.rst
     component.rst
     rvea-variants.rst
