@@ -4,10 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.offset;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 @DisplayName("Unit tests for the values of class NormalizedHypervolume")
@@ -136,20 +141,182 @@ class NormalizedHypervolumeValuesTest {
   }
 
   @Nested
-  @DisplayName("When the reference front has no hypervolume")
-  class WhenTheReferenceFrontHasNoHypervolume {
+  @DisplayName("When the indicator cannot be computed")
+  class WhenTheIndicatorCannotBeComputed {
     @Test
-    @DisplayName("given a front with hypervolume, then the indicator is not a finite number")
-    void givenAFrontWithHypervolume_whenComputing_thenTheIndicatorIsNotFinite() {
+    @DisplayName("given a reference front without hypervolume, then computing is rejected")
+    void givenAReferenceFrontWithoutHypervolume_whenComputing_thenItIsRejected() {
       // Arrange: the reference point (1, 1) is the only point of the reference front
       var indicator = new NormalizedHypervolume(new double[][] {{1.0, 1.0}});
 
       // Act
-      double value = indicator.compute(new double[][] {{0.5, 0.5}});
+      Throwable thrown = catchThrowable(() -> indicator.compute(new double[][] {{0.5, 0.5}}));
 
       // Assert
-      assertThat(Double.isFinite(value)).isFalse();
+      assertThat(thrown).isInstanceOf(InvalidConditionException.class);
     }
+
+    @Test
+    @DisplayName("given an indicator without reference front, then computing is rejected")
+    void givenAnIndicatorWithoutReferenceFront_whenComputing_thenItIsRejected() {
+      // Arrange
+      var indicator = new NormalizedHypervolume();
+
+      // Act
+      Throwable thrown = catchThrowable(() -> indicator.compute(new double[][] {{0.5, 0.5}}));
+
+      // Assert
+      assertThat(thrown).isInstanceOf(InvalidConditionException.class);
+    }
+
+    @Test
+    @DisplayName("given a null front, then computing is rejected")
+    void givenANullFront_whenComputing_thenItIsRejected() {
+      // Arrange
+      var indicator = new NormalizedHypervolume(TWO_POINTS_FRONT);
+
+      // Act
+      Throwable thrown = catchThrowable(() -> indicator.compute(null));
+
+      // Assert
+      assertThat(thrown).isInstanceOf(NullParameterException.class);
+    }
+  }
+
+  @Nested
+  @DisplayName("When the indicator is built from a reference point")
+  class WhenTheIndicatorIsBuiltFromAReferencePoint {
+    @Test
+    @DisplayName("given the point (1, 1), then the indicator is 1 minus the hypervolume")
+    void givenTheUnitPoint_whenComputing_thenTheIndicatorIsOneMinusTheHypervolume() {
+      // Arrange
+      var indicator = new NormalizedHypervolume(new double[] {1.0, 1.0});
+
+      // Act & Assert: the hypervolumes are 0.25 and 0.16 + 0.16 - 0.04 = 0.28
+      assertThat(indicator.compute(new double[][] {{0.5, 0.5}}))
+          .isEqualTo(0.75, offset(EPSILON));
+      assertThat(indicator.compute(TWO_POINTS_FRONT)).isEqualTo(0.72, offset(EPSILON));
+    }
+
+    @Test
+    @DisplayName("given another point, then the front is measured in the box of the point")
+    void givenAnotherPoint_whenComputing_thenTheFrontIsMeasuredInTheBoxOfThePoint() {
+      // Arrange: the box [0, 2] x [0, 4] has a volume of 8
+      var indicator = new NormalizedHypervolume(new double[] {2.0, 4.0});
+
+      // Act
+      double value = indicator.compute(new double[][] {{1.0, 2.0}});
+
+      // Assert: the point dominates a quarter of the box
+      assertThat(value).isEqualTo(0.75, offset(EPSILON));
+    }
+
+    @Test
+    @DisplayName("given a front out of the box, then it adds no hypervolume")
+    void givenAFrontOutOfTheBox_whenComputing_thenItAddsNoHypervolume() {
+      // Arrange
+      var indicator = new NormalizedHypervolume(new double[] {2.0, 4.0});
+
+      // Act & Assert
+      assertThat(indicator.compute(new double[][] {{2.5, 1.0}})).isEqualTo(1.0, offset(EPSILON));
+      assertThat(indicator.compute(new double[0][])).isEqualTo(1.0, offset(EPSILON));
+    }
+
+    @Test
+    @DisplayName("given three objectives, then the volume of the box is used")
+    void givenThreeObjectives_whenComputing_thenTheVolumeOfTheBoxIsUsed() {
+      // Arrange: the box [0, 2]^3 has a volume of 8
+      var indicator = new NormalizedHypervolume(new double[] {2.0, 2.0, 2.0});
+
+      // Act
+      double value = indicator.compute(new double[][] {{1.0, 1.0, 1.0}});
+
+      // Assert: the point dominates an eighth of the box
+      assertThat(value).isEqualTo(1.0 - 1.0 / 8.0, offset(EPSILON));
+    }
+
+    @Test
+    @DisplayName("given the indicator, then it has the reference front of its point")
+    void givenTheIndicator_whenAskingTheReferenceFront_thenItIsTheOneOfThePoint() {
+      // Act
+      var indicator = new NormalizedHypervolume(new double[] {2.0, 4.0});
+
+      // Assert
+      assertThat(indicator.referenceFront()).isDeepEqualTo(new double[][] {{2.0, 0.0}, {0.0, 4.0}});
+    }
+
+    @Test
+    @DisplayName("given a point whose array is changed later, then the indicator is not affected")
+    void givenAPoint_whenTheArrayIsChanged_thenTheIndicatorIsNotAffected() {
+      // Arrange
+      double[] point = {2.0, 4.0};
+      var indicator = new NormalizedHypervolume(point);
+
+      // Act
+      point[0] = 100.0;
+
+      // Assert
+      assertThat(indicator.compute(new double[][] {{1.0, 2.0}})).isEqualTo(0.75, offset(EPSILON));
+    }
+
+    @Test
+    @DisplayName("given a front with another number of objectives, then it is rejected")
+    void givenAFrontOfAnotherDimension_whenComputing_thenItIsRejected() {
+      // Arrange
+      var indicator = new NormalizedHypervolume(new double[] {1.0, 1.0});
+
+      // Act
+      Throwable thrown = catchThrowable(() -> indicator.compute(new double[][] {{0.5, 0.5, 0.5}}));
+
+      // Assert
+      assertThat(thrown).isInstanceOf(InvalidConditionException.class);
+    }
+
+    @Test
+    @DisplayName("given a reference front set afterwards, then the front is used instead")
+    void givenAReferenceFrontSetAfterwards_whenComputing_thenTheFrontIsUsedInstead() {
+      // Arrange
+      var indicator = new NormalizedHypervolume(new double[] {2.0, 4.0});
+
+      // Act
+      indicator.referenceFront(TWO_POINTS_FRONT);
+
+      // Assert
+      assertThat(indicator.compute(new double[][] {{0.2, 0.8}}))
+          .isEqualTo(1.0 - 0.16 / 0.28, offset(EPSILON));
+    }
+
+    @ParameterizedTest(name = "point {0}")
+    @MethodSource(
+        "org.uma.jmetal.qualityindicator.NormalizedHypervolumeValuesTest#invalidReferencePoints")
+    @DisplayName("given an invalid point, then it is rejected")
+    void givenAnInvalidPoint_whenConstructing_thenItIsRejected(String description, double[] point) {
+      // Act
+      Throwable thrown = catchThrowable(() -> new NormalizedHypervolume(point));
+
+      // Assert
+      assertThat(thrown).isInstanceOf(InvalidConditionException.class);
+    }
+
+    @Test
+    @DisplayName("given a null point, then it is rejected")
+    void givenANullPoint_whenConstructing_thenItIsRejected() {
+      // Act
+      Throwable thrown = catchThrowable(() -> new NormalizedHypervolume((double[]) null));
+
+      // Assert
+      assertThat(thrown).isInstanceOf(NullParameterException.class);
+    }
+  }
+
+  static Stream<Arguments> invalidReferencePoints() {
+    return Stream.of(
+        Arguments.of("empty", new double[0]),
+        Arguments.of("with a zero", new double[] {1.0, 0.0}),
+        Arguments.of("with a negative", new double[] {1.0, -1.0}),
+        Arguments.of("with a NaN", new double[] {Double.NaN, 1.0}),
+        Arguments.of(
+            "with an infinity", new double[] {1.0, Double.POSITIVE_INFINITY}));
   }
 
   @Nested
