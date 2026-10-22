@@ -230,6 +230,62 @@ class EnvironmentalSelectionNormalizationTest {
     }
 
     @Test
+    @DisplayName("given a singular system, then the intercepts are the worst values of the front")
+    void givenASingularSystem_whenConstructing_thenTheInterceptsAreTheWorstValuesOfTheFront() {
+      // Arrange: the third objective is constant, so the extreme points lie in a plane
+      List<DoubleSolution> front = new ArrayList<>();
+      for (double value : new double[] {0.0, 0.25, 0.5, 0.75, 1.0}) {
+        front.add(solution(value, 1.0 - value, 7.0));
+      }
+      var selection = selection(List.of(front), 3);
+      selection.translateObjectives(front);
+
+      // Act
+      List<Double> intercepts =
+          selection.constructHyperplane(front, List.of(front.get(4), front.get(0), front.get(2)));
+
+      // Assert
+      assertEquals(List.of(1.0, 1.0, 7.0), intercepts);
+    }
+
+    @Test
+    @DisplayName("given a hyperplane with a negative intercept, then the worst values are used")
+    void givenANegativeIntercept_whenConstructing_thenTheWorstValuesAreUsed() {
+      // Arrange: the plane through (2, 1) and (3, 3) cuts the second axis at -3
+      DoubleSolution origin = solution(0.0, 0.0);
+      DoubleSolution first = solution(2.0, 1.0);
+      DoubleSolution second = solution(3.0, 3.0);
+      List<DoubleSolution> front = new ArrayList<>(List.of(origin, first, second));
+      var selection = selection(List.of(front), 2);
+      selection.translateObjectives(front);
+
+      // Act
+      List<Double> intercepts = selection.constructHyperplane(front, List.of(first, second));
+
+      // Assert
+      assertEquals(List.of(3.0, 3.0), intercepts);
+    }
+
+    @Test
+    @DisplayName("given a worse front, then the worst values are relative to the ideal point")
+    void givenATranslatedSingularFront_whenConstructing_thenTheWorstValuesAreInTheOriginalSpace() {
+      // Arrange: the same singular system translated by (20, -4, 100)
+      List<DoubleSolution> front = new ArrayList<>();
+      for (double value : new double[] {0.0, 0.5, 1.0}) {
+        front.add(solution(value + 20.0, 1.0 - value - 4.0, 107.0));
+      }
+      var selection = selection(List.of(front), 3);
+      selection.translateObjectives(front);
+
+      // Act
+      List<Double> intercepts =
+          selection.constructHyperplane(front, List.of(front.get(2), front.get(0), front.get(1)));
+
+      // Assert: the ideal point is (20, -4, 107) and the ranges of the first two objectives are 1
+      assertEquals(List.of(21.0, -3.0, 107.0), intercepts);
+    }
+
+    @Test
     @DisplayName("given objectives that have not been translated, then it is rejected")
     void givenUntranslatedObjectives_whenConstructing_thenItIsRejected() {
       // Arrange
@@ -378,6 +434,28 @@ class EnvironmentalSelectionNormalizationTest {
         double scale1, double scale2) {
       // Act & Assert
       assertEquals(List.of(0, 2, 4), selectedIndices(scale1, scale2, 0.0, 0.0));
+    }
+
+    @Test
+    @DisplayName("given a front with a constant objective, then the requested number is selected")
+    void givenAConstantObjective_whenSelecting_thenTheRequestedNumberIsSelected() {
+      // Arrange
+      List<DoubleSolution> front = new ArrayList<>();
+      for (double value : new double[] {0.0, 0.25, 0.5, 0.75, 1.0}) {
+        front.add(solution(value, 1.0 - value, 7.0));
+      }
+      List<ReferencePoint<DoubleSolution>> referencePoints = new ArrayList<>();
+      new ReferencePoint<DoubleSolution>().generateReferencePoints(referencePoints, 3, 3);
+      var selection = new EnvironmentalSelection<>(List.of(front), 3, referencePoints, 3);
+      JMetalRandom.getInstance().setSeed(23);
+
+      // Act
+      List<DoubleSolution> selected = selection.execute(new ArrayList<>(front));
+
+      // Assert
+      assertEquals(3, selected.size());
+      assertEquals(3, selected.stream().distinct().count());
+      assertTrue(front.containsAll(selected));
     }
 
     @Test
