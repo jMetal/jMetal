@@ -78,6 +78,33 @@ A typical scenario involves finding a Pareto front approximation and compute a q
 In this code, we assume the file containing the front has a CSV format.
 
 
+Normalization of the fronts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The fronts are normalized with the ``NormalizeUtils`` class. The reference front is normalized with its own minimum
+and maximum values in each objective, and the front with those of the reference front, so a point of the front that is
+out of the range of the reference front is mapped out of [0, 1]. This works with objectives of any sign, including
+those that are always negative. The normalization rejects, with an ``InvalidConditionException``, a matrix that is
+empty, has rows of different length, or contains a NaN or an infinite value (a front with an infinite objective value,
+which some problems produce, cannot be normalized). An objective with the same value in all the points is mapped to 0.5.
+
+Some details of the indicators are worth knowing:
+
+* The hypervolumes ``PISAHypervolume`` (``HV``) and ``NormalizedHypervolume`` (``NHV``) assume normalized fronts and the
+  reference point (1, ..., 1): a coordinate above one adds nothing to the hypervolume, and a negative one is counted as
+  zero. ``WFGHypervolume`` and ``Hypervolume3D`` use the reference point of their reference front, whatever the sign of
+  its coordinates.
+* ``NHV`` is 1 - (HV of the front / HV of the reference front), so it is zero for the reference front, one for an empty
+  front, and negative if the front has more hypervolume than the reference front. The hypervolume of the reference
+  front must be positive, otherwise the indicator is not defined and an ``InvalidConditionException`` is thrown. It can
+  also be built from a reference point (``new NormalizedHypervolume(new double[] {1.0, 1.0})``): the reference is then
+  the box between the origin and the point.
+* ``SP`` and ``GSPREAD`` are 1.0 for a front with a single point (or identical points), and 0.0 for a front uniformly
+  spread between the extremes of the reference front.
+* ``IGD+`` does not penalize a front that is better than the reference front, while ``IGD`` does.
+* The indicators reject, with a ``NullParameterException`` or an ``InvalidConditionException``, a null or empty front,
+  a missing reference front, and a front with another number of objectives than the reference front.
+
 Computing quality indicators from the command line
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
