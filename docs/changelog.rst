@@ -4,6 +4,18 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/22/2026] Fixed ``CRE21``, ``CRE25`` and ``CRE31`` (Tanabe and Ishibuchi, 2020) to match the
+  reference code of the suite. ``CRE21`` has the bounds of the reference code (x1 and x2 in
+  [0.00001, 100], x3 in [1, 3]) instead of [0.01, 0.45] x [0.01, 0.10]^2, and its second
+  constraint no longer has the sign of the second objective reversed; the constraint of ``CRE25``
+  bounds the first objective, not the second; and the first constraint of ``CRE31`` is that of the car side
+  impact problem.
+
+* [10/22/2026] Fixed ``RCM10``, ``RCM26`` and ``RCM28`` of the CEC 2021 suite against the official
+  code. The load of ``RCM10`` is 104, not 10000, and ``RCM26`` and ``RCM28`` store their
+  inequality constraints before the equality ones, as the official code does, so the positions of
+  their constraint values were swapped.
+
 * [10/21/2026] The environmental selection of AGE-MOEA and AGE-MOEA-II
   (``AGEMOEAEnvironmentalSelection`` and ``AGEMOEA2EnvironmentalSelection``) takes the ``Ranking``
   that sorts the population into fronts as a constructor argument, so that AGE-MOEA can use other

@@ -29,7 +29,7 @@ Summary of features:
   - Problem families: ZDT, DTLZ (including the DTLZ-Minus variants), WFG, MaF, LSMOP, RE, CRE, RWA, FDA, CEC2009, LZ09, GLT, MOP, LIRCMOP, UF, ZCAT, EBES
   - Real-world constrained problems: the 50 problems of the CEC2021 RWMOP suite (RCM01-RCM50)
   - Classical problems: Kursawe, Fonseca, Schaffer, Viennet2, Viennet3
-  - Constrained problems: Srinivas, Tanaka, Osyczka2, Constr_Ex, Golinski, Water, Viennet4, CF1-CF16 (Xiang et al. suite), C-DTLZ, LIR-CMOP1-14, DAS-CMOP1-9, RCM01-RCM50
+  - Constrained problems: Srinivas, Tanaka, Osyczka2, Constr_Ex, Golinski, Water, Viennet4, CF1-CF16 (Xiang et al. suite), C-DTLZ, LIR-CMOP1-14, DAS-CMOP1-9, MW1-MW14, RCM01-RCM50
   - Combinatorial problems: multi-objective TSP, multi-objective knapsack
   - Academic problems: OneMax, OneZeroMax
 
