@@ -4,6 +4,12 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/22/2026] Fixed ``AdaptiveGrid``, the grid of PAES, PESA-II and the grid-based archives: it
+  initialized the upper limit of each objective with ``Double.MIN_VALUE``, the smallest positive
+  double, so for an objective whose values are all negative the grid covered [min, 0] instead of
+  [min, max], and the solutions fell in the lower cells. The grid also has unit tests of its
+  locations, densities and limits now.
+
 * [10/22/2026] ``NormalizeUtils`` rejects invalid input with an ``InvalidConditionException`` (a
   ``NullParameterException`` for a null argument), as its Javadoc said it did: bounds with the lower
   one greater than the upper one, and matrices without rows or columns, with rows of different
