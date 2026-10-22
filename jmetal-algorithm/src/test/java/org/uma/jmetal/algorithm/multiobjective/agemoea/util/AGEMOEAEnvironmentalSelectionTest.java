@@ -208,8 +208,50 @@ public class AGEMOEAEnvironmentalSelectionTest {
 
         environmentalSelection.execute(secondPopulation, 3);
 
-        assertEquals(4.0,
+        // The inverse of the distance (L1, P reset to 1) to the ideal point: 1 / 4
+        assertEquals(0.25,
             dominatedSolution.attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId()));
+    }
+
+    @Test
+    public void testExecuteKeepsTheSolutionsOfTheCutFrontClosestToTheIdealPoint() {
+        FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
+        // A first front whose geometry gives P = 1, a second front whose L1 distances to the ideal
+        // point (0, 0) are 1.6, 1.2, 1.7 and 1.45, and a third front
+        List<DoubleSolution> population = List.of(
+            solutionWithObjectives(problem, 0.0, 1.0),
+            solutionWithObjectives(problem, 0.5, 0.5),
+            solutionWithObjectives(problem, 1.0, 0.0),
+            solutionWithObjectives(problem, 0.1, 1.5),
+            solutionWithObjectives(problem, 0.6, 0.6),
+            solutionWithObjectives(problem, 1.6, 0.1),
+            solutionWithObjectives(problem, 0.55, 0.9),
+            solutionWithObjectives(problem, 3.0, 3.0));
+
+        List<DoubleSolution> selected =
+            new AGEMOEAEnvironmentalSelection<DoubleSolution>(2).execute(population, 5);
+
+        assertEquals(5, selected.size());
+        assertTrue(selected.contains(population.get(4)));
+        assertTrue(selected.contains(population.get(6)));
+    }
+
+    @Test
+    public void testExecuteScoresAFrontWithANegativeObjective() {
+        FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
+        List<DoubleSolution> front = List.of(
+            solutionWithObjectives(problem, 2.0, -10.0),
+            solutionWithObjectives(problem, 5.0, -20.0),
+            solutionWithObjectives(problem, 10.0, -30.0),
+            solutionWithObjectives(problem, 20.0, -35.0));
+
+        new AGEMOEAEnvironmentalSelection<DoubleSolution>(2).execute(front, 4);
+
+        for (DoubleSolution solution : front.subList(1, 3)) {
+            double value =
+                (double) solution.attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId());
+            assertTrue(Double.isFinite(value) && value > 0.0, String.valueOf(value));
+        }
     }
 
     private DoubleSolution solutionWithObjectives(

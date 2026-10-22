@@ -21,6 +21,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     protected static String attributeId = AGEMOEAEnvironmentalSelection.class.getName();
     protected double P;
     protected List<Double> intercepts;
+    protected List<Double> idealPoint;
     protected int numberOfObjectives;
 
 
@@ -75,6 +76,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
 
         // compute ideal point
         List<Double> ideal_point = computeIdealPoint(front);
+        idealPoint = ideal_point;
 
         // find extreme points
         List<S> extreme_points = this.findExtremes(front);
@@ -102,10 +104,10 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             for(int i=0; i<this.numberOfObjectives; i++){
                 double value = 0.0;
                 for (S s : front){
-                    if (s.objectives()[i] > value)
-                        value = s.objectives()[i];
+                    if (s.objectives()[i] - ideal_point.get(i) > value)
+                        value = s.objectives()[i] - ideal_point.get(i);
                 }
-                intercepts.add(value);
+                intercepts.add(value > 0.0 ? value : 1.0);
             }
             return;
         }
@@ -118,7 +120,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         for (int i=0; i<front.size(); i++){
             double[] objectives = front.get(i).objectives().clone();
             for (int j=0; j<numberOfObjectives; j++){
-                objectives[j] = (objectives[j] - ideal_point.get(j)) / (intercepts.get(j) - ideal_point.get(j));
+                objectives[j] = (objectives[j] - ideal_point.get(j)) / intercepts.get(j);
             }
             normalizedFront.add(i, objectives);
         }
@@ -198,7 +200,8 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
                 centralPoint = normalizedFront.get(i);
             }
         }
-        assert(centralPoint != null);
+        if (centralPoint == null)
+            return 1;
         double average = 0;
         try {
             average = stream(centralPoint).sum() / numberOfObjectives;
@@ -215,28 +218,35 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
 
     /**
      * This method assigns only the convergence/proximity score to solution in the non-dominated front.
-     * This score is assigned to non-dominated fronts with ranking index > 0
+     * This score is assigned to non-dominated fronts with ranking index > 0: the inverse of the
+     * Minkowski distance (of order P) of the solution to the ideal point of the first front, with the
+     * objectives normalized as those of the first front, so that the solutions closer to the ideal
+     * point have higher scores (Panichella, GECCO 2019, and the authors' code in PlatEMO)
      * @param front
      */
     protected void assignConvergenceScore(List<S> front){
-        double[] idealPoint = new double[this.numberOfObjectives];
+        double[] origin = new double[this.numberOfObjectives];
         for (S solution : front){
             double[] normalizedObjective = solution.objectives().clone();
             for(int i=0; i<this.numberOfObjectives; i++){
+                if (idealPoint != null && !idealPoint.isEmpty())
+                    normalizedObjective[i] = normalizedObjective[i] - idealPoint.get(i);
                 if (intercepts != null && !intercepts.isEmpty())
                     normalizedObjective[i] = normalizedObjective[i] / intercepts.get(i);
             }
-            double value =  this.minkowskiDistance(normalizedObjective, idealPoint, P);
-            solution.attributes().put(attributeId, value);
+            double distance = this.minkowskiDistance(normalizedObjective, origin, P);
+            solution.attributes().put(attributeId, distance > 0.0 ? 1.0 / distance : Double.POSITIVE_INFINITY);
         }
     }
 
     /**
-     * This method finds the extreme points in the non-dominated front using point to line (axes) distance
+     * This method finds the extreme points in the non-dominated front using point to line (axes) distance,
+     * with the objectives translated so that the ideal point of the front is the origin
      * @param front the non-dominated front under analysis
      * @return the extreme solutions in the front
      */
     protected List<S> findExtremes(List<S> front) {
+        List<Double> ideal = computeIdealPoint(front);
         List<S> extremePoints = new ArrayList<>();
         for (int i=0; i<this.numberOfObjectives; i++){
             double[] axes = new double[this.numberOfObjectives];
@@ -245,7 +255,7 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             double minDistance = Double.POSITIVE_INFINITY;
             int minIndex = -1;
             for (int j=0; j<front.size(); j++){
-                double dist = this.point2LineDistance(front.get(j).objectives(), new double[this.numberOfObjectives], axes);
+                double dist = this.point2LineDistance(translated(front.get(j), ideal), new double[this.numberOfObjectives], axes);
                 if (dist < minDistance){
                     minDistance = dist;
                     minIndex = j;
@@ -336,6 +346,18 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
     private void resetState() {
         P = 1.0;
         intercepts = null;
+        idealPoint = null;
+    }
+
+    /**
+     * @return the objectives of the solution minus the given ideal point
+     */
+    protected double[] translated(S solution, List<Double> ideal) {
+        double[] objectives = solution.objectives().clone();
+        for (int i = 0; i < objectives.length; i++) {
+            objectives[i] -= ideal.get(i);
+        }
+        return objectives;
     }
 
     public List<Double> computeIdealPoint(List<S> population) {
@@ -354,7 +376,18 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         return ideal_point;
     }
 
+    /**
+     * The intercepts of the hyperplane through the extreme points, with the objectives translated so
+     * that the ideal point of the population is the origin. As in the authors' code (PlatEMO), they
+     * are the maxima of the translated objectives when the extreme points are not distinct or the
+     * hyperplane has no finite positive intercepts; an intercept of zero is taken as one.
+     *
+     * @param population the front to normalize
+     * @param extreme_points its extreme points
+     * @return the intercepts, relative to the ideal point of the population
+     */
     public List<Double> constructHyperplane(List<S> population, List<S> extreme_points) {
+        List<Double> ideal = computeIdealPoint(population);
         // Check whether there are duplicate extreme points.
         // This might happen but the original paper does not mention how to deal with it.
         boolean duplicate = false;
@@ -365,15 +398,9 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
         }
 
         List<Double> intercepts = new ArrayList<>();
+        boolean valid = !duplicate;
 
-        if (duplicate) // cannot construct the unique hyperplane (this is a casual method to deal with
-        // the condition)
-        {
-            for (int f = 0; f < numberOfObjectives; f += 1) {
-                // extreme_points[f] stands for the individual with the largest value of objective f
-                intercepts.add(extreme_points.get(f).objectives()[f]);
-            }
-        } else {
+        if (!duplicate) {
             // Find the equation of the hyperplane
             List<Double> b = new ArrayList<>(); // (pop[0].objs().size(), 1.0);
             for (int i = 0; i < numberOfObjectives; i++) b.add(1.0);
@@ -381,15 +408,34 @@ public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
             List<List<Double>> A = new ArrayList<>();
             for (S s : extreme_points) {
                 List<Double> aux = new ArrayList<>();
-                for (int i = 0; i < numberOfObjectives; i++) aux.add(s.objectives()[i]);
+                double[] objectives = translated(s, ideal);
+                for (int i = 0; i < numberOfObjectives; i++) aux.add(objectives[i]);
                 A.add(aux);
             }
             List<Double> x = guassianElimination(A, b);
 
             // Find intercepts
             for (int f = 0; f < numberOfObjectives; f += 1) {
-                intercepts.add(1.0 / x.get(f));
+                double intercept = 1.0 / x.get(f);
+                valid &= x.get(f) > 0.0 && Double.isFinite(x.get(f)) && Double.isFinite(intercept);
+                intercepts.add(intercept);
             }
+        }
+
+        if (!valid) {
+            // the maxima of the translated objectives
+            intercepts = new ArrayList<>();
+            for (int f = 0; f < numberOfObjectives; f += 1) {
+                double maximum = 0.0;
+                for (S s : population) {
+                    maximum = Math.max(maximum, s.objectives()[f] - ideal.get(f));
+                }
+                intercepts.add(maximum);
+            }
+        }
+        for (int f = 0; f < numberOfObjectives; f += 1) {
+            if (intercepts.get(f) == 0.0)
+                intercepts.set(f, 1.0);
         }
         return intercepts;
     }

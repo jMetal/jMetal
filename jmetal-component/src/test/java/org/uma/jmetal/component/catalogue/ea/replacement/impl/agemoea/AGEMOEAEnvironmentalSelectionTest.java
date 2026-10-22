@@ -98,8 +98,9 @@ class AGEMOEAEnvironmentalSelectionTest {
 
     environmentalSelection.execute(secondPopulation, 3);
 
+    // The inverse of the distance (L1, P reset to 1) to the ideal point: 1 / 4
     assertEquals(
-        4.0,
+        0.25,
         dominatedSolution.attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId()));
   }
 

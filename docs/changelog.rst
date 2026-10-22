@@ -20,6 +20,15 @@ only includes the latest entries.
   Binh2, Fonseca, Viennet2, Viennet3 and Water, which only existed as ``.pf``, have been converted to
   CSV.
 
+* [10/21/2026] AGE-MOEA and AGE-MOEA-II follow the authors' code (PlatEMO) in two places of their
+  survival score. The solutions of the fronts after the first are scored with the inverse of their
+  distance to the ideal point, not with the distance, so that the closer ones survive the front that
+  does not fit and win the tournaments. The extreme points and the hyperplane that normalize the
+  first front are computed with the objectives translated to its ideal point, falling back to the
+  maxima of the translated front when the extreme points coincide or the hyperplane has no positive
+  intercepts; before, a front with a negative objective (e.g. Srinivas) could be normalized to
+  infinity. Both changes are in ``jmetal-component`` and in the copy of ``jmetal-algorithm``.
+
 * [10/21/2026] The DAS-CMOP problems (Fan et al., "Difficulty Adjustable and Scalable Constrained
   Multiobjective Test Problem Toolkit", Evolutionary Computation, 2020), ``DASCMOP1`` to
   ``DASCMOP9`` in the package ``org.uma.jmetal.problem.multiobjective.dascmop``, with the
