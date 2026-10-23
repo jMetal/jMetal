@@ -248,7 +248,7 @@ The techniques are the following:
 
 The parameters are scale-free (quantiles, fractions of the run and ratios rather than absolute values of epsilon), so a setting can be used on problems whose constraints have different scales. The techniques that change during the run are scheduled with the progress of the run, in [0, 1], which the termination condition computes: they need a ``TerminationByEvaluations`` or a ``TerminationByComputingTime`` (any ``Termination`` that implements ``progress``), and throw an exception otherwise. A technique has state, so an instance must not be shared by several runs.
 
-The builders accept a technique with ``setConstraintHandlingTechnique``:
+The builders of the component-based algorithms (sub-project ``jmetal-component``) accept a technique with ``setConstraintHandlingTechnique``; the classic algorithms of ``jmetal-algorithm`` do not use them:
 
 .. list-table::
    :header-rows: 1
