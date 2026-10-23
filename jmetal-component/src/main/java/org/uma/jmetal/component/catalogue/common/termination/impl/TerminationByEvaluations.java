@@ -1,6 +1,7 @@
 package org.uma.jmetal.component.catalogue.common.termination.impl;
 
 import java.util.Map;
+import java.util.OptionalDouble;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -23,6 +24,17 @@ public class TerminationByEvaluations implements Termination {
     int currentNumberOfEvaluations = (int) algorithmStatusData.get("EVALUATIONS") ;
 
     return (currentNumberOfEvaluations >= maximumNumberOfEvaluations) ;
+  }
+
+  /** The evaluations done over the maximum, or empty if the status has no evaluations. */
+  @Override
+  public OptionalDouble progress(Map<String, Object> algorithmStatusData) {
+    Object evaluations = algorithmStatusData.get("EVALUATIONS");
+    if (evaluations == null) {
+      return OptionalDouble.empty();
+    }
+    return OptionalDouble.of(
+        Math.min(1.0, ((int) evaluations) / (double) maximumNumberOfEvaluations));
   }
 
   public int getMaximumNumberOfEvaluations() {

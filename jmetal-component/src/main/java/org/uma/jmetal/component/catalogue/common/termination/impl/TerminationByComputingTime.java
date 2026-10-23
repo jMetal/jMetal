@@ -1,6 +1,7 @@
 package org.uma.jmetal.component.catalogue.common.termination.impl;
 
 import java.util.Map;
+import java.util.OptionalDouble;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -27,6 +28,16 @@ public class TerminationByComputingTime implements Termination {
     evaluations = (int) algorithmStatusData.get("EVALUATIONS") ;
 
     return currentComputingTime >= maxComputingTime ;
+  }
+
+  /** The computing time over the maximum, or empty if the status has no computing time. */
+  @Override
+  public OptionalDouble progress(Map<String, Object> algorithmStatusData) {
+    Object computingTime = algorithmStatusData.get("COMPUTING_TIME");
+    if (computingTime == null) {
+      return OptionalDouble.empty();
+    }
+    return OptionalDouble.of(Math.min(1.0, ((long) computingTime) / (double) maxComputingTime));
   }
 
   public int getEvaluations() {
