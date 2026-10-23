@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.singleobjective;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization.CoralReefsOptimization;
 import org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization.CoralReefsOptimizationBuilder;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.CovarianceMatrixAdaptationEvolutionStrategy;
+import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
@@ -18,6 +20,7 @@ import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 @DisplayName("Reproducibility of single-objective algorithms with JMetalRandom's seed")
@@ -90,6 +93,42 @@ class ReproducibilityTest {
 
       // Assert
       assertEquals(first, second);
+    }
+  }
+
+  @Nested
+  @DisplayName("When running StandardPSO2011")
+  class WhenRunningStandardPSO2011 {
+
+    private List<Double> run() {
+      StandardPSO2011 algorithm =
+          new StandardPSO2011(new Sphere(10), 20, 50, 3, new SequentialSolutionListEvaluator<>());
+      algorithm.run();
+      return algorithm.result().variables();
+    }
+
+    @Test
+    @DisplayName("given the same seed, when running twice, then the results are equal")
+    void givenTheSameSeed_whenRunningTwice_thenTheResultsAreEqual() {
+      // Act
+      List<Double> first = runWithSeed(1, this::run);
+      List<Double> second = runWithSeed(1, this::run);
+
+      // Assert
+      assertEquals(first, second);
+    }
+
+    @Test
+    @DisplayName("given a generator, when creating the algorithm, then JMetalRandom keeps it")
+    void givenAGenerator_whenCreatingTheAlgorithm_thenJMetalRandomKeepsIt() {
+      // Arrange
+      var generator = JMetalRandom.getInstance().getRandomGenerator();
+
+      // Act
+      new StandardPSO2011(new Sphere(10), 20, 50, 3, new SequentialSolutionListEvaluator<>());
+
+      // Assert
+      assertSame(generator, JMetalRandom.getInstance().getRandomGenerator());
     }
   }
 }
