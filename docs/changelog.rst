@@ -4,6 +4,32 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/23/2026] Random numbers in parallel threads (issue #515). ``ThreadLocalRandomGenerator``
+  gives each thread its own generator: ``ThreadLocalRandomGenerator.install()`` makes
+  ``JMetalRandom`` use it, the installing thread keeps its generator and sequence, and ``setSeed``
+  applies to the calling thread. With the shared default generator, algorithms running in parallel
+  threads contended for it (40 runs of NSGA-II on 20 threads took about 17 times as long as with a
+  generator per thread). ``ExecuteAlgorithms`` installs it when an experiment has more than one
+  core, and ``ExperimentBuilder.setSeed`` sets a base seed from which each run derives its own, so a
+  parallel experiment gives the same fronts when it is repeated, with any number of cores. The
+  default generator of ``JMetalRandom`` does not change.
+
+* [10/23/2026] Fixed ``ExecuteAlgorithms``: it set the parallelism of the common pool of the parallel
+  streams, which has no effect once the pool exists, so the runs of an experiment were parallel even
+  with one core; they now run on as many threads as cores the experiment has.
+
+* [10/23/2026] Fixed ``JMetalRandom``: the instance was created lazily without synchronization, so
+  two threads could each create one, and a generator set in a thread was not guaranteed to be seen by
+  the others; it is now created once and its generator is ``volatile``. ``setRandomGenerator``
+  rejects ``null``.
+
+* [10/23/2026] Fixed ``StandardPSO2011`` and ``SPS2011VelocityUpdate``: their constructors replaced
+  the generator of ``JMetalRandom``, for all the program, with a new one seeded with the time, so a
+  seed set before creating them was lost and their runs could not be reproduced. They now have their
+  own ``ExtendedPseudoRandomGenerator`` that draws from ``JMetalRandom`` at each call (a new
+  constructor without arguments), as does CMA-ES, which kept the generator that ``JMetalRandom`` had
+  when it was created.
+
 * [10/23/2026] The problems of the CEC 2021 suite are named ``RCM01`` to ``RCM50``, as the classes and
   the names of the other families (``CRE21``, ``MW1``, ``RWA1``): the classes were named after the
   number and the description of the problem (``RCM01PressureVesselProblem``) and ``name()`` returned

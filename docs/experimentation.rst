@@ -208,6 +208,7 @@ The experiment is configured using the `ExperimentBuilder` class as shown in lin
 6. A list with the quality indicators (lines 80-85).
 7. The number of independent runs (line 86).
 8. The number of cores (line 8). An experiment can require a large computing time. This parameter indicates the number of cores that can be used to run the configurations in parallel. 
+9. Optionally, a base seed (``setSeed(long)``, not used in the example). Each run then sets the seed of ``JMetalRandom`` before it starts to a value derived from the base seed, the tags of the algorithm and the problem, and the number of the run, so repeating the experiment gives the same fronts, with any number of cores. Without a seed the runs are not reproducible.
 
 Algorithm execution
 ^^^^^^^^^^^^^^^^^^^
@@ -218,6 +219,8 @@ Once the experiment class is created and configured, we are ready to execute the
    :lineno-start: 90
 
    new ExecuteAlgorithms<>(experiment).run();
+
+The runs are executed on as many threads as cores were set in the experiment (in the calling thread with one core). With more than one core, ``ExecuteAlgorithms`` installs a ``ThreadLocalRandomGenerator`` (see :ref:`parallel`), which gives each thread its own random number generator: otherwise the runs would contend for the single generator of ``JMetalRandom`` and slow each other down.
 
 As a result, the following folder directory will be generated:
 

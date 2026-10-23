@@ -79,6 +79,19 @@ We studied this issue in: `J.J. Durillo, A.J. Nebro, F. Luna, E. Alba A Study of
 The `jmetal-parallel` sub-module contains an `AsynchronousParallelAlgorithm <https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/asynchronous/algorithm/AsynchronousParallelAlgorithm.java>`_ interface and a multi-threaded implementation of it based on the master-worker scheme, which is applied in two classes: `AsynchronousMultiThreadedGeneticAlgorithm <https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/asynchronous/algorithm/impl/AsynchronousMultiThreadedGeneticAlgorithm.java>`_ and `AsynchronousMultiThreadedNSGAII <https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/asynchronous/algorithm/impl/AsynchronousMultiThreadedNSGAII.java>`_.
 
 
+Random numbers in parallel threads
+----------------------------------
+All the components of jMetal draw their random numbers from ``JMetalRandom``, a single instance whose default generator is shared by all the threads. That makes a single-threaded program reproducible with ``JMetalRandom.getInstance().setSeed(seed)``, but algorithms that run at the same time in several threads (an experiment with several cores, a meta-optimizer that evaluates configurations in parallel, a thread pool of the user) contend for that generator and slow each other down, much more than the number of threads explains; generators other than the default one (e.g., ``MersenneTwisterGenerator``) are not even safe to share.
+
+In that case, install a generator per thread before starting the threads:
+
+.. code-block:: java
+
+  ThreadLocalRandomGenerator.install();                          // JavaRandomGenerator in the other threads
+  ThreadLocalRandomGenerator.install(MersenneTwisterGenerator::new); // or another type
+
+The thread that installs it keeps the generator it had, so it draws the same numbers as before. Every other thread gets its own generator the first time it draws, with a seed derived from that of the installing thread, and ``setSeed`` and ``getSeed`` apply to the calling thread, so each thread (each run of an algorithm) can make its draws reproducible by setting its own seed. ``ExecuteAlgorithms`` installs it automatically when an experiment has more than one core (see :ref:`experimentation`). Note that the methods ``setRandomGenerator`` of ``JMetalRandom`` and of the builders of SMPSO and dMOPSO replace the generator for all the program.
+
 Module contents
 ---------------
 
