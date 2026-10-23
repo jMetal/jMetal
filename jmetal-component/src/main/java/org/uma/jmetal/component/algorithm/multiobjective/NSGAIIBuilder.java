@@ -10,16 +10,19 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSo
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.ConstraintHandlingReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
+import org.uma.jmetal.component.util.RunProgress;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.MultiComparator;
+import org.uma.jmetal.util.constrainthandling.ConstraintHandlingTechnique;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.ranking.Ranking;
@@ -39,6 +42,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
   private Termination termination;
   private Selection<S> selection;
   private Variation<S> variation;
+  private ConstraintHandlingTechnique<S> constraintHandlingTechnique;
 
   public NSGAIIBuilder(Problem<S> problem, int populationSize, int offspringPopulationSize,
       CrossoverOperator<S> crossover, MutationOperator<S> mutation) {
@@ -80,6 +84,24 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     return this;
   }
 
+  /**
+   * Sets the constraint-handling technique: the ranking of the replacement and of the default
+   * selection becomes {@code technique.ranking()} (it replaces a ranking given with {@code
+   * setRanking}), and the technique is updated once per generation with the progress of the run.
+   * Without a technique the algorithm behaves as before (its default ranking ignores the
+   * constraints). The technique only guides the search: an external archive keeps the feasible
+   * solutions with the constrained-domination principle, which is recommended with {@link
+   * org.uma.jmetal.util.constrainthandling.StochasticRanking} and {@link
+   * org.uma.jmetal.util.constrainthandling.SelfAdaptivePenalty}, whose final population can contain
+   * infeasible solutions. A technique has state, so it must not be shared by several algorithms.
+   */
+  public NSGAIIBuilder<S> setConstraintHandlingTechnique(
+      ConstraintHandlingTechnique<S> technique) {
+    this.constraintHandlingTechnique = technique;
+
+    return this;
+  }
+
   public NSGAIIBuilder<S> setEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation;
 
@@ -100,16 +122,28 @@ public class NSGAIIBuilder<S extends Solution<?>> {
   }
 
   public EvolutionaryAlgorithm<S> build() {
+    Ranking<S> algorithmRanking =
+        constraintHandlingTechnique != null ? constraintHandlingTechnique.ranking() : ranking;
+    RunProgress progress = new RunProgress();
     Replacement<S> replacement = new RankingAndDensityEstimatorReplacement<>(
-        ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
-    Selection<S> algorithmSelection = selection != null ? selection : defaultSelection();
+        algorithmRanking, densityEstimator,
+        RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
+    if (constraintHandlingTechnique != null) {
+      replacement =
+          new ConstraintHandlingReplacement<>(constraintHandlingTechnique, replacement, progress);
+    }
+    Selection<S> algorithmSelection =
+        selection != null ? selection : defaultSelection(algorithmRanking);
 
-    return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-        algorithmSelection, variation, replacement);
+    var algorithm = new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation,
+        termination, algorithmSelection, variation, replacement);
+    progress.bind(() -> algorithm.termination(), algorithm::attributes);
+
+    return algorithm;
   }
 
   /** A binary tournament that compares the ranks of the ranking and then the densities. */
-  private Selection<S> defaultSelection() {
+  private Selection<S> defaultSelection(Ranking<S> ranking) {
     int tournamentSize = 2;
     return new NaryTournamentSelection<>(
         tournamentSize,

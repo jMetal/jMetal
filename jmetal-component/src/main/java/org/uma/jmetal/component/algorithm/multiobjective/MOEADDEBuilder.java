@@ -12,16 +12,19 @@ import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.SubproblemUpdateCriterion;
 import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.impl.AggregationCriterion;
+import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.impl.ConstraintHandlingCriterion;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.DifferentialEvolutionCrossoverVariation;
+import org.uma.jmetal.component.util.RunProgress;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.aggregationfunction.AggregationFunction;
 import org.uma.jmetal.util.aggregationfunction.impl.Tschebyscheff;
+import org.uma.jmetal.util.constrainthandling.PairwiseConstraintHandlingTechnique;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
@@ -44,6 +47,7 @@ public class MOEADDEBuilder {
   private SequenceGenerator<Integer> sequenceGenerator ;
   private WeightVectorNeighborhood<DoubleSolution> neighborhood ;
   private AggregationFunction aggregationFunction;
+  private final RunProgress progress = new RunProgress();
   private SubproblemUpdateCriterion<DoubleSolution> subproblemUpdateCriterion =
       new AggregationCriterion<>();
   private boolean normalize ;
@@ -141,6 +145,23 @@ public class MOEADDEBuilder {
     return this;
   }
 
+  /**
+   * Sets the constraint-handling technique, which decides whether a new solution replaces the
+   * solution of a subproblem: by the constraints of both and, when they do not decide, by their
+   * values of the aggregation function (see {@link ConstraintHandlingCriterion}). It replaces the
+   * subproblem update criterion, and is updated with the population and the progress of the run
+   * once per generation. Only pairwise techniques can be used, because MOEA/D compares two
+   * solutions of a subproblem. A technique has state, so it must not be shared by several
+   * algorithms.
+   *
+   * @param technique the constraint-handling technique
+   * @return this builder
+   */
+  public MOEADDEBuilder setConstraintHandlingTechnique(
+      PairwiseConstraintHandlingTechnique<DoubleSolution> technique) {
+    return setSubproblemUpdateCriterion(new ConstraintHandlingCriterion<>(technique, progress));
+  }
+
   public MOEADDEBuilder setSubproblemUpdateCriterion(
       SubproblemUpdateCriterion<DoubleSolution> subproblemUpdateCriterion) {
     this.subproblemUpdateCriterion = subproblemUpdateCriterion;
@@ -173,7 +194,10 @@ public class MOEADDEBuilder {
   }
 
   public EvolutionaryAlgorithm<DoubleSolution> build() {
-    return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
+    var algorithm = new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
         selection, variation, replacement);
+    progress.bind(() -> algorithm.termination(), algorithm::attributes);
+
+    return algorithm;
   }
 }

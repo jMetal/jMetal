@@ -18,6 +18,7 @@ import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.imp
 import org.uma.jmetal.component.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.component.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.component.catalogue.pso.localbestupdate.LocalBestUpdate;
+import org.uma.jmetal.component.catalogue.pso.localbestupdate.impl.ConstraintHandlingLocalBestUpdate;
 import org.uma.jmetal.component.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.component.catalogue.pso.perturbation.Perturbation;
 import org.uma.jmetal.component.catalogue.pso.perturbation.impl.FrequencySelectionMutationBasedPerturbation;
@@ -27,6 +28,7 @@ import org.uma.jmetal.component.catalogue.pso.velocityinitialization.VelocityIni
 import org.uma.jmetal.component.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.VelocityUpdate;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.impl.ConstrainedVelocityUpdate;
+import org.uma.jmetal.component.util.RunProgress;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -34,6 +36,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
+import org.uma.jmetal.util.constrainthandling.PairwiseConstraintHandlingTechnique;
 /**
  * Class to configure and build an instance of the SMPSO algorithm
  */
@@ -53,6 +56,7 @@ public class SMPSOBuilder {
   private LocalBestUpdate localBestUpdate;
   private GlobalBestSelection globalBestSelection;
   private BoundedArchive<DoubleSolution> archive;
+  private PairwiseConstraintHandlingTechnique<DoubleSolution> constraintHandlingTechnique;
 
   public SMPSOBuilder(DoubleProblem problem, int swarmSize) {
     name = "SMPSO";
@@ -147,8 +151,34 @@ public class SMPSOBuilder {
     return this ;
   }
 
+  /**
+   * Sets the constraint-handling technique, which decides whether a particle replaces its local
+   * best (by default, Pareto dominance, which ignores the constraints). It is updated with the
+   * swarm and the progress of the run once per iteration, and replaces a local best update set
+   * with {@code setLocalBestUpdate}. Only pairwise techniques can be used, because the local best
+   * update compares two solutions. The leaders, kept in the archive, are compared with the
+   * constrained-domination principle whatever the technique, so the effect of a technique that
+   * tolerates violations is smaller than in the algorithms that rank the population. A technique
+   * has state, so it must not be shared by several algorithms.
+   *
+   * @param technique the constraint-handling technique
+   * @return this builder
+   */
+  public SMPSOBuilder setConstraintHandlingTechnique(
+      PairwiseConstraintHandlingTechnique<DoubleSolution> technique) {
+    this.constraintHandlingTechnique = technique;
+    return this;
+  }
+
   public ParticleSwarmOptimizationAlgorithm build() {
-    return new ParticleSwarmOptimizationAlgorithm(name, swarmInitialization, evaluation, termination,
+    RunProgress progress = new RunProgress();
+    LocalBestUpdate algorithmLocalBestUpdate =
+        constraintHandlingTechnique != null
+            ? new ConstraintHandlingLocalBestUpdate(constraintHandlingTechnique, progress)
+            : localBestUpdate;
+
+    var algorithm = new ParticleSwarmOptimizationAlgorithm(name, swarmInitialization, evaluation,
+        termination,
         velocityInitialization,
         localBestInitialization,
         globalBestInitialization,
@@ -157,8 +187,11 @@ public class SMPSOBuilder {
         positionUpdate,
         perturbation,
         globalBestUpdate,
-        localBestUpdate,
+        algorithmLocalBestUpdate,
         globalBestSelection,
         archive);
+    progress.bind(() -> termination, algorithm::attributes);
+
+    return algorithm;
   }
 }

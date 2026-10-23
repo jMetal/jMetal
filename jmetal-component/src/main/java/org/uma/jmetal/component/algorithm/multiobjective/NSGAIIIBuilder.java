@@ -11,16 +11,19 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSo
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.ConstraintHandlingReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.NSGAIIIReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
+import org.uma.jmetal.component.util.RunProgress;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.MultiComparator;
+import org.uma.jmetal.util.constrainthandling.ConstraintHandlingTechnique;
 import org.uma.jmetal.util.densityestimator.impl.ReferencePointNicheDistanceEstimator;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
@@ -59,7 +62,7 @@ public class NSGAIIIBuilder<S extends Solution<?>> {
   private Termination termination;
   private Selection<S> selection;
   private Variation<S> variation;
-  private Replacement<S> replacement;
+  private ConstraintHandlingTechnique<S> constraintHandlingTechnique;
 
   /**
    * Constructor with single-layer reference points.
@@ -131,21 +134,8 @@ public class NSGAIIIBuilder<S extends Solution<?>> {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    this.replacement = new NSGAIIIReplacement<>(
-        ranking, referencePoints, problem.numberOfObjectives(), populationSize);
-
     int offspringPopulationSize = populationSize;
     this.variation = new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation);
-
-    // Selection using ranking and reference point distance
-    int tournamentSize = 2;
-    this.selection = new NaryTournamentSelection<>(
-        tournamentSize,
-        variation.matingPoolSize(),
-        new MultiComparator<>(
-            Arrays.asList(
-                Comparator.comparing(ranking::getRank),
-                Comparator.comparing(densityEstimator::value))));
 
     this.termination = new TerminationByEvaluations(25000);
     this.evaluation = new SequentialEvaluation<>(problem);
@@ -166,6 +156,30 @@ public class NSGAIIIBuilder<S extends Solution<?>> {
     return this;
   }
 
+  /** Sets the ranking of the replacement and of the default selection. */
+  public NSGAIIIBuilder<S> setRanking(Ranking<S> ranking) {
+    this.ranking = ranking;
+    return this;
+  }
+
+  /**
+   * Sets the constraint-handling technique: the ranking of the replacement and of the default
+   * selection becomes {@code technique.ranking()} (it replaces a ranking given with {@code
+   * setRanking}), and the technique is updated once per generation with the progress of the run.
+   * Without a technique the algorithm behaves as before (its default ranking ignores the
+   * constraints). The technique only guides the search: an external archive keeps the feasible
+   * solutions with the constrained-domination principle, which is recommended with {@link
+   * org.uma.jmetal.util.constrainthandling.StochasticRanking} and {@link
+   * org.uma.jmetal.util.constrainthandling.SelfAdaptivePenalty}, whose final population can contain
+   * infeasible solutions. A technique has state, so it must not be shared by several algorithms.
+   */
+  public NSGAIIIBuilder<S> setConstraintHandlingTechnique(
+      ConstraintHandlingTechnique<S> technique) {
+    this.constraintHandlingTechnique = technique;
+    return this;
+  }
+
+  /** Sets the selection, which replaces the default binary tournament. */
   public NSGAIIIBuilder<S> setSelection(Selection<S> selection) {
     this.selection = selection;
     return this;
@@ -194,13 +208,40 @@ public class NSGAIIIBuilder<S extends Solution<?>> {
    * Builds and returns the NSGA-III algorithm instance.
    */
   public EvolutionaryAlgorithm<S> build() {
-    return new EvolutionaryAlgorithm<>(
+    Ranking<S> algorithmRanking =
+        constraintHandlingTechnique != null ? constraintHandlingTechnique.ranking() : ranking;
+    RunProgress progress = new RunProgress();
+    Replacement<S> replacement = new NSGAIIIReplacement<>(
+        algorithmRanking, referencePoints, problem.numberOfObjectives(), populationSize);
+    if (constraintHandlingTechnique != null) {
+      replacement =
+          new ConstraintHandlingReplacement<>(constraintHandlingTechnique, replacement, progress);
+    }
+    Selection<S> algorithmSelection =
+        selection != null ? selection : defaultSelection(algorithmRanking);
+
+    var algorithm = new EvolutionaryAlgorithm<>(
         name,
         createInitialPopulation,
         evaluation,
         termination,
-        selection,
+        algorithmSelection,
         variation,
         replacement);
+    progress.bind(() -> algorithm.termination(), algorithm::attributes);
+
+    return algorithm;
+  }
+
+  /** A binary tournament that compares the ranks and then the distances to the reference points. */
+  private Selection<S> defaultSelection(Ranking<S> ranking) {
+    int tournamentSize = 2;
+    return new NaryTournamentSelection<>(
+        tournamentSize,
+        variation.matingPoolSize(),
+        new MultiComparator<>(
+            Arrays.asList(
+                Comparator.comparing(ranking::getRank),
+                Comparator.comparing(densityEstimator::value))));
   }
 }

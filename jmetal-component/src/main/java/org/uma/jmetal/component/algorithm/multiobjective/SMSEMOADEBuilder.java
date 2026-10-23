@@ -8,15 +8,18 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSo
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.ConstraintHandlingReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.DifferentialEvolutionCrossoverVariation;
+import org.uma.jmetal.component.util.RunProgress;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.constrainthandling.ConstraintHandlingTechnique;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
@@ -34,7 +37,8 @@ public class SMSEMOADEBuilder {
   private Termination termination;
   private Selection<DoubleSolution> selection;
   private Variation<DoubleSolution> variation;
-  private Replacement<DoubleSolution> replacement;
+  private final int populationSize;
+  private ConstraintHandlingTechnique<DoubleSolution> constraintHandlingTechnique;
   private SequenceGenerator<Integer> sequenceGenerator;
 
   public SMSEMOADEBuilder(
@@ -51,7 +55,7 @@ public class SMSEMOADEBuilder {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    this.replacement = createReplacement();
+    this.populationSize = populationSize;
 
     DifferentialEvolutionCrossover crossover =
             new DifferentialEvolutionCrossover(
@@ -79,7 +83,24 @@ public class SMSEMOADEBuilder {
 
   public SMSEMOADEBuilder setRanking(Ranking<DoubleSolution> ranking) {
     this.ranking = ranking;
-    this.replacement = createReplacement();
+
+    return this;
+  }
+
+  /**
+   * Sets the constraint-handling technique: the ranking of the replacement becomes {@code
+   * technique.ranking()} (it replaces a ranking given with {@code setRanking}), and the technique
+   * is updated with the progress of the run once every population size replacements, the
+   * equivalent of a generation. Without a technique the algorithm behaves as before (its default
+   * ranking ignores the constraints). The technique only guides the search: an external archive
+   * keeps the feasible solutions with the constrained-domination principle, which is recommended
+   * with {@link org.uma.jmetal.util.constrainthandling.StochasticRanking} and {@link
+   * org.uma.jmetal.util.constrainthandling.SelfAdaptivePenalty}, whose final population can contain
+   * infeasible solutions. A technique has state, so it must not be shared by several algorithms.
+   */
+  public SMSEMOADEBuilder setConstraintHandlingTechnique(
+      ConstraintHandlingTechnique<DoubleSolution> technique) {
+    this.constraintHandlingTechnique = technique;
 
     return this;
   }
@@ -91,12 +112,21 @@ public class SMSEMOADEBuilder {
   }
 
   public EvolutionaryAlgorithm<DoubleSolution> build() {
-    return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-        selection, variation, replacement);
-  }
+    Ranking<DoubleSolution> algorithmRanking =
+        constraintHandlingTechnique != null ? constraintHandlingTechnique.ranking() : ranking;
+    RunProgress progress = new RunProgress();
+    Replacement<DoubleSolution> replacement = new SMSEMOAReplacement<>(algorithmRanking);
+    if (constraintHandlingTechnique != null) {
+      replacement =
+          new ConstraintHandlingReplacement<>(
+              constraintHandlingTechnique, replacement, progress, populationSize);
+    }
 
-  private Replacement<DoubleSolution> createReplacement() {
-    return new SMSEMOAReplacement<>(ranking);
+    var algorithm = new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation,
+        termination, selection, variation, replacement);
+    progress.bind(() -> algorithm.termination(), algorithm::attributes);
+
+    return algorithm;
   }
 
   private Ranking<DoubleSolution> createDefaultRanking(Problem<DoubleSolution> problem) {

@@ -1,6 +1,10 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Set;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -9,16 +13,19 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSo
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.ConstraintHandlingReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.PAESReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.PAESSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.MutationOnlyVariation;
+import org.uma.jmetal.component.util.RunProgress;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.constrainthandling.PairwiseConstraintHandlingTechnique;
 
 /**
  * Class to configure and build a component-based instance of the PAES (Pareto Archived Evolution
@@ -45,6 +52,7 @@ public class PAESBuilder<S extends Solution<?>> {
   private Selection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
+  private PairwiseConstraintHandlingTechnique<S> constraintHandlingTechnique;
 
   public PAESBuilder(
       Problem<S> problem,
@@ -95,16 +103,61 @@ public class PAESBuilder<S extends Solution<?>> {
     return this;
   }
 
+  /**
+   * Sets the constraint-handling technique, which decides whether the mutant replaces the current
+   * solution (by default, Deb's constrained-domination principle). It is updated with the
+   * progress of the run and with the archive, the current solution and the mutant once every
+   * archive size iterations, the equivalent of a generation. Only pairwise techniques can be used,
+   * because PAES compares two solutions. The archive, which is the result of the algorithm, keeps
+   * comparing with the constrained-domination principle: the current solution can be a mutant
+   * that the technique accepts and the archive does not. A technique has state, so it must not be
+   * shared by several algorithms.
+   *
+   * @param technique the constraint-handling technique
+   * @return this builder
+   */
+  public PAESBuilder<S> setConstraintHandlingTechnique(
+      PairwiseConstraintHandlingTechnique<S> technique) {
+    this.constraintHandlingTechnique = technique;
+
+    return this;
+  }
+
   public EvolutionaryAlgorithm<S> build() {
-    return new PAESAlgorithm<>(
+    RunProgress progress = new RunProgress();
+    Replacement<S> algorithmReplacement = replacement;
+    if (constraintHandlingTechnique != null) {
+      algorithmReplacement =
+          new ConstraintHandlingReplacement<>(
+              constraintHandlingTechnique,
+              new PAESReplacement<>(archive, constraintHandlingTechnique.comparator()),
+              progress,
+              archive.maximumSize(),
+              (population, offspring) -> archiveAndCandidates(archive, population, offspring));
+    }
+
+    var algorithm = new PAESAlgorithm<>(
         name,
         createInitialPopulation,
         evaluation,
         termination,
         selection,
         variation,
-        replacement,
+        algorithmReplacement,
         archive);
+    progress.bind(() -> algorithm.termination(), algorithm::attributes);
+
+    return algorithm;
+  }
+
+  /** The archive, the current solution and the mutant, each solution once. */
+  private static <S extends Solution<?>> List<S> archiveAndCandidates(
+      BoundedArchive<S> archive, List<S> population, List<S> offspringPopulation) {
+    Set<S> solutions = Collections.newSetFromMap(new IdentityHashMap<>());
+    solutions.addAll(archive.solutions());
+    solutions.addAll(population);
+    solutions.addAll(offspringPopulation);
+    return new ArrayList<>(solutions);
   }
 
   /**

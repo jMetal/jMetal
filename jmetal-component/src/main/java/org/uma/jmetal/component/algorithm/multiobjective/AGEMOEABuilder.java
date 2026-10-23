@@ -9,6 +9,7 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.AGEMOEAReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.ConstraintHandlingReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.agemoea.AGEMOEA2EnvironmentalSelection;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.agemoea.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.agemoea.SurvivalScoreComparator;
@@ -16,11 +17,14 @@ import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
+import org.uma.jmetal.component.util.RunProgress;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.constrainthandling.ConstraintHandlingTechnique;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.ranking.Ranking;
 
 /**
  * Class to configure and build an instance of the AGE-MOEA or AGE-MOEA-II algorithm
@@ -44,6 +48,7 @@ public class AGEMOEABuilder<S extends Solution<?>> {
   private Replacement<S> replacement;
   private boolean customSelectionConfigured;
   private boolean customReplacementConfigured;
+  private ConstraintHandlingTechnique<S> constraintHandlingTechnique;
 
   public AGEMOEABuilder(Problem<S> problem, int populationSize, int offspringPopulationSize,
       CrossoverOperator<S> crossover, MutationOperator<S> mutation,
@@ -157,15 +162,70 @@ public class AGEMOEABuilder<S extends Solution<?>> {
     return this;
   }
 
-  public EvolutionaryAlgorithm<S> build() {
-    Selection<S> algorithmSelection =
-        new AGEMOEASelection<>(selection, environmentalSelection);
+  /**
+   * Sets the constraint-handling technique: the environmental selection (of AGE-MOEA or
+   * AGE-MOEA-II, as the one the builder has) ranks the population with {@code
+   * technique.ranking()}, the default parent selection compares those ranks, and the technique is
+   * updated once per generation with the progress of the run. Without a technique the algorithm
+   * behaves as before (it ranks with the constrained-domination principle). The technique only
+   * guides the search: an external archive keeps the feasible solutions with the
+   * constrained-domination principle, which is recommended with {@link
+   * org.uma.jmetal.util.constrainthandling.StochasticRanking} and {@link
+   * org.uma.jmetal.util.constrainthandling.SelfAdaptivePenalty}, whose final population can contain
+   * infeasible solutions. A technique has state, so it must not be shared by several algorithms.
+   *
+   * @param technique the constraint-handling technique
+   * @return this builder
+   */
+  public AGEMOEABuilder<S> setConstraintHandlingTechnique(
+      ConstraintHandlingTechnique<S> technique) {
+    this.constraintHandlingTechnique = technique;
+    return this;
+  }
 
-    return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-        algorithmSelection, variation, replacement);
+  public EvolutionaryAlgorithm<S> build() {
+    AGEMOEAEnvironmentalSelection<S> algorithmEnvironmentalSelection =
+        constraintHandlingTechnique != null
+            ? environmentalSelectionWith(constraintHandlingTechnique.ranking())
+            : environmentalSelection;
+    RunProgress progress = new RunProgress();
+    Replacement<S> algorithmReplacement =
+        customReplacementConfigured
+            ? replacement
+            : new AGEMOEAReplacement<>(algorithmEnvironmentalSelection);
+    if (constraintHandlingTechnique != null) {
+      algorithmReplacement =
+          new ConstraintHandlingReplacement<>(
+              constraintHandlingTechnique, algorithmReplacement, progress);
+    }
+    Selection<S> parentSelection =
+        customSelectionConfigured
+            ? selection
+            : createDefaultSelection(algorithmEnvironmentalSelection);
+    Selection<S> algorithmSelection =
+        new AGEMOEASelection<>(parentSelection, algorithmEnvironmentalSelection);
+
+    var algorithm = new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation,
+        termination, algorithmSelection, variation, algorithmReplacement);
+    progress.bind(() -> algorithm.termination(), algorithm::attributes);
+
+    return algorithm;
+  }
+
+  /** An environmental selection of the same kind as the one of the builder, with a ranking. */
+  private AGEMOEAEnvironmentalSelection<S> environmentalSelectionWith(Ranking<S> ranking) {
+    int numberOfObjectives = problem.numberOfObjectives();
+    return environmentalSelection instanceof AGEMOEA2EnvironmentalSelection
+        ? new AGEMOEA2EnvironmentalSelection<>(numberOfObjectives, ranking)
+        : new AGEMOEAEnvironmentalSelection<>(numberOfObjectives, ranking);
   }
 
   private Selection<S> createDefaultSelection() {
+    return createDefaultSelection(environmentalSelection);
+  }
+
+  private Selection<S> createDefaultSelection(
+      AGEMOEAEnvironmentalSelection<S> environmentalSelection) {
     return new NaryTournamentSelection<>(
         selectionTournamentSize,
         variation.matingPoolSize(),
