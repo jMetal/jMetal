@@ -4,6 +4,26 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/23/2026] jMetal 7.9 is released. Changes that can affect existing code or results:
+
+  - The problems of the CEC 2021 suite are named ``RCM01`` to ``RCM50`` (classes and names).
+  - ``ListUtils.randomSelectionWithoutReplacement`` draws fewer random numbers, and the
+    normalization of SMS-EMOA (four or more objectives, negative values) and of the classic and
+    component-based NSGA-III has been fixed, so the results of these algorithms for a given seed are
+    not the same as in 7.8.
+  - ``NormalizeUtils`` and the quality indicators ``Spread``, ``GeneralizedSpread``,
+    ``GenerationalDistance``, ``InvertedGenerationalDistancePlus`` and ``AverageHausdorffDistance``
+    throw an exception for data that are not valid (a null or empty front, a ragged matrix, or
+    values that are not finite).
+  - The builders of NSGA-II, NSGA-III, SMS-EMOA, RDSMOEA and their DE variants create their replacement and selection in
+    ``build()``, and ``Termination`` has the new default method ``progress``.
+  - The fixes of the constrained problems (C-DTLZ, CF, LIR-CMOP, CRE, RWA5 and the CEC 2021 suite)
+    change their definitions, as the entries below explain.
+
+  New in this release: the constraint-handling techniques, the generator of random numbers per
+  thread for parallel experiments, the MW and DAS-CMOP problems and the reference fronts of the
+  constrained problems.
+
 * [10/23/2026] Constraint-handling techniques (issue #517), ported from the prototype of Nicolás
   Rodríguez Uribe in Evolver. The package ``org.uma.jmetal.util.constrainthandling`` contains the
   ``ConstraintHandlingTechnique`` interface, its pairwise subtype

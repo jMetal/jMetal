@@ -18,11 +18,11 @@ jMetal project Web site
    :target: https://jmetal.readthedocs.io/?badge=latest
 
 jMetal is a Java-based framework for multi-objective optimization with metaheuristics.
-The last stable version is 7.8.
+The last stable version is 7.9.
 The most recent documentation is hosted in https://jmetal.readthedocs.io.
 
 
-jMetal 7.8 is a Maven project structured in the following sub-projects:
+jMetal 7.9 is a Maven project structured in the following sub-projects:
 
 +---------------------+------------------------------------+
 | Sub-project         |  Contents                          | 
@@ -91,6 +91,12 @@ Install dependencies and run::
 
 Changelog
 ---------
+
+* [10/23/2026] jMetal 7.9 is released. Changes that can affect existing code or results: the
+  problems of the CEC 2021 suite are named ``RCM01`` to ``RCM50``; the random selection of the
+  algorithms and the normalization of SMS-EMOA and NSGA-III have changed, so the results for a given
+  seed are not the same as in 7.8; the quality indicators and ``NormalizeUtils`` reject invalid
+  fronts with an exception. See the changelog section of the documentation for the complete list.
 
 * [10/23/2026] Constraint-handling techniques (package ``org.uma.jmetal.util.constrainthandling``):
   the constrained-domination principle, the epsilon-constrained method, push and pull search,
