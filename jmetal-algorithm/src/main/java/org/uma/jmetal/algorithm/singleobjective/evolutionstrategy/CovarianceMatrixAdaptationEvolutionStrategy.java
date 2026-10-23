@@ -11,7 +11,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.ExtendedPseudoRandomGenerator;
 
 /**
@@ -103,7 +102,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     this.typicalX = builder.typicalX;
     this.sigma = builder.sigma;
 
-    rand = new ExtendedPseudoRandomGenerator(JMetalRandom.getInstance().getRandomGenerator());
+    rand = new ExtendedPseudoRandomGenerator();
     comparator = new ObjectiveComparator<DoubleSolution>(0);
 
     initializeInternalParameters();
