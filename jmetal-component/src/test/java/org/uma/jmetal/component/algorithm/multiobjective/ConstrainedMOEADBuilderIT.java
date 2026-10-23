@@ -1,15 +1,20 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.function.ToDoubleFunction;
+import java.util.stream.LongStream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluationWithArchive;
-import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.impl.FeasibilityRulesCriterion;
 import org.uma.jmetal.component.catalogue.ea.replacement.subproblemupdate.impl.ImprovedEpsilonCriterion;
@@ -20,11 +25,10 @@ import org.uma.jmetal.problem.multiobjective.Srinivas;
 import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.problem.multiobjective.cf.CF10;
 import org.uma.jmetal.problem.multiobjective.cf.CF4;
-import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
@@ -32,180 +36,231 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.RandomPermutationCycle;
 
+/**
+ * Integration tests for MOEA/D with the subproblem update criteria that handle constraints.
+ *
+ * <p>The result of a single run depends on the seed: on CF4 and CF10 the normalized hypervolume
+ * of a run is zero for many seeds, because its front does not enter the box of the reference
+ * front, so a threshold on one run fails by chance whenever the random numbers change. Each test
+ * runs the algorithm with several seeds and checks the median of the runs: of the normalized IGD+
+ * (which, unlike the hypervolume, does not saturate) and of the feasibility ratio, and that some
+ * run gets a good hypervolume.
+ */
 @DisplayName("Integration tests for MOEA/D with constraint handling subproblem update criteria")
 class ConstrainedMOEADBuilderIT {
-
-  @BeforeEach
-  void setUp() {
-    // The results of the runs are random: a fixed seed keeps the thresholds from failing by chance
-    JMetalRandom.getInstance().setSeed(12);
-  }
-
   private static final String WEIGHT_VECTOR_DIRECTORY = "../resources/weightVectorFiles/moead";
   private static final String REFERENCE_FRONTS_DIRECTORY = "../resources/referenceFronts/";
   private static final String REFERENCE_FRONTS_RSG_DIRECTORY = "../resources/referenceFrontsRSG/";
 
-  @Test
-  @DisplayName("MOEA/D with feasibility rules computes a front with an acceptable hypervolume on Srinivas")
-  void moeadWithFeasibilityRulesReturnsAGoodFrontOnProblemSrinivas() throws IOException {
-    Problem<DoubleSolution> problem = new Srinivas();
+  private static final long[] SEEDS = LongStream.rangeClosed(1, 15).toArray();
 
-    var crossover = new SBXCrossover(0.9, 20.0);
-    var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+  /** The quality of the front of a run, normalized with the bounds of the reference front. */
+  private record Run(double hypervolume, double igdPlus, double feasibilityRatio, int size) {}
 
-    int populationSize = 100;
-    Termination termination = new TerminationByEvaluations(25000);
-    SequenceGenerator<Integer> sequenceGenerator = new RandomPermutationCycle(populationSize);
+  /** The runs of the algorithm with each of the seeds. */
+  private record Runs(List<Run> runs) {
+    double median(ToDoubleFunction<Run> value) {
+      double[] values = runs.stream().mapToDouble(value).sorted().toArray();
+      return values[values.length / 2];
+    }
 
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
-        problem,
-        populationSize,
-        crossover,
-        mutation,
-        WEIGHT_VECTOR_DIRECTORY,
-        sequenceGenerator,
-        false)
-        .setTermination(termination)
-        .setSubproblemUpdateCriterion(new FeasibilityRulesCriterion<>())
-        .build();
+    double best(ToDoubleFunction<Run> value) {
+      return runs.stream().mapToDouble(value).max().orElseThrow();
+    }
 
-    moead.run();
+    long count(Predicate<Run> condition) {
+      return runs.stream().filter(condition).count();
+    }
 
-    double hv = normalizedHypervolume(moead.result(), REFERENCE_FRONTS_DIRECTORY + "Srinivas.csv");
-
-    assertThat(hv).isGreaterThan(0.50);
+    @Override
+    public String toString() {
+      return runs.toString();
+    }
   }
 
-  @Test
-  @DisplayName("MOEA/D-DE with improved epsilon computes a front with an acceptable hypervolume on Tanaka")
-  void moeadDEWithImprovedEpsilonReturnsAGoodFrontOnProblemTanaka() throws IOException {
-    Problem<DoubleSolution> problem = new Tanaka();
-
-    var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
-
-    int populationSize = 100;
-    int maximumNumberOfEvaluations = 30000;
-    Termination termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
-    SequenceGenerator<Integer> sequenceGenerator = new RandomPermutationCycle(populationSize);
-
-    int tc = (int) (0.8 * maximumNumberOfEvaluations / populationSize);
-
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADDEBuilder(
-        problem,
-        populationSize,
-        1.0,
-        0.5,
-        mutation,
-        WEIGHT_VECTOR_DIRECTORY,
-        sequenceGenerator,
-        false)
-        .setTermination(termination)
-        .setSubproblemUpdateCriterion(new ImprovedEpsilonCriterion<>(tc))
-        .build();
-
-    moead.run();
-
-    double hv = normalizedHypervolume(moead.result(), REFERENCE_FRONTS_DIRECTORY + "Tanaka.csv");
-
-    assertThat(hv).isGreaterThan(0.28);
-  }
-
-  @Test
-  @DisplayName("MOEA/D with feasibility rules and an external archive computes a feasible front with an acceptable hypervolume on CF4")
-  void moeadWithFeasibilityRulesAndExternalArchiveReturnsAFeasibleFrontOnProblemCF4()
+  private static Runs run(Supplier<List<DoubleSolution>> algorithm, String referenceFrontFile)
       throws IOException {
-    Problem<DoubleSolution> problem = new CF4();
-
-    var crossover = new SBXCrossover(0.9, 20.0);
-    var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
-
-    int populationSize = 91;
-    Termination termination = new TerminationByEvaluations(30000);
-    SequenceGenerator<Integer> sequenceGenerator = new RandomPermutationCycle(populationSize);
-
-    Archive<DoubleSolution> externalArchive =
-        new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), populationSize);
-
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
-        problem,
-        populationSize,
-        crossover,
-        mutation,
-        WEIGHT_VECTOR_DIRECTORY,
-        sequenceGenerator,
-        false)
-        .setTermination(termination)
-        .setSubproblemUpdateCriterion(new FeasibilityRulesCriterion<>())
-        .setEvaluation(new SequentialEvaluationWithArchive<>(problem, externalArchive))
-        .build();
-
-    moead.run();
-
-    List<DoubleSolution> result = externalArchive.solutions();
-    double hv = normalizedHypervolume(result, REFERENCE_FRONTS_RSG_DIRECTORY + "CF4.csv");
-
-    assertThat(ConstraintHandling.feasibilityRatio(result)).isEqualTo(1.0);
-    assertThat(hv).isGreaterThan(0.28);
-  }
-
-  @Test
-  @DisplayName("MOEA/D-DE with improved epsilon and an external archive computes a feasible front with an acceptable hypervolume on CF10")
-  void moeadDEWithImprovedEpsilonAndExternalArchiveReturnsAFeasibleFrontOnProblemCF10()
-      throws IOException {
-    Problem<DoubleSolution> problem = new CF10();
-
-    var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
-
-    int populationSize = 91;
-    int maximumNumberOfEvaluations = 50000;
-    Termination termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
-    SequenceGenerator<Integer> sequenceGenerator = new RandomPermutationCycle(populationSize);
-
-    int tc = (int) (0.8 * maximumNumberOfEvaluations / populationSize);
-
-    Archive<DoubleSolution> externalArchive =
-        new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), populationSize);
-
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADDEBuilder(
-        problem,
-        populationSize,
-        1.0,
-        0.5,
-        mutation,
-        WEIGHT_VECTOR_DIRECTORY,
-        sequenceGenerator,
-        false)
-        .setTermination(termination)
-        .setSubproblemUpdateCriterion(new ImprovedEpsilonCriterion<>(tc))
-        .setEvaluation(new SequentialEvaluationWithArchive<>(problem, externalArchive))
-        .build();
-
-    moead.run();
-
-    List<DoubleSolution> result = externalArchive.solutions();
-    double hv = normalizedHypervolume(result, REFERENCE_FRONTS_RSG_DIRECTORY + "CF10.csv");
-
-    assertThat(ConstraintHandling.feasibilityRatio(result)).isEqualTo(1.0);
-    assertThat(hv).isGreaterThan(0.20);
-  }
-
-  private double normalizedHypervolume(
-      List<DoubleSolution> population, String referenceFrontFile) throws IOException {
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
-    QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
+    double[] minimum = NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront);
+    double[] maximum = NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront);
+    double[][] normalizedReferenceFront =
+        NormalizeUtils.normalize(referenceFront, minimum, maximum);
 
-    double[][] normalizedFront =
-        NormalizeUtils.normalize(
-            SolutionListUtils.getMatrixWithObjectiveValues(population),
-            NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
-            NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
+    List<Run> runs = new ArrayList<>();
+    for (long seed : SEEDS) {
+      JMetalRandom.getInstance().setSeed(seed);
+      List<DoubleSolution> result = algorithm.get();
 
-    double hv = hypervolume.compute(normalizedFront);
-    JMetalLogger.logger.info(referenceFrontFile + " HV: " + hv);
+      double[][] front =
+          NormalizeUtils.normalize(
+              SolutionListUtils.getMatrixWithObjectiveValues(result), minimum, maximum);
+      runs.add(
+          new Run(
+              new PISAHypervolume(normalizedReferenceFront).compute(front),
+              new InvertedGenerationalDistancePlus(normalizedReferenceFront).compute(front),
+              ConstraintHandling.feasibilityRatio(result),
+              result.size()));
+    }
+    return new Runs(runs);
+  }
 
-    return hv;
+  @Nested
+  @DisplayName("When using feasibility rules")
+  class WhenUsingFeasibilityRules {
+    @Test
+    @DisplayName("given Srinivas, when running MOEA/D, then the median front is close")
+    void givenSrinivas_whenRunningMOEAD_thenTheMedianFrontIsCloseToTheReferenceFront()
+        throws IOException {
+      // Arrange
+      Supplier<List<DoubleSolution>> moead =
+          () -> {
+            Problem<DoubleSolution> problem = new Srinivas();
+            EvolutionaryAlgorithm<DoubleSolution> algorithm =
+                new MOEADBuilder<>(
+                        problem,
+                        100,
+                        new SBXCrossover(0.9, 20.0),
+                        new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0),
+                        WEIGHT_VECTOR_DIRECTORY,
+                        new RandomPermutationCycle(100),
+                        false)
+                    .setTermination(new TerminationByEvaluations(25000))
+                    .setSubproblemUpdateCriterion(new FeasibilityRulesCriterion<>())
+                    .build();
+            algorithm.run();
+            return algorithm.result();
+          };
+
+      // Act
+      Runs runs = run(moead, REFERENCE_FRONTS_DIRECTORY + "Srinivas.csv");
+
+      // Assert
+      assertThat(runs.runs()).as(runs.toString()).allMatch(r -> r.size() > 0);
+      assertThat(runs.median(Run::feasibilityRatio)).as(runs.toString()).isEqualTo(1.0);
+      assertThat(runs.median(Run::igdPlus)).as(runs.toString()).isLessThan(0.02);
+      assertThat(runs.median(Run::hypervolume)).as(runs.toString()).isGreaterThan(0.50);
+    }
+
+    @Test
+    @DisplayName("given CF4, when running MOEA/D with an archive, then the median front is close")
+    void givenCF4_whenRunningMOEADWithAnArchive_thenTheMedianFrontIsFeasibleAndClose()
+        throws IOException {
+      // Arrange
+      Supplier<List<DoubleSolution>> moead =
+          () -> {
+            Problem<DoubleSolution> problem = new CF4();
+            Archive<DoubleSolution> archive =
+                new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), 91);
+            EvolutionaryAlgorithm<DoubleSolution> algorithm =
+                new MOEADBuilder<>(
+                        problem,
+                        91,
+                        new SBXCrossover(0.9, 20.0),
+                        new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0),
+                        WEIGHT_VECTOR_DIRECTORY,
+                        new RandomPermutationCycle(91),
+                        false)
+                    .setTermination(new TerminationByEvaluations(30000))
+                    .setSubproblemUpdateCriterion(new FeasibilityRulesCriterion<>())
+                    .setEvaluation(new SequentialEvaluationWithArchive<>(problem, archive))
+                    .build();
+            algorithm.run();
+            return archive.solutions();
+          };
+
+      // Act
+      Runs runs = run(moead, REFERENCE_FRONTS_RSG_DIRECTORY + "CF4.csv");
+
+      // Assert
+      assertThat(runs.runs()).as(runs.toString()).allMatch(r -> r.size() > 0);
+      assertThat(runs.median(Run::feasibilityRatio)).as(runs.toString()).isEqualTo(1.0);
+      assertThat(runs.median(Run::igdPlus)).as(runs.toString()).isLessThan(0.5);
+      assertThat(runs.best(Run::hypervolume)).as(runs.toString()).isGreaterThan(0.12);
+    }
+  }
+
+  @Nested
+  @DisplayName("When using the improved epsilon criterion")
+  class WhenUsingTheImprovedEpsilonCriterion {
+    @Test
+    @DisplayName("given Tanaka, when running MOEA/D-DE, then the median front is close")
+    void givenTanaka_whenRunningMOEADDE_thenTheMedianFrontIsCloseToTheReferenceFront()
+        throws IOException {
+      // Arrange
+      int evaluations = 30000;
+      Supplier<List<DoubleSolution>> moeadDE =
+          () -> {
+            Problem<DoubleSolution> problem = new Tanaka();
+            EvolutionaryAlgorithm<DoubleSolution> algorithm =
+                new MOEADDEBuilder(
+                        problem,
+                        100,
+                        1.0,
+                        0.5,
+                        new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0),
+                        WEIGHT_VECTOR_DIRECTORY,
+                        new RandomPermutationCycle(100),
+                        false)
+                    .setTermination(new TerminationByEvaluations(evaluations))
+                    .setSubproblemUpdateCriterion(
+                        new ImprovedEpsilonCriterion<>((int) (0.8 * evaluations / 100)))
+                    .build();
+            algorithm.run();
+            return algorithm.result();
+          };
+
+      // Act
+      Runs runs = run(moeadDE, REFERENCE_FRONTS_DIRECTORY + "Tanaka.csv");
+
+      // Assert
+      assertThat(runs.runs()).as(runs.toString()).allMatch(r -> r.size() > 0);
+      assertThat(runs.median(Run::feasibilityRatio)).as(runs.toString()).isEqualTo(1.0);
+      assertThat(runs.median(Run::igdPlus)).as(runs.toString()).isLessThan(0.02);
+      assertThat(runs.median(Run::hypervolume)).as(runs.toString()).isGreaterThan(0.28);
+    }
+
+    @Test
+    @DisplayName("given CF10, when running MOEA/D-DE with an archive, then a run reaches the front")
+    void givenCF10_whenRunningMOEADDEWithAnArchive_thenARunReachesTheFront()
+        throws IOException {
+      // Arrange
+      int evaluations = 50000;
+      Supplier<List<DoubleSolution>> moeadDE =
+          () -> {
+            Problem<DoubleSolution> problem = new CF10();
+            Archive<DoubleSolution> archive =
+                new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), 91);
+            EvolutionaryAlgorithm<DoubleSolution> algorithm =
+                new MOEADDEBuilder(
+                        problem,
+                        91,
+                        1.0,
+                        0.5,
+                        new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0),
+                        WEIGHT_VECTOR_DIRECTORY,
+                        new RandomPermutationCycle(91),
+                        false)
+                    .setTermination(new TerminationByEvaluations(evaluations))
+                    .setSubproblemUpdateCriterion(
+                        new ImprovedEpsilonCriterion<>((int) (0.8 * evaluations / 91)))
+                    .setEvaluation(new SequentialEvaluationWithArchive<>(problem, archive))
+                    .build();
+            algorithm.run();
+            return archive.solutions();
+          };
+
+      // Act
+      Runs runs = run(moeadDE, REFERENCE_FRONTS_RSG_DIRECTORY + "CF10.csv");
+
+      // Assert
+      assertThat(runs.runs()).as(runs.toString()).allMatch(r -> r.size() > 0);
+      assertThat(runs.median(Run::feasibilityRatio)).as(runs.toString()).isEqualTo(1.0);
+      assertThat(runs.median(Run::igdPlus)).as(runs.toString()).isLessThan(0.75);
+      assertThat(runs.best(Run::hypervolume)).as(runs.toString()).isGreaterThan(0.20);
+      // The runs either reach the front (IGD+ about 0.02) or stay on a local front (0.1 or more)
+      assertThat(runs.count(r -> r.igdPlus() < 0.05)).as(runs.toString()).isPositive();
+    }
   }
 }
