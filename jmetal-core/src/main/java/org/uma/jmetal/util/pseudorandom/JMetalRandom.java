@@ -1,28 +1,35 @@
 package org.uma.jmetal.util.pseudorandom;
 
 import java.io.Serializable;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 
 /**
+ * The source of random numbers of jMetal: a single instance that delegates every draw to a {@link
+ * PseudoRandomGenerator}, by default a {@link JavaRandomGenerator}.
+ *
+ * <p>The instance is created when the class is loaded, so all the threads get the same one, and
+ * the generator can be replaced from any thread: the change is visible to the others. With the
+ * default generator all the threads draw from the same sequence; to give each thread its own
+ * generator, install a {@link org.uma.jmetal.util.pseudorandom.impl.ThreadLocalRandomGenerator}.
+ *
  * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class JMetalRandom implements Serializable {
-  private static JMetalRandom instance ;
-  private PseudoRandomGenerator randomGenerator ;
+  private static final JMetalRandom INSTANCE = new JMetalRandom();
+  private volatile PseudoRandomGenerator randomGenerator ;
 
   private JMetalRandom() {
     randomGenerator = new JavaRandomGenerator() ;
   }
 
   public static JMetalRandom getInstance() {
-    if (instance == null) {
-      instance = new JMetalRandom() ;
-    }
-    return instance ;
+    return INSTANCE;
   }
 
   public void setRandomGenerator(PseudoRandomGenerator randomGenerator) {
+    Check.notNull(randomGenerator);
     this.randomGenerator = randomGenerator;
   }
 
