@@ -1,7 +1,6 @@
 package org.uma.jmetal.util.permutation;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -12,14 +11,14 @@ public class PermutationFactory {
     Check.valueIsNotNegative(length);
     Check.notNull(randomGenerator);
 
-    List<Integer> integerList = new LinkedList<>() ;
+    // An array list: getting the drawn element is constant time, unlike in a linked list
+    List<Integer> integerList = new ArrayList<>(length) ;
     IntStream.range(0, length).forEach(integerList::add);
 
     List<Integer> permutation = new ArrayList<>(length) ;
     while(!integerList.isEmpty()) {
       int index = randomGenerator.getRandomValue(0, integerList.size()-1) ;
-      permutation.add(integerList.get(index)) ;
-      integerList.remove(index) ;
+      permutation.add(integerList.remove(index)) ;
     }
 
     return permutation ;

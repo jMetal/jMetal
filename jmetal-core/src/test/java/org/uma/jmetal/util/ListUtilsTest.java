@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -92,6 +93,38 @@ class ListUtilsTest {
 
       assertThat(resultList)
           .hasSize(numberOfRequestedElements) ;
+    }
+
+    @Test
+    void selectionReturnsDifferentElements() {
+      var list = IntStream.range(0, 10).boxed().toList();
+
+      for (int i = 0; i < 100; i++) {
+        assertThat(ListUtils.randomSelectionWithoutReplacement(5, list)).doesNotHaveDuplicates();
+      }
+    }
+
+    @Test
+    void selectionDrawsOneRandomNumberPerSelectedElement() {
+      var list = IntStream.range(0, 100).boxed().toList();
+      int[] draws = {0};
+
+      ListUtils.randomSelectionWithoutReplacement(2, list, (lower, upper) -> {
+        draws[0]++;
+        return JMetalRandom.getInstance().nextInt(lower, upper);
+      });
+
+      assertThat(draws[0]).isEqualTo(2);
+    }
+
+    @Test
+    void selectionWithTheLowestDrawsReturnsTheFirstElementsInOrder() {
+      var list = List.of(10, 20, 30, 40, 50);
+
+      List<Integer> resultList =
+          ListUtils.randomSelectionWithoutReplacement(3, list, (lower, upper) -> lower);
+
+      assertThat(resultList).containsExactly(10, 20, 30);
     }
   }
 

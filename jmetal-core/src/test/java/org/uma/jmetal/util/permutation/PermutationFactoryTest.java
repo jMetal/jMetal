@@ -44,6 +44,16 @@ class PermutationFactoryTest {
   }
 
   @Test
+  void createIntegerPermutationTakesEachDrawAsAPositionAmongTheRemainingElements() {
+    int[] draws = {1, 0, 0};
+    int[] next = {0};
+    List<Integer> permutation =
+        PermutationFactory.createIntegerPermutation(3, (lower, upper) -> draws[next[0]++]);
+
+    assertThat(permutation).containsExactly(1, 0, 2);
+  }
+
+  @Test
   void createIntegerPermutationWithLengthFiveReturnAListWithFiveElements() {
     List<Integer> permutation = PermutationFactory.createIntegerPermutation(5,
         JMetalRandom.getInstance()::nextInt);
