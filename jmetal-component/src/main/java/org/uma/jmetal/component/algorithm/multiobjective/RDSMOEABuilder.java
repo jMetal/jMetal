@@ -33,37 +33,27 @@ public class RDSMOEABuilder<S extends Solution<?>> {
   private String name;
   private Ranking<S> ranking;
   private DensityEstimator<S> densityEstimator;
+  private RankingAndDensityEstimatorReplacement.RemovalPolicy removalPolicy;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
-  private Selection<S> selection;
   private Variation<S> variation;
-  private Replacement<S> replacement;
 
   public RDSMOEABuilder(Problem<S> problem, int populationSize, int offspringPopulationSize,
                         CrossoverOperator<S> crossover, MutationOperator<S> mutation,
-                        Ranking<S> ranking, DensityEstimator<S> densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy removalPolicy) {
+                        Ranking<S> ranking, DensityEstimator<S> densityEstimator,
+                        RankingAndDensityEstimatorReplacement.RemovalPolicy removalPolicy) {
     name = "MOEA";
 
-    this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
+    this.ranking = ranking;
+    this.densityEstimator = densityEstimator;
+    this.removalPolicy = removalPolicy;
 
-    this.replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, removalPolicy);
+    this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     this.variation =
         new CrossoverAndMutationVariation<>(
             offspringPopulationSize, crossover, mutation);
-
-    int tournamentSize = 2 ;
-    this.selection =
-        new NaryTournamentSelection<>(
-            tournamentSize,
-            variation.matingPoolSize(),
-            new MultiComparator<>(
-                Arrays.asList(
-                    Comparator.comparing(ranking::getRank),
-                    Comparator.comparing(densityEstimator::value).reversed())));
 
     this.termination = new TerminationByEvaluations(25000);
 
@@ -76,11 +66,12 @@ public class RDSMOEABuilder<S extends Solution<?>> {
     return this;
   }
 
+  /**
+   * Sets the ranking of the replacement and of the selection (a binary tournament that compares
+   * the ranks and then the densities); the removal policy of the replacement is kept.
+   */
   public RDSMOEABuilder<S> setRanking(Ranking<S> ranking) {
     this.ranking = ranking;
-    this.replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     return this;
   }
@@ -98,7 +89,20 @@ public class RDSMOEABuilder<S extends Solution<?>> {
   }
 
   public EvolutionaryAlgorithm<S> build() {
-      return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-          selection, variation, replacement);
+    Replacement<S> replacement =
+        new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator, removalPolicy);
+
+    int tournamentSize = 2 ;
+    Selection<S> selection =
+        new NaryTournamentSelection<>(
+            tournamentSize,
+            variation.matingPoolSize(),
+            new MultiComparator<>(
+                Arrays.asList(
+                    Comparator.comparing(ranking::getRank),
+                    Comparator.comparing(densityEstimator::value).reversed())));
+
+    return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
+        selection, variation, replacement);
   }
 }

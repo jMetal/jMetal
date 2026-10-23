@@ -39,7 +39,6 @@ public class NSGAIIBuilder<S extends Solution<?>> {
   private Termination termination;
   private Selection<S> selection;
   private Variation<S> variation;
-  private Replacement<S> replacement;
 
   public NSGAIIBuilder(Problem<S> problem, int populationSize, int offspringPopulationSize,
       CrossoverOperator<S> crossover, MutationOperator<S> mutation) {
@@ -50,20 +49,8 @@ public class NSGAIIBuilder<S extends Solution<?>> {
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    this.replacement = new RankingAndDensityEstimatorReplacement<>(
-        ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
-
     this.variation = new CrossoverAndMutationVariation<>(
         offspringPopulationSize, crossover, mutation);
-
-    int tournamentSize = 2;
-    this.selection = new NaryTournamentSelection<>(
-        tournamentSize,
-        variation.matingPoolSize(),
-        new MultiComparator<>(
-            Arrays.asList(
-                Comparator.comparing(ranking::getRank),
-                Comparator.comparing(densityEstimator::value).reversed())));
 
     this.termination = new TerminationByEvaluations(25000);
 
@@ -76,28 +63,19 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     return this;
   }
 
+  /**
+   * Sets the ranking of the replacement and of the default selection (a binary tournament that
+   * compares the ranks and then the densities), whatever the order of the calls to the builder.
+   */
   public NSGAIIBuilder<S> setRanking(Ranking<S> ranking) {
     this.ranking = ranking;
-    this.replacement = new RankingAndDensityEstimatorReplacement<>(
-        ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
 
     return this;
   }
 
+  /** Sets the density estimator of the replacement and of the default selection. */
   public NSGAIIBuilder<S> setDensityEstimator(DensityEstimator<S> densityEstimator) {
     this.densityEstimator = densityEstimator;
-    this.replacement = new RankingAndDensityEstimatorReplacement<>(
-        ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
-
-    // Update selection to use new density estimator
-    int tournamentSize = 2;
-    this.selection = new NaryTournamentSelection<>(
-        tournamentSize,
-        variation.matingPoolSize(),
-        new MultiComparator<>(
-            java.util.Arrays.asList(
-                java.util.Comparator.comparing(ranking::getRank),
-                java.util.Comparator.comparing(densityEstimator::value).reversed())));
 
     return this;
   }
@@ -114,6 +92,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     return this;
   }
 
+  /** Sets the selection, which replaces the default binary tournament. */
   public NSGAIIBuilder<S> setSelection(Selection<S> selection) {
     this.selection = selection;
 
@@ -121,7 +100,23 @@ public class NSGAIIBuilder<S extends Solution<?>> {
   }
 
   public EvolutionaryAlgorithm<S> build() {
+    Replacement<S> replacement = new RankingAndDensityEstimatorReplacement<>(
+        ranking, densityEstimator, RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
+    Selection<S> algorithmSelection = selection != null ? selection : defaultSelection();
+
     return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-        selection, variation, replacement);
+        algorithmSelection, variation, replacement);
+  }
+
+  /** A binary tournament that compares the ranks of the ranking and then the densities. */
+  private Selection<S> defaultSelection() {
+    int tournamentSize = 2;
+    return new NaryTournamentSelection<>(
+        tournamentSize,
+        variation.matingPoolSize(),
+        new MultiComparator<>(
+            Arrays.asList(
+                Comparator.comparing(ranking::getRank),
+                Comparator.comparing(densityEstimator::value).reversed())));
   }
 }
