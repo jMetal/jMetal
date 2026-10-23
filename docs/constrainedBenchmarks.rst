@@ -69,15 +69,17 @@ the type should be confirmed before relying on it in a publication.
        feasible, and no solution of the runs dominates it; at most 1000 points with two objectives
        and 2500 with more.
    * - CEC 2021 RWMOP (RCM)
-     - 50
+     - 50 (49 with constraints)
      - [Kumar2021]_
      - RCM01-50 except RCM17, whose first objective has no lower bound in the feasible region
-       (``RCM01.csv`` to ``RCM50.csv``, as the classes and the names of the problems). Estimated as the CRE fronts,
-       with problem-specific searches for the problems whose equality constraints leave feasible
-       regions that the algorithms do not reach (RCM22, RCM24, RCM28 and RCM30-49). The front of
-       RCM30 is less certain than the rest: half of its runs reach 0.886 of the hypervolume of all
-       of them. RCM11 is the same problem as CRE51, and has the same front. All the problems have constraints but
-       RCM09, whose reference evaluator assigns none although the metadata of the suite lists one.
+       (``RCM01.csv`` to ``RCM50.csv``, as the classes and the names of the problems). Estimated as
+       the CRE fronts, with problem-specific searches for the problems whose equality constraints
+       leave feasible regions that the algorithms do not reach (RCM22, RCM24, RCM28 and RCM30-49).
+       The front of RCM30 is less certain than the rest: half of its runs reach 0.886 of the
+       hypervolume of all of them. RCM11 is the same problem as CRE51, and has the same front.
+       RCM09 has no constraints: its reference evaluator assigns none, although the metadata of the
+       suite lists one. The ``README.md`` of the package
+       ``org.uma.jmetal.problem.multiobjective.cec2021`` describes each problem.
    * - EBES
      - 1
      - Javadoc of the classes
