@@ -3,20 +3,29 @@ package org.uma.jmetal.lab.experiment.component.impl;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.pseudorandom.impl.ThreadLocalRandomGenerator;
 
 /**
  * This class executes the algorithms the have been configured with a instance of class {@link
- * Experiment}. Java 8 parallel streams are used to run the algorithms in parallel.
+ * Experiment}. The algorithms run in parallel, on as many threads as the experiment has cores.
  *
  * <p>The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per
  * org.uma.jmetal.experiment, which are stored in the directory {@link Experiment
  * #getExperimentBaseDirectory()}/algorithmName/problemName.
+ *
+ * <p>With more than one core, {@link ThreadLocalRandomGenerator#install()} gives each thread its
+ * own random number generator before the runs start, so that the threads do not contend for the
+ * shared one. If the experiment has a base seed ({@link
+ * org.uma.jmetal.lab.experiment.ExperimentBuilder#setSeed(long)}), each run sets the seed of its
+ * thread before it starts, so the results are the same whatever the number of cores.
  *
  * @author Antonio J. Nebro
  */
@@ -34,9 +43,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
     JMetalLogger.logger.info("ExecuteAlgorithms: Preparing output directory");
     prepareOutputDirectory();
 
-    System.setProperty(
-        "java.util.concurrent.ForkJoinPool.common.parallelism",
-        "" + this.experiment.getNumberOfCores());
+    installAGeneratorPerThreadIfParallel();
 
     int retryCounter = 0 ;
     int maxRetries = 5 ;
@@ -49,9 +56,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
       } else {
         JMetalLogger.logger.info(
             "ExecuteAlgorithms: there are " + unfinishedAlgorithmList.size() + " runs pending");
-        unfinishedAlgorithmList
-            .parallelStream()
-            .forEach(algorithm -> algorithm.runAlgorithm(experiment));
+        execute(unfinishedAlgorithmList);
         retryCounter++;
       }
     }
@@ -86,7 +91,43 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
   }
 
   public void runMissingExecutions(List<ExperimentAlgorithm<?, ?>> experimentAlgorithms) {
-    experimentAlgorithms.parallelStream().forEach(algorithm -> algorithm.runAlgorithm(experiment));
+    installAGeneratorPerThreadIfParallel();
+    execute(experimentAlgorithms);
+  }
+
+  /**
+   * Runs the algorithms on as many threads as the experiment has cores: in the calling thread with
+   * one core, and in a pool of its own otherwise. (Setting the parallelism of the common pool has
+   * no effect once the pool has been created, so the runs used to be parallel even with one core.)
+   */
+  private void execute(List<ExperimentAlgorithm<?, ?>> algorithms) {
+    int cores = experiment.getNumberOfCores();
+    if (cores <= 1) {
+      algorithms.forEach(algorithm -> algorithm.runAlgorithm(experiment));
+      return;
+    }
+
+    ForkJoinPool pool = new ForkJoinPool(cores);
+    try {
+      pool.submit(
+              () ->
+                  algorithms.parallelStream()
+                      .forEach(algorithm -> algorithm.runAlgorithm(experiment)))
+          .get();
+    } catch (InterruptedException exception) {
+      Thread.currentThread().interrupt();
+      throw new JMetalException("The execution of the algorithms was interrupted", exception);
+    } catch (ExecutionException exception) {
+      throw new JMetalException("The execution of the algorithms failed", exception);
+    } finally {
+      pool.shutdown();
+    }
+  }
+
+  private void installAGeneratorPerThreadIfParallel() {
+    if (experiment.getNumberOfCores() > 1) {
+      ThreadLocalRandomGenerator.install();
+    }
   }
 
   private void prepareOutputDirectory() {

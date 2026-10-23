@@ -2,6 +2,7 @@ package org.uma.jmetal.lab.experiment;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.OptionalLong;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
@@ -28,6 +29,8 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
 
   private int numberOfCores;
 
+  private OptionalLong seed;
+
   /** Constructor */
   public Experiment(ExperimentBuilder<S, Result> builder) {
     this.experimentName = builder.getExperimentName();
@@ -38,6 +41,7 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
     this.outputParetoFrontFileName = builder.getOutputParetoFrontFileName();
     this.outputParetoSetFileName = builder.getOutputParetoSetFileName();
     this.numberOfCores = builder.getNumberOfCores();
+    this.seed = builder.getSeed();
     this.referenceFrontDirectory = builder.getReferenceFrontDirectory();
     this.indicatorList = builder.getIndicatorList();
   }
@@ -73,6 +77,11 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
 
   public int getNumberOfCores() {
     return numberOfCores;
+  }
+
+  /** The base seed of the runs, if the experiment has one. */
+  public OptionalLong getSeed() {
+    return seed;
   }
 
   public String getReferenceFrontDirectory() {

@@ -8,6 +8,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Class defining tasks for the execution of algorithms in parallel.
@@ -62,6 +63,10 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
         + funFile ;
     JMetalLogger.logger.info(message);
 
+    experimentData
+        .getSeed()
+        .ifPresent(baseSeed -> JMetalRandom.getInstance().setSeed(seedOfTheRun(baseSeed)));
+
     try {
       algorithm.run();
       Result population = algorithm.result();
@@ -73,6 +78,24 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
     } catch (Exception exception) {
       JMetalLogger.logger.warning("Execution failed: " + funFile + " has not been created.");
     }
+  }
+
+  /**
+   * The seed of this run in an experiment with a base seed: the base seed, the tags of the algorithm
+   * and the problem and the number of the run, mixed with SplitMix64, so that it does not depend on
+   * the order or the thread in which the runs are executed.
+   */
+  public long seedOfTheRun(long baseSeed) {
+    long seed = mix(baseSeed + algorithmTag.hashCode());
+    seed = mix(seed + problemTag.hashCode());
+    return mix(seed + runId);
+  }
+
+  private static long mix(long value) {
+    long z = value + 0x9E3779B97F4A7C15L;
+    z = (z ^ (z >>> 30)) * 0xBF58476D1CE4E5B9L;
+    z = (z ^ (z >>> 27)) * 0x94D049BB133111EBL;
+    return z ^ (z >>> 31);
   }
 
   public Algorithm<Result> getAlgorithm() {
