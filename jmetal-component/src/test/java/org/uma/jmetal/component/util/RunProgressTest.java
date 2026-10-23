@@ -27,7 +27,7 @@ class RunProgressTest {
       // Arrange
       Map<String, Object> status = new HashMap<>();
       var progress = new RunProgress();
-      progress.bind(new TerminationByEvaluations(200), () -> status);
+      progress.bind(() -> new TerminationByEvaluations(200), () -> status);
 
       // Act
       status.put("EVALUATIONS", 50);
@@ -45,7 +45,7 @@ class RunProgressTest {
     void givenATerminationWithoutProgress_whenAskingTheProgress_thenItIsNaN() {
       // Arrange
       var progress = new RunProgress();
-      progress.bind(status -> false, HashMap::new);
+      progress.bind(() -> status -> false, HashMap::new);
 
       // Act & Assert
       assertThat(progress.getAsDouble()).isNaN();
