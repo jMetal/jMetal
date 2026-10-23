@@ -92,6 +92,31 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [10/23/2026] Constraint-handling techniques (package ``org.uma.jmetal.util.constrainthandling``):
+  the constrained-domination principle, the epsilon-constrained method, push and pull search,
+  stochastic ranking and the self-adaptive penalty, which the component-based NSGA-II, NSGA-III,
+  SMS-EMOA, AGE-MOEA, RDSMOEA, PAES, SMPSO and MOEA/D take with ``setConstraintHandlingTechnique``.
+  ``Termination`` gives the progress of the run, which the techniques that change during the run
+  use. See the `constraints section <https://jmetal.readthedocs.io/en/latest/constraints.html>`_.
+
+* [10/23/2026] Random numbers in parallel threads: ``ThreadLocalRandomGenerator`` gives each thread
+  its own generator, ``ExecuteAlgorithms`` installs it with more than one core and runs on as many
+  threads as cores, and ``ExperimentBuilder.setSeed`` makes a parallel experiment reproducible.
+  The random selection draws only the selected elements, so the results for a given seed change.
+
+* [10/23/2026] Reference fronts of the CRE problems and of the CEC 2021 suite, whose problems are
+  now named ``RCM01`` to ``RCM50``, and a page on the constrained benchmarks and their reference
+  fronts in the documentation.
+
+* [10/22/2026] Fixes in the normalization of the fronts (``NormalizeUtils``, ``NormalizedHypervolume``,
+  the classic and the component-based NSGA-III), the hypervolume with negative reference points, the
+  hypervolume contributions of SMS-EMOA with four or more objectives, and the argument checks of the
+  quality indicators.
+
+* [10/21/2026] The MW and DAS-CMOP constrained problems, reference fronts of the C-DTLZ, DAS-CMOP and
+  MW problems, all the reference fronts in CSV in ``resources/referenceFronts``, and constraint
+  handling in RVEA (C-RVEA) and iRVEA.
+
 * [10/13/2026] jMetal 7.8 is released.
 
 * [10/13/2026] Reference fronts of the MaF problems with 3 objectives
