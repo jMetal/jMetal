@@ -14,16 +14,17 @@ import org.uma.jmetal.util.errorchecking.Check;
  * not know the progress (see {@link Termination#progress(Map)}).
  */
 public class RunProgress implements DoubleSupplier {
-  private Termination termination;
+  private Supplier<Termination> termination;
   private Supplier<Map<String, Object>> status;
 
   /**
-   * Binds the progress to a termination condition and to the status of an algorithm.
+   * Binds the progress to the termination condition that an algorithm has at each moment (so that
+   * it follows a termination condition set after the algorithm is built) and to its status.
    *
    * @param termination the termination condition of the algorithm
    * @param status the status of the algorithm
    */
-  public void bind(Termination termination, Supplier<Map<String, Object>> status) {
+  public void bind(Supplier<Termination> termination, Supplier<Map<String, Object>> status) {
     Check.notNull(termination);
     Check.notNull(status);
     this.termination = termination;
@@ -35,6 +36,6 @@ public class RunProgress implements DoubleSupplier {
     if (termination == null) {
       return Double.NaN;
     }
-    return termination.progress(status.get()).orElse(Double.NaN);
+    return termination.get().progress(status.get()).orElse(Double.NaN);
   }
 }

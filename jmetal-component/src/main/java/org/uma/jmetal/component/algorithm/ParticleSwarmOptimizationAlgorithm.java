@@ -196,6 +196,11 @@ public class ParticleSwarmOptimizationAlgorithm
     return "Particle Swarm Optimization";
   }
 
+  /** The status of the algorithm: its evaluations, its leaders and its computing time. */
+  public Map<String, Object> attributes() {
+    return attributes;
+  }
+
   public Evaluation<DoubleSolution> evaluation() {
     return evaluation;
   }
