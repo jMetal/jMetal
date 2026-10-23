@@ -238,6 +238,11 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     return this;
   }
 
+  /**
+   * Sets the generator of {@link JMetalRandom}, which all the program uses, not only this
+   * algorithm: it replaces a generator installed before, such as a {@link
+   * org.uma.jmetal.util.pseudorandom.impl.ThreadLocalRandomGenerator}.
+   */
   public DMOPSOBuilder setRandomGenerator(PseudoRandomGenerator randomGenerator) {
     JMetalRandom.getInstance().setRandomGenerator(randomGenerator);
 
