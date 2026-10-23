@@ -13,9 +13,7 @@ import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.impl.AdaptiveRandomNeighborhood;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.ExtendedPseudoRandomGenerator;
-import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 /**
@@ -42,7 +40,8 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   private GenericSolutionAttribute<DoubleSolution, Integer> positionInSwarm;
   private double weight;
   private double c;
-  private JMetalRandom randomGenerator ;
+  private final ExtendedPseudoRandomGenerator randomGenerator =
+      new ExtendedPseudoRandomGenerator();
   private DoubleSolution bestFoundParticle;
   private double changeVelocity;
 
@@ -82,8 +81,6 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
 
     positionInSwarm = new GenericSolutionAttribute<DoubleSolution, Integer>();
 
-    randomGenerator = JMetalRandom.getInstance() ;
-    randomGenerator.setRandomGenerator(new ExtendedPseudoRandomGenerator(new JavaRandomGenerator()));
 
     bestFoundParticle = null;
     neighborhood = new AdaptiveRandomNeighborhood<DoubleSolution>(swarmSize, this.numberOfParticlesToInform);
@@ -193,7 +190,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       double radius = 0;
       radius = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(gravityCenter, particle);
 
-      double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRandomGenerator()).randSphere(problem.numberOfVariables());
+      double[] random = randomGenerator.randSphere(problem.numberOfVariables());
 
       randomParticle[i] = problem.createSolution() ;
       for (int j = 0; j < particle.variables().size(); j++) {

@@ -8,9 +8,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.ExtendedPseudoRandomGenerator;
-import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 
 /**
  * Method implementing a velocity update strategy proposed in Standard PSO 2011.
@@ -23,7 +21,8 @@ public class SPS2011VelocityUpdate implements VelocityUpdate {
   protected double c2Max;
   protected double c2Min;
 
-  protected JMetalRandom randomGenerator;
+  protected final ExtendedPseudoRandomGenerator randomGenerator =
+      new ExtendedPseudoRandomGenerator();
   private DoubleProblem problem ;
 
   /**
@@ -46,8 +45,6 @@ public class SPS2011VelocityUpdate implements VelocityUpdate {
 
     this.problem = problem ;
 
-    this.randomGenerator = JMetalRandom.getInstance();
-    randomGenerator.setRandomGenerator(new ExtendedPseudoRandomGenerator(new JavaRandomGenerator()));
 
   }
 
@@ -90,7 +87,7 @@ public class SPS2011VelocityUpdate implements VelocityUpdate {
 
       double radius = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(gravityCenter, particle);
 
-      double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRandomGenerator()).randSphere(problem.numberOfVariables());
+      double[] random = randomGenerator.randSphere(problem.numberOfVariables());
 
       DoubleSolution randomParticle = problem.createSolution() ;
       for (int j = 0; j < particle.variables().size(); j++) {
