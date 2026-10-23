@@ -71,12 +71,13 @@ the type should be confirmed before relying on it in a publication.
    * - CEC 2021 RWMOP (RCM)
      - 50
      - [Kumar2021]_
-     - RCM01-50 except RCM17, whose first objective has no lower bound in the feasible region; the
-       files are named after the number of the problem (``RCM01.csv``). Estimated as the CRE fronts,
+     - RCM01-50 except RCM17, whose first objective has no lower bound in the feasible region
+       (``RCM01.csv`` to ``RCM50.csv``, as the classes and the names of the problems). Estimated as the CRE fronts,
        with problem-specific searches for the problems whose equality constraints leave feasible
        regions that the algorithms do not reach (RCM22, RCM24, RCM28 and RCM30-49). The front of
        RCM30 is less certain than the rest: half of its runs reach 0.886 of the hypervolume of all
-       of them. RCM11 is the same problem as CRE51, and has the same front.
+       of them. RCM11 is the same problem as CRE51, and has the same front. All the problems have constraints but
+       RCM09, whose reference evaluator assigns none although the metadata of the suite lists one.
    * - EBES
      - 1
      - Javadoc of the classes

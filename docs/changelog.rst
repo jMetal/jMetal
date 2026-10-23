@@ -4,6 +4,27 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/23/2026] The problems of the CEC 2021 suite are named ``RCM01`` to ``RCM50``, as the classes and
+  the names of the other families (``CRE21``, ``MW1``, ``RWA1``): the classes were named after the
+  number and the description of the problem (``RCM01PressureVesselProblem``) and ``name()`` returned
+  the description (``PressureVesselProblem``), so an experiment could not find their reference
+  fronts. Code that uses the old class names has to be updated.
+
+* [10/23/2026] Reference fronts for the CRE problems and for RCM01-50 (except RCM17, whose first
+  objective has no lower bound in the feasible region). Their Pareto fronts are not known: the fronts
+  are the non-dominated feasible solutions of many runs of several algorithms, completed near the
+  extremes by SLSQP and by problem-specific searches (see :ref:`constrainedBenchmarks`).
+
+* [10/23/2026] ``ListUtils.randomSelectionWithoutReplacement`` draws only the selected elements (a
+  partial Fisher-Yates shuffle) instead of a whole permutation of the list, and
+  ``PermutationFactory.createIntegerPermutation`` uses an array list instead of a linked list. The
+  selection keeps its distribution, but **the elements selected with a given seed change**, so the
+  results of the algorithms whose selection or replacement uses it (``NaryTournamentSelection``,
+  used by NSGA-II and others, ``RandomSelection``, ``TournamentReplacement``, ``RandomReplacement``
+  and ``SpatialSpreadDeviationSelection``) are not the same as in previous versions for the same
+  seed. The integration tests of MOEA/D with constraints, which depended on a single seed, now check
+  the median of 15 seeds.
+
 * [10/22/2026] ``NSGAIIIReplacement`` (component-based NSGA-III) normalizes with the intercepts of the
   hyperplane through the extreme points, as in the paper, instead of the diagonal of the extreme points
   (the largest translated value of each objective of the first front is used if the hyperplane is
