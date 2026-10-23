@@ -301,12 +301,14 @@ The key of having a component-based architecture is to provide a catalogue of co
        * ``RVEAReplacement``
        * ``AGEMOEAReplacement``
        * ``PAESReplacement``
+       * ``ConstraintHandlingReplacement``
    * - ``ea``
      - ``SubproblemUpdateCriterion``
      - * ``AggregationCriterion``
        * ``FeasibilityRulesCriterion``
        * ``ViolationThresholdCriterion``
        * ``ImprovedEpsilonCriterion``
+       * ``ConstraintHandlingCriterion``
 
 Each component type is included in a package containing an interface with the component name and an ``impl``
 sub-package where all the implementations of the interface are stored.
@@ -342,6 +344,7 @@ Available Components
 - ``NSGAIIIReplacement``: NSGA-III replacement: it keeps the complete fronts that fit and fills the population from the last one with the niching procedure of the reference points. The objectives are translated by the ideal point and scaled by the intercepts of the hyperplane through the extreme points (the largest translated value of each objective in the first front if the hyperplane is not valid), as in the paper, so the selection does not depend on the position or the scale of the objectives (the scaling is not exact if the scales of the objectives differ by a factor of one million or more, because of the weight of the extreme point search).
 - ``SMSEMOAReplacement``: steady-state SMS-EMOA replacement: it removes the solution of the last front that contributes the least to the hypervolume. The reference point is 1.1 times the maximum value of each objective (the maximum divided by 1.1 if it is negative), so it works with objectives of any sign and range. With constraints it ranks the whole population, so it needs a constraint-aware ranking (see :ref:`constraints`).
 - ``PAESReplacement``: PAES three-way rule for a (1+1) strategy; accepts the offspring if it dominates the current solution, rejects it if dominated, or breaks ties using the bounded archive's density estimator.
+- ``ConstraintHandlingReplacement``: decorator of another replacement that updates a constraint-handling technique with the population, the offspring and the progress of the run before replacing, once per generation (see :ref:`constraints`).
 
 **Subproblem Update Criterion Components** (``ea.replacement.subproblemupdate``): rule used by ``MOEADReplacement`` to decide whether a new solution replaces the current solution of a subproblem, enabling constraint handling in MOEA/D (see :ref:`constraints`):
 
@@ -349,6 +352,7 @@ Available Components
 - ``FeasibilityRulesCriterion``: feasibility rules of the constrained dominance principle (Deb, 2000).
 - ``ViolationThresholdCriterion``: adaptive violation threshold (Jan and Khanum, 2013).
 - ``ImprovedEpsilonCriterion``: improved epsilon constraint handling (Fan et al., 2019).
+- ``ConstraintHandlingCriterion``: a pairwise constraint-handling technique, which compares the aggregation function values when the constraints do not decide (see :ref:`constraints`).
 
 **Evaluation Components** (``common.evaluation``):
 

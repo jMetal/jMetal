@@ -4,6 +4,30 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/23/2026] Constraint-handling techniques (issue #517), ported from the prototype of Nicolás
+  Rodríguez Uribe in Evolver. The package ``org.uma.jmetal.util.constrainthandling`` contains the
+  ``ConstraintHandlingTechnique`` interface, its pairwise subtype
+  ``PairwiseConstraintHandlingTechnique`` and five techniques: ``ConstrainedDominance``,
+  ``EpsilonConstrained``, ``PushPullSearch``, ``StochasticRanking`` and ``SelfAdaptivePenalty``. The
+  builders of NSGA-II, NSGA-II-DE, RDSMOEA, NSGA-III, SMS-EMOA, SMS-EMOA-DE and AGE-MOEA take any
+  technique with ``setConstraintHandlingTechnique``, and those of PAES, SMPSO, MOEA/D and MOEA/D-DE
+  take the pairwise ones. The techniques that change during the run use its progress, which
+  ``Termination`` now gives with the default method ``progress`` (implemented by
+  ``TerminationByEvaluations`` and ``TerminationByComputingTime``). Without a technique the
+  algorithms behave as before. See :ref:`constraints`.
+
+* [10/23/2026] Fixed ``NSGAIIBuilder`` and ``RDSMOEABuilder``: ``setRanking`` did not change the
+  ranking of the binary tournament, which kept reading the ranks of the default ranking (with a
+  ranking of another class, every solution had rank -1 in the tournament);
+  ``NSGAIIBuilder.setDensityEstimator`` replaced a selection set before; and
+  ``RDSMOEABuilder.setRanking`` reset the removal policy of the replacement. These builders, and
+  those of NSGA-III and SMS-EMOA, now create their replacement and default selection in ``build()``;
+  ``NSGAIIIBuilder`` gets ``setRanking``, and its ``setVariation`` now sizes the mating pool of the
+  default selection.
+
+* [10/23/2026] Fixed ``SMPSOBuilder.setLocalBestUpdate``, which ignored the local best update it was
+  given.
+
 * [10/23/2026] Random numbers in parallel threads (issue #515). ``ThreadLocalRandomGenerator``
   gives each thread its own generator: ``ThreadLocalRandomGenerator.install()`` makes
   ``JMetalRandom`` use it, the installing thread keeps its generator and sequence, and ``setSeed``

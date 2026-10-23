@@ -181,7 +181,7 @@ Whether a component uses this comparator by default depends on the component:
 * **Constraint-aware by default**: the `NonDominatedSolutionListArchive <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/archive/impl/NonDominatedSolutionListArchive.java>`_ class; the bounded archives (``CrowdingDistanceArchive``, ``AngleArchive``, ``CosineSimilarityArchive`` and any subclass of ``AbstractBoundedArchive`` built without an explicit comparator); ``StrengthRanking``; ``ExperimentalFastNonDominanceRanking``, which sorts the solutions by their overall constraint violation before the non-dominated sorting; the replacement of the component-based PAES (``PAESBuilder``); and the environmental selection of the component-based AGE-MOEA and AGE-MOEA-II (``AGEMOEABuilder``), which ranks the population with the constrained dominance and passes that ranking to its parent selection (another ranking can be given to ``AGEMOEAEnvironmentalSelection``). In them, an infeasible solution never replaces a feasible one.
 * **Not constraint-aware by default**: `FastNonDominatedSortRanking <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/ranking/impl/FastNonDominatedSortRanking.java>`_, whose default constructor uses plain Pareto dominance (``DefaultDominanceComparator``), and ``MergeNonDominatedSortRanking``, which only compares objectives and accepts no comparator. Consequently, the builders that use these rankings by default, such as ``NSGAIIBuilder`` and ``SMSEMOABuilder``, **ignore the constraints** unless a constraint-aware ranking is set. The reason is efficiency: computing the constraint violation in every comparison would slow down the non-dominated sorting of problems without constraints, which are the most frequent ones.
 
-To solve a problem with constraints with these algorithms, set a ranking with ``DominanceWithConstraintsComparator``, as in `NSGAIISolvingConstrainedProblemExample <https://github.com/jMetal/jMetal/blob/master/jmetal-component/src/main/java/org/uma/jmetal/component/examples/multiobjective/nsgaii/NSGAIISolvingConstrainedProblemExample.java>`_:
+To solve a problem with constraints with these algorithms, set a constraint-handling technique (see the next section) or a ranking with ``DominanceWithConstraintsComparator``, as in `NSGAIISolvingConstrainedProblemExample <https://github.com/jMetal/jMetal/blob/master/jmetal-component/src/main/java/org/uma/jmetal/component/examples/multiobjective/nsgaii/NSGAIISolvingConstrainedProblemExample.java>`_:
 
 .. code-block:: java
 
@@ -196,6 +196,102 @@ To solve a problem with constraints with these algorithms, set a ranking with ``
         .build();
 
 The same applies to ``SMSEMOABuilder``: its replacement (``SMSEMOAReplacement``) honors the comparator of the ranking, and ranks the whole population when the solutions have constraints, so it handles them only when it is given a constraint-aware ranking.
+
+Constraint-handling techniques
+------------------------------
+
+The package ``org.uma.jmetal.util.constrainthandling`` (sub-project ``jmetal-core``) contains constraint-handling techniques (CHTs) that can be passed to an algorithm, so that the same algorithm can handle the constraints in different ways, and that can be a configurable parameter in automatic design tools such as `Evolver <https://github.com/jMetal/Evolver>`_. A technique is a `ConstraintHandlingTechnique <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/constrainthandling/ConstraintHandlingTechnique.java>`_:
+
+.. code-block:: java
+
+  public interface ConstraintHandlingTechnique<S extends Solution<?>> {
+    Ranking<S> ranking();         // a new ranking that sorts a population with the technique
+    Comparator<S> comparator();   // for pairwise decisions
+    default void update(List<S> population, double progress) {}  // once per generation
+  }
+
+There are two kinds of techniques:
+
+* **Pairwise techniques** (``PairwiseConstraintHandlingTechnique``) look at the constraints of two solutions and, when the constraints do not decide, delegate in a comparison of their objectives that the algorithm provides: Pareto dominance in the algorithms based on dominance, or the value of the aggregation function of a subproblem in MOEA/D. They can be used by any algorithm.
+* **Population techniques** need the whole population to rank it, so they can only be used by algorithms that rank their population. Their comparator, for the pairwise decisions those algorithms may also take, is the constrained-domination principle.
+
+The techniques are the following:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 18 14 38 30
+
+   * - Class
+     - Kind
+     - Parameters
+     - Reference
+   * - ``ConstrainedDominance``
+     - pairwise
+     - violation measure: the overall constraint violation (default) or the number of violated constraints
+     - Deb et al., IEEE TEVC 6(2), 2002
+   * - ``EpsilonConstrained``
+     - pairwise, changes during the run
+     - quantile of the violations of the first population that gives the initial epsilon; exponent of its decrease; fraction of the run from which epsilon is zero
+     - Takahama and Sakai, IEEE CEC 2006
+   * - ``PushPullSearch``
+     - pairwise, changes during the run
+     - change threshold of the ideal and nadir points and window (a fraction of the run) that end the push stage; fraction of the run Tc from which epsilon is zero; exponent; feasibility ratio alpha; reduction tau
+     - Fan et al., Swarm and Evolutionary Computation 44, 2019
+   * - ``StochasticRanking``
+     - population
+     - probability pf of comparing two solutions by their Pareto rank when one of them is infeasible
+     - Runarsson and Yao, IEEE TEVC 4(3), 2000 (multi-objective form)
+   * - ``SelfAdaptivePenalty``
+     - population
+     - none
+     - Woldesenbet, Yen and Tessema, IEEE TEVC 13(3), 2009
+
+The parameters are scale-free (quantiles, fractions of the run and ratios rather than absolute values of epsilon), so a setting can be used on problems whose constraints have different scales. The techniques that change during the run are scheduled with the progress of the run, in [0, 1], which the termination condition computes: they need a ``TerminationByEvaluations`` or a ``TerminationByComputingTime`` (any ``Termination`` that implements ``progress``), and throw an exception otherwise. A technique has state, so an instance must not be shared by several runs.
+
+The builders accept a technique with ``setConstraintHandlingTechnique``:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 40 20 40
+
+   * - Builders
+     - Techniques
+     - Where the technique is used
+   * - ``NSGAIIBuilder``, ``NSGAIIDEBuilder``, ``RDSMOEABuilder``, ``NSGAIIIBuilder``, ``SMSEMOABuilder``, ``SMSEMOADEBuilder``, ``AGEMOEABuilder`` (AGE-MOEA and AGE-MOEA-II)
+     - any
+     - the ranking of the selection and the replacement is ``technique.ranking()``
+   * - ``PAESBuilder``
+     - pairwise
+     - whether the mutant replaces the current solution
+   * - ``SMPSOBuilder``
+     - pairwise
+     - whether a particle replaces its local best (which, by default, ignores the constraints)
+   * - ``MOEADBuilder``, ``MOEADDEBuilder``
+     - pairwise
+     - as the subproblem update criterion (``ConstraintHandlingCriterion``): the technique decides by the constraints and then by the aggregation function values; with ``ConstrainedDominance`` it decides as ``FeasibilityRulesCriterion``
+
+For example, NSGA-II with push and pull search and an external archive (see `NSGAIIWithConstraintHandlingTechniqueExample <https://github.com/jMetal/jMetal/blob/master/jmetal-component/src/main/java/org/uma/jmetal/component/examples/multiobjective/nsgaii/NSGAIIWithConstraintHandlingTechniqueExample.java>`_):
+
+.. code-block:: java
+
+    var archive = new NonDominatedSolutionListArchive<DoubleSolution>();
+
+    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+        problem, populationSize, offspringPopulationSize, crossover, mutation)
+        .setTermination(new TerminationByEvaluations(25000))
+        .setConstraintHandlingTechnique(new PushPullSearch<>(0.001, 0.02, 0.8, 2.0, 0.95, 0.1))
+        .setEvaluation(new SequentialEvaluationWithArchive<>(problem, archive))
+        .build();
+
+On LIR-CMOP5, with 25,000 evaluations and five runs, the median IGD+ of the feasible solutions of the archive is 0.217 with this technique and 1.229 with the constrained-domination principle; on LIR-CMOP1 it is 0.147 with push and pull search, 0.171 with ``new EpsilonConstrained<>(0.2, 5.0, 0.5)`` and 0.260 with the constrained-domination principle.
+
+Some remarks:
+
+* **The technique only guides the search.** The archives that keep the result of an algorithm (an external archive, the archive of PAES, the leaders of SMPSO) compare solutions with the constrained-domination principle whatever the technique, so a technique that tolerates violations does not decide what is returned. In SMPSO the technique only acts on the local bests, so its effect is smaller than in the algorithms that rank their population.
+* **The final population.** ``EpsilonConstrained`` and ``PushPullSearch`` end as the constrained-domination principle, so the final population is ranked with it. ``StochasticRanking`` (with pf > 0) and ``SelfAdaptivePenalty`` can end with infeasible solutions in the population: use an external archive to get the feasible solutions found. The self-adaptive penalty, in particular, keeps the population just outside very narrow feasible regions (on LIR-CMOP1 to LIR-CMOP4, violations of 1e-4 to 1e-7 and hardly any feasible solution at the end), because a solution with a tiny violation and better objectives outranks a feasible one when few are feasible; an external archive keeps the feasible solutions it finds along the run.
+* **The initial epsilon** is a quantile of the violations of the first population, so it is zero, and ``EpsilonConstrained`` is the constrained-domination principle, when that quantile of the population is feasible (as on LIR-CMOP5). ``PushPullSearch`` does not have this limitation, because it starts by ignoring the constraints.
+* **The number of violated constraints** as violation measure makes two infeasible solutions that violate as many constraints be compared by their objectives, which gives little guidance towards the feasible region to an algorithm without a population such as PAES.
+* **RVEA** is not included: its rule (C-RVEA) is already the constrained-domination principle within each niche, with the angle-penalized distance as the comparison of the objectives, so a pairwise technique could be used there in the future.
 
 Constraint handling in component-based MOEA/D
 ---------------------------------------------
