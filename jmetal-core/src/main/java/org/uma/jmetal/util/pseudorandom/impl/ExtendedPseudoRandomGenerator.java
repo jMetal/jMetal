@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.pseudorandom.impl;
 
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
@@ -14,6 +15,52 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
 
   public ExtendedPseudoRandomGenerator(PseudoRandomGenerator randomGenerator) {
     this.randomGenerator = randomGenerator ;
+  }
+
+  /**
+   * Creates a generator that draws from the generator of {@link JMetalRandom} at each call, so it
+   * follows the seed and the generator that {@link JMetalRandom} has when it draws (including a
+   * generator per thread), not the ones it had when it was created.
+   */
+  public ExtendedPseudoRandomGenerator() {
+    this(new GeneratorOfJMetalRandom());
+  }
+
+  /** Delegates each call to the generator that {@link JMetalRandom} has at that moment. */
+  private static final class GeneratorOfJMetalRandom implements PseudoRandomGenerator {
+    private static PseudoRandomGenerator current() {
+      return JMetalRandom.getInstance().getRandomGenerator();
+    }
+
+    @Override
+    public int nextInt(int lowerBound, int upperBound) {
+      return current().nextInt(lowerBound, upperBound);
+    }
+
+    @Override
+    public double nextDouble(double lowerBound, double upperBound) {
+      return current().nextDouble(lowerBound, upperBound);
+    }
+
+    @Override
+    public double nextDouble() {
+      return current().nextDouble();
+    }
+
+    @Override
+    public void setSeed(long seed) {
+      current().setSeed(seed);
+    }
+
+    @Override
+    public long getSeed() {
+      return current().getSeed();
+    }
+
+    @Override
+    public String getName() {
+      return current().getName();
+    }
   }
 
   @Override
