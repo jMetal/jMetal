@@ -142,7 +142,7 @@ public class SMPSOBuilder {
   }
 
   public SMPSOBuilder setLocalBestUpdate(LocalBestUpdate localBestUpdate) {
-    this.localBestInitialization = localBestInitialization ;
+    this.localBestUpdate = localBestUpdate ;
 
     return this ;
   }
