@@ -63,11 +63,20 @@ the type should be confirmed before relying on it in a publication.
    * - CRE (constrained RE)
      - 8
      - [Tanabe2020]_
-     - None.
+     - CRE21-25, CRE31, CRE32 and CRE51. Estimated: the non-dominated feasible solutions of many
+       runs of NSGA-II, SMS-EMOA, AGE-MOEA-II, NSGA-III and MOEA/D, completed near their extremes
+       by SLSQP. Every point is the objective vector of a solution that jMetal evaluates as
+       feasible, and no solution of the runs dominates it; at most 1000 points with two objectives
+       and 2500 with more.
    * - CEC 2021 RWMOP (RCM)
      - 50
      - [Kumar2021]_
-     - None.
+     - RCM01-50 except RCM17, whose first objective has no lower bound in the feasible region; the
+       files are named after the number of the problem (``RCM01.csv``). Estimated as the CRE fronts,
+       with problem-specific searches for the problems whose equality constraints leave feasible
+       regions that the algorithms do not reach (RCM22, RCM24, RCM28 and RCM30-49). The front of
+       RCM30 is less certain than the rest: half of its runs reach 0.886 of the hypervolume of all
+       of them. RCM11 is the same problem as CRE51, and has the same front.
    * - EBES
      - 1
      - Javadoc of the classes
@@ -90,8 +99,6 @@ Notes:
 * ``Ebes``, the classical problems and the engineering problems do not cite a paper in a single
   place; see the Javadoc of their classes. ``Ebes`` is by G. R. Zavala, A. J. Nebro and J. J.
   Durillo.
-* The reference of the RCM suite (CEC 2021) was written from memory, not from the code, and its
-  bibliographic details should be checked.
 
 References
 ----------
@@ -118,6 +125,8 @@ References
 .. [Tanabe2020] R. Tanabe and H. Ishibuchi, "An easy-to-use real-world multi-objective optimization problem
    suite", Applied Soft Computing 89:106078, 2020 (https://doi.org/10.1016/j.asoc.2020.106078).
 
-.. [Kumar2021] A. Kumar et al., "A benchmark-suite of real-world constrained multi-objective optimization
-   problems and some baseline results", Swarm and Evolutionary Computation, 2021.
+.. [Kumar2021] A. Kumar, G. Wu, M. Z. Ali, Q. Luo, R. Mallipeddi, P. N. Suganthan and S. Das, "A
+   Benchmark-Suite of real-World constrained multi-objective optimization problems and some
+   baseline results", Swarm and Evolutionary Computation 67:100961, 2021
+   (https://doi.org/10.1016/j.swevo.2021.100961).
 
