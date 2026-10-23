@@ -270,7 +270,17 @@ The builders of the component-based algorithms (sub-project ``jmetal-component``
      - pairwise
      - as the subproblem update criterion (``ConstraintHandlingCriterion``): the technique decides by the constraints and then by the aggregation function values; with ``ConstrainedDominance`` it decides as ``FeasibilityRulesCriterion``
 
-For example, NSGA-II with push and pull search and an external archive (see `NSGAIIWithConstraintHandlingTechniqueExample <https://github.com/jMetal/jMetal/blob/master/jmetal-component/src/main/java/org/uma/jmetal/component/examples/multiobjective/nsgaii/NSGAIIWithConstraintHandlingTechniqueExample.java>`_):
+For example, NSGA-II with its own technique, the constrained-domination principle, on the Srinivas problem (see `NSGAIIWithConstrainedDominanceExample <https://github.com/jMetal/jMetal/blob/master/jmetal-component/src/main/java/org/uma/jmetal/component/examples/multiobjective/nsgaii/NSGAIIWithConstrainedDominanceExample.java>`_):
+
+.. code-block:: java
+
+    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+        new Srinivas(), populationSize, offspringPopulationSize, crossover, mutation)
+        .setTermination(new TerminationByEvaluations(25000))
+        .setConstraintHandlingTechnique(new ConstrainedDominance<>())
+        .build();
+
+Changing the technique only requires changing that line. NSGA-II with push and pull search and an external archive (see `NSGAIIWithConstraintHandlingTechniqueExample <https://github.com/jMetal/jMetal/blob/master/jmetal-component/src/main/java/org/uma/jmetal/component/examples/multiobjective/nsgaii/NSGAIIWithConstraintHandlingTechniqueExample.java>`_):
 
 .. code-block:: java
 
