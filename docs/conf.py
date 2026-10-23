@@ -24,7 +24,7 @@ author = 'Antonio J. Nebro'
 highlight_language = 'java'
 
 # The full version, including alpha/beta/rc tags
-release = '7.9'
+release = '8.0-SNAPSHOT'
 
 
 # -- General configuration ---------------------------------------------------
