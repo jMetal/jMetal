@@ -1,7 +1,6 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,11 +12,67 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.cec2021.*;
-import org.uma.jmetal.problem.multiobjective.cre.*;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM01;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM02;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM03;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM04;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM05;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM06;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM07;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM08;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM09;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM10;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM11;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM12;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM13;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM14;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM15;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM16;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM18;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM19;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM20;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM21;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM22;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM23;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM24;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM25;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM26;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM27;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM28;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM29;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM30;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM31;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM32;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM33;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM34;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM35;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM36;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM37;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM38;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM39;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM40;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM41;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM42;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM43;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM44;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM45;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM46;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM47;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM48;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM49;
+import org.uma.jmetal.problem.multiobjective.cec2021.RCM50;
+import org.uma.jmetal.problem.multiobjective.cre.CRE21;
+import org.uma.jmetal.problem.multiobjective.cre.CRE22;
+import org.uma.jmetal.problem.multiobjective.cre.CRE23;
+import org.uma.jmetal.problem.multiobjective.cre.CRE24;
+import org.uma.jmetal.problem.multiobjective.cre.CRE25;
+import org.uma.jmetal.problem.multiobjective.cre.CRE31;
+import org.uma.jmetal.problem.multiobjective.cre.CRE32;
+import org.uma.jmetal.problem.multiobjective.cre.CRE51;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
 
@@ -111,62 +166,87 @@ class RealWorldReferenceFrontsTest {
     return rows;
   }
 
-  @ParameterizedTest(name = "{0}")
-  @MethodSource("problems")
-  @DisplayName("each sampled solution is feasible and gives its point of the front")
-  void eachSampledSolutionIsFeasibleAndGivesItsPointOfTheFront(String name) throws IOException {
-    DoubleProblem problem = PROBLEMS.get(name).get();
-    int n = problem.numberOfVariables();
-    int m = problem.numberOfObjectives();
-    List<double[]> samples = rows(SAMPLES.resolve(name + ".csv"), true);
-    List<double[]> front = rows(FRONTS.resolve(name + ".csv"), false);
-
-    assertFalse(samples.isEmpty(), "no samples");
-    for (int row = 0; row < samples.size(); row++) {
-      double[] values = samples.get(row);
-      DoubleSolution solution = problem.createSolution();
-      for (int i = 0; i < n; i++) {
-        solution.variables().set(i, values[i]);
+  /** Whether a point of the front is the given objective vector, with a relative tolerance. */
+  private static boolean isThePoint(double[] point, double[] objectives) {
+    for (int j = 0; j < objectives.length; j++) {
+      if (Math.abs(point[j] - objectives[j]) > 1e-9 * Math.max(1.0, Math.abs(point[j]))) {
+        return false;
       }
-      problem.evaluate(solution);
-      assertTrue(ConstraintHandling.isFeasible(solution), name + " row " + row + " is infeasible");
-      double[] objectives = solution.objectives();
-      boolean inTheFront =
-          front.stream()
-              .anyMatch(
-                  point -> {
-                    for (int j = 0; j < m; j++) {
-                      if (Math.abs(point[j] - objectives[j])
-                          > 1e-9 * Math.max(1.0, Math.abs(point[j]))) {
-                        return false;
-                      }
-                    }
-                    return true;
-                  });
-      assertTrue(
-          inTheFront,
-          name + " row " + row + " gives " + Arrays.toString(objectives)
-              + ", which is not a point of the front");
+    }
+    return true;
+  }
+
+  private static boolean dominates(double[] a, double[] b) {
+    boolean noWorse = true;
+    boolean better = false;
+    for (int j = 0; j < a.length; j++) {
+      noWorse &= a[j] <= b[j];
+      better |= a[j] < b[j];
+    }
+    return noWorse && better;
+  }
+
+  @Nested
+  @DisplayName("When evaluating the sampled solutions of a front")
+  class WhenEvaluatingTheSampledSolutions {
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("org.uma.jmetal.problem.multiobjective.RealWorldReferenceFrontsTest#problems")
+    @DisplayName("given a sample, when evaluated, then each solution is feasible and in the front")
+    void givenASample_whenEvaluated_thenEachSolutionIsFeasibleAndGivesAPointOfTheFront(
+        String name) throws IOException {
+      // Arrange
+      DoubleProblem problem = PROBLEMS.get(name).get();
+      List<double[]> samples = rows(SAMPLES.resolve(name + ".csv"), true);
+      List<double[]> front = rows(FRONTS.resolve(name + ".csv"), false);
+      assertThat(samples).as("samples of " + name).isNotEmpty();
+
+      for (int row = 0; row < samples.size(); row++) {
+        double[] values = samples.get(row);
+        DoubleSolution solution = problem.createSolution();
+        for (int i = 0; i < problem.numberOfVariables(); i++) {
+          solution.variables().set(i, values[i]);
+        }
+
+        // Act
+        problem.evaluate(solution);
+
+        // Assert
+        double[] objectives = solution.objectives();
+        assertThat(ConstraintHandling.isFeasible(solution))
+            .as(name + " row " + row + " is feasible")
+            .isTrue();
+        assertThat(front.stream().anyMatch(point -> isThePoint(point, objectives)))
+            .as(name + " row " + row + " gives " + Arrays.toString(objectives)
+                + ", a point of the front")
+            .isTrue();
+      }
     }
   }
 
-  @ParameterizedTest(name = "{0}")
-  @MethodSource("problems")
-  @DisplayName("no point of the front dominates another")
-  void noPointOfTheFrontDominatesAnother(String name) throws IOException {
-    List<double[]> front = rows(FRONTS.resolve(name + ".csv"), false);
+  @Nested
+  @DisplayName("When checking the points of a front")
+  class WhenCheckingThePointsOfTheFront {
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("org.uma.jmetal.problem.multiobjective.RealWorldReferenceFrontsTest#problems")
+    @DisplayName("given a front, when comparing its points, then none dominates another")
+    void givenAFront_whenComparingItsPoints_thenNoneDominatesAnother(String name)
+        throws IOException {
+      // Arrange
+      List<double[]> front = rows(FRONTS.resolve(name + ".csv"), false);
+      assertThat(front).as("front of " + name).isNotEmpty();
 
-    assertFalse(front.isEmpty(), "empty front");
-    for (double[] a : front) {
-      for (double[] b : front) {
-        boolean noWorse = true;
-        boolean better = false;
-        for (int j = 0; j < a.length; j++) {
-          noWorse &= a[j] <= b[j];
-          better |= a[j] < b[j];
+      // Act
+      List<String> dominatedPairs = new ArrayList<>();
+      for (double[] a : front) {
+        for (double[] b : front) {
+          if (dominates(a, b)) {
+            dominatedPairs.add(Arrays.toString(a) + " dominates " + Arrays.toString(b));
+          }
         }
-        assertFalse(noWorse && better, Arrays.toString(a) + " dominates " + Arrays.toString(b));
       }
+
+      // Assert
+      assertThat(dominatedPairs).isEmpty();
     }
   }
 }
