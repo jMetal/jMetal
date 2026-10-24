@@ -4,6 +4,10 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/24/2026] The reference front of Srinivas (``resources/referenceFronts/Srinivas.csv`` and its
+  copy in ``jmetal-auto``) has no trailing comma in its lines: a reader that splits the lines by
+  commas counted three objectives instead of two. The values do not change.
+
 * [10/23/2026] jMetal 7.9 is released. Changes that can affect existing code or results:
 
   - The problems of the CEC 2021 suite are named ``RCM01`` to ``RCM50`` (classes and names).
