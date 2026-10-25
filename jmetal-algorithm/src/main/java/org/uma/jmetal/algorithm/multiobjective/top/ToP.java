@@ -117,9 +117,9 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *   <li>When the objectives of the feasible solutions have a zero range, their normalization
  *       divides zero by zero and delta is NaN, so that the test delta &ge; 0.2 fails.
  *   <li>jMetal's {@code DifferentialEvolutionCrossover} is not used: its {@code
- *       CURRENT_TO_RAND_1_BIN} variant does not compute a mutant vector and its {@code
  *       RAND_TO_BEST_1_BIN} variant is DE/current-to-best/1, whose base vector is the current
- *       solution, not x<sub>r1</sub>.
+ *       solution, not x<sub>r1</sub>, and its binomial crossover always takes one variable from
+ *       the mutant vector (j<sub>rand</sub>), which PlatEMO does not.
  *   <li>The default mutation, jMetal's {@code PolynomialMutation}, applies the formula of
  *       PlatEMO; it mutates a variable when a uniform draw is not greater than the probability,
  *       while PlatEMO requires it to be lower, which only differs for a draw equal to it.
