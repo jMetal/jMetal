@@ -20,7 +20,7 @@ jMetal is described in the following papers:
 
 Summary of features:
 
-* Multi-objective algorithms: NSGA-II, SPEA2, PAES, PESA-II, OMOPSO, MOCell, AbYSS, MOEA/D, GDE3, IBEA, SMPSO, SMPSOhv, SMS-EMOA, MOEA/D-STM, MOEA/D-DE, MOEA/D-DRA, MOEA/D-D, MOEA/D-IEpsilon, MOCHC, MOMBI, MOMBI-II, NSGA-III, WASF-GA, GWASF-GA, R-NSGA-II, CDG-MOEA, ESPEA, SMSPO/RP, AGEMOEA, AGEMOEA-II, CDG, FAME, MicroFAME, MOSA, DMOPSO, RVEA, RVEA*, iRVEA, RDS-MOEA, CMOEA-MS, random search.
+* Multi-objective algorithms: NSGA-II, SPEA2, PAES, PESA-II, OMOPSO, MOCell, AbYSS, MOEA/D, GDE3, IBEA, SMPSO, SMPSOhv, SMS-EMOA, MOEA/D-STM, MOEA/D-DE, MOEA/D-DRA, MOEA/D-D, MOEA/D-IEpsilon, MOCHC, MOMBI, MOMBI-II, NSGA-III, WASF-GA, GWASF-GA, R-NSGA-II, CDG-MOEA, ESPEA, SMSPO/RP, AGEMOEA, AGEMOEA-II, CDG, FAME, MicroFAME, MOSA, DMOPSO, RVEA, RVEA*, iRVEA, RDS-MOEA, CCMO, C-TAEA, CMOEA-MS, random search.
 * Single-objective algorithms: genetic algorithm (variants: generational, steady-state), evolution strategy (variants: elitist or mu+lambda, non-elitist or mu, lambda), DE, CMA-ES, PSO (Standard 2007, Standard 2011), Coral reef optimization.
 * Parallel models: Synchronous (multi-threaded, Apache Spark), asynchronous
 * Variable representations (encodings): binary, real, integer, permutation, mixed
