@@ -421,10 +421,10 @@ Each parent is the winner of a binary tournament in one of the archives, chosen 
 
 The implementation follows the one of PlatEMO, also where it differs from the paper; the javadoc of ``CTAEA`` lists those differences, such as the probability of taking the second parent from the CA and the association of the solutions with the subregions on the objectives without normalization. With these settings, in ten runs on C1-DTLZ1 and C3-DTLZ4 with three objectives (500 and 750 generations) and on MW3 (300 generations of 100 solutions), all the solutions of the result are feasible and the median IGD+ (on the objectives without normalization) is 0.017, 0.055 and 0.0037.
 
-ToP: a two-phase framework
---------------------------
+ToP
+~~~
 
-ToP (class ``ToP``, package ``org.uma.jmetal.algorithm.multiobjective.top``, sub-project ``jmetal-algorithm``) is an algorithm designed for constrained problems, proposed by Z.-Z. Liu and Y. Wang in "Handling Constrained Multiobjective Optimization Problems With Constraints in Both the Decision and Objective Spaces", IEEE Transactions on Evolutionary Computation, 23(5):870-884, 2019 (`DOI: 10.1109/TEVC.2019.2894743 <https://doi.org/10.1109/TEVC.2019.2894743>`_). It runs in two phases:
+ToP (classes ``ToP`` and ``ToPBuilder``, package ``org.uma.jmetal.algorithm.multiobjective.top``) is the two-phase framework of `Liu and Wang, "Handling Constrained Multiobjective Optimization Problems With Constraints in Both the Decision and Objective Spaces", IEEE TEVC 23(5):870-884, 2019 <https://doi.org/10.1109/TEVC.2019.2894743>`_. It runs in two phases:
 
 * **Phase 1** solves the problem as a constrained single-objective one, whose objective is the mean of the objectives, with differential evolution (DE/current-to-rand/1 and DE/rand-to-best/1/bin, followed by the polynomial mutation) and a one-to-one replacement by the feasibility rule. It lasts until more than a third of the population is feasible and the best third of the feasible solutions are close to each other in the normalized objective space (delta < 0.2), or until 90% of the evaluations have been done.
 * **Phase 2** is NSGA-II with the constrained-domination principle, whose offspring are created with DE/rand/1/bin and the polynomial mutation.
