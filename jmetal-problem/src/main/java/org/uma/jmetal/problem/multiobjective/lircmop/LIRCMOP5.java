@@ -82,7 +82,7 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
   protected double g1(double[] x) {
     double result = 0.0;
     for (int i = 2; i < x.length; i += 2) {
-      result += Math.pow(x[i] - Math.sin(0.5 * i / x.length * Math.PI * x[0]), 2.0);
+      result += Math.pow(x[i] - Math.sin(0.5 * (i + 1) / x.length * Math.PI * x[0]), 2.0);
     }
     return result;
   }
@@ -90,7 +90,7 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
   protected double g2(double[] x) {
     double result = 0.0;
     for (int i = 1; i < x.length; i += 2) {
-      result += Math.pow(x[i] - Math.cos(0.5 * i / x.length * Math.PI * x[0]), 2.0);
+      result += Math.pow(x[i] - Math.cos(0.5 * (i + 1) / x.length * Math.PI * x[0]), 2.0);
     }
 
     return result;

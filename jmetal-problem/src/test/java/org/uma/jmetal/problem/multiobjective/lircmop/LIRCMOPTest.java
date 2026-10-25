@@ -21,13 +21,17 @@ class LIRCMOPTest {
             .newInstance();
   }
 
-  /** A solution of the Pareto set of LIRCMOP5 and LIRCMOP6 (g1 = g2 = 0) with x1 = 0.5. */
+  /**
+   * A solution of the Pareto set of LIRCMOP5 and LIRCMOP6 (g1 = g2 = 0) with x1 = 0.5: the variable
+   * x_j, with the 1-based index j, is sin(0.5 j / n pi x1) for odd j and cos(0.5 j / n pi x1) for
+   * even j.
+   */
   private static DoubleSolution paretoOptimalSolution(DoubleProblem problem) {
     DoubleSolution solution = problem.createSolution();
     int n = problem.numberOfVariables();
     solution.variables().set(0, 0.5);
     for (int i = 1; i < n; i++) {
-      double angle = 0.5 * i / n * Math.PI * 0.5;
+      double angle = 0.5 * (i + 1) / n * Math.PI * 0.5;
       solution.variables().set(i, i % 2 == 0 ? Math.sin(angle) : Math.cos(angle));
     }
     return solution;
