@@ -9,8 +9,8 @@ package org.uma.jmetal.problem.multiobjective.dcdtlz;
  * c_2 = exp(-g) - b &gt;= 0
  * </pre>
  *
- * <p>With the default constants (a = 3, b = 0.5 and a factor of g of 100, as PlatEMO), g must be in
- * [0, 1/9] or [5/9, ln 2], and the front is the simplex sum f = 0.5.
+ * <p>With the default constants (a = 3, b = 0.5 and a factor of g of 100; see {@link DCDTLZ}), g
+ * must be in [0, 1/9] or [5/9, ln 2], and the front is the simplex sum f = 0.5.
  */
 @SuppressWarnings("serial")
 public class DC2_DTLZ1 extends DCDTLZ {

@@ -31,31 +31,56 @@ import org.uma.jmetal.util.errorchecking.Check;
  * </pre>
  *
  * <p>The constraints are of the form cos(a pi y) - b &gt;= 0 (jMetal's convention: a value &gt;= 0
- * is satisfied), and DC2 adds exp(-g) - b &gt;= 0. The definitions are in the supplementary
- * material of the paper, and the implementations differ in a, b and the factor of g:
+ * is satisfied), and DC2 adds exp(-g) - b &gt;= 0. The definitions are in Section I-B of the
+ * supplementary material of the paper (Eqs. 12-16), and the implementations differ in a, b, the
+ * factor of g and the constraints of DC3:
  *
  * <table>
- *   <caption>The constants of the implementations</caption>
+ *   <caption>The constants of the supplementary material and of the implementations</caption>
  *   <tr>
- *     <th></th><th>EMOC (authors' group)</th><th>PlatEMO 4</th><th>cmo</th><th>pymoo</th>
- *   </tr>
- *   <tr><td>a, b of DC1</td><td>3, 0.5</td><td>3, 0.5</td><td>3, 0.5</td><td>5, 0.95</td></tr>
- *   <tr>
- *     <td>a, b of DC2-DTLZ1</td><td>3, 0.9</td><td>3, 0.5</td><td>3, 0.5</td>
- *     <td>3, 0.9 on g / 100</td>
+ *     <th></th><th>Supplementary</th><th>EMOC (authors' group)</th><th>PlatEMO 4</th><th>cmo</th>
+ *     <th>pymoo</th>
  *   </tr>
  *   <tr>
- *     <td>a, b of DC2-DTLZ3</td><td>3, 0.5</td><td>3, 0.5</td><td>3, 0.5</td>
- *     <td>3, 0.9 on g / 100</td>
+ *     <td>a, b of DC1</td><td>3, 0.5</td><td>3, 0.5</td><td>3, 0.5</td><td>3, 0.5</td>
+ *     <td>5, 0.95</td>
  *   </tr>
- *   <tr><td>a, b of DC3</td><td>3, 0.5</td><td>3, 0.5</td><td>3, 0.5</td><td>5, 0.5</td></tr>
- *   <tr><td>factor of g in DTLZ3</td><td>10</td><td>10</td><td>100</td><td>100</td></tr>
+ *   <tr>
+ *     <td>a, b of DC2-DTLZ1</td><td>a &gt; 0, 0.5 &lt; b &lt; 1</td><td>3, 0.9</td><td>3, 0.5</td>
+ *     <td>3, 0.5</td><td>3, 0.9 on g / 100</td>
+ *   </tr>
+ *   <tr>
+ *     <td>a, b of DC2-DTLZ3</td><td>a &gt; 0, 0.5 &lt; b &lt; 1</td><td>3, 0.5</td><td>3, 0.5</td>
+ *     <td>3, 0.5</td><td>3, 0.9 on g / 100</td>
+ *   </tr>
+ *   <tr>
+ *     <td>a, b of DC3</td><td>a &gt; 0, 0.5 &lt; b &lt; 1</td><td>3, 0.5</td><td>3, 0.5</td>
+ *     <td>3, 0.5</td><td>5, 0.5</td>
+ *   </tr>
+ *   <tr>
+ *     <td>factor of g, DTLZ3-based</td><td>100</td><td>10</td><td>10</td><td>100</td>
+ *     <td>100</td>
+ *   </tr>
+ *   <tr>
+ *     <td>variables constrained by DC3</td><td>x_1..x_m</td><td>x_1..x_{m-1}</td>
+ *     <td>x_1..x_{m-1}</td><td>x_1..x_m</td><td>x_1..x_{m-1}</td>
+ *   </tr>
  * </table>
  *
+ * <p>The defaults of these classes follow the supplementary material where it gives a value: a = 3
+ * and b = 0.5 for DC1, and 100 as the factor of g, since the objectives are those of C1-DTLZ1 and
+ * C1-DTLZ3, whose g is that of DTLZ1 (Eq. 2). For DC2 and DC3, for which it gives only ranges, they
+ * take a = 3 and b = 0.5, as EMOC (except b = 0.9 in its DC2-DTLZ1), PlatEMO and cmo. DC3
+ * constrains x_1, ..., x_{m-1} and g (m constraints), as EMOC, PlatEMO and pymoo, although Eq. 15
+ * writes j = 1, ..., m: the feasible ratios of its Table II (3.70% with 3 objectives, 0.41% with 5)
+ * are those of m constraints with b = 0.5, and a constraint on x_m, a distance variable, would keep
+ * every solution off the front, which its Fig. 11 shows partially feasible. The supplementary
+ * material is not consistent everywhere: the feasible ratio of DC1 in its Table II (10.11%) is that
+ * of b = 0.95, and its Figs. 6 and 11 are drawn with a = 5, the values of pymoo. The five-argument
+ * constructors give any of the variants.
+ *
  * <p>EMOC is the framework of the first author's group (COLA-Laboratory); cmo is the Python
- * package of the STEP benchmark (Cork, Tu&#353;ar and Filipi&#269;, Knowledge-Based Systems, 2026),
- * whose DC3 also constrains x_m. The default constructors follow PlatEMO, and the five-argument
- * ones give any of the other variants. Every implementation uses 100 as the factor of g in DTLZ1.
+ * package of the STEP benchmark (Cork, Tu&#353;ar and Filipi&#269;, Knowledge-Based Systems, 2026).
  *
  * <p>The reference fronts in {@code resources/referenceFronts} are those of the default constants.
  * Distance variables at 0.5 give g = 0, which satisfies every constraint on g, so the front of DC2
