@@ -33,7 +33,7 @@ public class LIRCMOP10 extends LIRCMOP8 {
     }
 
     solution.objectives()[0] = 1.7057 * x[0] * (10 * g1(x) + 1);
-    solution.objectives()[1] = 1.7957 * (1 - sqrt(x[0])) * (10 * g2(x) + 1);
+    solution.objectives()[1] = 1.7057 * (1 - sqrt(x[0])) * (10 * g2(x) + 1);
 
     evaluateConstraints(solution);
 
