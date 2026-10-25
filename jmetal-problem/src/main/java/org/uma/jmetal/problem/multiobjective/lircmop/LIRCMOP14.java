@@ -36,12 +36,4 @@ public class LIRCMOP14 extends LIRCMOP13 {
     solution.constraints()[1] = constraint[1];
     solution.constraints()[2] = constraint[2];
   }
-
-  protected double g1(double[] x) {
-    double result = 0.0;
-    for (int i = 2; i < numberOfVariables(); i += 2) {
-      result += 10 * Math.pow(x[i] - 0.5, 2.0);
-    }
-    return result;
-  }
 }

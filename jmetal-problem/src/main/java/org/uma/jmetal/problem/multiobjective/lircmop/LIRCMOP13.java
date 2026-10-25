@@ -69,7 +69,7 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
 
   protected double g1(double[] x) {
     double result = 0.0;
-    for (int i = 2; i < numberOfVariables(); i += 2) {
+    for (int i = 2; i < numberOfVariables(); i++) {
       result += 10 * Math.pow(x[i] - 0.5, 2.0);
     }
     return result;
