@@ -342,3 +342,60 @@ RVEA family
 The component module provides RVEA, RVEA* (reference-vector regeneration), and
 iRVEA (adaptive vectors, regional protection, and an epsilon archive). See
 :ref:`rvea-variants` for implementation notes and runnable DTLZ/ZDT examples.
+
+CMOEA-MS
+--------
+
+CMOEA-MS (class ``CMOEAMS``, package ``org.uma.jmetal.algorithm.multiobjective.cmoeams``,
+sub-project ``jmetal-algorithm``) is an algorithm for constrained problems that changes the priority
+of the objectives and the constraints during the run [Tian2022]_.
+It evolves one population whose fitness, as in SPEA2, is the sum of the strengths of the dominating
+solutions plus a density term lower than 1, computed on the union of the population and the
+offspring in one of two stages:
+
+* Stage A gives the objectives the same priority as the constraints: the solutions are compared by
+  Pareto dominance on two objectives, their shift-based density estimation (SDE) and their
+  constraint violation.
+* Stage B gives the objectives a lower priority than the constraints: a solution with a lower
+  constraint violation dominates, and the solutions with the same violation are compared by Pareto
+  dominance on the objectives.
+
+The algorithm is in stage B when the ratio of feasible solutions of the union is greater than the
+parameter ``lambda`` (0.5 by default) and at least 10% of the evaluations have been done. The
+environmental selection keeps the non-dominated solutions (fitness lower than 1), completing them
+with those of lowest fitness or truncating them by the cosine distance between their objective
+vectors. The result is the final population.
+
+The implementation follows the authors' code in `PlatEMO <https://github.com/BIMK/PlatEMO>`_, which
+differs from the paper in some details (the constraint violation is normalized, the SDE and the
+fitness use other distances, and stage B waits for 10% of the evaluations); the javadoc of
+``CMOEAMS`` lists them. The crossover selects the variation operators of PlatEMO: a crossover with
+two parents and two children (e.g., SBX) gives the genetic operators of the paper, and a
+``DifferentialEvolutionCrossover`` of variant ``RAND_1_BIN`` gives the variant with differential
+evolution. An example is included in class `CMOEAMSRunner <https://github.com/jMetal/jMetal/blob/main/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/examples/multiobjective/cmoeams/CMOEAMSRunner.java>`_:
+
+.. code-block:: java
+
+  Problem<DoubleSolution> problem = new MW1();
+
+  var crossover = new SBXCrossover(1.0, 20.0);
+  var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+
+  Algorithm<List<DoubleSolution>> algorithm =
+      new CMOEAMSBuilder<>(problem, crossover, mutation)
+          .setPopulationSize(100)
+          .setMaxEvaluations(50000)
+          .setLambda(0.5)
+          .build();
+
+  algorithm.run();
+
+  List<DoubleSolution> population = algorithm.result();
+
+The final population can contain infeasible and dominated solutions; to compute quality indicators,
+keep its feasible non-dominated solutions.
+
+.. [Tian2022] Y. Tian, Y. Zhang, Y. Su, X. Zhang, K. C. Tan and Y. Jin, "Balancing Objective
+   Optimization and Constraint Satisfaction in Constrained Evolutionary Multiobjective
+   Optimization", IEEE Transactions on Cybernetics 52(9):9559-9572, 2022
+   (https://doi.org/10.1109/TCYB.2020.3021138).
