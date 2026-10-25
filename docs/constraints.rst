@@ -368,3 +368,25 @@ A recommended approach for solving constrained problems with three or more objec
   List<DoubleSolution> result = externalArchive.solutions();
 
 The ``MOEADSolvingCF4Example`` and ``MOEADDESolvingCF10Example`` classes illustrate this approach on the three-objective constrained problems CF4 and CF10 of the CF benchmark suite, whose reference fronts are available in the ``resources/referenceFrontsRSG`` directory.
+
+ToP: a two-phase framework
+--------------------------
+
+ToP (class ``ToP``, package ``org.uma.jmetal.algorithm.multiobjective.top``, sub-project ``jmetal-algorithm``) is an algorithm designed for constrained problems, proposed by Z.-Z. Liu and Y. Wang in "Handling Constrained Multiobjective Optimization Problems With Constraints in Both the Decision and Objective Spaces", IEEE Transactions on Evolutionary Computation, 23(5):870-884, 2019 (`DOI: 10.1109/TEVC.2019.2894743 <https://doi.org/10.1109/TEVC.2019.2894743>`_). It runs in two phases:
+
+* **Phase 1** solves the problem as a constrained single-objective one, whose objective is the mean of the objectives, with differential evolution (DE/current-to-rand/1 and DE/rand-to-best/1/bin, followed by the polynomial mutation) and a one-to-one replacement by the feasibility rule. It lasts until more than a third of the population is feasible and the best third of the feasible solutions are close to each other in the normalized objective space (delta < 0.2), or until 90% of the evaluations have been done.
+* **Phase 2** is NSGA-II with the constrained-domination principle, whose offspring are created with DE/rand/1/bin and the polynomial mutation.
+
+The implementation follows the ToP of PlatEMO, including the details of its non-dominated sorting, crowding distance and tie-breaking; where PlatEMO and the paper differ (for example, the paper draws F and CR from pools, does not mutate the trial vectors of the first phase and uses the SBX crossover in the second one), it follows PlatEMO. The differences are listed in the documentation of the class. The algorithm is configured with ``ToPBuilder``, whose default values are those of PlatEMO (population size 100, CR = 1.0, F = 0.5, polynomial mutation with probability 1/n and distribution index 20):
+
+.. code-block:: java
+
+    ToP algorithm = new ToPBuilder(problem)
+        .setPopulationSize(100)
+        .setMaxEvaluations(100000)
+        .build();
+
+    algorithm.run();
+    List<DoubleSolution> population = algorithm.result();
+
+The result is the final population, which can contain infeasible solutions, and ``phaseTwoStart()`` returns the number of evaluations done when the second phase started. In the integration tests (``ToPIT``), the median IGD of the feasible solutions is 0.013 on MW3 (25,000 evaluations), 0.23 on LIR-CMOP2 and 0.027 on C1-DTLZ1 (100,000 evaluations); on MW3 the population collapsed into a single feasible point in 4 of 15 runs, and on MW1 none of five runs with 25,000 evaluations found a feasible solution. An example is included in `ToPRunner <https://github.com/jMetal/jMetal/blob/main/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/examples/multiobjective/top/ToPRunner.java>`_, which solves LIR-CMOP2.
