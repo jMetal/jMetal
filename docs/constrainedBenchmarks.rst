@@ -48,11 +48,12 @@ the type should be confirmed before relying on it in a publication.
      - 6
      - [Li2019]_
      - DC1-DTLZ1, DC1-DTLZ3, DC2-DTLZ1, DC2-DTLZ3, DC3-DTLZ1 and DC3-DTLZ3 with 2 and 3
-       objectives, for the default constants of the classes (those of PlatEMO). Exact: the parts of
-       the fronts of DTLZ1 and DTLZ3 whose position variables satisfy the constraints (about 1000
-       points with two objectives and 10000 with three); every point is the objective vector of a
-       feasible solution. The implementations of the suite (the authors' EMOC, PlatEMO, pymoo and
-       the cmo package of the STEP benchmark) differ in some constants, which the classes take as
+       objectives, for the default constants of the classes. Exact: the parts of the fronts of DTLZ1
+       and DTLZ3 whose position variables satisfy the constraints (about 1000 points with two
+       objectives and 10000 with three); every point is the objective vector of a feasible
+       solution. They agree with the fronts that the authors publish in EMOC. The supplementary
+       material of the paper and the implementations of the suite (EMOC, PlatEMO, pymoo and the cmo
+       package of the STEP benchmark) differ in some constants, which the classes take as
        arguments; see the Javadoc of ``DCDTLZ``.
    * - LIR-CMOP
      - 14
