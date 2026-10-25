@@ -19,7 +19,8 @@ import org.uma.jmetal.util.errorchecking.Check;
  * </ul>
  *
  * <p>With m objectives and n variables, x_1, ..., x_{m-1} are the position variables and x_m, ...,
- * x_n the k = n - m + 1 distance variables:
+ * x_n the k = n - m + 1 distance variables. With n = m - 1 there is no distance variable and g = 0,
+ * as in some instances of the STEP benchmark (e.g. DC2-DTLZ3 with 3 objectives and 2 variables):
  *
  * <pre>
  * g = gFactor (k + sum_{i=m..n} ((x_i - 0.5)^2 - cos(20 pi (x_i - 0.5))))
@@ -72,7 +73,7 @@ public abstract class DCDTLZ extends AbstractDoubleProblem {
    * Checks the parameters and sets the name, dimensions and bounds: every variable in [0, 1].
    *
    * @param name the name of the problem
-   * @param numberOfVariables the number of variables, at least the number of objectives
+   * @param numberOfVariables the number of variables, at least the number of objectives minus one
    * @param numberOfObjectives the number of objectives, at least two
    * @param numberOfConstraints the number of constraints
    * @param a the frequency of the constraints, positive
@@ -91,13 +92,13 @@ public abstract class DCDTLZ extends AbstractDoubleProblem {
         numberOfObjectives >= 2,
         () -> name + " needs at least two objectives (" + numberOfObjectives + ")");
     Check.that(
-        numberOfVariables >= numberOfObjectives,
+        numberOfVariables >= numberOfObjectives - 1,
         () ->
             name
                 + " needs at least as many variables ("
                 + numberOfVariables
-                + ") as objectives ("
-                + numberOfObjectives
+                + ") as position variables ("
+                + (numberOfObjectives - 1)
                 + ")");
     Check.that(a > 0, () -> name + ": a must be positive (" + a + ")");
     Check.that(b >= -1 && b <= 1, () -> name + ": b must be in [-1, 1] (" + b + ")");

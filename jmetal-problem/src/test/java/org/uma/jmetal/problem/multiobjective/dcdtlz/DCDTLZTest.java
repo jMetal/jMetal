@@ -218,12 +218,13 @@ class DCDTLZTest {
 
     @ParameterizedTest(name = "{0} with {1} variables and {2} objectives")
     @CsvSource({
-      "DC1_DTLZ1, 2, 3",
-      "DC2_DTLZ3, 4, 5",
+      "DC1_DTLZ1, 1, 3",
+      "DC2_DTLZ3, 3, 5",
       "DC3_DTLZ1, 6, 1",
       "DC3_DTLZ3, 6, 0"
     })
-    @DisplayName("given fewer variables than objectives or under two objectives, then rejected")
+    @DisplayName(
+        "given fewer variables than position variables or under two objectives, then rejected")
     void givenInvalidDimensions_whenCreated_thenItIsRejected(
         String name, int variables, int objectives) {
       // Act & Assert

@@ -24,7 +24,7 @@ public class DC3_DTLZ3 extends DCDTLZ {
   /**
    * Creates the problem with the default constants.
    *
-   * @param numberOfVariables the number of variables, at least the number of objectives
+   * @param numberOfVariables the number of variables, at least the number of objectives minus one
    * @param numberOfObjectives the number of objectives, at least two
    */
   public DC3_DTLZ3(int numberOfVariables, int numberOfObjectives) {
@@ -34,7 +34,7 @@ public class DC3_DTLZ3 extends DCDTLZ {
   /**
    * Creates the problem.
    *
-   * @param numberOfVariables the number of variables, at least the number of objectives
+   * @param numberOfVariables the number of variables, at least the number of objectives minus one
    * @param numberOfObjectives the number of objectives, at least two
    * @param a the frequency of the constraints, positive
    * @param b their threshold, in [-1, 1]
