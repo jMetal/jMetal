@@ -213,6 +213,33 @@ class DCDTLZTest {
   }
 
   @Nested
+  @DisplayName("When creating a problem without distance variables")
+  class WithoutDistanceVariablesTests {
+
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = {"DC1_DTLZ3", "DC2_DTLZ3", "DC3_DTLZ3"})
+    @DisplayName(
+        "given 3 objectives and 2 variables, as in the STEP benchmark, then g is 0 and every"
+            + " constraint on g is satisfied")
+    void givenOneVariableLessThanObjectives_whenEvaluated_thenTheSolutionIsOnTheFront(String name)
+        throws ReflectiveOperationException {
+      // Arrange
+      DCDTLZ problem = problem(name, 2, 3, 3.0, 0.5, 100.0);
+      DoubleSolution solution = problem.createSolution();
+      solution.variables().set(0, 0.05);
+      solution.variables().set(1, 0.7);
+
+      // Act
+      problem.evaluate(solution);
+
+      // Assert
+      double[] f = solution.objectives();
+      assertEquals(1.0, Math.sqrt(Arrays.stream(f).map(v -> v * v).sum()), 1e-12);
+      assertTrue(Arrays.stream(solution.constraints()).allMatch(c -> c >= 0), name);
+    }
+  }
+
+  @Nested
   @DisplayName("When creating a problem with invalid arguments")
   class InvalidArgumentTests {
 
