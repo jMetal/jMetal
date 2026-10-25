@@ -9,9 +9,9 @@ package org.uma.jmetal.problem.multiobjective.dcdtlz;
  * c_m = cos(a pi g) - b &gt;= 0
  * </pre>
  *
- * <p>With the default constants (a = 3, b = 0.5 and a factor of g of 100, as PlatEMO), every
- * position variable must be in [0, 1/9] or [5/9, 7/9], and the front is made of the parts of the
- * simplex sum f = 0.5 that they reach.
+ * <p>With the default constants (a = 3, b = 0.5 and a factor of g of 100; see {@link DCDTLZ}),
+ * every position variable must be in [0, 1/9] or [5/9, 7/9], and the front is made of the parts of
+ * the simplex sum f = 0.5 that they reach.
  */
 @SuppressWarnings("serial")
 public class DC3_DTLZ1 extends DCDTLZ {

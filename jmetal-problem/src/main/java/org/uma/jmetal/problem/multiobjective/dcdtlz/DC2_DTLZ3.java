@@ -9,8 +9,8 @@ package org.uma.jmetal.problem.multiobjective.dcdtlz;
  * c_2 = exp(-g) - b &gt;= 0
  * </pre>
  *
- * <p>With the default constants (a = 3, b = 0.5 and a factor of g of 10, as PlatEMO), g must be in
- * [0, 1/9] or [5/9, ln 2], and the front is the unit sphere.
+ * <p>With the default constants (a = 3, b = 0.5 and a factor of g of 100; see {@link DCDTLZ}), g
+ * must be in [0, 1/9] or [5/9, ln 2], and the front is the unit sphere.
  */
 @SuppressWarnings("serial")
 public class DC2_DTLZ3 extends DCDTLZ {
@@ -27,7 +27,7 @@ public class DC2_DTLZ3 extends DCDTLZ {
    * @param numberOfObjectives the number of objectives, at least two
    */
   public DC2_DTLZ3(int numberOfVariables, int numberOfObjectives) {
-    this(numberOfVariables, numberOfObjectives, 3.0, 0.5, 10.0);
+    this(numberOfVariables, numberOfObjectives, 3.0, 0.5, 100.0);
   }
 
   /**

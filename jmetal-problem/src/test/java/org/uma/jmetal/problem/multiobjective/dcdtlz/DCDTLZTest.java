@@ -133,14 +133,15 @@ class DCDTLZTest {
     @ParameterizedTest(name = "{0}")
     @CsvSource({
       "DC1_DTLZ1, 7, 1, 100",
-      "DC1_DTLZ3, 12, 1, 10",
+      "DC1_DTLZ3, 12, 1, 100",
       "DC2_DTLZ1, 7, 2, 100",
-      "DC2_DTLZ3, 12, 2, 10",
+      "DC2_DTLZ3, 12, 2, 100",
       "DC3_DTLZ1, 7, 3, 100",
-      "DC3_DTLZ3, 12, 3, 10"
+      "DC3_DTLZ3, 12, 3, 100"
     })
-    @DisplayName("given a problem, then it has 3 objectives and PlatEMO's dimensions and constants")
-    void givenAProblem_whenCreated_thenItHasPlatEMOsDimensionsAndConstants(
+    @DisplayName(
+        "given a problem, then it has 3 objectives and the default variables and constants")
+    void givenAProblem_whenCreated_thenItHasTheDefaultDimensionsAndConstants(
         String name, int variables, int constraints, double gFactor)
         throws ReflectiveOperationException {
       // Act
