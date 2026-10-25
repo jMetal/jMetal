@@ -12,7 +12,12 @@ public class LIRCMOP4 extends LIRCMOP2 {
 
   /** Constructor */
   public LIRCMOP4() {
-    super();
+    this(30);
+  }
+
+  /** Constructor */
+  public LIRCMOP4(int numberOfVariables) {
+    super(numberOfVariables);
     numberOfConstraints(3);
     name("LIRCMOP4");
   }
