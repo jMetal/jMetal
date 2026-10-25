@@ -3,11 +3,20 @@ package org.uma.jmetal.problem.multiobjective.lircmop;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -19,6 +28,38 @@ class LIRCMOPTest {
         Class.forName("org.uma.jmetal.problem.multiobjective.lircmop.LIRCMOP" + id)
             .getConstructor()
             .newInstance();
+  }
+
+  private static DoubleProblem problem(int id, int variables) throws ReflectiveOperationException {
+    return (DoubleProblem)
+        Class.forName("org.uma.jmetal.problem.multiobjective.lircmop.LIRCMOP" + id)
+            .getConstructor(int.class)
+            .newInstance(variables);
+  }
+
+  /**
+   * Rows of {@code lircmop/reference-values.csv}, computed with lircmop_reference_fronts.py of
+   * Evolver, an independent Python transcription of Table 6 of the paper: problem, number of
+   * variables n, the n variables, the objectives and the constraints.
+   */
+  static Stream<Arguments> referenceValues() throws IOException {
+    try (var reader =
+        new BufferedReader(
+            new InputStreamReader(
+                LIRCMOPTest.class.getResourceAsStream("/lircmop/reference-values.csv"),
+                StandardCharsets.UTF_8))) {
+      List<double[]> rows =
+          reader
+              .lines()
+              .filter(line -> !line.startsWith("#") && !line.isBlank())
+              .map(line -> Arrays.stream(line.split(",")).mapToDouble(Double::parseDouble).toArray())
+              .toList();
+      return rows.stream().map(row -> Arguments.of((int) row[0], (int) row[1], row));
+    }
+  }
+
+  private static void assertClose(double expected, double actual, String message) {
+    assertEquals(expected, actual, 1e-10 * Math.max(1.0, Math.abs(expected)), message);
   }
 
   /**
@@ -60,6 +101,35 @@ class LIRCMOPTest {
       assertEquals(objectives, problem.numberOfObjectives());
       assertEquals(constraints, problem.numberOfConstraints());
       assertEquals(constraints, solution.constraints().length);
+    }
+
+    @ParameterizedTest(name = "LIRCMOP{0} with {1} variables")
+    @MethodSource("org.uma.jmetal.problem.multiobjective.lircmop.LIRCMOPTest#referenceValues")
+    @DisplayName("given a solution, then its objectives and constraints are the reference ones")
+    void givenASolution_whenEvaluated_thenItsValuesAreTheReferenceOnes(
+        int id, int variables, double[] row) throws ReflectiveOperationException {
+      // Arrange
+      DoubleProblem problem = problem(id, variables);
+      DoubleSolution solution = problem.createSolution();
+      for (int i = 0; i < variables; i++) {
+        solution.variables().set(i, row[2 + i]);
+      }
+
+      // Act
+      problem.evaluate(solution);
+
+      // Assert
+      int objectives = problem.numberOfObjectives();
+      int constraints = problem.numberOfConstraints();
+      double[] expected = Arrays.copyOfRange(row, 2 + variables, row.length);
+      assertEquals(variables, problem.numberOfVariables());
+      assertEquals(objectives + constraints, expected.length);
+      for (int i = 0; i < objectives; i++) {
+        assertClose(expected[i], solution.objectives()[i], "objective " + i);
+      }
+      for (int i = 0; i < constraints; i++) {
+        assertClose(expected[objectives + i], solution.constraints()[i], "constraint " + i);
+      }
     }
   }
 
