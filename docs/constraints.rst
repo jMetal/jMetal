@@ -420,3 +420,35 @@ Each parent is the winner of a binary tournament in one of the archives, chosen 
   List<DoubleSolution> result = algorithm.result();
 
 The implementation follows the one of PlatEMO, also where it differs from the paper; the javadoc of ``CTAEA`` lists those differences, such as the probability of taking the second parent from the CA and the association of the solutions with the subregions on the objectives without normalization. With these settings, in ten runs on C1-DTLZ1 and C3-DTLZ4 with three objectives (500 and 750 generations) and on MW3 (300 generations of 100 solutions), all the solutions of the result are feasible and the median IGD+ (on the objectives without normalization) is 0.017, 0.055 and 0.0037.
+
+CMOEA-MS
+~~~~~~~~
+
+CMOEA-MS (classes ``CMOEAMS`` and ``CMOEAMSBuilder``, package ``org.uma.jmetal.algorithm.multiobjective.cmoeams``) is the algorithm of `Tian, Zhang, Su, Zhang, Tan and Jin, "Balancing Objective Optimization and Constraint Satisfaction in Constrained Evolutionary Multiobjective Optimization", IEEE TCYB 52(9):9559-9572, 2022 <https://doi.org/10.1109/TCYB.2020.3021138>`_, which changes the priority of the objectives and the constraints during the run. It evolves one population whose fitness, as in SPEA2, is the sum of the strengths of the dominating solutions plus a density term lower than 1, computed on the union of the population and the offspring in one of two stages:
+
+* Stage A gives the objectives the same priority as the constraints: the solutions are compared by Pareto dominance on two objectives, their shift-based density estimation (SDE) and their constraint violation.
+* Stage B gives the objectives a lower priority than the constraints: a solution with a lower constraint violation dominates, and the solutions with the same violation are compared by Pareto dominance on the objectives.
+
+The algorithm is in stage B when the ratio of feasible solutions of the union is greater than the parameter ``lambda`` (0.5 by default) and at least 10% of the evaluations have been done. The environmental selection keeps the non-dominated solutions (fitness lower than 1), completing them with those of lowest fitness or truncating them by the cosine distance between their objective vectors. The result is the final population.
+
+The implementation follows the authors' code in PlatEMO, which differs from the paper in some details (the constraint violation is normalized, the SDE and the fitness use other distances, and stage B waits for 10% of the evaluations); the javadoc of ``CMOEAMS`` lists them. The crossover selects the variation operators of PlatEMO: a crossover with two parents and two children (e.g., SBX) gives the genetic operators of the paper, and a ``DifferentialEvolutionCrossover`` of variant ``RAND_1_BIN`` gives the variant with differential evolution. An example is included in class `CMOEAMSRunner <https://github.com/jMetal/jMetal/blob/main/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/examples/multiobjective/cmoeams/CMOEAMSRunner.java>`_:
+
+.. code-block:: java
+
+  Problem<DoubleSolution> problem = new MW1();
+
+  var crossover = new SBXCrossover(1.0, 20.0);
+  var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
+
+  Algorithm<List<DoubleSolution>> algorithm =
+      new CMOEAMSBuilder<>(problem, crossover, mutation)
+          .setPopulationSize(100)
+          .setMaxEvaluations(50000)
+          .setLambda(0.5)
+          .build();
+
+  algorithm.run();
+
+  List<DoubleSolution> population = algorithm.result();
+
+The final population can contain infeasible and dominated solutions; to compute quality indicators, keep its feasible non-dominated solutions.
