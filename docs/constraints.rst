@@ -368,3 +368,29 @@ A recommended approach for solving constrained problems with three or more objec
   List<DoubleSolution> result = externalArchive.solutions();
 
 The ``MOEADSolvingCF4Example`` and ``MOEADDESolvingCF10Example`` classes illustrate this approach on the three-objective constrained problems CF4 and CF10 of the CF benchmark suite, whose reference fronts are available in the ``resources/referenceFrontsRSG`` directory.
+
+C-TAEA
+------
+
+C-TAEA, the two-archive evolutionary algorithm for constrained multi-objective optimization [Li2019]_, handles the constraints by itself, so it does not take a constraint-handling technique; it is in the package ``org.uma.jmetal.algorithm.multiobjective.ctaea`` (sub-project ``jmetal-algorithm``). It keeps two archives of N solutions, where N is the number of weight vectors generated from the requested population size as in the ``UniformPoint`` function of PlatEMO (100 gives 91 vectors with three objectives):
+
+* the convergence archive (CA) keeps the feasible solutions, selected by non-dominated sorting and by the density of the subregions of the weight vectors and, while there are fewer than N of them, the infeasible solutions that are best in their constraint violation and in their Tchebycheff value;
+* the diversity archive (DA) ignores the constraints and keeps the solutions that complement the CA in the subregions where the CA has few solutions.
+
+Each parent is the winner of a binary tournament in one of the archives, chosen according to the proportions of non-dominated solutions of the archives, and each generation creates one offspring per weight vector. The result is the CA. The algorithm is generic over the type of the solutions: the crossover (of which only the first child is used) and the mutation are given by the user, as in `CTAEARunner <https://github.com/jMetal/jMetal/blob/main/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/examples/multiobjective/ctaea/CTAEARunner.java>`_:
+
+.. code-block:: java
+
+  CTAEA<DoubleSolution> algorithm =
+      new CTAEABuilder<>(problem, new SBXCrossover(1.0, 20.0),
+              new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0))
+          .setPopulationSize(100)
+          .setMaxEvaluations(91 * 500)
+          .build();
+
+  algorithm.run();
+  List<DoubleSolution> result = algorithm.result();
+
+The implementation follows the one of PlatEMO, also where it differs from the paper; the javadoc of ``CTAEA`` lists those differences, such as the probability of taking the second parent from the CA and the association of the solutions with the subregions on the objectives without normalization. With these settings, in ten runs on C1-DTLZ1 and C3-DTLZ4 with three objectives (500 and 750 generations) and on MW3 (300 generations of 100 solutions), all the solutions of the result are feasible and the median IGD+ (on the objectives without normalization) is 0.017, 0.055 and 0.0037.
+
+.. [Li2019] K. Li, R. Chen, G. Fu and X. Yao, "Two-Archive Evolutionary Algorithm for Constrained Multiobjective Optimization", IEEE Transactions on Evolutionary Computation 23(2):303-315, 2019 (https://doi.org/10.1109/TEVC.2018.2855411).
