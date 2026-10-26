@@ -92,6 +92,10 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [10/26/2026] The constrained problems DC1-DTLZ1 to DC3-DTLZ3 (package ``dcdtlz``) and CF1 to CF10
+  of the CEC 2009 competition (package ``cec2009``, classes ``CEC2009CF1`` to ``CEC2009CF10``), with
+  their reference fronts.
+
 * [10/23/2026] jMetal 7.9 is released. Changes that can affect existing code or results: the
   problems of the CEC 2021 suite are named ``RCM01`` to ``RCM50``; the random selection of the
   algorithms and the normalization of SMS-EMOA and NSGA-III have changed, so the results for a given

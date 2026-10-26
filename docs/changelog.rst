@@ -4,6 +4,24 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/26/2026] The constrained problems CF1 to CF10 of the CEC 2009 competition (Zhang et al.,
+  Technical Report CES-487), in the classes ``CEC2009CF1`` to ``CEC2009CF10`` of the package
+  ``org.uma.jmetal.problem.multiobjective.cec2009``, with 2 objectives (CF1-CF7) or 3 (CF8-CF10).
+  Their names carry the prefix because ``CF1`` to ``CF16`` already are the problems of Xiang et al.
+  Where the code of the competition divides by zero (CF8-CF10 at the point (0, 0, 1) of the front)
+  the constraint is satisfied instead of NaN, a value that the evaluators reject. They have exact
+  reference fronts, ``CEC2009CF1.csv`` to ``CEC2009CF10.csv``, and tests against an independent
+  transcription of the code of the competition. See :ref:`constrainedBenchmarks`.
+
+* [10/26/2026] The constrained problems DC1-DTLZ1, DC1-DTLZ3, DC2-DTLZ1, DC2-DTLZ3, DC3-DTLZ1 and
+  DC3-DTLZ3 (Li, Chen, Fu and Yao, IEEE TEVC 23(2), 2019), in the package
+  ``org.uma.jmetal.problem.multiobjective.dcdtlz``. The supplementary material of the paper and the
+  implementations of the suite (EMOC, PlatEMO, pymoo, cmo) differ in some constants: the default
+  constructors follow the supplementary material where it gives a value (a = 3, b = 0.5 and a factor
+  of 100 for g), and the constructors with five arguments give the other variants. They accept as few
+  variables as position variables (no distance variables), and have exact reference fronts with 2 and
+  3 objectives, ``DCn_DTLZm.2D.csv`` and ``DCn_DTLZm.3D.csv``. See :ref:`constrainedBenchmarks`.
+
 * [10/24/2026] The reference front of Srinivas (``resources/referenceFronts/Srinivas.csv`` and its
   copy in ``jmetal-auto``) has no trailing comma in its lines: a reader that splits the lines by
   commas counted three objectives instead of two. The values do not change.
