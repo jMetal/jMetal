@@ -4,6 +4,14 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/26/2026] New quality indicator for problems with constraints, ``ConstrainedMultiobjectiveIndicator``
+  (``ICMOP``), from A. Vodopija, T. Tušar and B. Filipič (IEEE Transactions on Evolutionary Computation
+  29(1), 2025). It measures the approximation of the Pareto front and the satisfaction of the constraints at
+  once: a front with feasible solutions takes minus the hypervolume of those that dominate the nadir point (or
+  their distance to the region of interest), capped at a threshold, and a front without them its least
+  violation plus the threshold, so that any feasible front is better than any infeasible one. It takes the
+  violations with the front or from the solutions (see the quality indicators page).
+
 * [10/26/2026] Fixed the LIR-CMOP problems against Table 6 of the paper (Fan et al., Soft Computing,
   2019). **The definitions of these problems change, so the results obtained with them in earlier
   versions, including jMetal 7.9, are not comparable with the ones of this version.** LIRCMOP5 to

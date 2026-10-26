@@ -4,8 +4,8 @@ Quality indicators
 ==================
 
 :Author: Antonio J. Nebro
-:Version: 1.2
-:Date: 2026-03-02
+:Version: 1.3
+:Date: 2026-10-26
 
 Quality indicators are entities that typically measure the convergence and/or the diversity Pareto front approximations, and most of
 them require a reference Pareto front to be applied. These indicators are located in package ``org.uma.jmetal.qualityindicator`` (sub-project ``jmetal-core``), and all of them implement the ``QualityIndicator`` abstract class:
@@ -51,6 +51,7 @@ The list of available quality indicators is the following:
 * ``AHD``: Average Hausdorff Distance
 * ``R2``: R2 indicator
 * ``SC``: Set coverage
+* ``ICMOP``: Indicator for constrained multiobjective optimization (see below)
 
 Example of use
 ^^^^^^^^^^^^^^
@@ -104,6 +105,34 @@ Some details of the indicators are worth knowing:
 * ``IGD+`` does not penalize a front that is better than the reference front, while ``IGD`` does.
 * The indicators reject, with a ``NullParameterException`` or an ``InvalidConditionException``, a null or empty front,
   a missing reference front, and a front with another number of objectives than the reference front.
+
+Problems with constraints: ``ICMOP``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The indicators above only look at the objectives. On a problem with constraints they are usually computed on the
+feasible solutions, and they cannot rank a front without feasible solutions. ``ConstrainedMultiobjectiveIndicator``
+(``ICMOP``) is the indicator of A. Vodopija, T. Tušar and B. Filipič, "Characterization of Constrained Continuous
+Multiobjective Optimization Problems: A Performance Space Perspective", IEEE Transactions on Evolutionary
+Computation 29(1):275-285, 2025, which measures both the approximation of the Pareto front and the satisfaction of
+the constraints. With the objectives normalized with the ideal and nadir points of the reference front:
+
+* If the front has feasible solutions, the value is ``min(I_MOP, threshold)`` on them, where ``I_MOP`` is minus the
+  hypervolume of the solutions that dominate the nadir point (1, ..., 1), or, if none does, their smallest distance
+  to the region of interest [0, 1]^M.
+* Otherwise, it is the smallest overall constraint violation of the front plus the threshold (1 by default).
+
+So any front with a feasible solution has a value up to the threshold, and any front without one a value above it.
+The violations are given with the front or taken from the solutions:
+
+.. code-block:: java
+
+  var icmop = new ConstrainedMultiobjectiveIndicator(referenceFront) ;
+  double value = icmop.compute(solutions) ;                 // a List of solutions
+  double sameValue = icmop.compute(objectives, violations) ; // double[][] and double[] (0 if feasible)
+
+The indicator normalizes the front with the bounds of its reference front, so a front and a reference front that
+are already normalized give the same value. ``compute(double[][])`` considers every point feasible. As it needs the
+violations, the indicator is not offered by the command-line tool below.
 
 Computing quality indicators from the command line
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
