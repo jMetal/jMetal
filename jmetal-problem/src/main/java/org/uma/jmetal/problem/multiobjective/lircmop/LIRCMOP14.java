@@ -3,7 +3,7 @@ package org.uma.jmetal.problem.multiobjective.lircmop;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
- * Class representing problem LIR-CMOP13, defined in: An Improved epsilon-constrained Method in
+ * Class representing problem LIR-CMOP14, defined in: An Improved epsilon-constrained Method in
  * MOEA/D for CMOPs with Large Infeasible Regions Fan, Z., Li, W., Cai, X. et al. Soft Comput
  * (2019). https://doi.org/10.1007/s00500-019-03794-x
  */
@@ -35,13 +35,5 @@ public class LIRCMOP14 extends LIRCMOP13 {
     solution.constraints()[0] = constraint[0];
     solution.constraints()[1] = constraint[1];
     solution.constraints()[2] = constraint[2];
-  }
-
-  protected double g1(double[] x) {
-    double result = 0.0;
-    for (int i = 2; i < numberOfVariables(); i += 2) {
-      result += 10 * Math.pow(x[i] - 0.5, 2.0);
-    }
-    return result;
   }
 }

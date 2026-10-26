@@ -68,7 +68,14 @@ the type should be confirmed before relying on it in a publication.
    * - LIR-CMOP
      - 14
      - [Fan2019]_
-     - LIR-CMOP1-14. Unverified.
+     - LIR-CMOP1-12 with 2 objectives and LIR-CMOP13-14 with 3. Exact: computed from Table 6 of
+       the paper (1000 points with two objectives and 9870 with three); every point is the objective
+       vector of a feasible solution. The fronts of LIR-CMOP1-4 are the unconstrained ones shifted
+       by the smallest feasible distance, 0.5 (only where ``sin(20 pi x1) >= 0.5`` in LIR-CMOP3-4);
+       those of LIR-CMOP5-12 are the non-dominated feasible points of the attainable objective
+       space, which lie on the unconstrained front or on the boundary of a constraint; those of
+       LIR-CMOP13-14 are spheres of radius 1.7057 and 1.75. PlatEMO computes the distance functions
+       of LIR-CMOP2-4 as the sum of ``(x_j - x_1)^2``, unlike the paper.
    * - DAS-CMOP
      - 9
      - [Fan2020]_

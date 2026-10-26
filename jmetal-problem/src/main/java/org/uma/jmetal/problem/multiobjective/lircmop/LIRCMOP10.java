@@ -5,7 +5,7 @@ import static java.lang.Math.sqrt;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
- * Class representing problem LIR-CMOP9, defined in: An Improved epsilon-constrained Method in
+ * Class representing problem LIR-CMOP10, defined in: An Improved epsilon-constrained Method in
  * MOEA/D for CMOPs with Large Infeasible Regions Fan, Z., Li, W., Cai, X. et al. Soft Comput
  * (2019). https://doi.org/10.1007/s00500-019-03794-x
  */
@@ -33,7 +33,7 @@ public class LIRCMOP10 extends LIRCMOP8 {
     }
 
     solution.objectives()[0] = 1.7057 * x[0] * (10 * g1(x) + 1);
-    solution.objectives()[1] = 1.7957 * (1 - sqrt(x[0])) * (10 * g2(x) + 1);
+    solution.objectives()[1] = 1.7057 * (1 - sqrt(x[0])) * (10 * g2(x) + 1);
 
     evaluateConstraints(solution);
 
