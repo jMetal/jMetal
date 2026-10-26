@@ -293,7 +293,7 @@ Changing the technique only requires changing that line. NSGA-II with push and p
         .setEvaluation(new SequentialEvaluationWithArchive<>(problem, archive))
         .build();
 
-On LIR-CMOP5, with 25,000 evaluations and five runs, the median IGD+ of the feasible solutions of the archive is 0.217 with this technique and 1.229 with the constrained-domination principle; on LIR-CMOP1 it is 0.147 with push and pull search, 0.171 with ``new EpsilonConstrained<>(0.2, 5.0, 0.5)`` and 0.260 with the constrained-domination principle.
+On LIR-CMOP5, with 25,000 evaluations and five runs, the median IGD+ of the feasible solutions of the archive is 0.315 with this technique and 1.226 with the constrained-domination principle; on LIR-CMOP1 it is 0.150 with push and pull search, 0.178 with ``new EpsilonConstrained<>(0.2, 5.0, 0.5)`` and 0.270 with the constrained-domination principle.
 
 Some remarks:
 

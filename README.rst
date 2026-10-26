@@ -92,6 +92,10 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [10/26/2026] The LIR-CMOP problems follow the paper (Fan et al., 2019): their definitions change,
+  so the results obtained with LIRCMOP5 to LIRCMOP14 in earlier versions are not comparable, and they
+  have exact reference fronts.
+
 * [10/26/2026] The constrained problems DC1-DTLZ1 to DC3-DTLZ3 (package ``dcdtlz``) and CF1 to CF10
   of the CEC 2009 competition (package ``cec2009``, classes ``CEC2009CF1`` to ``CEC2009CF10``), with
   their reference fronts.

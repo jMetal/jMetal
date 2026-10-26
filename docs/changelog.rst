@@ -4,6 +4,20 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/26/2026] Fixed the LIR-CMOP problems against Table 6 of the paper (Fan et al., Soft Computing,
+  2019). **The definitions of these problems change, so the results obtained with them in earlier
+  versions, including jMetal 7.9, are not comparable with the ones of this version.** LIRCMOP5 to
+  LIRCMOP12 index their distance variables from 1, as the paper does, instead of from 0 (the
+  functions of the sine and the cosine of LIRCMOP5-8 used ``i`` where the paper has ``i + 1``);
+  LIRCMOP9 to LIRCMOP12 use 1.7057 as the factor of f2, not 1.7957; the wave constraint of LIRCMOP9
+  is rotated by pi/4, not by -pi/4; the objectives of LIRCMOP13 and LIRCMOP14 are the angles of the
+  paper (they had ``0.5 pi + x`` where the paper has ``0.5 pi x``) and their distance sums all the
+  variables from the third, not every other one. LIRCMOP2, LIRCMOP3 and LIRCMOP4 take the number of
+  variables, as the rest of the suite, and the Javadoc of each class names its own problem. The
+  reference fronts of the 14 problems are now exact, computed from Table 6 of the paper, and the
+  tests compare the problems with an independent transcription of it. See
+  :ref:`constrainedBenchmarks`.
+
 * [10/26/2026] The constrained problems CF1 to CF10 of the CEC 2009 competition (Zhang et al.,
   Technical Report CES-487), in the classes ``CEC2009CF1`` to ``CEC2009CF10`` of the package
   ``org.uma.jmetal.problem.multiobjective.cec2009``, with 2 objectives (CF1-CF7) or 3 (CF8-CF10).
