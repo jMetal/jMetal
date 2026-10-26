@@ -44,6 +44,17 @@ the type should be confirmed before relying on it in a publication.
      - C1-DTLZ1, C1-DTLZ3, C2-DTLZ2, ConvexC2-DTLZ2, C3-DTLZ1 and C3-DTLZ4 with 3 objectives.
        Exact: written from the definition of the problems; every point is the objective vector of a
        feasible solution.
+   * - DC-DTLZ
+     - 6
+     - [Li2019]_
+     - DC1-DTLZ1, DC1-DTLZ3, DC2-DTLZ1, DC2-DTLZ3, DC3-DTLZ1 and DC3-DTLZ3 with 2 and 3
+       objectives, for the default constants of the classes. Exact: the parts of the fronts of DTLZ1
+       and DTLZ3 whose position variables satisfy the constraints (about 1000 points with two
+       objectives and 10000 with three); every point is the objective vector of a feasible
+       solution. They agree with the fronts that the authors publish in EMOC. The supplementary
+       material of the paper and the implementations of the suite (EMOC, PlatEMO, pymoo and the cmo
+       package of the STEP benchmark) differ in some constants, which the classes take as
+       arguments; see the Javadoc of ``DCDTLZ``.
    * - LIR-CMOP
      - 14
      - [Fan2019]_
@@ -113,6 +124,10 @@ References
 .. [Jain2014] H. Jain and K. Deb, "An Evolutionary Many-Objective Optimization Algorithm Using Reference-Point-
    Based Nondominated Sorting Approach, Part II: Handling Constraints and Extending to an Adaptive
    Approach", IEEE Transactions on Evolutionary Computation 18(4):602-622, 2014.
+
+.. [Li2019] K. Li, R. Chen, G. Fu and X. Yao, "Two-Archive Evolutionary Algorithm for Constrained
+   Multiobjective Optimization", IEEE Transactions on Evolutionary Computation 23(2):303-315, 2019
+   (https://doi.org/10.1109/TEVC.2018.2855411).
 
 .. [Fan2019] Z. Fan et al., "An improved epsilon constraint-handling method in MOEA/D for CMOPs with large
    infeasible regions", Soft Computing, 2019 (https://doi.org/10.1007/s00500-019-03794-x).
