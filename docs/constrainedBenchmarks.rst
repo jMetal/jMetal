@@ -10,8 +10,9 @@ inverted generational distance or the hypervolume of the normalized fronts (see
 :ref:`qualityIndicators`).
 
 The reference fronts are CSV files with one solution per row in ``resources/referenceFronts``
-(``resources/referenceFrontsRSG`` for the CF problems). The ``NAME.xD.csv`` files are the fronts for
-problems with ``x`` objectives. The *Reference fronts* column says how they were obtained:
+(``resources/referenceFrontsRSG`` for the CF problems of Xiang et al.). The ``NAME.xD.csv`` files
+are the fronts for problems with ``x`` objectives. The *Reference fronts* column says how they were
+obtained:
 
 * **Exact**: computed from the analytical definition of the problem (the Pareto set or the Pareto
   front is known in closed form).
@@ -38,12 +39,32 @@ the type should be confirmed before relying on it in a publication.
      - [Xiang2021]_
      - CF1-16 with 3 objectives, in ``resources/referenceFrontsRSG``. Estimated (generated with the
        RSG algorithm, according to the commit that added them).
+   * - CF (CEC 2009)
+     - 10
+     - [Zhang2008]_
+     - CF1-10 of the CEC 2009 competition, the classes ``CEC2009CF1`` to ``CEC2009CF10`` of the
+       package ``org.uma.jmetal.problem.multiobjective.cec2009`` (2 objectives for CF1-7, 3 for
+       CF8-10), with fronts ``CEC2009CF1.csv`` to ``CEC2009CF10.csv``. Exact: computed from the
+       analytical definition (the Pareto fronts of the report): the 21 points of CF1, about 1000
+       points along the fronts of CF2-7 and 5000 on the curves and surfaces of CF8-10; every point
+       is the objective vector of a feasible solution of the Pareto set.
    * - C-DTLZ
      - 6
      - [Jain2014]_
      - C1-DTLZ1, C1-DTLZ3, C2-DTLZ2, ConvexC2-DTLZ2, C3-DTLZ1 and C3-DTLZ4 with 3 objectives.
        Exact: written from the definition of the problems; every point is the objective vector of a
        feasible solution.
+   * - DC-DTLZ
+     - 6
+     - [Li2019]_
+     - DC1-DTLZ1, DC1-DTLZ3, DC2-DTLZ1, DC2-DTLZ3, DC3-DTLZ1 and DC3-DTLZ3 with 2 and 3
+       objectives, for the default constants of the classes. Exact: the parts of the fronts of DTLZ1
+       and DTLZ3 whose position variables satisfy the constraints (about 1000 points with two
+       objectives and 10000 with three); every point is the objective vector of a feasible
+       solution. They agree with the fronts that the authors publish in EMOC. The supplementary
+       material of the paper and the implementations of the suite (EMOC, PlatEMO, pymoo and the cmo
+       package of the STEP benchmark) differ in some constants, which the classes take as
+       arguments; see the Javadoc of ``DCDTLZ``.
    * - LIR-CMOP
      - 14
      - [Fan2019]_
@@ -110,9 +131,17 @@ References
    Performance Evaluations", IEEE Transactions on Evolutionary Computation, 2021
    (https://doi.org/10.1109/TEVC.2020.3011829).
 
+.. [Zhang2008] Q. Zhang, A. Zhou, S. Zhao, P. N. Suganthan, W. Liu and S. Tiwari, "Multiobjective
+   optimization test instances for the CEC 2009 special session and competition", Technical Report
+   CES-487, University of Essex and Nanyang Technological University, 2008.
+
 .. [Jain2014] H. Jain and K. Deb, "An Evolutionary Many-Objective Optimization Algorithm Using Reference-Point-
    Based Nondominated Sorting Approach, Part II: Handling Constraints and Extending to an Adaptive
    Approach", IEEE Transactions on Evolutionary Computation 18(4):602-622, 2014.
+
+.. [Li2019] K. Li, R. Chen, G. Fu and X. Yao, "Two-Archive Evolutionary Algorithm for Constrained
+   Multiobjective Optimization", IEEE Transactions on Evolutionary Computation 23(2):303-315, 2019
+   (https://doi.org/10.1109/TEVC.2018.2855411).
 
 .. [Fan2019] Z. Fan et al., "An improved epsilon constraint-handling method in MOEA/D for CMOPs with large
    infeasible regions", Soft Computing, 2019 (https://doi.org/10.1007/s00500-019-03794-x).
