@@ -31,7 +31,7 @@ public class LIRCMOP9 extends LIRCMOP8 {
     }
 
     solution.objectives()[0] = 1.7057 * x[0] * (10 * g1(x) + 1);
-    solution.objectives()[1] = 1.7957 * (1 - x[0] * x[0]) * (10 * g2(x) + 1);
+    solution.objectives()[1] = 1.7057 * (1 - x[0] * x[0]) * (10 * g2(x) + 1);
 
     evaluateConstraints(solution);
     return solution ;
@@ -41,12 +41,12 @@ public class LIRCMOP9 extends LIRCMOP8 {
   public void evaluateConstraints(DoubleSolution solution) {
     double f0 = solution.objectives()[0];
     double f1 = solution.objectives()[1];
-    double N = 4.0, theta = -0.25 * Math.PI;
+    double N = 4.0, alpha = 0.25 * Math.PI, theta = -0.25 * Math.PI;
     double[] constraint = new double[numberOfConstraints()];
     constraint[0] =
-        f0 * Math.sin(theta)
-            + f1 * Math.cos(theta)
-            - Math.sin(N * Math.PI * (f0 * Math.cos(theta) - f1 * Math.sin(theta)))
+        f0 * Math.sin(alpha)
+            + f1 * Math.cos(alpha)
+            - Math.sin(N * Math.PI * (f0 * Math.cos(alpha) - f1 * Math.sin(alpha)))
             - 2;
     double xOffset = 1.40, yOffset = 1.40, a = 1.5, b = 6.0, r = 0.1;
     constraint[1] =
