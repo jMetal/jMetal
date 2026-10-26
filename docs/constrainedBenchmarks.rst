@@ -10,8 +10,9 @@ inverted generational distance or the hypervolume of the normalized fronts (see
 :ref:`qualityIndicators`).
 
 The reference fronts are CSV files with one solution per row in ``resources/referenceFronts``
-(``resources/referenceFrontsRSG`` for the CF problems). The ``NAME.xD.csv`` files are the fronts for
-problems with ``x`` objectives. The *Reference fronts* column says how they were obtained:
+(``resources/referenceFrontsRSG`` for the CF problems of Xiang et al.). The ``NAME.xD.csv`` files
+are the fronts for problems with ``x`` objectives. The *Reference fronts* column says how they were
+obtained:
 
 * **Exact**: computed from the analytical definition of the problem (the Pareto set or the Pareto
   front is known in closed form).
@@ -38,6 +39,15 @@ the type should be confirmed before relying on it in a publication.
      - [Xiang2021]_
      - CF1-16 with 3 objectives, in ``resources/referenceFrontsRSG``. Estimated (generated with the
        RSG algorithm, according to the commit that added them).
+   * - CF (CEC 2009)
+     - 10
+     - [Zhang2008]_
+     - CF1-10 of the CEC 2009 competition, the classes ``CEC2009CF1`` to ``CEC2009CF10`` of the
+       package ``org.uma.jmetal.problem.multiobjective.cec2009`` (2 objectives for CF1-7, 3 for
+       CF8-10), with fronts ``CEC2009CF1.csv`` to ``CEC2009CF10.csv``. Exact: computed from the
+       analytical definition (the Pareto fronts of the report): the 21 points of CF1, about 1000
+       points along the fronts of CF2-7 and 5000 on the curves and surfaces of CF8-10; every point
+       is the objective vector of a feasible solution of the Pareto set.
    * - C-DTLZ
      - 6
      - [Jain2014]_
@@ -120,6 +130,10 @@ References
 .. [Xiang2021] Y. Xiang et al., "Constrained Multiobjective Optimization: Test Problem Construction and
    Performance Evaluations", IEEE Transactions on Evolutionary Computation, 2021
    (https://doi.org/10.1109/TEVC.2020.3011829).
+
+.. [Zhang2008] Q. Zhang, A. Zhou, S. Zhao, P. N. Suganthan, W. Liu and S. Tiwari, "Multiobjective
+   optimization test instances for the CEC 2009 special session and competition", Technical Report
+   CES-487, University of Essex and Nanyang Technological University, 2008.
 
 .. [Jain2014] H. Jain and K. Deb, "An Evolutionary Many-Objective Optimization Algorithm Using Reference-Point-
    Based Nondominated Sorting Approach, Part II: Handling Constraints and Extending to an Adaptive
