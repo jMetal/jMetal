@@ -8,11 +8,12 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.VectorUtils;
 
 /**
- * Class representing the constrained function function CF5: B-type constraint + r=0 + Convex PF +
+ * Class representing the constrained function CF5: B-type constraint + r=0 + Convex PF +
  * Rosenbrock
  *
- * Problem defined in Constrained "Multiobjective Optimization: Test Problem Construction and
- * Performance Evaluations", IEEE TEC. Feb. 2021. DOI: https://doi.org/10.1109/TEVC.2020.3011829
+ * Problem defined in Y. Zhou, Y. Xiang and X. He, "Constrained Multiobjective Optimization: Test
+ * Problem Construction and Performance Evaluations", IEEE Transactions on Evolutionary Computation
+ * 25(1):172-186, 2021. DOI: https://doi.org/10.1109/TEVC.2020.3011829
  *
  * @author Yi Xiang Email: xiangyi@scut.edu.cn or gzhuxiang_yi@163.com
  * @author Code adapted by Antonio J. Nebro
