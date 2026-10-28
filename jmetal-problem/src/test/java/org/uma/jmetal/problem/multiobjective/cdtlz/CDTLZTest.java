@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 
 @DisplayName("Unit tests for the C-DTLZ problems (Jain and Deb, 2014)")
 class CDTLZTest {
@@ -188,6 +190,62 @@ class CDTLZTest {
 
       // Assert
       assertTrue(solution.constraints()[0] < 0);
+    }
+  }
+
+  @Nested
+  @DisplayName("When creating C2-DTLZ2 with a radius of its own")
+  class C2DTLZ2RadiusTests {
+
+    @ParameterizedTest(name = "{0} objectives: r = {1}")
+    @CsvSource({"2, 0.5", "3, 0.4", "5, 0.5"})
+    @DisplayName("given no radius, when created, then the radius is that of Jain and Deb")
+    void givenNoRadius_whenCreated_thenTheRadiusIsThatOfJainAndDeb(int m, double r) {
+      // Act
+      var problem = new C2_DTLZ2(m + 4, m);
+
+      // Assert
+      assertEquals(r, problem.radius());
+    }
+
+    @Test
+    @DisplayName("given r = 0.1 and 2 objectives, when a corner is evaluated, then it is feasible")
+    void givenRadius01_whenACornerIsEvaluated_thenItIsFeasibleByR2() {
+      // Arrange
+      var problem = new C2_DTLZ2(5, 2, 0.1);
+      DoubleSolution solution = withObjectives(problem, 1.0, 0.0);
+
+      // Act
+      problem.evaluateConstraints(solution);
+
+      // Assert: inside the sphere of radius 0.1 centered at (1, 0)
+      assertEquals(0.01, solution.constraints()[0], 1e-12);
+    }
+
+    @Test
+    @DisplayName("given a point of the front 0.15 rad from a corner, then only r = 0.5 accepts it")
+    void givenAPointBetweenTheArcs_whenEvaluated_thenOnlyTheLargerRadiusAcceptsIt() {
+      // Arrange: at 0.15 rad from (1, 0), farther than 0.1 from every center of a sphere
+      var narrow = new C2_DTLZ2(5, 2, 0.1);
+      var wide = new C2_DTLZ2(5, 2);
+      DoubleSolution inNarrow = withObjectives(narrow, Math.cos(0.15), Math.sin(0.15));
+      DoubleSolution inWide = withObjectives(wide, Math.cos(0.15), Math.sin(0.15));
+
+      // Act
+      narrow.evaluateConstraints(inNarrow);
+      wide.evaluateConstraints(inWide);
+
+      // Assert
+      assertTrue(inNarrow.constraints()[0] < 0);
+      assertTrue(inWide.constraints()[0] >= 0);
+    }
+
+    @ParameterizedTest(name = "r = {0}")
+    @CsvSource({"0.0", "-0.1"})
+    @DisplayName("given a radius that is not positive, when created, then it is rejected")
+    void givenANonPositiveRadius_whenCreated_thenItIsRejected(double r) {
+      // Act & Assert
+      assertThrows(InvalidConditionException.class, () -> new C2_DTLZ2(5, 2, r));
     }
   }
 

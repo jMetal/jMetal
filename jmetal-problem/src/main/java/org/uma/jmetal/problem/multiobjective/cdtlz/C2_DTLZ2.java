@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.multiobjective.cdtlz;
 
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Problem C2-DTLZ2, defined in:
@@ -18,23 +19,37 @@ public class C2_DTLZ2 extends DTLZ2 {
     this(12, 3);
   }
 
-  private double rValue ;
+  private final double rValue ;
   /**
-   * Constructor
+   * Constructor, with the radius of Jain and Deb: 0.4 with 3 objectives and 0.5 otherwise.
    * @param numberOfVariables
    * @param numberOfObjectives
    */
   public C2_DTLZ2(int numberOfVariables, int numberOfObjectives) {
+    this(numberOfVariables, numberOfObjectives, numberOfObjectives == 3 ? 0.4 : 0.5);
+  }
+
+  /**
+   * Constructor with the radius r of the spheres of the constraint. Other definitions use other
+   * radii: the cmo package of the STEP benchmark (Cork, Tusar and Filipic, 2026) uses 0.1 with 2
+   * objectives.
+   *
+   * @param numberOfVariables the number of variables
+   * @param numberOfObjectives the number of objectives
+   * @param r the radius of the spheres, positive
+   */
+  public C2_DTLZ2(int numberOfVariables, int numberOfObjectives, double r) {
     super(numberOfVariables, numberOfObjectives) ;
+    Check.that(r > 0, "The radius must be positive: " + r);
 
     numberOfConstraints(1);
     name("C2_DTLZ2");
+    rValue = r;
+  }
 
-    if (numberOfObjectives() == 3) {
-      rValue = 0.4 ;
-    } else {
-      rValue = 0.5 ;
-    }
+  /** The radius r of the spheres of the constraint. */
+  public double radius() {
+    return rValue;
   }
 
   @Override
