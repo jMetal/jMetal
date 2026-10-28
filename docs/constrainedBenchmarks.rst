@@ -10,9 +10,9 @@ inverted generational distance or the hypervolume of the normalized fronts (see
 :ref:`qualityIndicators`).
 
 The reference fronts are CSV files with one solution per row in ``resources/referenceFronts``
-(``resources/referenceFrontsRSG`` for the CF problems of Xiang et al.). The ``NAME.xD.csv`` files
-are the fronts for problems with ``x`` objectives. The *Reference fronts* column says how they were
-obtained:
+(``resources/referenceFrontsRSG`` for the CF problems of Zhou, Xiang and He). The ``NAME.xD.csv``
+files are the fronts for problems with ``x`` objectives. The *Reference fronts* column says how they
+were obtained:
 
 * **Exact**: computed from the analytical definition of the problem (the Pareto set or the Pareto
   front is known in closed form).
@@ -34,9 +34,9 @@ the type should be confirmed before relying on it in a publication.
      - Problems
      - Reference
      - Reference fronts
-   * - CF (Xiang et al.)
+   * - CF (Zhou, Xiang and He)
      - 16
-     - [Xiang2021]_
+     - [Zhou2021]_
      - CF1-16 with 3 objectives, in ``resources/referenceFrontsRSG``. Estimated (generated with the
        RSG algorithm, according to the commit that added them).
    * - CF (CEC 2009)
@@ -134,9 +134,9 @@ Notes:
 References
 ----------
 
-.. [Xiang2021] Y. Xiang et al., "Constrained Multiobjective Optimization: Test Problem Construction and
-   Performance Evaluations", IEEE Transactions on Evolutionary Computation, 2021
-   (https://doi.org/10.1109/TEVC.2020.3011829).
+.. [Zhou2021] Y. Zhou, Y. Xiang and X. He, "Constrained Multiobjective Optimization: Test Problem
+   Construction and Performance Evaluations", IEEE Transactions on Evolutionary Computation
+   25(1):172-186, 2021 (https://doi.org/10.1109/TEVC.2020.3011829).
 
 .. [Zhang2008] Q. Zhang, A. Zhou, S. Zhao, P. N. Suganthan, W. Liu and S. Tiwari, "Multiobjective
    optimization test instances for the CEC 2009 special session and competition", Technical Report
