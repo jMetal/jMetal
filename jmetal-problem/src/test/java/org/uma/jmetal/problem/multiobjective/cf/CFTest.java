@@ -10,9 +10,11 @@ import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -82,6 +84,33 @@ class CFTest {
             Arrays.stream(solution.constraints()).allMatch(Double::isFinite),
             "constraints " + Arrays.toString(solution.constraints()));
       }
+    }
+  }
+
+  @Nested
+  @DisplayName("When evaluating a solution of a C- or D-type problem with r > 0")
+  class RadiusConstraintTests {
+
+    @ParameterizedTest(name = "CF{0}")
+    @CsvSource({"10, 0.25", "11, 0.5", "12, 0.75", "14, 0.25", "15, 0.5", "16, 0.75"})
+    @DisplayName("given a solution inside radius r, when evaluated, then only S + h >= r is violated")
+    void givenASolutionInsideTheRadius_whenEvaluated_thenOnlyTheRadiusConstraintIsViolated(
+        int id, double r) throws ReflectiveOperationException {
+      // Arrange: h = 0 and both angles below 0.1, so only S + h >= r is violated
+      DoubleProblem problem = createDefault(id);
+      DoubleSolution solution = problem.createSolution();
+      double[] position = {0.099, 0.014, 0.001};
+      for (int i = 0; i < problem.numberOfVariables(); i++) {
+        solution.variables().set(i, i < position.length ? position[i] : 0.2);
+      }
+      double s = Arrays.stream(position).map(x -> x * x).sum();
+
+      // Act
+      problem.evaluate(solution);
+
+      // Assert
+      assertEquals(-(r - s), ConstraintHandling.overallConstraintViolationDegree(solution), 1e-12);
+      assertEquals(1, ConstraintHandling.numberOfViolatedConstraints(solution));
     }
   }
 
