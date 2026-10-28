@@ -15,6 +15,11 @@ import org.uma.jmetal.util.VectorUtils;
  * Problem Construction and Performance Evaluations", IEEE Transactions on Evolutionary Computation
  * 25(1):172-186, 2021. DOI: https://doi.org/10.1109/TEVC.2020.3011829
  *
+ * Unlike those of CF1-CF8, the constraint values of this problem are positive when violated. The
+ * overall constraint violation degree and the number of violated constraints are precomputed as
+ * solution attributes, so they must be read with {@link ConstraintHandling}, not from
+ * {@code constraints()}.
+ *
  * @author Yi Xiang Email: xiangyi@scut.edu.cn or gzhuxiang_yi@163.com
  * @author Code adapted by Antonio J. Nebro
  */
