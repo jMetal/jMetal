@@ -4,6 +4,13 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/29/2026] Fixed ``SelfAdaptivePenalty`` on problems that precompute their constraint violation,
+  such as CF9-CF16 of the ``cf`` package, whose constraint values are positive when violated: it read
+  the violation of each constraint from ``constraints()``, which inverted the penalty on them, so that
+  the most violated solutions were the least penalized. It now takes the precomputed overall violation,
+  as a single constraint, when the problem gives it. **The results obtained with this technique on
+  CF9-CF16 in earlier versions, including jMetal 7.9, are not valid.**
+
 * [10/29/2026] Fixed the ``CURRENT_TO_RAND_1_BIN`` and ``CURRENT_TO_RAND_1_EXP`` variants of
   ``DifferentialEvolutionCrossover``: they had no mutation, so every mutated variable was set to 0
   (and then repaired into its bounds). **The results obtained with these variants in earlier
