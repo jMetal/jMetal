@@ -14,6 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.ranking.Ranking;
@@ -442,6 +443,28 @@ class ConstraintHandlingTechniquesTest {
       // Arrange
       var dominating = solution(0.0, 0.0, -2.0);
       var lessViolated = solution(1.0, 1.0, -1.0);
+      Ranking<DoubleSolution> ranking = new SelfAdaptivePenalty<DoubleSolution>().ranking();
+
+      // Act
+      ranking.compute(List.of(dominating, lessViolated));
+
+      // Assert
+      assertThat(ranking.getRank(lessViolated)).isZero();
+      assertThat(ranking.getRank(dominating)).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName(
+        "given a violation precomputed by the problem, when ranking, then the less violated comes"
+            + " first")
+    void givenAPrecomputedViolation_whenRanked_thenTheLessViolatedOneComesFirst() {
+      // Arrange: constraint values as CF9-CF16 store them, positive when violated
+      var dominating = solution(0.0, 0.0, 2.0);
+      var lessViolated = solution(1.0, 1.0, 1.0);
+      for (var solution : List.of(dominating, lessViolated)) {
+        ConstraintHandling.overallConstraintViolationDegree(solution, -solution.constraints()[0]);
+        ConstraintHandling.numberOfViolatedConstraints(solution, 1);
+      }
       Ranking<DoubleSolution> ranking = new SelfAdaptivePenalty<DoubleSolution>().ranking();
 
       // Act
