@@ -152,6 +152,12 @@ public class CF10 extends AbstractDoubleProblem {
       overallConstraintViolation = overallConstraintViolation + constraint[0];
     }
 
+    // The second constraint
+    if (constraint[1] > 0.0) { // Constraints Violated
+      numberOfViolatedConstraints++;
+      overallConstraintViolation = overallConstraintViolation + constraint[1];
+    }
+
     // Evaluate constraints
     for (int i = 0; i < k; i++) {
       if (constraint[2 * (i + 1)] > 0.0
