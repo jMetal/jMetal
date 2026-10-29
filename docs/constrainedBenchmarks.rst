@@ -10,9 +10,9 @@ inverted generational distance or the hypervolume of the normalized fronts (see
 :ref:`qualityIndicators`).
 
 The reference fronts are CSV files with one solution per row in ``resources/referenceFronts``
-(``resources/referenceFrontsRSG`` for the CF problems of Xiang et al.). The ``NAME.xD.csv`` files
-are the fronts for problems with ``x`` objectives. The *Reference fronts* column says how they were
-obtained:
+(``resources/referenceFrontsRSG`` for the CF problems of Zhou, Xiang and He). The ``NAME.xD.csv``
+files are the fronts for problems with ``x`` objectives. The *Reference fronts* column says how they
+were obtained:
 
 * **Exact**: computed from the analytical definition of the problem (the Pareto set or the Pareto
   front is known in closed form).
@@ -34,9 +34,9 @@ the type should be confirmed before relying on it in a publication.
      - Problems
      - Reference
      - Reference fronts
-   * - CF (Xiang et al.)
+   * - CF (Zhou, Xiang and He)
      - 16
-     - [Xiang2021]_
+     - [Zhou2021]_
      - CF1-16 with 3 objectives, in ``resources/referenceFrontsRSG``. Estimated (generated with the
        RSG algorithm, according to the commit that added them).
    * - CF (CEC 2009)
@@ -131,12 +131,150 @@ Notes:
   place; see the Javadoc of their classes. ``Ebes`` is by G. R. Zavala, A. J. Nebro and J. J.
   Durillo.
 
+The CF problems of Zhou, Xiang and He
+-------------------------------------
+
+The 16 problems of the ``cf`` package [Zhou2021]_ share one structure. They have ``M`` objectives
+(3 by default) and ``n`` variables in (0, 1) (``M + 10`` by default):
+
+* The first ``M`` variables set the position. ``S`` is the sum of their squares, and the angles
+  ``theta_1`` to ``theta_(M-1)``, scaled to [0, 1], set the point on the front.
+* The distance function ``h`` takes the other ``n - M`` variables and is 0 when all of them are 0.2.
+* The objectives are ``f_i = (1 + (1 - S)^2 + h) * shape_i(theta)``, so the Pareto front lies at
+  ``S = 1`` and ``h = 0``.
+
+Every problem has the constraint ``S + h <= 1``, and the problems with a positive radius ``r`` also
+have ``S + h >= r``. Apart from the A type, the constraint type adds one constraint on each of the
+first ``k`` angles (``k = M - 1`` up to three objectives, ``floor(M / 2)`` from four to eight and 3
+from nine), which splits the front:
+
+* **A**: no constraints on the angles.
+* **B**: ``theta_i`` must lie in [1/4, 3/4].
+* **C**: ``theta_i`` must lie outside (1/4, 3/4).
+* **D**: ``theta_i`` must lie outside (1/10, 2/5) and (7/10, 4/5).
+
+.. list-table::
+   :header-rows: 1
+   :widths: 14 14 10 18 18 26
+
+   * - Problem
+     - Constraint type
+     - r
+     - h
+     - Front shape
+     - Values in ``constraints()`` (M = 3)
+   * - CF1
+     - A
+     - 0
+     - Sphere
+     - Linear
+     - 1
+   * - CF2
+     - A
+     - 1/4
+     - Rosenbrock
+     - Concave
+     - 2
+   * - CF3
+     - A
+     - 1/2
+     - Ackley
+     - Convex
+     - 2
+   * - CF4
+     - A
+     - 3/4
+     - Griewank
+     - Mixed
+     - 2
+   * - CF5
+     - B
+     - 0
+     - Rosenbrock
+     - Convex
+     - 5
+   * - CF6
+     - B
+     - 1/4
+     - Sphere
+     - Mixed
+     - 6
+   * - CF7
+     - B
+     - 1/2
+     - Griewank
+     - Linear
+     - 6
+   * - CF8
+     - B
+     - 3/4
+     - Ackley
+     - Concave
+     - 6
+   * - CF9
+     - C
+     - 0
+     - Ackley
+     - Mixed
+     - 5
+   * - CF10
+     - C
+     - 1/4
+     - Griewank
+     - Convex
+     - 6
+   * - CF11
+     - C
+     - 1/2
+     - Sphere
+     - Concave
+     - 6
+   * - CF12
+     - C
+     - 3/4
+     - Rosenbrock
+     - Linear
+     - 6
+   * - CF13
+     - D
+     - 0
+     - Griewank
+     - Concave
+     - 9
+   * - CF14
+     - D
+     - 1/4
+     - Ackley
+     - Linear
+     - 10
+   * - CF15
+     - D
+     - 1/2
+     - Rosenbrock
+     - Mixed
+     - 10
+   * - CF16
+     - D
+     - 3/4
+     - Sphere
+     - Convex
+     - 10
+
+Each constraint on an angle is stored as two values of ``constraints()``, one per bound (four for
+the D type, which has two bands), so the B and C types have ``1 + 2k`` values (``2 + 2k`` with a
+positive radius) and the D type ``1 + 4k`` (``2 + 4k``). In CF1-CF8 a negative value means a violated constraint, as in the rest of jMetal. CF9-CF16
+store their values with the opposite sign and precompute the overall violation degree and the
+number of violated constraints, which must therefore be read with ``ConstraintHandling`` (see
+:ref:`constraints`). PlatEMO implements the suite as ZXH_CF1-ZXH_CF16, with the same objectives and
+constraints except the radius of ZXH_CF15 and ZXH_CF16, which is 1/4 in both. PlatEMO also stores
+one value per angle constraint instead of two.
+
 References
 ----------
 
-.. [Xiang2021] Y. Xiang et al., "Constrained Multiobjective Optimization: Test Problem Construction and
-   Performance Evaluations", IEEE Transactions on Evolutionary Computation, 2021
-   (https://doi.org/10.1109/TEVC.2020.3011829).
+.. [Zhou2021] Y. Zhou, Y. Xiang and X. He, "Constrained Multiobjective Optimization: Test Problem
+   Construction and Performance Evaluations", IEEE Transactions on Evolutionary Computation
+   25(1):172-186, 2021 (https://doi.org/10.1109/TEVC.2020.3011829).
 
 .. [Zhang2008] Q. Zhang, A. Zhou, S. Zhao, P. N. Suganthan, W. Liu and S. Tiwari, "Multiobjective
    optimization test instances for the CEC 2009 special session and competition", Technical Report
