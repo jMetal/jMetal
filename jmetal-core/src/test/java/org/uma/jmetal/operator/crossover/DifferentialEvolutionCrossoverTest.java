@@ -3,8 +3,12 @@ package org.uma.jmetal.operator.crossover;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.util.bounds.Bounds;
 
 public class DifferentialEvolutionCrossoverTest {
   private double EPSILON = 0.0000000001;
@@ -172,6 +176,72 @@ public class DifferentialEvolutionCrossoverTest {
         assertEquals(DifferentialEvolutionCrossover.DE_MUTATION_TYPE.RAND_TO_BEST, crossover.getMutationType());
         assertEquals(DifferentialEvolutionCrossover.DE_VARIANT.RAND_TO_BEST_1_BIN, crossover.getVariant());
     }
+
+  @Test
+  public void shouldCURRENT_TO_RAND_1_BINVariantBeCorrectlyParsed() {
+    DifferentialEvolutionCrossover crossover =
+        new DifferentialEvolutionCrossover(
+            0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.CURRENT_TO_RAND_1_BIN);
+
+    assertEquals(1, crossover.getNumberOfDifferenceVectors());
+    assertEquals(
+        DifferentialEvolutionCrossover.DE_CROSSOVER_TYPE.BIN, crossover.getCrossoverType());
+    assertEquals(
+        DifferentialEvolutionCrossover.DE_MUTATION_TYPE.CURRENT_TO_RAND,
+        crossover.getMutationType());
+  }
+
+  @Test
+  public void shouldCURRENT_TO_RAND_1_EXPVariantBeCorrectlyParsed() {
+    DifferentialEvolutionCrossover crossover =
+        new DifferentialEvolutionCrossover(
+            0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.CURRENT_TO_RAND_1_EXP);
+
+    assertEquals(1, crossover.getNumberOfDifferenceVectors());
+    assertEquals(
+        DifferentialEvolutionCrossover.DE_CROSSOVER_TYPE.EXP, crossover.getCrossoverType());
+    assertEquals(
+        DifferentialEvolutionCrossover.DE_MUTATION_TYPE.CURRENT_TO_RAND,
+        crossover.getMutationType());
+  }
+
+  private static DoubleSolution solution(double... variables) {
+    DoubleSolution solution =
+        new DefaultDoubleSolution(
+            List.of(Bounds.create(-10.0, 10.0), Bounds.create(-10.0, 10.0)), 1, 0);
+    for (int i = 0; i < variables.length; i++) {
+      solution.variables().set(i, variables[i]);
+    }
+    return solution;
+  }
+
+  /**
+   * With CR = 1 every variable comes from the mutant x + F (r3 - x) + F (r1 - r2): with x = (1, 2),
+   * r1 = (3, 5), r2 = (1, 1), r3 = (2, 4) and F = 0.5, the child is (2.5, 5).
+   */
+  private static void assertCurrentToRandChild(DifferentialEvolutionCrossover.DE_VARIANT variant) {
+    DifferentialEvolutionCrossover crossover =
+        new DifferentialEvolutionCrossover(1.0, 0.5, variant, (a, b) -> a, (a, b) -> a);
+    crossover.setCurrentSolution(solution(1.0, 2.0));
+
+    DoubleSolution child =
+        crossover
+            .execute(List.of(solution(3.0, 5.0), solution(1.0, 1.0), solution(2.0, 4.0)))
+            .get(0);
+
+    assertEquals(2.5, child.variables().get(0), 1e-12);
+    assertEquals(5.0, child.variables().get(1), 1e-12);
+  }
+
+  @Test
+  public void shouldCURRENT_TO_RAND_1_BINVariantApplyTheCurrentToRandMutation() {
+    assertCurrentToRandChild(DifferentialEvolutionCrossover.DE_VARIANT.CURRENT_TO_RAND_1_BIN);
+  }
+
+  @Test
+  public void shouldCURRENT_TO_RAND_1_EXPVariantApplyTheCurrentToRandMutation() {
+    assertCurrentToRandChild(DifferentialEvolutionCrossover.DE_VARIANT.CURRENT_TO_RAND_1_EXP);
+  }
 
   /*
   	@Test
