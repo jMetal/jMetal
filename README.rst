@@ -92,6 +92,11 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [10/29/2026] Fixes that change results: the ``CURRENT_TO_RAND_1_BIN`` and ``CURRENT_TO_RAND_1_EXP``
+  variants of ``DifferentialEvolutionCrossover`` had no mutation (every mutated variable was set to
+  0), and CF10 did not count its second constraint in the violation. Results obtained with them in
+  earlier versions are not valid.
+
 * [10/26/2026] The LIR-CMOP problems follow the paper (Fan et al., 2019): their definitions change,
   so the results obtained with LIRCMOP5 to LIRCMOP14 in earlier versions are not comparable, and they
   have exact reference fronts.
