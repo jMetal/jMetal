@@ -336,6 +336,10 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
       value = bestMutation(parent, index, numberOfDifferenceVectors);
     } else if (mutationType.equals(DE_MUTATION_TYPE.RAND_TO_BEST)) {
       value = bestRandToBestMutation(parent, index);
+    } else if (mutationType.equals(DE_MUTATION_TYPE.CURRENT_TO_RAND)) {
+      value = currentToRandMutation(parent, index);
+    } else {
+      throw new JMetalException("DE mutation type invalid: " + mutationType);
     }
 
     return value;
@@ -373,6 +377,14 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     Check.notNull(currentSolution);
     return currentSolution.variables().get(index)
             + f * (bestSolution.variables().get(index) - currentSolution.variables().get(index))
+            + f * (parent[0][index] - parent[1][index]);
+  }
+
+  /** current-to-rand/1: x + F (r3 - x) + F (r1 - r2), with the same factor F for both terms. */
+  private double currentToRandMutation(Double[][] parent, int index) {
+    Check.notNull(currentSolution);
+    return currentSolution.variables().get(index)
+            + f * (parent[2][index] - currentSolution.variables().get(index))
             + f * (parent[0][index] - parent[1][index]);
   }
 
