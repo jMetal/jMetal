@@ -4,6 +4,21 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [10/29/2026] Fixed the ``CURRENT_TO_RAND_1_BIN`` and ``CURRENT_TO_RAND_1_EXP`` variants of
+  ``DifferentialEvolutionCrossover``: they had no mutation, so every mutated variable was set to 0
+  (and then repaired into its bounds). **The results obtained with these variants in earlier
+  versions, including those of configurations of ``jmetal-auto`` that choose them, are not valid.**
+  They now apply current-to-rand/1, ``x + F (r3 - x) + F (r1 - r2)``, with the same factor F for both
+  terms, and an unknown mutation type throws a ``JMetalException`` instead of yielding 0.
+
+* [10/29/2026] Fixed CF10 of the ``cf`` package: its precomputed constraint violation did not count the
+  second constraint (``S + h >= r``), only the first one and the band constraints. **The results
+  obtained with CF10 in earlier versions are not comparable with those of this version.** The suite of
+  the package is by Zhou, Xiang and He (IEEE TEVC 25(1), 2021), not by Xiang et al. as the
+  documentation said, and the Javadoc and the documentation now say that the constraint values of
+  CF9-CF16 are positive when violated, so the violation of their solutions must be read with
+  ``ConstraintHandling`` and not from ``constraints()``. See :ref:`constrainedBenchmarks`.
+
 * [10/26/2026] New quality indicator for problems with constraints, ``ConstrainedMultiobjectiveIndicator``
   (``ICMOP``), from A. Vodopija, T. Tušar and B. Filipič (IEEE Transactions on Evolutionary Computation
   29(1), 2025). It measures the approximation of the Pareto front and the satisfaction of the constraints at
