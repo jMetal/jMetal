@@ -29,9 +29,10 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
  *
  * where f_i is the i-th objective normalized to [0, 1] with its minimum and maximum in the
  * population, and v(x) the mean over the constraints of the violation of each one divided by its
- * largest violation in the population. With no feasible solutions only the violation counts; as
- * the ratio of feasible solutions grows, infeasible solutions with good objectives can still rank
- * well. It has no parameters; with no constraints it is Pareto dominance.
+ * largest violation in the population (a problem that precomputes its overall violation counts as
+ * one constraint, see {@link #violations}). With no feasible solutions only the violation counts;
+ * as the ratio of feasible solutions grows, infeasible solutions with good objectives can still
+ * rank well. It has no parameters; with no constraints it is Pareto dominance.
  *
  * <p>On a problem whose feasible region is very narrow, the population can stay just outside it:
  * a solution with a tiny violation and better objectives outranks a feasible one when few are
@@ -70,7 +71,9 @@ public class SelfAdaptivePenalty<S extends Solution<?>> implements ConstraintHan
    */
   static <S extends Solution<?>> Map<S, double[]> modifiedObjectives(List<S> population) {
     int numberOfObjectives = population.get(0).objectives().length;
-    int numberOfConstraints = population.get(0).constraints().length;
+    Map<S, double[]> violations = new IdentityHashMap<>();
+    population.forEach(solution -> violations.put(solution, violations(solution)));
+    int numberOfConstraints = violations.get(population.get(0)).length;
     double[] minimum = new double[numberOfObjectives];
     double[] maximum = new double[numberOfObjectives];
     Arrays.fill(minimum, Double.POSITIVE_INFINITY);
@@ -83,7 +86,7 @@ public class SelfAdaptivePenalty<S extends Solution<?>> implements ConstraintHan
         maximum[i] = Math.max(maximum[i], solution.objectives()[i]);
       }
       for (int j = 0; j < numberOfConstraints; j++) {
-        largestViolation[j] = Math.max(largestViolation[j], -solution.constraints()[j]);
+        largestViolation[j] = Math.max(largestViolation[j], violations.get(solution)[j]);
       }
       if (ConstraintHandling.isFeasible(solution)) {
         feasible++;
@@ -96,7 +99,7 @@ public class SelfAdaptivePenalty<S extends Solution<?>> implements ConstraintHan
       double violation = 0.0;
       for (int j = 0; j < numberOfConstraints; j++) {
         if (largestViolation[j] > 0) {
-          violation += Math.max(0.0, -solution.constraints()[j]) / largestViolation[j];
+          violation += violations.get(solution)[j] / largestViolation[j];
         }
       }
       violation = numberOfConstraints > 0 ? violation / numberOfConstraints : 0.0;
@@ -117,6 +120,30 @@ public class SelfAdaptivePenalty<S extends Solution<?>> implements ConstraintHan
       modified.put(solution, objectives);
     }
     return modified;
+  }
+
+  /**
+   * The violation of each constraint of a solution (0 if it is satisfied). A problem that
+   * precomputes its overall violation, such as CF9 to CF16, whose constraint values are positive
+   * when violated instead of following the sign convention of jMetal, has a single one: the overall
+   * violation.
+   *
+   * @param solution the solution
+   * @return the violation of each constraint
+   */
+  static double[] violations(Solution<?> solution) {
+    if (solution
+        .attributes()
+        .containsKey(ConstraintHandling.PRECOMPUTED.OVERALL_CONSTRAINT_VIOLATION)) {
+      return new double[] {
+        Math.max(0.0, -ConstraintHandling.overallConstraintViolationDegree(solution))
+      };
+    }
+    double[] violations = new double[solution.constraints().length];
+    for (int j = 0; j < violations.length; j++) {
+      violations[j] = Math.max(0.0, -solution.constraints()[j]);
+    }
+    return violations;
   }
 
   /** The non-dominated sorting on the modified objectives of each population ranked. */
