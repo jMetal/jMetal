@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
@@ -18,7 +19,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
     extends Master<ParallelTask<S>, List<S>> {
@@ -38,6 +38,7 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   private Observable<Map<String, Object>> observable;
 
   private int numberOfCores;
+  private final AtomicLong nextTaskIdentifier = new AtomicLong();
 
   public AsynchronousMultiThreadedGeneticAlgorithm(
       int numberOfCores,
@@ -66,17 +67,25 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   }
 
   private void createWorkers(int numberOfCores, Problem<S> problem) {
-    IntStream.range(0, numberOfCores).forEach(i -> new Worker<>(
-            (task) -> {
-              problem.evaluate(task.getContents());
-              return ParallelTask.create(createTaskIdentifier(), task.getContents());
-            },
-            pendingTaskQueue,
-            completedTaskQueue).start());
+    IntStream.range(0, numberOfCores)
+        .forEach(
+            i -> {
+              Worker<ParallelTask<S>> worker =
+                  new Worker<>(
+                      (task) -> {
+                        problem.evaluate(task.getContents());
+                        return ParallelTask.create(task.getIdentifier(), task.getContents());
+                      },
+                      pendingTaskQueue,
+                      completedTaskQueue);
+              register(worker);
+              worker.start();
+            });
   }
 
-  private int createTaskIdentifier() {
-    return JMetalRandom.getInstance().nextInt(0, 1000000000) ;
+  /** The identifiers of the tasks are consecutive numbers, so none is repeated. */
+  private long createTaskIdentifier() {
+    return nextTaskIdentifier.getAndIncrement();
   }
 
   @Override
@@ -108,25 +117,10 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
         .forEach(i -> initialPopulation.add(problem.createSolution()));
     initialPopulation.forEach(
         solution -> {
-          int taskId = JMetalRandom.getInstance().nextInt(0, 1000);
-          initialTaskList.add(ParallelTask.create(taskId, solution));
+          initialTaskList.add(ParallelTask.create(createTaskIdentifier(), solution));
         });
 
     return initialTaskList ;
-  }
-
-  @Override
-  public void submitInitialTasks(List<ParallelTask<S>> initialTaskList) {
-    if (initialTaskList.size() >= numberOfCores) {
-      initialTaskList.forEach(this::submitTask);
-    } else {
-      int idleWorkers = numberOfCores - initialTaskList.size();
-      initialTaskList.forEach(this::submitTask);
-      while (idleWorkers > 0) {
-        submitTask(createNewTask());
-        idleWorkers--;
-      }
-    }
   }
 
   @Override
