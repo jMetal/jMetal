@@ -4,6 +4,45 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/04/2026] Fixes found in an audit of ``jmetal-component``. **The first three can change the results
+  of existing algorithms.**
+
+  - ``NSGAIIDEBuilder`` and ``SMSEMOADEBuilder`` built a selection and a variation that take, as the
+    solution to which differential evolution is applied, the one whose index is the current value of a
+    cyclic sequence that nothing advanced, so it was always the first solution of the population. The
+    sequence now advances once per replacement (new class ``SequenceAdvancingReplacement``). With 25000
+    evaluations and populations of 100, the median IGD+ of 15 runs changes little: 3-6% lower on
+    ZDT1-3 with a crossover probability of 0.2, and higher with 0.9 (0.0065 to 0.0089 on ZDT2).
+  - ``LinearDecreasingStrategy`` and ``LinearIncreasingStrategy`` of the inertia weight used the number
+    of the particle, not the iteration, as the position in the schedule: the weight went down and up
+    again in every iteration and never reached its last value. Configurations of ``jmetal-auto`` that
+    choose a linear inertia weight are affected.
+  - ``MOEADBuilder`` and ``MOEADDEBuilder`` ignored ``setNeighborhoodSize``,
+    ``setNeighborhoodSelectionProbability`` and, depending on the order of the calls,
+    ``setMaximumNumberOfReplacedSolutions``, and the replacement kept the selection that the
+    constructor had created even if another one was set. They create the neighborhood, the selection
+    and the replacement when the algorithm is built, so the order of the calls does not matter and two
+    algorithms built by the same builder do not share state. The selection has to be a
+    ``PopulationAndNeighborhoodSelection``.
+  - ``BoltzmannSelection`` computed ``exp(fitness / temperature)``, which is infinite when the
+    population is larger than 709 times the temperature, and then every probability was NaN and the
+    worst solution was always selected. It subtracts the best fitness before the exponential.
+  - ``ScatterSearchSolutionsCreation`` chose the sub-range with ``>`` instead of ``>=``, so the first
+    sub-ranges had more probability than the reverse frequency gave them.
+  - ``SMPSOBuilder`` created the selection of the global best with the comparator of its default
+    archive even if ``setArchive`` gave another one, and bound the progress of the run to the
+    termination of the builder and not to the one of the algorithm.
+  - ``TerminationByQualityIndicator`` stops when the indicator reaches a percentage of the value of the
+    reference front, which only makes sense for an indicator that grows when it improves, such as the
+    hypervolume; it now rejects the others, with which it stopped at the first check.
+  - ``DifferentialEvolutionCrossoverVariation`` with more than one offspring built all of them from the
+    same parents and the same solution; ``ImprovedEpsilonCriterion`` failed with a population of one
+    solution; the constructor of ``SMSEMOAReplacement`` that receives a hypervolume, which it ignores,
+    is deprecated.
+  - The constriction coefficient of SMPSO is negative when c1 + c2 is above four, unlike the formula of
+    Clerc and Kennedy, as it has always been in jMetal. It is kept: with the absolute value SMPSO is
+    much worse (the median IGD+ of 15 runs goes from 0.003 to 6 on ZDT4). It is documented and tested.
+
 * [11/04/2026] Fixes found in an audit of the ``util`` package of ``jmetal-core``. **The first two can
   change the results of existing algorithms.**
 

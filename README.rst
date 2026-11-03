@@ -92,6 +92,11 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [11/04/2026] Fixes in ``jmetal-component`` that can change results: NSGA-II-DE and SMS-EMOA-DE applied
+  differential evolution always to the first solution of the population, the linear inertia weight
+  strategies of PSO did not follow the iterations, and the builders of MOEA/D and MOEA/D-DE ignored the
+  neighborhood size and the neighborhood selection probability.
+
 * [11/04/2026] Fixes in the ``util`` package of ``jmetal-core`` that can change results:
   ``MergeNonDominatedSortRanking`` (used by SMS-EMOA and the asynchronous NSGA-II) gave wrong ranks to
   populations with ties in the first objective, and the C25, C49, L25 and L41 neighborhoods had wrong
