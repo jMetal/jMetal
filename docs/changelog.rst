@@ -36,6 +36,10 @@ only includes the latest entries.
     and ``findIndexOfWorstSolution`` look at the sign of a comparator and not at the values -1 and 1.
   - The cosine similarity of a vector that is the reference point is zero and not NaN, and
     ``GDominanceComparator`` checks the size of its reference point.
+  - The ``WFGHypervolume`` of the ``legacy`` package, which ``HypervolumeArchive`` and the external
+    archive parameter of ``jmetal-auto`` still use, kept its working state in static fields, as the one of
+    the ``qualityindicator`` package did before: computations in different threads corrupted each other
+    and failed with an index error.
 
 * [11/03/2026] ``C2_DTLZ2`` takes the radius of the spheres of its constraint as an argument, with a
   new constructor ``C2_DTLZ2(numberOfVariables, numberOfObjectives, r)`` and the method ``radius()``,
