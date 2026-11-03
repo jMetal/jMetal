@@ -33,6 +33,13 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
    */
   @Override
   public void compute(List<S> solutionList) {
+    Check.that(
+        solutionList.size() > k,
+        () ->
+            "The solution list must have more than k = "
+                + k
+                + " solutions, because the distance to the k-th nearest one is needed: "
+                + solutionList.size());
     double[][] distance = SolutionListUtils.distanceMatrix(solutionList);
     double[] strength = new double[solutionList.size()];
     double[] rawFitness = new double[solutionList.size()];
