@@ -22,11 +22,14 @@ public abstract class ListGrouping<C extends Comparable<C>> implements Collectio
   protected List<List<Integer>> groups;
 
   protected ListGrouping(int numberOfGroups) {
+    Check.that(numberOfGroups > 0, () -> "The number of groups must be positive: " + numberOfGroups);
     this.numberOfGroups = numberOfGroups;
     this.groups = new ArrayList<>(numberOfGroups);
   }
 
   protected void createGroups() {
+    // The groups of a previous list must not remain
+    groups.clear();
     int groupSize = computeGroupSize();
     int index = groupValues(groupSize);
 
