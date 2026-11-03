@@ -18,11 +18,11 @@ jMetal project Web site
    :target: https://jmetal.readthedocs.io/?badge=latest
 
 jMetal is a Java-based framework for multi-objective optimization with metaheuristics.
-The last stable version is 7.9.
+The last stable version is 7.10.
 The most recent documentation is hosted in https://jmetal.readthedocs.io.
 
 
-jMetal 7.9 is a Maven project structured in the following sub-projects:
+jMetal 7.10 is a Maven project structured in the following sub-projects:
 
 +---------------------+------------------------------------+
 | Sub-project         |  Contents                          | 
@@ -91,6 +91,13 @@ Install dependencies and run::
 
 Changelog
 ---------
+
+* [11/03/2026] jMetal 7.10 is released. Changes that can affect existing code or results: the fixes
+  of this release change the results of the asynchronous NSGA-II, SMS-EMOA, NSGA-II-DE, SMS-EMOA-DE,
+  the PSO algorithms with a linear inertia weight, MOEA/D with a non-default neighborhood, the
+  current-to-rand variants of the DE crossover, CF10 and the LIR-CMOP problems, among others; the
+  constructor without arguments of ``EpsilonDominanceComparator`` is removed. See the changelog
+  section of the documentation for the complete list.
 
 * [11/03/2026] Fixes in ``jmetal-parallel``: the asynchronous algorithms evaluated their initial
   population twice, and they waited forever if the evaluation of a problem failed in a worker.

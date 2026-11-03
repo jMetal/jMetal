@@ -4,6 +4,27 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/03/2026] jMetal 7.10 is released. Changes that can affect existing code or results:
+
+  - The results of these algorithms and problems obtained with earlier versions are not comparable
+    with those of this one, because of the fixes listed below: the asynchronous NSGA-II (its
+    tournament and the double evaluation of its initial population), SMS-EMOA and every algorithm that
+    uses ``MergeNonDominatedSortRanking``, the cellular genetic algorithm with the ``C25``, ``C49``,
+    ``L25`` and ``L41`` neighborhoods, NSGA-II-DE and SMS-EMOA-DE, the PSO algorithms with a linear
+    inertia weight, MOEA/D and MOEA/D-DE with a neighborhood size or selection probability other than
+    the default ones, the ``CURRENT_TO_RAND_1`` variants of the DE crossover, the self-adaptive
+    penalty on CF9-CF16, CF10 and the LIR-CMOP problems.
+  - The constructor without arguments of ``EpsilonDominanceComparator`` is removed; the selection of
+    ``MOEADBuilder`` and ``MOEADDEBuilder`` has to be a ``PopulationAndNeighborhoodSelection``;
+    ``TerminationByQualityIndicator`` rejects the indicators that are better when lower;
+    ``WeightVectorNeighborhood`` rejects weight files with a wrong number or size of vectors; the
+    constructor of ``SMSEMOAReplacement`` that receives a hypervolume is deprecated, and
+    ``Worker.failure()`` of ``jmetal-parallel`` returns an ``Optional``.
+
+  New in this release: the constrained problems DC-DTLZ and CF1-CF10 of the CEC 2009 competition, the
+  ``ICMOP`` quality indicator for constrained problems, the radius of the constraint of ``C2_DTLZ2``
+  as an argument, and the exact reference fronts of the LIR-CMOP problems.
+
 * [11/03/2026] Fixes found in an audit of ``jmetal-parallel``. **The first one changes the number of
   evaluations that the asynchronous algorithms make.**
 
