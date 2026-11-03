@@ -1,6 +1,7 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 @DisplayName("Unit tests for class PAESBuilder")
 class PAESBuilderTest {
@@ -146,6 +148,55 @@ class PAESBuilderTest {
 
       // Assert
       assertThat(result).containsExactly(current);
+    }
+  }
+
+  @Nested
+  @DisplayName("When an initial solution is given")
+  class WhenAnInitialSolutionIsGiven {
+    @Test
+    @DisplayName("given an initial solution, when the population is created, then it is a copy of it")
+    void givenAnInitialSolution_whenThePopulationIsCreated_thenItIsACopyOfIt() {
+      // Arrange
+      DoubleSolution initialSolution = problem.createSolution();
+      EvolutionaryAlgorithm<DoubleSolution> algorithm =
+          new PAESBuilder<>(problem, ARCHIVE_SIZE, mutation, archive, initialSolution).build();
+
+      // Act
+      List<DoubleSolution> population = algorithm.createInitialPopulation().create();
+
+      // Assert
+      assertThat(population).hasSize(1);
+      assertThat(population.get(0)).isNotSameAs(initialSolution);
+      assertThat(population.get(0).variables()).isEqualTo(initialSolution.variables());
+    }
+
+    @Test
+    @DisplayName("given an initial solution, when the algorithm runs, then the solution is not modified")
+    void givenAnInitialSolution_whenTheAlgorithmRuns_thenTheSolutionIsNotModified() {
+      // Arrange
+      DoubleSolution initialSolution = problem.createSolution();
+      List<Double> variables = new ArrayList<>(initialSolution.variables());
+      EvolutionaryAlgorithm<DoubleSolution> algorithm =
+          new PAESBuilder<>(problem, ARCHIVE_SIZE, mutation, archive, initialSolution)
+              .setTermination(new TerminationByEvaluations(200))
+              .build();
+
+      // Act
+      algorithm.run();
+
+      // Assert
+      assertThat(initialSolution.variables()).isEqualTo(variables);
+      assertThat(initialSolution.objectives()).containsOnly(0.0);
+      assertThat(algorithm.result()).isNotEmpty().doesNotContain(initialSolution);
+    }
+
+    @Test
+    @DisplayName("given a null initial solution, when the builder is created, then an exception is thrown")
+    void givenANullInitialSolution_whenTheBuilderIsCreated_thenAnExceptionIsThrown() {
+      // Act & Assert
+      assertThatThrownBy(() -> new PAESBuilder<>(problem, ARCHIVE_SIZE, mutation, archive, null))
+          .isInstanceOf(NullParameterException.class);
     }
   }
 }
