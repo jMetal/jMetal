@@ -54,7 +54,7 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
     // rawFitness(i) = |{sum strength(j) | j <- SolutionSet and j dominate i}|
     for (int i = 0; i < solutionList.size(); i++) {
       for (int j = 0; j < solutionList.size(); j++) {
-        if (dominanceComparator.compare(solutionList.get(i), solutionList.get(j)) == 1) {
+        if (dominanceComparator.compare(solutionList.get(i), solutionList.get(j)) > 0) {
           rawFitness[i] += strength[j];
         }
       }

@@ -76,10 +76,10 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
       for (int q = p + 1; q < population.size(); q++) {
         flagDominate = dominanceComparator.compare(solutionList.get(p), solutionList.get(q));
 
-        if (flagDominate == -1) {
+        if (flagDominate < 0) {
           iDominate.get(p).add(q);
           dominateMe[q]++;
-        } else if (flagDominate == 1) {
+        } else if (flagDominate > 0) {
           iDominate.get(q).add(p);
           dominateMe[p]++;
         }

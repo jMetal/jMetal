@@ -65,7 +65,7 @@ public class SolutionListUtils {
     for (int i = 1; i < solutionList.size(); i++) {
       candidateSolution = solutionList.get(i);
       flag = comparator.compare(bestKnown, candidateSolution);
-      if (flag == 1) {
+      if (flag > 0) {
         index = i;
         bestKnown = candidateSolution;
       }
@@ -95,7 +95,7 @@ public class SolutionListUtils {
     for (int i = 1; i < solutionList.size(); i++) {
       candidateSolution = solutionList.get(i);
       flag = comparator.compare(worstKnown, candidateSolution);
-      if (flag == -1) {
+      if (flag < 0) {
         index = i;
         worstKnown = candidateSolution;
       }
