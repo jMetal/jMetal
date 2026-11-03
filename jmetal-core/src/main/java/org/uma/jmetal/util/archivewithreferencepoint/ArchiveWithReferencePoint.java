@@ -84,16 +84,21 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
 
   public synchronized void changeReferencePoint(List<Double> newReferencePoint) {
     this.referencePoint = newReferencePoint ;
-    for (int i = 0; i < referencePoint.size(); i++) {
-      referencePointSolution.objectives()[i] = this.referencePoint.get(i);
-    }
 
-    int i = 0 ;
-    while (i < solutions().size()) {
-      if (dominanceTest(solutions().get(i), referencePointSolution) == 0) {
-        solutions().remove(i) ;
-      } else {
-        i++;
+    // The solution that stands for the reference point is created with the first solution that is
+    // added, so there is nothing to filter before that
+    if (referencePointSolution != null) {
+      for (int i = 0; i < referencePoint.size(); i++) {
+        referencePointSolution.objectives()[i] = this.referencePoint.get(i);
+      }
+
+      int i = 0 ;
+      while (i < solutions().size()) {
+        if (dominanceTest(solutions().get(i), referencePointSolution) == 0) {
+          solutions().remove(i) ;
+        } else {
+          i++;
+        }
       }
     }
 
