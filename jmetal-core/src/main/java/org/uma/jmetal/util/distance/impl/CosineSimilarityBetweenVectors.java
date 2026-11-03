@@ -23,7 +23,11 @@ public class CosineSimilarityBetweenVectors implements Distance<double[], double
       sum += (vector1[i] - referencePoint[i]) * (vector2[i] - referencePoint[i]);
     }
 
-    return sum / (sumOfDistancesToIdealPoint(vector1) * sumOfDistancesToIdealPoint(vector2));
+    double norms = sumOfDistancesToIdealPoint(vector1) * sumOfDistancesToIdealPoint(vector2);
+
+    // The cosine of a vector that is the reference point is not defined: it is taken as zero
+    // (orthogonal), so that it does not become a NaN that no comparison can order
+    return norms > 0.0 ? sum / norms : 0.0;
   }
 
   private double sumOfDistancesToIdealPoint(double[] vector) {

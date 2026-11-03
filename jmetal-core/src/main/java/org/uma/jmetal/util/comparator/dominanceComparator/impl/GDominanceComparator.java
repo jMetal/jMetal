@@ -3,6 +3,7 @@ package org.uma.jmetal.util.comparator.dominanceComparator.impl;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
@@ -42,6 +43,15 @@ public class GDominanceComparator<S extends Solution<?>> implements DominanceCom
           solution1.objectives().length+ " objectives and solution2 has " +
           solution2.objectives().length) ;
     }
+
+    Check.that(
+        referencePoint.size() == solution1.objectives().length,
+        () ->
+            "The reference point has "
+                + referencePoint.size()
+                + " values and the solutions have "
+                + solution1.objectives().length
+                + " objectives");
 
     int result = flagComparison(solution1, solution2);
 
