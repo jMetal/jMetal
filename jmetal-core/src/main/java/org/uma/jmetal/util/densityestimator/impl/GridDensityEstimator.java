@@ -34,10 +34,6 @@ public class GridDensityEstimator<S extends Solution<?>> implements DensityEstim
       return;
     }
 
-    if (size == 1) {
-      solutionList.get(0).attributes().put(attributeId, Double.MAX_VALUE);
-    }
-
     grid.updateGrid(solutionList);
 
     for (S solution : solutionList) {

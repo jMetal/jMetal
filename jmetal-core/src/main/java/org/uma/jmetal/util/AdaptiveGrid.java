@@ -2,6 +2,7 @@ package org.uma.jmetal.util;
 
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -12,6 +13,9 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @author Juan J. Durillo
  */
 public class AdaptiveGrid<S extends Solution<?>> {
+  /** The hypercubes are indexed with an int, so the grid cannot have more than 2^30 of them. */
+  private static final int MAXIMUM_BITS = 30;
+
   private int bisections;
   private int numberOfObjectives;
 
@@ -36,6 +40,19 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @param objectives Number of numberOfObjectives of the problem.
    */
   public AdaptiveGrid(int bisections, int objectives) {
+    // The grid has 2^(bisections * objectives) hypercubes, which are stored in an array
+    Check.that(
+        (long) bisections * objectives <= MAXIMUM_BITS,
+        () ->
+            "The grid would have 2^"
+                + ((long) bisections * objectives)
+                + " hypercubes, and the maximum is 2^"
+                + MAXIMUM_BITS
+                + ": reduce the number of bisections ("
+                + bisections
+                + ") or the number of objectives ("
+                + objectives
+                + ")");
     this.bisections = bisections;
     numberOfObjectives = objectives;
     gridLowerLimits = new double[numberOfObjectives];
