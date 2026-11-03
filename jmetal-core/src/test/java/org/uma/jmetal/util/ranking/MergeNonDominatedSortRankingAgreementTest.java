@@ -10,10 +10,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.ranking.impl.ExperimentalFastNonDominanceRanking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 
-@DisplayName("Agreement of MergeNonDominatedSortRanking with FastNonDominatedSortRanking")
+@DisplayName("Agreement of the non-dominated sorting rankings with an independent ranking")
 class MergeNonDominatedSortRankingAgreementTest {
 
   private static List<DoubleSolution> population(
@@ -80,10 +81,12 @@ class MergeNonDominatedSortRankingAgreementTest {
       List<DoubleSolution> solutions = population(random, 5 + random.nextInt(40), objectives, levels);
       Ranking<DoubleSolution> expected = new FastNonDominatedSortRanking<>();
       Ranking<DoubleSolution> actual = new MergeNonDominatedSortRanking<>();
+      Ranking<DoubleSolution> experimental = new ExperimentalFastNonDominanceRanking<>();
 
       // Act
       expected.compute(solutions);
       actual.compute(solutions);
+      experimental.compute(solutions);
 
       // Assert
       int[] reference = peelFronts(solutions);
@@ -95,6 +98,9 @@ class MergeNonDominatedSortRankingAgreementTest {
                 trial, i, java.util.Arrays.toString(solution.objectives()));
         assertThat(expected.getRank(solution)).as("fast, " + description).isEqualTo(reference[i]);
         assertThat(actual.getRank(solution)).as("merge, " + description).isEqualTo(reference[i]);
+        assertThat(experimental.getRank(solution))
+            .as("experimental, " + description)
+            .isEqualTo(reference[i]);
       }
     }
   }
