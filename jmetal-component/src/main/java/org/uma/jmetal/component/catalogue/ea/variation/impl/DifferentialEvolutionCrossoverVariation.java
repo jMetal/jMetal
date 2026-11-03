@@ -39,16 +39,21 @@ public class DifferentialEvolutionCrossoverVariation implements Variation<Double
       List<DoubleSolution> solutionList, List<DoubleSolution> matingPool) {
 
     List<DoubleSolution> offspringPopulation = new ArrayList<>();
+    int numberOfRequiredParentsToCross = crossover.numberOfRequiredParents() ;
     while (offspringPopulation.size() < offspringPopulationSize) {
-      crossover.setCurrentSolution(solutionList.get(solutionIndexGenerator.getValue()));
+      int offspringIndex = offspringPopulation.size();
 
-      int numberOfRequiredParentsToCross = crossover.numberOfRequiredParents() ;
+      // Each offspring is built from its own group of parents of the mating pool, and from the
+      // solution that follows the one of the previous offspring
+      crossover.setCurrentSolution(
+          solutionList.get(
+              (solutionIndexGenerator.getValue() + offspringIndex) % solutionList.size()));
 
-      List<DoubleSolution> parents = new ArrayList<>(numberOfRequiredParentsToCross);
-      for (int j = 0; j < numberOfRequiredParentsToCross; j++) {
-        parents.add(matingPool.get(j));
-        //matingPool.remove(0);
-      }
+      List<DoubleSolution> parents =
+          new ArrayList<>(
+              matingPool.subList(
+                  offspringIndex * numberOfRequiredParentsToCross,
+                  (offspringIndex + 1) * numberOfRequiredParentsToCross));
 
       List<DoubleSolution> offspring = crossover.execute(parents);
 
