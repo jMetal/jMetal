@@ -77,16 +77,8 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
     int row = getRow(solution) ;
     int col = getColumn((solution)) ;
 
-    int r ;
-    int c ;
-
-    r = (row + neighbor[0]) % this.rows ;
-    if (r < 0)
-      r = rows - 1;
-
-    c = (col + neighbor[1]) % this.columns ;
-    if (c < 0)
-      c = columns - 1 ;
+    int r = Math.floorMod(row + neighbor[0], rows) ;
+    int c = Math.floorMod(col + neighbor[1], columns) ;
 
     return this.mesh[r][c];
   }
