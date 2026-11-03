@@ -4,7 +4,7 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
-* [11/04/2026] Fixes found in an audit of ``jmetal-parallel``. **The first one changes the number of
+* [11/03/2026] Fixes found in an audit of ``jmetal-parallel``. **The first one changes the number of
   evaluations that the asynchronous algorithms make.**
 
   - The asynchronous algorithms (``AsynchronousMultiThreadedNSGAII``, and the ones that extend
@@ -18,7 +18,7 @@ only includes the latest entries.
     threads and they end when they are interrupted, so they do not keep the JVM alive, and the
     identifiers of the tasks are consecutive numbers instead of random ones, which could repeat.
 
-* [11/04/2026] Fixes found in an audit of ``jmetal-component``. **The first three can change the results
+* [11/03/2026] Fixes found in an audit of ``jmetal-component``. **The first three can change the results
   of existing algorithms.**
 
   - ``NSGAIIDEBuilder`` and ``SMSEMOADEBuilder`` built a selection and a variation that take, as the
@@ -57,7 +57,7 @@ only includes the latest entries.
     Clerc and Kennedy, as it has always been in jMetal. It is kept: with the absolute value SMPSO is
     much worse (the median IGD+ of 15 runs goes from 0.003 to 6 on ZDT4). It is documented and tested.
 
-* [11/04/2026] Fixes found in an audit of the ``util`` package of ``jmetal-core``. **The first two can
+* [11/03/2026] Fixes found in an audit of the ``util`` package of ``jmetal-core``. **The first two can
   change the results of existing algorithms.**
 
   - ``MergeNonDominatedSortRanking`` skipped the merge of lists that were not sorted when the
