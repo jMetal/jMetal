@@ -45,7 +45,8 @@ public class EqualSolutionsComparator<S extends Solution<?>> implements Comparat
       value1 = solution1.objectives()[i];
       value2 = solution2.objectives()[i];
 
-      flag = Double.compare(value1, value2);
+      // Adding zero turns -0.0 into 0.0, which are the same value for a solution
+      flag = Double.compare(value1 + 0.0, value2 + 0.0);
 
       if (flag == -1) {
         dominate1 = 1;
