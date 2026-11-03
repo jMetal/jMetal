@@ -135,10 +135,12 @@ public class BoltzmannSelection<S extends Solution<?>> implements Selection<S> {
     double[] boltzmannValues = new double[n];
     double partitionFunction = 0.0;
 
-    // Compute unnormalized Boltzmann values
+    // Compute unnormalized Boltzmann values. The best fitness (n) is subtracted before the
+    // exponential: the probabilities do not change, but exp(n / temperature) is infinite for a
+    // low temperature (more than 709), and then every probability was NaN
     for (int i = 0; i < n; i++) {
       double fitness = n - i; // Linear ranking fitness
-      boltzmannValues[i] = Math.exp(fitness / temperature);
+      boltzmannValues[i] = Math.exp((fitness - n) / temperature);
       partitionFunction += boltzmannValues[i];
     }
 
