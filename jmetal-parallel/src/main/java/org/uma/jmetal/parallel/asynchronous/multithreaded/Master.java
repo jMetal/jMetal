@@ -9,6 +9,19 @@ import org.uma.jmetal.parallel.asynchronous.algorithm.AsynchronousParallelAlgori
 import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
+/**
+ * Master of a master-worker scheme with threads: it puts the tasks in a queue of pending tasks,
+ * from which the {@link Worker}s take them, and takes the results from a queue of completed tasks,
+ * in which the workers put them.
+ *
+ * <p>The subclasses create the workers with the two queues of the master, register them with
+ * {@link #register(Worker)}, so that the master detects a worker that has stopped, and start them.
+ * They also provide the steps of the algorithm that depend on the tasks: how they are created and
+ * processed, and when the algorithm stops.
+ *
+ * @param <T> the type of the tasks
+ * @param <R> the type of the result of the algorithm
+ */
 public abstract class Master<T extends ParallelTask<?>,R>
     implements AsynchronousParallelAlgorithm<T,R> {
   protected int numberOfCores;
@@ -18,6 +31,12 @@ public abstract class Master<T extends ParallelTask<?>,R>
   protected BlockingQueue<T> pendingTaskQueue;
   private final List<Worker<T>> workers = new CopyOnWriteArrayList<>();
 
+  /**
+   * Creates a master with empty queues of pending and completed tasks.
+   *
+   * @param numberOfCores the number of workers, which is also the number of tasks that are being
+   *     computed at the same time
+   */
   public Master(int numberOfCores) {
     this.numberOfCores = numberOfCores;
     this.completedTaskQueue =  new LinkedBlockingQueue<>();
@@ -82,6 +101,7 @@ public abstract class Master<T extends ParallelTask<?>,R>
   @Override
   public abstract void processComputedTask(T task);
 
+  /** Puts the task in the queue of pending tasks, from which a worker will take it. */
   @Override
   public void submitTask(T task) {
     pendingTaskQueue.add(task);
@@ -95,6 +115,7 @@ public abstract class Master<T extends ParallelTask<?>,R>
     return initialTasks.size() > 0;
   }
 
+  /** Removes the first task of the list and returns it. */
   @Override
   public T getInitialTask(List<T> initialTasks) {
     T initialTask = initialTasks.get(0);
@@ -105,10 +126,12 @@ public abstract class Master<T extends ParallelTask<?>,R>
   @Override
   public abstract boolean stoppingConditionIsNotMet();
 
+  /** The queue in which the workers put the computed tasks. */
   public BlockingQueue<T> getCompletedTaskQueue() {
     return completedTaskQueue;
   }
 
+  /** The queue from which the workers take the tasks to compute. */
   public BlockingQueue<T> getPendingTaskQueue() {
     return pendingTaskQueue;
   }

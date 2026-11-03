@@ -17,6 +17,10 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
+/**
+ * Runs the asynchronous NSGA-II with 32 threads on ZDT1, whose evaluation is made artificially
+ * expensive with a computing delay, and writes the result to {@code VAR.csv} and {@code FUN.csv}.
+ */
 public class AsynchronousMasterWorkerBasedNSGAIIExample {
   public static void main(String[] args) {
     CrossoverOperator<DoubleSolution> crossover;

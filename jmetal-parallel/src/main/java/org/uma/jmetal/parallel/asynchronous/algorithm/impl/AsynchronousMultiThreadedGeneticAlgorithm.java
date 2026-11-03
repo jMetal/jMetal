@@ -20,6 +20,26 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 
+/**
+ * Asynchronous steady-state genetic algorithm with threads: each task is a solution that a {@link
+ * Worker} evaluates, and every time the evaluation of a solution finishes, the solution enters the
+ * population and a new one is created and submitted, without waiting for the other workers.
+ *
+ * <p>The initial population is evaluated in parallel, and the first {@code populationSize}
+ * solutions that are evaluated fill the population. From then on each evaluated solution is given
+ * to the replacement together with the population, which keeps {@code populationSize} solutions.
+ * A new solution is the first offspring of the crossover of parents chosen by the selection, after
+ * the mutation; while the population has no more solutions than the parents that the crossover
+ * needs, the new solutions are random.
+ *
+ * <p>The observable notifies, once per evaluated solution, a map with the number of evaluations
+ * ({@code EVALUATIONS}), the population ({@code POPULATION}), the computing time in milliseconds
+ * ({@code COMPUTING_TIME}) and the first solution of the population ({@code BEST_SOLUTION}),
+ * which is the best one only if the replacement sorts the population. The termination receives
+ * the same map.
+ *
+ * @param <S> the type of the solutions
+ */
 public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
     extends Master<ParallelTask<S>, List<S>> {
   private Problem<S> problem;
@@ -40,6 +60,20 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   private int numberOfCores;
   private final AtomicLong nextTaskIdentifier = new AtomicLong();
 
+  /**
+   * Creates the algorithm and starts its workers, which wait for tasks until the algorithm runs.
+   *
+   * @param numberOfCores the number of workers, each one a thread that evaluates solutions
+   * @param problem the problem to solve; its {@code evaluate} method is called from several threads
+   *     at the same time, so it has to be thread-safe
+   * @param populationSize the size of the population
+   * @param crossover the crossover; only its first offspring is used
+   * @param mutation the mutation, applied to the offspring
+   * @param selection the selection of each parent from the population
+   * @param replacement the replacement, which receives the population and a list with the evaluated
+   *     solution and returns a population of {@code populationSize} solutions
+   * @param termination the stopping condition
+   */
   public AsynchronousMultiThreadedGeneticAlgorithm(
       int numberOfCores,
       Problem<S> problem,
@@ -172,11 +206,13 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
     super.run();
   }
 
+  /** Returns the population. */
   @Override
   public List<S> result() {
     return population;
   }
 
+  /** The observable that notifies the progress of the algorithm once per evaluated solution. */
   public Observable<Map<String, Object>> observable() {
     return observable;
   }

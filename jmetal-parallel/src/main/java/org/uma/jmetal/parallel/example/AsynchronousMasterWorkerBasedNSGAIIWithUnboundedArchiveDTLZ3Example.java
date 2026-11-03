@@ -14,6 +14,11 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+/**
+ * Runs the asynchronous NSGA-II with an unbounded archive with 10 threads on DTLZ3, and writes the
+ * result, a subset of the archive of the size of the population, to {@code VAR.csv} and
+ * {@code FUN.csv}.
+ */
 public class AsynchronousMasterWorkerBasedNSGAIIWithUnboundedArchiveDTLZ3Example {
 
   public static void main(String[] args) {

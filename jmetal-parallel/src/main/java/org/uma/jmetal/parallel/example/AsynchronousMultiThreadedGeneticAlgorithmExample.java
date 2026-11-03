@@ -21,6 +21,11 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.FitnessObserver;
 
+/**
+ * Runs the asynchronous genetic algorithm with 16 threads on OneMax with 1024 bits, whose
+ * evaluation is made artificially expensive with a computing delay, prints the fitness every 100
+ * evaluations, and writes the result to {@code VAR.csv} and {@code FUN.csv}.
+ */
 public class AsynchronousMultiThreadedGeneticAlgorithmExample {
   public static void main(String[] args) {
     CrossoverOperator<BinarySolution> crossover;

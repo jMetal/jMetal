@@ -11,11 +11,25 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 
+/**
+ * {@link AsynchronousMultiThreadedNSGAII} with an external archive of non-dominated solutions to
+ * which every evaluated solution is added. The archive has no size limit, but {@link #result()}
+ * does not return all of it: it returns {@code populationSize} solutions of the archive selected by
+ * {@link BestSolutionsArchive}, which is a distance-based subset selection (all of them if there
+ * are fewer).
+ *
+ * @param <S> the type of the solutions
+ */
 public class AsynchronousMultiThreadedNSGAIIWithUnboundedArchive<S extends Solution<?>>
     extends AsynchronousMultiThreadedNSGAII<S> {
 
   protected Archive<S> externalArchive;
 
+  /**
+   * Creates an asynchronous NSGA-II with the merge non-dominated sorting and an unbounded archive.
+   * The parameters are the ones of {@link AsynchronousMultiThreadedNSGAII}; {@code populationSize}
+   * is also the number of solutions of the result.
+   */
   public AsynchronousMultiThreadedNSGAIIWithUnboundedArchive(
       int numberOfCores,
       Problem<S> problem,
@@ -29,12 +43,17 @@ public class AsynchronousMultiThreadedNSGAIIWithUnboundedArchive<S extends Solut
         populationSize);
   }
 
+  /** Adds the evaluated solution to the archive and then to the population. */
   @Override
   public void processComputedTask(ParallelTask<S> task) {
     externalArchive.add(task.getContents());
     super.processComputedTask(task);
   }
 
+  /**
+   * Returns {@code populationSize} solutions of the archive, selected by distance, or all of them
+   * if there are fewer.
+   */
   @Override
   public List<S> result() {
     return externalArchive.solutions();

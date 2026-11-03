@@ -15,6 +15,11 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
+/**
+ * Runs the asynchronous NSGA-II with 10 threads on ZDT1 with 2,000,000 variables, which makes
+ * each evaluation expensive, shows the front during the run with a {@code RunTimeChartObserver}, and
+ * writes the result to {@code VAR.csv} and {@code FUN.csv}.
+ */
 public class AsynchronousMasterWorkerBasedNSGAIIZDT1Example {
   public static void main(String[] args) {
     CrossoverOperator<DoubleSolution> crossover;

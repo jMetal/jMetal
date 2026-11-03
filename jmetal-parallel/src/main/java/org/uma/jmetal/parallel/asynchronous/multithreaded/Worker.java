@@ -22,6 +22,13 @@ public class Worker<T extends ParallelTask<?>> extends Thread {
   protected Function<T, T> computeFunction;
   private volatile Throwable failure;
 
+  /**
+   * Creates a worker; it starts taking tasks when the thread is started.
+   *
+   * @param computeFunction the function that computes a task and returns the computed task
+   * @param pendingTaskQueue the queue from which the tasks to compute are taken
+   * @param completedTaskQueue the queue in which the computed tasks are put
+   */
   public Worker(
       Function<T, T> computeFunction,
       BlockingQueue<T> pendingTaskQueue,
@@ -58,10 +65,12 @@ public class Worker<T extends ParallelTask<?>> extends Thread {
     return failure;
   }
 
+  /** The queue in which this worker puts the computed tasks. */
   public BlockingQueue<T> getCompletedTaskQueue() {
     return completedTaskQueue;
   }
 
+  /** The queue from which this worker takes the tasks to compute. */
   public BlockingQueue<T> getPendingTaskQueue() {
     return pendingTaskQueue;
   }
