@@ -82,7 +82,8 @@ public class ImprovedEpsilonCriterion<S extends Solution<?>>
     List<Double> violations =
         population.stream().map(this::violation).sorted(Comparator.reverseOrder()).toList();
 
-    int index = (int) Math.ceil(0.05 * population.size());
+    // A population with fewer than 20 solutions has no solution after the 5% most violated ones
+    int index = Math.min((int) Math.ceil(0.05 * population.size()), population.size() - 1);
     epsilonK = violations.get(index);
     phiMax = violations.get(0);
 

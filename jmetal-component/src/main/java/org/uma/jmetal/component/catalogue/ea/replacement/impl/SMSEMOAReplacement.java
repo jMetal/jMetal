@@ -47,11 +47,14 @@ public class SMSEMOAReplacement<S extends Solution<?>> implements Replacement<S>
   }
 
   /**
-   * Constructor using the provided hypervolume implementation.
+   * Constructor that receives a hypervolume implementation.
    *
    * @param ranking ranking implementation
-   * @param hypervolume hypervolume implementation
+   * @param hypervolume it is not used: the contributions are computed with an exact calculator that
+   *     is part of this class
+   * @deprecated the hypervolume is ignored, use {@link #SMSEMOAReplacement(Ranking)}
    */
+  @Deprecated
   public SMSEMOAReplacement(Ranking<S> ranking, Hypervolume hypervolume) {
     this.ranking = Objects.requireNonNull(ranking);
     Check.notNull(hypervolume);
