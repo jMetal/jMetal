@@ -4,6 +4,13 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [In development, 7.11] ``SMSEMOABuilder`` and ``MOEADBuilder`` accept a custom initial population
+  with ``setCreateInitialPopulation``, as NSGA-II, NSGA-III, AGE-MOEA and RVEA already did, for
+  example to start from solutions computed with other algorithms. The creation must return exactly
+  the population size (in MOEA/D, one solution per subproblem, in the order of the weight vectors);
+  otherwise the run fails with an ``InvalidConditionException``. The population may be returned as an
+  unmodifiable list. Without the setter, both algorithms behave as before.
+
 * [11/03/2026] jMetal 7.10 is released. Changes that can affect existing code or results:
 
   - The results of these algorithms and problems obtained with earlier versions are not comparable
