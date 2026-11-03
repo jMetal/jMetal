@@ -92,6 +92,9 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [11/04/2026] Fixes in ``jmetal-parallel``: the asynchronous algorithms evaluated their initial
+  population twice, and they waited forever if the evaluation of a problem failed in a worker.
+
 * [11/04/2026] Fixes in ``jmetal-component`` that can change results: NSGA-II-DE and SMS-EMOA-DE applied
   differential evolution always to the first solution of the population, the linear inertia weight
   strategies of PSO did not follow the iterations, and the builders of MOEA/D and MOEA/D-DE ignored the

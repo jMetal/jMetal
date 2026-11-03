@@ -4,6 +4,20 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/04/2026] Fixes found in an audit of ``jmetal-parallel``. **The first one changes the number of
+  evaluations that the asynchronous algorithms make.**
+
+  - The asynchronous algorithms (``AsynchronousMultiThreadedNSGAII``, and the ones that extend
+    ``AsynchronousMultiThreadedGeneticAlgorithm`` and ``Master``) submitted all the initial tasks and
+    left them in the list, so the main loop submitted them again: the initial population was evaluated
+    twice, the same solution could be computed by two workers at the same time, and the duplicates went to
+    the replacement, which wasted as many evaluations as the population size. Now ``Master`` submits one
+    initial task per worker, and removes it from the list; the main loop submits the rest.
+  - If the evaluation of a problem fails in a worker, the worker ends and the algorithm raises a
+    ``JMetalException`` with the cause; before, the algorithm waited forever. The workers are daemon
+    threads and they end when they are interrupted, so they do not keep the JVM alive, and the
+    identifiers of the tasks are consecutive numbers instead of random ones, which could repeat.
+
 * [11/04/2026] Fixes found in an audit of ``jmetal-component``. **The first three can change the results
   of existing algorithms.**
 
