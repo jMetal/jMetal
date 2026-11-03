@@ -40,6 +40,24 @@ only includes the latest entries.
     archive parameter of ``jmetal-auto`` still use, kept its working state in static fields, as the one of
     the ``qualityindicator`` package did before: computations in different threads corrupted each other
     and failed with an index error.
+  - ``RemoveNSolutionsAccordingToTheCrowdingDistance`` and
+    ``RemoveNSolutionsAccordingToTheHypervolumeContribution`` returned the number of solutions that they
+    kept and not the number that they removed, and the restart strategy creates that many new
+    solutions, so the population of a restart (``DynamicNSGAII``) did not keep its size. They now
+    return the difference of the sizes, which also counts the dominated solutions that their archive
+    discards. ``RemoveNRandomSolutions`` rejects a number of solutions to remove that is higher than the
+    size of the list.
+  - ``ListLinearGrouping`` and ``ListOrderedGrouping`` kept the groups of the previous list when they
+    were computed again, so ``group(i)`` returned the groups of the first list.
+  - ``VectorUtils.readVectors`` and ``StoredSolutionsUtils.readSolutionsFromFile`` skip blank lines and
+    ignore the spaces at the beginning of a line (they failed with a number format error), and the
+    second one closes the file if a line cannot be read.
+  - ``AdaptiveGrid`` rejects a grid whose number of hypercubes does not fit in an array, with a message;
+    ``changeReferencePoint`` of the archives with a reference point does not fail before the first
+    solution is added; ``EqualSolutionsComparator`` takes 0.0 and -0.0 as the same value;
+    ``PreferenceDistance`` leaves out an objective whose values are all equal instead of giving NaN.
+  - New tests show that the non-dominated sorting rankings agree with an independent ranking on
+    populations with many ties, and that the quality indicators do not modify their input.
 
 * [11/03/2026] ``C2_DTLZ2`` takes the radius of the spheres of its constraint as an argument, with a
   new constructor ``C2_DTLZ2(numberOfVariables, numberOfObjectives, r)`` and the method ``radius()``,
