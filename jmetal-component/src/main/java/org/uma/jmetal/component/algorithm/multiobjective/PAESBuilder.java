@@ -37,8 +37,9 @@ import org.uma.jmetal.util.constrainthandling.PairwiseConstraintHandlingTechniqu
  * the offspring if it dominates the current solution, reject it if dominated, or use the archive's
  * density comparator as a tiebreaker when neither solution dominates the other.
  *
- * <p>The {@code archiveSize} provided to the constructor plays a role analogous to the population
- * size of other algorithms (typical value: 100).
+ * <p>The size of the archive plays a role analogous to the population size of other algorithms
+ * (typical value: 100). It is the maximum size of the archive that is given to the constructor: the
+ * {@code archiveSize} argument is not used.
  *
  * @param <S> the solution type
  */

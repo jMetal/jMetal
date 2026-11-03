@@ -233,7 +233,14 @@ public class NSGAIIIBuilder<S extends Solution<?>> {
     return algorithm;
   }
 
-  /** A binary tournament that compares the ranks and then the distances to the reference points. */
+  /**
+   * A binary tournament that compares the ranks and then the distances to the reference points.
+   *
+   * <p>The distances of the density estimator are those of its own attribute, which the replacement
+   * of NSGA-III does not write (it keeps its niche distances under other keys), so in practice the
+   * tournament only compares the ranks and the ties are decided at random, as in the original
+   * NSGA-III, which selects the parents at random.
+   */
   private Selection<S> defaultSelection(Ranking<S> ranking) {
     int tournamentSize = 2;
     return new NaryTournamentSelection<>(
