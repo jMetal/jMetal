@@ -53,7 +53,8 @@ the type should be confirmed before relying on it in a publication.
      - [Jain2014]_
      - C1-DTLZ1, C1-DTLZ3, C2-DTLZ2, ConvexC2-DTLZ2, C3-DTLZ1 and C3-DTLZ4 with 3 objectives.
        Exact: written from the definition of the problems; every point is the objective vector of a
-       feasible solution.
+       feasible solution. C2-DTLZ2 can take the radius of its constraint as an argument, but the
+       front is the one of the radius of Jain and Deb (0.4 with 3 objectives, 0.5 otherwise).
    * - DC-DTLZ
      - 6
      - [Li2019]_

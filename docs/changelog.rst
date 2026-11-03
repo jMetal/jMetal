@@ -4,6 +4,13 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/03/2026] ``C2_DTLZ2`` takes the radius of the spheres of its constraint as an argument, with a
+  new constructor ``C2_DTLZ2(numberOfVariables, numberOfObjectives, r)`` and the method ``radius()``,
+  to reproduce other definitions, such as the 0.1 with 2 objectives of the cmo package of the STEP
+  benchmark (Cork, Tušar and Filipič, 2026). The existing constructors keep the radius of Jain and Deb
+  (0.4 with 3 objectives and 0.5 otherwise), and so do the reference fronts, which are not valid for
+  another radius.
+
 * [11/03/2026] Fixed the binary tournament of ``AsynchronousMultiThreadedNSGAII``: it compared the ranks
   of a ranking of its own that nobody computed, so every solution had rank -1 and the parents were
   chosen by crowding distance only. **The results obtained with this algorithm and with
