@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
@@ -28,6 +29,10 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
   private final int neighborhoodSize;
 
   public WeightVectorNeighborhood(int numberOfWeightVectors, int neighborhoodSize) {
+    Check.that(
+        numberOfWeightVectors > 1,
+        () -> "The number of weight vectors must be at least two: " + numberOfWeightVectors);
+    checkNeighborhoodSize(numberOfWeightVectors, neighborhoodSize);
     this.numberOfWeightVectors = numberOfWeightVectors;
     this.weightVectorSize = 2;
     this.neighborhoodSize = neighborhoodSize;
@@ -47,6 +52,7 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
   public WeightVectorNeighborhood(
       int numberOfWeightVectors, int weightVectorSize, int neighborhoodSize, String vectorDirectoryName)
       throws FileNotFoundException {
+    checkNeighborhoodSize(numberOfWeightVectors, neighborhoodSize);
     this.numberOfWeightVectors = numberOfWeightVectors;
     this.weightVectorSize = weightVectorSize;
     this.neighborhoodSize = neighborhoodSize;
@@ -60,6 +66,16 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
     initializeNeighborhood();
   }
 
+  private static void checkNeighborhoodSize(int numberOfWeightVectors, int neighborhoodSize) {
+    Check.that(
+        neighborhoodSize > 0 && neighborhoodSize <= numberOfWeightVectors,
+        () ->
+            "The neighborhood size must be in [1, "
+                + numberOfWeightVectors
+                + "], the number of weight vectors: "
+                + neighborhoodSize);
+  }
+
   private void readWeightsFromFile(String vectorFileName) throws FileNotFoundException {
     InputStream inputStream;
     inputStream = getClass().getResourceAsStream(vectorFileName);
@@ -70,19 +86,45 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
 
     try (BufferedReader br = new BufferedReader(isr)) {
       int i = 0;
-      int j;
       String aux = br.readLine();
       while (aux != null) {
-        StringTokenizer st = new StringTokenizer(aux);
-        j = 0;
-        while (st.hasMoreTokens()) {
-          double value = Double.parseDouble(st.nextToken());
-          weightVector[i][j] = value;
-          j++;
+        StringTokenizer st = new StringTokenizer(aux, " \t,");
+        if (st.hasMoreTokens()) {
+          final int row = i;
+          Check.that(
+              row < numberOfWeightVectors,
+              () ->
+                  vectorFileName
+                      + " has more than the "
+                      + numberOfWeightVectors
+                      + " weight vectors that were expected");
+          Check.that(
+              st.countTokens() == weightVectorSize,
+              () ->
+                  "Line "
+                      + (row + 1)
+                      + " of "
+                      + vectorFileName
+                      + " does not have "
+                      + weightVectorSize
+                      + " values");
+          for (int j = 0; j < weightVectorSize; j++) {
+            weightVector[i][j] = Double.parseDouble(st.nextToken());
+          }
+          i++;
         }
         aux = br.readLine();
-        i++;
       }
+      final int rows = i;
+      Check.that(
+          rows == numberOfWeightVectors,
+          () ->
+              vectorFileName
+                  + " has "
+                  + rows
+                  + " weight vectors and "
+                  + numberOfWeightVectors
+                  + " were expected");
     } catch (IOException e) {
       throw new JMetalException(
           "readWeightsFromFile: failed when reading for file: " + vectorFileName, e);
