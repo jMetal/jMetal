@@ -28,6 +28,10 @@ public class SpatialSpreadDeviationDensityEstimator<S extends Solution<?>>
   public void compute(List<S> solutionList) {
     int size = solutionList.size();
 
+    if (size == 0) {
+      return;
+    }
+
     if (size <= solutionList.get(0).objectives().length) {
       for (int x = 0; x < size; x++) {
         solutionList.get(x).attributes().put(attributeId, Double.POSITIVE_INFINITY);
