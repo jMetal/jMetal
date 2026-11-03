@@ -76,9 +76,11 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
         Collections.sort(front, new ObjectiveComparator<S>(j));
         objetiveMinn = front.get(0).objectives()[j];
         objetiveMaxn = front.get(front.size() - 1).objectives()[j];
+        // An objective whose values are all equal adds the same to the distance of every solution,
+        // so it does not change their order and it is left out
+        double range = objetiveMaxn - objetiveMinn;
         normalizeDiff =
-            (front.get(i).objectives()[j] - this.interestPoint.get(j))
-                / (objetiveMaxn - objetiveMinn);
+            range > 0.0 ? (front.get(i).objectives()[j] - this.interestPoint.get(j)) / range : 0.0;
         distance += weights.get(j) * Math.pow(normalizeDiff, 2.0D);
       }
       distance = Math.sqrt(distance);

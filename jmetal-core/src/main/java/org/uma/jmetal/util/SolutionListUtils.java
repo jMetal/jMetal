@@ -180,6 +180,9 @@ public class SolutionListUtils {
   @SuppressWarnings("unchecked")
   public static <S extends Solution<?>> List<S> getInvertedFront(List<S> solutionSet) {
     List<S> invertedFront = new ArrayList<>(solutionSet.size());
+    if (solutionSet.isEmpty()) {
+      return invertedFront;
+    }
     int numberOfObjectives = solutionSet.get(0).objectives().length;
 
     for (int i = 0; i < solutionSet.size(); i++) {

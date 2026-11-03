@@ -21,30 +21,26 @@ public class StoredSolutionsUtils {
   private static final GenericSolutionAttribute<Solution<?>, String> textRepresentation = SolutionTextRepresentation.getAttribute();
 
   public static List<PointSolution> readSolutionsFromFile(String inputFileName, int numberOfObjectives) {
-    Stream<String> lines;
+    // The stream is closed even if a line cannot be read; blank lines are skipped, and the spaces
+    // at the beginning of a line are ignored
+    try (Stream<String> lines = Files.lines(Paths.get(inputFileName), Charset.defaultCharset())) {
+      return lines
+          .filter(line -> !line.isBlank())
+          .map(
+              line -> {
+                String[] textNumbers = line.strip().split(DEFAULT_REGEX, numberOfObjectives + 1);
+                PointSolution solution = new PointSolution(numberOfObjectives);
+                for (int i = 0; i < numberOfObjectives; i++) {
+                  solution.objectives()[i] = Double.parseDouble(textNumbers[i]);
+                }
+                solution.attributes().put(textRepresentation, line);
 
-    try {
-      lines = Files.lines(Paths.get(inputFileName), Charset.defaultCharset());
+                return solution;
+              })
+          .collect(toList());
     } catch (IOException e) {
       throw new JMetalException(e);
     }
-
-    List<PointSolution> solutions = lines
-      .map(line -> {
-        String[] textNumbers = line.split(DEFAULT_REGEX, numberOfObjectives + 1);
-        PointSolution solution = new PointSolution(numberOfObjectives);
-        for (int i = 0; i < numberOfObjectives; i++) {
-          solution.objectives()[i] = Double.parseDouble(textNumbers[i]);
-        }
-        solution.attributes().put(textRepresentation, line);
-
-        return solution;
-      })
-      .collect(toList());
-    
-    lines.close();
-
-    return solutions;
   }
 
   public static <S extends Solution<?>> void writeToOutput(List<S> solutionList, FileOutputContext context) {
