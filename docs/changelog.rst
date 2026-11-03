@@ -19,6 +19,23 @@ only includes the latest entries.
   - ``EpsilonDominanceComparator`` throws an exception if epsilon is not positive, and its constructor
     without arguments, which used epsilon 0 and made every comparison return 1, is removed. OMOPSO,
     which passes epsilon, is not affected.
+  - ``ListUtils.listAreEquals`` counts the repetitions (``[a, a, b]`` was equal to ``[a, b, b]``); it
+    is used by MOCHC to detect that the population does not change.
+  - ``AbstractBoundedArchive.join`` returns this archive and not the one that it receives.
+  - ``WeightVectorNeighborhood`` rejects a neighborhood larger than the number of weight vectors, and
+    a weight file with fewer or more vectors than expected or with a vector of another size, which
+    before left the missing weights at zero without any message. It reads values separated by commas:
+    the file ``W4D_165.dat``, for 4 objectives, could not be read. (``W10D_275.dat`` and ``W8D_156.dat``
+    have each corner vector twice.)
+  - ``SolutionUtils.normalizedDistanceBetweenObjectives`` ignores an objective whose values are all
+    equal instead of returning NaN, and ``averageDistanceToSolutionList`` rejects an empty list.
+  - ``SpatialSpreadDeviationDensityEstimator`` accepts an empty list, and
+    ``StrenghtRawFitnessDensityEstimator`` rejects a list with ``k`` solutions or fewer, with a
+    message instead of an index error.
+  - ``FastNonDominatedSortRanking``, ``StrengthRanking`` and ``SolutionListUtils.findIndexOfBestSolution``
+    and ``findIndexOfWorstSolution`` look at the sign of a comparator and not at the values -1 and 1.
+  - The cosine similarity of a vector that is the reference point is zero and not NaN, and
+    ``GDominanceComparator`` checks the size of its reference point.
 
 * [11/03/2026] ``C2_DTLZ2`` takes the radius of the spheres of its constraint as an argument, with a
   new constructor ``C2_DTLZ2(numberOfVariables, numberOfObjectives, r)`` and the method ``radius()``,
