@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.BinaryOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -82,10 +83,12 @@ public class SolutionUtils {
     double distance = 0.0;
     // euclidean distance
     for (int nObj = 0; nObj < firstSolution.objectives().length; nObj++) {
-      diff =
-          (firstSolution.objectives()[nObj] / (maxs[nObj] - mins[nObj]))
-              - (secondSolution.objectives()[nObj] / (maxs[nObj] - mins[nObj]));
-      distance += Math.pow(diff, 2.0);
+      double range = maxs[nObj] - mins[nObj];
+      // An objective whose values are all equal does not separate the solutions
+      if (range > 0.0) {
+        diff = (firstSolution.objectives()[nObj] - secondSolution.objectives()[nObj]) / range;
+        distance += Math.pow(diff, 2.0);
+      }
     }
 
     return Math.sqrt(distance);
@@ -135,6 +138,8 @@ public class SolutionUtils {
   /** Returns the average euclidean distance of a solution to the solutions of a list. */
   public static <S extends Solution<?>> double averageDistanceToSolutionList(
       S solution, List<S> solutionList) {
+
+    Check.collectionIsNotEmpty(solutionList);
 
     double sumOfDistances = 0.0;
     for (S sol : solutionList) {

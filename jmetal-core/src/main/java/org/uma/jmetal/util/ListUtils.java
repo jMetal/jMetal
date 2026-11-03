@@ -1,8 +1,10 @@
 package org.uma.jmetal.util;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
@@ -105,7 +107,8 @@ public class ListUtils {
    *
    * @param firstList A <code>list</code>
    * @param secondList A <code>list</code>
-   * @return true if both lists contain the same elements (in any order), false in other case
+   * @return true if both lists contain the same elements, each one the same number of times, in any
+   *     order; false in other case
    */
   public static <S> boolean listAreEquals(List<S> firstList, List<S> secondList) {
     Check.notNull(firstList);
@@ -114,7 +117,11 @@ public class ListUtils {
     if (firstList.size() != secondList.size()) {
       return false ;
     } else {
-      return new HashSet<>(firstList).containsAll(secondList) ;
+      return occurrences(firstList).equals(occurrences(secondList)) ;
     }
+  }
+
+  private static <S> Map<S, Long> occurrences(List<S> list) {
+    return list.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
   }
 }
