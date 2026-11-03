@@ -65,7 +65,8 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
       } else {
         value = JMetalRandom.getInstance().nextInt(0, sumOfReverseFrequencyValues[i] - 1);
         range = 0;
-        while (value > reverseFrequency[range][i]) {
+        // The sub-range is chosen with a probability proportional to its reverse frequency
+        while (value >= reverseFrequency[range][i]) {
           value -= reverseFrequency[range][i];
           range++;
         }
