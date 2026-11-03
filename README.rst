@@ -92,6 +92,10 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [11/03/2026] Fixed the binary tournament of ``AsynchronousMultiThreadedNSGAII``: it ignored the
+  ranks, so the parents were chosen by crowding distance only. Results obtained with it in earlier
+  versions are not comparable.
+
 * [10/29/2026] Fixes that change results: the ``CURRENT_TO_RAND_1_BIN`` and ``CURRENT_TO_RAND_1_EXP``
   variants of ``DifferentialEvolutionCrossover`` had no mutation (every mutated variable was set to
   0), and CF10 did not count its second constraint in the violation. Results obtained with them in
