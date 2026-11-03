@@ -93,7 +93,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
     isSorted &= mergeSort(dest, src, mid, high, obj, toObj);
 
     // If list is already sorted, just copy from src to dest.
-    if (src[mid - 1][obj] <= src[mid][obj]) {
+    if (compareLex(src[mid - 1], src[mid], obj, toObj) <= 0) {
       System.arraycopy(src, low, dest, destLow, length);
       return isSorted;
     }
