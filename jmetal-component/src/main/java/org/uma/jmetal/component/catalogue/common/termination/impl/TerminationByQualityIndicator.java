@@ -31,6 +31,16 @@ public class TerminationByQualityIndicator implements Termination {
       int evaluationsLimit) {
     Check.notNull(qualityIndicator);
     Check.notNull(referenceFront);
+    // The run stops when the indicator reaches a percentage of the value that it has on the
+    // reference front, which is a bound only for the indicators that grow when they improve. For
+    // the others, such as IGD+, the value of the reference front is zero and the run would stop
+    // at the first check
+    Check.that(
+        !qualityIndicator.isTheLowerTheIndicatorValueTheBetter(),
+        () ->
+            "The termination by quality indicator needs an indicator whose value grows when it"
+                + " improves, such as the hypervolume: "
+                + qualityIndicator.name());
     Check.valueIsNotNegative(percentage);
     Check.valueIsNotNegative(evaluationsLimit);
     Check.that(referenceFront.length > 1,
