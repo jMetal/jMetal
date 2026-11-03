@@ -10,6 +10,7 @@ import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByE
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.ConstraintHandlingReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.SequenceAdvancingReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
@@ -35,11 +36,12 @@ public class SMSEMOADEBuilder {
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialPopulation;
   private Termination termination;
-  private Selection<DoubleSolution> selection;
-  private Variation<DoubleSolution> variation;
   private final int populationSize;
+  private final double cr;
+  private final double f;
+  private final MutationOperator<DoubleSolution> mutation;
+  private final DifferentialEvolutionCrossover.DE_VARIANT differentialEvolutionVariant;
   private ConstraintHandlingTechnique<DoubleSolution> constraintHandlingTechnique;
-  private SequenceGenerator<Integer> sequenceGenerator;
 
   public SMSEMOADEBuilder(
           Problem<DoubleSolution> problem, 
@@ -51,25 +53,14 @@ public class SMSEMOADEBuilder {
     name = "SMS-EMOA-DE";
 
     ranking = createDefaultRanking(problem);
-    sequenceGenerator = new CyclicIntegerSequence(populationSize);
-
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     this.populationSize = populationSize;
+    this.cr = cr;
+    this.f = f;
+    this.mutation = mutation;
+    this.differentialEvolutionVariant = differentialEvolutionVariant;
 
-    DifferentialEvolutionCrossover crossover =
-            new DifferentialEvolutionCrossover(
-                    cr, f, differentialEvolutionVariant);
-
-    this.variation =
-            new DifferentialEvolutionCrossoverVariation(
-                    1, crossover, mutation, sequenceGenerator);
-
-    int numberOfParentsToSelect = crossover.numberOfRequiredParents() ;
-    this.selection =
-            new DifferentialEvolutionSelection(variation.matingPoolSize(), numberOfParentsToSelect, false,
-                    sequenceGenerator);
-    
     this.termination = new TerminationByEvaluations(25000);
 
     this.evaluation = new SequentialEvaluation<>(problem);
@@ -115,7 +106,25 @@ public class SMSEMOADEBuilder {
     Ranking<DoubleSolution> algorithmRanking =
         constraintHandlingTechnique != null ? constraintHandlingTechnique.ranking() : ranking;
     RunProgress progress = new RunProgress();
-    Replacement<DoubleSolution> replacement = new SMSEMOAReplacement<>(algorithmRanking);
+
+    // The components that keep state are created for each algorithm. The index of the solution to
+    // which differential evolution is applied goes through the population, one solution per
+    // replacement
+    SequenceGenerator<Integer> sequenceGenerator = new CyclicIntegerSequence(populationSize);
+    DifferentialEvolutionCrossover crossover =
+        new DifferentialEvolutionCrossover(cr, f, differentialEvolutionVariant);
+    Variation<DoubleSolution> variation =
+        new DifferentialEvolutionCrossoverVariation(1, crossover, mutation, sequenceGenerator);
+    Selection<DoubleSolution> selection =
+        new DifferentialEvolutionSelection(
+            variation.matingPoolSize(),
+            crossover.numberOfRequiredParents(),
+            false,
+            sequenceGenerator);
+
+    Replacement<DoubleSolution> replacement =
+        new SequenceAdvancingReplacement<>(
+            new SMSEMOAReplacement<>(algorithmRanking), sequenceGenerator);
     if (constraintHandlingTechnique != null) {
       replacement =
           new ConstraintHandlingReplacement<>(

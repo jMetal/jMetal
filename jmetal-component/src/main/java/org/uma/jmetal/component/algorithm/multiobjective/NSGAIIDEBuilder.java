@@ -10,6 +10,7 @@ import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByE
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.ConstraintHandlingReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.SequenceAdvancingReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
@@ -38,11 +39,13 @@ public class NSGAIIDEBuilder {
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialPopulation;
   private Termination termination;
-  private Selection<DoubleSolution> selection;
-  private Variation<DoubleSolution> variation;
   private ConstraintHandlingTechnique<DoubleSolution> constraintHandlingTechnique;
 
-  private SequenceGenerator<Integer> sequenceGenerator;
+  private final int populationSize;
+  private final double cr;
+  private final double f;
+  private final MutationOperator<DoubleSolution> mutation;
+  private final DE_VARIANT differentialEvolutionVariant;
 
   public NSGAIIDEBuilder(
       Problem<DoubleSolution> problem,
@@ -56,22 +59,13 @@ public class NSGAIIDEBuilder {
     densityEstimator = new CrowdingDistanceDensityEstimator<>();
     ranking = new FastNonDominatedSortRanking<>();
 
-    sequenceGenerator = new CyclicIntegerSequence(populationSize);
+    this.populationSize = populationSize;
+    this.cr = cr;
+    this.f = f;
+    this.mutation = mutation;
+    this.differentialEvolutionVariant = differentialEvolutionVariant;
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
-
-    DifferentialEvolutionCrossover crossover =
-        new DifferentialEvolutionCrossover(
-            cr, f, differentialEvolutionVariant);
-
-    this.variation =
-        new DifferentialEvolutionCrossoverVariation(
-            1, crossover, mutation, sequenceGenerator);
-
-    int numberOfParentsToSelect = crossover.numberOfRequiredParents() ;
-    this.selection =
-        new DifferentialEvolutionSelection(variation.matingPoolSize(), numberOfParentsToSelect, false,
-            sequenceGenerator);
 
     this.termination = new TerminationByEvaluations(25000);
 
@@ -118,10 +112,29 @@ public class NSGAIIDEBuilder {
     Ranking<DoubleSolution> algorithmRanking =
         constraintHandlingTechnique != null ? constraintHandlingTechnique.ranking() : ranking;
     RunProgress progress = new RunProgress();
+
+    // The components that keep state are created for each algorithm. The index of the solution to
+    // which differential evolution is applied goes through the population, one solution per
+    // replacement
+    SequenceGenerator<Integer> sequenceGenerator = new CyclicIntegerSequence(populationSize);
+    DifferentialEvolutionCrossover crossover =
+        new DifferentialEvolutionCrossover(cr, f, differentialEvolutionVariant);
+    Variation<DoubleSolution> variation =
+        new DifferentialEvolutionCrossoverVariation(1, crossover, mutation, sequenceGenerator);
+    Selection<DoubleSolution> selection =
+        new DifferentialEvolutionSelection(
+            variation.matingPoolSize(),
+            crossover.numberOfRequiredParents(),
+            false,
+            sequenceGenerator);
+
     Replacement<DoubleSolution> replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            algorithmRanking, densityEstimator,
-            RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT);
+        new SequenceAdvancingReplacement<>(
+            new RankingAndDensityEstimatorReplacement<>(
+                algorithmRanking,
+                densityEstimator,
+                RankingAndDensityEstimatorReplacement.RemovalPolicy.ONE_SHOT),
+            sequenceGenerator);
     if (constraintHandlingTechnique != null) {
       replacement =
           new ConstraintHandlingReplacement<>(constraintHandlingTechnique, replacement, progress);
