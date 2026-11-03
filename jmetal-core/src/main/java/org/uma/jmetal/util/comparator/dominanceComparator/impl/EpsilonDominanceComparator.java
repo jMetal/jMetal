@@ -5,20 +5,25 @@ import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
- * This class implements a solution comparator taking into account the violation constraints and
- * an optional epsilon value (i.e, implements an epsilon dominance comparator)
+ * Epsilon-dominance comparator (Laumanns et al., 2002): the objective space is divided into boxes
+ * of side epsilon, and a solution dominates another if its box dominates the box of the other. When
+ * both solutions are in the same box, the one closer to the lower corner of the box is preferred;
+ * if they are at the same distance, the comparison returns 1, so that an archive keeps the
+ * solution that it already has. It does not take the constraints into account.
  *
  * @author Antonio J. Nebro
  */
 public class EpsilonDominanceComparator<S extends Solution<?>> implements DominanceComparator<S> {
   private final double epsilon ;
 
+  /**
+   * Constructor.
+   *
+   * @param epsilon the side of the boxes, which must be positive
+   */
   public EpsilonDominanceComparator(double epsilon) {
+    Check.that(epsilon > 0.0, () -> "The epsilon value must be positive: " + epsilon);
     this.epsilon = epsilon ;
-  }
-
-  public EpsilonDominanceComparator() {
-    this(0.0) ;
   }
 
   /**
