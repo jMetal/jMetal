@@ -11,8 +11,11 @@ public class LinearIncreasingStrategy implements InertiaWeightRangeBasedComputin
 
   public LinearIncreasingStrategy(double minimumWeight, double maximumWeight, int maximumNumberOfIterations, int swamSize) {
     Check.that(maximumWeight >= minimumWeight, "The maximum weight " + maximumWeight +
-        " is not higher or equal than minimum weight " + maximumWeight);
+        " is not higher or equal than minimum weight " + minimumWeight);
     Check.that(swamSize > 0, "The swarm size is zero");
+    Check.that(
+        maximumNumberOfIterations > 0,
+        () -> "The maximum number of iterations must be positive: " + maximumNumberOfIterations);
     this.minimumWeight = minimumWeight ;
     this.maximumWeight = maximumWeight ;
     this.maximumNumberOfIterations = maximumNumberOfIterations;
@@ -22,11 +25,12 @@ public class LinearIncreasingStrategy implements InertiaWeightRangeBasedComputin
 
   @Override
   public double compute() {
+    // The weight is computed once per particle, so the iteration is the number of the call divided
+    // by the size of the swarm; it does not go beyond the last iteration
+    int currentIteration = Math.min(computeCounter / swamSize, maximumNumberOfIterations);
     computeCounter++ ;
-    int currentIteration = (computeCounter % swamSize) ;
-    double weight = minimumWeight - (minimumWeight - maximumWeight) * currentIteration/maximumNumberOfIterations ;
-    currentIteration ++ ;
-    
+    double weight = minimumWeight + (maximumWeight - minimumWeight) * currentIteration/maximumNumberOfIterations ;
+
     return weight ;
   }
 
