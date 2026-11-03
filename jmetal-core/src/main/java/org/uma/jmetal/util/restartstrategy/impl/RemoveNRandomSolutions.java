@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.restartstrategy.RemoveSolutionsStrategy;
@@ -28,6 +29,14 @@ public class RemoveNRandomSolutions<S extends Solution<?>> implements RemoveSolu
       throw new JMetalException("The solution list is empty") ;
     }
 
+    Check.that(
+        numberOfSolutionsToDelete <= solutionList.size(),
+        () ->
+            "The list size ("
+                + solutionList.size()
+                + ") is lower than the number of solutions to remove ("
+                + numberOfSolutionsToDelete
+                + ")");
     int numberOfSolutionsToRemove = numberOfSolutionsToDelete ;
     IntStream.range(0, numberOfSolutionsToRemove)
             .forEach(s -> {

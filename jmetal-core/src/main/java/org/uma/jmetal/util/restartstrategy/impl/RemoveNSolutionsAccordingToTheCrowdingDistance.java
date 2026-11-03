@@ -24,7 +24,8 @@ public class RemoveNSolutionsAccordingToTheCrowdingDistance<S extends Solution<?
     } else if (problem == null) {
       throw new JMetalException("The problem is null") ;
     }
-    int numberOfSolutions = solutionList.size() - numberOfSolutionsToDelete;
+    int originalSize = solutionList.size();
+    int numberOfSolutions = originalSize - numberOfSolutionsToDelete;
     if(numberOfSolutions < 0){
       numberOfSolutions = solutionList.size();
     }
@@ -36,6 +37,8 @@ public class RemoveNSolutionsAccordingToTheCrowdingDistance<S extends Solution<?
 
     solutionList.addAll(archive.solutions());
 
-    return numberOfSolutions ;
+    // The archive also discards the dominated solutions, so the number of removed solutions, which
+    // the restart strategy replaces with new ones, is the difference of the sizes
+    return originalSize - solutionList.size() ;
   }
 }
