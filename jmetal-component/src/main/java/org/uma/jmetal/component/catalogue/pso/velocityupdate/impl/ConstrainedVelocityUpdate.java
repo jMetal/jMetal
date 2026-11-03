@@ -160,6 +160,12 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
   /**
    * Generate the coefficient constriction value
    *
+   * <p>For c1 + c2 > 4 the value is negative, because the denominator of the formula is not taken
+   * in absolute value as Clerc and Kennedy do. This is how SMPSO has always been implemented in
+   * jMetal, also in the classic SMPSO, SMPSORP and DMOPSO, and it is kept on purpose: with the
+   * absolute value the algorithm is much worse (on ZDT4 the median IGD+ of 15 runs goes from 0.003
+   * to 6, and on ZDT3 it is three times higher). Do not "fix" it without measuring it.
+   *
    * @param c1 value for c1.
    * @param c2 value for c2
    * @return Coefficient constriction
