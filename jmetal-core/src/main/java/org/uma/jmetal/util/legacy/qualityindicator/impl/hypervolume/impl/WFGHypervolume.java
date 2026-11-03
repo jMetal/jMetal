@@ -75,7 +75,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);
   }
 
-  static class ComparatorGreater implements Comparator<Point> {
+  class ComparatorGreater implements Comparator<Point> {
 
     @Override
     public int compare(Point p, Point q) {
@@ -112,12 +112,15 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     }
   }
 
-  static int n;
-  static Front[] fs; // memory management stuff
-  static int safe = 0; // the number of points that don't need sorting
-  static int fr = 0;
+  // Instance state of one WFG computation. It was `static` (a direct port of the global variables
+  // of the reference C code), so that concurrent computations in different threads corrupted each
+  // other, as it happened in WFGHypervolume of the qualityindicator package.
+  private int n;
+  private Front[] fs; // memory management stuff
+  private int safe = 0; // the number of points that don't need sorting
+  private int fr = 0;
 
-  static double CalculateHypervolume(double[][] fronton, int noPoints, int noObjectives) {
+  double CalculateHypervolume(double[][] fronton, int noPoints, int noObjectives) {
 
     n = noObjectives;
     safe = 0;
@@ -142,7 +145,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return x > y ? y : x;
   }
 
-  static int dominates2way(Point p, Point q, int k)
+  int dominates2way(Point p, Point q, int k)
   // returns -1 if p dominates q, 1 if q dominates p, 2 if p == q, 0 otherwise
   // k is the highest index inspected
   {
@@ -161,7 +164,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return 2;
   }
 
-  static boolean dominates1way(Point p, Point q, int k)
+  boolean dominates1way(Point p, Point q, int k)
   // returns true if p dominates q or p == q, false otherwise
   // the assumption is that q doesn't dominate p
   // k is the highest index inspected
@@ -172,7 +175,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return true;
   }
 
-  static void makeDominatedBit(Front ps, int p)
+  void makeDominatedBit(Front ps, int p)
   // creates the front ps[0 .. p-1] in fs[fr], with each point bounded by ps[p]
   // and dominated
   // points removed
@@ -277,7 +280,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     fr++;
   }
 
-  static double hv2(Front ps, int k)
+  double hv2(Front ps, int k)
   // returns the hypervolume of ps[0 .. k-1] in 2D
   // assumes that ps is sorted improving
   {
@@ -287,7 +290,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return volume;
   }
 
-  static double inclhv(Point p)
+  double inclhv(Point p)
   // returns the inclusive hypervolume of p
   {
     double volume = 1;
@@ -296,7 +299,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return volume;
   }
 
-  static double inclhv2(Point p, Point q)
+  double inclhv2(Point p, Point q)
   // returns the hypervolume of {p, q}
   {
     double vp = 1;
@@ -311,7 +314,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return suma;
   }
 
-  static double inclhv3(Point p, Point q, Point r)
+  double inclhv3(Point p, Point q, Point r)
   // returns the hypervolume of {p, q, r}
   {
     double vp = 1;
@@ -352,7 +355,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return vp + vq + vr - vpq - vpr - vqr + vpqr;
   }
 
-  static double inclhv4(Point p, Point q, Point r, Point s)
+  double inclhv4(Point p, Point q, Point r, Point s)
   // returns the hypervolume of {p, q, r, s}
   {
     double vp = 1;
@@ -489,7 +492,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return vp + vq + vr + vs - vpq - vpr - vps - vqr - vqs - vrs + vpqr + vpqs + vprs + vqrs - vpqrs;
   }
 
-  static double exclhv(Front ps, int p)
+  double exclhv(Front ps, int p)
   // returns the exclusive hypervolume of ps[p] relative to ps[0 .. p-1]
   {
     makeDominatedBit(ps, p);
@@ -500,7 +503,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return volume;
   }
 
-  static double hv(Front ps)
+  double hv(Front ps)
   // returns the hypervolume of ps[0 ..]
   {
     // process small fronts with the IEA
