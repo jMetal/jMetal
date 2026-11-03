@@ -126,7 +126,7 @@ class MasterWorkerTest {
       worker.join(TimeUnit.SECONDS.toMillis(10));
 
       assertThat(worker.isAlive()).isFalse();
-      assertThat(worker.failure()).isNull();
+      assertThat(worker.failure()).isEmpty();
     }
 
     @Test

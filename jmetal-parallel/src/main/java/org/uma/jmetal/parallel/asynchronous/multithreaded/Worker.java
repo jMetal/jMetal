@@ -1,5 +1,6 @@
 package org.uma.jmetal.parallel.asynchronous.multithreaded;
 
+import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
 import java.util.function.Function;
 import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
@@ -60,9 +61,9 @@ public class Worker<T extends ParallelTask<?>> extends Thread {
     }
   }
 
-  /** The exception that ended the worker, or null if it has not failed. */
-  public Throwable failure() {
-    return failure;
+  /** The exception that ended the worker, or an empty optional if it has not failed. */
+  public Optional<Throwable> failure() {
+    return Optional.ofNullable(failure);
   }
 
   /** The queue in which this worker puts the computed tasks. */

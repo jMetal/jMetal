@@ -85,9 +85,7 @@ public abstract class Master<T extends ParallelTask<?>,R>
       if (!worker.isAlive()) {
         JMetalException exception =
             new JMetalException("A worker has stopped, so a task will never be computed");
-        if (worker.failure() != null) {
-          exception.initCause(worker.failure());
-        }
+        worker.failure().ifPresent(exception::initCause);
         throw exception;
       }
     }
