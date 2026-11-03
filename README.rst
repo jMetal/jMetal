@@ -92,6 +92,11 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [11/04/2026] Fixes in the ``util`` package of ``jmetal-core`` that can change results:
+  ``MergeNonDominatedSortRanking`` (used by SMS-EMOA and the asynchronous NSGA-II) gave wrong ranks to
+  populations with ties in the first objective, and the C25, C49, L25 and L41 neighborhoods had wrong
+  neighbors at the borders of the mesh.
+
 * [11/03/2026] Fixed the binary tournament of ``AsynchronousMultiThreadedNSGAII``: it ignored the
   ranks, so the parents were chosen by crowding distance only. Results obtained with it in earlier
   versions are not comparable.

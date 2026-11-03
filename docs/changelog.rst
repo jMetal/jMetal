@@ -4,6 +4,22 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/04/2026] Fixes found in an audit of the ``util`` package of ``jmetal-core``. **The first two can
+  change the results of existing algorithms.**
+
+  - ``MergeNonDominatedSortRanking`` skipped the merge of lists that were not sorted when the
+    first objective had ties, so equal solutions were not adjacent, duplicates got different ranks and
+    other ranks were wrong. SMS-EMOA (classic and component-based) and the asynchronous NSGA-II use
+    this ranking. A test compares it with an independent ranking on populations with many ties.
+  - ``TwoDimensionalMesh`` wrapped around the borders of the mesh only for shifts of one cell, so the
+    neighborhoods ``C25``, ``C49``, ``L25`` and ``L41`` (used by the cellular genetic algorithm) had
+    wrong neighbors at the borders.
+  - ``HypervolumeContributionDensityEstimator.value()`` always returned 0.0, because it read another
+    attribute than the one that the hypervolume writes.
+  - ``EpsilonDominanceComparator`` throws an exception if epsilon is not positive, and its constructor
+    without arguments, which used epsilon 0 and made every comparison return 1, is removed. OMOPSO,
+    which passes epsilon, is not affected.
+
 * [11/03/2026] ``C2_DTLZ2`` takes the radius of the spheres of its constraint as an argument, with a
   new constructor ``C2_DTLZ2(numberOfVariables, numberOfObjectives, r)`` and the method ``radius()``,
   to reproduce other definitions, such as the 0.1 with 2 objectives of the cmo package of the STEP
