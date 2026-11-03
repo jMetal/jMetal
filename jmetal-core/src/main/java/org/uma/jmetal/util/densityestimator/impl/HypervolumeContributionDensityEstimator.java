@@ -8,6 +8,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
 /**
  * This class implements a density estimator based on the hypervolume contribution
@@ -16,7 +17,8 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHyp
  */
 public class HypervolumeContributionDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
 
-  private final String attributeId = getClass().getName();
+  private final HypervolumeContributionAttribute<S> contributionAttribute =
+      new HypervolumeContributionAttribute<>();
   private final Hypervolume<S> hypervolume ;
 
   public HypervolumeContributionDensityEstimator(List<S> referenceFront) {
@@ -48,11 +50,8 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
   public Double value(S solution) {
     Check.notNull(solution);
 
-    Double result = 0.0 ;
-    if (solution.attributes().get(attributeId) != null) {
-      result = (Double) solution.attributes().get(attributeId) ;
-    }
-    return result ;
+    Double contribution = contributionAttribute.getAttribute(solution) ;
+    return contribution != null ? contribution : 0.0 ;
   }
 
   @Override
