@@ -1,6 +1,8 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -94,6 +96,24 @@ public class MOEADBuilder<S extends Solution<?>> {
 
   public MOEADBuilder<S> setEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation;
+
+    return this;
+  }
+
+  /**
+   * Sets the creation of the initial population, which replaces the default random creation (for
+   * example, to start from solutions computed with other algorithms). The i-th solution created is
+   * the initial solution of the i-th subproblem, so it must create exactly {@code populationSize}
+   * solutions, one per weight vector; otherwise the run fails with an {@link
+   * org.uma.jmetal.util.errorchecking.exception.InvalidConditionException} when the initial
+   * population is created.
+   *
+   * @param solutionsCreation the creation of the initial population
+   * @return this builder
+   */
+  public MOEADBuilder<S> setCreateInitialPopulation(SolutionsCreation<S> solutionsCreation) {
+    Check.notNull(solutionsCreation);
+    this.createInitialPopulation = solutionsCreation;
 
     return this;
   }
@@ -219,10 +239,27 @@ public class MOEADBuilder<S extends Solution<?>> {
             normalize,
             criterion);
 
-    var algorithm = new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation,
-        termination, algorithmSelection, variation, replacement);
+    var algorithm = new EvolutionaryAlgorithm<>(name,
+        withPopulationSize(createInitialPopulation, populationSize), evaluation, termination,
+        algorithmSelection, variation, replacement);
     progress.bind(() -> algorithm.termination(), algorithm::attributes);
 
     return algorithm;
+  }
+
+  /**
+   * Checks that the initial population has one solution per subproblem, and returns it as a
+   * modifiable list, because the replacement updates the population in place.
+   */
+  private static <S extends Solution<?>> SolutionsCreation<S> withPopulationSize(
+      SolutionsCreation<S> creation, int populationSize) {
+    return () -> {
+      List<S> population = creation.create();
+      Check.that(
+          population.size() == populationSize,
+          () -> "The initial population has " + population.size()
+              + " solutions, but MOEA/D has " + populationSize + " subproblems");
+      return new ArrayList<>(population);
+    };
   }
 }
