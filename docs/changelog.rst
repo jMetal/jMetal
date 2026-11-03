@@ -4,6 +4,14 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/03/2026] Fixed the binary tournament of ``AsynchronousMultiThreadedNSGAII``: it compared the ranks
+  of a ranking of its own that nobody computed, so every solution had rank -1 and the parents were
+  chosen by crowding distance only. **The results obtained with this algorithm and with
+  ``AsynchronousMultiThreadedNSGAIIWithUnboundedArchive`` in earlier versions are not comparable with
+  those of this version.** The tournament and the replacement now share the ranking, and a new
+  constructor takes it, e.g. a ``FastNonDominatedSortRanking`` with a
+  ``DominanceWithConstraintsComparator`` to follow the constrained-domination principle.
+
 * [10/29/2026] Fixed ``SelfAdaptivePenalty`` on problems that precompute their constraint violation,
   such as CF9-CF16 of the ``cf`` package, whose constraint values are positive when violated: it read
   the violation of each constraint from ``constraints()``, which inverted the penalty on them, so that
