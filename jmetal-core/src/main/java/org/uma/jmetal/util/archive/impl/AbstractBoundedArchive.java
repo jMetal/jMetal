@@ -66,6 +66,6 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
   public Archive<S> join(Archive<S> archive) {
     archive.solutions().forEach(this::add);
 
-    return archive;
+    return this;
   }
 }
