@@ -9,7 +9,9 @@ only includes the latest entries.
   example to start from solutions computed with other algorithms. The creation must return exactly
   the population size (in MOEA/D, one solution per subproblem, in the order of the weight vectors);
   otherwise the run fails with an ``InvalidConditionException``. The population may be returned as an
-  unmodifiable list. Without the setter, both algorithms behave as before.
+  unmodifiable list. Without the setter, both algorithms behave as before. ``PAESBuilder`` has a
+  constructor that receives the initial solution: PAES is a (1+1) evolution strategy, so it starts
+  from one solution rather than a population; every run starts from a copy of it.
 
 * [11/03/2026] jMetal 7.10 is released. Changes that can affect existing code or results:
 
