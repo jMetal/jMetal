@@ -214,6 +214,10 @@ public class ParticleSwarmOptimizationAlgorithm
     this.termination = termination ;
   }
 
+  public Termination termination() {
+    return termination;
+  }
+
   public void evaluation(Evaluation<DoubleSolution> evaluation) {
     this.evaluation = evaluation ;
   }}

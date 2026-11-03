@@ -69,7 +69,6 @@ public class SMPSOBuilder {
     globalBestInitialization = new DefaultGlobalBestInitialization();
 
     archive = new CrowdingDistanceArchive<>(swarmSize);
-    globalBestSelection = new BinaryTournamentGlobalBestSelection(archive.comparator()) ;
 
     double r1Min = 0.0;
     double r1Max = 1.0;
@@ -177,6 +176,13 @@ public class SMPSOBuilder {
             ? new ConstraintHandlingLocalBestUpdate(constraintHandlingTechnique, progress)
             : localBestUpdate;
 
+    // Unless it is set, the global best is chosen with the comparator of the archive that is finally
+    // used, which may not be the one that the builder had when it was created
+    GlobalBestSelection algorithmGlobalBestSelection =
+        globalBestSelection != null
+            ? globalBestSelection
+            : new BinaryTournamentGlobalBestSelection(archive.comparator());
+
     var algorithm = new ParticleSwarmOptimizationAlgorithm(name, swarmInitialization, evaluation,
         termination,
         velocityInitialization,
@@ -188,9 +194,9 @@ public class SMPSOBuilder {
         perturbation,
         globalBestUpdate,
         algorithmLocalBestUpdate,
-        globalBestSelection,
+        algorithmGlobalBestSelection,
         archive);
-    progress.bind(() -> termination, algorithm::attributes);
+    progress.bind(() -> algorithm.termination(), algorithm::attributes);
 
     return algorithm;
   }
