@@ -43,7 +43,10 @@ public class VectorUtils {
   }
 
   /**
+   * Reads the vectors of a file, one per line.
+   *
    * @param filePath the file need to read
+   * @param separator the regular expression that separates the values of a line
    * @return referenceVectors. referenceVectors[i][j] means the i-th vector's j-th value
    * @throws JMetalException if error while read file
    */
@@ -60,7 +63,12 @@ public class VectorUtils {
       }
     }
 
-    List<String> vectorStrList = Files.readAllLines(Paths.get(path));
+    // Blank lines are skipped, and the spaces at the beginning and the end of a line are ignored
+    List<String> vectorStrList =
+        Files.readAllLines(Paths.get(path)).stream()
+            .map(String::trim)
+            .filter(line -> !line.isEmpty())
+            .toList();
 
     referenceVectors = new double[vectorStrList.size()][];
     for (int i = 0; i < vectorStrList.size(); i++) {
