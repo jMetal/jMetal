@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
+import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -31,6 +32,11 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
  * A new solution is the first offspring of the crossover of parents chosen by the selection, after
  * the mutation; while the population has no more solutions than the parents that the crossover
  * needs, the new solutions are random.
+ *
+ * <p>By default the initial solutions are random ({@link Problem#createSolution()}). {@link
+ * #setInitialSolutionsCreation(SolutionsCreation)} gives them instead (e.g. solutions produced by
+ * other tools); the solutions needed while the population is too small to select parents are then
+ * also taken from it, so the problem never has to create random solutions.
  *
  * <p>The observable notifies, once per evaluated solution, a map with the number of evaluations
  * ({@code EVALUATIONS}), the population ({@code POPULATION}), the computing time in milliseconds
@@ -58,6 +64,8 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   private Observable<Map<String, Object>> observable;
 
   private int numberOfCores;
+  private SolutionsCreation<S> initialSolutionsCreation;
+  private final List<S> spareSolutions = new ArrayList<>();
   private final AtomicLong nextTaskIdentifier = new AtomicLong();
 
   /**
@@ -143,12 +151,31 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
     observable.notifyObservers(attributes);
   }
 
+  /**
+   * Gives the initial solutions instead of creating random ones. Call it before {@link #run()}.
+   *
+   * @param initialSolutionsCreation creates the initial solutions; it is called again if more
+   *     solutions are needed while the population is too small to select parents
+   * @return this algorithm
+   */
+  public AsynchronousMultiThreadedGeneticAlgorithm<S> setInitialSolutionsCreation(
+      SolutionsCreation<S> initialSolutionsCreation) {
+    Check.notNull(initialSolutionsCreation);
+    this.initialSolutionsCreation = initialSolutionsCreation;
+    return this;
+  }
+
   @Override
   public List<ParallelTask<S>> createInitialTasks() {
     List<S> initialPopulation = new ArrayList<>();
     List<ParallelTask<S>> initialTaskList = new ArrayList<>() ;
-    IntStream.range(0, populationSize)
-        .forEach(i -> initialPopulation.add(problem.createSolution()));
+    if (initialSolutionsCreation != null) {
+      initialPopulation.addAll(initialSolutionsCreation.create());
+      Check.that(!initialPopulation.isEmpty(), "The initial solutions creation gave no solution");
+    } else {
+      IntStream.range(0, populationSize)
+          .forEach(i -> initialPopulation.add(problem.createSolution()));
+    }
     initialPopulation.forEach(
         solution -> {
           initialTaskList.add(ParallelTask.create(createTaskIdentifier(), solution));
@@ -191,8 +218,23 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
 
       return ParallelTask.create(createTaskIdentifier(), offspring.get(0));
     } else {
-      return ParallelTask.create(createTaskIdentifier(), problem.createSolution());
+      return ParallelTask.create(createTaskIdentifier(), newSolution());
     }
+  }
+
+  /**
+   * A solution for a task when the population cannot give parents yet: random, or the next one of
+   * the initial solutions creation if one was given.
+   */
+  @SuppressWarnings("unchecked")
+  private S newSolution() {
+    if (initialSolutionsCreation == null) {
+      return problem.createSolution();
+    }
+    if (spareSolutions.isEmpty()) {
+      spareSolutions.addAll(initialSolutionsCreation.create());
+    }
+    return (S) spareSolutions.remove(0).copy();
   }
 
   @Override
