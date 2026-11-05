@@ -1,5 +1,7 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -22,6 +24,7 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.constrainthandling.ConstraintHandlingTechnique;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
@@ -99,6 +102,23 @@ public class SMSEMOABuilder<S extends Solution<?>> {
     return this;
   }
 
+  /**
+   * Sets the creation of the initial population, which replaces the default random creation (for
+   * example, to start from solutions computed with other algorithms). It must create exactly {@code
+   * populationSize} solutions; otherwise the run fails with an {@link
+   * org.uma.jmetal.util.errorchecking.exception.InvalidConditionException} when the initial
+   * population is created.
+   *
+   * @param solutionsCreation the creation of the initial population
+   * @return this builder
+   */
+  public SMSEMOABuilder<S> setCreateInitialPopulation(SolutionsCreation<S> solutionsCreation) {
+    Check.notNull(solutionsCreation);
+    this.createInitialPopulation = solutionsCreation;
+
+    return this;
+  }
+
   public EvolutionaryAlgorithm<S> build() {
     Ranking<S> algorithmRanking =
         constraintHandlingTechnique != null ? constraintHandlingTechnique.ranking() : ranking;
@@ -110,11 +130,28 @@ public class SMSEMOABuilder<S extends Solution<?>> {
               constraintHandlingTechnique, replacement, progress, populationSize);
     }
 
-    var algorithm = new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation,
-        termination, selection, variation, replacement);
+    var algorithm = new EvolutionaryAlgorithm<>(name,
+        withPopulationSize(createInitialPopulation, populationSize), evaluation, termination,
+        selection, variation, replacement);
     progress.bind(() -> algorithm.termination(), algorithm::attributes);
 
     return algorithm;
+  }
+
+  /**
+   * Checks that the initial population has the size that the algorithm works with, and returns it
+   * as a modifiable list, because the replacement updates the population in place.
+   */
+  private static <S extends Solution<?>> SolutionsCreation<S> withPopulationSize(
+      SolutionsCreation<S> creation, int populationSize) {
+    return () -> {
+      List<S> population = creation.create();
+      Check.that(
+          population.size() == populationSize,
+          () -> "The initial population has " + population.size()
+              + " solutions, but the population size of SMS-EMOA is " + populationSize);
+      return new ArrayList<>(population);
+    };
   }
 
   private Ranking<S> createDefaultRanking(Problem<S> problem) {

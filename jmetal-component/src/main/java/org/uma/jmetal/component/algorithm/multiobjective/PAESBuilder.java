@@ -26,6 +26,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.constrainthandling.PairwiseConstraintHandlingTechnique;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Class to configure and build a component-based instance of the PAES (Pareto Archived Evolution
@@ -77,6 +78,30 @@ public class PAESBuilder<S extends Solution<?>> {
     this.termination = new TerminationByEvaluations(25000);
 
     this.evaluation = new SequentialEvaluation<>(problem);
+  }
+
+  /**
+   * Creates a builder of a PAES that starts from a given solution instead of a random one, for
+   * example a solution computed with another algorithm. Every run of the built algorithms starts
+   * from a copy of it, so the given solution is neither evaluated nor stored in the archive.
+   *
+   * @param problem the problem to solve
+   * @param archiveSize not used (see the class comment)
+   * @param mutation the mutation operator
+   * @param archive the bounded archive, which is the result of the algorithm
+   * @param initialSolution the solution from which the (1+1) strategy starts
+   */
+  @SuppressWarnings("unchecked")
+  public PAESBuilder(
+      Problem<S> problem,
+      int archiveSize,
+      MutationOperator<S> mutation,
+      BoundedArchive<S> archive,
+      S initialSolution) {
+    this(problem, archiveSize, mutation, archive);
+    Check.notNull(initialSolution);
+    this.createInitialPopulation =
+        () -> new ArrayList<>(List.of((S) initialSolution.copy()));
   }
 
   public PAESBuilder<S> setName(String name) {
