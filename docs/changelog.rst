@@ -11,7 +11,10 @@ only includes the latest entries.
   otherwise the run fails with an ``InvalidConditionException``. The population may be returned as an
   unmodifiable list. Without the setter, both algorithms behave as before. ``PAESBuilder`` has a
   constructor that receives the initial solution: PAES is a (1+1) evolution strategy, so it starts
-  from one solution rather than a population; every run starts from a copy of it.
+  from one solution rather than a population; every run starts from a copy of it. The asynchronous
+  genetic algorithm and NSGA-II of ``jmetal-parallel`` accept the initial solutions with
+  ``setInitialSolutionsCreation``; the solutions needed while the population is too small to select
+  parents are taken from it too, so the problem never creates random ones.
 
 * [11/03/2026] jMetal 7.10 is released. Changes that can affect existing code or results:
 
