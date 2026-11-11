@@ -92,6 +92,10 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [11/11/2026] New adaptive stopping criterion ``TerminationByMutualDominationRate`` (MGBM), which
+  stops when the population no longer improves, as a stopping condition or as a warning of stagnation.
+  See the termination components in the documentation for how to use it.
+
 * [11/11/2026] New termination conditions: ``TerminationByUserRequest``, to stop an algorithm that
   runs in a background thread from a user interface, and ``TerminationByAnyOf``, to combine several
   conditions (e.g. a stop requested by the user or a maximum computing time). ``TerminationByKeyboard``

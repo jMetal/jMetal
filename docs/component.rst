@@ -270,6 +270,7 @@ The key of having a component-based architecture is to provide a catalogue of co
        * ``TerminationByKeyboard``
        * ``TerminationByUserRequest``
        * ``TerminationByQualityIndicator``
+       * ``TerminationByMutualDominationRate``
        * ``TerminationByAnyOf``
    * - ``ea``
      - ``Selection``
@@ -381,6 +382,8 @@ All of them reject a solution evaluated to NaN with an ``InvalidConditionExcepti
 - ``TerminationByUserRequest``: Stop when ``requestStop()`` is called from another thread, such as
   the one of a graphical interface or of a web application.
 - ``TerminationByQualityIndicator``: Stop when quality indicator exceeds threshold.
+- ``TerminationByMutualDominationRate``: Adaptive stopping criterion MGBM; stop when the population
+  no longer improves (see :ref:`adaptiveStopping`).
 - ``TerminationByAnyOf``: Stop when any of several termination conditions is met.
 
 For example, the ``Termination``
@@ -466,3 +469,151 @@ population at that point. It does not depend on any user interface technology. C
   userStop.requestStop();
 
 A request cannot be undone, so a new ``TerminationByUserRequest`` is needed for each run.
+
+.. _adaptiveStopping:
+
+Adaptive stopping: the mutual domination rate (MGBM)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+``TerminationByMutualDominationRate`` implements MGBM (Martí, García, Berlanga and Molina,
+Information Sciences 367-368, 2016), one of the stopping criteria compared by Kitamura and Tanabe in
+"Benchmarking Stopping Criteria for Evolutionary Multi-objective Optimization" (GECCO 2026). It
+decides by itself when to stop, without a budget fixed in advance:
+
+1. Each time it is checked, it computes the *mutual domination rate* (MDR) between the current
+   population and the previous one: the fraction of the previous population dominated by the current
+   one minus the fraction of the current population dominated by the previous one. It is 1 when the
+   new population dominates the whole previous one, 0 when neither improves the other, and negative
+   when the population gets worse.
+2. The MDR values are noisy, so they are the observations of a one-dimensional Kalman filter.
+3. The search stops when the estimate of the filter falls below a threshold.
+
+It only uses dominance, so it does not need the ideal or nadir points, and it does not depend on the
+scale of the objectives. Its parameters are:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 15 65
+
+   * - Parameter
+     - Default
+     - Meaning
+   * - ``threshold``
+     - (required)
+     - The search stops when the estimate of the MDR falls below it; in (0, 1).
+   * - ``observationNoise``
+     - 0.05
+     - Variance of the noise of the MDR values, and initial covariance of the filter.
+   * - ``processNoise``
+     - 0
+     - Variance of the change of the MDR between two checks. With 0 the estimate is the mean of an
+       initial value of 1 and all the MDR values so far; a positive value gives more weight to the
+       recent values.
+   * - ``epsilon``
+     - 0
+     - A solution is dominated only if the other one improves it by more than ``epsilon`` in some
+       objective, relative to the range of that objective in the two populations. With 0 it is
+       Pareto dominance, as in the original criterion.
+
+The defaults follow the implementation of Kitamura and Tanabe. Two facts matter when setting the
+parameters:
+
+* With NSGA-II, the MDR does not tend to zero when the search stagnates: on a front that has
+  converged, each population still dominates around 10% of the previous one by tiny improvements,
+  which count as much as large ones. With ``epsilon = 0``, a threshold below that level never stops
+  the search (with ``threshold = 0.12``, the value used by Kitamura and Tanabe, NSGA-II did not stop
+  on ZDT1), and a threshold above it stops at a rather arbitrary point. A small ``epsilon``, such as
+  0.01, does not count those tiny improvements, so the MDR does fall to zero.
+* A high threshold or a positive process noise stops earlier, also on the plateaus of local fronts:
+  in our runs they stopped NSGA-II on local fronts of DTLZ1 and DTLZ3, with a hypervolume of zero.
+
+In a small study with NSGA-II (population of 100, 100,000 evaluations at most, 10 runs per
+problem), ``threshold = 0.05``, ``processNoise = 0`` and ``epsilon = 0.01`` gave these results, where
+the hypervolume is relative to the best one of the whole run:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 25 25 25
+
+   * - Problem
+     - Median evaluations at the stop
+     - Median hypervolume
+     - Worst hypervolume
+   * - ZDT1
+     - 70,200
+     - 99.9%
+     - 99.8%
+   * - DTLZ1 (2 objectives)
+     - 44,000
+     - 99.8%
+     - 99.4%
+   * - DTLZ2 (2 objectives)
+     - 20,950
+     - 99.7%
+     - 99.6%
+   * - DTLZ3 (2 objectives)
+     - 89,300
+     - 99.7%
+     - 99.6%
+   * - DTLZ1 (3 objectives)
+     - 58,900
+     - 98.3%
+     - 97.3%
+   * - DTLZ2 (3 objectives)
+     - 26,950
+     - 95.0%
+     - 93.6%
+   * - DTLZ3 (3 objectives)
+     - Did not stop in 9 runs
+     - 100%
+     - 96.7%
+
+The criterion gives more time to the harder problems (DTLZ3) and stops earlier on the easier ones,
+but it loses more quality with three objectives. These values are a starting point and not tuned
+defaults: other algorithms, numbers of objectives or population sizes may need other ones. The
+criterion keeps the state of the run, so a new instance is needed for each run.
+
+**As a stopping condition.** Combine it with a budget, so that the run ends even if the criterion
+never stops it (see ``NSGAIIStoppingByMutualDominationRateExample``):
+
+.. code-block:: java
+
+  var mutualDominationRate = new TerminationByMutualDominationRate(0.05, 0.05, 0.0, 0.01);
+  Termination termination =
+      new TerminationByAnyOf(mutualDominationRate, new TerminationByEvaluations(100000));
+
+  EvolutionaryAlgorithm<DoubleSolution> nsgaii =
+      new NSGAIIBuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation)
+          .setTermination(termination)
+          .build();
+  nsgaii.run();
+
+  // mutualDominationRate.estimate() and lastMutualDominationRate() give the state of the criterion
+
+**As a warning of stagnation.** When the user watches the evolution of the search and decides when
+to stop it (e.g., with ``TerminationByUserRequest``), the criterion can just tell the user that the
+search seems to have stagnated. An observer passes it the status data of each iteration, and the
+criterion never stops the run (see ``NSGAIIWithStagnationWarningExample``):
+
+.. code-block:: java
+
+  class StagnationWarning implements Observer<Map<String, Object>> {
+    private final TerminationByMutualDominationRate stagnationDetector =
+        new TerminationByMutualDominationRate(0.05, 0.05, 0.0, 0.01);
+    private boolean warned = false;
+
+    @Override
+    public void update(Observable<Map<String, Object>> observable, Map<String, Object> data) {
+      if (stagnationDetector.isMet(data) && !warned) {
+        warned = true;
+        // Tell the user, e.g., with a message in the user interface
+      }
+    }
+  }
+
+  algorithm.observable().register(new StagnationWarning());
+
+The algorithms of ``jmetal-component`` check the termination condition, and notify the observers,
+once per iteration. In a steady-state algorithm, such as SMS-EMOA, an iteration produces a single
+solution, so two consecutive populations differ in one solution at most and the MDR behaves
+differently; the values above are not valid for them.

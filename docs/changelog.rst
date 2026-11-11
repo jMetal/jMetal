@@ -4,6 +4,16 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/11/2026] New adaptive stopping criterion ``TerminationByMutualDominationRate``, which
+  implements MGBM (Martí et al., Information Sciences, 2016): it stops when the mutual domination
+  rate between consecutive populations, filtered with a Kalman filter, falls below a threshold. Its
+  defaults follow the implementation of Kitamura and Tanabe (GECCO 2026), and an optional tolerance
+  ``epsilon`` ignores the tiny improvements that keep the rate of NSGA-II around 0.1 after it
+  converges. It can be a stopping condition, combined with a budget with ``TerminationByAnyOf``, or a
+  warning of stagnation in an observer. The component page explains its parameters and gives the
+  results of a small study with NSGA-II; examples ``NSGAIIStoppingByMutualDominationRateExample`` and
+  ``NSGAIIWithStagnationWarningExample``.
+
 * [11/11/2026] New termination conditions in ``jmetal-component``, and a fix of
   ``TerminationByKeyboard``:
 
