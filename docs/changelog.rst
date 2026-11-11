@@ -4,6 +4,21 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/11/2026] New termination conditions in ``jmetal-component``, and a fix of
+  ``TerminationByKeyboard``:
+
+  - ``TerminationByUserRequest`` stops an algorithm when ``requestStop()`` is called from another
+    thread, such as the one of a graphical interface or of a web application, so that the user can
+    stop an algorithm that runs in a background thread. The algorithm ends at the end of the current
+    iteration and returns its population at that point.
+  - ``TerminationByAnyOf`` is met when any of several termination conditions is met, e.g. a stop
+    requested by the user or a maximum computing time. It checks all the conditions every time, and
+    its progress is the largest one of the conditions that know it.
+  - ``TerminationByKeyboard`` is built on ``TerminationByUserRequest``. The flag that its reading
+    thread set was a plain field, which the thread of the algorithm might never see; that thread kept
+    the JVM alive if the algorithm ended by another condition, and it closed the standard input. The
+    public field ``keyHit`` is removed.
+
 * [11/05/2026] jMetal 7.11 is released. It does not change existing code or results: every change
   is a new way of starting an algorithm from given solutions, and without it the algorithms behave as
   in 7.10.

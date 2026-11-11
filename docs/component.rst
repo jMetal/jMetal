@@ -268,7 +268,9 @@ The key of having a component-based architecture is to provide a catalogue of co
      - * ``TerminationByEvaluations``
        * ``TerminationByComputingTime``
        * ``TerminationByKeyboard``
+       * ``TerminationByUserRequest``
        * ``TerminationByQualityIndicator``
+       * ``TerminationByAnyOf``
    * - ``ea``
      - ``Selection``
      - * ``NaryTournamentSelection``
@@ -375,8 +377,11 @@ All of them reject a solution evaluated to NaN with an ``InvalidConditionExcepti
 
 - ``TerminationByEvaluations``: Stop after a maximum number of evaluations.
 - ``TerminationByComputingTime``: Stop after a given computing time.
-- ``TerminationByKeyboard``: Stop when a key is pressed.
+- ``TerminationByKeyboard``: Stop when the user hits return in the console.
+- ``TerminationByUserRequest``: Stop when ``requestStop()`` is called from another thread, such as
+  the one of a graphical interface or of a web application.
 - ``TerminationByQualityIndicator``: Stop when quality indicator exceeds threshold.
+- ``TerminationByAnyOf``: Stop when any of several termination conditions is met.
 
 For example, the ``Termination``
 interface for termination components is as follows:
@@ -386,18 +391,24 @@ interface for termination components is as follows:
   package org.uma.jmetal.component.catalogue.common.termination;
 
   import java.util.Map;
+  import java.util.OptionalDouble;
 
   /**
-   * This interface represents classes that isMet the termination condition of an algorithm.
+   * This interface represents classes that check the termination condition of an algorithm.
    *
    * @author Antonio J. Nebro
    */
   @FunctionalInterface
   public interface Termination {
     boolean isMet(Map<String, Object> algorithmStatusData) ;
+
+    default OptionalDouble progress(Map<String, Object> algorithmStatusData) {
+      return OptionalDouble.empty();
+    }
   }
 
 This interface has a method called ``isMet()`` that returns true whenever the implemented stopping condition is met.
+The default method ``progress()`` gives the fraction of the run that has been done, if the condition knows it.
 For example, the ``TerminationByEvaluations`` class defines that method as shown here:
 
 
@@ -427,6 +438,31 @@ For example, the ``TerminationByEvaluations`` class defines that method as shown
   }
 
 The point is that this class has access to the attribute field of the algorithms using it,
-o it have access to the current number of evaluations.
+so it has access to the current number of evaluations.
 Other implementations of ``Termination`` allow to stop when a given computing time has been expired,
-when a keyboard key is pressed, or when the quality indicator value of the current population exceeds a given threshold.
+when a keyboard key is pressed, when the user asks for it, or when the quality indicator value of the current
+population exceeds a given threshold.
+
+The algorithms check the termination condition once per iteration, so ``TerminationByUserRequest`` lets an
+application stop an algorithm that runs in a background thread: the user interface calls ``requestStop()``
+(e.g., when a button is pressed), and the algorithm ends at the end of the current iteration and returns its
+population at that point. It does not depend on any user interface technology. Combined with
+``TerminationByAnyOf``, the run also ends when a budget is reached, whichever comes first:
+
+.. code-block:: java
+
+  var userStop = new TerminationByUserRequest();
+  Termination termination =
+      new TerminationByAnyOf(userStop, new TerminationByComputingTime(maximumComputingTimeInMilliseconds));
+
+  EvolutionaryAlgorithm<DoubleSolution> algorithm =
+      new NSGAIIBuilder<>(problem, populationSize, offspringPopulationSize, crossover, mutation)
+          .setTermination(termination)
+          .build();
+
+  CompletableFuture.runAsync(algorithm::run).thenRun(() -> showResults(algorithm.result()));
+
+  // In the user interface, e.g., when the user presses a "Stop" button
+  userStop.requestStop();
+
+A request cannot be undone, so a new ``TerminationByUserRequest`` is needed for each run.

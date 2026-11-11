@@ -92,6 +92,11 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [11/11/2026] New termination conditions: ``TerminationByUserRequest``, to stop an algorithm that
+  runs in a background thread from a user interface, and ``TerminationByAnyOf``, to combine several
+  conditions (e.g. a stop requested by the user or a maximum computing time). ``TerminationByKeyboard``
+  is built on the first one, which fixes the visibility of its flag and the thread that kept the JVM alive.
+
 * [11/05/2026] jMetal 7.11 is released. It adds ways to start algorithms from given solutions and
   does not change existing code or results: ``SMSEMOABuilder`` and ``MOEADBuilder`` accept a custom
   initial population, ``PAESBuilder`` an initial solution, and the asynchronous genetic algorithm and
