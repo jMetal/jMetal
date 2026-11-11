@@ -151,6 +151,49 @@ class TerminationByMutualDominationRateTest {
   }
 
   @Nested
+  @DisplayName("When it has a tolerance epsilon")
+  class WhenItHasAToleranceEpsilon {
+    private static final double[][] SLIGHTLY_BETTER_FRONT = {
+      {0.199, 0.799}, {0.499, 0.499}, {0.799, 0.199}
+    };
+
+    @Test
+    @DisplayName("given a negative epsilon, then it raises an exception")
+    void givenANegativeEpsilon_thenItRaisesAnException() {
+      assertThatThrownBy(() -> new TerminationByMutualDominationRate(0.1, 0.05, 0.0, -0.01))
+          .isInstanceOf(NegativeValueException.class);
+    }
+
+    @Test
+    @DisplayName("given an improvement below epsilon, then it does not count as domination")
+    void givenAnImprovementBelowEpsilon_thenItDoesNotCountAsDomination() {
+      // The range of each objective is about 0.6, so the tolerance is about 0.006 > 0.001
+      TerminationByMutualDominationRate withEpsilon =
+          new TerminationByMutualDominationRate(0.12, 0.05, 0.0, 0.01);
+
+      withEpsilon.isMet(statusWith(FRONT));
+      withEpsilon.isMet(statusWith(SLIGHTLY_BETTER_FRONT));
+      termination.isMet(statusWith(FRONT));
+      termination.isMet(statusWith(SLIGHTLY_BETTER_FRONT));
+
+      assertThat(withEpsilon.lastMutualDominationRate()).hasValue(0.0);
+      assertThat(termination.lastMutualDominationRate()).hasValue(1.0);
+    }
+
+    @Test
+    @DisplayName("given an improvement above epsilon, then it counts as domination")
+    void givenAnImprovementAboveEpsilon_thenItCountsAsDomination() {
+      TerminationByMutualDominationRate withEpsilon =
+          new TerminationByMutualDominationRate(0.12, 0.05, 0.0, 0.01);
+
+      withEpsilon.isMet(statusWith(FRONT));
+      withEpsilon.isMet(statusWith(BETTER_FRONT));
+
+      assertThat(withEpsilon.lastMutualDominationRate()).hasValue(1.0);
+    }
+  }
+
+  @Nested
   @DisplayName("When the estimate is updated")
   class WhenTheEstimateIsUpdated {
     @Test
