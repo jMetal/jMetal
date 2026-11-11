@@ -46,6 +46,28 @@ import org.uma.jmetal.util.errorchecking.Check;
  * constraints. The first check only stores the population. The criterion keeps the state of the run,
  * so an instance cannot be used in two runs. It does not bound the number of evaluations, so it
  * should be combined with a budget-based termination.
+ *
+ * <p>Usage. With NSGA-II (population of 100, two objectives), {@code new
+ * TerminationByMutualDominationRate(0.05, 0.05, 0.0, 0.01)} stopped on DTLZ1, DTLZ2, DTLZ3 and ZDT1
+ * keeping at least 99.3% of the best hypervolume of runs of 100,000 evaluations, while the original
+ * configuration (threshold 0.12, epsilon 0) did not stop on ZDT1 and stopped on a local front of
+ * DTLZ3 in some runs; a higher threshold or a positive process noise stops earlier, also on local
+ * fronts. With three objectives the same configuration loses more quality: it kept a median of 95%
+ * of the best hypervolume on DTLZ2 (93.6% in the worst run) and 98% on DTLZ1, and it hardly ever
+ * stopped on DTLZ3. These values come from a small study (10 runs per problem), so they are a
+ * starting point and not tuned defaults, and other algorithms, numbers of objectives or population
+ * sizes may need other values. Combine it with a budget:
+ *
+ * <pre>{@code
+ * Termination termination =
+ *     new TerminationByAnyOf(
+ *         new TerminationByMutualDominationRate(0.05, 0.05, 0.0, 0.01),
+ *         new TerminationByEvaluations(100000));
+ * }</pre>
+ *
+ * <p>It can also be used as a warning of stagnation, leaving the decision of stopping to the user:
+ * an observer of the algorithm passes it the status data of each iteration and tells the user when
+ * it is met (see {@code NSGAIIWithStagnationWarningExample}).
  */
 public class TerminationByMutualDominationRate implements Termination {
   public static final double DEFAULT_OBSERVATION_NOISE = 0.05;
