@@ -41,7 +41,7 @@ public class CF13 extends AbstractDoubleProblem {
    */
   public CF13(Integer numberOfVariables, Integer numberOfObjectives) {
     numberOfObjectives(numberOfObjectives);
-    name("CF12");
+    name("CF13");
 
     if (numberOfObjectives <= 3) {
       k = numberOfObjectives - 1; // k=1,2,...,m-1
