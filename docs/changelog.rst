@@ -4,6 +4,26 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/14/2026] CF9-CF16 of the ``cf`` package store their constraints in the sign convention of
+  jMetal and as the paper defines them (Zhou, Xiang and He, IEEE TEVC 25(1), 2021): besides the
+  radius constraints, ``1 - (S + h)`` and, with a positive radius, ``S + h - r``, one value per
+  constrained angle, ``max(1/4 - theta_i, theta_i - 3/4)`` (C type, CF9-CF12) or
+  ``min(max(1/10 - theta_i, theta_i - 2/5), max(7/10 - theta_i, theta_i - 4/5))`` (D type,
+  CF13-CF16), which is negative when the angle lies in an excluded interval. They stored instead two
+  values per excluded interval, positive when violated, of which a single positive one did not mean a
+  violation, and precomputed the overall violation degree and the number of violated constraints as
+  solution attributes; now they precompute nothing, and their ``constraints()`` can be read as those
+  of any other problem. With ``k`` constrained angles (``k = 2`` with three objectives), they have
+  ``k + 1`` constraints (CF9 and CF13) or ``k + 2`` (the others) instead of ``2k + 1`` or ``2k + 2``
+  (CF9-CF12) and ``4k + 1`` or ``4k + 2`` (CF13-CF16). The feasible region does not change, nor does
+  the overall violation degree, up to the last bits of the sum (``ConstraintHandling`` adds the
+  negative values with compensated summation). The number of violated constraints counts one per
+  angle in an excluded interval, as in the paper, instead of two (C type) or three (D type). **The
+  results obtained on CF9-CF16 in earlier versions with techniques that use the number of violated
+  constraints or the value of each constraint, such as ``NumberOfViolatedConstraintsComparator``, the
+  ``ViolationThresholdCriterion`` of MOEA/D and ``SelfAdaptivePenalty``, are not comparable with those
+  of this version.** See :ref:`constrainedBenchmarks`.
+
 * [11/11/2026] New adaptive stopping criterion ``TerminationByMutualDominationRate``, which
   implements MGBM (Martí et al., Information Sciences, 2016): it stops when the mutual domination
   rate between consecutive populations, filtered with a Kalman filter, falls below a threshold. Its

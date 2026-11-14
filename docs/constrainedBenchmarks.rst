@@ -217,58 +217,63 @@ from nine), which splits the front:
      - 0
      - Ackley
      - Mixed
-     - 5
+     - 3
    * - CF10
      - C
      - 1/4
      - Griewank
      - Convex
-     - 6
+     - 4
    * - CF11
      - C
      - 1/2
      - Sphere
      - Concave
-     - 6
+     - 4
    * - CF12
      - C
      - 3/4
      - Rosenbrock
      - Linear
-     - 6
+     - 4
    * - CF13
      - D
      - 0
      - Griewank
      - Concave
-     - 9
+     - 3
    * - CF14
      - D
      - 1/4
      - Ackley
      - Linear
-     - 10
+     - 4
    * - CF15
      - D
      - 1/2
      - Rosenbrock
      - Mixed
-     - 10
+     - 4
    * - CF16
      - D
      - 3/4
      - Sphere
      - Convex
-     - 10
+     - 4
 
-Each constraint on an angle is stored as two values of ``constraints()``, one per bound (four for
-the D type, which has two bands), so the B and C types have ``1 + 2k`` values (``2 + 2k`` with a
-positive radius) and the D type ``1 + 4k`` (``2 + 4k``). In CF1-CF8 a negative value means a violated constraint, as in the rest of jMetal. CF9-CF16
-store their values with the opposite sign and precompute the overall violation degree and the
-number of violated constraints, which must therefore be read with ``ConstraintHandling`` (see
-:ref:`constraints`). PlatEMO implements the suite as ZXH_CF1-ZXH_CF16, with the same objectives and
-constraints except the radius of ZXH_CF15 and ZXH_CF16, which is 1/4 in both. PlatEMO also stores
-one value per angle constraint instead of two.
+The values of ``constraints()`` follow the convention of jMetal in the 16 problems: a negative value
+means a violated constraint, the overall violation degree of a solution is the sum of its negative
+values and the number of violated constraints is the number of negative values (see
+:ref:`constraints`). The radius constraints are ``1 - (S + h)`` and, with a positive radius,
+``S + h - r``. The B type stores each constraint on an angle as two values, one per bound,
+``3/4 - theta_i`` and ``theta_i - 1/4``, so it has ``1 + 2k`` values (``2 + 2k`` with a positive
+radius). The C and D types store one value per constrained angle, as the paper defines them,
+``max(1/4 - theta_i, theta_i - 3/4)`` for the C type and
+``min(max(1/10 - theta_i, theta_i - 2/5), max(7/10 - theta_i, theta_i - 4/5))`` for the D type,
+which are negative only when ``theta_i`` lies in an excluded interval, so they have ``1 + k`` values
+(``2 + k``). PlatEMO implements the suite as ZXH_CF1-ZXH_CF16, with the same objectives and
+constraints except the radius of ZXH_CF15 and ZXH_CF16, which is 1/4 in both. Like CF9-CF16,
+PlatEMO stores one value per angle constraint; CF5-CF8 store two.
 
 References
 ----------
