@@ -458,7 +458,7 @@ class ConstraintHandlingTechniquesTest {
         "given a violation precomputed by the problem, when ranking, then the less violated comes"
             + " first")
     void givenAPrecomputedViolation_whenRanked_thenTheLessViolatedOneComesFirst() {
-      // Arrange: constraint values as CF9-CF16 store them, positive when violated
+      // Arrange: constraint values that are positive when violated, with a precomputed violation
       var dominating = solution(0.0, 0.0, 2.0);
       var lessViolated = solution(1.0, 1.0, 1.0);
       for (var solution : List.of(dominating, lessViolated)) {

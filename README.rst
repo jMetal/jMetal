@@ -92,6 +92,12 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [11/14/2026] CF9-CF16 store their constraints in the sign convention of jMetal, one value per
+  constrained angle as the paper defines them, and no longer precompute their violation. Their
+  feasible regions and violation degrees do not change, but their numbers of constraints and of
+  violated constraints do, so results obtained on them in earlier versions with techniques that use
+  those numbers or the value of each constraint are not comparable.
+
 * [11/11/2026] New adaptive stopping criterion ``TerminationByMutualDominationRate`` (MGBM), which
   stops when the population no longer improves, as a stopping condition or as a warning of stagnation.
   See the termination components in the documentation for how to use it.

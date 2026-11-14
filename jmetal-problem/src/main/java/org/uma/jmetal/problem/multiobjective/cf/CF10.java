@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.VectorUtils;
 
 /**
@@ -16,10 +15,13 @@ import org.uma.jmetal.util.VectorUtils;
  * Problem Construction and Performance Evaluations", IEEE Transactions on Evolutionary Computation
  * 25(1):172-186, 2021. DOI: https://doi.org/10.1109/TEVC.2020.3011829
  *
- * Unlike those of CF1-CF8, the constraint values of this problem are positive when violated. The
- * overall constraint violation degree and the number of violated constraints are precomputed as
- * solution attributes, so they must be read with {@link ConstraintHandling}, not from
- * {@code constraints()}.
+ * The constraints follow the convention of jMetal: a negative value means a violated constraint.
+ * The first two, {@code 1 - (S + h) >= 0} and {@code S + h - 1/4 >= 0}, bound the sum S of the
+ * squares of the first M variables plus the distance function h. Each of the other k is the C-type
+ * constraint of one of the first k angles theta_i (scaled to [0, 1]),
+ * {@code max(1/4 - theta_i, theta_i - 3/4) >= 0}, which is violated when theta_i lies in
+ * (1/4, 3/4). As in the paper, k is M - 1 up to three objectives, M / 2 (rounded down) from four to
+ * eight and 3 from nine, so the problem has k + 2 constraints.
  *
  * @author Yi Xiang Email: xiangyi@scut.edu.cn or gzhuxiang_yi@163.com
  * @author Code adapted by Antonio J. Nebro
@@ -53,7 +55,7 @@ public class CF10 extends AbstractDoubleProblem {
       k = 3;
     }
 
-    numberOfConstraints(2 * k + 2);
+    numberOfConstraints(k + 2);
 
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
@@ -138,48 +140,14 @@ public class CF10 extends AbstractDoubleProblem {
     // The second constraint
     constraint[1] = -(sx[0] + h - r); //
 
-    // Other constraints, if necessary
+    // Other constraints, if necessary: one per angle, violated when it lies in (alpha, belta)
     for (int i = 0; i < k; i++) {
-      constraint[2 * (i + 1)] = theta[i] - alpha;
-      constraint[2 * (i + 1) + 1] = -(theta[i] - belta);
+      constraint[i + 2] = Math.min(theta[i] - alpha, belta - theta[i]);
     }
 
     // Set constraints
-    for (int i = 0; i < numberOfConstraints(); i++) {
-      solution.constraints()[i] = constraint[i];
-    }
-
-    double overallConstraintViolation = 0.0; // Overall Constraint Violation
-    int numberOfViolatedConstraints = 0; // Number Of Violated Constraint
-
-    // The first constraint
-    if (constraint[0] > 0.0) { // Constraints Violated
-      numberOfViolatedConstraints++;
-      overallConstraintViolation = overallConstraintViolation + constraint[0];
-    }
-
-    // The second constraint
-    if (constraint[1] > 0.0) { // Constraints Violated
-      numberOfViolatedConstraints++;
-      overallConstraintViolation = overallConstraintViolation + constraint[1];
-    }
-
-    // Evaluate constraints
-    for (int i = 0; i < k; i++) {
-      if (constraint[2 * (i + 1)] > 0.0
-          && constraint[2 * (i + 1) + 1] > 0.0) { // Constraints Violated
-        numberOfViolatedConstraints = numberOfViolatedConstraints + 2;
-
-        if (constraint[2 * (i + 1)] < constraint[2 * (i + 1) + 1]) {
-          overallConstraintViolation = overallConstraintViolation + constraint[2 * (i + 1)];
-        } else {
-          overallConstraintViolation = overallConstraintViolation + constraint[2 * (i + 1) + 1];
-        }
-      }
-    }
-
-    ConstraintHandling.overallConstraintViolationDegree(solution, -overallConstraintViolation);
-    ConstraintHandling.numberOfViolatedConstraints(solution, numberOfViolatedConstraints) ;
+    IntStream.range(0, numberOfConstraints())
+        .forEach(i -> solution.constraints()[i] = -constraint[i]);
     /* ----------------------Evaluate constraints (end)--------------------------*/
     return solution;
   }

@@ -124,9 +124,8 @@ public class SelfAdaptivePenalty<S extends Solution<?>> implements ConstraintHan
 
   /**
    * The violation of each constraint of a solution (0 if it is satisfied). A problem that
-   * precomputes its overall violation, such as CF9 to CF16, whose constraint values are positive
-   * when violated instead of following the sign convention of jMetal, has a single one: the overall
-   * violation.
+   * precomputes its overall violation, for instance because its constraint values do not follow the
+   * sign convention of jMetal, has a single one: the overall violation.
    *
    * @param solution the solution
    * @return the violation of each constraint
