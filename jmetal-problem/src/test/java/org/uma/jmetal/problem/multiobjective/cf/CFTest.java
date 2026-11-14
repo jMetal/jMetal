@@ -51,6 +51,18 @@ class CFTest {
 
     @ParameterizedTest(name = "CF{0}")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16})
+    @DisplayName("given each problem, when created, then its name is the name of its class")
+    void givenEachProblem_whenCreatedWithoutArguments_thenItsNameIsTheNameOfItsClass(int id)
+        throws ReflectiveOperationException {
+      // Act
+      DoubleProblem problem = createDefault(id);
+
+      // Assert
+      assertEquals("CF" + id, problem.name());
+    }
+
+    @ParameterizedTest(name = "CF{0}")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16})
     @DisplayName("given each problem, when created, then it has 10 distance variables")
     void givenEachProblem_whenCreatedWithoutArguments_thenItHasTenDistanceVariables(int id)
         throws ReflectiveOperationException {
