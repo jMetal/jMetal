@@ -368,3 +368,77 @@ A recommended approach for solving constrained problems with three or more objec
   List<DoubleSolution> result = externalArchive.solutions();
 
 The ``MOEADSolvingCF4Example`` and ``MOEADDESolvingCF10Example`` classes illustrate this approach on the three-objective constrained problems CF4 and CF10 of the CF benchmark suite, whose reference fronts are available in the ``resources/referenceFrontsRSG`` directory.
+
+Algorithms for constrained problems
+-----------------------------------
+
+Besides the general-purpose algorithms, which handle the constraints with a comparator, a ranking or a constraint-handling technique, the ``jmetal-algorithm`` sub-project includes algorithms designed for problems with constraints. They handle the constraints by themselves, so they do not take a constraint-handling technique. Their implementations follow the ones of PlatEMO, and the javadoc of each class lists where they differ from the paper and from PlatEMO.
+
+CCMO
+~~~~
+
+CCMO (classes ``CCMO`` and ``CCMOBuilder``, package ``org.uma.jmetal.algorithm.multiobjective.ccmo``) is the coevolutionary framework of `Tian, Zhang, Xiao, Zhang and Jin, "A Coevolutionary Framework for Constrained Multiobjective Optimization Problems", IEEE TEVC 25(1):102-116, 2021 <https://doi.org/10.1109/TEVC.2020.3004012>`_. It evolves two populations of the same size: the first one solves the original problem and the second one a helper problem, the original problem without constraints. Each population creates its own offspring and selects its next generation from itself and the offspring of both populations, and the result is the first population. The implementation follows the one of PlatEMO, in which each population is evolved with SPEA2 with a dominance in which a smaller overall constraint violation dominates and the solutions with the same violation are compared by Pareto dominance (the paper embeds instead the constrained NSGA-II with the truncation of SPEA2). The variation is a genetic algorithm (``CCMO.VariationType.GA``, the default), in which each population creates N/2 offspring with one child per pair of parents, or, with real variables, differential evolution (``CCMO.VariationType.DE``, with a ``DifferentialEvolutionCrossover`` of variant ``RAND_1_BIN`` or ``RAND_1_EXP`` as crossover), in which each population creates N offspring. The javadoc of ``CCMO`` lists its differences with the paper and with PlatEMO.
+
+For example, with the settings of the paper (see `CCMORunner <https://github.com/jMetal/jMetal/blob/main/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/examples/multiobjective/ccmo/CCMORunner.java>`_, which solves MW1):
+
+.. code-block:: java
+
+    CCMO<DoubleSolution> ccmo = new CCMOBuilder<>(
+        problem,
+        new SBXCrossover(1.0, 20.0),
+        new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0))
+        .setPopulationSize(100)
+        .setMaxEvaluations(100000)
+        .build();
+
+    ccmo.run();
+    List<DoubleSolution> feasibleSolutions =
+        ccmo.result().stream().filter(ConstraintHandling::isFeasible).toList();
+
+The result can contain dominated solutions and, on hard problems, infeasible ones. With these settings, the mean IGD (the mean distance from the points of the reference front to the result, as in the paper) of the final population is 1.61e-3 on MW1 (16 runs), 4.88e-3 on MW3 (14 runs) and 1.94e-2 on C1-DTLZ1 with the 105 solutions of the paper (10 runs), and the paper reports 1.61e-3, 4.69e-3 and 1.99e-2, respectively.
+
+C-TAEA
+~~~~~~
+
+C-TAEA (classes ``CTAEA`` and ``CTAEABuilder``, package ``org.uma.jmetal.algorithm.multiobjective.ctaea``) is the two-archive evolutionary algorithm of `Li, Chen, Fu and Yao, "Two-Archive Evolutionary Algorithm for Constrained Multiobjective Optimization", IEEE TEVC 23(2):303-315, 2019 <https://doi.org/10.1109/TEVC.2018.2855411>`_. It keeps two archives of N solutions, where N is the number of weight vectors generated from the requested population size as in the ``UniformPoint`` function of PlatEMO (100 gives 91 vectors with three objectives):
+
+* the convergence archive (CA) keeps the feasible solutions, selected by non-dominated sorting and by the density of the subregions of the weight vectors and, while there are fewer than N of them, the infeasible solutions that are best in their constraint violation and in their Tchebycheff value;
+* the diversity archive (DA) ignores the constraints and keeps the solutions that complement the CA in the subregions where the CA has few solutions.
+
+Each parent is the winner of a binary tournament in one of the archives, chosen according to the proportions of non-dominated solutions of the archives, and each generation creates one offspring per weight vector. The result is the CA. The algorithm is generic over the type of the solutions: the crossover (of which only the first child is used) and the mutation are given by the user, as in `CTAEARunner <https://github.com/jMetal/jMetal/blob/main/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/examples/multiobjective/ctaea/CTAEARunner.java>`_:
+
+.. code-block:: java
+
+  CTAEA<DoubleSolution> algorithm =
+      new CTAEABuilder<>(problem, new SBXCrossover(1.0, 20.0),
+              new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0))
+          .setPopulationSize(100)
+          .setMaxEvaluations(91 * 500)
+          .build();
+
+  algorithm.run();
+  List<DoubleSolution> result = algorithm.result();
+
+The implementation follows the one of PlatEMO, also where it differs from the paper; the javadoc of ``CTAEA`` lists those differences, such as the probability of taking the second parent from the CA and the association of the solutions with the subregions on the objectives without normalization. With these settings, in ten runs on C1-DTLZ1 and C3-DTLZ4 with three objectives (500 and 750 generations) and on MW3 (300 generations of 100 solutions), all the solutions of the result are feasible and the median IGD+ (on the objectives without normalization) is 0.017, 0.055 and 0.0037.
+
+ToP
+~~~
+
+ToP (classes ``ToP`` and ``ToPBuilder``, package ``org.uma.jmetal.algorithm.multiobjective.top``) is the two-phase framework of `Liu and Wang, "Handling Constrained Multiobjective Optimization Problems With Constraints in Both the Decision and Objective Spaces", IEEE TEVC 23(5):870-884, 2019 <https://doi.org/10.1109/TEVC.2019.2894743>`_. It runs in two phases:
+
+* **Phase 1** solves the problem as a constrained single-objective one, whose objective is the mean of the objectives, with differential evolution (DE/current-to-rand/1 and DE/rand-to-best/1/bin, followed by the polynomial mutation) and a one-to-one replacement by the feasibility rule. It lasts until more than a third of the population is feasible and the best third of the feasible solutions are close to each other in the normalized objective space (delta < 0.2), or until 90% of the evaluations have been done.
+* **Phase 2** is NSGA-II with the constrained-domination principle, whose offspring are created with DE/rand/1/bin and the polynomial mutation.
+
+The implementation follows the ToP of PlatEMO, including the details of its non-dominated sorting, crowding distance and tie-breaking; where PlatEMO and the paper differ (for example, the paper draws F and CR from pools, does not mutate the trial vectors of the first phase and uses the SBX crossover in the second one), it follows PlatEMO. The differences are listed in the documentation of the class. The algorithm is configured with ``ToPBuilder``, whose default values are those of PlatEMO (population size 100, CR = 1.0, F = 0.5, polynomial mutation with probability 1/n and distribution index 20):
+
+.. code-block:: java
+
+    ToP algorithm = new ToPBuilder(problem)
+        .setPopulationSize(100)
+        .setMaxEvaluations(100000)
+        .build();
+
+    algorithm.run();
+    List<DoubleSolution> population = algorithm.result();
+
+The result is the final population, which can contain infeasible solutions, and ``phaseTwoStart()`` returns the number of evaluations done when the second phase started. In the integration tests (``ToPIT``), the median IGD of the feasible solutions is 0.013 on MW3 (25,000 evaluations), 0.23 on LIR-CMOP2 and 0.027 on C1-DTLZ1 (100,000 evaluations); on MW3 the population collapsed into a single feasible point in 4 of 15 runs, and on MW1 none of five runs with 25,000 evaluations found a feasible solution. An example is included in `ToPRunner <https://github.com/jMetal/jMetal/blob/main/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/examples/multiobjective/top/ToPRunner.java>`_, which solves LIR-CMOP2.
