@@ -368,3 +368,28 @@ A recommended approach for solving constrained problems with three or more objec
   List<DoubleSolution> result = externalArchive.solutions();
 
 The ``MOEADSolvingCF4Example`` and ``MOEADDESolvingCF10Example`` classes illustrate this approach on the three-objective constrained problems CF4 and CF10 of the CF benchmark suite, whose reference fronts are available in the ``resources/referenceFrontsRSG`` directory.
+
+Algorithms for constrained problems
+-----------------------------------
+
+Besides the general-purpose algorithms, which handle the constraints with a comparator, a ranking or a constraint-handling technique, the ``jmetal-algorithm`` sub-project includes algorithms designed for problems with constraints:
+
+* **CCMO** (classes ``CCMO`` and ``CCMOBuilder``, package ``org.uma.jmetal.algorithm.multiobjective.ccmo``): the coevolutionary framework of `Tian, Zhang, Xiao, Zhang and Jin, "A Coevolutionary Framework for Constrained Multiobjective Optimization Problems", IEEE TEVC 25(1):102-116, 2021 <https://doi.org/10.1109/TEVC.2020.3004012>`_. It evolves two populations of the same size: the first one solves the original problem and the second one a helper problem, the original problem without constraints. Each population creates its own offspring and selects its next generation from itself and the offspring of both populations, and the result is the first population. The implementation follows the one of PlatEMO, in which each population is evolved with SPEA2 with a dominance in which a smaller overall constraint violation dominates and the solutions with the same violation are compared by Pareto dominance (the paper embeds instead the constrained NSGA-II with the truncation of SPEA2). The variation is a genetic algorithm (``CCMO.VariationType.GA``, the default), in which each population creates N/2 offspring with one child per pair of parents, or, with real variables, differential evolution (``CCMO.VariationType.DE``, with a ``DifferentialEvolutionCrossover`` of variant ``RAND_1_BIN`` or ``RAND_1_EXP`` as crossover), in which each population creates N offspring. The javadoc of ``CCMO`` lists its differences with the paper and with PlatEMO.
+
+For example, with the settings of the paper (see `CCMORunner <https://github.com/jMetal/jMetal/blob/main/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/examples/multiobjective/ccmo/CCMORunner.java>`_, which solves MW1):
+
+.. code-block:: java
+
+    CCMO<DoubleSolution> ccmo = new CCMOBuilder<>(
+        problem,
+        new SBXCrossover(1.0, 20.0),
+        new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0))
+        .setPopulationSize(100)
+        .setMaxEvaluations(100000)
+        .build();
+
+    ccmo.run();
+    List<DoubleSolution> feasibleSolutions =
+        ccmo.result().stream().filter(ConstraintHandling::isFeasible).toList();
+
+The result can contain dominated solutions and, on hard problems, infeasible ones. With these settings, the mean IGD (the mean distance from the points of the reference front to the result, as in the paper) of the final population is 1.61e-3 on MW1 (16 runs), 4.88e-3 on MW3 (14 runs) and 1.94e-2 on C1-DTLZ1 with the 105 solutions of the paper (10 runs), and the paper reports 1.61e-3, 4.69e-3 and 1.99e-2, respectively.
