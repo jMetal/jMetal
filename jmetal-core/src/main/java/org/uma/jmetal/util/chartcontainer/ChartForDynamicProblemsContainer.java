@@ -2,20 +2,27 @@ package org.uma.jmetal.util.chartcontainer;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import javax.swing.SwingUtilities;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * Class for configuring and displaying a XChart.
+ *
+ * <p>XChart is not thread-safe: once the chart is displayed, the series are added and removed in the
+ * event dispatch thread of Swing, so that the algorithm, which updates the chart from its own
+ * thread, does not change the series while Swing paints them.
  *
  * @author Jorge Rodriguez Ordonez
  */
@@ -60,26 +67,57 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
   }
 
   public synchronized void setReferencePoint(List<List<Double>> referencePoint) {
-    for (int i = 0; i < referencePoint.size(); i++) {
-      double rp1 = referencePoint.get(i).get(this.objective1);
-      double rp2 = referencePoint.get(i).get(this.objective2);
-
-      referencePointName.add("Reference Point [" + rp1 + ", " + rp2 + "]");
-
-      XYSeries referencePointSeries = this.frontChart.addSeries(referencePointName.get(i),
-              new double[]{rp1},
-              new double[]{rp2});
-      referencePointSeries.setMarkerColor(Color.green);
-    }
+    onTheEventDispatchThread(() -> addReferencePoints(referencePoint));
   }
 
   /** Replaces the reference points shown, whose number can change. */
   public synchronized void updateReferencePoint(List<List<Double>> referencePoint) {
-    for (String name : referencePointName) {
-      this.frontChart.removeSeries(name);
+    onTheEventDispatchThread(
+        () -> {
+          for (String name : referencePointName) {
+            this.frontChart.removeSeries(name);
+          }
+          referencePointName.clear();
+          addReferencePoints(referencePoint);
+        });
+  }
+
+  private void addReferencePoints(List<List<Double>> referencePoint) {
+    for (List<Double> point : referencePoint) {
+      double rp1 = point.get(this.objective1);
+      double rp2 = point.get(this.objective2);
+      String name = "Reference Point [" + rp1 + ", " + rp2 + "]";
+      if (!referencePointName.contains(name)) {
+        referencePointName.add(name);
+        XYSeries referencePointSeries =
+            this.frontChart.addSeries(name, new double[] {rp1}, new double[] {rp2});
+        referencePointSeries.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);
+        referencePointSeries.setMarkerColor(Color.green);
+      }
     }
-    referencePointName.clear();
-    setReferencePoint(referencePoint);
+  }
+
+  /** Sets the title of the chart of the front. */
+  public void setFrontChartTitle(String title) {
+    onTheEventDispatchThread(() -> this.frontChart.setTitle(title));
+  }
+
+  /**
+   * Runs the change in the event dispatch thread if the chart is displayed, and waits for it;
+   * otherwise, it runs it in the current thread.
+   */
+  private void onTheEventDispatchThread(Runnable change) {
+    if (this.swingWrapper == null || SwingUtilities.isEventDispatchThread()) {
+      change.run();
+    } else {
+      try {
+        SwingUtilities.invokeAndWait(change);
+      } catch (InterruptedException exception) {
+        Thread.currentThread().interrupt();
+      } catch (InvocationTargetException exception) {
+        throw new JMetalException("The chart could not be updated", exception);
+      }
+    }
   }
 
   public void initChart() {
@@ -90,11 +128,14 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
 
   public void updateFrontCharts(List<S> solutionList) {
     if (this.frontChart != null) {
-      this.frontChart.addSeries("Front." + counter,
-              this.getSolutionsForObjective(solutionList, this.objective1),
-              this.getSolutionsForObjective(solutionList, this.objective2),
-              null);
-      counter++;
+      double[] xData = this.getSolutionsForObjective(solutionList, this.objective1);
+      double[] yData = this.getSolutionsForObjective(solutionList, this.objective2);
+      onTheEventDispatchThread(
+          () -> {
+            XYSeries series = this.frontChart.addSeries("Front." + counter, xData, yData, null);
+            series.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);
+            counter++;
+          });
     }
   }
 

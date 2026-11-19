@@ -67,7 +67,7 @@ public class RunTimeForDynamicProblemsChartObserver<S extends Solution<?>> imple
 
     if (evaluations!=null && population!=null) {
       if (this.chart != null) {
-        this.chart.getFrontChart().setTitle("Evaluation: " + evaluations);
+        this.chart.setFrontChartTitle("Evaluation: " + evaluations);
         this.chart.updateFrontCharts(population);
         this.chart.refreshCharts();
       }
