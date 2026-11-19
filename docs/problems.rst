@@ -84,7 +84,7 @@ problems (e.g., *Kursawe*, *Sphere*, etc.) and benchmarks suites (such as *ZDT*,
 
 The benchmark suites and problem families of the ``multiobjective`` package (each one in its own sub-package) are:
 
-* *Unconstrained*: ``zdt``, ``dtlz`` (including ``DTLZ1Minus``-``DTLZ4Minus``, the inverted versions used with decomposition-based algorithms), ``wfg``, ``maf`` (MaF1-MaF15, with reference fronts for 3, 5, 10 and 15 objectives in ``resources/referenceFronts``), ``lsmop`` (large-scale), ``lz09``, ``uf`` (CEC2009), ``fda`` (dynamic problems), ``glt``, ``mop``, ``zcat`` and ``cec2015OptBigDataCompetition``.
+* *Unconstrained*: ``zdt``, ``dtlz`` (including ``DTLZ1Minus``-``DTLZ4Minus``, the inverted versions used with decomposition-based algorithms), ``wfg``, ``maf`` (MaF1-MaF15, with reference fronts for 3, 5, 10 and 15 objectives in ``resources/referenceFronts``), ``lsmop`` (large-scale), ``lz09``, ``uf`` (CEC2009), ``fda`` (dynamic problems FDA1-FDA5 of Farina, Deb and Amato, and FDA2Mod), ``df`` (dynamic problems DF1-DF14 of the CEC 2018 competition), ``glt``, ``mop``, ``zcat`` and ``cec2015OptBigDataCompetition``.
 * *Constrained benchmarks*: ``cf`` (CF1-CF16), ``cec2009`` (CEC2009CF1-CEC2009CF10, the constrained problems of CEC 2009), ``cdtlz`` (C-DTLZ), ``dcdtlz`` (DC-DTLZ), ``dascmop`` (DAS-CMOP1-9), ``mw`` (MW1-MW14) and ``lircmop``.
 * *Engineering problems*: ``re`` and ``cre`` (with and without constraints) and ``ebes``.
 * *Real-world problems*: ``rwa`` (RWA1-RWA10, box-constrained) and ``cec2021`` (the 50 constrained problems of the RWMOP suite, RCM01-RCM50, from "A Benchmark-Suite of Real-World Constrained Multi-Objective Optimization Problems and some Baseline Results").

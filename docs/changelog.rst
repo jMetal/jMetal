@@ -4,6 +4,25 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/19/2026] Dynamic problems:
+
+  - New dynamic problems DF1-DF14 of the CEC 2018 Competition on Dynamic Multiobjective Optimisation
+    (package ``org.uma.jmetal.problem.multiobjective.df``), following the technical report of Jiang
+    et al. (2017). The official MATLAB code and pymoo differ from the report in DF10, DF12 and DF13,
+    and the implementation of jMetalSP in several more problems; the Javadoc of ``DF`` lists the
+    differences. They are tested against a transcription of the report that agrees with pymoo
+    (``scripts/df_reference_values.py``).
+  - **FDA2 now implements the original definition of Farina, Deb and Amato (2004), so the results
+    obtained with it in earlier versions are not comparable.** It implemented FDA2mod, the redesign
+    of Mehnen, Wagner and Rudolph (2006), which is now the class ``FDA2Mod``; this is the problem
+    used in the experiments of InDM2, whose paper describes the original FDA2.
+  - FDA1 has 20 variables by default, as suggested in the paper, instead of 100, and its constructor
+    with an observable, which ignored it, is deprecated. FDA3 has five variables in x_I by default
+    instead of one (``new FDA3(31, 2, 1)`` gives the former setting). FDA4 and FDA5 have the number
+    of objectives given, instead of always three.
+  - The FDA and DF problems are marked as changed only when their time instant changes, not every
+    time the counter is updated, and their frequency and severity of change can be set.
+
 * [11/11/2026] New adaptive stopping criterion ``TerminationByMutualDominationRate``, which
   implements MGBM (Martí et al., Information Sciences, 2016): it stops when the mutual domination
   rate between consecutive populations, filtered with a Kalman filter, falls below a threshold. Its

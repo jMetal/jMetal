@@ -92,6 +92,11 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [11/19/2026] New dynamic problems DF1-DF14 (CEC 2018). **FDA2 now follows the original
+  definition of Farina, Deb and Amato**; the former one, FDA2mod of Mehnen et al., is ``FDA2Mod``.
+  FDA1, FDA3, FDA4 and FDA5 have the default settings of the paper. See the changelog section of the
+  documentation.
+
 * [11/11/2026] New adaptive stopping criterion ``TerminationByMutualDominationRate`` (MGBM), which
   stops when the population no longer improves, as a stopping condition or as a warning of stagnation.
   See the termination components in the documentation for how to use it.
