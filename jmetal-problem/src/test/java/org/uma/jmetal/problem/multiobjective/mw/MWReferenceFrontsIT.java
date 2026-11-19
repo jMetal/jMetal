@@ -25,7 +25,7 @@ import org.uma.jmetal.util.ConstraintHandling;
  * point of the front is no worse in every objective, within a tolerance).
  */
 @DisplayName("Reference fronts of the MW problems")
-class MWReferenceFrontsTest {
+class MWReferenceFrontsIT {
 
   private static final int VARIABLES = 15;
   private static final int SAMPLES = 3000;

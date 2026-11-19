@@ -27,7 +27,7 @@ import org.uma.jmetal.util.ConstraintHandling;
  * the front is no worse in every objective, within a tolerance).
  */
 @DisplayName("Reference fronts of the DAS-CMOP problems")
-class DASCMOPReferenceFrontsTest {
+class DASCMOPReferenceFrontsIT {
 
   private static final int VARIABLES = 30;
   private static final int SAMPLES = 3000;

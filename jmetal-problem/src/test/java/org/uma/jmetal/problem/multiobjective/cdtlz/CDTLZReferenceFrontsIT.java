@@ -32,7 +32,7 @@ import org.uma.jmetal.util.ConstraintHandling;
  * set must lie on the front, and none may dominate it.
  */
 @DisplayName("Reference fronts of the C-DTLZ problems with 3 objectives")
-class CDTLZReferenceFrontsTest {
+class CDTLZReferenceFrontsIT {
 
   private static final int OBJECTIVES = 3;
   private static final int SAMPLES = 2000;
@@ -99,7 +99,7 @@ class CDTLZReferenceFrontsTest {
   class FrontPoints {
 
     @ParameterizedTest(name = "{0}")
-    @MethodSource("org.uma.jmetal.problem.multiobjective.cdtlz.CDTLZReferenceFrontsTest#fronts")
+    @MethodSource("org.uma.jmetal.problem.multiobjective.cdtlz.CDTLZReferenceFrontsIT#fronts")
     @DisplayName("given a front, then every point is feasible, and on a constraint for C3")
     void givenAFront_whenItsPointsAreEvaluated_thenTheyAreFeasible(
         String name, DoubleProblem problem, ConstraintEvaluator evaluator, boolean onConstraints)
@@ -127,7 +127,7 @@ class CDTLZReferenceFrontsTest {
   class ParetoSetSamples {
 
     @ParameterizedTest(name = "{0}")
-    @MethodSource("org.uma.jmetal.problem.multiobjective.cdtlz.CDTLZReferenceFrontsTest#paretoSets")
+    @MethodSource("org.uma.jmetal.problem.multiobjective.cdtlz.CDTLZReferenceFrontsIT#paretoSets")
     @DisplayName("given its feasible samples, then none dominates the front and all lie on it")
     void givenFeasibleSamples_whenEvaluated_thenTheyLieOnTheFront(String name, DoubleProblem problem)
         throws IOException {

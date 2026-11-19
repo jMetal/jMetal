@@ -29,7 +29,7 @@ import org.uma.jmetal.util.ConstraintHandling;
  * constraints must lie on the front, and none may dominate it.
  */
 @DisplayName("Reference fronts of the DC-DTLZ problems with 2 and 3 objectives")
-class DCDTLZReferenceFrontsTest {
+class DCDTLZReferenceFrontsIT {
 
   private static final List<String> PROBLEMS =
       List.of("DC1_DTLZ1", "DC1_DTLZ3", "DC2_DTLZ1", "DC2_DTLZ3", "DC3_DTLZ1", "DC3_DTLZ3");
@@ -111,7 +111,7 @@ class DCDTLZReferenceFrontsTest {
   class FrontPoints {
 
     @ParameterizedTest(name = "{0} with {1} objectives")
-    @MethodSource("org.uma.jmetal.problem.multiobjective.dcdtlz.DCDTLZReferenceFrontsTest#fronts")
+    @MethodSource("org.uma.jmetal.problem.multiobjective.dcdtlz.DCDTLZReferenceFrontsIT#fronts")
     @DisplayName("given a front, then the problem gives every point, from a feasible solution")
     void givenAFront_whenItsPointsAreEvaluated_thenTheyAreFeasibleAndReproduced(
         String name, int objectives) throws IOException, ReflectiveOperationException {
@@ -138,7 +138,7 @@ class DCDTLZReferenceFrontsTest {
   class ParetoSetSamples {
 
     @ParameterizedTest(name = "{0} with {1} objectives")
-    @MethodSource("org.uma.jmetal.problem.multiobjective.dcdtlz.DCDTLZReferenceFrontsTest#fronts")
+    @MethodSource("org.uma.jmetal.problem.multiobjective.dcdtlz.DCDTLZReferenceFrontsIT#fronts")
     @DisplayName("given its feasible samples, then none dominates the front and all lie on it")
     void givenFeasibleSamples_whenEvaluated_thenTheyLieOnTheFront(String name, int objectives)
         throws IOException, ReflectiveOperationException {

@@ -34,7 +34,7 @@ import org.uma.jmetal.util.ConstraintHandling;
  * LIRCMOP5-12. LIRCMOP13-14 have the distance t = 1.7057 + sum 10 (x_j - 0.5)^2 for j &gt;= 3.
  */
 @DisplayName("Reference fronts of the LIR-CMOP problems")
-class LIRCMOPReferenceFrontsTest {
+class LIRCMOPReferenceFrontsIT {
 
   private static final int VARIABLES = 30;
   private static final int SAMPLES = 20000;
