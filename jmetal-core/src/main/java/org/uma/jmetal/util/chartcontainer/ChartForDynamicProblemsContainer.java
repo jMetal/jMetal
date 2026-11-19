@@ -73,20 +73,13 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
     }
   }
 
+  /** Replaces the reference points shown, whose number can change. */
   public synchronized void updateReferencePoint(List<List<Double>> referencePoint) {
-    for (int i = 0; i < referencePoint.size(); i++) {
-      double rp1 = referencePoint.get(i).get(this.objective1);
-      double rp2 = referencePoint.get(i).get(this.objective2);
-
-      this.frontChart.removeSeries(referencePointName.get(i));
-
-      referencePointName.set(i, "Reference Point [" + rp1 + ", " + rp2 + "]");
-
-      XYSeries referencePointSeries = this.frontChart.addSeries(referencePointName.get(i),
-              new double[]{rp1},
-              new double[]{rp2});
-      referencePointSeries.setMarkerColor(Color.green);
+    for (String name : referencePointName) {
+      this.frontChart.removeSeries(name);
     }
+    referencePointName.clear();
+    setReferencePoint(referencePoint);
   }
 
   public void initChart() {

@@ -43,13 +43,27 @@ public class RunTimeForDynamicProblemsChartObserver<S extends Solution<?>> imple
   }
 
   /**
-   * This methods displays a front (population)
+   * This methods displays a front (population). If the data include the key REFERENCE_POINTS (a
+   * list of points, each one a list of values), the reference points shown are replaced by them;
+   * an empty population is not drawn.
    * @param data Map of pairs (key, value)
    */
   @Override
   public void update(Observable<Map<String, Object>> observable, Map<String, Object> data) {
     evaluations = (Integer)data.get("EVALUATIONS") ;
     List<S> population = (List<S>) data.get("POPULATION");
+    List<List<Double>> referencePoints = (List<List<Double>>) data.get("REFERENCE_POINTS");
+
+    if (referencePoints != null && this.chart != null) {
+      this.chart.updateReferencePoint(referencePoints);
+      if (population != null && population.isEmpty()) {
+        this.chart.refreshCharts();
+      }
+    }
+
+    if (population != null && population.isEmpty()) {
+      return;
+    }
 
     if (evaluations!=null && population!=null) {
       if (this.chart != null) {
