@@ -20,14 +20,15 @@ import org.uma.jmetal.util.observer.impl.RunTimeForDynamicProblemsChartObserver;
 
 /**
  * Runs InDM2 with SMPSO/RP on DF1, with a swarm of 100 particles and two reference points, (0.1,
- * 0.6) and (0.6, 0.1). The problem is updated every second (its time changes every ten seconds,
- * tau_t = 10). Type two new reference points in the console (e.g. "0.2, 0.4, 0.5, 0.2"), or q to
- * stop.
+ * 0.6) and (0.6, 0.1). The problem is updated every second and its time changes every two seconds
+ * (tau_t = 2), so that the front, which goes from concave to convex as H(t) = 0.75 sin(0.5 pi t) +
+ * 1.25 goes from 2 to 0.5, completes a cycle in about 80 seconds. Type two new reference points in
+ * the console (e.g. "0.2, 0.4, 0.5, 0.2"), or q to stop.
  */
 public class InDM2WithSMPSORPRunner {
 
   public static void main(String[] args) {
-    var problem = new DF1();
+    var problem = new DF1(10, 2, 10);
     int swarmSize = 100;
     List<List<Double>> referencePoints = List.of(List.of(0.1, 0.6), List.of(0.6, 0.1));
 
