@@ -1,129 +1,70 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import org.uma.jmetal.qualityindicator.CoverageChangeDetector;
+import org.uma.jmetal.algorithm.dynamic.DynamicAlgorithm;
+import org.uma.jmetal.algorithm.dynamic.DynamicStoppingCondition;
+import org.uma.jmetal.algorithm.dynamic.stepwise.StepwiseNSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.restartstrategy.RestartStrategy;
 
+/**
+ * Dynamic version of NSGA-II: a {@link DynamicAlgorithm} that runs NSGA-II one generation at a
+ * time. By default the time of the problem advances with the generations (the protocol of the FDA
+ * and CEC 2018 benchmarks), the run ends after 30 changes of the problem (as in the CEC 2018
+ * competition), and the front is published at the end of every round; all of this can be changed
+ * with the methods of {@link DynamicAlgorithm}.
+ *
+ * <p>Up to jMetal 7.11 this class ran forever, advanced the time of the problem once per round of
+ * evaluations and restarted the population at the end of every round, whether the problem had
+ * changed or not.
+ *
+ * @param <S> the type of the solutions
+ */
 @SuppressWarnings("serial")
-public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S> {
+public class DynamicNSGAII<S extends Solution<?>> extends DynamicAlgorithm<S> {
+  public static final int DEFAULT_NUMBER_OF_PROBLEM_CHANGES = 30;
 
-  private RestartStrategy<S> restartStrategy;
-  private DynamicProblem<S, Integer> problem;
-  private Observable<Map<String, Object>> observable;
-  private int completedIterations;
-  private CoverageChangeDetector coverageChangeDetector;
-  private List<S> lastReceivedFront;
   /**
-   * Constructor
+   * Creates the algorithm.
    *
-   * @param problem
-   * @param maxEvaluations
-   * @param populationSize
-   * @param matingPoolSize
-   * @param offspringPopulationSize
-   * @param crossoverOperator
-   * @param mutationOperator
-   * @param selectionOperator
-   * @param evaluator
-   * @param restartStrategy
-   * @param observable
+   * @param problem the dynamic problem, whose counter is the generation
+   * @param populationSize the population size, which is also the size of the mating pool
+   * @param offspringPopulationSize the offspring population size
+   * @param restartStrategy the restart strategy applied when the problem changes
+   * @param generationsPerRound the generations of a round, at the end of which the front is
+   *     published
    */
   public DynamicNSGAII(
       DynamicProblem<S, Integer> problem,
-      int maxEvaluations,
       int populationSize,
-      int matingPoolSize,
       int offspringPopulationSize,
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator,
       SolutionListEvaluator<S> evaluator,
       RestartStrategy<S> restartStrategy,
-      Observable<Map<String, Object>> observable,
-      CoverageChangeDetector coverageChangeDetector) {
+      int generationsPerRound) {
     super(
+        "DynamicNSGAII",
+        new StepwiseNSGAII<>(
+            problem,
+            populationSize,
+            populationSize,
+            offspringPopulationSize,
+            crossoverOperator,
+            mutationOperator,
+            selectionOperator,
+            evaluator),
         problem,
-        maxEvaluations,
-        populationSize,
-        matingPoolSize,
-        offspringPopulationSize,
-        crossoverOperator,
-        mutationOperator,
-        selectionOperator,
-        evaluator);
-    Check.notNull(problem);
-    Check.notNull(restartStrategy);
-    Check.notNull(observable);
-    Check.notNull(coverageChangeDetector);
-
-    this.restartStrategy = restartStrategy;
-    this.problem = problem;
-    this.observable = observable;
-    this.completedIterations = 0;
-    this.coverageChangeDetector = coverageChangeDetector;
-    this.lastReceivedFront = null;
-  }
-
-
-  @Override
-  protected boolean isStoppingConditionReached() {
-    if (evaluations >= maxEvaluations) {
-      boolean coverage = false;
-      if (lastReceivedFront != null) {
-        coverageChangeDetector.updateReferenceFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
-
-        // Use the current population directly to compute the objective matrix
-        coverage = coverageChangeDetector.hasSignificantChange(
-          SolutionListUtils.getMatrixWithObjectiveValues(getPopulation()));
-      }
-
-      if (coverage) {
-        observable.setChanged();
-
-        Map<String, Object> algorithmData = new HashMap<>();
-
-        algorithmData.put("EVALUATIONS", completedIterations);
-        algorithmData.put("POPULATION", getPopulation());
-
-        observable.notifyObservers(algorithmData);
-        observable.clearChanged();
-      }
-      lastReceivedFront = getPopulation();
-      completedIterations++;
-      problem.update(completedIterations);
-
-      restart();
-      evaluator.evaluate(getPopulation(), getDynamicProblem());
-
-      initProgress();
-    }
-    return false;
-  }
-
-  public DynamicProblem<S, ?> getDynamicProblem() {
-    return problem;
-  }
-
-  public void restart() {
-    this.restartStrategy.restart(getPopulation(), (DynamicProblem<S, ?>) getProblem());
-  }
-
-  public RestartStrategy<?> getRestartStrategy() {
-    return restartStrategy;
-  }
-
-  public Observable<Map<String, Object>> getObservable() {
-    return observable;
+        restartStrategy,
+        generationsPerRound);
+    timeDrivenByIterations(true);
+    stoppingCondition(
+        DynamicStoppingCondition.afterProblemChanges(DEFAULT_NUMBER_OF_PROBLEM_CHANGES));
   }
 }

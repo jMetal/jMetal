@@ -1,65 +1,61 @@
 package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
-import java.util.List;
+import org.uma.jmetal.algorithm.dynamic.DynamicAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.DynamicNSGAII;
-import org.uma.jmetal.qualityindicator.CoverageChangeDetector;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.problem.multiobjective.fda.FDA2;
-import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.observer.impl.RunTimeForDynamicProblemsChartObserver;
 import org.uma.jmetal.util.restartstrategy.impl.CreateNRandomSolutions;
 import org.uma.jmetal.util.restartstrategy.impl.DefaultRestartStrategy;
 import org.uma.jmetal.util.restartstrategy.impl.RemoveNRandomSolutions;
 
+/**
+ * Runs the dynamic NSGA-II on FDA2, whose time changes every 50 generations, and shows the front
+ * found just before each change. The run ends after 30 changes of the problem.
+ */
 public class DynamicNSGAIIRunner {
 
-  /**
-   * main() method to run the algorithm as a process
-   *
-   * @param args
-   */
   public static void main(String[] args) {
-    DynamicProblem<DoubleSolution, Integer> problem = new FDA2();
+    int generationsPerChange = 50;
+    var problem = new FDA2(31, 2, generationsPerChange, 10);
 
-    // STEP 2. Create the algorithm
-    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(0.9, 20.0);
-    MutationOperator<DoubleSolution> mutation =
-        new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection =
-        new BinaryTournamentSelection<>();
-
-    InvertedGenerationalDistance igd = new InvertedGenerationalDistance();
-    CoverageChangeDetector coverageChangeDetector = new CoverageChangeDetector(0.055, igd);
+    var mutation = new PolynomialMutation(1.0 / problem.numberOfVariables(), 20.0);
     var algorithm =
-        new DynamicNSGAII<>(
+        new DynamicNSGAII<DoubleSolution>(
             problem,
-            25000,
             100,
             100,
-            100,
-            crossover,
+            new SBXCrossover(0.9, 20.0),
             mutation,
-            selection,
+            new BinaryTournamentSelection<>(),
             new SequentialSolutionListEvaluator<>(),
             new DefaultRestartStrategy<>(
-                new RemoveNRandomSolutions<>(10), new CreateNRandomSolutions<>()),
-            new DefaultObservable<>("Dynamic NSGA-II"),
-            coverageChangeDetector);
+                new RemoveNRandomSolutions<>(50), new CreateNRandomSolutions<>()),
+            generationsPerChange);
+    algorithm.notifyProblemChanges(true);
 
-    RunTimeForDynamicProblemsChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeForDynamicProblemsChartObserver<>("Dynamic NSGA-II", 80);
-
-    algorithm.getObservable().register(runTimeChartObserver);
+    var chart = new RunTimeForDynamicProblemsChartObserver<DoubleSolution>("Dynamic NSGA-II", 80);
+    algorithm.observable().register(
+        (observable, data) -> {
+          if (DynamicAlgorithm.PROBLEM_CHANGE.equals(data.get("EVENT"))) {
+            chart.update(observable, data);
+          }
+        });
 
     algorithm.run();
+
+    JMetalLogger.logger.info(
+        "Problem changes: "
+            + algorithm.status().problemChanges()
+            + ". Evaluations: "
+            + algorithm.status().evaluations()
+            + ". Computing time: "
+            + algorithm.status().computingTime()
+            + " ms");
   }
 }
