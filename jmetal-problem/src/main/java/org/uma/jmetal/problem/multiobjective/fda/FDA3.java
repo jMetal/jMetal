@@ -1,93 +1,97 @@
 package org.uma.jmetal.problem.multiobjective.fda;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
+ * Problem FDA3 of Farina, Deb and Amato (see {@link FDA}): type II, convex fronts whose density of
+ * solutions changes with t.
+ *
+ * <pre>
+ * f_1 = sum_{x_i in x_I} x_i^F,  f_2 = g h,  g = 1 + G + sum_{x_i in x_II} (x_i - G)^2
+ * h = 1 - sqrt(f_1 / g),  G = |sin(0.5 pi t)|,  F = 10^(2 sin(0.5 pi t))
+ * x_I in [0, 1],  x_II in [-1, 1]
+ * </pre>
+ *
+ * <p>The paper suggests |x_I| = 5 and |x_II| = 25, the defaults. The experiments of InDM2 (Nebro et
+ * al., 2018) use |x_I| = 1 and 31 variables, which {@code new FDA3(31, 2, 1)} gives; up to jMetal
+ * 7.11 this class always used |x_I| = 1.
+ *
  * @author Cristóbal Barba <cbarba@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class FDA3 extends FDA implements Serializable {
+public class FDA3 extends FDA {
+  private final int sizeOfXI;
 
-  private final int limitInfI = 0;
-  private final int limitSupI = 1;
-  private final int limitInfII = 1;
-
+  /** Creates the problem with |x_I| = 5 and |x_II| = 25, as suggested in the paper. */
   public FDA3() {
     this(30, 2);
   }
 
-  public FDA3(Integer numberOfVariables, Integer numberOfObjectives)
-      throws JMetalException {
-    super();
+  /**
+   * Creates the problem with |x_I| = 5, tau_T = 5 and n_T = 10.
+   *
+   * @param numberOfVariables the number of variables, at least 6
+   * @param numberOfObjectives the number of objectives, 2
+   */
+  public FDA3(Integer numberOfVariables, Integer numberOfObjectives) {
+    this(numberOfVariables, numberOfObjectives, 5);
+  }
+
+  /**
+   * Creates the problem with tau_T = 5 and n_T = 10.
+   *
+   * @param numberOfVariables the number of variables, more than {@code sizeOfXI}
+   * @param numberOfObjectives the number of objectives, 2
+   * @param sizeOfXI the number of variables of x_I, which define f_1
+   */
+  public FDA3(int numberOfVariables, int numberOfObjectives, int sizeOfXI) {
+    this(numberOfVariables, numberOfObjectives, sizeOfXI, DEFAULT_TAU_T, DEFAULT_N_T);
+  }
+
+  /**
+   * Creates the problem.
+   *
+   * @param numberOfVariables the number of variables, more than {@code sizeOfXI}
+   * @param numberOfObjectives the number of objectives, 2
+   * @param sizeOfXI the number of variables of x_I, which define f_1, at least 1
+   * @param tauT the number of values of the counter for which t remains fixed
+   * @param nT the number of distinct steps in t
+   */
+  public FDA3(int numberOfVariables, int numberOfObjectives, int sizeOfXI, int tauT, int nT) {
+    super(tauT, nT);
+    Check.that(numberOfObjectives == 2, () -> "FDA3 has 2 objectives (" + numberOfObjectives + ")");
+    Check.that(sizeOfXI >= 1, () -> "FDA3 needs at least one variable in x_I (" + sizeOfXI + ")");
+    Check.that(
+        numberOfVariables > sizeOfXI,
+        () -> "FDA3 needs more variables (" + numberOfVariables + ") than x_I (" + sizeOfXI + ")");
+    this.sizeOfXI = sizeOfXI;
     numberOfObjectives(numberOfObjectives);
     name("FDA3");
+    setVariableBounds(numberOfVariables, sizeOfXI, -1.0, 1.0);
+  }
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
-
-    for (int i = limitInfI; i < limitSupI; i++) {
-      lowerLimit.add(0.0);
-      upperLimit.add(1.0);
-    }
-
-    for (int i = limitInfII; i < numberOfVariables; i++) {
-      lowerLimit.add(-1.0);
-      upperLimit.add(1.0);
-    }
-
-    variableBounds(lowerLimit, upperLimit);
+  public int sizeOfXI() {
+    return sizeOfXI;
   }
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
-    f[0] = this.evalF(solution, limitInfI, limitSupI);
-    double g = this.evalG(solution, limitInfII);
-    double h = this.evalH(f[0], g);
-    f[1] = g * h;
-    solution.objectives()[0] = f[0];
-    solution.objectives()[1] = f[1];
+    double bigF = Math.pow(10.0, 2.0 * Math.sin(0.5 * Math.PI * time));
+    double bigG = Math.abs(Math.sin(0.5 * Math.PI * time));
+
+    double f1 = 0.0;
+    for (int i = 0; i < sizeOfXI; i++) {
+      f1 += Math.pow(solution.variables().get(i), bigF);
+    }
+    double g = 1.0 + bigG;
+    for (int i = sizeOfXI; i < solution.variables().size(); i++) {
+      g += Math.pow(solution.variables().get(i) - bigG, 2.0);
+    }
+    double h = 1.0 - Math.sqrt(f1 / g);
+
+    solution.objectives()[0] = f1;
+    solution.objectives()[1] = g * h;
     return solution;
-  }
-
-  private double evalF(DoubleSolution solution, int limitInf, int limitSup) {
-    double f = 0.0d;
-    double aux = 2.0d * Math.sin(0.5d * Math.PI * time);
-    double Ft = Math.pow(10.0d, aux);
-    for (int i = limitInf; i < limitSup; i++) {
-      f += Math.pow(solution.variables().get(i), Ft);
-    }
-    return f;
-  }
-
-  /**
-   * Returns the value of the FDA3 function G.
-   *
-   * @param solution Solution
-   */
-  private double evalG(DoubleSolution solution, int limitInf) {
-
-    double g = 0.0d;
-    double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-    for (int i = limitInf; i < solution.variables().size(); i++) {
-      g += Math.pow((solution.variables().get(i) - Gt), 2.0);
-    }
-    g = g + 1.0 + Gt;
-    return g;
-  }
-
-  /**
-   * Returns the value of the FDA3 function H.
-   *
-   * @param f First argument of the function H.
-   * @param g Second argument of the function H.
-   */
-  private double evalH(double f, double g) {
-    double h = 1.0d - Math.sqrt(f / g);
-    return h;
   }
 }

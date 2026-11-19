@@ -1,85 +1,104 @@
 package org.uma.jmetal.problem.multiobjective.fda;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.errorchecking.Check;
 
-/** @author Cristóbal Barba <cbarba@lcc.uma.es> */
+/**
+ * Problem FDA4 of Farina, Deb and Amato (see {@link FDA}): type I, nonconvex front (the spherical
+ * front of DTLZ2) whose Pareto set moves with t. With M objectives:
+ *
+ * <pre>
+ * f_1 = (1 + g) prod_{i=1..M-1} cos(x_i pi / 2)
+ * f_k = (1 + g) prod_{i=1..M-k} cos(x_i pi / 2) sin(x_{M-k+1} pi / 2),  k = 2, ..., M - 1
+ * f_M = (1 + g) sin(x_1 pi / 2)
+ * g = sum_{i=M..n} (x_i - G)^2,  G = |sin(0.5 pi t)|,  x in [0, 1]^n
+ * </pre>
+ *
+ * <p>The paper suggests n = M + 9; the default is M = 3 and n = 12. Up to jMetal 7.11 the class
+ * always had three objectives, whatever the number given.
+ *
+ * @author Cristóbal Barba <cbarba@lcc.uma.es>
+ */
 @SuppressWarnings("serial")
 public class FDA4 extends FDA {
-  private final int M = 3;
+
+  /** Creates the problem with 3 objectives and 12 variables. */
   public FDA4() {
     this(12, 3);
   }
 
-  public FDA4(Integer numberOfVariables, Integer numberOfObjectives)
-      throws JMetalException {
-    super();
+  /**
+   * Creates the problem with tau_T = 5 and n_T = 10.
+   *
+   * @param numberOfVariables the number of variables, at least the number of objectives
+   * @param numberOfObjectives the number of objectives, at least 2
+   */
+  public FDA4(Integer numberOfVariables, Integer numberOfObjectives) {
+    this(numberOfVariables, numberOfObjectives, DEFAULT_TAU_T, DEFAULT_N_T);
+  }
+
+  /**
+   * Creates the problem.
+   *
+   * @param numberOfVariables the number of variables, at least the number of objectives
+   * @param numberOfObjectives the number of objectives, at least 2
+   * @param tauT the number of values of the counter for which t remains fixed
+   * @param nT the number of distinct steps in t
+   */
+  public FDA4(int numberOfVariables, int numberOfObjectives, int tauT, int nT) {
+    super(tauT, nT);
+    checkDimensions("FDA4", numberOfVariables, numberOfObjectives);
     numberOfObjectives(numberOfObjectives);
     name("FDA4");
+    setVariableBounds(numberOfVariables, numberOfVariables, 0.0, 1.0);
+  }
 
-    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
-    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
+  static void checkDimensions(String name, int numberOfVariables, int numberOfObjectives) {
+    Check.that(
+        numberOfObjectives >= 2,
+        () -> name + " needs at least 2 objectives (" + numberOfObjectives + ")");
+    Check.that(
+        numberOfVariables >= numberOfObjectives,
+        () ->
+            name
+                + " needs at least as many variables ("
+                + numberOfVariables
+                + ") as objectives ("
+                + numberOfObjectives
+                + ")");
+  }
 
-    for (int i = 0; i < numberOfVariables; i++) {
-      lowerLimit.add(0.0);
-      upperLimit.add(1.0);
+  /**
+   * The objectives of the spherical front of DTLZ2 for the position values y_1, ..., y_{M-1} and
+   * the distance g.
+   */
+  static void sphericalObjectives(double[] y, double g, double[] f) {
+    int m = f.length;
+    for (int k = 1; k <= m; k++) {
+      double value = 1.0 + g;
+      for (int i = 1; i <= m - k; i++) {
+        value *= Math.cos(y[i - 1] * Math.PI / 2.0);
+      }
+      if (k > 1) {
+        value *= Math.sin(y[m - k] * Math.PI / 2.0);
+      }
+      f[k - 1] = value;
     }
-
-    variableBounds(lowerLimit, upperLimit);
   }
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.objectives().length];
-    double g = this.evalG(solution, M - 1);
-    f[0] = this.evalF1(solution, g);
-    f[1] = evalFK(solution, g, 2);
-    f[2] = evalFM(solution, g);
-    for (int i = 0; i < solution.objectives().length; i++) {
-      solution.objectives()[i] = f[i];
+    int m = solution.objectives().length;
+    double bigG = Math.abs(Math.sin(0.5 * Math.PI * time));
+    double g = 0.0;
+    for (int i = m - 1; i < solution.variables().size(); i++) {
+      g += Math.pow(solution.variables().get(i) - bigG, 2.0);
     }
-    return solution ;
-  }
-
-  private double evalF1(DoubleSolution solution, double g) {
-    double f = 1.0d + g;
-    double mult = 1.0d;
-    for (int i = 1; i <= M - 1; i++) {
-      mult *= Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
+    double[] y = new double[m - 1];
+    for (int i = 0; i < m - 1; i++) {
+      y[i] = solution.variables().get(i);
     }
-    return f * mult;
-  }
-
-  private double evalFK(DoubleSolution solution, double g, int k) {
-    double f = 1.0d + g;
-    double mult = 1.0d;
-    double aux = Math.sin((solution.variables().get(M - k) * Math.PI) / 2.0d);
-    for (int i = 1; i <= M - k; i++) {
-      mult *= Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
-    }
-    mult *= aux;
-    return f * mult;
-  }
-
-  /**
-   * Returns the value of the FDA4 function G.
-   *
-   * @param solution Solution
-   */
-  private double evalG(DoubleSolution solution, int limitInf) {
-    double g = 0.0d;
-    double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-    for (int i = limitInf; i < solution.variables().size(); i++) {
-      g += Math.pow((solution.variables().get(i) - Gt), 2.0d);
-    }
-    return g;
-  }
-
-  private double evalFM(DoubleSolution solution, double g) {
-    double fm = 1.0d + g;
-    fm *= Math.sin(solution.variables().get(0) * Math.PI / 2);
-    return fm;
+    sphericalObjectives(y, g, solution.objectives());
+    return solution;
   }
 }
