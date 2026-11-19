@@ -24,7 +24,10 @@ only includes the latest entries.
     had already modified. It now runs on ``DynamicAlgorithm``, advances the time with the generations,
     restarts only when the problem changes, and ends after 30 changes by default.
   - ``RunTimeForDynamicProblemsChartObserver`` draws the reference points of the observed data, and
-    the chart can change the number of reference points.
+    the chart can change the number of reference points. ``ChartForDynamicProblemsContainer`` adds and
+    removes its series in the Swing thread once the chart is displayed: XChart is not thread-safe, and
+    a series added by the algorithm while Swing painted the chart had no style, which made the legend
+    fail with a ``NullPointerException``.
 
 * [11/19/2026] Dynamic problems:
 
