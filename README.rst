@@ -92,6 +92,11 @@ Install dependencies and run::
 Changelog
 ---------
 
+* [11/19/2026] New InDM2, the interactive dynamic algorithm of Nebro et al. (2018), without streaming
+  frameworks, on a new ``DynamicAlgorithm`` that can be stopped with a stopping condition or a stop
+  request and restarts the search only when the problem changes. **``DynamicNSGAII`` is rewritten on
+  it**: it no longer runs forever, and ends after 30 changes of the problem by default.
+
 * [11/19/2026] New dynamic problems DF1-DF14 (CEC 2018). **FDA2 now follows the original
   definition of Farina, Deb and Amato**; the former one, FDA2mod of Mehnen et al., is ``FDA2Mod``.
   FDA1, FDA3, FDA4 and FDA5 have the default settings of the paper. See the changelog section of the

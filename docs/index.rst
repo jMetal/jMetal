@@ -70,6 +70,7 @@ Summary of features:
     constrainedBenchmarks.rst
     parallel.rst
     component.rst
+    dynamic.rst
     rvea-variants.rst
     constrained-rvea.rst
     autoconfiguration.rst

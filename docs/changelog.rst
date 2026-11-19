@@ -4,6 +4,28 @@ Changelog
 This page lists the changes of the jMetal project, most recent first. The README of the project
 only includes the latest entries.
 
+* [11/19/2026] Dynamic algorithms (see the dynamic optimization page of the documentation):
+
+  - New ``DynamicAlgorithm`` (package ``org.uma.jmetal.algorithm.dynamic``), which runs a metaheuristic
+    one iteration at a time on a dynamic problem: it applies the changes of the problem between
+    iterations, restarts the search only when the problem changes, publishes the front at the end of
+    each round if it differs from the last one published, and ends with a ``DynamicStoppingCondition``
+    (iterations, evaluations including the re-evaluations, rounds, changes of the problem or computing
+    time) or with ``requestStop()``. Stepwise versions of NSGA-II, R-NSGA-II, WASF-GA and SMPSO/RP,
+    and ``PeriodicProblemUpdater``, a clock that updates the problem.
+  - New InDM2 (Nebro et al., Swarm and Evolutionary Computation, 2018), ported from jMetalSP without
+    streaming frameworks, with WASF-GA, R-NSGA-II or SMPSO/RP: the reference points of the decision
+    maker can change during the run from any thread (``KeyboardReferencePointReader`` reads them from
+    the console). Unlike the version of jMetalSP, it can be stopped, restarts the population once when
+    the reference points change, and does not restart it at the end of every round.
+  - **``DynamicNSGAII`` has changed its constructor and its behavior.** It ran forever, advanced the
+    time of the problem once per round of evaluations, restarted the population at the end of every
+    round whether the problem had changed or not, and compared each front with a list that the restart
+    had already modified. It now runs on ``DynamicAlgorithm``, advances the time with the generations,
+    restarts only when the problem changes, and ends after 30 changes by default.
+  - ``RunTimeForDynamicProblemsChartObserver`` draws the reference points of the observed data, and
+    the chart can change the number of reference points.
+
 * [11/19/2026] Dynamic problems:
 
   - New dynamic problems DF1-DF14 of the CEC 2018 Competition on Dynamic Multiobjective Optimisation
