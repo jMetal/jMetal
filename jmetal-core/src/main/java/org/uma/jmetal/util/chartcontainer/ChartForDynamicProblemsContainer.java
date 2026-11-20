@@ -14,6 +14,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -60,8 +61,11 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
 
     double[] xData = new double[]{0};
     double[] yData = new double[]{0};
-    XYSeries frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
-    frontChartSeries.setMarkerColor(Color.blue);
+    // A placeholder, because XChart cannot paint a chart without series; it is not shown and it is
+    // removed when the first front arrives
+    XYSeries placeholder = this.frontChart.addSeries(this.name, xData, yData);
+    placeholder.setMarker(SeriesMarkers.NONE);
+    placeholder.setShowInLegend(false);
 
     this.charts.put("Front", this.frontChart);
   }
@@ -134,6 +138,9 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
           () -> {
             XYSeries series = this.frontChart.addSeries("Front." + counter, xData, yData, null);
             series.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);
+            if (counter == 0) {
+              this.frontChart.removeSeries(this.name);
+            }
             counter++;
           });
     }
