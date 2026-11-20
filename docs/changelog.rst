@@ -27,7 +27,8 @@ only includes the latest entries.
     the chart can change the number of reference points. ``ChartForDynamicProblemsContainer`` adds and
     removes its series in the Swing thread once the chart is displayed: XChart is not thread-safe, and
     a series added by the algorithm while Swing painted the chart had no style, which made the legend
-    fail with a ``NullPointerException``.
+    fail with a ``NullPointerException``. The chart no longer shows a blue point at (0, 0) named after
+    the algorithm, a placeholder that XChart needs before the first front arrives.
 
 * [11/19/2026] Dynamic problems:
 
